@@ -1,16 +1,22 @@
 package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.border.BevelBorder;
+
+import it.unibo.progetto_oop.Combat.Position.Position;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.Map;
 import java.awt.FlowLayout;
 
 public class CombatView extends JFrame{
@@ -63,6 +69,14 @@ public class CombatView extends JFrame{
         this.buttonPanel.add(runButton);
 
         this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+    }
+
+    public void redraw(Map<JLabel, Position> cells, Position player, Position enemy) {
+        for (Map.Entry<JLabel, Position> entry : cells.entrySet()) {
+            JLabel label = entry.getKey();
+            label.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+            panel.add(label);
+        }
     }
 
 }
