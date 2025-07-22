@@ -13,7 +13,7 @@ public class CombatController {
         view.setVisible(true);
     }
     
-    private void performAttack() {
+    /*private void performAttack() {
         
         Timer playerTimer = new Timer(100, e -> {
             model.movePlayer(1, 0);
@@ -24,6 +24,6 @@ public class CombatController {
             view.redraw(model.getCells(), model.getPlayerPosition(), model.getEnemyPosition());
         });
         playerTimer.start();
-    }
+    }*/
 
 }
