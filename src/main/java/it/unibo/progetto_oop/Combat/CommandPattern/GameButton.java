@@ -1,5 +1,11 @@
 package it.unibo.progetto_oop.Combat.CommandPattern;
 
-public class GameButton {
+/*
+ * Interface to be used by buttons.
+ * Represents the action each button will be able to execute 
+ * 
+ */
+public interface GameButton {
+
     
 }
