@@ -1,3 +1,9 @@
+# In case this is needed ignore Java compilation files
+.class
+
+# Ignore Log Files
+.log
+
 # Ignore Gradle project-specific cache directory
 .gradle
 
