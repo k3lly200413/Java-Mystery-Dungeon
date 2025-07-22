@@ -71,6 +71,14 @@ public class CombatView extends JFrame{
         this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    public void createGrid(Map<JLabel, Position> cells) {
+        for (Map.Entry<JLabel, Position> entry : cells.entrySet()) {
+            JLabel label = entry.getKey();
+            label.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+            panel.add(label);
+        }
+    }
+
     public void redraw(Map<JLabel, Position> cells, Position player, Position enemy) {
         for (Map.Entry<JLabel, Position> entry : cells.entrySet()) {
             JLabel label = entry.getKey();
