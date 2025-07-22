@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop;
+package it.unibo.progetto_oop.Combat;
 
 public class Main {
     public static void main(String[] args){
