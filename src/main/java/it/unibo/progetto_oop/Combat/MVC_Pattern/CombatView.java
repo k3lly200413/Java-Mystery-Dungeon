@@ -16,10 +16,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.HashMap;
 import java.util.Map;
 import java.awt.FlowLayout;
 
 public class CombatView extends JFrame{
+
+    private final Map<JLabel, Position> cells = new HashMap<>();
     
     private JProgressBar playerHealtBar;
     private JProgressBar enemyHealthBar;
@@ -40,6 +43,20 @@ public class CombatView extends JFrame{
         this.getContentPane().add(panel, BorderLayout.CENTER);
 
         this.healthPanel = new JPanel();
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++){
+                final JLabel cellLabel = new JLabel();
+                cellLabel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+                cellLabel.setOpaque(true);
+                // Set an initial icon for the background
+                cellLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/white.jpg")));
+                this.cells.put(cellLabel, new Position(j, i)); // Store the label and its position
+                panel.add(cellLabel); // Add the label to the grid panel
+            }
+        }
+        this.getContentPane().add(panel, BorderLayout.CENTER);
+
         this.healthPanel.setLayout(new BoxLayout(this.healthPanel, BoxLayout.Y_AXIS));
 
         this.playerHealtBar = new JProgressBar(0, 100);
