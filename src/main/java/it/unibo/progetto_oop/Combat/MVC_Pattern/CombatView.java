@@ -100,8 +100,11 @@ public class CombatView extends JFrame{
             } else {
                 cellLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/white.jpg")));
             }
-
         }
+    }
+
+    public void display() {
+        this.setVisible(true);
     }
 
 }
