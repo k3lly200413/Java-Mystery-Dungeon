@@ -8,6 +8,6 @@ public class Main {
     public static void main(String[] args){
         CombatModel model = new CombatModel();
         CombatView view = new CombatView(12);
-        CombatController controller = new CombatController();
+        CombatController controller = new CombatController(model, view);
     }
 }
