@@ -48,8 +48,9 @@ public class CombatView extends JFrame{
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(70 * size, 70 * size);
         this.setLayout(new BorderLayout());
-
+        this.initializeUI(size);
     }
+
     private void initializeUI(int size){
 
         panel = new JPanel(new GridLayout(size, size));
