@@ -132,6 +132,14 @@ public class CombatView extends JFrame{
         }
     }
 
+    public void showAttackOptions() {
+        this.cardLayout.show(buttonPanelContainer, "attackOptions");
+    }
+
+    public void showOriginalButtons(){
+        this.cardLayout.show(this.buttonPanelContainer, "originalButton");
+    }
+
     public void display() {
         this.setVisible(true);
     }
