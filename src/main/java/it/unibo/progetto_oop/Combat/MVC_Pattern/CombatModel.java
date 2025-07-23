@@ -43,6 +43,7 @@ public class CombatModel {
         this.attackPosition = new Position(0, 0);
     }
 
+    //getters
     public int getSize() {
         return size;
     }
