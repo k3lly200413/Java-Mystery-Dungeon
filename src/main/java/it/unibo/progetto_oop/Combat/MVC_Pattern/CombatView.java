@@ -33,6 +33,7 @@ public class CombatView extends JFrame{
     private CardLayout cardLayout;
     private JPanel originalButtonPanel;
     private JPanel attackButtonPanel;
+    private JPanel healthPanel;
 
     private JButton attackButton;
     private JButton bagButton;
@@ -46,10 +47,12 @@ public class CombatView extends JFrame{
     public CombatView(int size) {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(70 * size, 70 * size);
+        this.setLayout(new BorderLayout());
+
+    }
+    private void initializeUI(int size){
 
         panel = new JPanel(new GridLayout(size, size));
-        this.getContentPane().add(panel, BorderLayout.CENTER);
-
         this.healthPanel = new JPanel();
 
         for (int i = 0; i < size; i++) {
@@ -63,7 +66,7 @@ public class CombatView extends JFrame{
                 panel.add(cellLabel); // Add the label to the grid panel
             }
         }
-        this.getContentPane().add(panel, BorderLayout.CENTER);
+        this.add(panel, BorderLayout.CENTER);
 
         this.healthPanel.setLayout(new BoxLayout(this.healthPanel, BoxLayout.Y_AXIS));
 
@@ -71,7 +74,6 @@ public class CombatView extends JFrame{
         this.playerHealtBar.setValue(100);
         this.playerHealtBar.setStringPainted(true);
         this.playerHealtBar.setForeground(Color.GREEN);
-        this.playerHealtBar.setPreferredSize(new Dimension(35 * size, 20));
 
         this.enemyHealthBar = new JProgressBar(0, 100);
         this.enemyHealthBar.setValue(100);
@@ -80,20 +82,39 @@ public class CombatView extends JFrame{
         this.enemyHealthBar.setPreferredSize(new Dimension(35 * size, 20));
 
         this.healthPanel.add(this.playerHealtBar);
-        this.healthPanel.add(Box.createVerticalStrut(5));
         this.healthPanel.add(enemyHealthBar);
-        this.getContentPane().add(healthPanel, BorderLayout.NORTH);
+        this.add(healthPanel, BorderLayout.NORTH);
 
-        this.buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        this.cardLayout = new CardLayout();
+        this.buttonPanelContainer = new JPanel(cardLayout);
+
+        this.originalButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.attackButton = new JButton("Attack");
         this.bagButton = new JButton("Bag");
         this.runButton = new JButton("Run");
+        this.infoButton = new JButton("info");
 
-        this.buttonPanel.add(attackButton);
-        this.buttonPanel.add(bagButton);
-        this.buttonPanel.add(runButton);
+        this.originalButtonPanel.add(attackButton);
+        this.originalButtonPanel.add(bagButton);
+        this.originalButtonPanel.add(runButton);
+        this.originalButtonPanel.add(infoButton);
 
-        this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        this.attackButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        this.physicalAttackButton = new JButton("Physical Attack");
+        this.longRangeButton = new JButton("Long Range");
+        this.poisonButton = new JButton("Poison");
+        this.backButton = new JButton("Back");
+        this.attackButtonPanel.add(physicalAttackButton);
+        this.attackButtonPanel.add(longRangeButton);
+        this.attackButtonPanel.add(poisonButton);
+        this.attackButtonPanel.add(backButton);
+
+        this.buttonPanelContainer.add(originalButtonPanel, "originalButtons");
+        this.buttonPanelContainer.add(attackButtonPanel, "attackOptions");
+
+        this.add(buttonPanelContainer, BorderLayout.SOUTH);
+
+        this.cardLayout.show(buttonPanelContainer, "origianlButtons");
     }
 
     public void redrawGrid(Map<JLabel, Position> cells, Position player, Position enemy) {
