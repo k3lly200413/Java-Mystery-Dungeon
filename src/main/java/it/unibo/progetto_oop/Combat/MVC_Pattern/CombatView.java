@@ -44,9 +44,12 @@ public class CombatView extends JFrame{
     private JButton poisonButton;
     private JButton backButton;
 
+    private JLabel infoLabel;
+
     public CombatView(int size) {
+        this.setTitle("Combat Screen");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(70 * size, 70 * size);
+        this.setSize(70 * size, 75 * size);
         this.setLayout(new BorderLayout());
         this.initializeUI(size);
     }
@@ -82,7 +85,9 @@ public class CombatView extends JFrame{
         this.enemyHealthBar.setForeground(Color.RED);
         this.enemyHealthBar.setPreferredSize(new Dimension(35 * size, 20));
 
+        this.healthPanel.add(new JLabel("Player Health"));
         this.healthPanel.add(this.playerHealtBar);
+        this.healthPanel.add(new JLabel("Enemy Health"));
         this.healthPanel.add(enemyHealthBar);
         this.add(healthPanel, BorderLayout.NORTH);
 

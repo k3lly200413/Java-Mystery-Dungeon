@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args){
 
         //es
-        int size = 15;
+        int size = 12;
         int playerPower = 5;
         int playerPoisonPower = 2;
         int enemyPower = 3;
@@ -16,7 +16,7 @@ public class Main {
         String enemyName = "Dragon";
         
         CombatModel model = new CombatModel(size, playerPower, playerPoisonPower, enemyPower, enemySpeed, enemyName);
-        CombatView view = new CombatView(12);
+        CombatView view = new CombatView(model.getSize());
         CombatController controller = new CombatController(model, view);
     }
 }
