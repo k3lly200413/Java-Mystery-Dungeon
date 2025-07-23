@@ -13,6 +13,7 @@ import javax.swing.border.BevelBorder;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -26,14 +27,21 @@ public class CombatView extends JFrame{
     
     private JProgressBar playerHealtBar;
     private JProgressBar enemyHealthBar;
-
-    private JPanel healthPanel;
     private JPanel panel;
-    private JPanel buttonPanel;
+
+    private JPanel buttonPanelContainer;
+    private CardLayout cardLayout;
+    private JPanel originalButtonPanel;
+    private JPanel attackButtonPanel;
 
     private JButton attackButton;
     private JButton bagButton;
     private JButton runButton;
+    private JButton infoButton;
+    private JButton physicalAttackButton;
+    private JButton longRangeButton;
+    private JButton poisonButton;
+    private JButton backButton;
 
     public CombatView(int size) {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
