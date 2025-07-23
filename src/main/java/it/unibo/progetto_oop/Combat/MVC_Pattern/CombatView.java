@@ -123,6 +123,31 @@ public class CombatView extends JFrame{
         this.cardLayout.show(buttonPanelContainer, "origianlButtons");
     }
 
+    public void setHealthBarMax(int max) {
+        this.playerHealtBar.setMaximum(max);
+        this.enemyHealthBar.setMaximum(max);
+    }
+
+    public void updatePlayerHealth(int value) {
+        this.playerHealtBar.setValue(value);
+        this.playerHealtBar.setString("Player: " + value + "/" + this.playerHealtBar.getMaximum());
+    }
+
+    public void updateEnemyHealth(int value) {
+        enemyHealthBar.setValue(value);
+        enemyHealthBar.setString("Enemy: " + value + "/" + this.enemyHealthBar.getMaximum());
+    }
+    
+    // NEW: Methods to control the info label
+    public void showInfo(String text) {
+        // Use HTML to allow for multi-line messages
+        infoLabel.setText("<html>" + text.replace("\n", "<br>") + "</html>");
+    }
+
+    public void clearInfo() {
+        infoLabel.setText("");
+    }
+
     public void redrawGrid(Position player, Position enemy) {
         for (Map.Entry<JLabel, Position> entry : cells.entrySet()) {
             JLabel cellLabel = entry.getKey();
