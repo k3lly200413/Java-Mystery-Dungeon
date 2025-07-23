@@ -9,8 +9,12 @@ public class CombatController {
     public CombatController(CombatModel model, CombatView view){
         this.model = model;
         this.view = view;
-        view.createGrid(model.getCells());
+        this.redrawView();
         view.setVisible(true);
+    }
+
+    private void redrawView(){
+        view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition());
     }
     
     /*private void performAttack() {

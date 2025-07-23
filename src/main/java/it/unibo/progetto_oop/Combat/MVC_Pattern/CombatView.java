@@ -118,7 +118,7 @@ public class CombatView extends JFrame{
         this.cardLayout.show(buttonPanelContainer, "origianlButtons");
     }
 
-    public void redrawGrid(Map<JLabel, Position> cells, Position player, Position enemy) {
+    public void redrawGrid(Position player, Position enemy) {
         for (Map.Entry<JLabel, Position> entry : cells.entrySet()) {
             JLabel cellLabel = entry.getKey();
             Position cellPos = entry.getValue();
