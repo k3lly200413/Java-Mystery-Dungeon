@@ -16,10 +16,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.HashMap;
 import java.util.Map;
 import java.awt.FlowLayout;
 
 public class CombatView extends JFrame{
+
+    private final Map<JLabel, Position> cells = new HashMap<>();
     
     private JProgressBar playerHealtBar;
     private JProgressBar enemyHealthBar;
@@ -40,6 +43,20 @@ public class CombatView extends JFrame{
         this.getContentPane().add(panel, BorderLayout.CENTER);
 
         this.healthPanel = new JPanel();
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++){
+                final JLabel cellLabel = new JLabel();
+                cellLabel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+                cellLabel.setOpaque(true);
+                // Set an initial icon for the background
+                cellLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/white.jpg")));
+                this.cells.put(cellLabel, new Position(j, i)); // Store the label and its position
+                panel.add(cellLabel); // Add the label to the grid panel
+            }
+        }
+        this.getContentPane().add(panel, BorderLayout.CENTER);
+
         this.healthPanel.setLayout(new BoxLayout(this.healthPanel, BoxLayout.Y_AXIS));
 
         this.playerHealtBar = new JProgressBar(0, 100);
@@ -71,12 +88,23 @@ public class CombatView extends JFrame{
         this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    public void redraw(Map<JLabel, Position> cells, Position player, Position enemy) {
+    public void redrawGrid(Map<JLabel, Position> cells, Position player, Position enemy) {
         for (Map.Entry<JLabel, Position> entry : cells.entrySet()) {
-            JLabel label = entry.getKey();
-            label.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-            panel.add(label);
+            JLabel cellLabel = entry.getKey();
+            Position cellPos = entry.getValue();
+
+            if (cellPos.equals(player)){
+                cellLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/green.jpg")));
+            } else if (cellPos.equals(enemy)) {
+                cellLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/red.jpg")));
+            } else {
+                cellLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/white.jpg")));
+            }
         }
+    }
+
+    public void display() {
+        this.setVisible(true);
     }
 
 }
