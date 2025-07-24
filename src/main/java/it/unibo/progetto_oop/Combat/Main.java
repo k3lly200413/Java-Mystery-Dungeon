@@ -17,6 +17,6 @@ public class Main {
         
         CombatModel model = new CombatModel(size, playerPower, playerPoisonPower, enemyPower, enemySpeed, enemyName);
         CombatView view = new CombatView(model.getSize());
-        CombatController controller = new CombatController(model, view);
+        new CombatController(model, view);
     }
 }
