@@ -3,11 +3,13 @@ package it.unibo.progetto_oop.Combat.MVC_Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
 import it.unibo.progetto_oop.Combat.Position.Position;
@@ -17,9 +19,11 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
 
 public class CombatView extends JFrame{
 
@@ -27,7 +31,7 @@ public class CombatView extends JFrame{
     
     private JProgressBar playerHealtBar;
     private JProgressBar enemyHealthBar;
-    private JPanel panel;
+    private JPanel gridpanel;
 
     private JPanel buttonPanelContainer;
     private CardLayout cardLayout;
@@ -46,6 +50,8 @@ public class CombatView extends JFrame{
 
     private JLabel infoLabel;
 
+    private java.net.URL imgURL;
+
     public CombatView(int size) {
         this.setTitle("Combat Screen");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -56,7 +62,7 @@ public class CombatView extends JFrame{
 
     private void initializeUI(int size){
 
-        panel = new JPanel(new GridLayout(size, size));
+        this.gridpanel = new JPanel(new GridLayout(size, size));
         this.healthPanel = new JPanel();
 
         for (int i = 0; i < size; i++) {
@@ -65,12 +71,13 @@ public class CombatView extends JFrame{
                 cellLabel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
                 cellLabel.setOpaque(true);
                 // Set an initial icon for the background
-                cellLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/white.jpg")));
+                cellLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                cellLabel.setIcon(this.getIconResource("/white.jpg"));
                 this.cells.put(cellLabel, new Position(j, i)); // Store the label and its position
-                panel.add(cellLabel); // Add the label to the grid panel
+                this.gridpanel.add(cellLabel); // Add the label to the grid panel
             }
         }
-        this.add(panel, BorderLayout.CENTER);
+        this.add(this.gridpanel, BorderLayout.CENTER);
 
         this.healthPanel.setLayout(new BoxLayout(this.healthPanel, BoxLayout.Y_AXIS));
 
@@ -120,7 +127,7 @@ public class CombatView extends JFrame{
 
         this.add(buttonPanelContainer, BorderLayout.SOUTH);
 
-        this.cardLayout.show(buttonPanelContainer, "origianlButtons");
+        this.showOriginalButtons();
     }
 
     public void setHealthBarMax(int max) {
@@ -174,5 +181,29 @@ public class CombatView extends JFrame{
     public void display() {
         this.setVisible(true);
     }
+
+    public void close() {
+        this.dispose();
+    }
+
+    private ImageIcon getIconResource(String path) {
+        this.imgURL = getClass().getResource(path);
+        if (this.imgURL != null){
+            return new ImageIcon(this.imgURL);
+        }
+        else{
+            System.err.println("Was not able to find file: " + path);
+            return this.createDefaultIcon();
+        }
+    }
+
+    private ImageIcon createDefaultIcon() {
+        BufferedImage image = new BufferedImage(20, 20, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = image.createGraphics();
+        g.setColor(Color.GRAY);
+        g.fillRect(0, 0, 20, 20);
+        g.dispose();
+        return new ImageIcon(image);
+    } 
 
 }
