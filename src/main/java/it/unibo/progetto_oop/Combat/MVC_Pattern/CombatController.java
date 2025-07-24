@@ -1,5 +1,7 @@
 package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
+import it.unibo.progetto_oop.Combat.Position.Position;
+
 // import javax.swing.Timer;
 
 public class CombatController {
@@ -14,7 +16,7 @@ public class CombatController {
     }
 
     private void redrawView(){
-        view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition());
+        view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), new Position(0, 0), true, true, false, false, 1, 1);
     }
     
     /*private void performAttack() {
