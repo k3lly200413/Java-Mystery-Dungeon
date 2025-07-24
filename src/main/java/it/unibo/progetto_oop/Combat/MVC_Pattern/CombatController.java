@@ -52,6 +52,9 @@ public class CombatController {
         view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), new Position(0, 0), true, true, false, false, 1, 1);
     }
 
+    /**
+     * Uses private methods to Assing Actionlisteners to buttons inside view
+     */
     private void attachListeners() {
         view.addAttackButtonListener(e -> handleAttackMenu());
         view.addPhysicalButtonListener(e -> handlePlayerPhysicalAttack());
