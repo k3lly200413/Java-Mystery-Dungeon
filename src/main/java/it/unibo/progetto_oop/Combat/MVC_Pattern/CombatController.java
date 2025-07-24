@@ -26,6 +26,7 @@ public class CombatController {
         this.model = model;
         this.view = view;
         this.view.setHealthBarMax(model.getMaxHealth());
+        // TODO: make methods in model that divides playerMaxHleath and enemyMaxHealth
         this.view.updatePlayerHealth(model.getMaxHealth());
         this.view.updateEnemyHealth(model.getMaxHealth());
         this.redrawView();
@@ -46,6 +47,10 @@ public class CombatController {
      */
     private void redrawView(){
         view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), new Position(0, 0), true, true, false, false, 1, 1);
+    }
+
+    private void attachListeners() {
+        // TODO: finish complete this
     }
     
     /*private void performAttack() {
