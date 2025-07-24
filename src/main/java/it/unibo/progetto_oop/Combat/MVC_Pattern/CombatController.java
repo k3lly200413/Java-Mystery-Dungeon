@@ -10,8 +10,8 @@ import it.unibo.progetto_oop.Combat.Position.Position;
  * @author Kelly.applebee@studio.unibo.it
  */
 public class CombatController {
-    private CombatModel model;
-    private CombatView view;
+    private final CombatModel model;
+    private final CombatView view;
 
     /**
      * Contructor of CombatController takes in both model and view
@@ -25,8 +25,17 @@ public class CombatController {
     public CombatController(CombatModel model, CombatView view){
         this.model = model;
         this.view = view;
+        this.view.setHealthBarMax(model.getMaxHealth());
+        this.view.updatePlayerHealth(model.getMaxHealth());
+        this.view.updateEnemyHealth(model.getMaxHealth());
         this.redrawView();
-        view.setVisible(true);
+    }
+
+    /**
+     * Makes the main combat window visible
+     */
+    public void startCombat() {
+        view.display();
     }
 
     /**
