@@ -3,6 +3,7 @@ package it.unibo.progetto_oop.Combat.MVC_Pattern;
 import javax.swing.BorderFactory;
 // import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,6 +13,7 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
+import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
 import java.awt.BorderLayout;
@@ -49,6 +51,8 @@ public class CombatView extends JFrame{
     private JButton backButton;
 
     private JLabel infoLabel;
+
+    private final MeleeButton redrawHelper = new MeleeButton();
 
     private java.net.URL imgURL;
 
@@ -155,19 +159,27 @@ public class CombatView extends JFrame{
         infoLabel.setText("");
     }
 
-    public void redrawGrid(Position player, Position enemy) {
-        for (Map.Entry<JLabel, Position> entry : cells.entrySet()) {
+    public void redrawGrid( Position player, Position enemy, Position flame, 
+                            boolean drawPlayer, boolean drawEnemy, 
+                            boolean drawflame, boolean drawPoison, 
+                            int playerRange, int enemyRange) {
+        for (var entry : cells.entrySet()) {
             JLabel cellLabel = entry.getKey();
             Position cellPos = entry.getValue();
-
-            if (cellPos.equals(player)){
-                cellLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/green.jpg")));
-            } else if (cellPos.equals(enemy)) {
-                cellLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/red.jpg")));
+            Icon icon = null;
+            if ((drawflame || drawPoison) && this.redrawHelper.neighbours(player, flame, enemyRange)){
+                icon = drawflame ? this.getIconResource("/yellow.jpg") : this.getIconResource("/green.jpg");
+            } else if (drawPlayer && this.redrawHelper.neighbours(player, cellPos, playerRange)){
+                icon = this.getIconResource("/Screenshot 2025-03-25 164621.png");
+            } else if (drawEnemy && this.redrawHelper.neighbours(enemy, cellPos, enemyRange)) {
+                icon = getIconResource("/red.jpg");
             } else {
-                cellLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/white.jpg")));
+                icon = getIconResource("/white.jpg");
             }
+            cellLabel.setIcon(icon);
         }
+        this.revalidate();
+        this.repaint();
     }
 
     public void showAttackOptions() {
