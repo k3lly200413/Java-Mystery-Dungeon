@@ -13,6 +13,11 @@ public class CombatController {
     private final CombatModel model;
     private final CombatView view;
 
+    private static final int ANIMATION_DELAY = 100      //ms
+    private static final int POST_ATTACK_DELAY = 500    // ms
+
+    private Timer animationTimer;
+
     /**
      * Contructor of CombatController takes in both model and view
      * <p>
