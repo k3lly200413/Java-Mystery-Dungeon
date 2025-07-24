@@ -106,8 +106,25 @@ public class CombatController {
         this.redrawView();
     }
 
+    /**
+     * Handler for Generic Long range attack
+     * <p> Placeholder for now because it will be replace by correct animation
+     * @param applyPoison   boolean to tell controller wether to apply poison to target or not 
+     * 
+     * @author kelly.applebee@studio.unibo.it
+     */
     private void handlePlayerLongRangeAttack(boolean applyPoison) {
-        System.out.println("Long Range Attack clicked. Is Poison: " + applyPoison);
+        this.view.showInfo(applyPoison ? "Player uses poison!" : "Player uses long range attack!");
+        
+        this.model.decreaseEnemyHealth(model.getPlayerPower());
+        if (applyPoison){
+            this.model.setEnemyPoisoned(true);
+            this.view.showInfo("Enemy is Poisoned!");
+        }
+
+        this.view.updateEnemyHealth(this.model.getEnemyHealth());
+    
+        this.redrawView();
     }
     
     /*private void performAttack() {
