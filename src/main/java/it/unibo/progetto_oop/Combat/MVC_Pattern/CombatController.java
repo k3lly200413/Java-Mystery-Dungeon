@@ -1,5 +1,8 @@
 package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
+import java.util.List;
+
+import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
 // import javax.swing.Timer;
@@ -12,6 +15,7 @@ import it.unibo.progetto_oop.Combat.Position.Position;
 public class CombatController {
     private final CombatModel model;
     private final CombatView view;
+    private final MeleeButton meleeCommand;
 
     /**
      * Contructor of CombatController takes in both model and view
@@ -23,8 +27,11 @@ public class CombatController {
      * @author kelly.applebee@studio.unibo.it
      */
     public CombatController(CombatModel model, CombatView view){
+        
         this.model = model;
         this.view = view;
+        this.meleeCommand = new MeleeButton();
+
         this.view.setHealthBarMax(model.getMaxHealth());
         // TODO: make methods in model that divides playerMaxHleath and enemyMaxHealth
         this.view.updatePlayerHealth(model.getMaxHealth());
@@ -80,8 +87,23 @@ public class CombatController {
         System.out.println("Info button clicked.");
     }
 
+    /**
+     * Delegates all the necessary commands to the correct files 
+     * I.E. MeleeButton
+     * 
+     * @author kelly.applebee@studio.unibo.it
+     */
     private void handlePlayerPhysicalAttack() {
-        System.out.println("Physical Attack button clicked.");
+        this.view.showInfo("Player uses Physical Attack!");
+
+        this.meleeCommand.setAttributes(model.getPlayerPosition(), model.getEnemyPosition(), 1, 1);
+
+        List<Position> newPosition = meleeCommand.execute();
+
+        this.model.setPlayerPosition(newPosition.get(0));
+        this.model.setEnemyPosition(newPosition.get(1));
+
+        this.redrawView();
     }
 
     private void handlePlayerLongRangeAttack(boolean applyPoison) {
