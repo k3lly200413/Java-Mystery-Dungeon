@@ -29,6 +29,9 @@ public class CombatController {
         // TODO: make methods in model that divides playerMaxHleath and enemyMaxHealth
         this.view.updatePlayerHealth(model.getMaxHealth());
         this.view.updateEnemyHealth(model.getMaxHealth());
+        
+        this.attachListeners();
+        
         this.redrawView();
     }
 
@@ -50,7 +53,36 @@ public class CombatController {
     }
 
     private void attachListeners() {
-        // TODO: finish complete this
+        view.addAttackButtonListener(e -> handleAttackMenu());
+        view.addPhysicalButtonListener(e -> handlePlayerPhysicalAttack());
+        view.addLongRangeButtonListener(e -> handlePlayerLongRangeAttack(false));
+        view.addPoisonButtonListener(e -> handlePlayerLongRangeAttack(true));
+        view.addBackButtonListener(e -> handleBackToMainMenu());
+        view.addInfoButtonListener(e -> handleInfo());
+        view.addBagButtonListener(e -> System.out.println("Bag clicked - Not Yet Implemented"));
+        view.addRunButtonListener(e -> System.out.println("Run clicked - Not Yet Implemented"));
+    }
+
+    private void handleAttackMenu() {
+        System.out.println("Attack Menu button clicked.");
+        view.showAttackOptions(); // Show the attack sub-menu
+    }
+
+    private void handleBackToMainMenu() {
+        System.out.println("Back button clicked.");
+        view.showOriginalButtons(); // Go back to the main menu
+    }
+
+    private void handleInfo() {
+        System.out.println("Info button clicked.");
+    }
+
+    private void handlePlayerPhysicalAttack() {
+        System.out.println("Physical Attack button clicked.");
+    }
+
+    private void handlePlayerLongRangeAttack(boolean applyPoison) {
+        System.out.println("Long Range Attack clicked. Is Poison: " + applyPoison);
     }
     
     /*private void performAttack() {
