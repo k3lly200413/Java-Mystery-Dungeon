@@ -21,6 +21,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
@@ -217,5 +218,32 @@ public class CombatView extends JFrame{
         g.dispose();
         return new ImageIcon(image);
     } 
+
+    // Listener methods (Used By Controller)
+
+    public void addAttackButtonListener(ActionListener e) {
+        this.attackButton.addActionListener(e);
+    }
+    public void addBagButtonListener(ActionListener e) {
+        this.bagButton.addActionListener(e);
+    }
+    public void addRunButtonListener(ActionListener e){
+        this.runButton.addActionListener(e);
+    }
+    public void addInfoButtonListener(ActionListener e){
+        this.infoButton.addActionListener(e);
+    }
+    public void addPhysicalButtonListener(ActionListener e){
+        this.physicalAttackButton.addActionListener(e);
+    }
+    public void addLongRangeButtonListener(ActionListener e){
+        this.longRangeButton.addActionListener(e);
+    }
+    public void addPoisonButtonListener(ActionListener e){
+        this.poisonButton.addActionListener(e);
+    }
+    public void addBackButtonListener(ActionListener e){
+        this.backButton.addActionListener(e);
+    }
 
 }
