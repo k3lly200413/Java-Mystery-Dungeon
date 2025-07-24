@@ -1,7 +1,7 @@
 package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
+// import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
