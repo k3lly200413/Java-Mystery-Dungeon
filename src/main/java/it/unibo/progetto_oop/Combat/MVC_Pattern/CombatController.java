@@ -1,5 +1,10 @@
 package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
+import java.util.List;
+
+import javax.swing.Timer;
+
+import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
 // import javax.swing.Timer;
@@ -12,9 +17,10 @@ import it.unibo.progetto_oop.Combat.Position.Position;
 public class CombatController {
     private final CombatModel model;
     private final CombatView view;
+    private final MeleeButton meleeCommand;
 
-    private static final int ANIMATION_DELAY = 100      //ms
-    private static final int POST_ATTACK_DELAY = 500    // ms
+    private static final int ANIMATION_DELAY = 100;      //ms
+    private static final int POST_ATTACK_DELAY = 500;    // ms
 
     private Timer animationTimer;
 
@@ -86,11 +92,130 @@ public class CombatController {
     }
 
     private void handlePlayerPhysicalAttack() {
+        if (!model.isPlayerTurn() || isAnimationRunning()) return;
+        
+        view.setButtonsEnabled(false); // Disable buttons during animation
+        view.clearInfo();
         System.out.println("Physical Attack button clicked.");
+
+        Runnable onPlayerAttackComplete = () -> {
+            // We will add logic here later for game over checks and the enemy's turn
+            System.out.println("Animation complete! Next up: enemy turn.");
+            view.setButtonsEnabled(true); // Re-enable buttons for now
+        };
+
+        animatePhysicalMove(
+                model.getPlayerPosition(),
+                model.getEnemyPosition(),
+                true, // isPlayerAttacker
+                model.getPlayerPower(),
+                onPlayerAttackComplete
+        );
     }
 
     private void handlePlayerLongRangeAttack(boolean applyPoison) {
         System.out.println("Long Range Attack clicked. Is Poison: " + applyPoison);
+    }
+
+    /**
+     * Method to cleanly stop a Timer which is running
+     * 
+     * @author kelly.applebee@studio.unibo.it
+     */
+    private void stopAnimationTimer() {
+        if (animationTimer != null && animationTimer.isRunning()) {
+            animationTimer.stop();
+            animationTimer = null; // Release reference
+        }
+    }
+
+    private boolean isAnimationRunning() {
+         return animationTimer != null && animationTimer.isRunning();
+    }
+
+
+    private void animatePhysicalMove(
+        final Position attackerStartPos,
+        final Position targetStartPos,
+        final boolean isPlayerAttacker,
+        final int attackPower,
+        final Runnable onComplete)
+    {
+        stopAnimationTimer(); // Ensure no other animation is running
+
+        final int moveDirection = isPlayerAttacker ? 1 : -1;
+        final int returnDirection = -moveDirection;
+        final int meleeCheckDistance = 1;
+
+        // Use arrays to hold mutable positions within the lambda
+        final Position[] currentAttackerPos = { new Position(attackerStartPos.x(), attackerStartPos.y()) };
+        final Position[] currentTargetPos = { new Position(targetStartPos.x(), targetStartPos.y()) };
+
+        // State machine for animation steps: 0=moving, 1=attacking, 2=returning
+        final int[] state = {0};
+        final boolean[] damageApplied = {false};
+
+        animationTimer = new Timer(ANIMATION_DELAY, null);
+        animationTimer.addActionListener(event -> {
+
+            Position nextAttackerPos = currentAttackerPos[0];
+            Position nextTargetPos = currentTargetPos[0];
+
+            // State 0: Moving forward
+            if (state[0] == 0) {
+                meleeCommand.setAttributes(currentAttackerPos[0], currentTargetPos[0], moveDirection, meleeCheckDistance);
+                List<Position> result = meleeCommand.execute();
+                nextAttackerPos = result.get(0);
+                nextTargetPos = result.get(1);
+
+                // If contact is made, move to the next state
+                if (meleeCommand.neighbours(nextAttackerPos, nextTargetPos, meleeCheckDistance)) {
+                    state[0] = 1;
+                }
+                currentAttackerPos[0] = nextAttackerPos;
+                currentTargetPos[0] = nextTargetPos;
+            } 
+            // State 1: Apply damage and start returning
+            else if (state[0] == 1) {
+                if (!damageApplied[0]) {
+                    if (isPlayerAttacker) {
+                        model.decreaseEnemyHealth(attackPower);
+                        view.updateEnemyHealth(model.getEnemyHealth());
+                    } else {
+                        model.decreasePlayerHealth(attackPower);
+                        view.updatePlayerHealth(model.getPlayerHealth());
+                    }
+                    damageApplied[0] = true;
+                }
+                // Move back one step to start the return trip
+                currentAttackerPos[0] = new Position(currentAttackerPos[0].x() + returnDirection, currentAttackerPos[0].y());
+                state[0] = 2; // Move to returning state
+            } 
+            // State 2: Returning to start position
+            else { 
+                if (currentAttackerPos[0].equals(attackerStartPos)) {
+                    stopAnimationTimer();
+                    // Execute the completion action (e.g., start enemy turn)
+                    if (onComplete != null) {
+                        onComplete.run();
+                    }
+                    return; // End of animation
+                } else { // Continue moving back
+                    currentAttackerPos[0] = new Position(currentAttackerPos[0].x() + returnDirection, currentAttackerPos[0].y());
+                }
+            }
+
+            // Update model and redraw for every step of the animation
+            if (isPlayerAttacker) {
+                model.setPlayerPosition(currentAttackerPos[0]);
+                model.setEnemyPosition(currentTargetPos[0]);
+            } else {
+                model.setPlayerPosition(currentTargetPos[0]);
+                model.setEnemyPosition(currentAttackerPos[0]);
+            }
+            redrawView();
+        });
+        animationTimer.start();
     }
     
     /*private void performAttack() {
