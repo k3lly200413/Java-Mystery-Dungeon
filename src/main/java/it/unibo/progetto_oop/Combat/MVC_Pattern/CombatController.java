@@ -7,8 +7,6 @@ import javax.swing.Timer;
 import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
-// import javax.swing.Timer;
-
 /**
  * Controller class in Model View Controller Pattern
  * 
