@@ -114,7 +114,6 @@ public class CombatController {
 
     /**
      * Handler for Generic Long range attack
-     * <p> Placeholder for now because it will be replace by correct animation
      * @param applyPoison   boolean to tell controller wether to apply poison to target or not 
      * 
      * @author kelly.applebee@studio.unibo.it
