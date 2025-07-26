@@ -139,6 +139,33 @@ public class CombatController {
         this.startDelayedEnemyTurn(POST_ATTACK_DELAY);
         this.redrawView();
     }
+
+    private void longRangeAttackAnimation(boolean isPoison, Runnable onHit) {
+        stopAnimationTimer();
+        model.setFlamePosition(model.getPlayerPosition()); // Start flame at player
+
+        animationTimer = new Timer(ANIMATION_DELAY, e -> {
+            // Check if flame reached the enemy
+            if (model.getFlamePosition().x() >= model.getEnemyPosition().x() - 1) {
+                stopAnimationTimer();
+                model.setFlamePosition(model.getPlayerPosition()); // Reset flame position
+                view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), model.getFlamePosition(), true, true, false, false, 1, 1);
+                if (onHit != null) {
+                    onHit.run();
+                }
+                return;
+            }
+
+            // Move flame forward using the command
+            longRangeCommand.setAttributes(model.getFlamePosition(), 1);
+            Position nextFlamePos = longRangeCommand.execute().get(0);
+            model.setFlamePosition(nextFlamePos);
+
+            // Redraw showing the projectile
+            view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), model.getFlamePosition(), true, true, !isPoison, isPoison, 1, 1);
+        });
+        animationTimer.start();
+    }
     
     /*private void performAttack() {
         
