@@ -17,6 +17,8 @@ public class CombatController {
     private final CombatView view;
     private final MeleeButton meleeCommand;
 
+    private static final int POST_ATTACK_DELAY = 500;   // ms
+
     /**
      * Contructor of CombatController takes in both model and view
      * <p>
@@ -84,7 +86,11 @@ public class CombatController {
     }
 
     private void handleInfo() {
-        System.out.println("Info button clicked.");
+        if (this.model.isPlayerTurn()) {
+            return;
+        }
+        this.zoomerAnimation();
+        this.view.showInfo("Enemy Info:\nName: " + this.model.getEnemyName());
     }
 
     /**
@@ -114,16 +120,24 @@ public class CombatController {
      * @author kelly.applebee@studio.unibo.it
      */
     private void handlePlayerLongRangeAttack(boolean applyPoison) {
+        if (!this.model.isPlayerTurn() || this.isAnimationRunning()) {
+            return;
+        }
+        this.view.setButtonsEnabled(false);
+        view.clearInfo();
         this.view.showInfo(applyPoison ? "Player uses poison!" : "Player uses long range attack!");
         
-        this.model.decreaseEnemyHealth(model.getPlayerPower());
+        this.longRangeAttackAnimation(applyPoison, () -> {
+            this.model.decreaseEnemyHealth(model.getPlayerPower());
         if (applyPoison){
             this.model.setEnemyPoisoned(true);
             this.view.showInfo("Enemy is Poisoned!");
         }
+        });
 
         this.view.updateEnemyHealth(this.model.getEnemyHealth());
-    
+        
+        this.startDelayedEnemyTurn(POST_ATTACK_DELAY);
         this.redrawView();
     }
     
