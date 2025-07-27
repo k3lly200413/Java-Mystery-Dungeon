@@ -86,7 +86,7 @@ public class CombatController {
     }
 
     private void handleInfo() {
-        if (this.model.isPlayerTurn()) {
+        if (!this.model.isPlayerTurn()) {
             return;
         }
         this.zoomerAnimation();
