@@ -58,7 +58,9 @@ public class CombatController {
      * @author kelly.applebee@studio.unibo.itc
      */
     private void redrawView(){
-        view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), new Position(0, 0), true, true, false, false, 1, 1);
+        view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), 
+                        new Position(0, 0), true, true, 
+                        false, false, 1, 1);
     }
 
     /**
