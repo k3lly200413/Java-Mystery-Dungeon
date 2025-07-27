@@ -131,7 +131,15 @@ public class CombatView extends JFrame{
         this.buttonPanelContainer.add(originalButtonPanel, "originalButtons");
         this.buttonPanelContainer.add(attackButtonPanel, "attackOptions");
 
-        this.add(buttonPanelContainer, BorderLayout.SOUTH);
+        this.infoLabel = new JLabel("Combat Started!", SwingConstants.CENTER);
+        this.infoLabel.setPreferredSize(new Dimension(70 * size, 30));
+
+        JPanel southPanel = new JPanel();
+        southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
+        southPanel.add(buttonPanelContainer);
+        southPanel.add(infoLabel);
+        this.add(southPanel, BorderLayout.SOUTH);
+
 
         this.showOriginalButtons();
     }
@@ -169,7 +177,7 @@ public class CombatView extends JFrame{
             JLabel cellLabel = entry.getKey();
             Position cellPos = entry.getValue();
             Icon icon = null;
-            if ((drawflame || drawPoison) && this.redrawHelper.neighbours(player, flame, enemyRange)){
+            if ((drawflame || drawPoison) && this.redrawHelper.neighbours(player, flame, 0)){
                 icon = drawflame ? this.getIconResource("/yellow.jpg") : this.getIconResource("/green.jpg");
             } else if (drawPlayer && this.redrawHelper.neighbours(player, cellPos, playerRange)){
                 icon = this.getIconResource("/Screenshot 2025-03-25 164621.png");
