@@ -19,6 +19,7 @@ import it.unibo.progetto_oop.Combat.Position.Position;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -189,6 +190,20 @@ public class CombatView extends JFrame{
 
     public void showOriginalButtons(){
         this.cardLayout.show(this.buttonPanelContainer, "originalButton");
+    }
+
+    public void setButtonsEnabled(boolean enableButtons){
+        this.setPanelEnabled(this.originalButtonPanel, enableButtons);
+        this.setPanelEnabled(this.attackButtonPanel, enableButtons);
+    }
+
+    private void setPanelEnabled(JPanel panel, boolean enablePanel){
+        panel.setEnabled(enablePanel);
+        for (Component comp : panel.getComponents()){
+            if (comp instanceof JButton) {
+                comp.setEnabled(enablePanel);
+            }
+        }
     }
 
     public void display() {
