@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.StatePattern;
+package it.unibo.progetto_oop.Combat.StatePattern;
 
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 
