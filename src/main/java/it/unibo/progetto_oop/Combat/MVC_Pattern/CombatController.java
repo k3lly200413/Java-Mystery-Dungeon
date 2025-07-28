@@ -359,8 +359,20 @@ public class CombatController {
     }
 
     private void infoNextDrawAnimation(Position originalEnemyPosition) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'infoNextDrawAnimation'");
+        stopAnimationTimer();
+
+        animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
+            if (zoomerStep < 3) {
+                this.view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), true, true, false, false, 1, 1);
+                zoomerStep++;
+            } else {
+                stopAnimationTimer();
+                this.view.setButtonsEnabled(true);
+                this.view.showInfo("Enemy Info:\nName: " + model.getEnemyName());
+                this.model.setEnemyPosition(originalEnemyPosition); // Reset enemy position
+                redrawView();
+            }
+        });
     }
 
     /*private void performAttack() {
