@@ -121,9 +121,9 @@ public class CombatController {
         System.out.println("Physical Attack button clicked.");
 
         Runnable onPlayerAttackComplete = () -> {
-            // We will add logic here later for game over checks and the enemy's turn
-            System.out.println("Animation complete! Next up: enemy turn.");
-            this.view.setButtonsEnabled(true); // Re-enable buttons for now
+            applyPostTurnEffects();
+            
+            startDelayedEnemyTurn(POST_ATTACK_DELAY);
         };
 
         animatePhysicalMove(
@@ -133,6 +133,19 @@ public class CombatController {
                 model.getPlayerPower(),
                 onPlayerAttackComplete
         );
+    }
+
+    private void startDelayedEnemyTurn(int delay) {
+        Timer enemyTurnDelayTimer = new Timer(delay,e -> {
+            enemyTrun();
+        });
+        enemyTurnDelayTimer.setRepeats(false); //ensure it only runs once
+        enemyTurnDelayTimer.start();
+    }
+
+    private void enemyTrun() {
+        model.setPlayerTurn(false);
+        view.showInfo("Enemy attacks!");
     }
 
     /**
@@ -159,6 +172,8 @@ public class CombatController {
 
         this.view.updateEnemyHealth(this.model.getEnemyHealth());
         
+        applyPostTurnEffects();
+
         this.startDelayedEnemyTurn(POST_ATTACK_DELAY);
         this.redrawView();
     }
