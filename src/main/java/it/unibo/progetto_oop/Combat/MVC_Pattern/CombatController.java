@@ -362,15 +362,14 @@ public class CombatController {
         stopAnimationTimer();
 
         animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
-            if (zoomerStep < 3) {
-                this.view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), true, true, false, false, 1, 1);
-                zoomerStep++;
-            } else {
+            zoomerStep++;
+            if (zoomerStep >= 6) {
                 stopAnimationTimer();
-                this.view.setButtonsEnabled(true);
-                this.view.showInfo("Enemy Info:\nName: " + model.getEnemyName());
-                this.model.setEnemyPosition(originalEnemyPosition); // Reset enemy position
+                model.setEnemyPosition(originalEnemyPosition); // Reset enemy position
                 redrawView();
+                this.view.setButtonsEnabled(true);
+            } else {
+                this.view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), true, true, false, false, 1, zoomerStep);
             }
         });
     }
