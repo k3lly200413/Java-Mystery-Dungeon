@@ -123,8 +123,6 @@ public class CombatController {
         Runnable onPlayerAttackComplete = () -> {
             applyPostTurnEffects();
             if (checkGameOver()) return; //Check if enemy was defeated
-            
-
             startDelayedEnemyTurn(POST_ATTACK_DELAY);
         };
 
