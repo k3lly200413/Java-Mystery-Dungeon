@@ -7,7 +7,7 @@ public class PlayerTurnState implements CombatState{
     @Override
     public void handlePhysicalAttackInput(CombatController context) {
         System.out.println("Debug Log: Requested Physicaln\nCurrent State: Player Turn State");
-        // TODO: Perform Physical Attack in context
+        context.performPlayerPhysicalAttack();
     }
 
     @Override
