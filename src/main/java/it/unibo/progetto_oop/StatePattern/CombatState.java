@@ -10,4 +10,7 @@ public interface CombatState {
     void handleBagInput(CombatController context); // Add if implementing
     void handleRunInput(CombatController context);  // Add if implementing
 
+    void enterState(CombatController context);
+    void extiState(CombatController context);
+
 }
