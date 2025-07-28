@@ -105,6 +105,10 @@ public class CombatController {
     }
 
     private void handlePlayerPhysicalAttack() {
+        // call playerturnstate and have it run performPlayerphysical Attack
+    }
+
+    public void performPlayerPhysicalAttack() {
         if (!model.isPlayerTurn() || isAnimationRunning()){
             return;
         } 
