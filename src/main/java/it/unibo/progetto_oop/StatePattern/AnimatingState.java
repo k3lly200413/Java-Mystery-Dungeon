@@ -4,6 +4,8 @@ import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 
 public class AnimatingState implements CombatState{
 
+    private final boolean turn = true;
+
     @Override
     public void handlePhysicalAttackInput(CombatController context) {
         // TODO Auto-generated method stub
@@ -44,11 +46,18 @@ public class AnimatingState implements CombatState{
     public void enterState(CombatController context) {
         context.getView().showInfo("Entered Animating State!\nNo issues for now");
         System.out.println("------ Entered Animating State ------");
+        context.getView().setButtonsEnabled(false);
     }
 
     @Override
     public void extiState(CombatController context) {
         System.out.println("------ Exeting Animating State ------");
+        if (context.getModel().isPlayerTurn()) {
+            context.getModel().setPlayerTurn(this.turn);
+        }
+        else{
+            context.getModel().setPlayerTurn(!this.turn);
+        }
     }
     
 }
