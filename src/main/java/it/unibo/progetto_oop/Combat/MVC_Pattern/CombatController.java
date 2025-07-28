@@ -433,6 +433,16 @@ public class CombatController {
         return false;
     }
 
+    // ------ Getters ------
+
+    public CombatView getView() {
+        return this.view;
+    }
+
+    public CombatModel getModel() {
+        return this.model;
+    }
+
     /*private void performAttack() {
         
         Timer playerTimer = new Timer(100, e -> {
