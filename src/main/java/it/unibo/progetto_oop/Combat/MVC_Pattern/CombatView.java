@@ -201,7 +201,7 @@ public class CombatView extends JFrame{
     }
 
     public void showOriginalButtons(){
-        this.cardLayout.show(this.buttonPanelContainer, "originalButton");
+        this.cardLayout.show(this.buttonPanelContainer, "originalButtons");
     }
 
     public void setButtonsEnabled(boolean enableButtons){
