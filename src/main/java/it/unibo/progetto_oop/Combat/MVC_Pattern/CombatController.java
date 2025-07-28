@@ -122,7 +122,9 @@ public class CombatController {
 
         Runnable onPlayerAttackComplete = () -> {
             applyPostTurnEffects();
+            if (checkGameOver()) return; //Check if enemy was defeated
             
+
             startDelayedEnemyTurn(POST_ATTACK_DELAY);
         };
 
@@ -173,6 +175,8 @@ public class CombatController {
         this.view.updateEnemyHealth(this.model.getEnemyHealth());
         
         applyPostTurnEffects();
+
+        if(checkGameOver()){return; }
 
         this.startDelayedEnemyTurn(POST_ATTACK_DELAY);
         this.redrawView();
@@ -395,6 +399,17 @@ public class CombatController {
             model.decreaseEnemyHealth(model.getPlayerPoisonPower());
             view.updateEnemyHealth(model.getEnemyHealth());
         }
+    }
+
+    private boolean checkGameOver(){
+        if (model.isGameOver()) {
+            stopAnimationTimer();
+            view.setButtonsEnabled(false);
+            String winner = model.getPlayerHealth() <= 0 ? "Enemy" : "Player";
+            view.showInfo("Game Over! "+winner+"wins!");
+            return true;
+        }
+        return false;
     }
 
     /*private void performAttack() {
