@@ -66,7 +66,7 @@ public class CombatController {
      */
     private void redrawView(){
         this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), 
-                        this.model.getFlamePosition(), true, true, 
+                        this.model.getAttackPosition(), true, true, 
                         false, false, 1, 1);
     }
 
@@ -115,7 +115,7 @@ public class CombatController {
         
         this.view.setButtonsEnabled(false); // Disable buttons during animation
         this.view.clearInfo();
-        this.view.showInfo("Player Has used physical Attack")
+        this.view.showInfo("Player Has used physical Attack");
         System.out.println("Physical Attack button clicked.");
 
         Runnable onPlayerAttackComplete = () -> {
@@ -163,14 +163,14 @@ public class CombatController {
 
     private void longRangeAttackAnimation(boolean isPoison, Runnable onHit) {
         this.stopAnimationTimer();
-        this.model.setFlamePosition(this.model.getPlayerPosition()); // Start flame at player
+        this.model.setAttackPosition(this.model.getPlayerPosition()); // Start flame at player
 
         animationTimer = new Timer(ANIMATION_DELAY, e -> {
             // Check if flame reached the enemy
-            if (this.model.getFlamePosition().x() >= this.model.getEnemyPosition().x() - 1) {
+            if (this.model.getAttackPosition().x() >= this.model.getEnemyPosition().x() - 1) {
                 this.stopAnimationTimer();
-                this.model.setFlamePosition(this.model.getPlayerPosition()); // Reset flame position
-                this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getFlamePosition(), true, true, false, false, 1, 1);
+                this.model.setAttackPosition(this.model.getPlayerPosition()); // Reset flame position
+                this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), true, true, false, false, 1, 1);
                 if (onHit != null) {
                     onHit.run();
                 }
@@ -178,12 +178,11 @@ public class CombatController {
             }
 
             // Move flame forward using the command
-            longRangeCommand.setAttributes(this.model.getFlamePosition(), 1);
+            longRangeCommand.setAttributes(this.model.getAttackPosition(), 1);
             Position nextFlamePos = longRangeCommand.execute().get(0);
-            this.model.setFlamePosition(nextFlamePos);
-
+            this.model.setAttackPosition(nextFlamePos);
             // Redraw showing the projectile
-            this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getFlamePosition(), true, true, !isPoison, isPoison, 1, 1);
+            this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), true, true, !isPoison, isPoison, 1, 1);
         });
         animationTimer.start();
     }
