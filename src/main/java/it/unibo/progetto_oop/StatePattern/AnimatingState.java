@@ -4,7 +4,7 @@ import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 
 public class AnimatingState implements CombatState{
 
-    private final boolean turn = true;
+    private final boolean playerTurn = true;
 
     @Override
     public void handlePhysicalAttackInput(CombatController context) {
@@ -53,10 +53,12 @@ public class AnimatingState implements CombatState{
     public void exitState(CombatController context) {
         System.out.println("------ Exeting Animating State ------");
         if (context.getModel().isPlayerTurn()) {
-            context.getModel().setPlayerTurn(this.turn);
+            context.getModel().setPlayerTurn(!this.playerTurn);
         }
         else{
-            context.getModel().setPlayerTurn(!this.turn);
+            context.getModel().setPlayerTurn(this.playerTurn);
+            // TODO: implement setState in Controller
+            // context.setState(new PlayerturnState())
         }
     }
     
