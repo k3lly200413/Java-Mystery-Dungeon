@@ -132,26 +132,32 @@ public class CombatController {
     }
 
 
-    private void animatePhysicalMove(
-        final Position attackerStartPos,
-        final Position targetStartPos,
-        final boolean isPlayerAttacker,
-        final int attackPower,
-        final Runnable onComplete)
-    {
-        stopAnimationTimer(); // Ensure no other animation is running
+    private void animatePhysicalMove( 
+        Position attackerStartPos, 
+        Position targetStartPos, 
+        boolean isPlayerAttacker, 
+        int attackPower, 
+        Runnable onComplete) {
+        // TODO: Add javaDoc and comments I'm to tired at this point
+        stopAnimationTimer();
 
         final int moveDirection = isPlayerAttacker ? 1 : -1;
         final int returnDirection = -moveDirection;
-        final int meleeCheckDistance = 1;
+        final int meleeCheckDistance = 1; 
 
-        // Use arrays to hold mutable positions within the lambda
         final Position[] currentAttackerPos = { new Position(attackerStartPos.x(), attackerStartPos.y()) };
         final Position[] currentTargetPos = { new Position(targetStartPos.x(), targetStartPos.y()) };
 
-        // State machine for animation steps: 0=moving, 1=attacking, 2=returning
-        final int[] state = {0};
+        final int[] state = {0}; 
         final boolean[] damageApplied = {false};
+
+        if (isPlayerAttacker) {
+            model.setPlayerPosition(currentAttackerPos[0]);
+            model.setEnemyPosition(currentTargetPos[0]);
+        } else {
+            model.setPlayerPosition(currentTargetPos[0]); 
+            model.setEnemyPosition(currentAttackerPos[0]); 
+        }
 
         animationTimer = new Timer(ANIMATION_DELAY, null);
         animationTimer.addActionListener(event -> {
@@ -159,24 +165,33 @@ public class CombatController {
             Position nextAttackerPos = currentAttackerPos[0];
             Position nextTargetPos = currentTargetPos[0];
 
-            // State 0: Moving forward
-            if (state[0] == 0) {
+            // --- State Logic ---
+            if (state[0] == 0) { 
                 meleeCommand.setAttributes(currentAttackerPos[0], currentTargetPos[0], moveDirection, meleeCheckDistance);
-                List<Position> result = meleeCommand.execute();
+                List<Position> result = meleeCommand.execute(); 
                 nextAttackerPos = result.get(0);
-                nextTargetPos = result.get(1);
+                nextTargetPos = result.get(1); 
 
-                // If contact is made, move to the next state
-                if (meleeCommand.neighbours(nextAttackerPos, nextTargetPos, meleeCheckDistance)) {
-                    state[0] = 1;
+                if (meleeCommand.neighbours(nextAttackerPos, nextTargetPos, meleeCheckDistance) || !nextTargetPos.equals(currentTargetPos[0])) {
+                    state[0] = 1; 
+                } else if (!nextAttackerPos.equals(currentAttackerPos[0])) {
+
+                } else {
+
+                    if (meleeCommand.neighbours(nextAttackerPos, nextTargetPos, meleeCheckDistance + 1)) { // Check slightly wider range
+                        state[0] = 1;
+                    } else {
+
+                        System.err.println("Animation stuck in state 0? Forcing state 1.");
+                        state[0] = 1;
+                    }
                 }
                 currentAttackerPos[0] = nextAttackerPos;
                 currentTargetPos[0] = nextTargetPos;
-            } 
-            // State 1: Apply damage and start returning
-            else if (state[0] == 1) {
+
+            } else if (state[0] == 1) { 
                 if (!damageApplied[0]) {
-                    if (isPlayerAttacker) {
+                if (isPlayerAttacker) {
                         model.decreaseEnemyHealth(attackPower);
                         view.updateEnemyHealth(model.getEnemyHealth());
                     } else {
@@ -184,34 +199,60 @@ public class CombatController {
                         view.updatePlayerHealth(model.getPlayerHealth());
                     }
                     damageApplied[0] = true;
+
+                    if(checkGameOver()) {
+                        stopAnimationTimer(); 
+
+                        if (isPlayerAttacker) model.setEnemyPosition(currentTargetPos[0]);
+                        else model.setPlayerPosition(currentTargetPos[0]);
+
+                        return;
+                    }
                 }
-                // Move back one step to start the return trip
-                currentAttackerPos[0] = new Position(currentAttackerPos[0].x() + returnDirection, currentAttackerPos[0].y());
-                state[0] = 2; // Move to returning state
-            } 
-            // State 2: Returning to start position
-            else { 
-                if (currentAttackerPos[0].equals(attackerStartPos)) {
+
+                nextAttackerPos = new Position(currentAttackerPos[0].x() + returnDirection, currentAttackerPos[0].y());
+                nextTargetPos = new Position(currentTargetPos[0].x() + returnDirection, currentTargetPos[0].y());
+                currentAttackerPos[0] = nextAttackerPos;
+                currentTargetPos[0] = nextTargetPos;
+                state[0] = 2; 
+
+            } else { 
+                if (currentAttackerPos[0].x() == attackerStartPos.x()) { 
                     stopAnimationTimer();
-                    // Execute the completion action (e.g., start enemy turn)
+
+                    currentAttackerPos[0] = attackerStartPos;
+
+                    if (isPlayerAttacker) {
+                        model.setPlayerPosition(currentAttackerPos[0]);
+                        model.setEnemyPosition(currentTargetPos[0]);
+                    } else {
+                        model.setPlayerPosition(currentTargetPos[0]); 
+                        model.setEnemyPosition(currentAttackerPos[0]); 
+                    }
+                    redrawView(); 
+
                     if (onComplete != null) {
                         onComplete.run();
                     }
-                    return; // End of animation
-                } else { // Continue moving back
-                    currentAttackerPos[0] = new Position(currentAttackerPos[0].x() + returnDirection, currentAttackerPos[0].y());
+                    return; 
+
+                } else { 
+                    nextAttackerPos = new Position(currentAttackerPos[0].x() + returnDirection, currentAttackerPos[0].y());
+
+                    currentAttackerPos[0] = nextAttackerPos;
                 }
             }
 
-            // Update model and redraw for every step of the animation
             if (isPlayerAttacker) {
                 model.setPlayerPosition(currentAttackerPos[0]);
                 model.setEnemyPosition(currentTargetPos[0]);
             } else {
-                model.setPlayerPosition(currentTargetPos[0]);
-                model.setEnemyPosition(currentAttackerPos[0]);
+                model.setPlayerPosition(currentTargetPos[0]); 
+                model.setEnemyPosition(currentAttackerPos[0]); 
             }
-            redrawView();
+
+            redrawView(); 
+
         });
         animationTimer.start();
     }
