@@ -50,7 +50,7 @@ public class AnimatingState implements CombatState{
     }
 
     @Override
-    public void extiState(CombatController context) {
+    public void exitState(CombatController context) {
         System.out.println("------ Exeting Animating State ------");
         if (context.getModel().isPlayerTurn()) {
             context.getModel().setPlayerTurn(this.turn);

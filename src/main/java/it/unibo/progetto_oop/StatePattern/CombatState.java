@@ -11,6 +11,6 @@ public interface CombatState {
     void handleRunInput(CombatController context);  // Add if implementing
 
     void enterState(CombatController context);
-    void extiState(CombatController context);
+    void exitState(CombatController context);
 
 }
