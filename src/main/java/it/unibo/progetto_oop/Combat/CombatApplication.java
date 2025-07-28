@@ -24,18 +24,18 @@ public class CombatApplication {
      */
     public static void main(String[] args) {
         // --- Game Configuration ---
-        int gridSize = 15;
-        int playerPower = 10;
+        int size = 12;
+        int playerPower = 5;
         int playerPoisonPower = 2;
-        int enemyPower = 8;
-        int enemySpeed = 5;
-        String enemyName = "Goblin";
+        int enemyPower = 3;
+        int enemySpeed = 3;
+        String enemyName = "Dragon";
 
         // --- Application Startup ---
         // Ensure UI creation happens on the Event Dispatch Thread (EDT) for safety.
         SwingUtilities.invokeLater(() -> {
             // 1. Create the Model with our configuration
-            CombatModel model = new CombatModel(gridSize, playerPower, playerPoisonPower, enemyPower, enemySpeed, enemyName);
+            CombatModel model = new CombatModel(size, playerPower, playerPoisonPower, enemyPower, enemySpeed, enemyName);
 
             // 2. Create the View
             CombatView view = new CombatView(model.getSize());
