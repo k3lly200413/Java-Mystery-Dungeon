@@ -1,6 +1,7 @@
 package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -101,8 +102,10 @@ public class CombatView extends JFrame{
 
         this.healthPanel.add(new JLabel("Player Health"));
         this.healthPanel.add(this.playerHealtBar);
+        this.healthPanel.add(Box.createVerticalStrut(5));       
         this.healthPanel.add(new JLabel("Enemy Health"));
         this.healthPanel.add(enemyHealthBar);
+        
         this.add(healthPanel, BorderLayout.NORTH);
 
         this.cardLayout = new CardLayout();
@@ -178,7 +181,7 @@ public class CombatView extends JFrame{
             JLabel cellLabel = entry.getKey();
             Position cellPos = entry.getValue();
             Icon icon = null;
-            if ((drawflame || drawPoison) && this.redrawHelper.neighbours(player, flame, 0)){
+            if ((drawflame || drawPoison) && this.redrawHelper.neighbours(cellPos, flame, 0)){
                 icon = drawflame ? this.getIconResource("/yellow.jpg") : this.getIconResource("/green.jpg");
             } else if (drawPlayer && this.redrawHelper.neighbours(player, cellPos, playerRange)){
                 icon = this.getIconResource("/Screenshot 2025-03-25 164621.png");

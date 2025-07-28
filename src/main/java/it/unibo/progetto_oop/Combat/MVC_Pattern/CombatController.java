@@ -39,10 +39,12 @@ public class CombatController {
         this.view = view;
         this.meleeCommand = new MeleeButton();
 
+        this.longRangeCommand = new LongRangeButton();
+
         this.view.setHealthBarMax(model.getMaxHealth());
         // TODO: make methods in model that divides playerMaxHleath and enemyMaxHealth
-        this.view.updatePlayerHealth(model.getMaxHealth());
-        this.view.updateEnemyHealth(model.getMaxHealth());
+        this.view.updatePlayerHealth(model.getPlayerHealth());
+        this.view.updateEnemyHealth(model.getEnemyHealth());
         
         this.attachListeners();
         
@@ -63,8 +65,8 @@ public class CombatController {
      * @author kelly.applebee@studio.unibo.itc
      */
     private void redrawView(){
-        this.view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), 
-                        new Position(0, 0), true, true, 
+        this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), 
+                        this.model.getFlamePosition(), true, true, 
                         false, false, 1, 1);
     }
 
@@ -107,10 +109,13 @@ public class CombatController {
      * @author kelly.applebee@studio.unibo.it
      */
     private void handlePlayerPhysicalAttack() {
-        if (!model.isPlayerTurn() || isAnimationRunning()) return;
+        if (!model.isPlayerTurn() || isAnimationRunning()){
+            return;
+        } 
         
         this.view.setButtonsEnabled(false); // Disable buttons during animation
         this.view.clearInfo();
+        this.view.showInfo("Player Has used physical Attack")
         System.out.println("Physical Attack button clicked.");
 
         Runnable onPlayerAttackComplete = () -> {
@@ -196,7 +201,7 @@ public class CombatController {
     }
 
     private boolean isAnimationRunning() {
-         return animationTimer != null && animationTimer.isRunning();
+        return animationTimer != null && animationTimer.isRunning();
     }
 
 

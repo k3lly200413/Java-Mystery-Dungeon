@@ -42,7 +42,7 @@ public class MeleeButton implements GameButton{
      * A special move where both the attacker and target are moved in the same direction.
      * Simulates the attacker "pushing" the target back.
      * @return A list containing the new positions.
-     */
+    */
     public List<Position> moveEnemy() {
         this.enemy = new Position(this.enemy.x() + this.where, this.enemy.y());
         this.player = new Position(this.player.x() + this.where, this.player.y());
@@ -60,7 +60,7 @@ public class MeleeButton implements GameButton{
      * @param other The second position.
      * @param distance The maximum distance to be considered neighbors.
      * @return True if they are neighbors, false otherwise.
-     */
+    */
     public boolean neighbours(Position player, Position other, int distance) {
         return Math.abs(player.x() - other.x()) <= distance && Math.abs(player.y() - other.y()) <= distance;
     }
