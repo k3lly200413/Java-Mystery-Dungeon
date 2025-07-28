@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.swing.Timer;
 
+import it.unibo.progetto_oop.Combat.CommandPattern.LongRangeButton;
 import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
@@ -16,6 +17,7 @@ public class CombatController {
     private final CombatModel model;
     private final CombatView view;
     private final MeleeButton meleeCommand;
+    private final LongRangeButton longRangeCommand;
 
     private static final int ANIMATION_DELAY = 100;      //ms
     private static final int POST_ATTACK_DELAY = 500;    // ms
