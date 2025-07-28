@@ -21,6 +21,8 @@ public class CombatController {
 
     private static final int ANIMATION_DELAY = 100;      //ms
     private static final int POST_ATTACK_DELAY = 500;    // ms
+    private static final int INFO_ZOOM_DELAY = 200; // ms
+    private static final int INFO_NEXT_DRAW_DELAY = 300; // ms
 
     private Timer animationTimer;
 
@@ -331,7 +333,7 @@ public class CombatController {
         this.animationTimer.start();
     }
     
-    private int zoomerStep =0;
+    private int zoomerStep = 0;
 
     private void zoomerAnimation() {
         this.stopAnimationTimer();
@@ -339,21 +341,26 @@ public class CombatController {
 
         final Position originalEnemyPosition = this.model.getEnemyPosition();
         final int targetX= model.getSize()/2;
+        final int targetY = model.getEnemyPosition().y();;
 
         this.animationTimer = new Timer(ANIMATION_DELAY, e -> {
-            if (zoomerStep < 10) {
-                int offset = zoomerStep * 2; // Increase offset for zoom effect
-                Position newEnemyPosition = new Position(targetX + offset, originalEnemyPosition.y());
-                this.model.setEnemyPosition(newEnemyPosition);
+            if (model.getEnemyPosition().x() < targetX) {
+                stopAnimationTimer(); // Increase offset for zoom effect
+                model.setEnemyPosition(new Position(targetX, targetY));
                 this.redrawView();
-                zoomerStep++;
+                infoNextDrawAnimation(originalEnemyPosition);
             } else {
                 model.setEnemyPosition(new Position(model.getEnemyPosition().x()-1, originalEnemyPosition.y()));
-                redrawView();
+                this.redrawView();
             }
         });
         zoomerStep = 0;
         animationTimer.start();
+    }
+
+    private void infoNextDrawAnimation(Position originalEnemyPosition) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'infoNextDrawAnimation'");
     }
 
     /*private void performAttack() {
