@@ -331,6 +331,31 @@ public class CombatController {
         this.animationTimer.start();
     }
     
+    private int zoomerStep =0;
+
+    private void zoomerAnimation() {
+        this.stopAnimationTimer();
+        this.view.setButtonsEnabled(false);
+
+        final Position originalEnemyPosition = this.model.getEnemyPosition();
+        final int targetX= model.getSize()/2;
+
+        this.animationTimer = new Timer(ANIMATION_DELAY, e -> {
+            if (zoomerStep < 10) {
+                int offset = zoomerStep * 2; // Increase offset for zoom effect
+                Position newEnemyPosition = new Position(targetX + offset, originalEnemyPosition.y());
+                this.model.setEnemyPosition(newEnemyPosition);
+                this.redrawView();
+                zoomerStep++;
+            } else {
+                model.setEnemyPosition(new Position(model.getEnemyPosition().x()-1, originalEnemyPosition.y()));
+                redrawView();
+            }
+        });
+        zoomerStep = 0;
+        animationTimer.start();
+    }
+
     /*private void performAttack() {
         
         Timer playerTimer = new Timer(100, e -> {
