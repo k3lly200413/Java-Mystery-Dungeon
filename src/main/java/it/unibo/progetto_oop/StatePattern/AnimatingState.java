@@ -42,6 +42,7 @@ public class AnimatingState implements CombatState{
 
     @Override
     public void enterState(CombatController context) {
+        context.getView().showInfo("Entered Animating State!\nNo issues for now");
         System.out.println("------ Entered Animating State ------");
     }
 
