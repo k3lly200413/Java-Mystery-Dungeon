@@ -104,12 +104,6 @@ public class CombatController {
         this.view.showInfo("Enemy Info:\nName: " + this.model.getEnemyName());
     }
 
-    /**
-     * Delegates all the necessary commands to the correct files 
-     * I.E. MeleeButton
-     * 
-     * @author kelly.applebee@studio.unibo.it
-     */
     private void handlePlayerPhysicalAttack() {
         if (!model.isPlayerTurn() || isAnimationRunning()){
             return;
