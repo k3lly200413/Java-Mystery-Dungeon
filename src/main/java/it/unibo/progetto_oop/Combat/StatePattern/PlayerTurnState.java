@@ -6,8 +6,8 @@ public class PlayerTurnState implements CombatState{
 
     @Override
     public void handlePhysicalAttackInput(CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handlePhysicalAttackInput'");
+        System.out.println("Debug Log: Requested Physicaln\nCurrent State: Player Turn State");
+        // TODO: Perform Physical Attack in context
     }
 
     @Override
