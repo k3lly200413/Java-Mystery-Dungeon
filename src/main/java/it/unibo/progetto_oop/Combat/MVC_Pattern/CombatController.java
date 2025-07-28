@@ -51,7 +51,7 @@ public class CombatController {
      * Makes the main combat window visible
      */
     public void startCombat() {
-        view.display();
+        this.view.display();
     }
 
     /**
@@ -61,7 +61,7 @@ public class CombatController {
      * @author kelly.applebee@studio.unibo.itc
      */
     private void redrawView(){
-        view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), 
+        this.view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), 
                         new Position(0, 0), true, true, 
                         false, false, 1, 1);
     }
@@ -70,24 +70,24 @@ public class CombatController {
      * Uses private methods to Assing Actionlisteners to buttons inside view
      */
     private void attachListeners() {
-        view.addAttackButtonListener(e -> handleAttackMenu());
-        view.addPhysicalButtonListener(e -> handlePlayerPhysicalAttack());
-        view.addLongRangeButtonListener(e -> handlePlayerLongRangeAttack(false));
-        view.addPoisonButtonListener(e -> handlePlayerLongRangeAttack(true));
-        view.addBackButtonListener(e -> handleBackToMainMenu());
-        view.addInfoButtonListener(e -> handleInfo());
-        view.addBagButtonListener(e -> System.out.println("Bag clicked - Not Yet Implemented"));
-        view.addRunButtonListener(e -> System.out.println("Run clicked - Not Yet Implemented"));
+        this.view.addAttackButtonListener(e -> handleAttackMenu());
+        this.view.addPhysicalButtonListener(e -> handlePlayerPhysicalAttack());
+        this.view.addLongRangeButtonListener(e -> handlePlayerLongRangeAttack(false));
+        this.view.addPoisonButtonListener(e -> handlePlayerLongRangeAttack(true));
+        this.view.addBackButtonListener(e -> handleBackToMainMenu());
+        this.view.addInfoButtonListener(e -> handleInfo());
+        this.view.addBagButtonListener(e -> System.out.println("Bag clicked - Not Yet Implemented"));
+        this.view.addRunButtonListener(e -> System.out.println("Run clicked - Not Yet Implemented"));
     }
 
     private void handleAttackMenu() {
         System.out.println("Attack Menu button clicked.");
-        view.showAttackOptions(); // Show the attack sub-menu
+        this.view.showAttackOptions(); // Show the attack sub-menu
     }
 
     private void handleBackToMainMenu() {
         System.out.println("Back button clicked.");
-        view.showOriginalButtons(); // Go back to the main menu
+        this.view.showOriginalButtons(); // Go back to the main menu
     }
 
     private void handleInfo() {
@@ -107,14 +107,14 @@ public class CombatController {
     private void handlePlayerPhysicalAttack() {
         if (!model.isPlayerTurn() || isAnimationRunning()) return;
         
-        view.setButtonsEnabled(false); // Disable buttons during animation
-        view.clearInfo();
+        this.view.setButtonsEnabled(false); // Disable buttons during animation
+        this.view.clearInfo();
         System.out.println("Physical Attack button clicked.");
 
         Runnable onPlayerAttackComplete = () -> {
             // We will add logic here later for game over checks and the enemy's turn
             System.out.println("Animation complete! Next up: enemy turn.");
-            view.setButtonsEnabled(true); // Re-enable buttons for now
+            this.view.setButtonsEnabled(true); // Re-enable buttons for now
         };
 
         animatePhysicalMove(
@@ -137,7 +137,7 @@ public class CombatController {
             return;
         }
         this.view.setButtonsEnabled(false);
-        view.clearInfo();
+        this.view.clearInfo();
         this.view.showInfo(applyPoison ? "Player uses poison!" : "Player uses long range attack!");
         
         this.longRangeAttackAnimation(applyPoison, () -> {
@@ -155,15 +155,15 @@ public class CombatController {
     }
 
     private void longRangeAttackAnimation(boolean isPoison, Runnable onHit) {
-        stopAnimationTimer();
-        model.setFlamePosition(model.getPlayerPosition()); // Start flame at player
+        this.stopAnimationTimer();
+        this.model.setFlamePosition(this.model.getPlayerPosition()); // Start flame at player
 
         animationTimer = new Timer(ANIMATION_DELAY, e -> {
             // Check if flame reached the enemy
-            if (model.getFlamePosition().x() >= model.getEnemyPosition().x() - 1) {
-                stopAnimationTimer();
-                model.setFlamePosition(model.getPlayerPosition()); // Reset flame position
-                view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), model.getFlamePosition(), true, true, false, false, 1, 1);
+            if (this.model.getFlamePosition().x() >= this.model.getEnemyPosition().x() - 1) {
+                this.stopAnimationTimer();
+                this.model.setFlamePosition(this.model.getPlayerPosition()); // Reset flame position
+                this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getFlamePosition(), true, true, false, false, 1, 1);
                 if (onHit != null) {
                     onHit.run();
                 }
@@ -171,12 +171,12 @@ public class CombatController {
             }
 
             // Move flame forward using the command
-            longRangeCommand.setAttributes(model.getFlamePosition(), 1);
+            longRangeCommand.setAttributes(this.model.getFlamePosition(), 1);
             Position nextFlamePos = longRangeCommand.execute().get(0);
-            model.setFlamePosition(nextFlamePos);
+            this.model.setFlamePosition(nextFlamePos);
 
             // Redraw showing the projectile
-            view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), model.getFlamePosition(), true, true, !isPoison, isPoison, 1, 1);
+            this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getFlamePosition(), true, true, !isPoison, isPoison, 1, 1);
         });
         animationTimer.start();
     }
@@ -205,7 +205,7 @@ public class CombatController {
         int attackPower, 
         Runnable onComplete) {
         // TODO: Add javaDoc and comments I'm to tired at this point
-        stopAnimationTimer();
+        this.stopAnimationTimer();
 
         final int moveDirection = isPlayerAttacker ? 1 : -1;
         final int returnDirection = -moveDirection;
@@ -218,33 +218,33 @@ public class CombatController {
         final boolean[] damageApplied = {false};
 
         if (isPlayerAttacker) {
-            model.setPlayerPosition(currentAttackerPos[0]);
-            model.setEnemyPosition(currentTargetPos[0]);
+            this.model.setPlayerPosition(currentAttackerPos[0]);
+            this.model.setEnemyPosition(currentTargetPos[0]);
         } else {
-            model.setPlayerPosition(currentTargetPos[0]); 
-            model.setEnemyPosition(currentAttackerPos[0]); 
+            this.model.setPlayerPosition(currentTargetPos[0]); 
+            this.model.setEnemyPosition(currentAttackerPos[0]); 
         }
 
-        animationTimer = new Timer(ANIMATION_DELAY, null);
-        animationTimer.addActionListener(event -> {
+        this.animationTimer = new Timer(ANIMATION_DELAY, null);
+        this.animationTimer.addActionListener(event -> {
 
             Position nextAttackerPos = currentAttackerPos[0];
             Position nextTargetPos = currentTargetPos[0];
 
             // --- State Logic ---
             if (state[0] == 0) { 
-                meleeCommand.setAttributes(currentAttackerPos[0], currentTargetPos[0], moveDirection, meleeCheckDistance);
-                List<Position> result = meleeCommand.execute(); 
+                this.meleeCommand.setAttributes(currentAttackerPos[0], currentTargetPos[0], moveDirection, meleeCheckDistance);
+                List<Position> result = this.meleeCommand.execute(); 
                 nextAttackerPos = result.get(0);
                 nextTargetPos = result.get(1); 
 
-                if (meleeCommand.neighbours(nextAttackerPos, nextTargetPos, meleeCheckDistance) || !nextTargetPos.equals(currentTargetPos[0])) {
+                if (this.meleeCommand.neighbours(nextAttackerPos, nextTargetPos, meleeCheckDistance) || !nextTargetPos.equals(currentTargetPos[0])) {
                     state[0] = 1; 
                 } else if (!nextAttackerPos.equals(currentAttackerPos[0])) {
 
                 } else {
 
-                    if (meleeCommand.neighbours(nextAttackerPos, nextTargetPos, meleeCheckDistance + 1)) { // Check slightly wider range
+                    if (this.meleeCommand.neighbours(nextAttackerPos, nextTargetPos, meleeCheckDistance + 1)) { // Check slightly wider range
                         state[0] = 1;
                     } else {
 
@@ -258,21 +258,23 @@ public class CombatController {
             } else if (state[0] == 1) { 
                 if (!damageApplied[0]) {
                 if (isPlayerAttacker) {
-                        model.decreaseEnemyHealth(attackPower);
-                        view.updateEnemyHealth(model.getEnemyHealth());
+                        this.model.decreaseEnemyHealth(attackPower);
+                        this.view.updateEnemyHealth(this.model.getEnemyHealth());
                     } else {
-                        model.decreasePlayerHealth(attackPower);
-                        view.updatePlayerHealth(model.getPlayerHealth());
+                        this.model.decreasePlayerHealth(attackPower);
+                        this.view.updatePlayerHealth(this.model.getPlayerHealth());
                     }
                     damageApplied[0] = true;
 
                     if(checkGameOver()) {
-                        stopAnimationTimer(); 
+                        this.stopAnimationTimer(); 
 
-                        if (isPlayerAttacker) model.setEnemyPosition(currentTargetPos[0]);
-                        else model.setPlayerPosition(currentTargetPos[0]);
-
-                        return;
+                        if (isPlayerAttacker){
+                            this.model.setEnemyPosition(currentTargetPos[0]);
+                        } else {
+                            this.model.setPlayerPosition(currentTargetPos[0]);
+                            return;
+                        }
                     }
                 }
 
@@ -284,18 +286,18 @@ public class CombatController {
 
             } else { 
                 if (currentAttackerPos[0].x() == attackerStartPos.x()) { 
-                    stopAnimationTimer();
+                    this.stopAnimationTimer();
 
                     currentAttackerPos[0] = attackerStartPos;
 
                     if (isPlayerAttacker) {
-                        model.setPlayerPosition(currentAttackerPos[0]);
-                        model.setEnemyPosition(currentTargetPos[0]);
+                        this.model.setPlayerPosition(currentAttackerPos[0]);
+                        this.model.setEnemyPosition(currentTargetPos[0]);
                     } else {
-                        model.setPlayerPosition(currentTargetPos[0]); 
-                        model.setEnemyPosition(currentAttackerPos[0]); 
+                        this.model.setPlayerPosition(currentTargetPos[0]); 
+                        this.model.setEnemyPosition(currentAttackerPos[0]); 
                     }
-                    redrawView(); 
+                    this.redrawView(); 
 
                     if (onComplete != null) {
                         onComplete.run();
@@ -310,17 +312,17 @@ public class CombatController {
             }
 
             if (isPlayerAttacker) {
-                model.setPlayerPosition(currentAttackerPos[0]);
-                model.setEnemyPosition(currentTargetPos[0]);
+                this.model.setPlayerPosition(currentAttackerPos[0]);
+                this.model.setEnemyPosition(currentTargetPos[0]);
             } else {
-                model.setPlayerPosition(currentTargetPos[0]); 
-                model.setEnemyPosition(currentAttackerPos[0]); 
+                this.model.setPlayerPosition(currentTargetPos[0]); 
+                this.model.setEnemyPosition(currentAttackerPos[0]); 
             }
 
-            redrawView(); 
+            this.redrawView(); 
 
         });
-        animationTimer.start();
+        this.animationTimer.start();
     }
     
     /*private void performAttack() {
