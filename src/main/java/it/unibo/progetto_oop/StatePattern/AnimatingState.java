@@ -39,5 +39,17 @@ public class AnimatingState implements CombatState{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleRunInput'");
     }
+
+    @Override
+    public void enterState(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'enterState'");
+    }
+
+    @Override
+    public void exitState(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'extiState'");
+    }
     
 }
