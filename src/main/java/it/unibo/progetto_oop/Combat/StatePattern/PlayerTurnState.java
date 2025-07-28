@@ -42,14 +42,16 @@ public class PlayerTurnState implements CombatState{
 
     @Override
     public void enterState(CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'enterState'");
+        context.getView().setButtonsEnabled(true);
+        context.getView().showOriginalButtons();
+        context.getView().showInfo("Your Turn!");
+        System.out.println("------ Entering Player Turn State ------");
     }
 
     @Override
     public void exitState(CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'extiState'");
+        System.out.println("------ Exiting Player Turn State ------");
+        context.getView().clearInfo();
     }
     
 }
