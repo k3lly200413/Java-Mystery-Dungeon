@@ -93,7 +93,7 @@ public class CombatController {
 
     private void handleBackToMainMenu() {
         System.out.println("Back button clicked.");
-        this.view.showOriginalButtons(); // Go back to the main menu
+        view.showOriginalButtons(); // Go back to the main menu
     }
 
     private void handleInfo() {
@@ -139,15 +139,35 @@ public class CombatController {
 
     private void startDelayedEnemyTurn(int delay) {
         Timer enemyTurnDelayTimer = new Timer(delay,e -> {
-            enemyTrun();
+            enemyTurn();
         });
         enemyTurnDelayTimer.setRepeats(false); //ensure it only runs once
         enemyTurnDelayTimer.start();
     }
 
-    private void enemyTrun() {
+    private void enemyTurn() {
         model.setPlayerTurn(false);
         view.showInfo("Enemy attacks!");
+
+        // Enemy attacks player
+        Runnable onEnemyAttackComplete = () -> {
+            if(checkGameOver()) return; // Check if player was defeated
+
+            model.setPlayerTurn(true);
+            view.setButtonsEnabled(true);
+            view.showInfo("Player's turn!");
+            view.showOriginalButtons();
+        };
+        
+        // Simple AI: The enemy always uses a physical attack.
+        // We re-use the same animation engine, just with the roles reversed.
+        animatePhysicalMove(
+                model.getEnemyPosition(),
+                model.getPlayerPosition(),
+                false, // isPlayerAttacker
+                model.getEnemyPower(),
+                onEnemyAttackComplete
+        );
     }
 
     /**
@@ -360,16 +380,16 @@ public class CombatController {
 
         final Position originalEnemyPosition = this.model.getEnemyPosition();
         final int targetX= model.getSize()/2;
-        final int targetY = model.getEnemyPosition().y();;
+        final int targetY = model.getEnemyPosition().y();
 
-        this.animationTimer = new Timer(ANIMATION_DELAY, e -> {
-            if (model.getEnemyPosition().x() < targetX) {
+        this.animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
+            if (model.getEnemyPosition().x() <= targetX) {
                 stopAnimationTimer(); // Increase offset for zoom effect
                 model.setEnemyPosition(new Position(targetX, targetY));
                 this.redrawView();
                 infoNextDrawAnimation(originalEnemyPosition);
             } else {
-                model.setEnemyPosition(new Position(model.getEnemyPosition().x()-1, originalEnemyPosition.y()));
+                model.setEnemyPosition(new Position(model.getEnemyPosition().x()-1, model.getEnemyPosition().y()));
                 this.redrawView();
             }
         });
@@ -380,7 +400,7 @@ public class CombatController {
     private void infoNextDrawAnimation(Position originalEnemyPosition) {
         stopAnimationTimer();
 
-        animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
+        animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, e -> {
             zoomerStep++;
             if (zoomerStep >= 6) {
                 stopAnimationTimer();
@@ -391,6 +411,7 @@ public class CombatController {
                 this.view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), true, true, false, false, 1, zoomerStep);
             }
         });
+        animationTimer.start();
     }
 
     private void applyPostTurnEffects() {
@@ -406,7 +427,7 @@ public class CombatController {
             stopAnimationTimer();
             view.setButtonsEnabled(false);
             String winner = model.getPlayerHealth() <= 0 ? "Enemy" : "Player";
-            view.showInfo("Game Over! "+winner+"wins!");
+            view.showInfo("Game Over! "+winner+" wins!");
             return true;
         }
         return false;
