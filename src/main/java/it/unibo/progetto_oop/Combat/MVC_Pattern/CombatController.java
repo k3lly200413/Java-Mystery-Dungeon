@@ -104,13 +104,11 @@ public class CombatController {
         this.view.showInfo("Enemy Info:\nName: " + this.model.getEnemyName());
     }
 
-    /**
-     * Delegates all the necessary commands to the correct files 
-     * I.E. MeleeButton
-     * 
-     * @author kelly.applebee@studio.unibo.it
-     */
     private void handlePlayerPhysicalAttack() {
+        // call playerturnstate and have it run performPlayerphysical Attack
+    }
+
+    public void performPlayerPhysicalAttack() {
         if (!model.isPlayerTurn() || isAnimationRunning()){
             return;
         } 
@@ -123,8 +121,6 @@ public class CombatController {
         Runnable onPlayerAttackComplete = () -> {
             applyPostTurnEffects();
             if (checkGameOver()) return; //Check if enemy was defeated
-            
-
             startDelayedEnemyTurn(POST_ATTACK_DELAY);
         };
 
