@@ -374,6 +374,14 @@ public class CombatController {
         });
     }
 
+    private void applyPostTurnEffects() {
+        if (model.isEnemyPoisoned() && model.getEnemyHealth() > 0){
+            view.showInfo("Enemy take oison damage!");
+            model.decreaseEnemyHealth(model.getPlayerPoisonPower());
+            view.updateEnemyHealth(model.getEnemyHealth());
+        }
+    }
+
     /*private void performAttack() {
         
         Timer playerTimer = new Timer(100, e -> {
