@@ -1,7 +1,6 @@
 package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
 import javax.swing.BorderFactory;
-// import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -28,6 +27,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
+
+// TODO: Implement methods necessary to Controller
 
 public class CombatView extends JFrame{
 
