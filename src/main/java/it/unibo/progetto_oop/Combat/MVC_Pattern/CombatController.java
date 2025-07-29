@@ -68,10 +68,18 @@ public class CombatController {
      * 
      * @author kelly.applebee@studio.unibo.itc
      */
-    private void redrawView(){
+    public void redrawView(){
         this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), 
                         this.model.getAttackPosition(), true, true, 
                         false, false, 1, 1);
+    }
+
+    public void redrawView(Position palyerPos, Position enemyPos, Position flamePos, 
+                            boolean drawPlayer, boolean drawEnemy, boolean drawFlame, 
+                            boolean drawPoison, int playerRange, int enemyRange) {
+        this.view.redrawGrid(   palyerPos, enemyPos, 
+                                flamePos, drawPlayer, drawEnemy, 
+                                drawFlame, drawPoison, playerRange, enemyRange);
     }
 
     /**
