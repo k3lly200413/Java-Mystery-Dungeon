@@ -6,6 +6,10 @@ public class PlayerTurnState implements CombatState{
 
     @Override
     public void handlePhysicalAttackInput(CombatController context) {
+        // TODO: Call controller and have it change state to animating state so this can be all done during the animation
+        context.getView().setButtonsEnabled(false); // Disable buttons during animation
+        context.getView().clearInfo();
+        context.getView().showInfo("Player Has used physical Attack");
         System.out.println("Debug Log: Requested Physicaln\nCurrent State: Player Turn State");
         context.performPlayerPhysicalAttack();
     }

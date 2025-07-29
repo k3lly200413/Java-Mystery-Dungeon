@@ -117,12 +117,6 @@ public class CombatController {
         if (!model.isPlayerTurn() || isAnimationRunning()){
             return;
         } 
-        
-        this.view.setButtonsEnabled(false); // Disable buttons during animation
-        this.view.clearInfo();
-        this.view.showInfo("Player Has used physical Attack");
-        System.out.println("Physical Attack button clicked.");
-
         Runnable onPlayerAttackComplete = () -> {
             applyPostTurnEffects();
             if (checkGameOver()) return; //Check if enemy was defeated
