@@ -177,13 +177,19 @@ public class CombatController {
         );
     }
 
+    private void handlePlayerLongRangeAttack(boolean applyPoison){
+        CombatState playerState = new PlayerTurnState();
+        playerState.enterState(this);
+        playerState.handleLongRangeAttackInput(this, applyPoison);
+    }
+
     /**
      * Handler for Generic Long range attack
      * @param applyPoison   boolean to tell controller wether to apply poison to target or not 
      * 
      * @author kelly.applebee@studio.unibo.it
      */
-    private void handlePlayerLongRangeAttack(boolean applyPoison) {
+    public void performPlayerLongRangeAttack(boolean applyPoison) {
         if (!this.model.isPlayerTurn() || this.isAnimationRunning()) {
             return;
         }
@@ -193,20 +199,21 @@ public class CombatController {
         
         this.longRangeAttackAnimation(applyPoison, () -> {
             this.model.decreaseEnemyHealth(model.getPlayerPower());
-        if (applyPoison){
-            this.model.setEnemyPoisoned(true);
-            this.view.showInfo("Enemy is Poisoned!");
-        }
-        });
-
-        this.view.updateEnemyHealth(this.model.getEnemyHealth());
+            if (applyPoison){
+                this.model.setEnemyPoisoned(true);
+                this.view.showInfo("Enemy is Poisoned!");
+            }
+            this.view.updateEnemyHealth(this.model.getEnemyHealth());
         
-        applyPostTurnEffects();
+            applyPostTurnEffects();
 
-        if(checkGameOver()){return; }
+            if(checkGameOver()){
+                return; 
+            }
 
-        this.startDelayedEnemyTurn(POST_ATTACK_DELAY);
-        this.redrawView();
+            this.startDelayedEnemyTurn(POST_ATTACK_DELAY);
+            this.redrawView();
+        });
     }
 
     private void longRangeAttackAnimation(boolean isPoison, Runnable onHit) {
