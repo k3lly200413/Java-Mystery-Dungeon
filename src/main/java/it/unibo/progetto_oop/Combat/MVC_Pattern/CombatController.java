@@ -186,20 +186,18 @@ public class CombatController {
         
         this.longRangeAttackAnimation(applyPoison, () -> {
             this.model.decreaseEnemyHealth(model.getPlayerPower());
-        if (applyPoison){
-            this.model.setEnemyPoisoned(true);
-            this.view.showInfo("Enemy is Poisoned!");
-        }
-        });
-
-        this.view.updateEnemyHealth(this.model.getEnemyHealth());
+            if (applyPoison){
+                this.model.setEnemyPoisoned(true);
+                this.view.showInfo("Enemy is Poisoned!");
+            }
+            this.applyPostTurnEffects();
+            this.view.updateEnemyHealth(this.model.getEnemyHealth());
         
-        applyPostTurnEffects();
+            if(checkGameOver()){return; }
 
-        if(checkGameOver()){return; }
-
-        this.startDelayedEnemyTurn(POST_ATTACK_DELAY);
-        this.redrawView();
+            this.startDelayedEnemyTurn(POST_ATTACK_DELAY);
+            this.redrawView();
+        });
     }
 
     private void longRangeAttackAnimation(boolean isPoison, Runnable onHit) {
@@ -208,7 +206,7 @@ public class CombatController {
 
         animationTimer = new Timer(ANIMATION_DELAY, e -> {
             // Check if flame reached the enemy
-            if (this.model.getAttackPosition().x() >= this.model.getEnemyPosition().x() - 1) {
+            if (this.model.getAttackPosition().x() >= this.model.getEnemyPosition().x() - 2) {
                 this.stopAnimationTimer();
                 this.model.setAttackPosition(this.model.getPlayerPosition()); // Reset flame position
                 this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), true, true, false, false, 1, 1);
