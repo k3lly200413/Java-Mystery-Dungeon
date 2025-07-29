@@ -181,20 +181,21 @@ public class CombatController {
         
         this.longRangeAttackAnimation(applyPoison, () -> {
             this.model.decreaseEnemyHealth(model.getPlayerPower());
-        if (applyPoison){
-            this.model.setEnemyPoisoned(true);
-            this.view.showInfo("Enemy is Poisoned!");
-        }
-        });
-
-        this.view.updateEnemyHealth(this.model.getEnemyHealth());
+            if (applyPoison){
+                this.model.setEnemyPoisoned(true);
+                this.view.showInfo("Enemy is Poisoned!");
+            }
+            this.view.updateEnemyHealth(this.model.getEnemyHealth());
         
-        applyPostTurnEffects();
+            applyPostTurnEffects();
 
-        if(checkGameOver()){return; }
+            if(checkGameOver()){
+                return; 
+            }
 
-        this.startDelayedEnemyTurn(POST_ATTACK_DELAY);
-        this.redrawView();
+            this.startDelayedEnemyTurn(POST_ATTACK_DELAY);
+            this.redrawView();
+        });
     }
 
     private void longRangeAttackAnimation(boolean isPoison, Runnable onHit) {
