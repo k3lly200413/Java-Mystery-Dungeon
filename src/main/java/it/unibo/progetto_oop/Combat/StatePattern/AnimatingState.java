@@ -1,8 +1,10 @@
-package it.unibo.progetto_oop.StatePattern;
+package it.unibo.progetto_oop.Combat.StatePattern;
 
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 
-public class PlayerTurnState implements CombatState{
+public class AnimatingState implements CombatState{
+
+    private final boolean playerTurn = true;
 
     @Override
     public void handlePhysicalAttackInput(CombatController context) {
@@ -42,14 +44,22 @@ public class PlayerTurnState implements CombatState{
 
     @Override
     public void enterState(CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'enterState'");
+        context.getView().showInfo("Entered Animating State!\nNo issues for now");
+        System.out.println("------ Entered Animating State ------");
+        context.getView().setButtonsEnabled(false);
     }
 
     @Override
     public void exitState(CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'exitState'");
+        System.out.println("------ Exeting Animating State ------");
+        if (context.getModel().isPlayerTurn()) {
+            context.getModel().setPlayerTurn(!this.playerTurn);
+        }
+        else{
+            context.getModel().setPlayerTurn(this.playerTurn);
+            // TODO: implement setState in Controller
+            // context.setState(new PlayerturnState())
+        }
     }
     
 }
