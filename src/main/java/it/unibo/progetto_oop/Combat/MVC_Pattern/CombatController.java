@@ -71,15 +71,16 @@ public class CombatController {
     public void redrawView(){
         this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), 
                         this.model.getAttackPosition(), true, true, 
-                        false, false, 1, 1);
+                        false, false, 1, 1, false, model.getPlayerPosition());
     }
 
     public void redrawView(Position palyerPos, Position enemyPos, Position flamePos, 
                             boolean drawPlayer, boolean drawEnemy, boolean drawFlame, 
-                            boolean drawPoison, int playerRange, int enemyRange) {
+                            boolean drawPoison, int playerRange, int enemyRange, boolean isGameOver, Position whoDied) {
         this.view.redrawGrid(   palyerPos, enemyPos, 
                                 flamePos, drawPlayer, drawEnemy, 
-                                drawFlame, drawPoison, playerRange, enemyRange);
+                                drawFlame, drawPoison, playerRange, enemyRange,
+                                isGameOver, whoDied);
     }
 
     /**
@@ -234,7 +235,7 @@ public class CombatController {
             if (this.model.getAttackPosition().x() >= this.model.getEnemyPosition().x() - 2) {
                 this.stopAnimationTimer();
                 this.model.setAttackPosition(this.model.getPlayerPosition()); // Reset flame position
-                this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), true, true, false, false, 1, 1);
+                this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), true, true, false, false, 1, 1, false, model.getPlayerPosition());
                 if (onHit != null) {
                     onHit.run();
                 }
@@ -246,7 +247,7 @@ public class CombatController {
             Position nextFlamePos = longRangeCommand.execute().get(0);
             this.model.setAttackPosition(nextFlamePos);
             // Redraw showing the projectile
-            this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), true, true, !isPoison, isPoison, 1, 1);
+            this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), true, true, !isPoison, isPoison, 1, 1, false, model.getPlayerPosition());
         });
         animationTimer.start();
     }
@@ -431,7 +432,7 @@ public class CombatController {
                 redrawView();
                 this.view.setButtonsEnabled(true);
             } else {
-                this.view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), true, true, false, false, 1, zoomerStep);
+                this.view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), true, true, false, false, 1, zoomerStep, false, model.getPlayerPosition());
             }
         });
         animationTimer.start();
