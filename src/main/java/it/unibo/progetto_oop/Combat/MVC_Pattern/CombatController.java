@@ -99,6 +99,12 @@ public class CombatController {
     }
 
     private void handleInfo() {
+        CombatState newState = new PlayerTurnState();
+        newState.enterState(this);
+        newState.handleInfoInput(this);
+    }
+
+    public void performInfo() {
         if (!this.model.isPlayerTurn()) {
             return;
         }

@@ -22,8 +22,7 @@ public class PlayerTurnState implements CombatState{
 
     @Override
     public void handleInfoInput(CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleInfoInput'");
+        context.performInfo();
     }
 
     @Override
