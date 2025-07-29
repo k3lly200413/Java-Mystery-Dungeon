@@ -7,6 +7,8 @@ import javax.swing.Timer;
 import it.unibo.progetto_oop.Combat.CommandPattern.LongRangeButton;
 import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
 import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.Combat.StatePattern.CombatState;
+import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
 
 /**
  * Controller class in Model View Controller Pattern
@@ -92,11 +94,23 @@ public class CombatController {
     }
 
     private void handleBackToMainMenu() {
+        CombatState newState = new PlayerTurnState();
+        newState.enterState(this);
+        newState.handleBackInput(this);
+    }
+
+    public void performBackToMainMenu() {
         System.out.println("Back button clicked.");
         view.showOriginalButtons(); // Go back to the main menu
     }
 
     private void handleInfo() {
+        CombatState newState = new PlayerTurnState();
+        newState.enterState(this);
+        newState.handleInfoInput(this);
+    }
+
+    public void performInfo() {
         if (!this.model.isPlayerTurn()) {
             return;
         }
@@ -104,27 +118,20 @@ public class CombatController {
         this.view.showInfo("Enemy Info:\nName: " + this.model.getEnemyName());
     }
 
-    /**
-     * Delegates all the necessary commands to the correct files 
-     * I.E. MeleeButton
-     * 
-     * @author kelly.applebee@studio.unibo.it
-     */
     private void handlePlayerPhysicalAttack() {
+        CombatState newState = new PlayerTurnState();
+        newState.enterState(this);
+        newState.handlePhysicalAttackInput(this);
+        // call playerturnstate and have it run performPlayerphysical Attack
+    }
+
+    public void performPlayerPhysicalAttack() {
         if (!model.isPlayerTurn() || isAnimationRunning()){
             return;
         } 
-        
-        this.view.setButtonsEnabled(false); // Disable buttons during animation
-        this.view.clearInfo();
-        this.view.showInfo("Player Has used physical Attack");
-        System.out.println("Physical Attack button clicked.");
-
         Runnable onPlayerAttackComplete = () -> {
             applyPostTurnEffects();
             if (checkGameOver()) return; //Check if enemy was defeated
-            
-
             startDelayedEnemyTurn(POST_ATTACK_DELAY);
         };
 
@@ -170,13 +177,19 @@ public class CombatController {
         );
     }
 
+    private void handlePlayerLongRangeAttack(boolean applyPoison){
+        CombatState playerState = new PlayerTurnState();
+        playerState.enterState(this);
+        playerState.handleLongRangeAttackInput(this, applyPoison);
+    }
+
     /**
      * Handler for Generic Long range attack
      * @param applyPoison   boolean to tell controller wether to apply poison to target or not 
      * 
      * @author kelly.applebee@studio.unibo.it
      */
-    private void handlePlayerLongRangeAttack(boolean applyPoison) {
+    public void performPlayerLongRangeAttack(boolean applyPoison) {
         if (!this.model.isPlayerTurn() || this.isAnimationRunning()) {
             return;
         }
@@ -186,14 +199,19 @@ public class CombatController {
         
         this.longRangeAttackAnimation(applyPoison, () -> {
             this.model.decreaseEnemyHealth(model.getPlayerPower());
-            if (applyPoison){
-                this.model.setEnemyPoisoned(true);
-                this.view.showInfo("Enemy is Poisoned!");
-            }
-            this.applyPostTurnEffects();
-            this.view.updateEnemyHealth(this.model.getEnemyHealth());
+        if (applyPoison){
+            this.model.setEnemyPoisoned(true);
+            this.view.showInfo("Enemy is Poisoned!");
+        }
+        });
+
+        this.view.updateEnemyHealth(this.model.getEnemyHealth());
         
-            if(checkGameOver()){return; }
+        applyPostTurnEffects();
+
+        if(checkGameOver()){
+            return; 
+        }
 
             this.startDelayedEnemyTurn(POST_ATTACK_DELAY);
             this.redrawView();
@@ -412,7 +430,7 @@ public class CombatController {
         animationTimer.start();
     }
 
-    private void applyPostTurnEffects() {
+    public void applyPostTurnEffects() {
         if (model.isEnemyPoisoned() && model.getEnemyHealth() > 0){
             view.showInfo("Enemy take oison damage!");
             model.decreaseEnemyHealth(model.getPlayerPoisonPower());
@@ -420,7 +438,7 @@ public class CombatController {
         }
     }
 
-    private boolean checkGameOver(){
+    public boolean checkGameOver(){
         if (model.isGameOver()) {
             stopAnimationTimer();
             view.setButtonsEnabled(false);

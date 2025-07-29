@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.StatePattern;
+package it.unibo.progetto_oop.Combat.StatePattern;
 
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 
@@ -12,5 +12,7 @@ public interface CombatState {
 
     void enterState(CombatController context);
     void exitState(CombatController context);
+
+    void handleAnimationComplete(CombatController context);
 
 }
