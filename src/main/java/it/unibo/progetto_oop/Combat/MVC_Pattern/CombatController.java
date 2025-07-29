@@ -94,6 +94,12 @@ public class CombatController {
     }
 
     private void handleBackToMainMenu() {
+        CombatState newState = new PlayerTurnState();
+        newState.enterState(this);
+        newState.handleBackInput(this);
+    }
+
+    public void performBackToMainMenu() {
         System.out.println("Back button clicked.");
         view.showOriginalButtons(); // Go back to the main menu
     }

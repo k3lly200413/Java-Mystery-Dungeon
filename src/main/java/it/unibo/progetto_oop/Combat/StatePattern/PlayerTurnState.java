@@ -27,8 +27,7 @@ public class PlayerTurnState implements CombatState{
 
     @Override
     public void handleBackInput(CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleBackInput'");
+        context.performBackToMainMenu();
     }
 
     @Override
