@@ -1,6 +1,8 @@
 package it.unibo.progetto_oop.Combat.StatePattern;
 
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
+import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
+import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatView;
 
 public class AnimatingState implements CombatState{
 
@@ -64,8 +66,30 @@ public class AnimatingState implements CombatState{
 
     @Override
     public void handleAnimationComplete(CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleAnimationComplete'");
+        System.out.println("Debug: Requested Handle Animation Complete");
+        
+        CombatModel model = context.getModel();
+        
+        boolean wasPlayerTurn = !model.isPlayerTurn();
+
+        if (context.checkGameOver()) {
+            // Create gameOverState
+            return;
+        }
+
+        else if (wasPlayerTurn) {
+            context.applyPostTurnEffects();
+        }
+
+        if (wasPlayerTurn) {
+            model.setPlayerTurn(this.playerTurn);
+            // Add EnemyTurnState
+        }
+        else {
+            model.setPlayerTurn(!this.playerTurn);
+            // Add setState to call PlayerturnState       
+        }
+    
     }
     
 }
