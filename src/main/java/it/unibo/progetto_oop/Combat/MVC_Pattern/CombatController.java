@@ -7,6 +7,8 @@ import javax.swing.Timer;
 import it.unibo.progetto_oop.Combat.CommandPattern.LongRangeButton;
 import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
 import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.Combat.StatePattern.CombatState;
+import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
 
 /**
  * Controller class in Model View Controller Pattern
@@ -105,6 +107,9 @@ public class CombatController {
     }
 
     private void handlePlayerPhysicalAttack() {
+        CombatState newState = new PlayerTurnState();
+        newState.enterState(this);
+        newState.handlePhysicalAttackInput(this);
         // call playerturnstate and have it run performPlayerphysical Attack
     }
 
