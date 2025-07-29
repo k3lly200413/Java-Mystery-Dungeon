@@ -13,4 +13,6 @@ public interface CombatState {
     void enterState(CombatController context);
     void exitState(CombatController context);
 
+    void handleAnimationComplete(CombatController context);
+
 }

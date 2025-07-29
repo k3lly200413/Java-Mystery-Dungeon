@@ -428,7 +428,7 @@ public class CombatController {
         animationTimer.start();
     }
 
-    private void applyPostTurnEffects() {
+    public void applyPostTurnEffects() {
         if (model.isEnemyPoisoned() && model.getEnemyHealth() > 0){
             view.showInfo("Enemy take oison damage!");
             model.decreaseEnemyHealth(model.getPlayerPoisonPower());
@@ -436,7 +436,7 @@ public class CombatController {
         }
     }
 
-    private boolean checkGameOver(){
+    public boolean checkGameOver(){
         if (model.isGameOver()) {
             stopAnimationTimer();
             view.setButtonsEnabled(false);

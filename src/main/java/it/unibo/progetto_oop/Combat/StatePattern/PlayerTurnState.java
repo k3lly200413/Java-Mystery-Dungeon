@@ -59,5 +59,11 @@ public class PlayerTurnState implements CombatState{
         System.out.println("------ Exiting Player Turn State ------");
         context.getView().clearInfo();
     }
+
+    @Override
+    public void handleAnimationComplete(CombatController context){
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleAnimationComplete'");
+    }
     
 }
