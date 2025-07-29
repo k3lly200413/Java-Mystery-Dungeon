@@ -64,5 +64,33 @@ public class MeleeButton implements GameButton{
     public boolean neighbours(Position player, Position other, int distance) {
         return Math.abs(player.x() - other.x()) <= distance && Math.abs(player.y() - other.y()) <= distance;
     }
+
+    /**
+     * Method used to display death of a character
+     * 
+     * @param player Center of dead player
+     * @param other points we want to display
+     * @param distance distance from center of dead character
+     * @return true if all checks are true, false otherwise
+     * 
+     * 
+     * eg.
+     * °°°
+     * °°°      Normal character
+     * °°°
+     * 
+     * ° ° °
+     * ° ° °    Dead character
+     * ° ° °
+     * 
+    */
+
+    public boolean deathNeighbours(Position player, Position other, int distance){
+        return 
+        (Math.abs(player.x() - other.x()) == distance && Math.abs(player.y() - other.y()) == distance) || 
+        (Math.abs(player.x() - other.x()) == distance && player.y() == other.y()) ||
+        (player.x() == other.x() && Math.abs(player.y() - other.y()) == distance) ||
+        (player.x() == other.x() && other.y() == player.y());
+    }
     
 }
