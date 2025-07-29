@@ -61,5 +61,11 @@ public class AnimatingState implements CombatState{
             // context.setState(new PlayerturnState())
         }
     }
+
+    @Override
+    public void handleAnimationComplete(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleAnimationComplete'");
+    }
     
 }

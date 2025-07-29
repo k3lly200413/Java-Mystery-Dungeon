@@ -51,5 +51,11 @@ public class PlayerTurnState implements CombatState{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'exitState'");
     }
+
+    @Override
+    public void handleAnimationComplete(CombatController context){
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleAnimationComplete'");
+    }
     
 }
