@@ -1,6 +1,7 @@
 package it.unibo.progetto_oop.Combat.StatePattern;
 
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
+import it.unibo.progetto_oop.Combat.PotionStrategy.CurePoison;
 
 public class PlayerTurnState implements CombatState{
 
