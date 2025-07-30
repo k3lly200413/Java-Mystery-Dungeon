@@ -36,8 +36,7 @@ public class PlayerTurnState implements CombatState{
 
     @Override
     public void handleBagInput(CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleBagInput'");
+        System.out.println("PlayerTurnState: Bag action requested");
     }
 
     @Override
@@ -64,6 +63,11 @@ public class PlayerTurnState implements CombatState{
     public void handleAnimationComplete(CombatController context){
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleAnimationComplete'");
+    }
+
+    @Override
+    public void handleCurePoisonInput(CombatController context) {
+        this.curePoison.applyEffect(context.getModel())
     }
     
 }
