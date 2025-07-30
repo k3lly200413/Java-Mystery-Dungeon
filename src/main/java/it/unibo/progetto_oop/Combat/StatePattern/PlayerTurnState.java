@@ -4,6 +4,12 @@ import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 
 public class PlayerTurnState implements CombatState{
 
+    private CurePoison curePoison;
+
+    public PlayerTurnState(){
+        this.curePoison = new CurePoison();
+    }
+
     @Override
     public void handlePhysicalAttackInput(CombatController context) {
         // TODO: Call controller and have it change state to animating state so this can be all done during the animation
@@ -67,7 +73,7 @@ public class PlayerTurnState implements CombatState{
 
     @Override
     public void handleCurePoisonInput(CombatController context) {
-        this.curePoison.applyEffect(context.getModel())
+        this.curePoison.applyEffect(context.getModel());
     }
     
 }
