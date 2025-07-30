@@ -4,6 +4,12 @@ import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 
 public class PlayerTurnState implements CombatState{
 
+    private CurePoison curePoison;
+
+    public PlayerTurnState(){
+        this.curePoison = new CurePoison();
+    }
+
     @Override
     public void handlePhysicalAttackInput(CombatController context) {
         // TODO: Call controller and have it change state to animating state so this can be all done during the animation
@@ -36,8 +42,7 @@ public class PlayerTurnState implements CombatState{
 
     @Override
     public void handleBagInput(CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleBagInput'");
+        System.out.println("PlayerTurnState: Bag action requested");
     }
 
     @Override
@@ -64,6 +69,11 @@ public class PlayerTurnState implements CombatState{
     public void handleAnimationComplete(CombatController context){
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleAnimationComplete'");
+    }
+
+    @Override
+    public void handleCurePoisonInput(CombatController context) {
+        this.curePoison.applyEffect(context.getModel());
     }
     
 }
