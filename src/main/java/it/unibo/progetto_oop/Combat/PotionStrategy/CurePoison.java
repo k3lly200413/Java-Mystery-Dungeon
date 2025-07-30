@@ -6,7 +6,7 @@ public class CurePoison implements PotionStrategy{
 
     @Override
     public void applyEffect(CombatModel user) {
-        user.setPlayerPoison(true);
+        user.setPlayerPoisoned(true);
     }
     
 }
