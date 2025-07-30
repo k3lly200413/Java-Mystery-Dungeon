@@ -113,7 +113,7 @@ public class CombatModel {
     public void setAttackPosition(Position attackPosition) {
         this.attackPosition = Objects.requireNonNull(attackPosition);
     }
-
+    
     public void setEnemyPoisoned(boolean enemyPoisoned) {
         this.enemyPoisoned = enemyPoisoned;
     }
