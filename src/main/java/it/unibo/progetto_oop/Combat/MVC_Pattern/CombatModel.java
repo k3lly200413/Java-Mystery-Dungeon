@@ -21,6 +21,7 @@ public class CombatModel {
     private String enemyName; // If needed
 
     private boolean enemyPoisoned;
+    private boolean isPlayerPoison;
     private boolean isPlayerTurn = true; // Added to manage turns
 
     public CombatModel(int size, int playerPower, int playerPoisonPower,
@@ -133,6 +134,10 @@ public class CombatModel {
     
     public boolean isGameOver() {
         return playerHealth <= 0 || enemyHealth <= 0;
+    }
+
+    public void setPlayerPoisoned(boolean isPoisoned) {
+        this.isPlayerPoison = true;
     }
 
 }

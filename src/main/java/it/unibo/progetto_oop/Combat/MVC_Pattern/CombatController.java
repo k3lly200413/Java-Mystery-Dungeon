@@ -93,13 +93,20 @@ public class CombatController {
         this.view.addPoisonButtonListener(e -> handlePlayerLongRangeAttack(true));
         this.view.addBackButtonListener(e -> handleBackToMainMenu());
         this.view.addInfoButtonListener(e -> handleInfo());
-        this.view.addBagButtonListener(e -> System.out.println("Bag clicked - Not Yet Implemented"));
+        this.view.addBagButtonListener(e -> handleBagMenu());
         this.view.addRunButtonListener(e -> System.out.println("Run clicked - Not Yet Implemented"));
+        this.view.addCurePoisonButtonListener(e -> this.handleCurePoisonInput());
     }
 
     private void handleAttackMenu() {
         System.out.println("Attack Menu button clicked.");
         this.view.showAttackOptions(); // Show the attack sub-menu
+    }
+    
+    private void handleBagMenu() {
+        this.view.showBagButtons();
+        view.clearInfo();
+        System.out.println("Debug: Pressed Bag Button");
     }
 
     private void handleBackToMainMenu() {
@@ -132,6 +139,11 @@ public class CombatController {
         newState.enterState(this);
         newState.handlePhysicalAttackInput(this);
         // call playerturnstate and have it run performPlayerphysical Attack
+    }
+
+    private void handleCurePoisonInput() {
+        CombatState currentState = new PlayerTurnState();
+        currentState.handleCurePoisonInput(this);
     }
 
     public void performPlayerPhysicalAttack() {
