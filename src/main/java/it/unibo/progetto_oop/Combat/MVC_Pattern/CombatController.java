@@ -457,6 +457,15 @@ public class CombatController {
         return false;
     }
 
+    public void performDeathAnimation(Position death, Runnable onComplete) {
+        this.animationTimer.setRepeats(false);
+        this.animationTimer.start();
+        this.redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), true, true, false, false, 1, 2, true, model.getEnemyPosition());
+        if (onComplete != null) {
+            onComplete.run();
+        }
+    }
+
     // ------ Getters ------
 
     public CombatView getView() {
