@@ -191,7 +191,7 @@ public class CombatView extends JFrame{
                 }
             }
 
-            if ((drawflame || drawPoison) && this.redrawHelper.neighbours(cellPos, flame, 0)){
+            else if ((drawflame || drawPoison) && this.redrawHelper.neighbours(cellPos, flame, 0)){
                 icon = drawflame ? this.getIconResource("/yellow.jpg") : this.getIconResource("/green.jpg");
             } else if (drawPlayer && this.redrawHelper.neighbours(player, cellPos, playerRange)){
                 icon = this.getIconResource("/Screenshot 2025-03-25 164621.png");
