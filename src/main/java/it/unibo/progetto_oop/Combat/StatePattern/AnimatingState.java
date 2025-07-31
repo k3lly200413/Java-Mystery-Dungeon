@@ -1,5 +1,7 @@
 package it.unibo.progetto_oop.Combat.StatePattern;
 
+import javax.swing.Timer;
+
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatView;
@@ -82,7 +84,11 @@ public class AnimatingState implements CombatState{
         }
 
         if (wasPlayerTurn) {
+            // TODO: Shold be able to fix with EnemyTurnState
             model.setPlayerTurn(this.playerTurn);
+            Timer enemyDeley = new Timer(500, e -> {
+                context.enemyTurn();
+            });
             // Add EnemyTurnState
         }
         else {

@@ -192,10 +192,10 @@ public class CombatView extends JFrame{
     }
 
     public void redrawGrid( Position player, Position enemy, Position flame, 
-                            boolean drawPlayer, boolean drawEnemy, 
-                            boolean drawflame, boolean drawPoison, 
-                            int playerRange, int enemyRange,
-                            boolean isGameOver, Position whoDied) {
+                            boolean drawPlayer, boolean drawEnemy, boolean drawflame, 
+                            boolean drawPoison, int playerRange, int enemyRange,
+                            boolean isGameOver, Position whoDied, boolean drawPoisonDamage, 
+                            int poisonYCorrd) {
         for (var entry : cells.entrySet()) {
             JLabel cellLabel = entry.getKey();
             Position cellPos = entry.getValue();
@@ -208,7 +208,10 @@ public class CombatView extends JFrame{
                     icon = getIconResource(whoDied.equals(player) ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg");
                 }
             }
-
+            
+            else if (drawPoisonDamage && entry.getValue().y() == poisonYCorrd) {
+                icon = this.getIconResource("/green.jpg");
+            }
             else if ((drawflame || drawPoison) && this.redrawHelper.neighbours(cellPos, flame, 0)){
                 icon = drawflame ? this.getIconResource("/yellow.jpg") : this.getIconResource("/green.jpg");
             } else if (drawPlayer && this.redrawHelper.neighbours(player, cellPos, playerRange)){
