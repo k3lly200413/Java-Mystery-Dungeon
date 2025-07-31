@@ -44,6 +44,7 @@ public class CombatView extends JFrame{
     private JPanel originalButtonPanel;
     private JPanel attackButtonPanel;
     private JPanel healthPanel;
+    private JPanel bagButtonPanel;
 
     private JButton attackButton;
     private JButton bagButton;
@@ -53,6 +54,9 @@ public class CombatView extends JFrame{
     private JButton longRangeButton;
     private JButton poisonButton;
     private JButton backButton;
+    private JButton curePoisonButton;
+    private JButton attackBuffButton;
+    private JButton healButton;
 
     private JLabel infoLabel;
 
@@ -131,6 +135,12 @@ public class CombatView extends JFrame{
         this.attackButtonPanel.add(longRangeButton);
         this.attackButtonPanel.add(poisonButton);
         this.attackButtonPanel.add(backButton);
+
+        this.bagButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        this.attackBuffButton = createButton("Attack Buff", (50 * size) / 3, (20 * size) / 3);
+        this.curePoisonButton = createButton("Cure poison", (50 * size) / 3, (20 * size) / 3);
+        this.healButton = createButton("Heal", (50 * size) / 3, (20 * size) / 3);
+        this.backButton = createButton("Back", (50 * size) / 3, (20 * size) / 3);
 
         this.buttonPanelContainer.add(originalButtonPanel, "originalButtons");
         this.buttonPanelContainer.add(attackButtonPanel, "attackOptions");
@@ -254,7 +264,13 @@ public class CombatView extends JFrame{
         g.fillRect(0, 0, 20, 20);
         g.dispose();
         return new ImageIcon(image);
-    } 
+    }
+
+    private JButton createButton(String name, int height, int length) {
+        JButton tempButton = new JButton(name);
+        tempButton.setPreferredSize(new Dimension(length, height));
+        return tempButton;
+    }
 
     // Listener methods (Used By Controller)
 
@@ -282,5 +298,7 @@ public class CombatView extends JFrame{
     public void addBackButtonListener(ActionListener e){
         this.backButton.addActionListener(e);
     }
-
+    public void addCurePoisonButtonListener(ActionListener e) {
+        this.curePoisonButton.addActionListener(e);
+    }
 }
