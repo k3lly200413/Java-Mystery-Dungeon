@@ -21,6 +21,8 @@ public class CombatController {
     private final MeleeButton meleeCommand;
     private final LongRangeButton longRangeCommand;
 
+    private int zoomerStep = 0;
+
     private static final int ANIMATION_DELAY = 100;      //ms
     private static final int POST_ATTACK_DELAY = 500;    // ms
     private static final int INFO_ZOOM_DELAY = 200; // ms
@@ -408,8 +410,6 @@ public class CombatController {
         this.animationTimer.start();
     }
     
-    private int zoomerStep = 0;
-
     private void zoomerAnimation() {
         this.stopAnimationTimer();
         this.view.setButtonsEnabled(false);
