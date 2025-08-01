@@ -452,7 +452,7 @@ public class CombatController {
 
     public void applyPostTurnEffects() {
         if (model.isEnemyPoisoned() && model.getEnemyHealth() > 0){
-            view.showInfo("Enemy take oison damage!");
+            view.showInfo("Enemy take poison damage!");
             model.decreaseEnemyHealth(model.getPlayerPoisonPower());
             view.updateEnemyHealth(model.getEnemyHealth());
         }
