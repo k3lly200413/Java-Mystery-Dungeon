@@ -415,6 +415,14 @@ public class CombatController {
         });
         this.animationTimer.start();
     }
+
+    public void performEnemySuperAttack() {
+        System.out.println("\nPerforming Super Attack\n");
+
+        // If needed TODO: Add in model bossTurn variable
+
+        // this.performEnemyPhysicalAttack();
+    }
     
     private int zoomerStep = 0;
 
