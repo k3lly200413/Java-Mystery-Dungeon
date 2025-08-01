@@ -21,10 +21,11 @@ public class CombatController {
     private final MeleeButton meleeCommand;
     private final LongRangeButton longRangeCommand;
 
-    private static final int ANIMATION_DELAY = 100;      //ms
-    private static final int POST_ATTACK_DELAY = 500;    // ms
-    private static final int INFO_ZOOM_DELAY = 200; // ms
-    private static final int INFO_NEXT_DRAW_DELAY = 300; // ms
+    private static final int ANIMATION_DELAY = 100;                     //ms
+    private static final int POST_ATTACK_DELAY = 500;                   // ms
+    private static final int INFO_ZOOM_DELAY = 200;                     // ms
+    private static final int INFO_NEXT_DRAW_DELAY = 300;                // ms
+    private static final int MINIMUM_STAMINA_FOR_SPECIAL_ATTACK = 5;    // Placeholder
 
     private Timer animationTimer;
 
@@ -101,6 +102,13 @@ public class CombatController {
     private void handleAttackMenu() {
         System.out.println("Attack Menu button clicked.");
         this.view.showAttackOptions(); // Show the attack sub-menu
+        // TODO: add getter in model to get stamina to then check if it's lower than the minimum then remove comment below
+        /*
+         * if (this.model.getPlayerStamina() < MINIMUM_STAMINA_FOR_SPECIALS){
+         *      this.view.setCustomButtonDisabled(this.view.getLongRangeAttackButton())
+         *      this.view.setCustomButtonDisabled(this.view.getPoisonAttackButton())
+         * }
+         */
     }
     
     private void handleBagMenu() {
@@ -182,7 +190,7 @@ public class CombatController {
             if(checkGameOver()) return; // Check if player was defeated
 
             model.setPlayerTurn(true);
-            view.setButtonsEnabled(true);
+            view.setAllButtonsEnabled();
             view.showInfo("Player's turn!");
             view.showOriginalButtons();
         };
@@ -214,7 +222,7 @@ public class CombatController {
         if (!this.model.isPlayerTurn() || this.isAnimationRunning()) {
             return;
         }
-        this.view.setButtonsEnabled(false);
+        this.view.setAllButtonsDisabled();
         this.view.clearInfo();
         this.view.showInfo(applyPoison ? "Player uses poison!" : "Player uses long range attack!");
         
@@ -412,7 +420,7 @@ public class CombatController {
 
     private void zoomerAnimation() {
         this.stopAnimationTimer();
-        this.view.setButtonsEnabled(false);
+        this.view.setAllButtonsDisabled();
 
         final Position originalEnemyPosition = this.model.getEnemyPosition();
         final int targetX= model.getSize()/2;
@@ -442,7 +450,7 @@ public class CombatController {
                 stopAnimationTimer();
                 model.setEnemyPosition(originalEnemyPosition); // Reset enemy position
                 redrawView();
-                this.view.setButtonsEnabled(true);
+                this.view.setAllButtonsEnabled();
             } else {
                 this.view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), true, true, false, false, 1, zoomerStep, false, model.getPlayerPosition());
             }
@@ -461,7 +469,7 @@ public class CombatController {
     public boolean checkGameOver(){
         if (model.isGameOver()) {
             stopAnimationTimer();
-            view.setButtonsEnabled(false);
+            view.setAllButtonsDisabled();
             String winner = model.getPlayerHealth() <= 0 ? "Enemy" : "Player";
             view.showInfo("Game Over! "+winner+" wins!");
             return true;

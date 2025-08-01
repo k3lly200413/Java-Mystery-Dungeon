@@ -14,8 +14,9 @@ public class PlayerTurnState implements CombatState{
     @Override
     public void handlePhysicalAttackInput(CombatController context) {
         // TODO: Call controller and have it change state to animating state so this can be all done during the animation
-        context.getView().setButtonsEnabled(false); // Disable buttons during animation
+        context.getView().setAllButtonsDisabled(); // Disable buttons during animation
         context.getView().clearInfo();
+        // TODO: call model to remove 10 (placeholder) points of stamina
         context.getView().showInfo("Player Has used physical Attack");
         System.out.println("Debug Log: Requested Physicaln\nCurrent State: Player Turn State");
         context.performPlayerPhysicalAttack();
@@ -24,8 +25,9 @@ public class PlayerTurnState implements CombatState{
     @Override
     public void handleLongRangeAttackInput(CombatController context, boolean isPoison) {
         // TODO: Call controller and have it change state to animating state so this can be all done during the animation
-        context.getView().setButtonsEnabled(false); // Disable buttons during animation
+        context.getView().setAllButtonsDisabled(); // Disable buttons during animation
         context.getView().clearInfo();
+        // TODO: call model to remove 20 (placeholder) points of stamina
         context.getView().showInfo("Player Has used Long Range Attack");
         System.out.println("Debug Log: Requested Long Range\nCurrent State: Player Turn State");
         context.performPlayerLongRangeAttack(isPoison);
@@ -54,7 +56,7 @@ public class PlayerTurnState implements CombatState{
 
     @Override
     public void enterState(CombatController context) {
-        context.getView().setButtonsEnabled(true);
+        context.getView().setAllButtonsEnabled();
         context.getView().showOriginalButtons();
         context.getView().showInfo("Your Turn!");
         System.out.println("------ Entering Player Turn State ------");

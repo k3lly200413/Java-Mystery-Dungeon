@@ -40,6 +40,8 @@ public class CombatView extends JFrame{
     
     private JProgressBar playerHealtBar;
     private JProgressBar enemyHealthBar;
+    private JProgressBar playerStaminaBar;
+
     private JPanel gridpanel;
 
     private JPanel buttonPanelContainer;
@@ -104,6 +106,13 @@ public class CombatView extends JFrame{
         this.playerHealtBar.setStringPainted(true);
         this.playerHealtBar.setForeground(Color.GREEN);
 
+        // TODO: get values from model
+        this.playerStaminaBar = new JProgressBar(0, 100); // Set max from model later
+        this.playerStaminaBar.setValue(100);            // Set value from model later
+        this.playerStaminaBar.setStringPainted(true);
+        this.playerStaminaBar.setForeground(Color.CYAN); // Light Blue
+        this.playerStaminaBar.setPreferredSize(new Dimension(35 * size, 20)); // Match others
+
         this.enemyHealthBar = new JProgressBar(0, 100);
         this.enemyHealthBar.setValue(100);
         this.enemyHealthBar.setStringPainted(true);
@@ -112,7 +121,9 @@ public class CombatView extends JFrame{
 
         this.healthPanel.add(new JLabel("Player Health"));
         this.healthPanel.add(this.playerHealtBar);
-        this.healthPanel.add(Box.createVerticalStrut(5));       
+        this.healthPanel.add(Box.createVerticalStrut(5));
+        healthPanel.add(new JLabel("Player Stamina: "));
+        healthPanel.add(playerStaminaBar);       
         this.healthPanel.add(new JLabel("Enemy Health"));
         this.healthPanel.add(enemyHealthBar);
         
@@ -181,6 +192,11 @@ public class CombatView extends JFrame{
         this.playerHealtBar.setString("Player: " + value + "/" + this.playerHealtBar.getMaximum());
     }
 
+    public void updatePlayerStamina(int value) {
+        this.playerStaminaBar.setValue(value);
+        this.playerStaminaBar.setString("Stamina: " + value + "/" + playerStaminaBar.getMaximum());
+    }
+
     public void updateEnemyHealth(int value) {
         enemyHealthBar.setValue(value);
         enemyHealthBar.setString("Enemy: " + value + "/" + this.enemyHealthBar.getMaximum());
@@ -241,9 +257,22 @@ public class CombatView extends JFrame{
         this.cardLayout.show(this.buttonPanelContainer, "bagButtons");
     }
 
-    public void setButtonsEnabled(boolean enableButtons){
-        this.setPanelEnabled(this.originalButtonPanel, enableButtons);
-        this.setPanelEnabled(this.attackButtonPanel, enableButtons);
+    public void setAllButtonsEnabled(){
+        this.setPanelEnabled(this.originalButtonPanel, true);
+        this.setPanelEnabled(this.attackButtonPanel, true);
+    }
+
+    public void setAllButtonsDisabled() {
+        this.setPanelEnabled(this.originalButtonPanel, false);
+        this.setPanelEnabled(this.attackButtonPanel, false);
+    }
+
+    public void setCustomButtonEnabled(JButton buttonToEnable){
+        buttonToEnable.setEnabled(true);
+    }
+
+    public void setCustomButtonDisabled(JButton buttonToDisable) {
+        buttonToDisable.setEnabled(false);
     }
 
     private void setPanelEnabled(JPanel panel, boolean enablePanel){
@@ -272,6 +301,14 @@ public class CombatView extends JFrame{
             System.err.println("Was not able to find file: " + path);
             return this.createDefaultIcon();
         }
+    }
+
+    public JButton getLongRangeAttackButton() {
+        return this.longRangeButton;
+    }
+
+    public JButton getPoisonAttackButton() {
+        return this.poisonButton;
     }
 
     private ImageIcon createDefaultIcon() {
