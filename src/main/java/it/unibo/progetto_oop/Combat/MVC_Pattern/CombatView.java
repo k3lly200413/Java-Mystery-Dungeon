@@ -33,6 +33,9 @@ import java.awt.Graphics2D;
 
 public class CombatView extends JFrame{
 
+    private final int buttonHeight;
+    private final int buttonWidth;
+
     private final Map<JLabel, Position> cells = new HashMap<>();
     
     private JProgressBar playerHealtBar;
@@ -66,6 +69,8 @@ public class CombatView extends JFrame{
     private java.net.URL imgURL;
 
     public CombatView(int size) {
+        this.buttonHeight = (20 * size) / 3;
+        this.buttonWidth = (50 * size) / 3;
         this.setTitle("Combat Screen");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(70 * size, 75 * size);
@@ -117,10 +122,10 @@ public class CombatView extends JFrame{
         this.buttonPanelContainer = new JPanel(cardLayout);
 
         this.originalButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        this.attackButton = this.createButton("Attack", (20 * size) / 3, (50 * size) / 3);
-        this.bagButton = this.createButton("Bag", (20 * size) / 3, (50 * size) / 3);
-        this.runButton = this.createButton("Run", (20 * size) / 3, (50 * size) / 3);
-        this.infoButton = this.createButton("Info", (20 * size) / 3, (50 * size) / 3);
+        this.attackButton = this.createButton("Attack", this.buttonHeight, this.buttonWidth);
+        this.bagButton = this.createButton("Bag", this.buttonHeight, this.buttonWidth);
+        this.runButton = this.createButton("Run", this.buttonHeight, this.buttonWidth);
+        this.infoButton = this.createButton("Info", this.buttonHeight, this.buttonWidth);
 
         this.originalButtonPanel.add(attackButton);
         this.originalButtonPanel.add(bagButton);
@@ -128,20 +133,20 @@ public class CombatView extends JFrame{
         this.originalButtonPanel.add(infoButton);
 
         this.attackButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        this.physicalAttackButton = new JButton("Physical Attack");
-        this.longRangeButton = new JButton("Long Range");
-        this.poisonButton = new JButton("Poison");
-        this.backAttackButton = new JButton("Back");
+        this.physicalAttackButton = this.createButton("Physical Attack", this.buttonHeight, this.buttonWidth);
+        this.longRangeButton = this.createButton("Long Range", this.buttonHeight, this.buttonWidth);new JButton("Long Range");
+        this.poisonButton = this.createButton("Poison", this.buttonHeight, this.buttonWidth);
+        this.backAttackButton = this.createButton("Back", this.buttonHeight, this.buttonWidth);
         this.attackButtonPanel.add(physicalAttackButton);
         this.attackButtonPanel.add(longRangeButton);
         this.attackButtonPanel.add(poisonButton);
         this.attackButtonPanel.add(backAttackButton);
 
         this.bagButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        this.attackBuffButton = createButton("Attack Buff", (20 * size) / 3, (50 * size) / 3);
-        this.curePoisonButton = createButton("Cure poison", (20 * size) / 3, (50 * size) / 3);
-        this.healButton = createButton("Heal", (20 * size) / 3, (50 * size) / 3);
-        this.backButton = createButton("Back", (20 * size) / 3, (50 * size) / 3);
+        this.attackBuffButton = createButton("Attack Buff", this.buttonHeight, this.buttonWidth);
+        this.curePoisonButton = createButton("Cure poison", this.buttonHeight, this.buttonWidth);
+        this.healButton = createButton("Heal", this.buttonHeight, this.buttonWidth);
+        this.backButton = createButton("Back", this.buttonHeight, this.buttonWidth);
 
         this.bagButtonPanel.add(attackBuffButton);
         this.bagButtonPanel.add(curePoisonButton);
