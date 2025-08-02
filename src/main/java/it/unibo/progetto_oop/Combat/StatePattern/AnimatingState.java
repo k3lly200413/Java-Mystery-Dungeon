@@ -72,18 +72,19 @@ public class AnimatingState implements CombatState{
         
         boolean wasPlayerTurn = !model.isPlayerTurn();
 
+        if (wasPlayerTurn) {
+            if (context.getModel().isBossTurn()){
+                // set new BossTurnState()
+            }
+            else{
+                context.applyPostTurnEffects();
+                model.setPlayerTurn(this.playerTurn);
+            }
+        }
+
         if (context.checkGameOver()) {
             // Create gameOverState
             return;
-        }
-
-        else if (wasPlayerTurn) {
-            context.applyPostTurnEffects();
-        }
-
-        if (wasPlayerTurn) {
-            model.setPlayerTurn(this.playerTurn);
-            // Add EnemyTurnState
         }
         else {
             model.setPlayerTurn(!this.playerTurn);

@@ -419,9 +419,20 @@ public class CombatController {
     public void performEnemySuperAttack() {
         System.out.println("\nPerforming Super Attack\n");
 
-        // If needed TODO: Add in model bossTurn variable
+        /*Runnable onSuperAttackComplete = () -> {
+            this.currentState.handleAnimationComplete(this);
+        };
+    
+        // Now start the animation itself
+        int superAttackPower = (int)(model.getEnemyPower() * 1.5);
+        animatePhysicalMove(
+            model.getEnemyPosition(),
+            model.getPlayerPosition(),
+            false, // isPlayerAttacker
+            superAttackPower,
+            onSuperAttackComplete
+        );*/
 
-        // this.performEnemyPhysicalAttack();
     }
     
     private int zoomerStep = 0;
