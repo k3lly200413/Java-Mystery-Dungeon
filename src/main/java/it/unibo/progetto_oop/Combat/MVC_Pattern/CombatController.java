@@ -72,8 +72,8 @@ public class CombatController {
      */
     public void redrawView(){
         this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), 
-                        this.model.getAttackPosition(), true, true, 
-                        false, false, 1, 1, false, model.getPlayerPosition());
+                        this.model.getAttackPosition(), 0, true, true, 
+                        false, false, 1, 1, false, model.getPlayerPosition(), false, new ArrayList<Position>());
     }
 
     public void redrawView(Position palyerPos, Position enemyPos, Position flamePos, 
@@ -258,7 +258,7 @@ public class CombatController {
             if (this.model.getAttackPosition().x() >= this.model.getEnemyPosition().x() - 2) {
                 this.stopAnimationTimer();
                 this.model.setAttackPosition(this.model.getPlayerPosition()); // Reset flame position
-                this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), true, true, false, false, 1, 1, false, model.getPlayerPosition());
+                this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), 0, true, true, false, false, 1, 1, false, model.getPlayerPosition(), false, new ArrayList<Position>());
                 if (onHit != null) {
                     onHit.run();
                 }
@@ -270,7 +270,7 @@ public class CombatController {
             Position nextFlamePos = longRangeCommand.execute().get(0);
             this.model.setAttackPosition(nextFlamePos);
             // Redraw showing the projectile
-            this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), true, true, !isPoison, isPoison, 1, 1, false, model.getPlayerPosition());
+            this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), 0, true, true, !isPoison, isPoison, 1, 1, false, model.getPlayerPosition(), false, new ArrayList<Position>());
         });
         animationTimer.start();
     }
@@ -520,7 +520,7 @@ public class CombatController {
                 redrawView();
                 this.view.setAllButtonsEnabled();
             } else {
-                this.view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), true, true, false, false, 1, zoomerStep, false, model.getPlayerPosition());
+                this.redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), 0, true, true, false, false, 1, zoomerStep, false, model.getPlayerPosition(), false, new ArrayList<Position>());
             }
         });
         animationTimer.start();
@@ -548,7 +548,7 @@ public class CombatController {
     public void performDeathAnimation(Position death, Runnable onComplete) {
         this.animationTimer.setRepeats(false);
         this.animationTimer.start();
-        this.redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), true, true, false, false, 1, 2, true, model.getEnemyPosition());
+        this.redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), 0, true, true, false, false, 1, 2, true, model.getEnemyPosition(), false, new ArrayList<Position>());
         if (onComplete != null) {
             onComplete.run();
         }
