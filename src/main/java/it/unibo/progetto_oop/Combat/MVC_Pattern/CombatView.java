@@ -24,6 +24,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.FlowLayout;
@@ -213,10 +214,10 @@ public class CombatView extends JFrame{
     }
 
     public void redrawGrid( Position player, Position enemy, Position flame, 
-                            boolean drawPlayer, boolean drawEnemy, 
-                            boolean drawflame, boolean drawPoison, 
-                            int playerRange, int enemyRange,
-                            boolean isGameOver, Position whoDied) {
+                            int flameSize, boolean drawPlayer, boolean drawEnemy, 
+                            boolean drawflame, boolean drawPoison, int playerRange, 
+                            int enemyRange, boolean isGameOver, Position whoDied,
+                            boolean drawBossRayAttack, ArrayList<Position> deathRayPath) {
         for (var entry : cells.entrySet()) {
             JLabel cellLabel = entry.getKey();
             Position cellPos = entry.getValue();
@@ -230,8 +231,8 @@ public class CombatView extends JFrame{
                 }
             }
 
-            else if ((drawflame || drawPoison) && this.redrawHelper.neighbours(cellPos, flame, 0)){
-                icon = drawflame ? this.getIconResource("/yellow.jpg") : this.getIconResource("/green.jpg");
+            else if ((drawflame || drawPoison || drawBossRayAttack) && this.redrawHelper.neighbours(cellPos, flame, flameSize)){
+                icon = drawflame ? this.getIconResource("/yellow.jpg") : drawPoison ? this.getIconResource("/green.jpg") : getIconResource("/purple.png");
             } else if (drawPlayer && this.redrawHelper.neighbours(player, cellPos, playerRange)){
                 icon = this.getIconResource("/Screenshot 2025-03-25 164621.png");
             } else if (drawEnemy && this.redrawHelper.neighbours(enemy, cellPos, enemyRange)) {
