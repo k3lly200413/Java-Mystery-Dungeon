@@ -98,5 +98,9 @@ public class AnimatingState implements CombatState{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleCurePoisonInput'");
     }
+
+    public void handleBossDeathRayAttack(CombatController context) {
+        
+    }
     
 }
