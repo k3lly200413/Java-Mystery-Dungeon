@@ -209,7 +209,7 @@ public class CombatController {
     private void handlePlayerLongRangeAttack(boolean applyPoison, boolean applyFlameIntent){
         CombatState playerState = new PlayerTurnState();
         playerState.enterState(this);
-        playerState.handleLongRangeAttackInput(this, applyPoison);
+        playerState.handleLongRangeAttackInput(this, applyPoison, applyFlameIntent);
     }
 
     /**
