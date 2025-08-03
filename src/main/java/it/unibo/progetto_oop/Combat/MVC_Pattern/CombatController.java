@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Timer;
@@ -76,12 +77,14 @@ public class CombatController {
     }
 
     public void redrawView(Position palyerPos, Position enemyPos, Position flamePos, 
-                            boolean drawPlayer, boolean drawEnemy, boolean drawFlame, 
-                            boolean drawPoison, int playerRange, int enemyRange, boolean isGameOver, Position whoDied) {
-        this.view.redrawGrid(   palyerPos, enemyPos, 
-                                flamePos, drawPlayer, drawEnemy, 
+                            int flameSize, boolean drawPlayer, boolean drawEnemy, 
+                            boolean drawFlame, boolean drawPoison, int playerRange, 
+                            int enemyRange, boolean isGameOver, Position whoDied,
+                            boolean bossRayAttack, ArrayList<Position> deathRayPath) {
+        this.view.redrawGrid(   palyerPos, enemyPos, flamePos, 
+                                flameSize, drawPlayer, drawEnemy, 
                                 drawFlame, drawPoison, playerRange, enemyRange,
-                                isGameOver, whoDied);
+                                isGameOver, whoDied, bossRayAttack, deathRayPath);
     }
 
     /**
@@ -270,6 +273,52 @@ public class CombatController {
             this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), true, true, !isPoison, isPoison, 1, 1, false, model.getPlayerPosition());
         });
         animationTimer.start();
+    }
+
+    public void handleBossDeathRayAttack() {
+        // call boss state and run handleBossDeathRayAttack(this);
+    }
+
+    public void performBossDeathRayAttack(){
+        this.view.clearInfo();
+        this.view.showInfo("Boss Unleasehs Death Ray");
+
+        Runnable onDeathRayAttackComplete = () -> {
+            // call animation complete(this);
+        };
+    }
+
+    public void animateBossDeathRay(Runnable onHit){
+        this.stopAnimationTimer();
+
+        final ArrayList<Position> deathRayLastPosition = new ArrayList<>();
+
+        this.animationTimer = new Timer(100, e -> {
+            if (deathRayLastPosition.stream()
+                                    .anyMatch(
+                                        passsedPosition -> passsedPosition
+                                        .equals(this.model.getPlayerPosition()))){
+                this.stopAnimationTimer();
+                // we want to reset the position of the ray
+                deathRayLastPosition.clear();
+                this.redrawView();
+                // TODO: Change to longrange enemy power 
+                this.model.decreasePlayerHealth(this.model.getEnemyPower());                                
+                if (onHit != null) {
+                    System.out.println("\nI now have to apply poison status\n");
+                    onHit.run(); // Execute the action upon hitting
+                }
+                return;
+            }
+            else {
+                deathRayLastPosition.add(new Position(deathRayLastPosition.get(deathRayLastPosition.size()).x() - 1, this.model.getEnemyPosition().y()));
+                this.redrawView(this.model.getPlayerPosition(), 
+                                this.model.getEnemyPosition(), new Position(0, 0), 
+                                2, true, true, false, false, 1, 1, false, new Position(0, 0),
+                                true, deathRayLastPosition);
+            }
+        });
+
     }
 
     /**
