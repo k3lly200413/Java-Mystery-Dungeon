@@ -15,7 +15,7 @@ public class AnimatingState implements CombatState{
     }
 
     @Override
-    public void handleLongRangeAttackInput(CombatController context, boolean isPoison) {
+    public void handleLongRangeAttackInput(CombatController context, boolean isPoison, boolean isFlame) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleLongRangeAttackInput'");
     }

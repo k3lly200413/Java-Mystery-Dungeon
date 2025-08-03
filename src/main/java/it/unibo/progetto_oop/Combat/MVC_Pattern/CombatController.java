@@ -90,8 +90,8 @@ public class CombatController {
     private void attachListeners() {
         this.view.addAttackButtonListener(e -> handleAttackMenu());
         this.view.addPhysicalButtonListener(e -> handlePlayerPhysicalAttack());
-        this.view.addLongRangeButtonListener(e -> handlePlayerLongRangeAttack(false));
-        this.view.addPoisonButtonListener(e -> handlePlayerLongRangeAttack(true));
+        this.view.addLongRangeButtonListener(e -> handlePlayerLongRangeAttack(false, true));
+        this.view.addPoisonButtonListener(e -> handlePlayerLongRangeAttack(true, false));
         this.view.addBackButtonListener(e -> handleBackToMainMenu());
         this.view.addInfoButtonListener(e -> handleInfo());
         this.view.addBagButtonListener(e -> handleBagMenu());
@@ -206,7 +206,7 @@ public class CombatController {
         );
     }
 
-    private void handlePlayerLongRangeAttack(boolean applyPoison){
+    private void handlePlayerLongRangeAttack(boolean applyPoison, boolean applyFlameIntent){
         CombatState playerState = new PlayerTurnState();
         playerState.enterState(this);
         playerState.handleLongRangeAttackInput(this, applyPoison);
@@ -218,7 +218,7 @@ public class CombatController {
      * 
      * @author kelly.applebee@studio.unibo.it
      */
-    public void performPlayerLongRangeAttack(boolean applyPoison) {
+    public void performPlayerLongRangeAttack(boolean applyPoison, boolean applyFlameIntent) {
         if (!this.model.isPlayerTurn() || this.isAnimationRunning()) {
             return;
         }
@@ -226,7 +226,7 @@ public class CombatController {
         this.view.clearInfo();
         this.view.showInfo(applyPoison ? "Player uses poison!" : "Player uses long range attack!");
         
-        this.longRangeAttackAnimation(applyPoison, () -> {
+        this.longRangeAttackAnimation(applyPoison, applyFlameIntent, () -> {
             this.model.decreaseEnemyHealth(model.getPlayerPower());
             if (applyPoison){
                 this.model.setEnemyPoisoned(true);
@@ -246,9 +246,11 @@ public class CombatController {
         });
     }
 
-    private void longRangeAttackAnimation(boolean isPoison, Runnable onHit) {
+    private void longRangeAttackAnimation(boolean isPoison, boolean isFlame, Runnable onHit) {
         this.stopAnimationTimer();
         this.model.setAttackPosition(this.model.getPlayerPosition()); // Start flame at player
+
+        this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), true, true, false, false, 1, 1, false, (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()));
 
         animationTimer = new Timer(ANIMATION_DELAY, e -> {
             // Check if flame reached the enemy
@@ -267,7 +269,7 @@ public class CombatController {
             Position nextFlamePos = longRangeCommand.execute().get(0);
             this.model.setAttackPosition(nextFlamePos);
             // Redraw showing the projectile
-            this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), true, true, !isPoison, isPoison, 1, 1, false, model.getPlayerPosition());
+            this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), true, true, isFlame, isPoison, 1, 1, false, model.getPlayerPosition());
         });
         animationTimer.start();
     }
@@ -498,7 +500,7 @@ public class CombatController {
 
     public void performDeathAnimation(Position death, Runnable onComplete) {
         this.animationTimer.setRepeats(false);
-        this.animationTimer.start();
+        // this.animationTimer.start();
         this.redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), true, true, false, false, 1, 2, true, model.getEnemyPosition());
         if (onComplete != null) {
             onComplete.run();

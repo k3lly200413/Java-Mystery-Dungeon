@@ -23,14 +23,14 @@ public class PlayerTurnState implements CombatState{
     }
 
     @Override
-    public void handleLongRangeAttackInput(CombatController context, boolean isPoison) {
+    public void handleLongRangeAttackInput(CombatController context, boolean isPoison, boolean isFalme) {
         // TODO: Call controller and have it change state to animating state so this can be all done during the animation
         context.getView().setAllButtonsDisabled(); // Disable buttons during animation
         context.getView().clearInfo();
         // TODO: call model to remove 20 (placeholder) points of stamina
         context.getView().showInfo("Player Has used Long Range Attack");
         System.out.println("Debug Log: Requested Long Range\nCurrent State: Player Turn State");
-        context.performPlayerLongRangeAttack(isPoison);
+        context.performPlayerLongRangeAttack(isPoison, isFalme);
     }
 
     @Override

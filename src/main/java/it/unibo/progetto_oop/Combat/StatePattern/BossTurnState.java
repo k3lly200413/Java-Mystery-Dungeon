@@ -17,7 +17,7 @@ public class BossTurnState implements CombatState{
     }
 
     @Override
-    public void handleLongRangeAttackInput(CombatController context, boolean isPoison) {
+    public void handleLongRangeAttackInput(CombatController context, boolean isPoison, boolean isFalme) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleLongRangeAttackInput'");
     }
