@@ -311,7 +311,7 @@ public class CombatController {
                 return;
             }
             else {
-                deathRayLastPosition.add(new Position(deathRayLastPosition.get(deathRayLastPosition.size()).x() - 1, this.model.getEnemyPosition().y()));
+                deathRayLastPosition.add(new Position(deathRayLastPosition.get(deathRayLastPosition.size() - 1).x() - 1, this.model.getEnemyPosition().y()));
                 this.redrawView(this.model.getPlayerPosition(), 
                                 this.model.getEnemyPosition(), new Position(0, 0), 
                                 2, true, true, false, false, 1, 1, false, new Position(0, 0),
