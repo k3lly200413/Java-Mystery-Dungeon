@@ -218,7 +218,7 @@ public class CombatView extends JFrame{
                             boolean drawflame, boolean drawPoison, int playerRange, 
                             int enemyRange, boolean isGameOver, Position whoDied,
                             boolean drawBossRayAttack, ArrayList<Position> deathRayPath,
-                            boolean drawPoisonDamage, int poisonYCoord;
+                            boolean drawPoisonDamage, int poisonYCoord,
                             boolean isCharging, int chargingCellDistance) {
         
             for (var entry : cells.entrySet()) {
@@ -236,8 +236,8 @@ public class CombatView extends JFrame{
 
             else if ((drawflame || drawPoison || drawBossRayAttack) && this.redrawHelper.neighbours(cellPos, flame, flameSize)){
                 icon = drawflame ? this.getIconResource("/yellow.jpg") : drawPoison ? this.getIconResource("/green.jpg") : getIconResource("/purple.png");
-            
-            else if (drawPoisonDamage && entry.getValue().y() == poisonYCorrd) {
+            }
+            else if (drawPoisonDamage && entry.getValue().y() == poisonYCoord) {
                 icon = this.getIconResource("/green.jpg");
             }
             else if ((drawflame || drawPoison) && this.redrawHelper.neighbours(cellPos, flame, 0)){
