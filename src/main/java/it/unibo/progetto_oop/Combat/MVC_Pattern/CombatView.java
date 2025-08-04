@@ -217,8 +217,10 @@ public class CombatView extends JFrame{
                             int flameSize, boolean drawPlayer, boolean drawEnemy, 
                             boolean drawflame, boolean drawPoison, int playerRange, 
                             int enemyRange, boolean isGameOver, Position whoDied,
-                            boolean drawBossRayAttack, ArrayList<Position> deathRayPath) {
-        for (var entry : cells.entrySet()) {
+                            boolean drawBossRayAttack, ArrayList<Position> deathRayPath,
+                            boolean isCharging, int chargingCellDistance) {
+        
+            for (var entry : cells.entrySet()) {
             JLabel cellLabel = entry.getKey();
             Position cellPos = entry.getValue();
             Icon icon = null;
@@ -237,6 +239,8 @@ public class CombatView extends JFrame{
                 icon = this.getIconResource("/Screenshot 2025-03-25 164621.png");
             } else if (drawEnemy && this.redrawHelper.neighbours(enemy, cellPos, enemyRange)) {
                 icon = getIconResource("/red.jpg");
+            } else if (isCharging && this.redrawHelper.deathNeighbours(enemy, cellPos, chargingCellDistance)) {
+                icon = getIconResource("/purple.png");
             } else {
                 icon = getIconResource("/white.jpg");
             }
