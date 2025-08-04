@@ -17,7 +17,7 @@ public class AnimatingState implements CombatState{
     }
 
     @Override
-    public void handleLongRangeAttackInput(CombatController context, boolean isPoison) {
+    public void handleLongRangeAttackInput(CombatController context, boolean isPoison, boolean isFlame) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleLongRangeAttackInput'");
     }
@@ -50,7 +50,7 @@ public class AnimatingState implements CombatState{
     public void enterState(CombatController context) {
         context.getView().showInfo("Entered Animating State!\nNo issues for now");
         System.out.println("------ Entered Animating State ------");
-        context.getView().setButtonsEnabled(false);
+        context.getView().setAllButtonsDisabled();
     }
 
     @Override
@@ -73,6 +73,16 @@ public class AnimatingState implements CombatState{
         CombatModel model = context.getModel();
         
         boolean wasPlayerTurn = !model.isPlayerTurn();
+
+        if (wasPlayerTurn) {
+            if (context.getModel().isBossTurn()){
+                // set new BossTurnState()
+            }
+            else{
+                context.applyPostTurnEffects();
+                model.setPlayerTurn(this.playerTurn);
+            }
+        }
 
         if (context.checkGameOver()) {
             // Create gameOverState
@@ -102,6 +112,10 @@ public class AnimatingState implements CombatState{
     public void handleCurePoisonInput(CombatController context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleCurePoisonInput'");
+    }
+
+    public void handleBossDeathRayAttack(CombatController context) {
+        
     }
     
 }

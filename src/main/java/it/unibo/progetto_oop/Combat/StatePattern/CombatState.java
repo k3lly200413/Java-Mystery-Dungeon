@@ -4,7 +4,7 @@ import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 
 public interface CombatState {
     void handlePhysicalAttackInput(CombatController context);
-    void handleLongRangeAttackInput(CombatController context, boolean isPoison);
+    void handleLongRangeAttackInput(CombatController context, boolean isPoison, boolean isFlame);
     void handleInfoInput(CombatController context);
     void handleBackInput(CombatController context);
     void handleBagInput(CombatController context); // Add if implementing
