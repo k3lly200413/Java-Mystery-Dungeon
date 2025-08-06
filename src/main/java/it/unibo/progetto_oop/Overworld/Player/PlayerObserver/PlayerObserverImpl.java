@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.PlayerObserver;
+package it.unibo.progetto_oop.Overworld.Player.PlayerObserver;
 
 import java.util.ArrayList;
 import java.util.List; 
