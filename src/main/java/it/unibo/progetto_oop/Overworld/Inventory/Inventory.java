@@ -22,12 +22,34 @@ public class Inventory {
         return this.items.size();
     }
 
-    public Integer addItem(Item item){ // add one item
-        return this.items.replace(item, this.items.get(item) + 1);
+    public boolean addItem(Item item){ // add one item
+        if (item == null){ 
+            System.out.println("Item is null");
+            return false;
+        }
+        if (!this.items.containsKey(item) && items.size() >= this.capacity){
+            System.out.println("Full cannot add new item");
+            return false;
+        }
+        // updating item amount
+        int currentCount = this.items.getOrDefault(item, 0); 
+        items.put(item, currentCount + 1);
+        return true;
     }
 
-    public Integer addItem(Item item, int quantity){ // add "quantity" items
-        return this.items.replace(item, this.items.get(item) + quantity);
+    public boolean addItem(Item item, int quantity){ // add "quantity" items
+        if (item == null){ 
+            System.out.println("Item is null");
+            return false;
+        }
+        if (!this.items.containsKey(item) && items.size() >= capacity){
+            System.out.println("Full cannot add new item");
+            return false;
+        }
+        // updating item amount
+        int currentCount = this.items.getOrDefault(item, 0); 
+        this.items.put(item, currentCount + quantity);
+        return true;
     }
 
     public boolean decreseItemCount(Item item){
