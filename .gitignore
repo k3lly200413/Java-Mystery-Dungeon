@@ -11,6 +11,10 @@
 build/
 bin/
 
+# Ignore gradle build files
+
+build.gradle.kts
+
 # Ignore Idea customizations
 .idea
 
@@ -18,3 +22,4 @@ bin/
 .project
 .settings/
 .classpath
+
