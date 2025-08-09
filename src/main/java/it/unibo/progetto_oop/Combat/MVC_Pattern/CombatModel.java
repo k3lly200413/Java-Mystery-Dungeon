@@ -2,8 +2,9 @@ package it.unibo.progetto_oop.Combat.MVC_Pattern;
 import java.util.Objects;
 
 import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.Overworld.Adapter_Pattern.PossibleUser;
 
-public class CombatModel {
+public class CombatModel implements PossibleUser{
 
     private int size;
     private Position playerPosition;
@@ -13,6 +14,7 @@ public class CombatModel {
     private int playerHealth;
     private int enemyHealth;
     private final int maxHealth = 100;
+    private int buff;
 
     private int playerPower;
     private int playerPoisonPower;
@@ -29,6 +31,7 @@ public class CombatModel {
 
         this.size = size;
         this.playerPower = playerPower;
+        this.buff = 0;
         this.playerPoisonPower = playerPoisonPower;
         this.enemyPower = enemyPower;
         this.enemySpeed = enemySpeed;
@@ -101,6 +104,16 @@ public class CombatModel {
         return isPlayerTurn;
     }
 
+    @Override
+    public int getHp() { 
+        return playerHealth; 
+    }
+
+    @Override
+    public int getMaxHP() { 
+        return maxHealth; 
+    }
+
 
     // setters
     public void setPlayerPosition(Position playerPosition) {
@@ -124,6 +137,15 @@ public class CombatModel {
     }
 
     // for combat logic
+    public void increasePlayerHealth(int amount){
+        this.playerHealth = Math.min(maxHealth, this.playerHealth + amount);
+    }
+
+    public void increasePlayerPower(int power){
+        this.playerPower += power;
+        this.buff = power; // the increased power is stored in buff
+    }
+
     public void decreasePlayerHealth(int amount) {
         this.playerHealth = Math.max(0, this.playerHealth - amount);  //only decrease health, do not allow negative values
     }

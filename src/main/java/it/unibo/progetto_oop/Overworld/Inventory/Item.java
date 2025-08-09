@@ -8,7 +8,7 @@ public class Item {
     
     public Item(String name, String description, Position position) {
         this.name = name;
-        this.description = "<html>"+description.replace("\n", "<br>")+"</html>";
+        this.description = description;
         this.position = position;
     }
 
