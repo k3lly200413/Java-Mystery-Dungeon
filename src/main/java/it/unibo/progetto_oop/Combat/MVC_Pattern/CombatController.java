@@ -23,20 +23,11 @@ public class CombatController {
     private final MeleeButton meleeCommand;
     private final LongRangeButton longRangeCommand;
 
-<<<<<<< HEAD
-    private int zoomerStep = 0;
-
-    private static final int ANIMATION_DELAY = 100;      //ms
-    private static final int POST_ATTACK_DELAY = 500;    // ms
-    private static final int INFO_ZOOM_DELAY = 200; // ms
-    private static final int INFO_NEXT_DRAW_DELAY = 300; // ms
-=======
     private static final int ANIMATION_DELAY = 100;                     //ms
     private static final int POST_ATTACK_DELAY = 500;                   // ms
     private static final int INFO_ZOOM_DELAY = 200;                     // ms
     private static final int INFO_NEXT_DRAW_DELAY = 300;                // ms
     private static final int MINIMUM_STAMINA_FOR_SPECIAL_ATTACK = 5;    // Placeholder
->>>>>>> origin/Charge-up-boss
 
     private Timer animationTimer;
 
@@ -81,23 +72,6 @@ public class CombatController {
      * @author kelly.applebee@studio.unibo.itc
      */
     public void redrawView(){
-<<<<<<< HEAD
-        this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), 
-                        this.model.getAttackPosition(), true, true, 
-                        false, false, 1, 1, false, model.getPlayerPosition(), false, 0);
-    }
-
-    public void redrawView( Position palyerPos, Position enemyPos, Position flamePos, 
-                            boolean drawPlayer, boolean drawEnemy, boolean drawFlame, 
-                            boolean drawPoison, int playerRange, int enemyRange, 
-                            boolean isGameOver, Position whoDied, boolean drawPoisonDamage, 
-                            int poisonYCorrd) {
-        this.view.redrawGrid(   palyerPos, enemyPos, flamePos, 
-                                drawPlayer, drawEnemy, drawFlame, 
-                                drawPoison, playerRange, enemyRange, 
-                                isGameOver, whoDied, drawPoisonDamage, 
-                                poisonYCorrd);
-=======
         this.view.redrawGrid(   this.model.getPlayerPosition(), this.model.getEnemyPosition(), 
                                 this.model.getAttackPosition(), 0, true, true, 
                                 false, false, 1, 1, false, 
@@ -115,7 +89,6 @@ public class CombatController {
                                 flameSize, drawPlayer, drawEnemy, 
                                 drawFlame, drawPoison, playerRange, enemyRange,
                                 isGameOver, whoDied, bossRayAttack, deathRayPath, false, 0);
->>>>>>> origin/Charge-up-boss
     }
 
     /**
@@ -291,11 +264,7 @@ public class CombatController {
             if (this.model.getAttackPosition().x() >= this.model.getEnemyPosition().x() - 2) {
                 this.stopAnimationTimer();
                 this.model.setAttackPosition(this.model.getPlayerPosition()); // Reset flame position
-<<<<<<< HEAD
-                this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), true, true, false, false, 1, 1, false, model.getPlayerPosition(), false, 0);
-=======
                 this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), (isFlame || isPoison) ? 0 : 1, true, true, false, false, 1, 1, false, (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()), (isFlame || isPoison) ? false : true, new ArrayList<Position>(), false, 0);
->>>>>>> origin/Charge-up-boss
                 if (onHit != null) {
                     onHit.run();
                 }
@@ -307,12 +276,8 @@ public class CombatController {
             Position nextFlamePos = longRangeCommand.execute().get(0);
             this.model.setAttackPosition(nextFlamePos);
             // Redraw showing the projectile
-<<<<<<< HEAD
-            this.view.redrawGrid(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), true, true, !isPoison, isPoison, 1, 1, false, model.getPlayerPosition(), false, 0);
-=======
 
             this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), (isFlame || isPoison) ? 0 : 1, true, true, !isPoison, isPoison, 1, 1, false, model.getPlayerPosition(), (isFlame || isPoison) ? false : true, new ArrayList<Position>(), false, 0);
->>>>>>> origin/Charge-up-boss
         });
         animationTimer.start();
     }
@@ -579,11 +544,7 @@ public class CombatController {
                 redrawView();
                 this.view.setAllButtonsEnabled();
             } else {
-<<<<<<< HEAD
-                this.view.redrawGrid(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), true, true, false, false, 1, zoomerStep, false, model.getPlayerPosition(), false, 0);
-=======
                 this.redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), 0, true, true, false, false, 1, zoomerStep, false, model.getPlayerPosition(), false, new ArrayList<Position>(), false, 0);
->>>>>>> origin/Charge-up-boss
             }
         });
         animationTimer.start();
@@ -591,12 +552,7 @@ public class CombatController {
 
     public void applyPostTurnEffects() {
         if (model.isEnemyPoisoned() && model.getEnemyHealth() > 0){
-<<<<<<< HEAD
-            view.showInfo("Enemy take oison damage!");
-            this.animatePoisonDamage();
-=======
             view.showInfo("Enemy take poison damage!");
->>>>>>> origin/Charge-up-boss
             model.decreaseEnemyHealth(model.getPlayerPoisonPower());
             view.updateEnemyHealth(model.getEnemyHealth());
         }
@@ -646,11 +602,7 @@ public class CombatController {
 
         this.redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), 1, true, true, false, false, 1, 2, true, model.getEnemyPosition(), false, new ArrayList<Position>(), false, 0);
         this.animationTimer.start();
-<<<<<<< HEAD
-        this.redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), true, true, false, false, 1, 2, true, model.getEnemyPosition(), false, 0);
-=======
         this.redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), 0, true, true, false, false, 1, 2, true, model.getEnemyPosition(), false, new ArrayList<Position>(), false, 0);
->>>>>>> origin/Charge-up-boss
         if (onComplete != null) {
             onComplete.run();
         }
