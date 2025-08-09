@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.Adapter_Pattern;
+package it.unibo.progetto_oop.Overworld.AdapterPattern;
 
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
