@@ -29,6 +29,8 @@ public class CombatController {
     private static final int INFO_NEXT_DRAW_DELAY = 300;                // ms
     private static final int MINIMUM_STAMINA_FOR_SPECIAL_ATTACK = 5;    // Placeholder
 
+    private int zoomerStep = 0;
+
     private Timer animationTimer;
 
     /**
@@ -72,23 +74,24 @@ public class CombatController {
      * @author kelly.applebee@studio.unibo.itc
      */
     public void redrawView(){
-        this.view.redrawGrid(   this.model.getPlayerPosition(), this.model.getEnemyPosition(), 
-                                this.model.getAttackPosition(), 0, true, true, 
-                                false, false, 1, 1, false, 
-                                model.getPlayerPosition(), false, 
-                                new ArrayList<Position>(), false, 0);
+        this.view.redrawGrid(   this.model.getPlayerPosition(), this.model.getEnemyPosition(),
+                                this.model.getAttackPosition(), 0, true, true, false, false, 1, 
+                                1, this.model.isGameOver(), 
+                                (this.model.isPlayerTurn() ? this.model.getEnemyPosition() : this.model.getPlayerPosition()), 
+                                false, new ArrayList<Position>(), false, 0, false, 0);
     }
 
-    public void redrawView(Position palyerPos, Position enemyPos, Position flamePos, 
+    public void redrawView( Position palyerPos, Position enemyPos, Position flamePos, 
                             int flameSize, boolean drawPlayer, boolean drawEnemy, 
                             boolean drawFlame, boolean drawPoison, int playerRange, 
                             int enemyRange, boolean isGameOver, Position whoDied,
                             boolean bossRayAttack, ArrayList<Position> deathRayPath,
+                            boolean drawPoisonDamage, int poisonYCoord, 
                             boolean isCharging, int chargingPosition) {
-        this.view.redrawGrid(   palyerPos, enemyPos, flamePos, 
-                                flameSize, drawPlayer, drawEnemy, 
-                                drawFlame, drawPoison, playerRange, enemyRange,
-                                isGameOver, whoDied, bossRayAttack, deathRayPath, false, 0);
+        this.view.redrawGrid(   palyerPos, enemyPos, flamePos, flameSize, drawPlayer, 
+                                drawEnemy, drawFlame, drawPoison, playerRange, enemyRange, 
+                                isGameOver, whoDied, bossRayAttack, deathRayPath, drawPoisonDamage, 
+                                poisonYCoord, isCharging, chargingPosition);
     }
 
     /**
@@ -257,14 +260,20 @@ public class CombatController {
         this.stopAnimationTimer();
         this.model.setAttackPosition(this.model.getPlayerPosition()); // Start flame at player
 
-        this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), (isFlame || isPoison) ? 0 : 1, true, true, false, false, 1, 1, false, (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()), (isFlame || isPoison) ? false : true, new ArrayList<Position>(), false, 0);
+        this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), 
+                        (isFlame || isPoison) ? 0 : 1, true, true, false, false, 1, 1, false, 
+                        (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()), 
+                        (isFlame || isPoison) ? false : true, new ArrayList<Position>(), false, 0, false, 0);
 
         animationTimer = new Timer(ANIMATION_DELAY, e -> {
             // Check if flame reached the enemy
             if (this.model.getAttackPosition().x() >= this.model.getEnemyPosition().x() - 2) {
                 this.stopAnimationTimer();
                 this.model.setAttackPosition(this.model.getPlayerPosition()); // Reset flame position
-                this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), (isFlame || isPoison) ? 0 : 1, true, true, false, false, 1, 1, false, (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()), (isFlame || isPoison) ? false : true, new ArrayList<Position>(), false, 0);
+                this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), 
+                                (isFlame || isPoison) ? 0 : 1, true, true, false, false, 1, 1, false, 
+                                (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()), 
+                                (isFlame || isPoison) ? false : true, new ArrayList<Position>(), false, 0, false, 0);
                 if (onHit != null) {
                     onHit.run();
                 }
@@ -277,7 +286,10 @@ public class CombatController {
             this.model.setAttackPosition(nextFlamePos);
             // Redraw showing the projectile
 
-            this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), (isFlame || isPoison) ? 0 : 1, true, true, !isPoison, isPoison, 1, 1, false, model.getPlayerPosition(), (isFlame || isPoison) ? false : true, new ArrayList<Position>(), false, 0);
+            this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), 
+                            (isFlame || isPoison) ? 0 : 1, true, true, !isPoison, isPoison, 1, 1, false, 
+                            model.getPlayerPosition(), (isFlame || isPoison) ? false : true, 
+                            new ArrayList<Position>(), false, 0, false, 0);
         });
         animationTimer.start();
     }
@@ -322,7 +334,7 @@ public class CombatController {
                 this.redrawView(this.model.getPlayerPosition(), 
                                 this.model.getEnemyPosition(), new Position(0, 0), 
                                 2, true, true, false, false, 1, 1, false, new Position(0, 0),
-                                true, deathRayLastPosition, false, 0);
+                                true, deathRayLastPosition, false, 0, false, 0);
             }
         });
 
@@ -510,7 +522,6 @@ public class CombatController {
                 this.redrawView();
             }
         });
-        zoomerStep = 0;
         animationTimer.start();
     }
 
@@ -526,7 +537,9 @@ public class CombatController {
                 // TODO: if implemented model step above show that we're not in animation anymore
             }
             else {
-                redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), true, true, false, false, 1, 1, model.isGameOver(), model.getPlayerPosition(), true, step[0]);
+                redrawView( this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(),
+                0, true, true, false, false, 1, 1, this.model.isGameOver(), (this.model.isPlayerTurn() ? this.model.getEnemyPosition() : this.model.getPlayerPosition()),
+                false, new ArrayList<Position>(), true, step[0], false, 0);
                 step[0]--;
             }
         });
@@ -543,8 +556,11 @@ public class CombatController {
                 model.setEnemyPosition(originalEnemyPosition); // Reset enemy position
                 redrawView();
                 this.view.setAllButtonsEnabled();
+                zoomerStep = 0;
             } else {
-                this.redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), 0, true, true, false, false, 1, zoomerStep, false, model.getPlayerPosition(), false, new ArrayList<Position>(), false, 0);
+                this.redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), 
+                                0, true, true, false, false, 1, zoomerStep, false, model.getPlayerPosition(), 
+                                false, new ArrayList<Position>(), false, 0, false, 0);
             }
         });
         animationTimer.start();
@@ -582,7 +598,7 @@ public class CombatController {
                 position[0]--;
                 this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(),
                                 0, true, true, false, false, 1, 1, false, (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()),
-                                true, new ArrayList<Position>(), true, position[0]);
+                                true, new ArrayList<Position>(), true, position[0], false, 0);
             });
             if (position[0] == 0){
                 times[0]--;
@@ -600,9 +616,13 @@ public class CombatController {
             this.animationTimer.start();
         }
 
-        this.redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), 1, true, true, false, false, 1, 2, true, model.getEnemyPosition(), false, new ArrayList<Position>(), false, 0);
+        this.redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), 
+                        1, true, true, false, false, 1, 2, true, model.getEnemyPosition(), false, 
+                        new ArrayList<Position>(), false, 0, false, 0);
         this.animationTimer.start();
-        this.redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), 0, true, true, false, false, 1, 2, true, model.getEnemyPosition(), false, new ArrayList<Position>(), false, 0);
+        this.redrawView(model.getPlayerPosition(), model.getEnemyPosition(), model.getAttackPosition(), 
+                        0, true, true, false, false, 1, 2, true, model.getEnemyPosition(), false, 
+                        new ArrayList<Position>(), false, 0, false, 0);
         if (onComplete != null) {
             onComplete.run();
         }
