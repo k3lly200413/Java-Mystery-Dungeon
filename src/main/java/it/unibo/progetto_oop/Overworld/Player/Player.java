@@ -28,22 +28,28 @@ public class Player {
         this.observers = new ArrayList<>();
     }
 
+    /** add an observer */
     public void addObservers(PlayerObserver observer){
-        if (!this.observers.contains(observer)){
+        if (!this.observers.contains(observer)){ // if not already present
             this.observers.add(observer);
         }
     }
 
+    /** remove an observer */
     public void removeObservers(PlayerObserver observer){
         if (!this.observers.remove(observer)){
             System.out.println("Observer not found");
         }
     }
 
+    /** Notify observers about hp change */
     private void notifyHpChange(int currentHP, int maxHP) {
         this.observers.stream().forEach(observer -> observer.playerHpChanged(this.currentHP, this.maxHP));
     }
 
+    /**
+     * Notify observers about inventory changes.
+     */
     private void notifyInventoryChanged() {
         this.observers.stream().forEach(observer -> observer.playerInventoryChanged(this.inventory));
     }
@@ -57,25 +63,29 @@ public class Player {
         // TODO
     }
 
+    /**
+     * Add an item to the player's inventory.
+     * @param item item to add to the inventory
+     */
     public void addItem(Item item){
         // TODO
     }
 
+    /**
+     * Heal the player by a specified amount of health.
+     * @param hp amount of health to heal
+     */
     public void heal(int hp){
         this.setHp(hp);
     }
 
-    public int getCurrentHp(){
-        return this.currentHP;
-    }
-
-    public int getMaxHp(){
-        return this.maxHP;
-    }
-
+    /**
+     * Set the player's health points.
+     * @param amount amount to increase the player's health points
+     */
     public void setHp(int amount){
         if (this.currentHP != this.maxHP && this.currentHP != 0){
-            this.currentHP = Math.max(this.maxHP, this.currentHP + amount);
+            this.currentHP = Math.min(this.maxHP, this.currentHP + amount); // if currentHP + amount > maxHP, set it to maxHP
             this.notifyHpChange(this.currentHP, this.maxHP);
         }
         else{
@@ -83,4 +93,24 @@ public class Player {
         }
         
     }
+
+    // getters
+
+    /**
+     * Get the current health points of the player.
+     * @return the current health points of the player
+     */
+    public int getCurrentHp(){
+        return this.currentHP;
+    }
+
+    /**
+     * Get the maximum health points of the player.
+     * @return the maximum health points of the player
+     */
+    public int getMaxHp(){
+        return this.maxHP;
+    }
+
+    
 }

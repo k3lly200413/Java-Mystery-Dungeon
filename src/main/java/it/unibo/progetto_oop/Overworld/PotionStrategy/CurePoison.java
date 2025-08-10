@@ -11,7 +11,7 @@ public class CurePoison implements PotionEffectStrategy {
      * 
      */
     @Override
-    public void apllyEffect(PossibleUser user) {
+    public void apllyEffect(PossibleUser user) { // TODO: Remove TypeCast
         if (user instanceof CombatModel){  // Check whether the user is in combat mode
             CombatModel combatUser = (CombatModel) user;
             combatUser.setPlayerPoisoned(false);
