@@ -2,9 +2,14 @@ package it.unibo.progetto_oop.Overworld.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.unibo.progetto_oop.Overworld.AdapterPattern.OverworldPlayerAdapter;
+import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 import it.unibo.progetto_oop.Overworld.Inventory.Inventory;
 import it.unibo.progetto_oop.Overworld.Inventory.Item;
 import it.unibo.progetto_oop.Overworld.Player.PlayerObserver.PlayerObserver;
+import it.unibo.progetto_oop.Overworld.PotionStrategy.Potion;
+import it.unibo.progetto_oop.Overworld.PotionStrategy.PotionEffectStrategy;
 import it.unibo.progetto_oop.Combat.PotionStrategy.*;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
@@ -43,6 +48,11 @@ public class Player {
         this.observers.stream().forEach(observer -> observer.playerInventoryChanged(this.inventory));
     }
 
+    /**
+     * Use an item from the player's inventory.
+     * 
+     * @param item The item to be used.
+     */
     public void useItem(Item item){
         // TODO
     }
