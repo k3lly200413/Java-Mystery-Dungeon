@@ -5,13 +5,13 @@ import java.util.List;
 
 import it.unibo.progetto_oop.Overworld.AdapterPattern.OverworldPlayerAdapter;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
-import it.unibo.progetto_oop.Overworld.Inventory.Inventory;
-import it.unibo.progetto_oop.Overworld.Inventory.Item;
 import it.unibo.progetto_oop.Overworld.Player.PlayerObserver.PlayerObserver;
-import it.unibo.progetto_oop.Overworld.PotionStrategy.Potion;
-import it.unibo.progetto_oop.Overworld.PotionStrategy.PotionEffectStrategy;
+import it.unibo.progetto_oop.Overworld.PotionStrategy.Potion; // TODO: change
+import it.unibo.progetto_oop.Overworld.PotionStrategy.PotionEffectStrategy; // same as above
 import it.unibo.progetto_oop.Combat.PotionStrategy.*;
-import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.Combat.Inventory.Inventory;
+import it.unibo.progetto_oop.Combat.Inventory.Item;
+import it.unibo.progetto_oop.Combat.Position.Position; // TODO: add getter for position
 
 // The Player class - Acts as the Subject/Observable
 public class Player {
@@ -60,7 +60,28 @@ public class Player {
      * @param item The item to be used.
      */
     public void useItem(Item item){
-        // TODO
+        if (this.inventory.hasItem(item)){ // check wether the item is in the inventory
+            if (item instanceof Potion) {
+                Potion potion = (Potion) item;
+                PotionEffectStrategy strategy = potion.getStrategy(); // the kind of potion
+                if (strategy != null) {
+                    System.out.println("Using potion " + "infos of potion"); // TODO --> print infos of potion
+                    PossibleUser adaptedPlayer = new OverworldPlayerAdapter(this); 
+                    potion.use(adaptedPlayer);
+                    this.inventory.decreseItemCount(item);
+                    this.notifyInventoryChanged();
+                }
+                else{
+                    System.out.println("Strategy is null");
+                }
+            }
+            else {
+                System.out.println("Not an istance of Potion, input ignored"); // the only usable objecys are potions
+            }
+        }
+        else{
+            System.out.println("Object not in inventory, input ignored");
+        }
     }
 
     /**
@@ -68,7 +89,13 @@ public class Player {
      * @param item item to add to the inventory
      */
     public void addItem(Item item){
-        // TODO
+        if (this.inventory.addItem(item)){
+            System.out.println("Aggiunto nuovo int a chiave"); // TODO: remove this print
+        }
+        else{
+            System.out.println("Chiave Non presente quindi aggiunta"); // same as above
+        }
+        this.observers.stream().forEach(observer -> observer.playerInventoryChanged(inventory));
     }
 
     /**

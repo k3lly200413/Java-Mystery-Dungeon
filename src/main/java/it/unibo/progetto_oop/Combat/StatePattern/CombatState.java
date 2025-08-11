@@ -1,7 +1,7 @@
 package it.unibo.progetto_oop.Combat.StatePattern;
 
+import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
-import it.unibo.progetto_oop.Overworld.Inventory.Item;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public interface CombatState {
