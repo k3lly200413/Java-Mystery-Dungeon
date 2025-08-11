@@ -2,11 +2,16 @@ package it.unibo.progetto_oop.Overworld.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import it.unibo.progetto_oop.Overworld.Inventory.Inventory;
-import it.unibo.progetto_oop.Overworld.Inventory.Item;
+
+import it.unibo.progetto_oop.Overworld.AdapterPattern.OverworldPlayerAdapter;
+import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 import it.unibo.progetto_oop.Overworld.Player.PlayerObserver.PlayerObserver;
+import it.unibo.progetto_oop.Overworld.PotionStrategy.Potion; // TODO: change
+import it.unibo.progetto_oop.Overworld.PotionStrategy.PotionEffectStrategy; // same as above
 import it.unibo.progetto_oop.Combat.PotionStrategy.*;
-import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.Combat.Inventory.Inventory;
+import it.unibo.progetto_oop.Combat.Inventory.Item;
+import it.unibo.progetto_oop.Combat.Position.Position; // TODO: add getter for position
 
 // The Player class - Acts as the Subject/Observable
 public class Player {
@@ -23,49 +28,91 @@ public class Player {
         this.observers = new ArrayList<>();
     }
 
+    /** add an observer */
     public void addObservers(PlayerObserver observer){
-        if (!this.observers.contains(observer)){
+        if (!this.observers.contains(observer)){ // if not already present
             this.observers.add(observer);
         }
     }
 
+    /** remove an observer */
     public void removeObservers(PlayerObserver observer){
         if (!this.observers.remove(observer)){
             System.out.println("Observer not found");
         }
     }
 
+    /** Notify observers about hp change */
     private void notifyHpChange(int currentHP, int maxHP) {
         this.observers.stream().forEach(observer -> observer.playerHpChanged(this.currentHP, this.maxHP));
     }
 
+    /**
+     * Notify observers about inventory changes.
+     */
     private void notifyInventoryChanged() {
         this.observers.stream().forEach(observer -> observer.playerInventoryChanged(this.inventory));
     }
 
+    /**
+     * Use an item from the player's inventory.
+     * 
+     * @param item The item to be used.
+     */
     public void useItem(Item item){
-        // TODO
+        if (this.inventory.hasItem(item)){ // check wether the item is in the inventory
+            if (item instanceof Potion) {
+                Potion potion = (Potion) item;
+                PotionEffectStrategy strategy = potion.getStrategy(); // the kind of potion
+                if (strategy != null) {
+                    System.out.println("Using potion " + "infos of potion"); // TODO --> print infos of potion
+                    PossibleUser adaptedPlayer = new OverworldPlayerAdapter(this); 
+                    potion.use(adaptedPlayer);
+                    this.inventory.decreseItemCount(item);
+                    this.notifyInventoryChanged();
+                }
+                else{
+                    System.out.println("Strategy is null");
+                }
+            }
+            else {
+                System.out.println("Not an istance of Potion, input ignored"); // the only usable objecys are potions
+            }
+        }
+        else{
+            System.out.println("Object not in inventory, input ignored");
+        }
     }
 
+    /**
+     * Add an item to the player's inventory.
+     * @param item item to add to the inventory
+     */
     public void addItem(Item item){
-        // TODO
+        if (this.inventory.addItem(item)){
+            System.out.println("Aggiunto nuovo int a chiave"); // TODO: remove this print
+        }
+        else{
+            System.out.println("Chiave Non presente quindi aggiunta"); // same as above
+        }
+        this.observers.stream().forEach(observer -> observer.playerInventoryChanged(inventory));
     }
 
+    /**
+     * Heal the player by a specified amount of health.
+     * @param hp amount of health to heal
+     */
     public void heal(int hp){
         this.setHp(hp);
     }
 
-    public int getCurrentHp(){
-        return this.currentHP;
-    }
-
-    public int getMaxHp(){
-        return this.maxHP;
-    }
-
+    /**
+     * Set the player's health points.
+     * @param amount amount to increase the player's health points
+     */
     public void setHp(int amount){
         if (this.currentHP != this.maxHP && this.currentHP != 0){
-            this.currentHP = Math.max(this.maxHP, this.currentHP + amount);
+            this.currentHP = Math.min(this.maxHP, this.currentHP + amount); // if currentHP + amount > maxHP, set it to maxHP
             this.notifyHpChange(this.currentHP, this.maxHP);
         }
         else{
@@ -73,4 +120,24 @@ public class Player {
         }
         
     }
+
+    // getters
+
+    /**
+     * Get the current health points of the player.
+     * @return the current health points of the player
+     */
+    public int getCurrentHp(){
+        return this.currentHP;
+    }
+
+    /**
+     * Get the maximum health points of the player.
+     * @return the maximum health points of the player
+     */
+    public int getMaxHp(){
+        return this.maxHP;
+    }
+
+    
 }

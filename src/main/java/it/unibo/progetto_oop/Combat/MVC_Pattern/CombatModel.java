@@ -2,7 +2,7 @@ package it.unibo.progetto_oop.Combat.MVC_Pattern;
 import java.util.Objects;
 
 import it.unibo.progetto_oop.Combat.Position.Position;
-import it.unibo.progetto_oop.Overworld.Adapter_Pattern.PossibleUser;
+import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 
 public class CombatModel implements PossibleUser{
 
