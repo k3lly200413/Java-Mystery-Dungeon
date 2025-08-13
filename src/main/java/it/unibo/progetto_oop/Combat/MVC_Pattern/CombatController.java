@@ -106,7 +106,8 @@ public class CombatController {
         this.view.addInfoButtonListener(e -> handleInfo());
         this.view.addBagButtonListener(e -> handleBagMenu());
         this.view.addRunButtonListener(e -> System.out.println("Run clicked - Not Yet Implemented"));
-        this.view.addCurePoisonButtonListener(e -> this.handleCurePoisonInput());
+        this.view.addCurePoisonButtonListener(e -> this.handleCurePoisonInput());A
+        this.view.addAttackButtonListener(e->handleAttackBuff());
     }
 
     private void handleAttackMenu() {
@@ -650,5 +651,9 @@ public class CombatController {
         });
         playerTimer.start();
     }*/
+
+    private void handleAttackBuff() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
 }
