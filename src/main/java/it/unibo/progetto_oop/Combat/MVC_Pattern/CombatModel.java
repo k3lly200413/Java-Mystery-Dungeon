@@ -17,7 +17,7 @@ public class CombatModel implements PossibleUser{
     private final int maxHealth = 100;
 
     private int playerStamina;
-    private int playerStaminaMax = 100;
+    private int playerStaminaMax;
 
     private int playerPower;
     private int playerPoisonPower;
@@ -31,7 +31,7 @@ public class CombatModel implements PossibleUser{
     private boolean enemyPoisoned;
     private boolean isPlayerPoison;
     private boolean isPlayerTurn = true; // Added to manage turns
-    private final int basicPlayerPower = 1;
+    private final int basicPlayerPower;
     private Position whoDied;
 
     private boolean isBossTurn;
@@ -46,39 +46,42 @@ public class CombatModel implements PossibleUser{
 
 
 
-    public CombatModel(int size, Position playerPosition, Position enemyPosition, Position attackPosition,
-            int playerHealth, int enemyHealth, int playerStamina, int playerStaminaMax, int playerPower,
-            int playerPoisonPower, int enemyPoisonPower, int playerLongRangePower, int enemyLongRangePower,
-            int enemyPower, int enemySpeed, String enemyName, boolean enemyPoisoned, boolean isPlayerPoison,
-            boolean isPlayerTurn, Position whoDied, boolean isBossTurn, int bossAttackCounter, int maxBossHit,
-            String currentBossState, ArrayList<Position> deathRayPath, int bossTurnCounter, boolean poisonAnimation) {
+    public CombatModel(int size,int StaminaMax, int playerPower,
+            int playerPoisonPower, int playerLongRangePower, 
+            int enemyPower, int enemySpeed, String enemyName) {
+        
         this.size = size;
-        this.playerPosition = playerPosition;
-        this.enemyPosition = enemyPosition;
-        this.attackPosition = attackPosition;
-        this.playerHealth = playerHealth;
-        this.enemyHealth = enemyHealth;
-        this.playerStamina = playerStamina;
-        this.playerStaminaMax = playerStaminaMax;
+        this.playerStaminaMax = StaminaMax;
         this.playerPower = playerPower;
         this.playerPoisonPower = playerPoisonPower;
-        this.enemyPoisonPower = enemyPoisonPower;
-        this.playerLongRangePower = playerLongRangePower;
-        this.enemyLongRangePower = enemyLongRangePower;
         this.enemyPower = enemyPower;
         this.enemySpeed = enemySpeed;
         this.enemyName = enemyName;
-        this.enemyPoisoned = enemyPoisoned;
-        this.isPlayerPoison = isPlayerPoison;
-        this.isPlayerTurn = isPlayerTurn;
-        this.whoDied = whoDied;
-        this.isBossTurn = isBossTurn;
-        this.bossAttackCounter = bossAttackCounter;
-        this.maxBossHit = maxBossHit;
-        this.currentBossState = currentBossState;
-        this.deathRayPath = deathRayPath;
-        this.bossTurnCounter = bossTurnCounter;
-        this.poisonAnimation = poisonAnimation;
+        this.basicPlayerPower = this.playerPower;
+
+        resetPositions();
+        this.attackPosition = this.playerPosition;
+
+        this.playerHealth = maxHealth;
+        this.enemyHealth = maxHealth;
+        this.playerStamina = StaminaMax;
+        this.enemyPoisonPower = playerPoisonPower;
+        this.playerLongRangePower = playerLongRangePower;
+        this.enemyLongRangePower = playerLongRangePower;
+
+        this.enemyPoisoned = false;
+        this.isPlayerPoison = false;
+        this.isBossTurn = false;
+
+        this.deathRayPath = new ArrayList<>();
+        this.deathRayPath.add(enemyPosition);
+
+    }
+
+    public void resetPositions() {
+        // Same logic as original Player() method
+        this.playerPosition = new Position((this.size / 3) - 2, (this.size / 2));
+        this.enemyPosition = new Position(this.size - ((this.size / 3) - 1), (this.size / 2));
     }
 
     //getters
