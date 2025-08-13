@@ -30,6 +30,7 @@ public class CombatApplication {
         int enemyPower = 3;
         int enemySpeed = 3;
         String enemyName = "Dragon";
+    
 
         // --- Application Startup ---
         // Ensure UI creation happens on the Event Dispatch Thread (EDT) for safety.

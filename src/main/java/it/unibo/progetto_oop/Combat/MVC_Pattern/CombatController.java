@@ -107,8 +107,10 @@ public class CombatController {
         this.view.addInfoButtonListener(e -> handleInfo());
         this.view.addBagButtonListener(e -> handleBagMenu());
         this.view.addRunButtonListener(e -> System.out.println("Run clicked - Not Yet Implemented"));
-        this.view.addCurePoisonButtonListener(e -> this.handleCurePoisonInput());A
+        this.view.addCurePoisonButtonListener(e -> this.handleCurePoisonInput());
         this.view.addAttackButtonListener(e->handleAttackBuff());
+        this.view.addHealButtonListener(e->handleHeal());
+
     }
 
     private void handleAttackMenu() {
@@ -656,6 +658,12 @@ public class CombatController {
     private void handleAttackBuff() {
         if(this.currentState != null){
             currentState.handleAttackBuffInput(this);
+        }
+    }
+
+    private void handleHeal() {
+        if (this.currentState != null) {
+            currentState.handleHealInput(this);
         }
     }
 

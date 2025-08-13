@@ -12,6 +12,7 @@ public interface CombatState {
     void handleBagInput(CombatController context); // Add if implementing
     void handleRunInput(CombatController context);  // Add if implementing
     void handleAttackBuffInput(CombatController context);
+    void handleHealInput(CombatController context);
 
      /**
      * 
