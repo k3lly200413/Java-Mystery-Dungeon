@@ -33,6 +33,7 @@ public class CombatController {
 
     private Timer animationTimer;
 
+    private CombatState currentState;
     /**
      * Contructor of CombatController takes in both model and view
      * <p>
@@ -653,7 +654,9 @@ public class CombatController {
     }*/
 
     private void handleAttackBuff() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if(this.currentState != null){
+            currentState.handleAttackBuffInput(this);
+        }
     }
 
 }
