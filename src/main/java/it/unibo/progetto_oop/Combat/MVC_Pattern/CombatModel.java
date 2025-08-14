@@ -84,74 +84,6 @@ public class CombatModel implements PossibleUser{
         this.enemyPosition = new Position(this.size - ((this.size / 3) - 1), (this.size / 2));
     }
 
-    //getters
-    public int getSize() {
-        return size;
-    }
-
-    public Position getPlayerPosition() {
-        return playerPosition;
-    }
-
-    public Position getEnemyPosition() {
-        return enemyPosition;
-    }
-
-    public Position getAttackPosition() {
-        return attackPosition;
-    }
-
-    public int getPlayerHealth() {
-        return playerHealth;
-    }
-
-    public int getEnemyHealth() {
-        return enemyHealth;
-    }
-
-    public int getMaxHealth() {
-        return maxHealth;
-    }
-
-    public int getPlayerPower() {
-        return playerPower;
-    }
-
-    public int getPlayerPoisonPower() {
-        return playerPoisonPower;
-    }
-
-    public int getEnemyPower() {
-        return enemyPower;
-    }
-
-    public int getEnemySpeed() {
-        return enemySpeed;
-    }
-
-    public String getEnemyName() {
-        return enemyName;
-    }
-
-    public boolean isEnemyPoisoned() {
-        return enemyPoisoned;
-    }
-
-    public boolean isPlayerTurn() {
-        return isPlayerTurn;
-    }
-
-    @Override
-    public int getHp() { 
-        return playerHealth; 
-    }
-
-    @Override
-    public int getMaxHP() { 
-        return maxHealth; 
-    }
-
-
     // setters
     public void setPlayerPosition(Position playerPosition) {
         this.playerPosition = Objects.requireNonNull(playerPosition);
@@ -250,6 +182,124 @@ public class CombatModel implements PossibleUser{
     public void clearDeathRayPath() {
         this.deathRayPath.clear();
     }
+
+    // Getters
+    public int getSize() {
+        return this.size;
+    }
+
+    public Position getPlayerPosition() {
+        return this.playerPosition;
+    }
+
+    public Position getEnemyPosition() {
+        return this.enemyPosition;
+    }
+
+    public Position getAttackPosition() {
+        return this.attackPosition;
+    }
+
+    public int getPlayerHealth() {
+        return this.playerHealth;
+    }
+
+    public int getEnemyHealth() {
+        return this.enemyHealth;
+    }
+
+    public int getMaxHealth() {
+        return this.maxHealth;
+    }
+
+    public int getPlayerStamina() {
+        return this.playerStamina;
+    }
+
+    public int getPlayerStaminaMax() {
+        return this.playerStaminaMax;
+    }
+
+    public int getPlayerPower() {
+        return this.playerPower;
+    }
+
+    public int getPlayerPoisonPower() {
+        return this.playerPoisonPower;
+    }
+
+    public int getEnemyPoisonPower() {
+        return this.enemyPoisonPower;
+    }
+
+    public int getPlayerLongRangePower() {
+        return this.playerLongRangePower;
+    }
+
+    public int getEnemyLongRangePower() {
+        return this.enemyLongRangePower;
+    }
+
+    public int getEnemyPower() {
+        return this.enemyPower;
+    }
+
+    public int getEnemySpeed() {
+        return this.enemySpeed;
+    }
+
+    public String getEnemyName() {
+        return this.enemyName;
+    }
+
+    public boolean isEnemyPoisoned() {
+        return this.enemyPoisoned;
+    }
+
+    public boolean isPlayerPoison() {
+        return this.isPlayerPoison;
+    }
+
+    public boolean isPlayerTurn() {
+        return this.isPlayerTurn;
+    }
+
+    public int getBasicPlayerPower() {
+        return this.basicPlayerPower;
+    }
+
+    public Position getWhoDied() {
+        return this.whoDied;
+    }
+
+    public boolean isBossTurn() {
+        return this.isBossTurn;
+    }
+
+    public int getBossAttackCounter() {
+        return this.bossAttackCounter;
+    }
+
+    public int getMaxBossHit() {
+        return this.maxBossHit;
+    }
+
+    public String getCurrentBossState() {
+        return this.currentBossState;
+    }
+
+    public ArrayList<Position> getDeathRayPath() {
+        return this.deathRayPath;
+    }
+
+    public int getBossTurnCounter() {
+        return this.bossTurnCounter;
+    }
+
+    public boolean isPoisonAnimation() {
+        return this.poisonAnimation;
+    }
+    
     
 
 }
