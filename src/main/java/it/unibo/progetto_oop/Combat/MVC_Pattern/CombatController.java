@@ -2,6 +2,7 @@ package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.Timer;
 
@@ -707,13 +708,31 @@ public class CombatController {
     }
 
     public EnemyTurnState getCurrentState() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCurrentState'");
+        return currentState;
     }
 
     public void performEnemyAttack() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'performEnemyAttack'");
+        Random newNumb = new Random();
+        int num = newNumb.nextInt(2);
+
+        num = 1;
+
+        System.out.println("Controller: The chosen number is: " + num);
+
+        switch (num) {
+            case 0:
+                System.out.println("Currante State Normal Attack => " + this.currentState.toString());
+                performEnemyPhysicalAttack();
+                break;
+            case 1:
+                System.out.print("EnemyTurn : ");
+                System.out.println("Currante State Normal Attack => " + this.currentState.toString());
+                this.performLongRangeAttack(this.model.getEnemyPosition(), -1, false, true);//(newNumb.nextInt(2) == 1 ? true : false));
+                break;
+            default:
+                break;
+        }
+        
     }
 
 
