@@ -280,26 +280,41 @@ public class CombatController {
         });
     }
 
-    private void longRangeAttackAnimation(boolean isPoison, boolean isFlame, Runnable onHit) {
-        this.stopAnimationTimer();
-        this.model.setAttackPosition(this.model.getPlayerPosition()); // Start flame at player
+    private void longRangeAttackAnimation(Position attacker, int direction, boolean isFlame, boolean isPoison, Runnable onHit) {
+        stopAnimationTimer(); // Ensure no other animation is running
+        
+        // Player => Flame <= Enemy 
 
-        this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), 
-                        (isFlame || isPoison) ? 0 : 1, true, true, false, false, 1, 1, false, 
-                        (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()), 
-                        (isFlame || isPoison) ? false : true, new ArrayList<Position>(), false, 0, false, 0);
+        model.setAttackPosition(new Position((attacker.x() + direction), attacker.y())); // Start flame at player
 
-        animationTimer = new Timer(ANIMATION_DELAY, e -> {
-            // Check if flame reached the enemy
-            if (this.model.getAttackPosition().x() >= this.model.getEnemyPosition().x() - 2) {
-                this.stopAnimationTimer();
-                this.model.setAttackPosition(this.model.getPlayerPosition()); // Reset flame position
-                this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), 
-                                (isFlame || isPoison) ? 0 : 1, true, true, false, false, 1, 1, false, 
-                                (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()), 
-                                (isFlame || isPoison) ? false : true, new ArrayList<Position>(), false, 0, false, 0);
+        redrawView( true, true, false, false, (isFlame || isPoison) ? 0 : 1, 1, 1, false, model.getEnemyPosition(), 
+                            (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()), 
+                            false, model.getEnemyPosition().y(), (isFlame || isPoison) ? false : true, model.getDeathRayPath()); // Redraw without flame/poison visible
+        
+        System.out.println("Attacker Position => " + attacker.equals(model.getEnemyPosition()));
+
+        animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
+            // Check if flame reached or passed the enemy
+            if (model.getAttackPosition().x() > model.getEnemyPosition().x() - 1 ||
+                model.getAttackPosition().x() < model.getPlayerPosition().x() + 1){
+                // if (model.getFlamePosition().x() >= enemy.x() -direction) { // -1 to hit when adjacent
+                System.out.println("\nFinished Long Range Attack Animation\n");
+                stopAnimationTimer();
+                // Reset flame position visually (optional, could just hide it)
+                model.setAttackPosition(attacker); // Move flame back instantly
+                redrawView( true, true, false, false, (isFlame || isPoison) ? 0 : 1, 1, 1, false, model.getEnemyPosition(), 
+                            (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()), 
+                            false, model.getEnemyPosition().y(), false, model.getDeathRayPath()); // Redraw without flame/poison visible
+                if (this.model.isPlayerTurn()) {
+                    this.model.decreaseEnemyHealth(this.model.getPlayerLongRangePower());
+                }
+                else {
+                    this.model.decreasePlayerHealth(this.model.getEnemyLongRangePower());
+                }
+                
                 if (onHit != null) {
-                    onHit.run();
+                    System.out.println("\nI now have to apply poison status\nThe State is => " + this.currentState.getClass().getSimpleName());
+                    onHit.run(); // Execute the action upon hitting
                 }
                 return;
             }
@@ -724,9 +739,30 @@ public class CombatController {
         
     }
 
-    private void performLongRangeAttack(Position attacker, int direction, boolean flame, boolean poison) {
-        longRangeAttackAnimation(//........
+    public void performLongRangeAttack(Position attacker, int direction, boolean applyFlameIntent, boolean applyPoisonIntent) {
+        // Pass the intent to the animation, AND create the completion runnable
 
+        System.out.println(" Performing Long Range Attack");
+
+        longRangeAttackAnimation(attacker, direction, applyFlameIntent, applyPoisonIntent, () -> {
+            // Animation finished - just signal the state machine
+            if (currentState != null) {
+                // Pass the original intent along so the state knows if poison should be applied ON HIT
+                // We need a way to pass this... Modify handleAnimationComplete? Or handle poison within animation?
+                // --> Simpler approach for now: Handle poison status SETTING inside handleAnimationComplete <--
+                System.out.println("About to Apply posion");
+                System.out.println("\nCurrent State = > "+this.currentState.toString() + "\n");
+                if (applyPoisonIntent){
+                    // TODO: change to make it more efficient
+                    if (this.model.isPlayerTurn()) {
+                        this.model.setEnemyPoisoned(applyPoisonIntent);
+                    }
+                    else {
+                        this.model.setPlayerPoisoned(applyPoisonIntent);
+                    }
+                }
+                currentState.handleAnimationComplete(this); // No extra args needed if state handles it
+            }
         });
     }
 
