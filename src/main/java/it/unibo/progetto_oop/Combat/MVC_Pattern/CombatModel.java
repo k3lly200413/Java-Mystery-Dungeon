@@ -135,7 +135,7 @@ public class CombatModel implements PossibleUser{
         return false;
     }
 
-    public void clearNossAttackCount(){
+    public void clearBossAttackCount(){
         this.bossAttackCounter = 0;
     }
 

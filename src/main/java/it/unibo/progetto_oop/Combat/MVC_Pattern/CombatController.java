@@ -368,7 +368,7 @@ public class CombatController {
      * 
      * @author kelly.applebee@studio.unibo.it
      */
-    private void stopAnimationTimer() {
+    public void stopAnimationTimer() {
         if (animationTimer != null && animationTimer.isRunning()) {
             animationTimer.stop();
             animationTimer = null; // Release reference
@@ -700,5 +700,22 @@ public class CombatController {
             currentState.handleHealInput(this);
         }
     }
+
+    public void setState(CombatState state) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setState'");
+    }
+
+    public EnemyTurnState getCurrentState() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCurrentState'");
+    }
+
+    public void performEnemyAttack() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'performEnemyAttack'");
+    }
+
+
 
 }
