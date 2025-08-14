@@ -36,7 +36,7 @@ public class CombatModel implements PossibleUser{
 
     private boolean isBossTurn;
     private int bossAttackCounter = 0;
-    private int maxBossHit = 3;
+    private final int maxBossHit = 3;
 
     private String currentBossState = "NORMAL";
     private ArrayList<Position> deathRayPath = new ArrayList<>();
@@ -78,31 +78,10 @@ public class CombatModel implements PossibleUser{
 
     }
 
-    public void resetPositions() {
+    public final void resetPositions() {
         // Same logic as original Player() method
         this.playerPosition = new Position((this.size / 3) - 2, (this.size / 2));
         this.enemyPosition = new Position(this.size - ((this.size / 3) - 1), (this.size / 2));
-    }
-
-    // setters
-    public void setPlayerPosition(Position playerPosition) {
-        this.playerPosition = Objects.requireNonNull(playerPosition);
-    }
-
-    public void setEnemyPosition(Position enemyPosition) {
-        this.enemyPosition = Objects.requireNonNull(enemyPosition);
-    }
-
-    public void setAttackPosition(Position attackPosition) {
-        this.attackPosition = Objects.requireNonNull(attackPosition);
-    }
-    
-    public void setEnemyPoisoned(boolean enemyPoisoned) {
-        this.enemyPoisoned = enemyPoisoned;
-    }
-
-    public void setPlayerTurn(boolean isPlayerTurn) {
-        this.isPlayerTurn = isPlayerTurn;
     }
 
     // for combat logic
@@ -154,10 +133,6 @@ public class CombatModel implements PossibleUser{
             return true;
         }
         return false;
-    }
-
-    public void setPlayerPoisoned(boolean isPoisoned) {
-        this.isPlayerPoison = isPoisoned;
     }
 
     public void clearNossAttackCount(){
@@ -300,6 +275,44 @@ public class CombatModel implements PossibleUser{
         return this.poisonAnimation;
     }
     
-    
+    // setters
+    public void setPlayerPosition(Position playerPosition) {
+        this.playerPosition = Objects.requireNonNull(playerPosition);
+    }
 
+    public void setEnemyPosition(Position enemyPosition) {
+        this.enemyPosition = Objects.requireNonNull(enemyPosition);
+    }
+
+    public void setAttackPosition(Position attackPosition) {
+        this.attackPosition = Objects.requireNonNull(attackPosition);
+    }
+
+    public void setEnemyPoisoned(boolean enemyPoisoned) {
+        this.enemyPoisoned = enemyPoisoned;
+    }
+
+    public void setPlayerTurn(boolean isPlayerTurn) {
+        this.isPlayerTurn = isPlayerTurn;
+    }
+
+    public void setPlayerPoisoned(boolean isPoisoned) {
+        this.isPlayerPoison = isPoisoned;
+    }
+
+    public void setPoisonAnimation(boolean newState){
+        this.poisonAnimation = newState;
+    }
+
+    public void setBossTurn(boolean bossTurn){
+        this.isBossTurn = bossTurn;
+    }
+
+    public void setBossAttackCounter(int bossAttackCounter) {
+        this.bossAttackCounter = bossAttackCounter;
+    }
+
+    public void setCurrentBossState(String currentBossState) {
+        this.currentBossState = currentBossState;
+    }
 }
