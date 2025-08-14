@@ -10,7 +10,9 @@ import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
 import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Combat.StatePattern.AnimatingState;
 import it.unibo.progetto_oop.Combat.StatePattern.CombatState;
+import it.unibo.progetto_oop.Combat.StatePattern.EnemyTurnState;
 import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
+
 
 /**
  * Controller class in Model View Controller Pattern
@@ -32,6 +34,7 @@ public class CombatController {
     private int zoomerStep = 0;
 
     private Timer animationTimer;
+    private Timer enemyActionTimer; 
 
     private CombatState currentState;
     /**
@@ -193,6 +196,22 @@ public class CombatController {
         });
         enemyTurnDelayTimer.setRepeats(false); //ensure it only runs once
         enemyTurnDelayTimer.start();
+    }
+
+    public void performDelayedEnemyAction(int delay,Runnable action) {
+        // Logic for delayed enemy action
+        if(enemyActionTimer != null && enemyActionTimer.isRunning()) {
+            enemyActionTimer.stop(); // Stop any previous timer
+        }
+        enemyActionTimer = new Timer(delay, e -> {
+            if (currentState instanceof EnemyTurnState){
+                action.run(); // Execute the action
+            }else{
+                System.err.println("Error: Not in enemy turn state, cannot perform delayed action.");
+            }
+        });
+        enemyActionTimer.setRepeats(false); // Ensure it only runs once
+        enemyActionTimer.start();
     }
 
     public void enemyTurn() {
@@ -505,6 +524,21 @@ public class CombatController {
             onSuperAttackComplete
         );*/
 
+    }
+
+    public void performEnemyPhysicalAttack(){
+        view.clearInfo();
+        view.showInfo("Enemy attacks!");
+        Runnable onEnemyAttackComplete = () -> {
+            currentState.handleAnimationComplete(this);
+        };
+        this.animatePhysicalMove(
+            model.getEnemyPosition(),
+            model.getPlayerPosition(),
+            false, // isPlayerAttacker
+            model.getEnemyPower(),
+            onEnemyAttackComplete
+        );
     }
     
     private void zoomerAnimation() {
