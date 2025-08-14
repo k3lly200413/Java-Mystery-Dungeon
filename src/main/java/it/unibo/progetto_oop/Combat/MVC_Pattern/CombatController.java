@@ -707,32 +707,27 @@ public class CombatController {
         throw new UnsupportedOperationException("Unimplemented method 'setState'");
     }
 
-    public EnemyTurnState getCurrentState() {
+    public CombatState getCurrentState() {
         return currentState;
     }
 
     public void performEnemyAttack() {
-        Random newNumb = new Random();
-        int num = newNumb.nextInt(2);
-
-        num = 1;
-
-        System.out.println("Controller: The chosen number is: " + num);
+        final int PHYSICAL = 0;
+        final int LONG_RANGE = 1;
+        int num = new Random().nextInt(2);
 
         switch (num) {
-            case 0:
-                System.out.println("Currante State Normal Attack => " + this.currentState.toString());
-                performEnemyPhysicalAttack();
-                break;
-            case 1:
-                System.out.print("EnemyTurn : ");
-                System.out.println("Currante State Normal Attack => " + this.currentState.toString());
-                this.performLongRangeAttack(this.model.getEnemyPosition(), -1, false, true);//(newNumb.nextInt(2) == 1 ? true : false));
-                break;
-            default:
-                break;
+            case PHYSICAL -> performEnemyPhysicalAttack();
+            case LONG_RANGE -> performLongRangeAttack(model.getEnemyPosition(), -1, false, true);
         }
+
         
+    }
+
+    private void performLongRangeAttack(Position attacker, int direction, boolean flame, boolean poison) {
+        longRangeAttackAnimation(//........
+
+        });
     }
 
 
