@@ -12,6 +12,7 @@ import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Combat.StatePattern.AnimatingState;
 import it.unibo.progetto_oop.Combat.StatePattern.CombatState;
 import it.unibo.progetto_oop.Combat.StatePattern.EnemyTurnState;
+import it.unibo.progetto_oop.Combat.StatePattern.InfoDisplayState;
 import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
 
 
@@ -153,10 +154,9 @@ public class CombatController {
     }
 
     public void performInfo() {
-        if (!this.model.isPlayerTurn()) {
-            return;
-        }
-        this.zoomerAnimation();
+        performInfoZoomInAnimation(() -> {
+            this.setState(new InfoDisplayState());
+        });
         this.view.showInfo("Enemy Info:\nName: " + this.model.getEnemyName());
     }
 
@@ -557,23 +557,22 @@ public class CombatController {
         );
     }
     
-    private void zoomerAnimation() {
+    private void performInfoZoomInAnimation(Runnable onZoomComplete) {
         this.stopAnimationTimer();
         this.view.setAllButtonsDisabled();
 
         final Position originalEnemyPosition = this.model.getEnemyPosition();
         final int targetX= model.getSize()/2;
-        final int targetY = model.getEnemyPosition().y();
 
         this.animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
-            if (model.getEnemyPosition().x() <= targetX) {
+            Position currentEnemyPosition = model.getEnemyPosition();
+            if (currentEnemyPosition.x() <= targetX) {
                 stopAnimationTimer(); // Increase offset for zoom effect
-                model.setEnemyPosition(new Position(targetX, targetY));
-                this.redrawView();
-                infoNextDrawAnimation(originalEnemyPosition);
+                model.setEnemyPosition(new Position(targetX, currentEnemyPosition.y()));
+                this.makeBigger(5,onZoomComplete);
             } else {
-                model.setEnemyPosition(new Position(model.getEnemyPosition().x()-1, model.getEnemyPosition().y()));
-                this.redrawView();
+                model.setEnemyPosition(new Position(model.getEnemyPosition().x()-1, currentEnemyPosition.y()));
+                redrawView(false, true, false, false, 0, 1, 1, false, model.getEnemyPosition(), (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()), false, model.getEnemyPosition().y(), false, model.getDeathRayPath());
             }
         });
         animationTimer.start();
