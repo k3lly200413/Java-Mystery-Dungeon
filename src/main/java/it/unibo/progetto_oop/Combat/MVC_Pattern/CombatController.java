@@ -766,6 +766,13 @@ public class CombatController {
         });
     }
 
-
+        public boolean checkGameOverAndUpdateView() {
+        if (model.isGameOver()) {
+            stopAnimationTimer(); // Controller still manages timers directly
+            // Game over display logic is now handled by GameOverState.enterState
+            return true;
+        }
+        return false;
+    }
 
 }
