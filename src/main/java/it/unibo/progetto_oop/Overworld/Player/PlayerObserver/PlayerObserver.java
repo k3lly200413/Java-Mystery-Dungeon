@@ -1,6 +1,7 @@
 package it.unibo.progetto_oop.Overworld.Player.PlayerObserver;
 
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
+import it.unibo.progetto_oop.Overworld.Player.Player;
 
 // Interface for objects that want to observe the Player
 public interface PlayerObserver {
@@ -17,4 +18,10 @@ public interface PlayerObserver {
      * @param inventory The current inventory of the player.
      */
     public void playerInventoryChanged(Inventory inventory);
+
+    /**
+     * This method is called when the player's position changes.
+     * @param player The player whose position has changed.
+     */
+    void playerPositionChanged(Player player);
 }
