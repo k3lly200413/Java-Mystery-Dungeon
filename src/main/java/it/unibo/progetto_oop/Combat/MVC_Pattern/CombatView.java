@@ -369,4 +369,7 @@ public class CombatView extends JFrame{
     public void addCurePoisonButtonListener(ActionListener e) {
         this.curePoisonButton.addActionListener(e);
     }
+    public void addHealButtonListener(ActionListener e){
+        this.healButton.addActionListener(e);
+    }
 }
