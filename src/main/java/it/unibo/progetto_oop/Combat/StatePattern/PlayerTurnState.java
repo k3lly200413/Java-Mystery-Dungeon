@@ -1,7 +1,9 @@
 package it.unibo.progetto_oop.Combat.StatePattern;
 
+import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 import it.unibo.progetto_oop.Combat.PotionStrategy.CurePoison;
+import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class PlayerTurnState implements CombatState{
 
@@ -77,6 +79,30 @@ public class PlayerTurnState implements CombatState{
     @Override
     public void handleCurePoisonInput(CombatController context) {
         this.curePoison.applyEffect(context.getModel());
+    }
+
+    @Override
+    public void handleAttackBuffInput(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleAttackBuffInput'");
+    }
+
+    @Override
+    public void handleHealInput(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleHealInput'");
+    }
+
+    @Override
+    public void handlePotionUsed(CombatController context, Item selectedPotion, Player player) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handlePotionUsed'");
+    }
+
+    @Override
+    public void enter(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'enter'");
     }
     
 }
