@@ -3,7 +3,9 @@ package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl;
 import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Overworld.Enemy.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
+import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.GenericEnemyState;
 
 
 public class GenericEnemy implements Enemy {
@@ -12,6 +14,8 @@ public class GenericEnemy implements Enemy {
     private Position initialPosition;
     private Position currentPosition;
     private int currentHealth;
+    private OverworldModel model;
+    private GenericEnemyState currentState;
 
 
     public GenericEnemy(int maxHealth, int currentHealth, int power, Position initialPosition) {
@@ -45,17 +49,18 @@ public class GenericEnemy implements Enemy {
     }
 
     @Override
-    public Position getInitialPosition(){
-        return this.initialPosition;
-    }
-
-
-    @Override
     public Position getPosition() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
     }
 
+    @Override
+    public EnemyType getState() {
+        return this.currentState.getType();
+    }
+
+
+    // setters 
 
     @Override
     public void setPosition(Position newPosition) {
@@ -63,6 +68,18 @@ public class GenericEnemy implements Enemy {
         throw new UnsupportedOperationException("Unimplemented method 'setPosition'");
     }
 
+    private void setModel(OverworldModel model){
+        this.model = model;
+    }
+
+    @Override
+    public void setState(GenericEnemyState newState) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setState'");
+    }
+
+
+    // methods
 
     @Override
     public void takeTurn(Player player) {
@@ -71,11 +88,13 @@ public class GenericEnemy implements Enemy {
     }
 
 
-    @Override
-    public EnemyType getEnemyType() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getEnemyType'");
-    }
+    
+
+
+    
+
+
+    
     
     
 }

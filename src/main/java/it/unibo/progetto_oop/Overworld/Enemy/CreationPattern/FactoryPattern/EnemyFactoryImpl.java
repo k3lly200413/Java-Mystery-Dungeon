@@ -7,23 +7,23 @@ public class EnemyFactoryImpl implements EnemyFactory {
 
     @Override
     public Enemy createpatrollerEnemy() {
-        Enemy enemy = new GenericEnemy();
+        // Enemy enemy = new GenericEnemy();
         // set the state to patroller
-        return enemy;
+        // return enemy;
     }
 
     @Override
     public Enemy createFollowerEnemy() {
-        Enemy enemy = new GenericEnemy();
+        // Enemy enemy = new GenericEnemy();
         // set the state to follower
-        return enemy;
+        // return enemy;
     }
 
     @Override
     public Enemy createSleeperEnemy() {
-        Enemy enemy = new GenericEnemy();
+        // Enemy enemy = new GenericEnemy();
         // set the state to sleeper
-        return enemy;
+        // return enemy;
     }
     
 }
