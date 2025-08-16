@@ -11,4 +11,6 @@ public interface Enemy {
     public void setPosition(Position newPosition);
     public void takeTurn(Player player);
     public EnemyType getEnemyType();
+    public Position getInitialPosition();
+    public Position getCurrentPosition();
 }
