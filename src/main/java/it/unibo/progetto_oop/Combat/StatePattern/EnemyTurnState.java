@@ -1,0 +1,74 @@
+package it.unibo.progetto_oop.Combat.StatePattern;
+
+import javax.swing.Timer;
+
+import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
+import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
+
+public class EnemyTurnState implements CombatState {
+
+    private static final int ENEMY_ACTION_DELAY = 500; // Delay in milliseconds before enemy action
+
+    @Override
+    public void enter(CombatController context) {
+        // Logic for entering enemy turn state
+        System.out.println("Entering enemy turn state.");
+        CombatModel model = context.getModel();
+
+        // Check if this is a boss turn AND if its special attack sequence is active
+        // context.setState(new BossState());
+        System.out.println("Boss Turn : " + model.isBossTurn());
+        if (model.isBossTurn() && model.getBossAttackCounter() < model.getMaxBossHit()) {
+            // --- The boss performs another attack in its sequence ---
+            model.increaseBossAttackCounter(); // We are performing hit #1, #2, or #3
+            System.out.println("Boss Sequence: Preparing hit #" + model.getBossAttackCounter());
+
+            // Use the controller's helper to perform a delayed action
+            context.performDelayedEnemyAction(ENEMY_ACTION_DELAY, () -> {
+                // This is the action to perform after the delay.
+                // In this case, it's always the super attack.
+                context.performEnemySuperAttack();
+            });
+            // The state machine will cycle through AnimatingState and come back here
+            // for the next hit if the sequence isn't over.
+        }
+        else {
+            if (model.isBossTurn() && model.getBossAttackCounter() > 0){
+                System.out.println("\n>>> Starting Boss Attack");
+                model.clearBossAttackCount();
+                model.setBossTurn(false);
+                context.setState(new PlayerTurnState());
+                model.setPlayerTurn(true);
+            }
+            else{
+                context.stopAnimationTimer();
+                System.out.println("No Boss Attack");
+                model.setBossTurn(false);
+                Timer enemyDelay = new Timer(ENEMY_ACTION_DELAY, e -> {
+                    // Ensure we are still in the EnemyTurnState before acting
+                    if (context.getCurrentState() == this) {
+                        System.out.println("Enemy choosing action...");
+                        context.setState(new AnimatingState()); // Assume enemy action leads to animation
+                        // context.performEnemySuperAttack();
+                        context.performEnemyAttack(); // Renamed controller method
+                    }
+                });
+                enemyDelay.setRepeats(false);
+                enemyDelay.start();
+            }
+        }
+    }
+
+    @Override
+    public void exit() {
+        // Logic for exiting enemy turn state
+        controller.getModel().setPlayerTurn(true);
+        controller.getView().updatePlayerTurnView();
+    }
+
+    @Override
+    public void handleInput(String input) {
+        // Handle any input during enemy turn if necessary
+    }
+
+}

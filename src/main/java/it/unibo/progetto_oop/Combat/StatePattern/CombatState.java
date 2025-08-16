@@ -11,6 +11,8 @@ public interface CombatState {
     void handleBackInput(CombatController context);
     void handleBagInput(CombatController context); // Add if implementing
     void handleRunInput(CombatController context);  // Add if implementing
+    void handleAttackBuffInput(CombatController context);
+    void handleHealInput(CombatController context);
 
      /**
      * 
@@ -30,6 +32,7 @@ public interface CombatState {
     void exitState(CombatController context);
 
     void handleAnimationComplete(CombatController context);
+    void enter(CombatController context);
 
 
 }

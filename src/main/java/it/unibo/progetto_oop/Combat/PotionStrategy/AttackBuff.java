@@ -1,0 +1,16 @@
+package it.unibo.progetto_oop.Combat.PotionStrategy;
+
+import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
+
+public class AttackBuff implements PotionStrategy{
+
+    private final int buffAmount = 50;
+
+    @Override
+    public void applyEffect(CombatModel user) {
+        // Logic to apply the attack buff effect
+        // Increase player's attack power by buffAmount
+        user.increasePlayerPower(buffAmount);
+    }
+    
+}
