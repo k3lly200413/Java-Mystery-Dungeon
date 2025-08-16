@@ -5,7 +5,7 @@ import java.util.List;
 
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 
-public class PlayerObserverImpl implements PlayerObserver {
+public class PlayerObserverImpl implements PlayerObserver { //  TODO
     public void playerHpChanged(int hp, int maxHp){
 
     }
