@@ -71,7 +71,7 @@ public class CombatView extends JFrame{
 
     private java.net.URL imgURL;
 
-    public CombatView(int size) {
+    public CombatView(final int size) {
         this.buttonHeight = (20 * size) / 3;
         this.buttonWidth = (50 * size) / 3;
         this.setTitle("Combat Screen");
@@ -81,13 +81,13 @@ public class CombatView extends JFrame{
         this.initializeUI(size);
     }
 
-    private void initializeUI(int size){
+    private void initializeUI(final int size) {
 
         this.gridpanel = new JPanel(new GridLayout(size, size));
         this.healthPanel = new JPanel();
 
         for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++){
+            for (int j = 0; j < size; j++) {
                 final JLabel cellLabel = new JLabel();
                 cellLabel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
                 cellLabel.setOpaque(true);
@@ -109,7 +109,7 @@ public class CombatView extends JFrame{
 
         // TODO: get values from model
         this.playerStaminaBar = new JProgressBar(0, 100); // Set max from model later
-        this.playerStaminaBar.setValue(100);            // Set value from model later
+        this.playerStaminaBar.setValue(100); // Set value from model later
         this.playerStaminaBar.setStringPainted(true);
         this.playerStaminaBar.setForeground(Color.CYAN); // Light Blue
         this.playerStaminaBar.setPreferredSize(new Dimension(35 * size, 20)); // Match others
@@ -124,10 +124,10 @@ public class CombatView extends JFrame{
         this.healthPanel.add(this.playerHealtBar);
         this.healthPanel.add(Box.createVerticalStrut(5));
         healthPanel.add(new JLabel("Player Stamina: "));
-        healthPanel.add(playerStaminaBar);       
+        healthPanel.add(playerStaminaBar);
         this.healthPanel.add(new JLabel("Enemy Health"));
         this.healthPanel.add(enemyHealthBar);
-        
+
         this.add(healthPanel, BorderLayout.NORTH);
 
         this.cardLayout = new CardLayout();
@@ -146,7 +146,8 @@ public class CombatView extends JFrame{
 
         this.attackButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.physicalAttackButton = this.createButton("Physical Attack", this.buttonHeight, this.buttonWidth);
-        this.longRangeButton = this.createButton("Long Range", this.buttonHeight, this.buttonWidth);new JButton("Long Range");
+        this.longRangeButton = this.createButton("Long Range", this.buttonHeight, this.buttonWidth);
+        new JButton("Long Range");
         this.poisonButton = this.createButton("Poison", this.buttonHeight, this.buttonWidth);
         this.backAttackButton = this.createButton("Back", this.buttonHeight, this.buttonWidth);
         this.attackButtonPanel.add(physicalAttackButton);
@@ -168,7 +169,6 @@ public class CombatView extends JFrame{
         this.buttonPanelContainer.add(originalButtonPanel, "originalButtons");
         this.buttonPanelContainer.add(attackButtonPanel, "attackOptions");
         this.buttonPanelContainer.add(bagButtonPanel, "bagButtons");
-        
 
         this.infoLabel = new JLabel("Combat Started!", SwingConstants.CENTER);
         this.infoLabel.setPreferredSize(new Dimension(70 * size, 30));
@@ -179,70 +179,70 @@ public class CombatView extends JFrame{
         southPanel.add(infoLabel);
         this.add(southPanel, BorderLayout.SOUTH);
 
-
         this.showOriginalButtons();
     }
 
-    public void setHealthBarMax(int max) {
+    public final void setHealthBarMax(final int max) {
         this.playerHealtBar.setMaximum(max);
         this.enemyHealthBar.setMaximum(max);
     }
 
-    public void updatePlayerHealth(int value) {
+    public final void updatePlayerHealth(final int value) {
         this.playerHealtBar.setValue(value);
         this.playerHealtBar.setString("Player: " + value + "/" + this.playerHealtBar.getMaximum());
     }
 
-    public void updatePlayerStamina(int value) {
+    public final void updatePlayerStamina(final int value) {
         this.playerStaminaBar.setValue(value);
         this.playerStaminaBar.setString("Stamina: " + value + "/" + playerStaminaBar.getMaximum());
     }
 
-    public void updateEnemyHealth(int value) {
+    public final void updateEnemyHealth(final int value) {
         enemyHealthBar.setValue(value);
         enemyHealthBar.setString("Enemy: " + value + "/" + this.enemyHealthBar.getMaximum());
     }
-    
+
     // NEW: Methods to control the info label
-    public void showInfo(String text) {
+    public final void showInfo(final String text) {
         // Use HTML to allow for multi-line messages
         infoLabel.setText("<html>" + text.replace("\n", "<br>") + "</html>");
     }
 
-    public void clearInfo() {
+    public final void clearInfo() {
         infoLabel.setText("");
     }
 
-    public void redrawGrid( Position player, Position enemy, Position flame, 
-                            int flameSize, boolean drawPlayer, boolean drawEnemy, 
-                            boolean drawflame, boolean drawPoison, int playerRange, 
-                            int enemyRange, boolean isGameOver, Position whoDied,
-                            boolean drawBossRayAttack, ArrayList<Position> deathRayPath,
-                            boolean drawPoisonDamage, int poisonYCoord,
-                            boolean isCharging, int chargingCellDistance) {
-        
-            for (var entry : cells.entrySet()) {
+    public final void redrawGrid(final Position player, final Position enemy, final Position flame,
+            final int flameSize, final boolean drawPlayer, final boolean drawEnemy,
+            final boolean drawflame, final boolean drawPoison, final int playerRange,
+            final int enemyRange, final boolean isGameOver, final Position whoDied,
+            final boolean drawBossRayAttack, final ArrayList<Position> deathRayPath,
+            final boolean drawPoisonDamage, final int poisonYCoord,
+            final boolean isCharging, final int chargingCellDistance) {
+
+        for (var entry : cells.entrySet()) {
             JLabel cellLabel = entry.getKey();
             Position cellPos = entry.getValue();
             Icon icon = null;
 
             if (isGameOver) {
-                if (this.redrawHelper.deathNeighbours(whoDied, cellPos, enemyRange)){
-                    icon = this.getIconResource(whoDied.equals(player) ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg");
+                if (this.redrawHelper.deathNeighbours(whoDied, cellPos, enemyRange)) {
+                    icon = this
+                            .getIconResource(whoDied.equals(player) ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg");
                 } else if (drawPlayer && redrawHelper.deathNeighbours(whoDied, cellPos, enemyRange)) {
                     icon = getIconResource(whoDied.equals(player) ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg");
                 }
             }
 
-            else if ((drawflame || drawPoison || drawBossRayAttack) && this.redrawHelper.neighbours(cellPos, flame, flameSize)){
-                icon = drawflame ? this.getIconResource("/yellow.jpg") : drawPoison ? this.getIconResource("/green.jpg") : getIconResource("/purple.png");
-            }
-            else if (drawPoisonDamage && entry.getValue().y() == poisonYCoord) {
+            else if ((drawflame || drawPoison || drawBossRayAttack)
+                    && this.redrawHelper.neighbours(cellPos, flame, flameSize)) {
+                icon = drawflame ? this.getIconResource("/yellow.jpg")
+                        : drawPoison ? this.getIconResource("/green.jpg") : getIconResource("/purple.png");
+            } else if (drawPoisonDamage && entry.getValue().y() == poisonYCoord) {
                 icon = this.getIconResource("/green.jpg");
-            }
-            else if ((drawflame || drawPoison) && this.redrawHelper.neighbours(cellPos, flame, 0)){
+            } else if ((drawflame || drawPoison) && this.redrawHelper.neighbours(cellPos, flame, 0)) {
                 icon = drawflame ? this.getIconResource("/yellow.jpg") : this.getIconResource("/green.jpg");
-            } else if (drawPlayer && this.redrawHelper.neighbours(player, cellPos, playerRange)){
+            } else if (drawPlayer && this.redrawHelper.neighbours(player, cellPos, playerRange)) {
                 icon = this.getIconResource("/Screenshot 2025-03-25 164621.png");
             } else if (drawEnemy && this.redrawHelper.neighbours(enemy, cellPos, enemyRange)) {
                 icon = getIconResource("/red.jpg");
@@ -257,69 +257,68 @@ public class CombatView extends JFrame{
         this.repaint();
     }
 
-    public void showAttackOptions() {
+    public final void showAttackOptions() {
         this.cardLayout.show(buttonPanelContainer, "attackOptions");
     }
 
-    public void showOriginalButtons(){
+    public final void showOriginalButtons() {
         this.cardLayout.show(this.buttonPanelContainer, "originalButtons");
     }
 
-    public void showBagButtons() {
+    public final void showBagButtons() {
         this.cardLayout.show(this.buttonPanelContainer, "bagButtons");
     }
 
-    public void setAllButtonsEnabled(){
+    public final void setAllButtonsEnabled() {
         this.setPanelEnabled(this.originalButtonPanel, true);
         this.setPanelEnabled(this.attackButtonPanel, true);
     }
 
-    public void setAllButtonsDisabled() {
+    public final void setAllButtonsDisabled() {
         this.setPanelEnabled(this.originalButtonPanel, false);
         this.setPanelEnabled(this.attackButtonPanel, false);
     }
 
-    public void setCustomButtonEnabled(JButton buttonToEnable){
+    public final void setCustomButtonEnabled(final JButton buttonToEnable) {
         buttonToEnable.setEnabled(true);
     }
 
-    public void setCustomButtonDisabled(JButton buttonToDisable) {
+    public final void setCustomButtonDisabled(final JButton buttonToDisable) {
         buttonToDisable.setEnabled(false);
     }
 
-    private void setPanelEnabled(JPanel panel, boolean enablePanel){
+    private void setPanelEnabled(final JPanel panel, final boolean enablePanel) {
         panel.setEnabled(enablePanel);
-        for (Component comp : panel.getComponents()){
+        for (Component comp : panel.getComponents()) {
             if (comp instanceof JButton) {
                 comp.setEnabled(enablePanel);
             }
         }
     }
 
-    public void display() {
+    public final void display() {
         this.setVisible(true);
     }
 
-    public void close() {
+    public final void close() {
         this.dispose();
     }
 
-    private ImageIcon getIconResource(String path) {
+    private ImageIcon getIconResource(final String path) {
         this.imgURL = getClass().getResource(path);
-        if (this.imgURL != null){
+        if (this.imgURL != null) {
             return new ImageIcon(this.imgURL);
-        }
-        else{
+        } else {
             System.err.println("Was not able to find file: " + path);
             return this.createDefaultIcon();
         }
     }
 
-    public JButton getLongRangeAttackButton() {
+    public final JButton getLongRangeAttackButton() {
         return this.longRangeButton;
     }
 
-    public JButton getPoisonAttackButton() {
+    public final JButton getPoisonAttackButton() {
         return this.poisonButton;
     }
 
@@ -332,7 +331,7 @@ public class CombatView extends JFrame{
         return new ImageIcon(image);
     }
 
-    private JButton createButton(String name, int height, int length) {
+    private JButton createButton(final String name, final int height, final int length) {
         JButton tempButton = new JButton(name);
         tempButton.setPreferredSize(new Dimension(length, height));
         return tempButton;
@@ -340,36 +339,45 @@ public class CombatView extends JFrame{
 
     // Listener methods (Used By Controller)
 
-    public void addAttackButtonListener(ActionListener e) {
+    public final void addAttackButtonListener(final ActionListener e) {
         this.attackButton.addActionListener(e);
     }
-    public void addBagButtonListener(ActionListener e) {
+
+    public final void addBagButtonListener(final ActionListener e) {
         this.bagButton.addActionListener(e);
     }
-    public void addRunButtonListener(ActionListener e){
+
+    public final void addRunButtonListener(final ActionListener e) {
         this.runButton.addActionListener(e);
     }
-    public void addInfoButtonListener(ActionListener e){
+
+    public final void addInfoButtonListener(final ActionListener e) {
         this.infoButton.addActionListener(e);
     }
-    public void addPhysicalButtonListener(ActionListener e){
+
+    public final void addPhysicalButtonListener(final ActionListener e) {
         this.physicalAttackButton.addActionListener(e);
     }
-    public void addLongRangeButtonListener(ActionListener e){
+
+    public final void addLongRangeButtonListener(final ActionListener e) {
         this.longRangeButton.addActionListener(e);
     }
-    public void addPoisonButtonListener(ActionListener e){
+
+    public final void addPoisonButtonListener(final ActionListener e) {
         this.poisonButton.addActionListener(e);
     }
-    public void addBackButtonListener(ActionListener e){
+
+    public final void addBackButtonListener(final ActionListener e) {
         this.backButton.addActionListener(e);
-        //TODO: Put in two different methods 
+        // TODO: Put in two different methods
         this.backAttackButton.addActionListener(e);
     }
-    public void addCurePoisonButtonListener(ActionListener e) {
+
+    public final void addCurePoisonButtonListener(final ActionListener e) {
         this.curePoisonButton.addActionListener(e);
     }
-    public void addHealButtonListener(ActionListener e){
+
+    public final void addHealButtonListener(final ActionListener e) {
         this.healButton.addActionListener(e);
     }
 }

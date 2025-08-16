@@ -10,25 +10,29 @@ public class FollowerState implements GenericEnemyState{
     @Override
     public void enterState(Enemy context, OverworldModel model) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'enterState'");
+        throw new UnsupportedOperationException(
+"Unimplemented method 'enterState'");
     }
 
     @Override
     public void exitState(Enemy context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'exitState'");
+        throw new UnsupportedOperationException(
+"Unimplemented method 'exitState'");
     }
 
     @Override
     public void update(Enemy enemy, OverworldModel model, Player player) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        throw new UnsupportedOperationException(
+"Unimplemented method 'update'");
     }
 
     @Override
     public void onPlayerMoved(Enemy context, Player player, OverworldModel model) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'onPlayerMoved'");
+        throw new UnsupportedOperationException(
+"Unimplemented method 'onPlayerMoved'");
     }
 
     @Override
