@@ -49,12 +49,6 @@ public class GenericEnemy implements Enemy {
     }
 
     @Override
-    public Position getPosition() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
-    }
-
-    @Override
     public EnemyType getState() {
         return this.currentState.getType();
     }
@@ -64,8 +58,7 @@ public class GenericEnemy implements Enemy {
 
     @Override
     public void setPosition(Position newPosition) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setPosition'");
+        this.currentPosition = newPosition;
     }
 
     private void setModel(OverworldModel model){
@@ -73,9 +66,20 @@ public class GenericEnemy implements Enemy {
     }
 
     @Override
-    public void setState(GenericEnemyState newState) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setState'");
+    public void setState(GenericEnemyState newState, OverworldModel model) {
+        if (newState == null || newState == this.currentState) {
+            return;
+        }
+
+        this.setModel(model);
+
+        if (this.currentState != null) {
+            this.currentState.exitState(this);
+        }
+
+        this.currentState = newState;
+
+        this.currentState.enterState(this, this.model);
     }
 
 
@@ -83,18 +87,18 @@ public class GenericEnemy implements Enemy {
 
     @Override
     public void takeTurn(Player player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'takeTurn'");
+        this.currentState.update(this, model, player);
     }
 
-
-    
-
-
-    
-
-
-    
-    
-    
+    /**
+     * @param player The player that has moved. 
+     * @param model The current model of the overworld.
+     * 
+     *  Based on the type of enemy, it will act differently when the player moves.
+     */
+    public void playerMoved(Player player) {
+        if (this.currentState != null){
+            this.currentState.onPlayerMoved(this, player, this.model);
+        }
+    } 
 }
