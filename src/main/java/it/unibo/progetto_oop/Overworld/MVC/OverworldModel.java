@@ -7,8 +7,8 @@ import java.util.Optional;
 
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
+import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.Overworld.Enemy.Enemy;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
 public class OverworldModel {

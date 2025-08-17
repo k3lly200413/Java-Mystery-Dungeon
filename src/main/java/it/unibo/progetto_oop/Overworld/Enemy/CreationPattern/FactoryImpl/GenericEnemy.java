@@ -1,7 +1,6 @@
 package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl;
 
 import it.unibo.progetto_oop.Combat.Position.Position;
-import it.unibo.progetto_oop.Overworld.Enemy.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
