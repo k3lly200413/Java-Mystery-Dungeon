@@ -12,6 +12,10 @@ public class AnimatingState implements CombatState {
      * Indicates if it is the player's turn.
      */
     private final boolean playerTurn = true;
+    /**
+     * Delay for the animation in milliseconds.
+     */
+    private static final int ANIMATION_DELAY = 500;
 
     @Override
     public final void handlePhysicalAttackInput(
@@ -112,7 +116,7 @@ public class AnimatingState implements CombatState {
         if (wasPlayerTurn) {
             // TODO: Shold be able to fix with EnemyTurnState
             model.setPlayerTurn(this.playerTurn);
-            Timer enemyDeley = new Timer(500, e -> {
+            Timer enemyDeley = new Timer(ANIMATION_DELAY, e -> {
                 context.enemyTurn();
             });
             // Add EnemyTurnState

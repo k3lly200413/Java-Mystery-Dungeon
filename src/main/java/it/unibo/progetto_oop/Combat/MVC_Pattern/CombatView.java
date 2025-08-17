@@ -146,20 +146,51 @@ public class CombatView extends JFrame {
     private java.net.URL imgURL;
 
     /**
+     * Maximum health of the player.
+     */
+    private int maxPlayerHealth;
+    /**
+     * Maximum health of the enemy.
+     */
+    private int maxEnemyHealth;
+
+    /**
      * Constructor for CombatView.
      * @param size the size of the combat view, used to scale components
+     * @param buttonHeightToAssign the height of the buttons
+     * @param buttonWidthToAssign the width of the buttons
+     * @param heightModifier the height modifier for scaling
+     * @param widthModifier the width modifier for scaling
+     * @param maxPlayerHealthToAssign the maximum health of the player
+     * @param maxEnemyHealthToAssign the maximum health of the enemy
      */
-    public CombatView(final int size) {
-        this.buttonHeight = (20 * size) / 3;
-        this.buttonWidth = (50 * size) / 3;
+    public CombatView(final int size,
+    final int buttonHeightToAssign,
+    final int buttonWidthToAssign,
+    final int heightModifier,
+    final int widthModifier,
+    final int maxPlayerHealthToAssign,
+    final int maxEnemyHealthToAssign) {
+        // this.buttonHeight = (20 * size) / 3;
+        this.buttonHeight = buttonHeightToAssign;
+        // this.buttonWidth = (50 * size) / 3;
+        this.buttonWidth = buttonWidthToAssign;
         this.setTitle("Combat Screen");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(70 * size, 75 * size);
+        // this.setSize(70 * size, 75 * size);
+        this.maxPlayerHealth = maxPlayerHealthToAssign;
+        this.maxEnemyHealth = maxEnemyHealthToAssign;
+        this.setSize(heightModifier * size, widthModifier * size);
         this.setLayout(new BorderLayout());
         this.initializeUI(size);
     }
 
-    private void initializeUI(final int size) {
+    private void initializeUI(final int size,
+    final int barHeight,
+    final int barWidth,
+    final int spaceBuffer,
+    final int squareWidth,
+    final int squareHeight) {
 
         this.gridpanel = new JPanel(new GridLayout(size, size));
         this.healthPanel = new JPanel();
@@ -173,7 +204,9 @@ public class CombatView extends JFrame {
                 cellLabel.setOpaque(true);
                 // Set an initial icon for the background
                 cellLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                cellLabel.setIcon(this.getIconResource("/white.jpg"));
+                cellLabel.setIcon(
+                    this.getIconResource(
+                        "/white.jpg", squareWidth, squareHeight));
                 this.cells.put(
                     cellLabel,
                     new Position(j, i)); // Store the label and its position
@@ -187,30 +220,33 @@ public class CombatView extends JFrame {
             new BoxLayout(
                 this.healthPanel, BoxLayout.Y_AXIS));
 
-        this.playerHealtBar = new JProgressBar(0, 100);
-        this.playerHealtBar.setValue(100);
+        this.playerHealtBar = new JProgressBar(0, this.maxPlayerHealth);
+        this.playerHealtBar.setValue(this.maxPlayerHealth);
         this.playerHealtBar.setStringPainted(true);
         this.playerHealtBar.setForeground(Color.GREEN);
 
         // TODO: get values from model
         this.playerStaminaBar =
-            new JProgressBar(0, 100); // Set max from model later
-        this.playerStaminaBar.setValue(100); // Set value from model later
+            new JProgressBar(
+                0, this.maxPlayerHealth); // Set max from model later
+        this.playerStaminaBar.setValue(
+            this.maxPlayerHealth); // Set value from model later
         this.playerStaminaBar.setStringPainted(true);
         this.playerStaminaBar.setForeground(Color.CYAN); // Light Blue
         this.playerStaminaBar.setPreferredSize(
             new Dimension(
-                35 * size, 20)); // Match others
+                barWidth * size, barHeight)); // Match others
 
-        this.enemyHealthBar = new JProgressBar(0, 100);
-        this.enemyHealthBar.setValue(100);
+        this.enemyHealthBar = new JProgressBar(0, this.maxEnemyHealth);
+        this.enemyHealthBar.setValue(this.maxEnemyHealth);
         this.enemyHealthBar.setStringPainted(true);
         this.enemyHealthBar.setForeground(Color.RED);
-        this.enemyHealthBar.setPreferredSize(new Dimension(35 * size, 20));
+        this.enemyHealthBar.setPreferredSize(
+            new Dimension(barWidth * size, barHeight));
 
         this.healthPanel.add(new JLabel("Player Health"));
         this.healthPanel.add(this.playerHealtBar);
-        this.healthPanel.add(Box.createVerticalStrut(5));
+        this.healthPanel.add(Box.createVerticalStrut(spaceBuffer));
         healthPanel.add(new JLabel("Player Stamina: "));
         healthPanel.add(playerStaminaBar);
         this.healthPanel.add(new JLabel("Enemy Health"));
@@ -342,7 +378,8 @@ public class CombatView extends JFrame {
         final boolean isGameOver, final Position whoDied,
         final boolean drawBossRayAttack, final ArrayList<Position> deathRayPath,
         final boolean drawPoisonDamage, final int poisonYCoord,
-        final boolean isCharging, final int chargingCellDistance) {
+        final boolean isCharging, final int chargingCellDistance,
+        final int squareWidth, final int squareHeight) {
 
         for (var entry : cells.entrySet()) {
             JLabel cellLabel = entry.getKey();
@@ -355,7 +392,8 @@ public class CombatView extends JFrame {
                     icon =
                     this.getIconResource(
                         whoDied.equals(player)
-                        ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg");
+                        ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg",
+                        squareWidth, squareHeight);
                 } else if (
                     drawPlayer
                     && redrawHelper.deathNeighbours(
@@ -363,45 +401,51 @@ public class CombatView extends JFrame {
                     icon =
                     getIconResource(
                         whoDied.equals(player)
-                        ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg");
+                        ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg",
+                        squareWidth, squareHeight);
                 }
             } else if ((drawflame || drawPoison || drawBossRayAttack)
                     && this.redrawHelper.neighbours(
                         cellPos, flame, flameSize)) {
-                icon = drawflame ? this.getIconResource("/yellow.jpg")
+                icon = drawflame ? this.getIconResource("/yellow.jpg",
+                    squareWidth, squareHeight)
                         : drawPoison
                         ? this.getIconResource(
-                            "/green.jpg")
-                            : getIconResource("/purple.png");
+                            "/green.jpg", squareWidth, squareHeight)
+                            : getIconResource("/purple.png",
+                            squareWidth, squareHeight);
             } else if (
                 drawPoisonDamage
                 && entry.getValue().y() == poisonYCoord) {
-                icon = this.getIconResource("/green.jpg");
+                icon = this.getIconResource("/green.jpg",
+                squareWidth, squareHeight);
             } else if (
                 (drawflame || drawPoison)
                 && this.redrawHelper.neighbours(
                     cellPos, flame, 0)) {
                 icon = drawflame
-                ? this.getIconResource("/yellow.jpg")
-                : this.getIconResource("/green.jpg");
+                ? this.getIconResource("/yellow.jpg", squareWidth, squareHeight)
+                : this.getIconResource("/green.jpg", squareWidth, squareHeight);
             } else if (
                 drawPlayer
                 && this.redrawHelper.neighbours(
                     player, cellPos, playerRange)) {
                 icon = this.getIconResource(
-                    "/Screenshot 2025-03-25 164621.png");
+                    "/Screenshot 2025-03-25 164621.png",
+                    squareWidth, squareHeight);
             } else if (
                 drawEnemy
                 && this.redrawHelper.neighbours(
                     enemy, cellPos, enemyRange)) {
-                icon = getIconResource("/red.jpg");
+                icon = getIconResource("/red.jpg", squareWidth, squareHeight);
             } else if (
                 isCharging
                 && this.redrawHelper.deathNeighbours(
                     enemy, cellPos, chargingCellDistance)) {
-                icon = getIconResource("/purple.png");
+                icon = getIconResource("/purple.png",
+                squareWidth, squareHeight);
             } else {
-                icon = getIconResource("/white.jpg");
+                icon = getIconResource("/white.jpg", squareWidth, squareHeight);
             }
             cellLabel.setIcon(icon);
         }
@@ -478,13 +522,16 @@ public class CombatView extends JFrame {
         this.dispose();
     }
 
-    private ImageIcon getIconResource(final String path) {
+    private ImageIcon getIconResource(
+        final String path,
+        final int width,
+        final int height) {
         this.imgURL = getClass().getResource(path);
         if (this.imgURL != null) {
             return new ImageIcon(this.imgURL);
         } else {
             System.err.println("Was not able to find file: " + path);
-            return this.createDefaultIcon();
+            return this.createDefaultIcon(width, height);
         }
     }
     /**
@@ -502,12 +549,12 @@ public class CombatView extends JFrame {
         return this.poisonButton;
     }
 
-    private ImageIcon createDefaultIcon() {
+    private ImageIcon createDefaultIcon(final int width, final int height) {
         BufferedImage image =
-        new BufferedImage(20, 20, BufferedImage.TYPE_INT_RGB);
+        new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = image.createGraphics();
         g.setColor(Color.GRAY);
-        g.fillRect(0, 0, 20, 20);
+        g.fillRect(0, 0, width, height);
         g.dispose();
         return new ImageIcon(image);
     }

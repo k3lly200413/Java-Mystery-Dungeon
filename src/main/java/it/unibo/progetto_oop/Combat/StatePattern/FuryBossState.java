@@ -14,6 +14,23 @@ public class FuryBossState implements CombatState {
      * Counter for the number of attacks performed by the boss.
      */
     private String curranteBossState;
+    /**
+     * Threshold for the boss to become enraged based on health percentage.
+     */
+    private static final Double ENRAGED_THRESHOLD = 0.5;
+    /**
+     * Threshold for the boss to perform a death ray attack.
+     */
+    private static final int DEATH_RAY_ATTACK_THRESHOLD = 5;
+    /**
+     * Threshold for the boss to charge up an attack before performing it.
+     */
+    private static final int CHARGE_UP_ATTACK_THRESHOLD = 4;
+
+    /**
+     * Threshold for the boss to perform a long-range attack.
+     */
+    private static final int LONG_RANGE_ATTACK_THRESHOLD = 3;
 
     /**
      * Constructor for FuryBossState.
@@ -86,7 +103,7 @@ public class FuryBossState implements CombatState {
         model.getEnemyHealth()
         / model.getMaxHealth();
 
-        if (boosHealthPercent < 0.5
+        if (boosHealthPercent < ENRAGED_THRESHOLD
         && this.curranteBossState.toUpperCase().equals("NORMAL")) {
             curranteBossState = "ENRAGED";
             context.getView().showInfo("The boss is now ENRAGED");
@@ -95,13 +112,13 @@ public class FuryBossState implements CombatState {
         if (this.curranteBossState.toUpperCase().equals("test")) {
             context.performEnemySuperAttack();
         } else {
-            if (this.bossCounter % 5 == 0) {
+            if (this.bossCounter % DEATH_RAY_ATTACK_THRESHOLD == 0) {
                 // context perform death ray attack
-            } else if (this.bossCounter % 4 == 0) {
+            } else if (this.bossCounter % CHARGE_UP_ATTACK_THRESHOLD == 0) {
                 context.getView().showInfo(
                     "The Boss is charging up his Super Attack!");
                 // player Turn
-            } else if (this.bossCounter % 3 == 0) {
+            } else if (this.bossCounter % LONG_RANGE_ATTACK_THRESHOLD == 0) {
                 // long range attack
             } else {
                 // physical attack
