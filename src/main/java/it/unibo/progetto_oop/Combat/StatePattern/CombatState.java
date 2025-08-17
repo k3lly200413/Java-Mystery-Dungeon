@@ -32,7 +32,6 @@ public interface CombatState {
     void exitState(CombatController context);
 
     void handleAnimationComplete(CombatController context);
-    void enter(CombatController context);
 
 
 }

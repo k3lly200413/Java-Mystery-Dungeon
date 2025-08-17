@@ -3,9 +3,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import it.unibo.progetto_oop.Combat.Position.Position;
-import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 
-public class CombatModel implements PossibleUser{
+public class CombatModel {
 
     private int size;
     private Position playerPosition;
@@ -20,7 +19,7 @@ public class CombatModel implements PossibleUser{
     private int playerStaminaMax;
 
     private int playerPower;
-    private int playerPoisonPower;
+    private final int playerPoisonPower;
     private int enemyPoisonPower;
     private int playerLongRangePower;
     private int enemyLongRangePower;

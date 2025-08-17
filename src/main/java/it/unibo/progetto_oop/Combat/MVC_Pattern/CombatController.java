@@ -178,8 +178,8 @@ public class CombatController {
         } 
         Runnable onPlayerAttackComplete = () -> {
             new AnimatingState().handleAnimationComplete(this);
-            //applyPostTurnEffects();
-            // if (checkGameOver()) return; //Check if enemy was defeated
+            applyPostTurnEffects();
+            if (checkGameOver()) return; //Check if enemy was defeated
         };
 
         animatePhysicalMove(
@@ -269,7 +269,7 @@ public class CombatController {
 
             this.view.updateEnemyHealth(this.model.getEnemyHealth());
             new AnimatingState().handleAnimationComplete(this);
-            // this.applyPostTurnEffects();
+            this.applyPostTurnEffects();
 
             if(checkGameOver()){
                 return; 
@@ -282,8 +282,6 @@ public class CombatController {
 
     private void longRangeAttackAnimation(Position attacker, int direction, boolean isFlame, boolean isPoison, Runnable onHit) {
         stopAnimationTimer(); // Ensure no other animation is running
-        
-        // Player => Flame <= Enemy 
 
         model.setAttackPosition(new Position((attacker.x() + direction), attacker.y())); // Start flame at player
 
