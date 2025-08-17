@@ -24,10 +24,12 @@ public interface Enemy {
     public EnemyType getState();
     
     /**
-     * update the model with the new state of the enemy based on the player's position
-     * @param player the player that the enemy is interacting with
+     * 
+     * Updates the enemy's state based on the player's position.
+     * @param model The current model of the overworld.
+     * @param player The player that the enemy is interacting with.
      */
-    public void takeTurn(Player player);
+    public void takeTurn(OverworldModel model, Player player);
     
     /**
      * @param newPosition the new position of the enemy

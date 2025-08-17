@@ -188,7 +188,7 @@ public class OverworldModel {
      * This method should be called after the player has moved
      */
     private void triggerEnemyTurns(){
-        // TODO: for each enemy, check if it can move or attack
+        this.enemies.stream().forEach(enemy -> enemy.takeTurn(this, this.player));
     }
 
     /**
