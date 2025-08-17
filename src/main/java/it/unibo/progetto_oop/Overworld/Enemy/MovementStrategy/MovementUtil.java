@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy;
 
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.ToIntFunction;
@@ -9,10 +10,6 @@ public class MovementUtil {
     public enum MoveDirection {
         UP, DOWN, LEFT, RIGHT, NONE
     }
-
-    // TODO: Function to calculate the next move direction based on the current position, target position, wall position
-    // -> Function to calculate closest wall
-    // --> Function to calculate distance: DONE
 
     /**
     * Calculates the distance between two positions on a specific axis.
@@ -34,12 +31,64 @@ public class MovementUtil {
      * @return an Optional containing the closest wall position if found, or an empty Optional if no wall is found
      */
     private Optional<Position> findClosestWallOnAxis(Position enemyPosition, Set<Position> wallList, boolean isVerticalCheck) {
-        // TODO: based on the axis the enemy is moving on, we check wich wall is closer
-        return Optional.empty();
+        if (wallList == null || wallList.isEmpty() || enemyPosition == null) {
+            return Optional.empty();
+        }
+
+        // Determine which coordinate accessor to use for filtering (fixed axis)
+        // and which to use for measuring distance (moving axis)
+        ToIntFunction<Position> fixedAxisGetter;
+        ToIntFunction<Position> movingAxisGetter;
+
+        if (isVerticalCheck) { // Checking vertically, X is fixed, Y is moving
+            fixedAxisGetter = Position::x;
+            movingAxisGetter = Position::y;
+        } else { // Checking horizontally, Y is fixed, X is moving
+            fixedAxisGetter = Position::y;
+            movingAxisGetter = Position::x;
+        }
+
+        return wallList.stream()
+                .filter(wallPos -> fixedAxisGetter.applyAsInt(wallPos) == fixedAxisGetter.applyAsInt(enemyPosition)) // Wall is on the same fixed axis
+                .filter(wallPos -> movingAxisGetter.applyAsInt(wallPos) != movingAxisGetter.applyAsInt(enemyPosition)) // Ensure wall is not at the exact same spot on moving axis
+                .min(Comparator.comparingInt(wallPos ->
+                        calculateDistanceOnAxis(enemyPosition, wallPos, movingAxisGetter)
+                )); // returns the positio of the closest wall on the moving axis
     }
 
     public MoveDirection getInitialGeneralMoveDirection(Position enemyPosition, Set<Position> wallList, boolean doesEnemyGoVertically) {
-        // TODO: determine the initial move direction based on the enemy's position, wall positions, and whether the enemy moves vertically or horizontally
-        return null;
+        ToIntFunction<Position> getCoordinate;
+        MoveDirection directionIfEnemyIsFurther;
+        MoveDirection directionIfEnemyIsCloser;
+
+        if (doesEnemyGoVertically) {
+            getCoordinate = Position::y;
+            directionIfEnemyIsFurther = MoveDirection.DOWN;
+            directionIfEnemyIsCloser = MoveDirection.UP; // changing the direction 
+        } else { // Horizontal movement
+            getCoordinate = Position::x; 
+            directionIfEnemyIsFurther = MoveDirection.RIGHT;
+            directionIfEnemyIsCloser = MoveDirection.LEFT; // changing the direction
+        }
+
+        // Use the refined findClosestWallOnAxis
+        Optional<Position> closestWallOpt = findClosestWallOnAxis(enemyPosition, wallList, doesEnemyGoVertically);
+
+        if (closestWallOpt.isPresent()) {
+            Position closestWall = closestWallOpt.get();
+
+            int enemyCoord = getCoordinate.applyAsInt(enemyPosition);
+            int wallCoord = getCoordinate.applyAsInt(closestWall);
+
+            if (enemyCoord > wallCoord) {
+                return directionIfEnemyIsFurther;
+            } else if (enemyCoord < wallCoord) {
+                return directionIfEnemyIsCloser;
+            } else {
+                return MoveDirection.NONE;
+            }
+        } else {
+            return MoveDirection.NONE;
+        }
     }
 }
