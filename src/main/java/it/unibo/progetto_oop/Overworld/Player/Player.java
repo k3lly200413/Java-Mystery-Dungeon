@@ -6,17 +6,17 @@ import java.util.List;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.OverworldPlayerAdapter;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 import it.unibo.progetto_oop.Overworld.Player.PlayerObserver.PlayerObserver;
-import it.unibo.progetto_oop.Overworld.PotionStrategy.Potion; // TODO: change
-import it.unibo.progetto_oop.Overworld.PotionStrategy.PotionEffectStrategy; // same as above
 import it.unibo.progetto_oop.Combat.PotionStrategy.*;
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
-import it.unibo.progetto_oop.Combat.Position.Position; // TODO: add getter for position
+import it.unibo.progetto_oop.Combat.Position.Position;
 
 // The Player class - Acts as the Subject/Observable
 public class Player {
     private int currentHP;
     private int maxHP;
+    private Position position;
+
     private Inventory inventory;
 
     private List<PlayerObserver> observers;
@@ -27,6 +27,8 @@ public class Player {
         this.inventory = new Inventory(); 
         this.observers = new ArrayList<>();
     }
+
+    // obserbver methods
 
     /** add an observer */
     public void addObservers(PlayerObserver observer){
@@ -55,11 +57,18 @@ public class Player {
     }
 
     /**
+     * Notify observers about position changes.
+     */
+    private void notifyPositionChanged() {
+        this.observers.stream().forEach(observers -> observers.playerPositionChanged(this));
+    }
+
+    /**
      * Use an item from the player's inventory.
      * 
      * @param item The item to be used.
      */
-    public void useItem(Item item){
+    public void useItem(Item item){ // TODO: fix
         if (this.inventory.hasItem(item)){ // check wether the item is in the inventory
             if (item instanceof Potion) {
                 Potion potion = (Potion) item;
@@ -106,6 +115,8 @@ public class Player {
         this.setHp(hp);
     }
 
+    // setters
+
     /**
      * Set the player's health points.
      * @param amount amount to increase the player's health points
@@ -120,6 +131,16 @@ public class Player {
         }
         
     }
+
+    /**
+     * Set the player's position.
+     * @param newPos the new position of the player
+     */
+    public void setPosition(Position newPos){
+        this.position = newPos;
+        this.notifyPositionChanged();
+    }
+
 
     // getters
 
@@ -137,6 +158,15 @@ public class Player {
      */
     public int getMaxHp(){
         return this.maxHP;
+    }
+
+
+    /** 
+     * Get the player position
+     * @return the position of the player
+     */
+    public Position getPosition(){
+        return this.position;
     }
 
     
