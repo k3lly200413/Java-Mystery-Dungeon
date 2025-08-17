@@ -6,10 +6,25 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class BossTurnState implements CombatState {
 
-    private static final int ENEMY_ACTION_DELAY = 500; // ms delay before enemy acts
+    /**
+     * Delay before the enemy takes action.
+     */
+    private static final int ENEMY_ACTION_DELAY = 500;
+    /**
+     * Counter for the number of attacks in a sequence.
+     */
     private int attackSequenceCounter = 0;
+    /**
+     * Total number of attacks before the boss performs a special attack.
+     */
     private static final int TOTAL_ATTACKS_IN_SEQUENCE = 3;
+    /**
+     * Boss health percentage used to determine the boss's state.
+     */
     private int bossHealthPercent;
+    /**
+     * Current state of the boss, either "NORMAL" or "ENRAGED".
+     */
     private String bossState = "NORMAL";
 
     @Override

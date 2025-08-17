@@ -5,12 +5,21 @@ import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
-public class FuryBossState implements CombatState{
-
+public class FuryBossState implements CombatState {
+    /**
+     * Counter for the number of attacks performed by the boss.
+     */
     private int bossCounter;
+    /**
+     * Counter for the number of attacks performed by the boss.
+     */
     private String curranteBossState;
 
-    public FuryBossState(){
+    /**
+     * Constructor for FuryBossState.
+     * Initializes the boss counter and sets the current boss state to "NORMAL".
+     */
+    public FuryBossState() {
         this.bossCounter = 0;
         this.curranteBossState = "NORMAL";
     }

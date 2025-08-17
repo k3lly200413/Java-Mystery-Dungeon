@@ -30,47 +30,125 @@ import java.util.Map;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 
-// TODO: Implement methods necessary to Controller
+public class CombatView extends JFrame {
 
-public class CombatView extends JFrame{
-
+    /**
+     * Height and width of the buttons in the combat view.
+     */
     private final int buttonHeight;
+    /**
+     * Width of the buttons in the combat view.
+     */
     private final int buttonWidth;
-
+    /**
+     * Map to hold JLabel components and their corresponding Position.
+     */
     private final Map<JLabel, Position> cells = new HashMap<>();
-    
+    /**
+     * Height and width of the player's health bar.
+     */
     private JProgressBar playerHealtBar;
+    /**
+     * Height and width of the player's health bar.
+     */
     private JProgressBar enemyHealthBar;
+    /**
+     * Height and width of the enemy's health bar.
+     */
     private JProgressBar playerStaminaBar;
-
+    /**
+     * Height and width of the player's stamina bar.
+     */
     private JPanel gridpanel;
-
+    /**
+     * Container for the button panels, allowing for card layout switching.
+     */
     private JPanel buttonPanelContainer;
+    /**
+     * Container for the button panels, allowing for card layout switching.
+     */
     private CardLayout cardLayout;
+    /**
+     * Panel containing the original buttons.
+     */
     private JPanel originalButtonPanel;
+    /**
+     * Panel containing the attack buttons.
+     */
     private JPanel attackButtonPanel;
+    /**
+     * Panel containing the bag buttons.
+     */
     private JPanel healthPanel;
+    /**
+     * Panel containing the bag buttons.
+     */
     private JPanel bagButtonPanel;
-
+    /**
+     * Button for initiating an attack in the combat view.
+     */
     private JButton attackButton;
+    /**
+     * Button for initiating an attack in the combat view.
+     */
     private JButton bagButton;
+    /**
+     * Button for opening the bag in the combat view.
+     */
     private JButton runButton;
+    /**
+     * Button for running away in the combat view.
+     */
     private JButton infoButton;
+    /**
+     * Button for displaying information in the combat view.
+     */
     private JButton physicalAttackButton;
+    /**
+     * Button for performing a physical attack in the combat view.
+     */
     private JButton longRangeButton;
+    /**
+     *  Button for performing a long-range attack in the combat view.
+     */
     private JButton poisonButton;
+    /**
+     * Button for performing a poison attack in the combat view.
+     */
     private JButton backButton;
+    /**
+     * Button for going back to the previous menu in the combat view.
+     */
     private JButton backAttackButton;
+    /**
+     * Button for going back to the previous attack options in the combat view.
+     */
     private JButton curePoisonButton;
+    /**
+     * Button for curing poison in the combat view.
+     */
     private JButton attackBuffButton;
+    /**
+     * Button for applying an attack buff in the combat view.
+     */
     private JButton healButton;
-
+    /**
+     * Button for healing in the combat view.
+     */
     private JLabel infoLabel;
-
+    /**
+     * Label for displaying information in the combat view.
+     */
     private final MeleeButton redrawHelper = new MeleeButton();
-
+    /**
+     * URL for loading icons in the combat view.
+     */
     private java.net.URL imgURL;
 
+    /**
+     * Constructor for CombatView.
+     * @param size the size of the combat view, used to scale components
+     */
     public CombatView(final int size) {
         this.buttonHeight = (20 * size) / 3;
         this.buttonWidth = (50 * size) / 3;
@@ -89,18 +167,25 @@ public class CombatView extends JFrame{
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 final JLabel cellLabel = new JLabel();
-                cellLabel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+                cellLabel.setBorder(
+                    BorderFactory.createBevelBorder(
+                        BevelBorder.RAISED));
                 cellLabel.setOpaque(true);
                 // Set an initial icon for the background
                 cellLabel.setHorizontalAlignment(SwingConstants.CENTER);
                 cellLabel.setIcon(this.getIconResource("/white.jpg"));
-                this.cells.put(cellLabel, new Position(j, i)); // Store the label and its position
-                this.gridpanel.add(cellLabel); // Add the label to the grid panel
+                this.cells.put(
+                    cellLabel,
+                    new Position(j, i)); // Store the label and its position
+                this.gridpanel.add(
+                    cellLabel); // Add the label to the grid panel
             }
         }
         this.add(this.gridpanel, BorderLayout.CENTER);
 
-        this.healthPanel.setLayout(new BoxLayout(this.healthPanel, BoxLayout.Y_AXIS));
+        this.healthPanel.setLayout(
+            new BoxLayout(
+                this.healthPanel, BoxLayout.Y_AXIS));
 
         this.playerHealtBar = new JProgressBar(0, 100);
         this.playerHealtBar.setValue(100);
@@ -108,11 +193,14 @@ public class CombatView extends JFrame{
         this.playerHealtBar.setForeground(Color.GREEN);
 
         // TODO: get values from model
-        this.playerStaminaBar = new JProgressBar(0, 100); // Set max from model later
+        this.playerStaminaBar =
+            new JProgressBar(0, 100); // Set max from model later
         this.playerStaminaBar.setValue(100); // Set value from model later
         this.playerStaminaBar.setStringPainted(true);
         this.playerStaminaBar.setForeground(Color.CYAN); // Light Blue
-        this.playerStaminaBar.setPreferredSize(new Dimension(35 * size, 20)); // Match others
+        this.playerStaminaBar.setPreferredSize(
+            new Dimension(
+                35 * size, 20)); // Match others
 
         this.enemyHealthBar = new JProgressBar(0, 100);
         this.enemyHealthBar.setValue(100);
@@ -133,11 +221,16 @@ public class CombatView extends JFrame{
         this.cardLayout = new CardLayout();
         this.buttonPanelContainer = new JPanel(cardLayout);
 
-        this.originalButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        this.attackButton = this.createButton("Attack", this.buttonHeight, this.buttonWidth);
-        this.bagButton = this.createButton("Bag", this.buttonHeight, this.buttonWidth);
-        this.runButton = this.createButton("Run", this.buttonHeight, this.buttonWidth);
-        this.infoButton = this.createButton("Info", this.buttonHeight, this.buttonWidth);
+        this.originalButtonPanel = new JPanel(
+            new FlowLayout(FlowLayout.CENTER));
+        this.attackButton = this.createButton(
+            "Attack", this.buttonHeight, this.buttonWidth);
+        this.bagButton = this.createButton(
+            "Bag", this.buttonHeight, this.buttonWidth);
+        this.runButton = this.createButton(
+            "Run", this.buttonHeight, this.buttonWidth);
+        this.infoButton = this.createButton(
+            "Info", this.buttonHeight, this.buttonWidth);
 
         this.originalButtonPanel.add(attackButton);
         this.originalButtonPanel.add(bagButton);
@@ -145,21 +238,29 @@ public class CombatView extends JFrame{
         this.originalButtonPanel.add(infoButton);
 
         this.attackButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        this.physicalAttackButton = this.createButton("Physical Attack", this.buttonHeight, this.buttonWidth);
-        this.longRangeButton = this.createButton("Long Range", this.buttonHeight, this.buttonWidth);
+        this.physicalAttackButton = this.createButton(
+            "Physical Attack", this.buttonHeight, this.buttonWidth);
+        this.longRangeButton = this.createButton(
+            "Long Range", this.buttonHeight, this.buttonWidth);
         new JButton("Long Range");
-        this.poisonButton = this.createButton("Poison", this.buttonHeight, this.buttonWidth);
-        this.backAttackButton = this.createButton("Back", this.buttonHeight, this.buttonWidth);
+        this.poisonButton = this.createButton(
+            "Poison", this.buttonHeight, this.buttonWidth);
+        this.backAttackButton = this.createButton(
+            "Back", this.buttonHeight, this.buttonWidth);
         this.attackButtonPanel.add(physicalAttackButton);
         this.attackButtonPanel.add(longRangeButton);
         this.attackButtonPanel.add(poisonButton);
         this.attackButtonPanel.add(backAttackButton);
 
         this.bagButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        this.attackBuffButton = createButton("Attack Buff", this.buttonHeight, this.buttonWidth);
-        this.curePoisonButton = createButton("Cure poison", this.buttonHeight, this.buttonWidth);
-        this.healButton = createButton("Heal", this.buttonHeight, this.buttonWidth);
-        this.backButton = createButton("Back", this.buttonHeight, this.buttonWidth);
+        this.attackBuffButton = createButton(
+            "Attack Buff", this.buttonHeight, this.buttonWidth);
+        this.curePoisonButton = createButton(
+            "Cure poison", this.buttonHeight, this.buttonWidth);
+        this.healButton = createButton(
+            "Heal", this.buttonHeight, this.buttonWidth);
+        this.backButton = createButton(
+            "Back", this.buttonHeight, this.buttonWidth);
 
         this.bagButtonPanel.add(attackBuffButton);
         this.bagButtonPanel.add(curePoisonButton);
@@ -181,44 +282,67 @@ public class CombatView extends JFrame{
 
         this.showOriginalButtons();
     }
-
+    /**
+     * Sets the maximum value for the health bars.
+     * @param max the maximum health value for both player and enemy
+     */
     public final void setHealthBarMax(final int max) {
         this.playerHealtBar.setMaximum(max);
         this.enemyHealthBar.setMaximum(max);
     }
-
+    /**
+     * Updates the player's health bar with the current value.
+     * @param value the current health value of the player
+     */
     public final void updatePlayerHealth(final int value) {
         this.playerHealtBar.setValue(value);
-        this.playerHealtBar.setString("Player: " + value + "/" + this.playerHealtBar.getMaximum());
+        this.playerHealtBar.setString(
+            "Player: " + value + "/" + this.playerHealtBar.getMaximum());
     }
-
+    /**
+     * Updates the player's stamina bar with the current value.
+     * @param value the current stamina value of the player
+     */
     public final void updatePlayerStamina(final int value) {
         this.playerStaminaBar.setValue(value);
-        this.playerStaminaBar.setString("Stamina: " + value + "/" + playerStaminaBar.getMaximum());
+        this.playerStaminaBar.setString(
+            "Stamina: " + value + "/" + playerStaminaBar.getMaximum());
     }
-
+    /**
+     * Updates the enemy's health bar with the current value.
+     * @param value the current health value of the enemy
+     */
     public final void updateEnemyHealth(final int value) {
         enemyHealthBar.setValue(value);
-        enemyHealthBar.setString("Enemy: " + value + "/" + this.enemyHealthBar.getMaximum());
+        enemyHealthBar.setString(
+            "Enemy: " + value + "/" + this.enemyHealthBar.getMaximum());
     }
-
-    // NEW: Methods to control the info label
+    /**
+     * Displays a message in the info label.
+     * @param text the message to display
+     */
     public final void showInfo(final String text) {
         // Use HTML to allow for multi-line messages
         infoLabel.setText("<html>" + text.replace("\n", "<br>") + "</html>");
     }
-
+    /**
+     * Clears the info label, removing any displayed messages.
+     */
     public final void clearInfo() {
         infoLabel.setText("");
     }
-
-    public final void redrawGrid(final Position player, final Position enemy, final Position flame,
-            final int flameSize, final boolean drawPlayer, final boolean drawEnemy,
-            final boolean drawflame, final boolean drawPoison, final int playerRange,
-            final int enemyRange, final boolean isGameOver, final Position whoDied,
-            final boolean drawBossRayAttack, final ArrayList<Position> deathRayPath,
-            final boolean drawPoisonDamage, final int poisonYCoord,
-            final boolean isCharging, final int chargingCellDistance) {
+    /**
+     * Redraws the grid with the specified parameters.
+     */
+    public final void redrawGrid(
+        final Position player, final Position enemy, final Position flame,
+        final int flameSize, final boolean drawPlayer, final boolean drawEnemy,
+        final boolean drawflame, final boolean drawPoison,
+        final int playerRange, final int enemyRange,
+        final boolean isGameOver, final Position whoDied,
+        final boolean drawBossRayAttack, final ArrayList<Position> deathRayPath,
+        final boolean drawPoisonDamage, final int poisonYCoord,
+        final boolean isCharging, final int chargingCellDistance) {
 
         for (var entry : cells.entrySet()) {
             JLabel cellLabel = entry.getKey();
@@ -226,27 +350,55 @@ public class CombatView extends JFrame{
             Icon icon = null;
 
             if (isGameOver) {
-                if (this.redrawHelper.deathNeighbours(whoDied, cellPos, enemyRange)) {
-                    icon = this
-                            .getIconResource(whoDied.equals(player) ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg");
-                } else if (drawPlayer && redrawHelper.deathNeighbours(whoDied, cellPos, enemyRange)) {
-                    icon = getIconResource(whoDied.equals(player) ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg");
+                if (this.redrawHelper.deathNeighbours(
+                whoDied, cellPos, enemyRange)) {
+                    icon =
+                    this.getIconResource(
+                        whoDied.equals(player)
+                        ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg");
+                } else if (
+                    drawPlayer
+                    && redrawHelper.deathNeighbours(
+                        whoDied, cellPos, enemyRange)) {
+                    icon =
+                    getIconResource(
+                        whoDied.equals(player)
+                        ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg");
                 }
-            }
-
-            else if ((drawflame || drawPoison || drawBossRayAttack)
-                    && this.redrawHelper.neighbours(cellPos, flame, flameSize)) {
+            } else if ((drawflame || drawPoison || drawBossRayAttack)
+                    && this.redrawHelper.neighbours(
+                        cellPos, flame, flameSize)) {
                 icon = drawflame ? this.getIconResource("/yellow.jpg")
-                        : drawPoison ? this.getIconResource("/green.jpg") : getIconResource("/purple.png");
-            } else if (drawPoisonDamage && entry.getValue().y() == poisonYCoord) {
+                        : drawPoison
+                        ? this.getIconResource(
+                            "/green.jpg")
+                            : getIconResource("/purple.png");
+            } else if (
+                drawPoisonDamage
+                && entry.getValue().y() == poisonYCoord) {
                 icon = this.getIconResource("/green.jpg");
-            } else if ((drawflame || drawPoison) && this.redrawHelper.neighbours(cellPos, flame, 0)) {
-                icon = drawflame ? this.getIconResource("/yellow.jpg") : this.getIconResource("/green.jpg");
-            } else if (drawPlayer && this.redrawHelper.neighbours(player, cellPos, playerRange)) {
-                icon = this.getIconResource("/Screenshot 2025-03-25 164621.png");
-            } else if (drawEnemy && this.redrawHelper.neighbours(enemy, cellPos, enemyRange)) {
+            } else if (
+                (drawflame || drawPoison)
+                && this.redrawHelper.neighbours(
+                    cellPos, flame, 0)) {
+                icon = drawflame
+                ? this.getIconResource("/yellow.jpg")
+                : this.getIconResource("/green.jpg");
+            } else if (
+                drawPlayer
+                && this.redrawHelper.neighbours(
+                    player, cellPos, playerRange)) {
+                icon = this.getIconResource(
+                    "/Screenshot 2025-03-25 164621.png");
+            } else if (
+                drawEnemy
+                && this.redrawHelper.neighbours(
+                    enemy, cellPos, enemyRange)) {
                 icon = getIconResource("/red.jpg");
-            } else if (isCharging && this.redrawHelper.deathNeighbours(enemy, cellPos, chargingCellDistance)) {
+            } else if (
+                isCharging
+                && this.redrawHelper.deathNeighbours(
+                    enemy, cellPos, chargingCellDistance)) {
                 icon = getIconResource("/purple.png");
             } else {
                 icon = getIconResource("/white.jpg");
@@ -256,38 +408,56 @@ public class CombatView extends JFrame{
         this.revalidate();
         this.repaint();
     }
-
+    /**
+     * Sets the visibility of the combat view.
+     */
     public final void showAttackOptions() {
         this.cardLayout.show(buttonPanelContainer, "attackOptions");
     }
-
+    /**
+     * Sets the visibility of the bag buttons in the combat view.
+     */
     public final void showOriginalButtons() {
         this.cardLayout.show(this.buttonPanelContainer, "originalButtons");
     }
-
+    /**
+     * Sets the visibility of the bag buttons in the combat view.
+     */
     public final void showBagButtons() {
         this.cardLayout.show(this.buttonPanelContainer, "bagButtons");
     }
-
+    /**
+     * Enables all buttons in the combat view, allowing user interaction.
+     */
     public final void setAllButtonsEnabled() {
         this.setPanelEnabled(this.originalButtonPanel, true);
         this.setPanelEnabled(this.attackButtonPanel, true);
     }
-
+    /**
+     * Disables all buttons in the combat view, preventing user interaction.
+     */
     public final void setAllButtonsDisabled() {
         this.setPanelEnabled(this.originalButtonPanel, false);
         this.setPanelEnabled(this.attackButtonPanel, false);
     }
-
+    /**
+     * Enables a specific button in the combat view, allowing user interaction.
+     * @param buttonToEnable the button to enable
+     */
     public final void setCustomButtonEnabled(final JButton buttonToEnable) {
         buttonToEnable.setEnabled(true);
     }
-
+    /**
+     * Disables a specific button in the combat view.
+     * @param buttonToDisable the button to disable
+     */
     public final void setCustomButtonDisabled(final JButton buttonToDisable) {
         buttonToDisable.setEnabled(false);
     }
 
-    private void setPanelEnabled(final JPanel panel, final boolean enablePanel) {
+    private void setPanelEnabled(
+        final JPanel panel,
+        final boolean enablePanel) {
         panel.setEnabled(enablePanel);
         for (Component comp : panel.getComponents()) {
             if (comp instanceof JButton) {
@@ -295,11 +465,15 @@ public class CombatView extends JFrame{
             }
         }
     }
-
+    /**
+     * Sets the visibility of the combat view.
+     */
     public final void display() {
         this.setVisible(true);
     }
-
+    /**
+     * Closes the combat view and releases resources.
+     */
     public final void close() {
         this.dispose();
     }
@@ -313,17 +487,24 @@ public class CombatView extends JFrame{
             return this.createDefaultIcon();
         }
     }
-
+    /**
+     * Returns the attack button for the combat view.
+     * @return the attack button
+     */
     public final JButton getLongRangeAttackButton() {
         return this.longRangeButton;
     }
-
+    /**
+     * Returns the physical attack button for the combat view.
+     * @return the physical attack button
+     */
     public final JButton getPoisonAttackButton() {
         return this.poisonButton;
     }
 
     private ImageIcon createDefaultIcon() {
-        BufferedImage image = new BufferedImage(20, 20, BufferedImage.TYPE_INT_RGB);
+        BufferedImage image =
+        new BufferedImage(20, 20, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = image.createGraphics();
         g.setColor(Color.GRAY);
         g.fillRect(0, 0, 20, 20);
@@ -331,52 +512,83 @@ public class CombatView extends JFrame{
         return new ImageIcon(image);
     }
 
-    private JButton createButton(final String name, final int height, final int length) {
+    private JButton createButton(
+        final String name,
+        final int height,
+        final int length) {
         JButton tempButton = new JButton(name);
         tempButton.setPreferredSize(new Dimension(length, height));
         return tempButton;
     }
 
-    // Listener methods (Used By Controller)
-
+    /**
+     * Adds an action listener to the attack button.
+     * @param e the action listener to add
+     */
     public final void addAttackButtonListener(final ActionListener e) {
         this.attackButton.addActionListener(e);
     }
-
+    /**
+     * Adds an action listener to the bag button.
+     * @param e the action listener to add
+     */
     public final void addBagButtonListener(final ActionListener e) {
         this.bagButton.addActionListener(e);
     }
-
+    /**
+     * Adds an action listener to the run button.
+     * @param e the action listener to add
+     */
     public final void addRunButtonListener(final ActionListener e) {
         this.runButton.addActionListener(e);
     }
-
+    /**
+     * Adds an action listener to the info button.
+     * @param e the action listener to add
+     */
     public final void addInfoButtonListener(final ActionListener e) {
         this.infoButton.addActionListener(e);
     }
-
+    /**
+     * Adds an action listener to the physical attack button.
+     * @param e the action listener to add
+     */
     public final void addPhysicalButtonListener(final ActionListener e) {
         this.physicalAttackButton.addActionListener(e);
     }
-
+    /**
+     * Adds an action listener to the long-range attack button.
+     * @param e the action listener to add
+     */
     public final void addLongRangeButtonListener(final ActionListener e) {
         this.longRangeButton.addActionListener(e);
     }
-
+    /**
+     * Adds an action listener to the poison button.
+     * @param e the action listener to add
+     */
     public final void addPoisonButtonListener(final ActionListener e) {
         this.poisonButton.addActionListener(e);
     }
-
+    /**
+     * Adds an action listener to the back button.
+     * @param e the action listener to add
+     */
     public final void addBackButtonListener(final ActionListener e) {
         this.backButton.addActionListener(e);
-        // TODO: Put in two different methods
         this.backAttackButton.addActionListener(e);
     }
-
+    /**
+     * Adds an action listener to the attack buff button.
+     * @param e the action listener to add
+     */
     public final void addCurePoisonButtonListener(final ActionListener e) {
         this.curePoisonButton.addActionListener(e);
     }
-
+    /**
+     * Adds an action listener to the attack buff button.
+     * @param e the action listener to add
+     */
     public final void addHealButtonListener(final ActionListener e) {
         this.healButton.addActionListener(e);
     }

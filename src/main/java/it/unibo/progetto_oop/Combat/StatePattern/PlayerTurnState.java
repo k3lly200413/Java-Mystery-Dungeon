@@ -7,9 +7,16 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class PlayerTurnState implements CombatState{
 
+    /**
+     * Strategy for curing poison.
+     */
     private CurePoison curePoison;
 
-    public PlayerTurnState(){
+    /**
+     * Constructor for PlayerTurnState.
+     * Initializes the CurePoison strategy.
+     */
+    public PlayerTurnState() {
         this.curePoison = new CurePoison();
     }
 

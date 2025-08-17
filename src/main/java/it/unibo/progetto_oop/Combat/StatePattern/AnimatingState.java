@@ -8,7 +8,9 @@ import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class AnimatingState implements CombatState {
-
+    /**
+     * Indicates if it is the player's turn.
+     */
     private final boolean playerTurn = true;
 
     @Override
@@ -128,7 +130,10 @@ public class AnimatingState implements CombatState {
 
             "Unimplemented method 'handleCurePoisonInput'");
     }
-
+    /**
+     * Method to handle the boss death ray attack.
+     * @param context The combat controller context.
+     */
     public void handleBossDeathRayAttack(final CombatController context) { }
 
     @Override
@@ -164,5 +169,4 @@ public class AnimatingState implements CombatState {
         throw new UnsupportedOperationException(
 "Unimplemented method 'enter'");
     }
-    
 }

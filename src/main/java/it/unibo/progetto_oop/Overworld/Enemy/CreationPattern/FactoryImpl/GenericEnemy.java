@@ -93,7 +93,7 @@ public class GenericEnemy implements Enemy {
     /**
      * @param player The player that has moved. 
      * @param model The current model of the overworld.
-     * 
+     *
      *  Based on the type of enemy, it will act differently when the player moves.
      */
     public void playerMoved(Player player) {

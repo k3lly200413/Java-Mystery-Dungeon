@@ -56,7 +56,7 @@ public class Player {
 
     /**
      * Use an item from the player's inventory.
-     * 
+     *
      * @param item The item to be used.
      */
     public void useItem(Item item){
