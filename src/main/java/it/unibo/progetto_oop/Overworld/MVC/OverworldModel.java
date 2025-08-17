@@ -3,32 +3,40 @@ package it.unibo.progetto_oop.Overworld.MVC;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.Optional;
 
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.Enemy.Enemy;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveDirection;
-import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.GenericEnemyState;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
 public class OverworldModel {
-    private Player player;
+    private final Player player;
+    private final OverworldApplication game;
+
     private List<Item> items = new ArrayList<>();
     private Inventory inventory;
+
     private final Set<Position> walls;
+
     private List<Enemy> enemies;
-    private GenericEnemyState currentEnemyState;
     private List<Enemy> beatenEnemies = new ArrayList<>();
+    private Enemy encounteredEnemy;
 
-    
+    private Position tempPosition;
 
-    public OverworldModel(Player player, List<Item> items, Inventory inventory, Set<Position> walls, List<Enemy> enemies) {
+    private boolean combatTransitionPending = false;
+    private boolean inCombat;
+
+    public OverworldModel(Player player, List<Enemy> enemies,  List<Item> items, Set<Position> walls, OverworldApplication game, Inventory inventory) {
         this.player = player;
         this.items = items;
         this.inventory = inventory;
         this.walls = walls;
         this.enemies = enemies;
+        this.inCombat = false;
+        this.game = game;
     }
 
     // --- getter methods ---
@@ -61,7 +69,7 @@ public class OverworldModel {
 
     /**
      * 
-     * @return lista dei muri
+     * @return set of walls
      */
     public Set<Position> getWalls(){
         return this.walls;
@@ -69,17 +77,56 @@ public class OverworldModel {
 
     /**
      * 
-     * @return Lista dei nemici sulla mappa
+     * @return list of enemies in the map
      */
     public List<Enemy> getEnemies(){
         return this.enemies;
     }
+
+    /**
+     * @return the encountered enemy
+     */
+    public Enemy getEncounteredEnemy(){
+        return this.encounteredEnemy;
+    }
+
+    public boolean isInCombat(){
+        return this.inCombat;
+    }
+
+    public boolean isCombatTransitionPending(){
+        return this.combatTransitionPending;
+    }
+
+    // setters
+
+    /** 
+     * @param the encountered enemy
+     */
+    public void setEncounteredEnemy(Enemy encounteredEnemy){
+        this.encounteredEnemy = encounteredEnemy;
+    }
+
+    public void clearInCombatFlag(){
+        this.inCombat = false;
+    }
+
+    public void setInCombatFlag(){
+        this.inCombat = true;
+    }
+
+    public void clearCombatTransitionFlag(){
+        this.combatTransitionPending = false;
+    }
     
+    public void setCombatTransitionFlag(){
+        this.combatTransitionPending = false;
+    }
 
     // methods
 
-    private boolean enemyHitPlayer(){
-        return this.enemies.stream().anyMatch(enemy -> enemy.getCurrentPosition().equals(this.player.getPosition()));
+    private Optional<Enemy> checkEnemyHit(){
+        return this.enemies.stream().filter(enemy -> enemy.getCurrentPosition().equals(this.tempPosition)).findFirst();
     }
 
     private void removeEnemy(Enemy enemyToRemove){
@@ -89,44 +136,45 @@ public class OverworldModel {
         }
     }
 
-    public boolean isMoveValid(Position target){
-        if(this.walls.contains(target)){
-            return false;
-        }
-        if (this.enemyHitPlayer()){
-
-            // if player wins:
-            this.enemies.stream().filter(enemy -> enemy.getCurrentPosition().equals(target)).findFirst().ifPresent(presentEnemy -> this.removeEnemy(presentEnemy));
-        }
-        return true;
+    private boolean checkWallHit(){
+        return this.walls.contains(this.tempPosition);
     }
 
-    public void tryToMovePlayer(MoveDirection direction){
-        Position nextPosition = this.getNextDirection(direction);
-        if (this.isMoveValid(nextPosition)){
-            // set the new position of the player
-            // if item is present in the position, remove it from the list
+    /**
+     * Move the player checking if it encounters items, enemies or walls.
+     * If it encounters an enemy transition to combat
+     * 
+     * @param directionX direction of movement on axis x
+     * @param directionY direction of movement on axis y
+     */
+    public void MovePlayer(int directionX, int directionY){
+        Position currentPos = player.getPosition();
+        tempPosition = new Position(currentPos.x()+directionX, currentPos.y()+directionY);
+
+        // reset flag and encountered enemy
+        this.clearCombatTransitionFlag();
+        this.encounteredEnemy = null;
+
+        // Check Walls
+        if (checkWallHit()) {
+            this.tempPosition = player.getPosition();
         }
-        // possible enemy interaction
+    
+        // Check Enemies
+        Optional<Enemy> enemyOpt = checkEnemyHit();
+        if (enemyOpt.isPresent()) {
+            this.setCombatTransitionFlag();
+            this.encounteredEnemy = enemyOpt.get();
+            System.out.println("Enemy encounter flagged at "+tempPosition);
+            return; 
+        }
+
+        // the player can now change position
+        this.player.setPosition(tempPosition);
+
+        // TODO: check items
+        // TODO: trigger enemy turn
     }
 
-    private Position getNextDirection(MoveDirection direction){
-        switch (direction) {
-            case UP:
-                return new Position(0, -1);
-            case DOWN:
-                return new Position(0, 1);
-            case LEFT:
-                return new Position(-1, 0);
-            case RIGHT:
-                return new Position(1, 0);
-            case NONE:
-                System.out.println("direction is 0 please fix");
-                return new Position(0, 0);
-            default:
-                System.out.println("Direction is NULL please fix");
-                return new Position(0, 0);
-        }
-    }
 
 }
