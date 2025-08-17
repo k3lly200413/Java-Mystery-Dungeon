@@ -1,7 +1,9 @@
 package it.unibo.progetto_oop.Combat.StatePattern;
 
+import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
+import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class FuryBossState implements CombatState{
 
@@ -15,73 +17,84 @@ public class FuryBossState implements CombatState{
 
 
     @Override
-    public void handlePhysicalAttackInput(CombatController context) {
+    public final void handlePhysicalAttackInput(
+            final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handlePhysicalAttackInput'");
+        throw new UnsupportedOperationException(
+                "Unimplemented method 'handlePhysicalAttackInput'");
     }
 
     @Override
-    public void handleLongRangeAttackInput(CombatController context, boolean isPoison, boolean isFlame) {
+    public final void handleLongRangeAttackInput(
+            final CombatController context,
+            final boolean isPoison,
+            final boolean isFlame) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleLongRangeAttackInput'");
+        throw new UnsupportedOperationException(
+                "Unimplemented method 'handleLongRangeAttackInput'");
     }
 
     @Override
-    public void handleInfoInput(CombatController context) {
+    public final void handleInfoInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleInfoInput'");
+        throw new UnsupportedOperationException(
+                "Unimplemented method 'handleInfoInput'");
     }
 
     @Override
-    public void handleBackInput(CombatController context) {
+    public final void handleBackInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleBackInput'");
+        throw new UnsupportedOperationException(
+                "Unimplemented method 'handleBackInput'");
     }
 
     @Override
-    public void handleBagInput(CombatController context) {
+    public final void handleBagInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleBagInput'");
+        throw new UnsupportedOperationException(
+                "Unimplemented method 'handleBagInput'");
     }
 
     @Override
-    public void handleRunInput(CombatController context) {
+    public final void handleRunInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleRunInput'");
+        throw new UnsupportedOperationException(
+                "Unimplemented method 'handleRunInput'");
     }
 
     @Override
-    public void handleCurePoisonInput(CombatController context) {
+    public final void handleCurePoisonInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleCurePoisonInput'");
+        throw new UnsupportedOperationException(
+                "Unimplemented method 'handleCurePoisonInput'");
     }
 
     @Override
-    public void enterState(CombatController context) {
+    public final void enterState(final CombatController context) {
         CombatModel model = context.getModel();
         this.bossCounter++;
-        double boosHealthPercent = model.getEnemyHealth() / model.getMaxHealth();
+        double boosHealthPercent =
+        model.getEnemyHealth()
+        / model.getMaxHealth();
 
-        if ( boosHealthPercent < 0.5 && this.curranteBossState.toUpperCase().equals("NORMAL")){
+        if (boosHealthPercent < 0.5
+        && this.curranteBossState.toUpperCase().equals("NORMAL")) {
             curranteBossState = "ENRAGED";
             context.getView().showInfo("The boss is now ENRAGED");
             // TODO: Change colour of Boss
         }
-        if (this.curranteBossState.toUpperCase().equals("test")){
+        if (this.curranteBossState.toUpperCase().equals("test")) {
             context.performEnemySuperAttack();
-        }
-        else {
+        } else {
             if (this.bossCounter % 5 == 0) {
                 // context perform death ray attack
-            }
-            else if (this.bossCounter % 4 == 0) {
-                context.getView().showInfo("The Boss is charging up his Super Attack!");
+            } else if (this.bossCounter % 4 == 0) {
+                context.getView().showInfo(
+                    "The Boss is charging up his Super Attack!");
                 // player Turn
-            }
-            else if (this.bossCounter % 3 == 0) {
+            } else if (this.bossCounter % 3 == 0) {
                 // long range attack
-            }
-            else {
+            } else {
                 // physical attack
             }
         }
@@ -89,15 +102,47 @@ public class FuryBossState implements CombatState{
     }
 
     @Override
-    public void exitState(CombatController context) {
+    public final void exitState(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'exitState'");
+        throw new UnsupportedOperationException(
+                "Unimplemented method 'exitState'");
     }
 
     @Override
-    public void handleAnimationComplete(CombatController context) {
+    public final void handleAnimationComplete(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleAnimationComplete'");
+        throw new UnsupportedOperationException(
+                "Unimplemented method 'handleAnimationComplete'");
     }
-    
+
+    @Override
+    public final void handleAttackBuffInput(final CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException(
+                "Unimplemented method 'handleAttackBuffInput'");
+    }
+
+    @Override
+    public final void handleHealInput(final CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException(
+                "Unimplemented method 'handleHealInput'");
+    }
+
+    @Override
+    public final void handlePotionUsed(
+        final CombatController context,
+        final Item selectedPotion,
+        final Player player) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException(
+                "Unimplemented method 'handlePotionUsed'");
+    }
+
+    @Override
+    public final void enter(final CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException(
+"Unimplemented method 'enter'");
+    }
 }
