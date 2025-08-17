@@ -716,9 +716,25 @@ public class CombatController {
         }
     }
 
-    public void setState(CombatState state) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setState'");
+    public void setState(CombatState newState) { // Or setStates
+        CombatState oldState = this.currentState; // Temporarily store the old state
+    
+        // *** CHECK THIS PART ***
+        if (oldState != null) {
+            System.out.println("setState: Calling exitState() on " + oldState.getClass().getSimpleName()); // Add debug
+            oldState.exitState(this); // <-- THIS CALL IS CRUCIAL
+        }
+        // ***********************
+    
+        // Now update to the new state
+        System.out.println("setState: Changing currentState to " + newState.getClass().getSimpleName()); // Add debug
+        this.currentState = newState;
+    
+        // And call enterState on the new one
+        if (this.currentState != null) {
+            System.out.println("setState: Calling enterState() on " + this.currentState.getClass().getSimpleName()); // Add debug
+            this.currentState.enterState(this);
+        }
     }
 
     public CombatState getCurrentState() {
@@ -772,6 +788,32 @@ public class CombatController {
             return true;
         }
         return false;
+    }
+
+    public void performPoisonEffectAnymation() {
+        stopAnimationTimer();
+        final int conto[] = {4};                                            // array perché così posso dichiararlo final usarlo nel Timer se no sarebbe stato più scomodo
+        model.setPoisonAnimation(true);
+        animationTimer = new Timer(500, e -> {                      // Timer con delay di 300 ms perché così potevo vedere da tablet che laggava ahahahahaha
+            if (conto[0] == 1) {                                        // fine del timer resetto tutto
+                conto[0]--;
+                stopAnimationTimer();
+                redrawView();
+                /*
+                    * TODO
+                    * CHANGE TO USE FUNCTION BELOW
+                    */
+                model.setPoisonAnimation(false);
+                this.currentState.handleAnimationComplete(this);    // chiamo la funzione che tratta la fine delle animazioni 
+            }
+            else{
+                System.out.println("Conto => " + conto[0]);                                         // ridisegno tutto con il veleno che sale 
+                redrawView(true, true, false, false, 0, 1, 1, model.isGameOver(), model.getWhoDied(), (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()), true, conto[0], false, model.getDeathRayPath());
+                conto[0]--;                                         // faccio salire il veleno
+            }
+        });
+        animationTimer.start();                                     // faccio partire il timer (finisce tutte le prossime chiamate poi fa partire il timer non è coe un for (lo so è strano))
+
     }
 
 }
