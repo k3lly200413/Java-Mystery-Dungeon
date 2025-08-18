@@ -72,7 +72,7 @@ public class Player {
         if (this.inventory.hasItem(item)){ // check wether the item is in the inventory
             if (item instanceof Potion) {
                 Potion potion = (Potion) item;
-                PotionEffectStrategy strategy = potion.getStrategy(); // the kind of potion
+                PotionStrategy strategy = potion.getStrategy(); // the kind of potion
                 if (strategy != null) {
                     System.out.println("Using potion " + "infos of potion"); // TODO --> print infos of potion
                     PossibleUser adaptedPlayer = new OverworldPlayerAdapter(this); 

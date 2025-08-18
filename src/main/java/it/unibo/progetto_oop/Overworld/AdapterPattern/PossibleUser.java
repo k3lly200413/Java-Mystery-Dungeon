@@ -5,4 +5,5 @@ public interface PossibleUser {
     int getMaxHP();
     void increasePlayerHealth(int amount);
     void increasePlayerPower(int amount);
+    void setPlayerPoisoned(boolean poisoned);
 }

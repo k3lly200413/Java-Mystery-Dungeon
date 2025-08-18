@@ -3,8 +3,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 
-public class CombatModel {
+public class CombatModel implements PossibleUser{
 
     private int size;
     private Position playerPosition;
@@ -313,5 +314,15 @@ public class CombatModel {
 
     public void setCurrentBossState(String currentBossState) {
         this.currentBossState = currentBossState;
+    }
+
+    @Override
+    public int getHp() {
+        return this.getPlayerHealth();
+    }
+
+    @Override
+    public int getMaxHP() {
+        return this.getMaxHealth();
     }
 }
