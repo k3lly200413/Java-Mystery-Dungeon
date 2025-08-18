@@ -6,6 +6,9 @@ import java.util.Set;
 import java.util.function.ToIntFunction;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
+/**
+ * This class is used by the follower and patroller enemies
+ */
 public class MovementUtil {
     public enum MoveDirection {
         UP, DOWN, LEFT, RIGHT, NONE
@@ -53,7 +56,7 @@ public class MovementUtil {
                 .filter(wallPos -> movingAxisGetter.applyAsInt(wallPos) != movingAxisGetter.applyAsInt(enemyPosition)) // Ensure wall is not at the exact same spot on moving axis
                 .min(Comparator.comparingInt(wallPos ->
                         calculateDistanceOnAxis(enemyPosition, wallPos, movingAxisGetter)
-                )); // returns the positio of the closest wall on the moving axis
+                )); // returns the position of the closest wall on the moving axis
     }
 
     public MoveDirection getInitialGeneralMoveDirection(Position enemyPosition, Set<Position> wallList, boolean doesEnemyGoVertically) {
@@ -71,7 +74,6 @@ public class MovementUtil {
             directionIfEnemyIsCloser = MoveDirection.LEFT; // changing the direction
         }
 
-        // Use the refined findClosestWallOnAxis
         Optional<Position> closestWallOpt = findClosestWallOnAxis(enemyPosition, wallList, doesEnemyGoVertically);
 
         if (closestWallOpt.isPresent()) {
@@ -81,11 +83,11 @@ public class MovementUtil {
             int wallCoord = getCoordinate.applyAsInt(closestWall);
 
             if (enemyCoord > wallCoord) {
-                return directionIfEnemyIsFurther;
+                return directionIfEnemyIsFurther; // RIGHT or DOWN
             } else if (enemyCoord < wallCoord) {
-                return directionIfEnemyIsCloser;
+                return directionIfEnemyIsCloser; // LEFT or UP
             } else {
-                return MoveDirection.NONE;
+                return MoveDirection.NONE; 
             }
         } else {
             return MoveDirection.NONE;
