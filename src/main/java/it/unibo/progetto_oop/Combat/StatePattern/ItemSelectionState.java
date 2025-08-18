@@ -69,22 +69,4 @@ public class ItemSelectionState implements CombatState {
     public void handleCurePoisonInput(CombatController context) {
         // this.handlePotionUsed(context, null, null); is this class needed???
     }
-
-    @Override
-    public void handleAttackBuffInput(CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleAttackBuffInput'");
-    }
-
-    @Override
-    public void handleHealInput(CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleHealInput'");
-    }
-
-    @Override
-    public void enter(CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'enter'");
-    }
 }

@@ -6,8 +6,6 @@ import java.util.List;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.OverworldPlayerAdapter;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 import it.unibo.progetto_oop.Overworld.Player.PlayerObserver.PlayerObserver;
-import it.unibo.progetto_oop.Combat.PotionStrategy.Potion;
-import it.unibo.progetto_oop.Combat.PotionStrategy.PotionStrategy;
 import it.unibo.progetto_oop.Combat.PotionStrategy.*;
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
@@ -67,14 +65,14 @@ public class Player {
 
     /**
      * Use an item from the player's inventory.
-     *
+     * 
      * @param item The item to be used.
      */
     public void useItem(Item item){ // TODO: fix
         if (this.inventory.hasItem(item)){ // check wether the item is in the inventory
             if (item instanceof Potion) {
                 Potion potion = (Potion) item;
-                PotionStrategy strategy = potion.getStrategy(); // the kind of potion
+                PotionEffectStrategy strategy = potion.getStrategy(); // the kind of potion
                 if (strategy != null) {
                     System.out.println("Using potion " + "infos of potion"); // TODO --> print infos of potion
                     PossibleUser adaptedPlayer = new OverworldPlayerAdapter(this); 

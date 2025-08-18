@@ -6,44 +6,11 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class BossTurnState implements CombatState {
 
-    /**
-     * Delay before the enemy takes action.
-     */
-    private static final int ENEMY_ACTION_DELAY = 500;
-    /**
-     * Counter for the number of attacks in a sequence.
-     */
+    private static final int ENEMY_ACTION_DELAY = 500; // ms delay before enemy acts
     private int attackSequenceCounter = 0;
-    /**
-     * Total number of attacks before the boss performs a special attack.
-     */
     private static final int TOTAL_ATTACKS_IN_SEQUENCE = 3;
-    /**
-     * Boss health percentage used to determine the boss's state.
-     */
     private int bossHealthPercent;
-    /**
-     * Current state of the boss, either "NORMAL" or "ENRAGED".
-     */
     private String bossState = "NORMAL";
-    /**
-     * Percentage of health at which the boss becomes enraged.
-     */
-    private static final double HALF_HEALTH_PERCENT = 0.5;
-    /**
-     * Threshold for the boss to perform a death ray attack.
-     */
-    private static final int DEATH_RAY_ATTACK_THRESHOLD = 5;
-    /**
-     * Threshold for the boss to charge up an attack before performing it.
-     */
-    private static final int CHARGE_UP_ATTACK_THRESHOLD = 4;
-
-    /**
-     * Threshold for the boss to perform a long-range attack.
-     */
-    private static final int LONG_RANGE_ATTACK_THRESHOLD = 3;
-
 
     @Override
     public final void handlePhysicalAttackInput(
@@ -109,16 +76,9 @@ public class BossTurnState implements CombatState {
         System.out.println("\nBoss State: Entering Boss Turn State\n");
         this.bossHealthPercent =
         (context.getModel().getEnemyHealth()
-        / context.getModel().getMaxHealth());
+        / context.getModel().getMaxHealth()) * 100;
 
-
-        // Converts bossHealthPercent to a double for comparison
-        // https://shorturl.at/XEBEK
-        /*
-         * Neeeded to add short url instead of normal URL
-         * Reason: The URL is too long and will trigger the checkstyle error
-         */
-        if (this.bossHealthPercent < HALF_HEALTH_PERCENT
+        if (this.bossHealthPercent < 50
             && this.bossState.toUpperCase().equals("NORMAL")) {
             this.bossState = "ENRAGED";
             context.getView().showInfo("The Boss is now ENRAGED");
@@ -128,11 +88,10 @@ public class BossTurnState implements CombatState {
             context.performEnemySuperAttack();
             this.attackSequenceCounter = 0;
         } else {
-            if (this.attackSequenceCounter % DEATH_RAY_ATTACK_THRESHOLD == 0) {
+            if (this.attackSequenceCounter % 5 == 0) {
                 // Set new Animating State
                 context.performBossDeathRayAttack();
-            } else if (this.attackSequenceCounter
-            % CHARGE_UP_ATTACK_THRESHOLD == 0) {
+            } else if (this.attackSequenceCounter % 4 == 0) {
                 context.getView().showInfo(
                     "The Boss is charging up his Super Attack!");
                 // animating State
@@ -140,8 +99,7 @@ public class BossTurnState implements CombatState {
                     context.getModel().getEnemyPosition(), true, () -> {
                     // handleAnimationComplete
                 });
-            } else if (this.attackSequenceCounter
-            % LONG_RANGE_ATTACK_THRESHOLD == 0) {
+            } else if (this.attackSequenceCounter % 3 == 0) {
                 // set animating State
                 // enemy long range attack
             } else {
