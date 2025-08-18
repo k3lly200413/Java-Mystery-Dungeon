@@ -101,6 +101,7 @@ public class EnemyTurnState implements CombatState {
 
     @Override
     public void handlePotionUsed(CombatController context, Item selectedPotion, Player player) {
+    public void handlePotionUsed(CombatController context, Item selectedPotion, Player player) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handlePotionUsed'");
     }

@@ -323,8 +323,9 @@ public class CombatView extends JFrame{
         return this.poisonButton;
     }
 
-    private ImageIcon createDefaultIcon() {
-        BufferedImage image = new BufferedImage(20, 20, BufferedImage.TYPE_INT_RGB);
+    private ImageIcon createDefaultIcon(final int width, final int height) {
+        BufferedImage image =
+        new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = image.createGraphics();
         g.setColor(Color.GRAY);
         g.fillRect(0, 0, 20, 20);
