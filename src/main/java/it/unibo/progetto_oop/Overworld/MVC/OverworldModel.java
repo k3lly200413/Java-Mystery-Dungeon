@@ -42,7 +42,7 @@ public class OverworldModel {
     // --- getter methods ---
 
     /**
-     * 
+     *
      * @return Posizione del giocatore
      */
     public Player getPlayer(){
@@ -50,7 +50,7 @@ public class OverworldModel {
     }
 
     /**
-     * 
+     *
      * @return the list of items in the overworld
      */
     public List<Item> getItem(){
@@ -59,7 +59,7 @@ public class OverworldModel {
 
 
     /**
-     * 
+     *
      * @return the player's inventory
      */
 

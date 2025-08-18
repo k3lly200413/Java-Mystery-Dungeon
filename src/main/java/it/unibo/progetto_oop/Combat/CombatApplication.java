@@ -30,16 +30,17 @@ public class CombatApplication {
         int enemyPower = 3;
         int enemySpeed = 3;
         String enemyName = "Dragon";
-    
+        int playerMaxStamina = 100;
+        int playerLongRangePower = 5;
 
         // --- Application Startup ---
         // Ensure UI creation happens on the Event Dispatch Thread (EDT) for safety.
         SwingUtilities.invokeLater(() -> {
             // 1. Create the Model with our configuration
-            CombatModel model = new CombatModel(size, playerPower, playerPoisonPower, enemyPower, enemySpeed, enemyName);
+            CombatModel model = new CombatModel(size, playerMaxStamina, playerPower, playerPoisonPower, playerLongRangePower, enemyPower, enemySpeed, enemyName);
 
             // 2. Create the View
-            CombatView view = new CombatView(model.getSize());
+            CombatView view = new CombatView(model.getSize(), (20 * model.getSize()) / 3, (50 * model.getSize()) / 3, 70, 75, 100, 100);
 
             // 3. Create the Controller, linking the Model and View
             CombatController controller = new CombatController(model, view);

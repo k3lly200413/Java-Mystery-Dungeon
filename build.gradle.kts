@@ -39,8 +39,11 @@ dependencies {
     // JUnit API and testing engine
     val jUnitVersion = "5.11.4"
     // when dependencies share the same version, grouping in a val helps to keep them in sync
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$jUnitVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
+
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    testImplementation("org.mockito:mockito-core:5.19.0")
 }
 
 application {

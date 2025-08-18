@@ -6,7 +6,7 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
 public interface Enemy {
-    /** 
+    /**
      * @return the current health of the enemy
      */
     public int getCurrentHealth();
@@ -18,7 +18,7 @@ public interface Enemy {
      * @return the power of the enemy
      */
     public int getPower();
-    /** 
+    /**
      * @return the type(state) of the enemy
      */
     public EnemyType getState();

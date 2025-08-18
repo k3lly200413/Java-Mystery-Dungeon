@@ -38,5 +38,11 @@ public class OverworldPlayerAdapter implements PossibleUser{
     public void increasePlayerPower(int amount) {
         this.adaptedPlayer.setHp(amount);
     }
+
+    @Override
+    public void setPlayerPoisoned(boolean poisoned) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setPlayerPoisoned'");
+    }
     
 }

@@ -63,22 +63,45 @@ public class EnemyTurnState implements CombatState {
 
     @Override
     public void exitState(CombatController context) {
-        System.out.println("Exiting Enemy Turn State");
+        // Logic for exiting enemy turn state
+        context.getModel().setPlayerTurn(true);
+        // context.getView().updatePlayerTurnView();
     }
 
-    // --- All handleInput methods should do nothing in this state ---
-    @Override public void handlePhysicalAttackInput(CombatController context) { /* Ignore */ }
-    @Override public void handleLongRangeAttackInput(CombatController context, boolean isFlame, boolean isPoison) { /* Ignore */ }
-    @Override public void handleInfoInput(CombatController context) { /* Ignore */ }
-    @Override public void handleBackInput(CombatController context) { /* Ignore */ }
-    @Override public void handleBagInput(CombatController context) { /* Ignore */ }
-    @Override public void handleRunInput(CombatController context) { /* Ignore */ }
-
+    @Override
+    public void handlePhysicalAttackInput(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handlePhysicalAttackInput'");
+    }
 
     @Override
-    public void handleAnimationComplete(CombatController context) {
-        // Should not happen in this state
-        System.err.println("Error: Animation completed while in EnemyTurnState!");
+    public void handleLongRangeAttackInput(CombatController context, boolean isPoison, boolean isFlame) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleLongRangeAttackInput'");
+    }
+
+    @Override
+    public void handleInfoInput(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleInfoInput'");
+    }
+
+    @Override
+    public void handleBackInput(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleBackInput'");
+    }
+
+    @Override
+    public void handleBagInput(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleBagInput'");
+    }
+
+    @Override
+    public void handleRunInput(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleRunInput'");
     }
 
     @Override
@@ -94,15 +117,21 @@ public class EnemyTurnState implements CombatState {
     }
 
     @Override
+    public void handlePotionUsed(CombatController context, Item selectedPotion, Player player) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handlePotionUsed'");
+    }
+
+    @Override
     public void handleCurePoisonInput(CombatController context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleCurePoisonInput'");
     }
 
     @Override
-    public void handlePotionUsed(CombatController context, Item selectedPotion, Player player) {
+    public void handleAnimationComplete(CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handlePotionUsed'");
+        throw new UnsupportedOperationException("Unimplemented method 'handleAnimationComplete'");
     }
 
 }
