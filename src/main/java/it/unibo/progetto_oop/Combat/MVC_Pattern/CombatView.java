@@ -182,7 +182,7 @@ public class CombatView extends JFrame {
         this.maxEnemyHealth = maxEnemyHealthToAssign;
         this.setSize(heightModifier * size, widthModifier * size);
         this.setLayout(new BorderLayout());
-        this.initializeUI(size);
+        this.initializeUI(size, );
     }
 
     private void initializeUI(final int size,

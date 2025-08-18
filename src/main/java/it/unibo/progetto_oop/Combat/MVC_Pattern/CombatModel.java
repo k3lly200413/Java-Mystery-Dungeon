@@ -315,4 +315,14 @@ public class CombatModel implements PossibleUser{
     public void setCurrentBossState(String currentBossState) {
         this.currentBossState = currentBossState;
     }
+
+    @Override
+    public int getHp() {
+        return this.getPlayerHealth();
+    }
+
+    @Override
+    public int getMaxHP() {
+        return this.getMaxHealth();
+    }
 }

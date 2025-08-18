@@ -129,7 +129,7 @@ public class CombatController {
             (this.model.isPlayerTurn()
             ? this.model.getEnemyPosition()
             : this.model.getPlayerPosition()),
-            false, new ArrayList<Position>(), false, 0, false, 0);
+            false, new ArrayList<Position>(), false, 0, false, 0, 20, 20);
     }
     /**
      * Redraws the view with specific parameters.
@@ -166,7 +166,7 @@ public class CombatController {
             palyerPos, enemyPos, flamePos, flameSize, drawPlayer,
             drawEnemy, drawFlame, drawPoison, playerRange, enemyRange,
             isGameOver, whoDied, bossRayAttack, deathRayPath, drawPoisonDamage,
-            poisonYCoord, isCharging, chargingPosition);
+            poisonYCoord, isCharging, chargingPosition, 20, 20);
     }
 
     /**
@@ -289,7 +289,7 @@ public class CombatController {
         enemyTurnDelayTimer.setRepeats(false); // ensure it only runs once
         enemyTurnDelayTimer.start();
     }
-    
+
     public final void performDelayedEnemyAction(
         final int delay,
         final Runnable action) {
@@ -392,12 +392,14 @@ public class CombatController {
 
         model.setAttackPosition(new Position((attacker.x() + direction), attacker.y())); // Start flame at player
 
-        redrawView(true, true, false, false, (isFlame || isPoison) ? 0 : 1, 1, 1, false, model.getEnemyPosition(),
-                (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()),
-                false, model.getEnemyPosition().y(), (isFlame || isPoison) ? false : true, model.getDeathRayPath()); // Redraw
-                                                                                                                     // without
-                                                                                                                     // flame/poison
-                                                                                                                     // visible
+        this.redrawView(
+            this.model.getPlayerPosition(), this.model.getEnemyPosition(),
+            this.model.getAttackPosition(), 0, true, true, !isPoison, isPoison,
+            1, 1, this.model.isGameOver(), (model.isPlayerTurn()
+            ? model.getEnemyPosition()
+            : model.getPlayerPosition()), false, new ArrayList<>(),
+            false, 0, false, 0
+        );
 
         System.out.println("Attacker Position => " + attacker.equals(model.getEnemyPosition()));
 
@@ -411,11 +413,7 @@ public class CombatController {
                 stopAnimationTimer();
                 // Reset flame position visually (optional, could just hide it)
                 model.setAttackPosition(attacker); // Move flame back instantly
-                redrawView(true, true, false, false, (isFlame || isPoison) ? 0 : 1, 1, 1, false,
-                        model.getEnemyPosition(),
-                        (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()),
-                        false, model.getEnemyPosition().y(), false, model.getDeathRayPath()); // Redraw without
-                                                                                              // flame/poison visible
+                redrawView();
                 if (this.model.isPlayerTurn()) {
                     this.model.decreaseEnemyHealth(this.model.getPlayerLongRangePower());
                 } else {
@@ -480,7 +478,7 @@ public class CombatController {
 
         final ArrayList<Position> deathRayLastPosition = new ArrayList<>();
 
-        this.animationTimer = new Timer(100, e -> {
+        this.animationTimer = new Timer(ANIMATION_DELAY, e -> {
             if (deathRayLastPosition.stream()
                     .anyMatch(
                             passsedPosition -> passsedPosition
@@ -960,8 +958,8 @@ public class CombatController {
         int num = new Random().nextInt(2);
 
         switch (num) {
-            case PHYSICAL -> performEnemyPhysicalAttack();
-            case LONG_RANGE -> performLongRangeAttack(model.getEnemyPosition(), -1, false, true);
+            case PHYSICAL : performEnemyPhysicalAttack();
+            case LONG_RANGE : performLongRangeAttack(model.getEnemyPosition(), -1, false, true);
             default:break;
         }
 
