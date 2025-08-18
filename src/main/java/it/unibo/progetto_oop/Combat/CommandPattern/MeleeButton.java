@@ -7,47 +7,19 @@ import it.unibo.progetto_oop.Combat.Position.Position;
 
 public class MeleeButton implements GameButton {
 
-    /**
-     * List of positions representing players in the combat.
-     */
     private List<Position> giocatori = new LinkedList<>();
-    /**
-     * The position of the player.
-     */
     private Position player;
-    /**
-     * The position of the enemy.
-     */
     private Position enemy;
-    /**
-     * The direction in which the player will move.
-     * It can be either 1 (right) or -1 (left).
-     */
     private int where;
-    /**
-     * The distance to check for contact.
-     * This is used to determine if the player can attack the enemy.
-     */
     private int distance;
 
-    /**
-     * Constructor for MeleeButton.
-     * Initializes the player and enemy positions, direction, and distance.
-     *
-     * @param playerPosition The initial position of the player.
-     * @param enemyPosition  The initial position of the enemy.
-     * @param direction      The direction in which the player will move.
-     * @param distanceBuffer       The distance to check for contact.
-     */
     public final void setAttributes(
-            final Position playerPosition,
-            final Position enemyPosition,
-            final int direction,
-            final int distanceBuffer) {
-        this.player = playerPosition;
-        this.enemy = enemyPosition;
-        this.where = direction;
-        this.distance = distanceBuffer;
+            final Position player, final Position enemy, final int where,
+            final int distance) {
+        this.player = player;
+        this.enemy = enemy;
+        this.where = where;
+        this.distance = distance;
     }
 
     @Override
@@ -96,28 +68,24 @@ public class MeleeButton implements GameButton {
     /**
      * Checks if two positions are within a given distance of each other.
      *
-     * @param firstPosition   The first position.
-     * @param secondPosition    The second position.
-     * @param distanceBuffer The maximum distance to be considered neighbors.
+     * @param player   The first position.
+     * @param other    The second position.
+     * @param distance The maximum distance to be considered neighbors.
      * @return True if they are neighbors, false otherwise.
      */
     public boolean neighbours(
-        final Position firstPosition,
-        final Position secondPosition,
-        final int distanceBuffer) {
+        final Position player, final Position other, final int distance) {
         return
-            Math.abs(firstPosition.x() - secondPosition.x())
-            <= distanceBuffer
-            && Math.abs(firstPosition.y() - secondPosition.y())
-            <= distanceBuffer;
+            Math.abs(player.x() - other.x()) <= distance
+            && Math.abs(player.y() - other.y()) <= distance;
     }
 
     /**
      * Method used to display death of a character.
      *
-     * @param deathPosition   Center of dead player
-     * @param positionToCheck    points we want to display
-     * @param distanceBuffer distance from center of dead character
+     * @param player   Center of dead player
+     * @param other    points we want to display
+     * @param distance distance from center of dead character
      * @return true if all checks are true, false otherwise
      *
      *
@@ -133,17 +101,14 @@ public class MeleeButton implements GameButton {
      */
 
     public boolean deathNeighbours(
-        final Position deathPosition,
-        final Position positionToCheck,
-        final int distanceBuffer) {
+        final Position player, final Position other, final int distance) {
         return
-        (Math.abs(deathPosition.x() - positionToCheck.x()) == distanceBuffer
-        && Math.abs(deathPosition.y() - positionToCheck.y()) == distanceBuffer)
-        || (Math.abs(deathPosition.x() - positionToCheck.x()) == distanceBuffer
-        && deathPosition.y() == positionToCheck.y())
-        || (deathPosition.x() == positionToCheck.x()
-        && Math.abs(deathPosition.y() - positionToCheck.y()) == distanceBuffer)
-        || (deathPosition.x() == positionToCheck.x()
-        && positionToCheck.y() == deathPosition.y());
+        (Math.abs(player.x() - other.x()) == distance
+        && Math.abs(player.y() - other.y()) == distance)
+        || (Math.abs(player.x() - other.x()) == distance
+        && player.y() == other.y())
+        || (player.x() == other.x()
+        && Math.abs(player.y() - other.y()) == distance)
+        || (player.x() == other.x() && other.y() == player.y());
     }
 }

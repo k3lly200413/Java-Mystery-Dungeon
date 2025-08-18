@@ -35,7 +35,7 @@ public interface GenericEnemyState {
     public void onPlayerMoved(Enemy context, Player player, OverworldModel model);
     
     /**
-     *
+     * 
      * @return the type of the enemy state
      */
     public EnemyType getType();

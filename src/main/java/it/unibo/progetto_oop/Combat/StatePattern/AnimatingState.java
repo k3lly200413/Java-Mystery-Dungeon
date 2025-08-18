@@ -8,14 +8,8 @@ import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class AnimatingState implements CombatState {
-    /**
-     * Indicates if it is the player's turn.
-     */
+
     private final boolean playerTurn = true;
-    /**
-     * Delay for the animation in milliseconds.
-     */
-    private static final int ANIMATION_DELAY = 500;
 
     @Override
     public final void handlePhysicalAttackInput(
@@ -97,27 +91,32 @@ public class AnimatingState implements CombatState {
         boolean wasPlayerTurn = !model.isPlayerTurn();
 
         if (wasPlayerTurn) {
+            // if (context.getModel().isBossTurn()){
+            // // set new BossTurnState()
+            // }
+            // else{
             context.applyPostTurnEffects();
-            // TODO: Check what wasPlayerTurn is
-            // model.setPlayerTurn(false); // Flip the turn flag
-            // model.setBossTurn(false);
-            // context.setState(new EnemyTurnState());
-            // TODO: make applypostTurnEffects() generic
+            // model.setPlayerTurn(this.playerTurn);
+            // }
         }
 
         if (context.checkGameOver()) {
             // Create gameOverState
             return;
+        } else if (wasPlayerTurn) {
+            context.applyPostTurnEffects();
         }
 
         if (wasPlayerTurn) {
-            // TODO: Check if enemyTurnState sets model flags
-            context.getModel().setPlayerTurn(false);
-            context.setState(new EnemyTurnState());
+            // TODO: Shold be able to fix with EnemyTurnState
+            model.setPlayerTurn(this.playerTurn);
+            Timer enemyDeley = new Timer(500, e -> {
+                context.enemyTurn();
+            });
+            // Add EnemyTurnState
         } else {
-            // TODO: Check if playerturnstate sets model flags
-            context.getModel().setPlayerTurn(true);
-            context.setState(new PlayerTurnState());
+            model.setPlayerTurn(!this.playerTurn);
+            // Add setState to call PlayerturnState
         }
 
     }
@@ -129,10 +128,7 @@ public class AnimatingState implements CombatState {
 
             "Unimplemented method 'handleCurePoisonInput'");
     }
-    /**
-     * Method to handle the boss death ray attack.
-     * @param context The combat controller context.
-     */
+
     public void handleBossDeathRayAttack(final CombatController context) { }
 
     @Override
@@ -168,4 +164,5 @@ public class AnimatingState implements CombatState {
         throw new UnsupportedOperationException(
 "Unimplemented method 'enter'");
     }
+    
 }

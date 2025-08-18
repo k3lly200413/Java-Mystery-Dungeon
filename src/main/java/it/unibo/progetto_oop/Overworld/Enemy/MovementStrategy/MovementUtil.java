@@ -30,7 +30,7 @@ public class MovementUtil {
      * @param enemyPosition the position of the enemy
      * @param wallList the set of wall positions
      * @param isVerticalCheck true if checking for vertical walls(enemy is moving vertically), false for horizontal walls
-     *
+     * 
      * @return an Optional containing the closest wall position if found, or an empty Optional if no wall is found
      */
     private Optional<Position> findClosestWallOnAxis(Position enemyPosition, Set<Position> wallList, boolean isVerticalCheck) {
