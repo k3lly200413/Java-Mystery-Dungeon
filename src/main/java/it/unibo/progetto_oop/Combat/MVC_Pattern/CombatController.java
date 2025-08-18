@@ -526,7 +526,7 @@ public class CombatController {
         }
     }
 
-    private boolean isAnimationRunning() {
+    public boolean isAnimationRunning() {
         return animationTimer != null && animationTimer.isRunning();
     }
 
@@ -670,6 +670,7 @@ public class CombatController {
             }
 
             this.redrawView();
+            System.out.println("Enemy Health => " + this.model.getEnemyHealth());
 
         });
         this.animationTimer.start();
