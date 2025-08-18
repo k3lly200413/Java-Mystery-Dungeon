@@ -549,6 +549,32 @@ public class CombatView extends JFrame {
         return this.poisonButton;
     }
 
+    public final JButton getCurePoisonButton() {
+        return this.curePoisonButton;
+    }
+
+    public final JPanel getBagButtonPanel() {
+        return this.bagButtonPanel;
+    }
+    public final JPanel getAttackButtonPanel() {
+        return this.attackButtonPanel;
+    }
+    public final JPanel getOriginalButtonPanel() {
+        return this.originalButtonPanel;
+    }
+
+    public final JPanel getButtonPanelContainer() {
+        return this.buttonPanelContainer;
+    }
+
+    public final JProgressBar getPlayerHealthBar() {
+        return this.playerHealtBar;
+    }
+
+    public final JProgressBar getEnemyHealthBar() {
+        return this.enemyHealthBar;
+    }
+
     private ImageIcon createDefaultIcon(final int width, final int height) {
         BufferedImage image =
         new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
