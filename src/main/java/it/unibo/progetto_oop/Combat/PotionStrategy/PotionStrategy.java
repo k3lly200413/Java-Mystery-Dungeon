@@ -1,6 +1,7 @@
 package it.unibo.progetto_oop.Combat.PotionStrategy;
 
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
+import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 
 public interface PotionStrategy {
     /**
@@ -8,5 +9,5 @@ public interface PotionStrategy {
      *
      * @param user the CombatModel representing the user of the potion
      */
-    void applyEffect(CombatModel user);
+    void applyEffect(PossibleUser user);
 }

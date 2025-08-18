@@ -2,15 +2,17 @@ package it.unibo.progetto_oop.Combat.StatePattern;
 
 import javax.swing.Timer;
 
+import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
+import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class EnemyTurnState implements CombatState {
 
     private static final int ENEMY_ACTION_DELAY = 500; // Delay in milliseconds before enemy action
 
     @Override
-    public void enter(CombatController context) {
+    public void enterState(CombatController context) {
         // Logic for entering enemy turn state
         System.out.println("Entering enemy turn state.");
         CombatModel model = context.getModel();
@@ -60,15 +62,82 @@ public class EnemyTurnState implements CombatState {
     }
 
     @Override
-    public void exit() {
+    public void exitState(CombatController context) {
         // Logic for exiting enemy turn state
-        controller.getModel().setPlayerTurn(true);
-        controller.getView().updatePlayerTurnView();
+        context.getModel().setPlayerTurn(true);
+        // context.getView().updatePlayerTurnView();
     }
 
     @Override
-    public void handleInput(String input) {
-        // Handle any input during enemy turn if necessary
+    public void handlePhysicalAttackInput(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handlePhysicalAttackInput'");
+    }
+
+    @Override
+    public void handleLongRangeAttackInput(CombatController context, boolean isPoison, boolean isFlame) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleLongRangeAttackInput'");
+    }
+
+    @Override
+    public void handleInfoInput(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleInfoInput'");
+    }
+
+    @Override
+    public void handleBackInput(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleBackInput'");
+    }
+
+    @Override
+    public void handleBagInput(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleBagInput'");
+    }
+
+    @Override
+    public void handleRunInput(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleRunInput'");
+    }
+
+    @Override
+    public void handleAttackBuffInput(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleAttackBuffInput'");
+    }
+
+    @Override
+    public void handleHealInput(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleHealInput'");
+    }
+
+    @Override
+    public void handlePotionUsed(CombatController context, Item selectedPotion, Player player) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handlePotionUsed'");
+    }
+
+    @Override
+    public void handleCurePoisonInput(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleCurePoisonInput'");
+    }
+
+    @Override
+    public void handleAnimationComplete(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handleAnimationComplete'");
+    }
+
+    @Override
+    public void enter(CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'enter'");
     }
 
 }

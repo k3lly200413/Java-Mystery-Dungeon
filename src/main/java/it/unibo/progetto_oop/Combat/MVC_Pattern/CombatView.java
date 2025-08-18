@@ -182,7 +182,7 @@ public class CombatView extends JFrame {
         this.maxEnemyHealth = maxEnemyHealthToAssign;
         this.setSize(heightModifier * size, widthModifier * size);
         this.setLayout(new BorderLayout());
-        this.initializeUI(size, );
+        this.initializeUI(size, 20, 35, 5, 20, 20);
     }
 
     private void initializeUI(final int size,
@@ -624,6 +624,13 @@ public class CombatView extends JFrame {
     public final void addBackButtonListener(final ActionListener e) {
         this.backButton.addActionListener(e);
         this.backAttackButton.addActionListener(e);
+    }
+    /**
+     * Adds an action listener to the attack buff button.
+     * @param e the action listener to add
+     */
+    public final void addAttackBuffButtonListener(final ActionListener e) {
+        this.attackBuffButton.addActionListener(e);
     }
     /**
      * Adds an action listener to the attack buff button.

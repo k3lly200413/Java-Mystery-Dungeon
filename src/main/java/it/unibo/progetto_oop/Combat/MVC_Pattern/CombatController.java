@@ -104,6 +104,7 @@ public class CombatController {
         this.attachListeners();
 
         this.redrawView();
+        this.currentState = new PlayerTurnState();
     }
 
     /**
@@ -186,7 +187,7 @@ public class CombatController {
             e -> System.out.println("Run clicked - Not Yet Implemented"));
         this.view.addCurePoisonButtonListener(
             e -> this.handleCurePoisonInput());
-        this.view.addAttackButtonListener(e -> handleAttackBuff());
+        this.view.addAttackBuffButtonListener(e -> handleAttackBuff());
         this.view.addHealButtonListener(e -> handleHeal());
 
     }
@@ -269,6 +270,7 @@ public class CombatController {
             return;
         }
         Runnable onPlayerAttackComplete = () -> {
+            this.model.setPlayerTurn(!this.model.isPlayerTurn());
             new AnimatingState().handleAnimationComplete(this);
             // applyPostTurnEffects();
             // if (checkGameOver()) return; //Check if enemy was defeated
@@ -318,7 +320,7 @@ public class CombatController {
                 return; // Check if player was defeated
             }
 
-            model.setPlayerTurn(true);
+            model.setPlayerTurn(!this.model.isPlayerTurn());
             view.setAllButtonsEnabled();
             view.showInfo("Player's turn!");
             view.showOriginalButtons();
@@ -414,10 +416,12 @@ public class CombatController {
                 // Reset flame position visually (optional, could just hide it)
                 model.setAttackPosition(attacker); // Move flame back instantly
                 redrawView();
-                if (this.model.isPlayerTurn()) {
+                if (!this.model.isPlayerTurn()) {
                     this.model.decreaseEnemyHealth(this.model.getPlayerLongRangePower());
                 } else {
                     this.model.decreasePlayerHealth(this.model.getEnemyLongRangePower());
+                    // TODO: refactor this to where it shuold be
+                    this.view.updatePlayerHealth(this.model.getPlayerHealth());
                 }
 
                 if (onHit != null) {
@@ -429,7 +433,7 @@ public class CombatController {
             }
 
             // Move flame forward using the command
-            longRangeCommand.setAttributes(this.model.getAttackPosition(), 1);
+            longRangeCommand.setAttributes(this.model.getAttackPosition(), direction);
             Position nextFlamePos = longRangeCommand.execute().get(0);
             this.model.setAttackPosition(nextFlamePos);
             // Redraw showing the projectile
@@ -805,6 +809,7 @@ public class CombatController {
             view.showInfo("Enemy take poison damage!");
             model.decreaseEnemyHealth(model.getPlayerPoisonPower());
             view.updateEnemyHealth(model.getEnemyHealth());
+            // this.model.setPlayerTurn(true);
         }
     }
 
@@ -942,10 +947,22 @@ public class CombatController {
 
     
     public final void setState(final CombatState state) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-
-"Unimplemented method 'setState'");
+        CombatState oldState = this.currentState; // Temporarily store the old state
+    
+        if (oldState != null) {
+            System.out.println("setState: Calling exitState() on " + oldState.getClass().getSimpleName()); // Add debug
+            oldState.exitState(this); 
+        }
+            
+        // Now update to the new state
+        System.out.println("setState: Changing currentState to " + state.getClass().getSimpleName()); // Add debug
+        this.currentState = state;
+    
+        // And call enterState on the new one
+        if (this.currentState != null) {
+            System.out.println("setState: Calling enterState() on " + this.currentState.getClass().getSimpleName()); // Add debug
+            this.currentState.enterState(this);
+        }
     }
 
     public final CombatState getCurrentState() {
@@ -965,8 +982,9 @@ public class CombatController {
 
     }
 
-    public final void performLongRangeAttack(final Position attacker, final int direction,
-            final boolean applyFlameIntent, final boolean applyPoisonIntent) {
+    public final void performLongRangeAttack(
+        final Position attacker, final int direction,
+        final boolean applyFlameIntent, final boolean applyPoisonIntent) {
         // Pass the intent to the animation, AND create the completion runnable
 
         System.out.println(" Performing Long Range Attack");
@@ -984,10 +1002,12 @@ public class CombatController {
                 System.out.println("\nCurrent State = > " + this.currentState.toString() + "\n");
                 if (applyPoisonIntent) {
                     // TODO: change to make it more efficient
-                    if (this.model.isPlayerTurn()) {
+                    if (!this.model.isPlayerTurn()) {
                         this.model.setEnemyPoisoned(applyPoisonIntent);
+                        this.model.setPlayerTurn(false);
                     } else {
                         this.model.setPlayerPoisoned(applyPoisonIntent);
+                        this.model.setPlayerTurn(true);
                     }
                 }
                 currentState.handleAnimationComplete(this); // No extra args needed if state handles it

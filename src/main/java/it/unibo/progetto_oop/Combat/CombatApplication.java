@@ -40,7 +40,7 @@ public class CombatApplication {
             CombatModel model = new CombatModel(size, playerMaxStamina, playerPower, playerPoisonPower, playerLongRangePower, enemyPower, enemySpeed, enemyName);
 
             // 2. Create the View
-            CombatView view = new CombatView(model.getSize());
+            CombatView view = new CombatView(model.getSize(), (20 * model.getSize()) / 3, (50 * model.getSize()) / 3, 70, 75, 100, 100);
 
             // 3. Create the Controller, linking the Model and View
             CombatController controller = new CombatController(model, view);

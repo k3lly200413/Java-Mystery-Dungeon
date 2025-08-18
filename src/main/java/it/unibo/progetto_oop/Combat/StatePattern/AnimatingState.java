@@ -97,32 +97,27 @@ public class AnimatingState implements CombatState {
         boolean wasPlayerTurn = !model.isPlayerTurn();
 
         if (wasPlayerTurn) {
-            // if (context.getModel().isBossTurn()){
-            // // set new BossTurnState()
-            // }
-            // else{
             context.applyPostTurnEffects();
-            // model.setPlayerTurn(this.playerTurn);
-            // }
+            // TODO: Check what wasPlayerTurn is
+            // model.setPlayerTurn(false); // Flip the turn flag
+            // model.setBossTurn(false);
+            // context.setState(new EnemyTurnState());
+            // TODO: make applypostTurnEffects() generic
         }
 
         if (context.checkGameOver()) {
             // Create gameOverState
             return;
-        } else if (wasPlayerTurn) {
-            context.applyPostTurnEffects();
         }
 
         if (wasPlayerTurn) {
-            // TODO: Shold be able to fix with EnemyTurnState
-            model.setPlayerTurn(this.playerTurn);
-            Timer enemyDeley = new Timer(ANIMATION_DELAY, e -> {
-                context.enemyTurn();
-            });
-            // Add EnemyTurnState
+            // TODO: Check if enemyTurnState sets model flags
+            context.getModel().setPlayerTurn(false);
+            context.setState(new EnemyTurnState());
         } else {
-            model.setPlayerTurn(!this.playerTurn);
-            // Add setState to call PlayerturnState
+            // TODO: Check if playerturnstate sets model flags
+            context.getModel().setPlayerTurn(true);
+            context.setState(new PlayerTurnState());
         }
 
     }
