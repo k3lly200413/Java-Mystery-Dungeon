@@ -103,9 +103,7 @@ public class FuryBossState implements CombatState{
 
     @Override
     public final void exitState(final CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-                "Unimplemented method 'exitState'");
+        System.out.println("Exiting Fury Boss State");
     }
 
     @Override

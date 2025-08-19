@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import it.unibo.progetto_oop.Combat.CommandPattern.GameButton;
 import it.unibo.progetto_oop.Combat.CommandPattern.LongRangeButton;
 import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
 import it.unibo.progetto_oop.Combat.Position.Position;
@@ -14,6 +15,7 @@ import it.unibo.progetto_oop.Combat.StatePattern.CombatState;
 import it.unibo.progetto_oop.Combat.StatePattern.EnemyTurnState;
 import it.unibo.progetto_oop.Combat.StatePattern.InfoDisplayState;
 import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
+import it.unibo.progetto_oop.Combat.Helper.Neighbours;
 
 
 /**
@@ -33,11 +35,16 @@ public class CombatController {
     /**
      * MeleeButton command for melee attacks.
      */
-    private final MeleeButton meleeCommand;
+    private GameButton meleeCommand;
     /**
      * LongRangeButton command for long range attacks.
      */
-    private final LongRangeButton longRangeCommand;
+    private GameButton longRangeCommand;
+    /**
+     * Neighbours instance to check if two positions are neighbours.
+     * This is used to determine if the player can attack the enemy.
+     */
+    private final Neighbours neighbours;
     /**
      * Animation delay for each step in the animation.
      */
@@ -93,9 +100,7 @@ public class CombatController {
 
         this.model = modelToUse;
         this.view = viewToUse;
-        this.meleeCommand = new MeleeButton();
-
-        this.longRangeCommand = new LongRangeButton();
+        this.neighbours = new Neighbours();
 
         this.view.setHealthBarMax(model.getMaxHealth());
         // TODO: make methods in model that divides playerMaxHleath and enemyMaxHealth
@@ -427,7 +432,7 @@ public class CombatController {
             }
 
             // Move flame forward using the command
-            longRangeCommand.setAttributes(this.model.getAttackPosition(), direction);
+            longRangeCommand = new LongRangeButton(this.model.getAttackPosition(), direction);
             Position nextFlamePos = longRangeCommand.execute().get(0);
             this.model.setAttackPosition(nextFlamePos);
             // Redraw showing the projectile
@@ -528,7 +533,8 @@ public class CombatController {
             final boolean isPlayerAttacker,
             final int attackPower,
             final Runnable onComplete) {
-        // TODO: Add javaDoc and comments I'm to tired at this point
+        //TODO: Move health logic management to model
+        //TODO: Correct State deligation, PlayerTurnState/AnimationState
         this.stopAnimationTimer();
 
         final int moveDirection = isPlayerAttacker ? 1 : -1;
@@ -559,14 +565,14 @@ public class CombatController {
 
             // --- State Logic ---
             if (state[0] == 0) {
-                this.meleeCommand.setAttributes(
+                this.meleeCommand = new MeleeButton(
                     currentAttackerPos[0], currentTargetPos[0], moveDirection,
                         meleeCheckDistance);
                 List<Position> result = this.meleeCommand.execute();
                 nextAttackerPos = result.get(0);
                 nextTargetPos = result.get(1);
 
-                if (this.meleeCommand.neighbours(
+                if (this.neighbours.neighbours(
                     nextAttackerPos, nextTargetPos, meleeCheckDistance)
                         || !nextTargetPos.equals(currentTargetPos[0])) {
                     state[0] = 1;
@@ -574,7 +580,7 @@ public class CombatController {
 
                 } else {
 
-                    if (this.meleeCommand.neighbours(
+                    if (this.neighbours.neighbours(
                         nextAttackerPos,
                         nextTargetPos,
                         meleeCheckDistance + 1)) { // Check slightly wider range

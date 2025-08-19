@@ -13,7 +13,9 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
+import it.unibo.progetto_oop.Combat.CommandPattern.GameButton;
 import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
+import it.unibo.progetto_oop.Combat.Helper.Neighbours;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
 import java.awt.BorderLayout;
@@ -139,7 +141,7 @@ public class CombatView extends JFrame {
     /**
      * Label for displaying information in the combat view.
      */
-    private final MeleeButton redrawHelper = new MeleeButton();
+    private final Neighbours neighbours;
     /**
      * URL for loading icons in the combat view.
      */
@@ -180,6 +182,7 @@ public class CombatView extends JFrame {
         // this.setSize(70 * size, 75 * size);
         this.maxPlayerHealth = maxPlayerHealthToAssign;
         this.maxEnemyHealth = maxEnemyHealthToAssign;
+        this.neighbours = new Neighbours();
         this.setSize(heightModifier * size, widthModifier * size);
         this.setLayout(new BorderLayout());
         this.initializeUI(size, 20, 35, 5, 20, 20);
@@ -387,7 +390,7 @@ public class CombatView extends JFrame {
             Icon icon = null;
 
             if (isGameOver) {
-                if (this.redrawHelper.deathNeighbours(
+                if (this.neighbours.deathNeighbours(
                 whoDied, cellPos, enemyRange)) {
                     icon =
                     this.getIconResource(
@@ -396,7 +399,7 @@ public class CombatView extends JFrame {
                         squareWidth, squareHeight);
                 } else if (
                     drawPlayer
-                    && redrawHelper.deathNeighbours(
+                    && neighbours.deathNeighbours(
                         whoDied, cellPos, enemyRange)) {
                     icon =
                     getIconResource(
@@ -405,7 +408,7 @@ public class CombatView extends JFrame {
                         squareWidth, squareHeight);
                 }
             } else if ((drawflame || drawPoison || drawBossRayAttack)
-                    && this.redrawHelper.neighbours(
+                    && this.neighbours.neighbours(
                         cellPos, flame, flameSize)) {
                 icon = drawflame ? this.getIconResource("/yellow.jpg",
                     squareWidth, squareHeight)
@@ -421,26 +424,26 @@ public class CombatView extends JFrame {
                 squareWidth, squareHeight);
             } else if (
                 (drawflame || drawPoison)
-                && this.redrawHelper.neighbours(
+                && this.neighbours.neighbours(
                     cellPos, flame, 0)) {
                 icon = drawflame
                 ? this.getIconResource("/yellow.jpg", squareWidth, squareHeight)
                 : this.getIconResource("/green.jpg", squareWidth, squareHeight);
             } else if (
                 drawPlayer
-                && this.redrawHelper.neighbours(
+                && this.neighbours.neighbours(
                     player, cellPos, playerRange)) {
                 icon = this.getIconResource(
                     "/Screenshot 2025-03-25 164621.png",
                     squareWidth, squareHeight);
             } else if (
                 drawEnemy
-                && this.redrawHelper.neighbours(
+                && this.neighbours.neighbours(
                     enemy, cellPos, enemyRange)) {
                 icon = getIconResource("/red.jpg", squareWidth, squareHeight);
             } else if (
                 isCharging
-                && this.redrawHelper.deathNeighbours(
+                && this.neighbours.deathNeighbours(
                     enemy, cellPos, chargingCellDistance)) {
                 icon = getIconResource("/purple.png",
                 squareWidth, squareHeight);

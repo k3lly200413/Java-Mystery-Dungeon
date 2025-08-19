@@ -44,6 +44,8 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
     testImplementation("org.mockito:mockito-core:5.19.0")
+    
+    testImplementation("org.easytesting:fest-swing:1.2")
 }
 
 application {

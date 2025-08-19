@@ -7,10 +7,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.fest.swing.edt.FailOnThreadViolationRepaintManager;
 
 import it.unibo.progetto_oop.Combat.StatePattern.AnimatingState;
 import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
@@ -62,14 +65,39 @@ public class CombatViewTest {
         assertEquals(90, this.view.getEnemyHealthBar().getValue());
     }
     @Test
-    void performingPhysicalAttackSetsAnimatingStateTest() {
+    void performingPhysicalAttackButtonsAreNotClickable() {
         this.controller.setState(new PlayerTurnState());
         this.controller.getCurrentState().handlePhysicalAttackInput(controller);
-        this.view.getPoisonAttackButton().isEnabled();
+        this.view.showAttackOptions();
+        assertTrue(this.view.getAttackButtonPanel().isVisible());
+        assertFalse(this.view.getBagButtonPanel().isVisible());
+        assertFalse(this.view.getOriginalButtonPanel().isVisible());
+        assertFalse(this.view.getPoisonAttackButton().isEnabled());
     }
     @Test
-    void buttonsAreClickableDuringAnimationTest() {
+    void buttonsAreNotClickableDuringAnimationTest() {
         this.controller.setState(new AnimatingState());
+        this.view.showBagButtons();
+        assertFalse(this.view.getAttackButtonPanel().getComponent(0).isEnabled());
+        this.view.showAttackOptions();
+        assertFalse(this.view.getAttackButtonPanel().getComponent(0).isEnabled());
+        this.view.showOriginalButtons();
         assertFalse(this.view.getAttackButtonPanel().getComponent(0).isEnabled());
     }
+    @Test
+    void testCardLayoutShowing() {
+        this.view.showAttackOptions();
+        assertTrue(this.view.getAttackButtonPanel().isVisible());
+        assertFalse(this.view.getBagButtonPanel().isVisible());
+        assertFalse(this.view.getOriginalButtonPanel().isVisible());
+        this.view.showBagButtons();
+        assertFalse(this.view.getAttackButtonPanel().isVisible());
+        assertTrue(this.view.getBagButtonPanel().isVisible());
+        assertFalse(this.view.getOriginalButtonPanel().isVisible());
+        this.view.showOriginalButtons();
+        assertTrue(this.view.getOriginalButtonPanel().isVisible());
+        assertFalse(this.view.getAttackButtonPanel().isVisible());
+        assertFalse(this.view.getBagButtonPanel().isVisible());
+    }
+    
 }

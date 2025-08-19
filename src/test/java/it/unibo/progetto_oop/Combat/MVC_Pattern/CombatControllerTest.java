@@ -10,7 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import it.unibo.progetto_oop.Combat.StatePattern.AnimatingState;
+import it.unibo.progetto_oop.Combat.StatePattern.BossTurnState;
 import it.unibo.progetto_oop.Combat.StatePattern.EnemyTurnState;
+import it.unibo.progetto_oop.Combat.StatePattern.FuryBossState;
+import it.unibo.progetto_oop.Combat.StatePattern.ItemSelectionState;
 import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
 
 public class CombatControllerTest {
@@ -59,6 +63,16 @@ public class CombatControllerTest {
     void setStateTest() {
         controller.setState(new EnemyTurnState());
         assertTrue(this.controller.getCurrentState() instanceof EnemyTurnState, "State should be set to EnemyTurnState");
+        controller.setState(new PlayerTurnState());
+        assertTrue(this.controller.getCurrentState() instanceof PlayerTurnState);
+        controller.setState(new AnimatingState());
+        assertTrue(this.controller.getCurrentState() instanceof AnimatingState);
+        controller.setState(new BossTurnState());
+        assertTrue(this.controller.getCurrentState() instanceof BossTurnState);
+        controller.setState(new FuryBossState());
+        assertTrue(this.controller.getCurrentState() instanceof FuryBossState);
+        controller.setState(new ItemSelectionState());
+        assertTrue(this.controller.getCurrentState() instanceof ItemSelectionState);
     }
 
     @Test
@@ -85,8 +99,18 @@ public class CombatControllerTest {
         assertTrue(controller.isAnimationRunning(), "Animation timer should be running after performing an enemy physical attack");
     }
     @Test
-    void playerLongRangeAttackAnimationStartedTest() {
+    void longRangeAttackAnimationStartedTest() {
+        controller.stopAnimationTimer();
         controller.performLongRangeAttack(model.getPlayerPosition(), 1, true, false);
+        assertTrue(controller.isAnimationRunning(), "Animation timer should be running after performing a player long range attack");
+        controller.stopAnimationTimer();
+        controller.performLongRangeAttack(model.getEnemyPosition(), -1, true, false);
+        assertTrue(controller.isAnimationRunning(), "Animation timer should be running after performing a player long range attack");
+        controller.stopAnimationTimer();
+        controller.performLongRangeAttack(model.getPlayerPosition(), 1, false, true);
+        assertTrue(controller.isAnimationRunning(), "Animation timer should be running after performing a player long range attack");
+        controller.stopAnimationTimer();
+        controller.performLongRangeAttack(model.getEnemyPosition(), -1, false, true);
         assertTrue(controller.isAnimationRunning(), "Animation timer should be running after performing a player long range attack");
     }
 
