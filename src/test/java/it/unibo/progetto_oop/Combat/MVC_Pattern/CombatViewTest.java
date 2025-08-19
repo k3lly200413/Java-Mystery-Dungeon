@@ -65,14 +65,23 @@ public class CombatViewTest {
         assertEquals(90, this.view.getEnemyHealthBar().getValue());
     }
     @Test
-    void performingPhysicalAttackSetsAnimatingStateTest() {
+    void performingPhysicalAttackButtonsAreNotClickable() {
         this.controller.setState(new PlayerTurnState());
         this.controller.getCurrentState().handlePhysicalAttackInput(controller);
-        this.view.getPoisonAttackButton().isEnabled();
+        this.view.showAttackOptions();
+        assertTrue(this.view.getAttackButtonPanel().isVisible());
+        assertFalse(this.view.getBagButtonPanel().isVisible());
+        assertFalse(this.view.getOriginalButtonPanel().isVisible());
+        assertFalse(this.view.getPoisonAttackButton().isEnabled());
     }
     @Test
     void buttonsAreNotClickableDuringAnimationTest() {
         this.controller.setState(new AnimatingState());
+        this.view.showBagButtons();
+        assertFalse(this.view.getAttackButtonPanel().getComponent(0).isEnabled());
+        this.view.showAttackOptions();
+        assertFalse(this.view.getAttackButtonPanel().getComponent(0).isEnabled());
+        this.view.showOriginalButtons();
         assertFalse(this.view.getAttackButtonPanel().getComponent(0).isEnabled());
     }
     @Test

@@ -99,8 +99,18 @@ public class CombatControllerTest {
         assertTrue(controller.isAnimationRunning(), "Animation timer should be running after performing an enemy physical attack");
     }
     @Test
-    void playerLongRangeAttackAnimationStartedTest() {
+    void longRangeAttackAnimationStartedTest() {
+        controller.stopAnimationTimer();
         controller.performLongRangeAttack(model.getPlayerPosition(), 1, true, false);
+        assertTrue(controller.isAnimationRunning(), "Animation timer should be running after performing a player long range attack");
+        controller.stopAnimationTimer();
+        controller.performLongRangeAttack(model.getEnemyPosition(), -1, true, false);
+        assertTrue(controller.isAnimationRunning(), "Animation timer should be running after performing a player long range attack");
+        controller.stopAnimationTimer();
+        controller.performLongRangeAttack(model.getPlayerPosition(), 1, false, true);
+        assertTrue(controller.isAnimationRunning(), "Animation timer should be running after performing a player long range attack");
+        controller.stopAnimationTimer();
+        controller.performLongRangeAttack(model.getEnemyPosition(), -1, false, true);
         assertTrue(controller.isAnimationRunning(), "Animation timer should be running after performing a player long range attack");
     }
 
