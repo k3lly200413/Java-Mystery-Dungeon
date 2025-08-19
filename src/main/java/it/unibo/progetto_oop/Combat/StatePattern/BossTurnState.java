@@ -145,11 +145,4 @@ public class BossTurnState implements CombatState {
         throw new UnsupportedOperationException(
 "Unimplemented method 'handlePotionUsed'");
     }
-
-    @Override
-    public final void enter(final CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-"Unimplemented method 'enter'");
-    }
 }

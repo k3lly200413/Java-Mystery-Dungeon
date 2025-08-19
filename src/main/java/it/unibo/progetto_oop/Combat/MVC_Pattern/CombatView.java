@@ -555,6 +555,10 @@ public class CombatView extends JFrame {
         return this.curePoisonButton;
     }
 
+    public final JButton getAttackBackButton() {
+        return this.backAttackButton;
+    }
+
     public final JPanel getBagButtonPanel() {
         return this.bagButtonPanel;
     }

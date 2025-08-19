@@ -61,7 +61,7 @@ public class InfoDisplayState implements CombatState {
         // --- Step 1: Explicitly Disable ALL standard combat buttons/panels ---
         // This is crucial because the previous state (AnimatingState) likely
         // disabled them, but we need to be certain only 'Back' will be active.
-        view.setButtonsEnabled(false); // Assumes this disables Attack/Bag/Run etc. AND Physical/LongRange etc. panels
+        view.setAllButtonsDisabled();
 
         // --- Step 2: Display the Information ---
         String infoText = String.format(
@@ -77,12 +77,12 @@ public class InfoDisplayState implements CombatState {
         
         view.showAttackOptions();
         System.out.println("\nOriginal\n");
-        view.setCustomButtonEnable(view.getAttackBackButton());
+        view.setCustomButtonEnabled(view.getAttackBackButton());
 
         // --- Step 4: Ensure zoomed view persists ---
         // Do not reset positions here.
         // Ensure the view is redrawn showing the enemy in the zoomed position.
-        // The exact parameters depend on your redrawView method signature.
+        // The exact parameters depend on the redrawView method signature.
         // context.redrawView();
 
     }
