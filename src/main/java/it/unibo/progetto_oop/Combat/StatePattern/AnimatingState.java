@@ -2,64 +2,86 @@ package it.unibo.progetto_oop.Combat.StatePattern;
 
 import javax.swing.Timer;
 
+import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatView;
+import it.unibo.progetto_oop.Overworld.Player.Player;
 
-public class AnimatingState implements CombatState{
-
+public class AnimatingState implements CombatState {
+    /**
+     * Indicates if it is the player's turn.
+     */
     private final boolean playerTurn = true;
+    /**
+     * Delay for the animation in milliseconds.
+     */
+    private static final int ANIMATION_DELAY = 500;
 
     @Override
-    public void handlePhysicalAttackInput(CombatController context) {
+    public final void handlePhysicalAttackInput(
+        final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handlePhysicalAttackInput'");
+        throw new UnsupportedOperationException(
+
+            "Unimplemented method 'handlePhysicalAttackInput'");
     }
 
     @Override
-    public void handleLongRangeAttackInput(CombatController context, boolean isPoison, boolean isFlame) {
+    public final void handleLongRangeAttackInput(
+        final CombatController context, final boolean isPoison,
+            final boolean isFlame) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleLongRangeAttackInput'");
+        throw new UnsupportedOperationException(
+
+            "Unimplemented method 'handleLongRangeAttackInput'");
     }
 
     @Override
-    public void handleInfoInput(CombatController context) {
+    public final void handleInfoInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleInfoInput'");
+        throw new UnsupportedOperationException(
+
+            "Unimplemented method 'handleInfoInput'");
     }
 
     @Override
-    public void handleBackInput(CombatController context) {
+    public final void handleBackInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleBackInput'");
+        throw new UnsupportedOperationException(
+
+            "Unimplemented method 'handleBackInput'");
     }
 
     @Override
-    public void handleBagInput(CombatController context) {
+    public final void handleBagInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleBagInput'");
+        throw new UnsupportedOperationException(
+
+            "Unimplemented method 'handleBagInput'");
     }
 
     @Override
-    public void handleRunInput(CombatController context) {
+    public final void handleRunInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleRunInput'");
+        throw new UnsupportedOperationException(
+
+            "Unimplemented method 'handleRunInput'");
     }
 
     @Override
-    public void enterState(CombatController context) {
-        context.getView().showInfo("Entered Animating State!\nNo issues for now");
+    public final void enterState(final CombatController context) {
+        context.getView().showInfo(
+            "Entered Animating State!\nNo issues for now");
         System.out.println("------ Entered Animating State ------");
         context.getView().setAllButtonsDisabled();
     }
 
     @Override
-    public void exitState(CombatController context) {
+    public final void exitState(final CombatController context) {
         System.out.println("------ Exeting Animating State ------");
         if (context.getModel().isPlayerTurn()) {
             context.getModel().setPlayerTurn(!this.playerTurn);
-        }
-        else{
+        } else {
             context.getModel().setPlayerTurn(this.playerTurn);
             // TODO: implement setState in Controller
             // context.setState(new PlayerturnState())
@@ -67,21 +89,20 @@ public class AnimatingState implements CombatState{
     }
 
     @Override
-    public void handleAnimationComplete(CombatController context) {
+    public final void handleAnimationComplete(final CombatController context) {
         System.out.println("Debug: Requested Handle Animation Complete");
-        
+
         CombatModel model = context.getModel();
-        
+
         boolean wasPlayerTurn = !model.isPlayerTurn();
 
         if (wasPlayerTurn) {
-            if (context.getModel().isBossTurn()){
-                // set new BossTurnState()
-            }
-            else{
-                context.applyPostTurnEffects();
-                model.setPlayerTurn(this.playerTurn);
-            }
+            context.applyPostTurnEffects();
+            // TODO: Check what wasPlayerTurn is
+            // model.setPlayerTurn(false); // Flip the turn flag
+            // model.setBossTurn(false);
+            // context.setState(new EnemyTurnState());
+            // TODO: make applypostTurnEffects() generic
         }
 
         if (context.checkGameOver()) {
@@ -89,33 +110,55 @@ public class AnimatingState implements CombatState{
             return;
         }
 
-        else if (wasPlayerTurn) {
-            context.applyPostTurnEffects();
+        if (wasPlayerTurn) {
+            // TODO: Check if enemyTurnState sets model flags
+            context.getModel().setPlayerTurn(false);
+            context.setState(new EnemyTurnState());
+        } else {
+            // TODO: Check if playerturnstate sets model flags
+            context.getModel().setPlayerTurn(true);
+            context.setState(new PlayerTurnState());
         }
 
-        if (wasPlayerTurn) {
-            // TODO: Shold be able to fix with EnemyTurnState
-            model.setPlayerTurn(this.playerTurn);
-            Timer enemyDeley = new Timer(500, e -> {
-                context.enemyTurn();
-            });
-            // Add EnemyTurnState
-        }
-        else {
-            model.setPlayerTurn(!this.playerTurn);
-            // Add setState to call PlayerturnState       
-        }
-    
     }
 
     @Override
-    public void handleCurePoisonInput(CombatController context) {
+    public final void handleCurePoisonInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleCurePoisonInput'");
+        throw new UnsupportedOperationException(
+
+            "Unimplemented method 'handleCurePoisonInput'");
+    }
+    /**
+     * Method to handle the boss death ray attack.
+     * @param context The combat controller context.
+     */
+    public void handleBossDeathRayAttack(final CombatController context) { }
+
+    @Override
+    public final void handleAttackBuffInput(final CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException(
+
+            "Unimplemented method 'handleAttackBuffInput'");
     }
 
-    public void handleBossDeathRayAttack(CombatController context) {
-        
+    @Override
+    public final void handleHealInput(final CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException(
+
+            "Unimplemented method 'handleHealInput'");
     }
-    
+
+    @Override
+    public final void handlePotionUsed(
+        final CombatController context,
+        final Item selectedPotion,
+        final Player player) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException(
+
+            "Unimplemented method 'handlePotionUsed'");
+    }
 }

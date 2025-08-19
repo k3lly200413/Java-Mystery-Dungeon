@@ -1,12 +1,12 @@
 package it.unibo.progetto_oop.Combat.PotionStrategy;
 
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
+import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 
-public class CurePoison implements PotionStrategy{
+public class CurePoison implements PotionStrategy {
 
     @Override
-    public void applyEffect(CombatModel user) {
-        user.setPlayerPoisoned(true);
+    public final void applyEffect(final PossibleUser user) {
+        user.setPlayerPoisoned(false);
     }
-    
 }

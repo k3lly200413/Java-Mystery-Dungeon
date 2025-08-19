@@ -4,17 +4,15 @@ import java.util.List;
 
 import it.unibo.progetto_oop.Combat.Position.Position;
 
-/*
+/**
  * Interface to be used by buttons.
- * Represents the action each button will be able to execute 
- * 
+ * Represents the action each button will be able to execute
+ *
  */
 public interface GameButton {
-    /*
+    /**
      * Executes a command.
      * @return A list of positions, used for animation.
-     * not sure why @ isn't working 
-     * TODO: fix @ not working
      */
     List<Position> execute();
 }
