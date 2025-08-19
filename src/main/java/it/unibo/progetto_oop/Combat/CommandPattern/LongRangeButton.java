@@ -22,7 +22,7 @@ public class LongRangeButton implements GameButton {
      * @param flamePosition the initial position of the flame
      * @param flameDirection the direction of the flame, either 1 or -1
      */
-    public final void setAttributes(
+    public LongRangeButton(
         final Position flamePosition,
         final int flameDirection) {
         this.flame = flamePosition;
