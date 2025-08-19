@@ -7,7 +7,6 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 public class BossTurnState implements CombatState {
 
     private static final int ENEMY_ACTION_DELAY = 500; // ms delay before enemy acts
-    private int attackSequenceCounter = 0;
     private static final int TOTAL_ATTACKS_IN_SEQUENCE = 3;
     private int bossHealthPercent;
     private String bossState = "NORMAL";
@@ -86,25 +85,32 @@ public class BossTurnState implements CombatState {
         }
         if (this.bossState.toUpperCase().equals("ENRAGED")) {
             context.performEnemySuperAttack();
-            this.attackSequenceCounter = 0;
         } else {
-            if (this.attackSequenceCounter % 5 == 0) {
-                // Set new Animating State
+            if (context.getModel().getBossTurnCounter() % 5 == 0) {
+                context.setState(new AnimatingState());
                 context.performBossDeathRayAttack();
-            } else if (this.attackSequenceCounter % 4 == 0) {
+                context.getModel().setBossTurn(false);
+                context.getModel().increaseBossTurnCounter();
+            } else if (context.getModel().getBossTurnCounter() % 4 == 0) {
                 context.getView().showInfo(
                     "The Boss is charging up his Super Attack!");
-                // animating State
+                context.setState(new AnimatingState());
                 context.performDeathAnimation(
                     context.getModel().getEnemyPosition(), true, () -> {
-                    // handleAnimationComplete
+                    context.getCurrentState().handleAnimationComplete(context);
                 });
-            } else if (this.attackSequenceCounter % 3 == 0) {
-                // set animating State
-                // enemy long range attack
+                context.getModel().setBossTurn(false);
+                context.getModel().increaseBossTurnCounter();
+            } else if (context.getModel().getBossTurnCounter() % 3 == 0) {
+                context.setState(new AnimatingState());
+                context.performEnemyAttack();
+                context.getModel().setBossTurn(false);
+                context.getModel().increaseBossTurnCounter();
             } else {
-                // animating state
-                // enemy physical attack
+                context.setState(new AnimatingState());
+                context.performEnemyPhysicalAttack();
+                context.getModel().setBossTurn(false);
+                context.getModel().increaseBossTurnCounter();
             }
         }
 

@@ -71,34 +71,7 @@ public class FuryBossState implements CombatState{
 
     @Override
     public final void enterState(final CombatController context) {
-        CombatModel model = context.getModel();
-        this.bossCounter++;
-        double boosHealthPercent =
-        model.getEnemyHealth()
-        / model.getMaxHealth();
-
-        if (boosHealthPercent < 0.5
-        && this.curranteBossState.toUpperCase().equals("NORMAL")) {
-            curranteBossState = "ENRAGED";
-            context.getView().showInfo("The boss is now ENRAGED");
-            // TODO: Change colour of Boss
-        }
-        if (this.curranteBossState.toUpperCase().equals("test")) {
-            context.performEnemySuperAttack();
-        } else {
-            if (this.bossCounter % 5 == 0) {
-                // context perform death ray attack
-            } else if (this.bossCounter % 4 == 0) {
-                context.getView().showInfo(
-                    "The Boss is charging up his Super Attack!");
-                // player Turn
-            } else if (this.bossCounter % 3 == 0) {
-                // long range attack
-            } else {
-                // physical attack
-            }
-        }
-
+        context.performEnemySuperAttack();
     }
 
     @Override

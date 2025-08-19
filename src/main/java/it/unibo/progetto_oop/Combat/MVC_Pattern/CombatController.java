@@ -337,9 +337,10 @@ public class CombatController {
 
     private void handlePlayerLongRangeAttack(
         final boolean applyPoison, final boolean applyFlameIntent) {
-        CombatState playerState = new PlayerTurnState();
-        playerState.enterState(this);
-        playerState.handleLongRangeAttackInput(
+        // CombatState playerState = new PlayerTurnState();
+        
+        this.currentState.enterState(this);
+        this.currentState.handleLongRangeAttackInput(
             this, applyPoison, applyFlameIntent);
     }
 
@@ -462,9 +463,12 @@ public class CombatController {
         this.view.clearInfo();
         this.view.showInfo("Boss Unleasehs Death Ray");
 
-        Runnable onDeathRayAttackComplete = () -> {
-            // call animation complete(this);
-        };
+        this.longRangeAttackAnimation(model.getEnemyPosition(), -1, false, false, () -> {
+            // Animation finished - just signal the state machine
+            if (currentState != null) {
+                currentState.handleAnimationComplete(this); // No extra args needed if state handles it
+            }
+        });
     }
 
     /**
@@ -679,21 +683,21 @@ public class CombatController {
     public final void performEnemySuperAttack() {
         System.out.println("\nPerforming Super Attack\n");
 
-        /*
-         * Runnable onSuperAttackComplete = () -> {
-         * this.currentState.handleAnimationComplete(this);
-         * };
-         * 
-         * // Now start the animation itself
-         * int superAttackPower = (int)(model.getEnemyPower() * 1.5);
-         * animatePhysicalMove(
-         * model.getEnemyPosition(),
-         * model.getPlayerPosition(),
-         * false, // isPlayerAttacker
-         * superAttackPower,
-         * onSuperAttackComplete
-         * );
-         */
+        
+        Runnable onSuperAttackComplete = () -> {
+            this.currentState.handleAnimationComplete(this);
+        };
+        
+        // Now start the animation itself
+        int superAttackPower = (model.getEnemyPower() * 2);
+        animatePhysicalMove(
+            model.getEnemyPosition(),
+            model.getPlayerPosition(),
+            false, // isPlayerAttacker
+            superAttackPower,
+            onSuperAttackComplete
+        );
+        
 
     }
 
@@ -749,8 +753,18 @@ public class CombatController {
                 step[0]--;
                 this.stopAnimationTimer();
                 this.redrawView();
-                // TODO: if implemented model step above show that we're not in animation
-                // anymore
+                if (this.model.isPlayerTurn()) {
+                    model.decreaseEnemyHealth(model.getPlayerPoisonPower());
+                    view.updateEnemyHealth(model.getEnemyHealth());
+                    this.setState(new EnemyTurnState());
+                }
+                else {
+                    System.out.println("Enemy Poison Power => " + model.getEnemyPoisonPower());
+                    this.model.decreasePlayerHealth(model.getEnemyPoisonPower());
+                    System.out.println("Enemy Health => " + model.getEnemyHealth());
+                    view.updatePlayerHealth(model.getPlayerHealth());
+                    this.setState(new PlayerTurnState());
+                }
             } else {
                 redrawView(
                     this.model.getPlayerPosition(),
