@@ -536,7 +536,8 @@ public class CombatController {
             final boolean isPlayerAttacker,
             final int attackPower,
             final Runnable onComplete) {
-        // TODO: Add javaDoc and comments I'm to tired at this point
+        //TODO: Move health logic management to model
+        //TODO: Correct State deligation, PlayerTurnState/AnimationState
         this.stopAnimationTimer();
 
         final int moveDirection = isPlayerAttacker ? 1 : -1;
