@@ -1,4 +1,4 @@
-package JMD;
+package it.unibo.progetto_oop.Overworld.PlayGround;
 
 public class Room {
     int x, y, width, height;

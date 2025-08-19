@@ -1,4 +1,4 @@
-package JMD;
+package it.unibo.progetto_oop.Overworld.PlayGround;
 
 import javax.swing.SwingUtilities;
 
