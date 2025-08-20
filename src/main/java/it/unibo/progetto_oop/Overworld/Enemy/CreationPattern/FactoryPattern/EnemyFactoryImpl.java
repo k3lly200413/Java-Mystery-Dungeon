@@ -7,7 +7,7 @@ import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Generic
 public class EnemyFactoryImpl implements EnemyFactory {
 
     @Override
-    public Enemy createpatrollerEnemy() {
+    public Enemy createPatrollerEnemy() {
 
         //TODO: Remove Placeholder values
         Enemy enemy = new GenericEnemy(100, 100, 10, new Position(0, 0));

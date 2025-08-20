@@ -17,8 +17,10 @@ public class FollowerState implements GenericEnemyState{
     private final Set<Position> walls;
     private final MovementUtil movementUtil;
     private final boolean isVertical;
-    int NEIGHBOUR_DISTANCE = 4; // Example value, adjust as needed
-    int COMBAT_DISTANCE = 1; // Example value, adjust as needed
+
+    // costants
+    private final static int NEIGHBOUR_DISTANCE = 4; // Example value, adjust as needed
+    private final static int COMBAT_DISTANCE = 1; // Example value, adjust as needed
 
     public FollowerState(Set<Position> walls, VisibilityUtil visibilityUtil, MovementUtil movementUtil, boolean isVertical){
         this.walls = walls;
