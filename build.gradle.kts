@@ -50,7 +50,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("it.unibo.progetto_oop.combat.combatApplication")
+    mainClass.set("iit.unibo.progetto_oop.Overworld.MVC.OverworldApplication") // DA CAMBIARE
 }
 
 tasks.test {
