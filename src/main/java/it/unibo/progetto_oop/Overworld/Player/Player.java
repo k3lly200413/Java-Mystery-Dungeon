@@ -68,13 +68,13 @@ public class Player {
      * 
      * @param item The item to be used.
      */
-    public void useItem(Item item){ // TODO: fix
+    public void useItem(Item item){ 
         if (this.inventory.hasItem(item)){ // check wether the item is in the inventory
             if (item instanceof Potion) {
                 Potion potion = (Potion) item;
                 PotionStrategy strategy = potion.getStrategy(); // the kind of potion
                 if (strategy != null) {
-                    System.out.println("Using potion " + "infos of potion"); // TODO --> print infos of potion
+                    System.out.println("Using potion " + potion.getDescription()); 
                     PossibleUser adaptedPlayer = new OverworldPlayerAdapter(this); 
                     potion.use(adaptedPlayer);
                     this.inventory.decreseItemCount(item);

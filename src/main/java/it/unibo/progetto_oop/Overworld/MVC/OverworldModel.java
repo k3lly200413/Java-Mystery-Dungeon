@@ -166,7 +166,7 @@ public class OverworldModel {
      * Remove an enemy from the list of enemies and add it to the list of beaten enemies
      * @param enemyToRemove
      */
-    private void removeEnemy(Enemy enemyToRemove){
+    public void removeEnemy(Enemy enemyToRemove){
         if (this.enemies.contains(enemyToRemove)){
             this.enemies.remove(enemyToRemove);
             this.beatenEnemies.add(enemyToRemove);

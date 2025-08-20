@@ -83,12 +83,15 @@ public class OverworldApplication {
         // create model
         this.model = new OverworldModel(player, enemyList, items, walls, this, inventory);
         
+        System.out.println(this.model.getEnemies());
+        this.model.removeEnemy(enemyList.get(0));
+        System.out.println(this.model.getEnemies());
         
         // create view
-        this.view = new OverworldView(); // TODO
+        // this.view = new OverworldView(); // TODO
 
         // create controller
-        this.controller = new OverworldController(model, view); // TODO
+        //this.controller = new OverworldController(model, view); // TODO
     }
 
     public OverworldModel getOverworldModel(){
