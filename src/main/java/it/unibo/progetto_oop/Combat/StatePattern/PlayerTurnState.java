@@ -7,9 +7,16 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class PlayerTurnState implements CombatState{
 
+    /**
+     * Strategy for curing poison.
+     */
     private CurePoison curePoison;
 
-    public PlayerTurnState(){
+    /**
+     * Constructor for PlayerTurnState.
+     * Initializes the CurePoison strategy.
+     */
+    public PlayerTurnState() {
         this.curePoison = new CurePoison();
     }
 
@@ -25,7 +32,7 @@ public class PlayerTurnState implements CombatState{
         // TODO: call model to remove 10 (placeholder) points of stamina
         context.getView().showInfo("Player Has used physical Attack");
         System.out.println(
-            "Debug Log: Requested Physicaln\nCurrent State: Player Turn State");
+            "Debug Log: Requested Physical\nCurrent State: Player Turn State");
         context.performPlayerPhysicalAttack();
     }
 
@@ -72,6 +79,7 @@ public class PlayerTurnState implements CombatState{
 
     @Override
     public final void enterState(final CombatController context) {
+        context.getModel().setPlayerTurn(true);
         context.getView().setAllButtonsEnabled();
         context.getView().showOriginalButtons();
         context.getView().showInfo("Your Turn!");
@@ -82,6 +90,7 @@ public class PlayerTurnState implements CombatState{
     public final void exitState(final CombatController context) {
         System.out.println("------ Exiting Player Turn State ------");
         context.getView().clearInfo();
+        context.getModel().setPlayerTurn(false);
     }
 
     @Override
@@ -120,10 +129,4 @@ public class PlayerTurnState implements CombatState{
                 "Unimplemented method 'handlePotionUsed'");
     }
 
-    @Override
-    public final void enter(final CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-"Unimplemented method 'enter'");
-    }
 }

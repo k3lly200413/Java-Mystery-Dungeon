@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.Combat.Helper.Neighbours;
 
 public class MeleeButton implements GameButton {
 
@@ -12,20 +13,36 @@ public class MeleeButton implements GameButton {
     private Position enemy;
     private int where;
     private int distance;
+    /**
+     * Neighbours instance to check if two positions are neighbours.
+     */
+    private Neighbours neighbours;
 
-    public final void setAttributes(
-            final Position player, final Position enemy, final int where,
-            final int distance) {
-        this.player = player;
-        this.enemy = enemy;
-        this.where = where;
-        this.distance = distance;
+    /**
+     * Constructor for MeleeButton.
+     * Initializes the player and enemy positions, direction, and distance.
+     *
+     * @param playerPosition The initial position of the player.
+     * @param enemyPosition  The initial position of the enemy.
+     * @param direction      The direction in which the player will move.
+     * @param distanceBuffer       The distance to check for contact.
+     */
+    public MeleeButton(
+            final Position playerPosition,
+            final Position enemyPosition,
+            final int direction,
+            final int distanceBuffer) {
+        this.player = playerPosition;
+        this.enemy = enemyPosition;
+        this.where = direction;
+        this.distance = distanceBuffer;
+        this.neighbours = new Neighbours();
     }
 
     @Override
     public final List<Position> execute() {
         // Check if the next step would result in contact
-        if (this.neighbours(
+        if (neighbours.neighbours(
             new Position(
                 this.player.x() + this.where, this.player.y()
             ),
@@ -63,52 +80,5 @@ public class MeleeButton implements GameButton {
         this.giocatori.add(this.enemy);
 
         return this.giocatori;
-    }
-
-    /**
-     * Checks if two positions are within a given distance of each other.
-     *
-     * @param player   The first position.
-     * @param other    The second position.
-     * @param distance The maximum distance to be considered neighbors.
-     * @return True if they are neighbors, false otherwise.
-     */
-    public boolean neighbours(
-        final Position player, final Position other, final int distance) {
-        return
-            Math.abs(player.x() - other.x()) <= distance
-            && Math.abs(player.y() - other.y()) <= distance;
-    }
-
-    /**
-     * Method used to display death of a character.
-     *
-     * @param player   Center of dead player
-     * @param other    points we want to display
-     * @param distance distance from center of dead character
-     * @return true if all checks are true, false otherwise
-     *
-     *
-     *         eg.
-     *         °°°
-     *         °°° Normal character
-     *         °°°
-     *
-     *         ° ° °
-     *         ° ° ° Dead character
-     *         ° ° °
-     *
-     */
-
-    public boolean deathNeighbours(
-        final Position player, final Position other, final int distance) {
-        return
-        (Math.abs(player.x() - other.x()) == distance
-        && Math.abs(player.y() - other.y()) == distance)
-        || (Math.abs(player.x() - other.x()) == distance
-        && player.y() == other.y())
-        || (player.x() == other.x()
-        && Math.abs(player.y() - other.y()) == distance)
-        || (player.x() == other.x() && other.y() == player.y());
     }
 }
