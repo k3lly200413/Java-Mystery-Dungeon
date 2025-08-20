@@ -1,39 +1,69 @@
 package it.unibo.progetto_oop.Overworld.Enemy.StatePattern;
 
-import it.unibo.progetto_oop.Overworld.Enemy.Enemy;
+import java.util.Set;
+
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
+import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.*;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveDirection;
+import it.unibo.progetto_oop.Combat.Position.Position;
+
 
 public class FollowerState implements GenericEnemyState{
+    private MoveDirection currentDirection;
+    private final VisibilityUtil visibilityUtil; 
+    private final Set<Position> walls;
+    private final MovementUtil movementUtil;
+    private final boolean isVertical;
+    int NEIGHBOUR_DISTANCE = 4; // Example value, adjust as needed
+    int COMBAT_DISTANCE = 1; // Example value, adjust as needed
 
+    public FollowerState(Set<Position> walls, VisibilityUtil visibilityUtil, MovementUtil movementUtil, boolean isVertical){
+        this.walls = walls;
+        this.visibilityUtil = visibilityUtil;
+        this.movementUtil = movementUtil;
+        this.isVertical = isVertical;
+    }
+
+    /** 
+     * initially the follower acts like a patroller
+     */
     @Override
     public void enterState(Enemy context, OverworldModel model) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-"Unimplemented method 'enterState'");
+        System.out.println("Entering PatrolState");
+        currentDirection = movementUtil.getInitialGeneralMoveDirection(context.getCurrentPosition(), this.walls, this.isVertical);
+        if (this.currentDirection == MoveDirection.NONE){
+            this.currentDirection = this.isVertical ? MoveDirection.DOWN : MoveDirection.UP;
+        }
     }
 
     @Override
     public void exitState(Enemy context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-"Unimplemented method 'exitState'");
+        System.out.println("Entering FollowerState");
     }
 
     @Override
     public void update(Enemy enemy, OverworldModel model, Player player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-"Unimplemented method 'update'");
+        Position nextPos = this.visibilityUtil.firstMove(enemy.getCurrentPosition(), player.getPosition());
+        // if the player is in the enemy's line of sight, move towards the player
+        if ( player != null 
+            && this.visibilityUtil.inLos(enemy.getCurrentPosition(), player.getPosition(), model, this.NEIGHBOUR_DISTANCE)
+            && !model.getWalls().contains(nextPos)){
+            // if the player and the enemy are close enough -> enter combat state
+            if (this.visibilityUtil.neighbours(enemy.getCurrentPosition(), player.getPosition(), this.COMBAT_DISTANCE)){
+                // TODO: implement combat state
+                // set combat state
+                enemy.setPosition(player.getPosition());
+            } else {
+                enemy.setPosition(nextPos); // move towards the player
+            }
+        }
     }
 
     @Override
-    public void onPlayerMoved(Enemy context, Player player, OverworldModel model) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-"Unimplemented method 'onPlayerMoved'");
-    }
+    public void onPlayerMoved(Enemy context, Player player, OverworldModel model) {}
 
     @Override
     public EnemyType getType() {

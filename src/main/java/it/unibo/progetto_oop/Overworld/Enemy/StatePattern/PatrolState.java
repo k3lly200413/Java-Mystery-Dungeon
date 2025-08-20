@@ -1,18 +1,36 @@
 package it.unibo.progetto_oop.Overworld.Enemy.StatePattern;
 
-import it.unibo.progetto_oop.Overworld.Enemy.Enemy;
+import java.util.Set;
+
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
+import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveDirection;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.Combat.Position.Position;
 
 public class PatrolState implements GenericEnemyState {
+    private MoveDirection currentDirection;
+    private final MovementUtil movementUtil; 
+    private final Set<Position> walls;
+    private final boolean isVertical;
+    private final MovementStrategy movementStrategy;
+
+    public PatrolState(Set<Position> walls, MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical){
+        this.walls = walls;
+        this.movementUtil = movementUtil;
+        this.isVertical = isVertical;
+        this.movementStrategy = movementStrategy;
+    }
 
     @Override
     public void enterState(Enemy context, OverworldModel model) {
-        System.out.println("Entered Patrol State");
-        // Initialize patrol path or any other necessary setup for patrolling
-        // context.setPatrolPath(...); // Example method to set a patrol path
-        
+        currentDirection = movementUtil.getInitialGeneralMoveDirection(context.getCurrentPosition(), this.walls, this.isVertical);
+        if (this.currentDirection == MoveDirection.NONE){
+            this.currentDirection = this.isVertical ? MoveDirection.DOWN : MoveDirection.UP;
+        }
     }
 
     @Override
@@ -22,17 +40,11 @@ public class PatrolState implements GenericEnemyState {
 
     @Override
     public void update(Enemy enemy, OverworldModel model, Player player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-"Unimplemented method 'update'");
+        this.currentDirection = this.movementStrategy.executeMove(enemy, model, this.currentDirection);
     }
 
     @Override
-    public void onPlayerMoved(Enemy context, Player player, OverworldModel model) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-"Unimplemented method 'onPlayerMoved'");
-    }
+    public void onPlayerMoved(Enemy context, Player player, OverworldModel model) {}
 
     @Override
     public EnemyType getType() {
