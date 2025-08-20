@@ -44,11 +44,7 @@ public class PatrolState implements GenericEnemyState {
     }
 
     @Override
-    public void onPlayerMoved(Enemy context, Player player, OverworldModel model) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-"Unimplemented method 'onPlayerMoved'");
-    }
+    public void onPlayerMoved(Enemy context, Player player, OverworldModel model) {}
 
     @Override
     public EnemyType getType() {
