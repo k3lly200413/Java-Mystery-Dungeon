@@ -1,19 +1,25 @@
 package it.unibo.progetto_oop.Overworld.PlayGround;
 
+import java.util.Random;
+
 import javax.swing.SwingUtilities;
 
 public class Main {
     public static void main(String[] args) {
-        // MODEL
-        Floor floor = new Floor();
+        final Random rand = new Random();
+        // Generator con le tue Strategy (esempio)
+        FloorGenerator gen = new FloorGenerator(8, new ImplRoomPlacement(), new ImplTunnelPlacement(), rand);
 
-        // VIEW (celle da 16px, puoi aumentare o ridurre)
+        // MODEL: crea la mappa (dentro Floor scegli new ArrayGrid/ByteGrid/SparseGrid)
+        Floor floor = new Floor(50, 50, gen);
+
+        // VIEW Swing
         SwingMapView view = new SwingMapView("Mystery Dungeon - Map", 14);
 
         // CONTROLLER
         MapController controller = new MapController(floor, view);
 
-        // Avvia la UI sul thread Swing
-        SwingUtilities.invokeLater(controller::show);
+        javax.swing.SwingUtilities.invokeLater(controller::show);
     }
 }
+

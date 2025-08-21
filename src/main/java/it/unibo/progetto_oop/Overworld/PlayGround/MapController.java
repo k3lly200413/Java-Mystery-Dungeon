@@ -10,6 +10,7 @@ public class MapController {
     }
 
     public void show() {
-        this.view.render(this.model.getPlayGround());
+        view.render(model.grid());
     }
 }
+

@@ -11,6 +11,8 @@ public final class Floor {
         Objects.requireNonNull(gen);
         this.grid = new ImplArrayListStructureData(w, h); // oggi ArrayGrid; domani cambi qui.
         this.rooms = List.copyOf(gen.generate(grid)); // Immutable list of rooms
+        System.out.println("[FLOOR] grid " + grid.width() + "x" + grid.height());
+
     }
 
     public StructureData grid() {
