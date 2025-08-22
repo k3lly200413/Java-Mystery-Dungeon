@@ -15,6 +15,11 @@ public record FloorConfig(
         private int nRooms = 8;
         private int minRoomW = 5, maxRoomW = 12;
         private int minRoomH = 5, maxRoomH = 10;
+        private final int nFloors = 5;
+
+        public int getnFloors() {
+            return this.nFloors;
+        }
 
         public Builder size(int w, int h) {
             this.width = w;
@@ -34,15 +39,17 @@ public record FloorConfig(
         }
 
         public FloorConfig build() {
-            if (width <= 0 || height <= 0)
+            if (this.width <= 0 || this.height <= 0)
                 throw new IllegalArgumentException("Grid size must be > 0");
-            if (nRooms <= 0)
+            if (this.nRooms <= 0)
                 throw new IllegalArgumentException("At least 1 room");
-            if (minRoomW < 1 || minRoomH < 1)
+            if (this.minRoomW < 1 || this.minRoomH < 1)
                 throw new IllegalArgumentException("Room min must be >= 1");
-            if (maxRoomW < minRoomW || maxRoomH < minRoomH)
+            if (this.maxRoomW < this.minRoomW || this.maxRoomH < this.minRoomH)
                 throw new IllegalArgumentException("Room max must be >= min");
-                
+            if (this.nFloors <= 0)
+                throw new IllegalArgumentException("At least 1 floor");
+
             return new FloorConfig(width, height, nRooms, minRoomW, maxRoomW, minRoomH, maxRoomH);
         }
     }

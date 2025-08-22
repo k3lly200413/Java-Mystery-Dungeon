@@ -13,7 +13,6 @@ public final class Floor {
         Objects.requireNonNull(gen);
         this.grid = new ImplArrayListStructureData(conf.width(),conf.height()); // oggi ArrayGrid; domani cambi qui.
         this.rooms = List.copyOf(gen.generate(grid, conf)); // Immutable list of rooms
-        System.out.println("[FLOOR] grid " + grid.width() + "x" + grid.height());
         notifyObservers();
     }
 
@@ -25,7 +24,6 @@ public final class Floor {
         return rooms;
     }
 
-    
     public void addObserver(FloorObserver o) {
         observers.add(Objects.requireNonNull(o));
     }
