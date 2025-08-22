@@ -6,23 +6,20 @@ import java.util.Objects;
 import java.util.Random;
 //SINGLETON??
 public final class FloorGenerator {
-    private final int nRooms;
     private final RoomPlacementStrategy roomPlacement;
     private final TunnelPlacementStrategy tunnelPlacement;
     private final Random rand;
 
-    public FloorGenerator(int nRooms,
-                          RoomPlacementStrategy roomPlacement,
+    public FloorGenerator(RoomPlacementStrategy roomPlacement,
                           TunnelPlacementStrategy tunnelPlacement,
                           Random rand) {
-        if (nRooms <= 0) throw new IllegalArgumentException("nRooms must be > 0");
-        this.nRooms = nRooms;
         this.roomPlacement = Objects.requireNonNull(roomPlacement);
         this.tunnelPlacement = Objects.requireNonNull(tunnelPlacement);
         this.rand = Objects.requireNonNull(rand);
     }
 
     public List<Room> generate(StructureData grid, FloorConfig conf) {
+        if (conf.nRooms() <= 0) throw new IllegalArgumentException("nRooms must be > 0");
         grid.fill(TileType.WALL);
         List<Room> rooms = new ArrayList<>();
         roomPlacement.placeRooms(grid, rooms, rand, conf);
