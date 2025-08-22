@@ -25,6 +25,9 @@ import it.unibo.progetto_oop.Overworld.MVC.*;
 public class OverworldModelTest {
     private static final int MAX_HP = 100; // Example max HP, can be adjusted
     private static final Position START_PLAYER_POS = new Position(5, 5); // Starting position of the player
+    private static final int ENEMY_HP = 100; // Example enemy max HP
+    private static final int ENEMY_POWER = 20; // Example enemy power
+
     private OverworldModel model;
     private Inventory inventory;
 
@@ -74,20 +77,16 @@ public class OverworldModelTest {
         List<Enemy> enemyList = new ArrayList<>();
         EnemyFactory factory = new EnemyFactoryImpl();
 
-        /* 
-        Enemy hider = factory.createFollowerEnemy();
-        Enemy patroller = factory.createPatrollerEnemy();
-
-        hider.setPosition(enemies.get(0));
-        patroller.setPosition(enemies.get(1));
-        
-        enemyList.add(hider);
-        enemyList.add(patroller); */
-
-        this.inventory = new Inventory();
-
         // create model
         this.model = new OverworldModel(player, enemyList, items, walls, inventory);
+
+        Enemy hider = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, enemies.get(0), true, this.model);
+        Enemy patroller = factory.createPatrollerEnemy(ENEMY_HP,ENEMY_POWER, enemies.get(0), true, this.model); 
+        enemyList.add(hider);
+        enemyList.add(patroller);
+        
+        this.inventory = new Inventory();
+
     }
 
     @Test

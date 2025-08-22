@@ -21,6 +21,8 @@ public class OverworldApplication {
     // costants
     private static final int MAX_HP = 100; // Example max HP, can be adjusted
     private static final Position START_PLAYER_POS = new Position(5, 5); // Starting position of the player
+    private static final int ENEMY_HP = 100;
+    private static final int ENEMY_POWER = 20;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -73,10 +75,10 @@ public class OverworldApplication {
         List<Enemy> enemyList = new ArrayList<>();
         EnemyFactory factory = new EnemyFactoryImpl();
 
-        /* Enemy hider = factory.createFollowerEnemy();
-        Enemy patroller = factory.createPatrollerEnemy(); // TODO: fix
+        Enemy hider = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, enemies.get(0), true, this.model);
+        Enemy patroller = factory.createPatrollerEnemy(ENEMY_HP,ENEMY_POWER, enemies.get(0), true, this.model); 
         enemyList.add(hider);
-        enemyList.add(patroller); */
+        enemyList.add(patroller);
 
         this.inventory = new Inventory(); // TODO
 

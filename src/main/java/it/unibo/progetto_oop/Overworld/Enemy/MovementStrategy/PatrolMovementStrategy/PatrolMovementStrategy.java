@@ -13,6 +13,7 @@ public class PatrolMovementStrategy implements MovementStrategy{
     public MoveDirection executeMove(Enemy enemy, OverworldModel model, MoveDirection currDirection) {
         Position currentPos = enemy.getCurrentPosition();
         Position targetPos = currentPos; // Initialize target position to current position
+        this.moveDirection = currDirection; // Set the current direction
 
         switch (moveDirection) {
             case UP:
