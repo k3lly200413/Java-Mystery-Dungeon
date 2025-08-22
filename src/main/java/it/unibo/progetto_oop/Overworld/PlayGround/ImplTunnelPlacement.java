@@ -10,9 +10,9 @@ public class ImplTunnelPlacement implements TunnelPlacementStrategy {
         for (int i = 0; i < rooms.size() - 1; i++) {
             Room r1 = rooms.get(i);
             Room r2 = rooms.get(i + 1);
-            int x1 = r1.getX() + r1.getWidth() / 2;
+            int x1 = r1.getX() + r1.getWidth()  / 2;
             int y1 = r1.getY() + r1.getHeight() / 2;
-            int x2 = r2.getX() + r2.getWidth() / 2;
+            int x2 = r2.getX() + r2.getWidth()  / 2;
             int y2 = r2.getY() + r2.getHeight() / 2;
 
             if (rand.nextBoolean()) {
@@ -27,24 +27,27 @@ public class ImplTunnelPlacement implements TunnelPlacementStrategy {
 
     private void connectHorizontal(StructureData grid, int x1, int x2, int y) {
         int startX = Math.min(x1, x2);
-        int endX = Math.max(x1, x2);
+        int endX   = Math.max(x1, x2);
         for (int x = startX; x <= endX; x++) {
-            if (grid.inBounds(x, y)) {
-                grid.set(x, y, TileType.TUNNEL);
-            }
+            setTunnelIfWall(grid, x, y);
         }
-            
     }
 
     private void connectVertical(StructureData grid, int y1, int y2, int x) {
         int startY = Math.min(y1, y2);
-        int endY = Math.max(y1, y2);
+        int endY   = Math.max(y1, y2);
         for (int y = startY; y <= endY; y++) {
-            if (grid.inBounds(x, y)) {
-                grid.set(x, y, TileType.TUNNEL);
-            }
+            setTunnelIfWall(grid, x, y);
         }
-            
     }
-    
+
+    /** Scava TUNNEL solo se la cella è WALL; non modifica FLOOR (stanze) né cambia TUNNEL già esistenti. */
+    private void setTunnelIfWall(StructureData grid, int x, int y) {
+        if (!grid.inBounds(x, y)) return;
+        TileType t = grid.get(x, y);
+        if (t == TileType.WALL) {
+            grid.set(x, y, TileType.TUNNEL);
+        }
+        // se è FLOOR (stanza) o già TUNNEL, non fare nulla
+    }
 }

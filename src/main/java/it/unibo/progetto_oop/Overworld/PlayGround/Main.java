@@ -15,6 +15,7 @@ public class Main {
 
         // VIEW Swing
         SwingMapView view = new SwingMapView("Mystery Dungeon - Map", 14);
+        floor.addObserver(view); 
 
         // CONTROLLER
         MapController controller = new MapController(floor, view);
