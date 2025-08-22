@@ -11,14 +11,14 @@ import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
-public class PatrolState implements GenericEnemyState {
+public class PatrollerState implements GenericEnemyState {
     private MoveDirection currentDirection;
     private final MovementUtil movementUtil; 
     private final Set<Position> walls;
     private final boolean isVertical;
     private final MovementStrategy movementStrategy;
 
-    public PatrolState(Set<Position> walls, MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical){
+    public PatrollerState(Set<Position> walls, MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical){
         this.walls = walls;
         this.movementUtil = movementUtil;
         this.isVertical = isVertical;

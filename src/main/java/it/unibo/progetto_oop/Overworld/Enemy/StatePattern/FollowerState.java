@@ -14,19 +14,21 @@ import it.unibo.progetto_oop.Combat.Position.Position;
 public class FollowerState implements GenericEnemyState{
     private MoveDirection currentDirection;
     private final VisibilityUtil visibilityUtil; 
-    private final Set<Position> walls;
     private final MovementUtil movementUtil;
+    private final MovementStrategy movementStrategy;
+    private final Set<Position> walls;
     private final boolean isVertical;
-
+    
     // costants
     private final static int NEIGHBOUR_DISTANCE = 4; // Example value, adjust as needed
     private final static int COMBAT_DISTANCE = 1; // Example value, adjust as needed
 
-    public FollowerState(Set<Position> walls, VisibilityUtil visibilityUtil, MovementUtil movementUtil, boolean isVertical){
+    public FollowerState(Set<Position> walls, VisibilityUtil visibilityUtil, MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical){
         this.walls = walls;
         this.visibilityUtil = visibilityUtil;
         this.movementUtil = movementUtil;
         this.isVertical = isVertical;
+        this.movementStrategy = movementStrategy;
     }
 
     /** 
@@ -49,18 +51,22 @@ public class FollowerState implements GenericEnemyState{
     @Override
     public void update(Enemy enemy, OverworldModel model, Player player) {
         Position nextPos = this.visibilityUtil.firstMove(enemy.getCurrentPosition(), player.getPosition());
+
         // if the player is in the enemy's line of sight, move towards the player
         if ( player != null 
-            && this.visibilityUtil.inLos(enemy.getCurrentPosition(), player.getPosition(), model, this.NEIGHBOUR_DISTANCE)
+            && this.visibilityUtil.inLos(enemy.getCurrentPosition(), player.getPosition(), model, NEIGHBOUR_DISTANCE)
             && !model.getWalls().contains(nextPos)){
+
             // if the player and the enemy are close enough -> enter combat state
-            if (this.visibilityUtil.neighbours(enemy.getCurrentPosition(), player.getPosition(), this.COMBAT_DISTANCE)){
+            if (this.visibilityUtil.neighbours(enemy.getCurrentPosition(), player.getPosition(), COMBAT_DISTANCE)){
                 // TODO: implement combat state
                 // set combat state
                 enemy.setPosition(player.getPosition());
             } else {
-                enemy.setPosition(nextPos); // move towards the player
+                enemy.setPosition(nextPos); // not close enough -> move closer towards the player
             }
+        } else{ // else, continue patrolling
+            this.currentDirection = this.movementStrategy.executeMove(enemy, model, this.currentDirection);
         }
     }
 

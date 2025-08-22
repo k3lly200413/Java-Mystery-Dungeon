@@ -73,19 +73,16 @@ public class OverworldApplication {
         List<Enemy> enemyList = new ArrayList<>();
         EnemyFactory factory = new EnemyFactoryImpl();
 
-        Enemy hider = factory.createFollowerEnemy();
-        Enemy patroller = factory.createPatrollerEnemy();
+        /* Enemy hider = factory.createFollowerEnemy();
+        Enemy patroller = factory.createPatrollerEnemy(); // TODO: fix
         enemyList.add(hider);
-        enemyList.add(patroller);
+        enemyList.add(patroller); */
 
         this.inventory = new Inventory(); // TODO
 
         // create model
-        this.model = new OverworldModel(player, enemyList, items, walls, this, inventory);
+        this.model = new OverworldModel(player, enemyList, items, walls, inventory);
         
-        System.out.println(this.model.getEnemies());
-        this.model.removeEnemy(enemyList.get(0));
-        System.out.println(this.model.getEnemies());
         
         // create view
         // this.view = new OverworldView(); // TODO

@@ -13,7 +13,7 @@ public class GenericEnemy implements Enemy {
     private Position initialPosition;
     private Position currentPosition;
     private int currentHealth;
-    private OverworldModel model; // TODO: check if this is needed, maybe it can be removed
+    private OverworldModel model; 
     private GenericEnemyState currentState;
 
 

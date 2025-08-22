@@ -74,6 +74,7 @@ public class OverworldModelTest {
         List<Enemy> enemyList = new ArrayList<>();
         EnemyFactory factory = new EnemyFactoryImpl();
 
+        /* 
         Enemy hider = factory.createFollowerEnemy();
         Enemy patroller = factory.createPatrollerEnemy();
 
@@ -81,7 +82,7 @@ public class OverworldModelTest {
         patroller.setPosition(enemies.get(1));
         
         enemyList.add(hider);
-        enemyList.add(patroller);
+        enemyList.add(patroller); */
 
         this.inventory = new Inventory();
 

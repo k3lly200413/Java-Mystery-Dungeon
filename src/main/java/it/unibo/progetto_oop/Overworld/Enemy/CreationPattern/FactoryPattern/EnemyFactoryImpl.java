@@ -3,31 +3,46 @@ package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern;
 import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.GenericEnemy;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.VisibilityUtil;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.PatrolMovementStrategy.PatrolMovementStrategy;
+import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.FollowerState;
+import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.PatrollerState;
+import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.SleeperState;
+import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 
 public class EnemyFactoryImpl implements EnemyFactory {
 
+    MovementUtil movementUtil = new MovementUtil();
+    MovementStrategy patrolMovementStrategy = new PatrolMovementStrategy();
+    
     @Override
-    public Enemy createPatrollerEnemy() {
+    public Enemy createPatrollerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, OverworldModel model) {
+        // create generic enemy
+        Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition);
 
-        //TODO: Remove Placeholder values
-        Enemy enemy = new GenericEnemy(100, 100, 10, new Position(0, 0));
-        // set the state to patroller
+        // set the correct state
+        enemy.setState(new PatrollerState(model.getWalls(), movementUtil, patrolMovementStrategy, isVertical), model);
         return enemy;
     }
 
     @Override
-    public Enemy createFollowerEnemy() {
-        //TODO: Remove Placeholder values
-        Enemy enemy = new GenericEnemy(100, 100, 10, new Position(0, 0));
-        // set the state to follower
+    public Enemy createFollowerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, OverworldModel model) {
+        VisibilityUtil visibilityUtil = new VisibilityUtil();
+        
+        Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition);
+
+        enemy.setState(new FollowerState(model.getWalls(), visibilityUtil, movementUtil, patrolMovementStrategy, isVertical), model);
         return enemy;
     }
 
     @Override
-    public Enemy createSleeperEnemy() {
-        //TODO: Remove Placeholder values
-        Enemy enemy = new GenericEnemy(100, 100, 10, new Position(0, 0));
-        // set the state to sleeper
+    public Enemy createSleeperEnemy(int hp, int power, Position spawnPosition, boolean isVertical, OverworldModel model) {
+        Enemy enemy = new GenericEnemy(hp, hp, power,spawnPosition);
+
+        enemy.setState(new SleeperState(), model);
+
         return enemy;
     }
     

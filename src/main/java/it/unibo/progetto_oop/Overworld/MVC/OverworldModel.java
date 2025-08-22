@@ -13,7 +13,6 @@ import it.unibo.progetto_oop.Combat.Position.Position;
 
 public class OverworldModel {
     private final Player player;
-    private final OverworldApplication game;
 
     private List<Item> items = new ArrayList<>();
     private Inventory inventory;
@@ -29,14 +28,13 @@ public class OverworldModel {
     private boolean combatTransitionPending = false;
     private boolean inCombat;
 
-    public OverworldModel(Player player, List<Enemy> enemies,  List<Item> items, Set<Position> walls, OverworldApplication game, Inventory inventory) {
+    public OverworldModel(Player player, List<Enemy> enemies,  List<Item> items, Set<Position> walls, Inventory inventory) {
         this.player = player;
         this.items = items;
         this.inventory = inventory;
         this.walls = walls;
         this.enemies = enemies;
         this.inCombat = false;
-        this.game = game;
     }
 
     // --- getter methods ---
@@ -151,7 +149,8 @@ public class OverworldModel {
      * @return an Optional containing the enemy if found, otherwise an empty Optional
      */
     private Optional<Enemy> checkEnemyHit(){
-        return this.enemies.stream().filter(enemy -> enemy.getCurrentPosition().equals(this.tempPosition)).findFirst();
+        return this.enemies.stream().filter(enemy -> enemy.getCurrentPosition()
+            .equals(this.tempPosition)).findFirst();
     }
 
     /**
@@ -166,7 +165,7 @@ public class OverworldModel {
      * Remove an enemy from the list of enemies and add it to the list of beaten enemies
      * @param enemyToRemove
      */
-    public void removeEnemy(Enemy enemyToRemove){
+    private void removeEnemy(Enemy enemyToRemove){
         if (this.enemies.contains(enemyToRemove)){
             this.enemies.remove(enemyToRemove);
             this.beatenEnemies.add(enemyToRemove);
@@ -222,7 +221,7 @@ public class OverworldModel {
      * @param directionX direction of movement on axis x
      * @param directionY direction of movement on axis y
      */
-    public void MovePlayer(int directionX, int directionY){
+    public void movePlayer(int directionX, int directionY){
         Position currentPos = player.getPosition();
         tempPosition = new Position(currentPos.x()+directionX, currentPos.y()+directionY);
 
