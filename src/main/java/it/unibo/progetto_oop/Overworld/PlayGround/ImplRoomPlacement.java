@@ -7,7 +7,7 @@ public class ImplRoomPlacement implements RoomPlacementStrategy {
 
     @Override
     public void placeRooms(StructureData grid, List<Room> outRooms, Random rand,
-                           int floorWidth, int floorHeight, int nRooms) {
+                           FloorConfig config) {
 
         for (int i = 0; i < nRooms; i++) {
             Room newRoom = genRoom(rand, floorWidth, floorHeight);

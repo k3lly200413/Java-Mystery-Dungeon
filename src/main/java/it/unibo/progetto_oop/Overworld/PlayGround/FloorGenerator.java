@@ -22,10 +22,10 @@ public final class FloorGenerator {
         this.rand = Objects.requireNonNull(rand);
     }
 
-    public List<Room> generate(StructureData grid) {
+    public List<Room> generate(StructureData grid, FloorConfig conf) {
         grid.fill(TileType.WALL);
         List<Room> rooms = new ArrayList<>();
-        roomPlacement.placeRooms(grid, rooms, rand, grid.width(), grid.height(), nRooms);
+        roomPlacement.placeRooms(grid, rooms, rand, conf);
         if (rooms.size() >= 2) {
             tunnelPlacement.connect(grid, rooms, rand);
         }

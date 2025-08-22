@@ -7,10 +7,10 @@ public final class Floor {
     private final StructureData grid;
     private final List<Room> rooms;
 
-    public Floor(int w, int h, FloorGenerator gen) {
+    public Floor(FloorConfig conf, FloorGenerator gen) {
         Objects.requireNonNull(gen);
-        this.grid = new ImplArrayListStructureData(w, h); // oggi ArrayGrid; domani cambi qui.
-        this.rooms = List.copyOf(gen.generate(grid)); // Immutable list of rooms
+        this.grid = new ImplArrayListStructureData(conf.width(),conf.height()); // oggi ArrayGrid; domani cambi qui.
+        this.rooms = List.copyOf(gen.generate(grid, conf)); // Immutable list of rooms
         System.out.println("[FLOOR] grid " + grid.width() + "x" + grid.height());
 
     }

@@ -1,6 +1,9 @@
 package it.unibo.progetto_oop.Overworld.PlayGround;
 
-public class Room {
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class Room implements Iterable<Pair<Integer, Integer>>{
     int x, y, width, height;
 
     public Room(int x, int y, int width, int height) {
@@ -45,5 +48,26 @@ public class Room {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    @Override
+    public Iterator<Pair<Integer, Integer>> iterator() {
+        return new Iterator<>() {
+            private int cx = x, cy = y;
+
+            @Override
+            public boolean hasNext() {
+                return cy < y + height;
+            }
+
+            @Override
+            public Pair<Integer, Integer> next() {
+                if (!hasNext()) throw new NoSuchElementException();
+                Pair<Integer, Integer> c = new Pair<>(cx, cy);
+                cx++;
+                if (cx >= x + width) { cx = x; cy++; }
+                return c;
+            }
+        };
     }
 }
