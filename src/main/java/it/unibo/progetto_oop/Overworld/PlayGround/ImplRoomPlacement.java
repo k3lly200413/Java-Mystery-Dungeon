@@ -25,7 +25,7 @@ public class ImplRoomPlacement implements RoomPlacementStrategy {
                 for (int y = newRoom.getY(); y < newRoom.getY() + newRoom.getHeight(); y++) {
                     for (int x = newRoom.getX(); x < newRoom.getX() + newRoom.getWidth(); x++) {
                         if (grid.inBounds(x, y)) {
-                            grid.set(x, y, TileType.FLOOR);
+                            grid.set(x, y, TileType.ROOM);
                         }
                     }
                 }

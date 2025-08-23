@@ -65,8 +65,9 @@ public class SwingMapView extends JFrame implements MapView, FloorObserver {
         private Color colorFor(TileType t) {
             return switch (t) {
                 case WALL     -> new Color(120,120,120);
-                case FLOOR    -> new Color(220,220,220);
-                case TUNNEL   -> new Color(255,215,0);
+                case ROOM    -> new Color(220,220,220);
+                case TUNNEL -> new Color(255, 215, 0);
+                case PLAYER,ENEMY,ITEM,STAIRS  -> new Color(0,0,0);
             };
         }
     }
