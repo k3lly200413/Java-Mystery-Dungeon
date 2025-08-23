@@ -21,10 +21,10 @@ public class Player {
 
     private List<PlayerObserver> observers;
 
-    public Player(int maxHP) {
+    public Player(int maxHP, Inventory inventory) {
         this.maxHP = maxHP;
         this.currentHP = this.maxHP;
-        this.inventory = new Inventory(); 
+        this.inventory = inventory; 
         this.observers = new ArrayList<>();
     }
 
@@ -77,7 +77,7 @@ public class Player {
                     System.out.println("Using potion " + potion.getDescription()); 
                     PossibleUser adaptedPlayer = new OverworldPlayerAdapter(this); 
                     potion.use(adaptedPlayer);
-                    this.inventory.decreseItemCount(item);
+                    this.inventory.decreseItemCount(item); // TODO: maybe put in the observer pattern
                     this.notifyInventoryChanged();
                 }
                 else{

@@ -41,7 +41,7 @@ public class OverworldApplication {
 
     private void start() {
         // The player
-        Player player = new Player(MAX_HP); // Example max HP
+        Player player = new Player(MAX_HP, inventory); // Example max HP
         player.setPosition(START_PLAYER_POS);
        
         // Items on the map
