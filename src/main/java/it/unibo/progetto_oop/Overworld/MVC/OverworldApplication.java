@@ -1,12 +1,15 @@
 package it.unibo.progetto_oop.Overworld.MVC;
 
 import javax.swing.*;
+
+import java.awt.CardLayout;
 import java.util.*;
 
 import it.unibo.progetto_oop.Combat.Inventory.*;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Combat.PotionFactory.ItemFactory;
+import it.unibo.progetto_oop.Combat.PotionStrategy.Potion;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.*;
 
@@ -16,13 +19,18 @@ public class OverworldApplication {
     private OverworldView view;
     private OverworldController controller;
 
+    private CardLayout cardLayout; 
+    private JPanel mainCardPanel; 
+
     private Inventory inventory;
+    private InventoryView invView;
 
     // costants
     private static final int MAX_HP = 100; // Example max HP, can be adjusted
     private static final Position START_PLAYER_POS = new Position(5, 5); // Starting position of the player
     private static final int ENEMY_HP = 100;
     private static final int ENEMY_POWER = 20;
+    public static final String INVENTORY_CARD = "INVENTORY";
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -71,26 +79,54 @@ public class OverworldApplication {
         enemies.add(new Position(2, 7));
         enemies.add(new Position(2, 8));
 
-        // Create enemies using the EnemyFactory
+        
         List<Enemy> enemyList = new ArrayList<>();
+
+        // create inventory
+        this.inventory = new Inventory(); // TODO
+        Potion healthPotion = (Potion) itemFactory.createItem("Health Potion", null);
+        Potion antidote = (Potion) itemFactory.createItem("Antidote", null);
+        Potion attackBuff = (Potion) itemFactory.createItem("Attack Buff", null);
+        this.inventory.addItem(healthPotion);
+        this.inventory.addItem(antidote);
+        this.inventory.addItem(attackBuff);
+        
+        // create model
+        this.model = new OverworldModel(player, enemyList, items, walls, inventory);
+
+        // Create enemies using the EnemyFactory
         EnemyFactory factory = new EnemyFactoryImpl();
 
         Enemy hider = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, enemies.get(0), true, this.model);
         Enemy patroller = factory.createPatrollerEnemy(ENEMY_HP,ENEMY_POWER, enemies.get(0), true, this.model); 
         enemyList.add(hider);
         enemyList.add(patroller);
-
-        this.inventory = new Inventory(); // TODO
-
-        // create model
-        this.model = new OverworldModel(player, enemyList, items, walls, inventory);
-        
         
         // create view
         // this.view = new OverworldView(); // TODO
 
         // create controller
         //this.controller = new OverworldController(model, view); // TODO
+
+        // Setup the CardLayout and main panel
+        this.mainCardPanel = new JPanel();
+        this.cardLayout = new CardLayout();
+        this.mainCardPanel.setLayout(this.cardLayout);
+
+        // TODO: add overworld and combat views to the card panel
+
+        // Setup the Main Window (JFrame)
+        JFrame frame = new JFrame("Overworld Adventure"); // window title
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+
+        frame.add(this.mainCardPanel);
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);      
+
+        // Show the inventory for testing purposes
+        this.showInventory(inventory);
     }
 
     public OverworldModel getOverworldModel(){
@@ -99,5 +135,18 @@ public class OverworldApplication {
 
     public OverworldView getView(){
         return this.view;
+    }
+
+    public void showInventory(Inventory inventory){
+        if (this.invView == null) {  // first time
+            this.invView = new InventoryView(inventory, this);
+            this.mainCardPanel.add(this.invView, INVENTORY_CARD);
+        } else { // update existing view
+            this.invView.updateInventoryModel(inventory); 
+            this.invView.refreshView(); 
+        }
+    
+        this.cardLayout.show(this.mainCardPanel, INVENTORY_CARD);    
+        this.model.clearInCombatFlag(); // ensure we are not in combat mode while in inventory
     }
 }

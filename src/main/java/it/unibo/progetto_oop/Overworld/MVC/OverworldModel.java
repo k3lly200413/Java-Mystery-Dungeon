@@ -116,14 +116,14 @@ public class OverworldModel {
     /**
      * Clear the InCombat flag, indicating that the player is no longer in combat.
      */
-    private void clearInCombatFlag(){
+    public void clearInCombatFlag(){
         this.inCombat = false;
     }
 
     /**
      * Set the InCombat flag to true, indicating that the player has entered combat.
      */
-    private void setInCombatFlag(){
+    public void setInCombatFlag(){
         this.inCombat = true;
     }
 
