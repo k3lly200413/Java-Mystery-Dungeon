@@ -3,6 +3,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * @author Laura Bertozzi
+ */
+
 public class Inventory {
     private final Map<Item, Integer> items;
     private final int capacity;
@@ -52,7 +56,7 @@ public class Inventory {
         return true;
     }
 
-    public boolean decreseItemCount(Item item){
+    public boolean decreaseItemCount(Item item){
         if (item == null){
             System.out.println("Item is null");
             return false;
@@ -62,13 +66,13 @@ public class Inventory {
             return false;
         }
         int currentAmount = this.items.get(item);
-        // amount could be < 0
-        if (currentAmount <= 0){
+
+        if (currentAmount <= 1){ // when i'll decrease the count will be 0, so remove the item from the inventory
             this.items.remove(item);
             System.out.println("Item removed becuause you don't have it anymore in the inventory");
             return true;
-        }
-        this.items.put(item, this.items.get(item) - 1);
+        } 
+        this.items.replace(item, currentAmount - 1);
         System.out.println("Removed from inventory because used");
         return true;
     }

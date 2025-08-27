@@ -77,7 +77,7 @@ public class Player {
                     System.out.println("Using potion " + potion.getDescription()); 
                     PossibleUser adaptedPlayer = new OverworldPlayerAdapter(this); 
                     potion.use(adaptedPlayer);
-                    this.inventory.decreseItemCount(item); // TODO: maybe put in the observer pattern
+                    this.inventory.decreaseItemCount(item); // TODO: maybe put in the observer pattern
                     this.notifyInventoryChanged();
                 }
                 else{

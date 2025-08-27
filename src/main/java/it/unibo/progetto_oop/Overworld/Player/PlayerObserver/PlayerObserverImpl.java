@@ -13,12 +13,19 @@ public class PlayerObserverImpl implements PlayerObserver { //  TODO
     public PlayerObserverImpl(OverworldModel model){
         this.model = model;
     }
-    public void playerHpChanged(int hp, int maxHp){
 
+    @Override
+    public void playerHpChanged(int hp, int maxHp){
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'playerPositionChanged'");
     }
+
+    @Override
     public void playerInventoryChanged(Inventory inventory){
-        
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'playerPositionChanged'");
     }
+
     @Override
     public void playerPositionChanged(Player player) {
         // TODO Auto-generated method stub
