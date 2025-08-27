@@ -98,12 +98,7 @@ public class Player {
      * @param item item to add to the inventory
      */
     public void addItem(Item item){
-        if (this.inventory.addItem(item)){
-            System.out.println("Aggiunto nuovo int a chiave"); // TODO: remove this print
-        }
-        else{
-            System.out.println("Chiave Non presente quindi aggiunta"); // same as above
-        }
+        this.inventory.addItem(item);
         this.observers.stream().forEach(observer -> observer.playerInventoryChanged(inventory));
     }
 
