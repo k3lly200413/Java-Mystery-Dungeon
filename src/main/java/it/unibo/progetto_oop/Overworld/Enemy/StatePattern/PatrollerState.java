@@ -10,7 +10,6 @@ import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveD
 import it.unibo.progetto_oop.Overworld.MVC.OverworldApplication;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.Combat.Position.Position;
 
 public class PatrollerState implements GenericEnemyState {
     private MoveDirection currentDirection;

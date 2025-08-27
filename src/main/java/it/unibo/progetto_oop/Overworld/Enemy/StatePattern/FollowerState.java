@@ -60,8 +60,7 @@ public class FollowerState implements GenericEnemyState{
 
             // if the player and the enemy are close enough -> enter combat state
             if (this.visibilityUtil.neighbours(enemy.getCurrentPosition(), player.getPosition(), COMBAT_DISTANCE)){
-                // TODO: implement combat state
-                // set combat state
+                enemy.setState(new CombatTransitionState(game, enemy.getState()), model);
                 enemy.setPosition(player.getPosition());
             } else {
                 enemy.setPosition(nextPos); // not close enough -> move closer towards the player
