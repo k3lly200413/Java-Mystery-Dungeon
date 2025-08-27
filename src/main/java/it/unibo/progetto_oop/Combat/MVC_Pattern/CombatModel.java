@@ -127,6 +127,12 @@ public class CombatModel implements PossibleUser{
         this.enemyHealth = Math.max(0, this.enemyHealth - amount); // only decrease health, do not allow negative values
     }
 
+    /**
+     * Checks if the game is over by verifying if either
+     * the player or the enemy has 0 or less health.
+     * Sets whoDied to the position of the entity that died.
+     * @return true if the game is over, false otherwise
+     */
     public final boolean isGameOver() {
         if (this.playerHealth <= 0) {
             this.whoDied = this.getPlayerPosition();
@@ -138,35 +144,62 @@ public class CombatModel implements PossibleUser{
         return false;
     }
 
+    /**
+     * Resets the boss attack counter to zero.
+     */
     public final void clearBossAttackCount() {
         this.bossAttackCounter = 0;
     }
 
+    /**
+     * Increases the boss attack counter by one.
+     */
     public final void increaseBossAttackCounter() {
         this.bossAttackCounter++;
     }
 
+    /**
+     * Increases the boss turn counter by one.
+     */
     public final void increaseBossTurnCounter() {
         this.bossTurnCounter++;
     }
 
+    /**
+     * Resets the boss turn counter to zero.
+     */
     public final void resetBossTurnCounter() {
         this.bossTurnCounter = 0;
     }
 
+    /**
+     * Adds a position to the boss's death ray path.
+     * @param nextPosition the next position to add to the death ray path
+     */
     public final void addDeathRayPosition(final Position nextPosition) {
         this.deathRayPath.add(nextPosition);
     }
 
+    /**
+     * Clears the boss's death ray path.
+     */
     public final void clearDeathRayPath() {
         this.deathRayPath.clear();
     }
 
     // Getters
+    /**
+     * Returns the size of the combat area.
+     * @return the size of the combat area
+     */
     public final int getSize() {
         return this.size;
     }
 
+    /**
+     * Returns the player's current position.
+     * @return the player's position
+     */
     public final Position getPlayerPosition() {
         return this.playerPosition;
     }
