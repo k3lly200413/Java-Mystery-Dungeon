@@ -269,10 +269,7 @@ public class CombatController {
             return;
         }
         Runnable onPlayerAttackComplete = () -> {
-            this.model.setPlayerTurn(this.model.isPlayerTurn());
-            new AnimatingState().handleAnimationComplete(this);
-            // applyPostTurnEffects();
-            // if (checkGameOver()) return; //Check if enemy was defeated
+            this.currentState.handleAnimationComplete(this);
         };
 
         animatePhysicalMove(
@@ -616,17 +613,6 @@ public class CombatController {
                 }
 
                     damageApplied[0] = true;
-
-                    if (checkGameOver()) {
-                        this.stopAnimationTimer();
-
-                        if (isPlayerAttacker) {
-                            this.model.setEnemyPosition(currentTargetPos[0]);
-                        } else {
-                            this.model.setPlayerPosition(currentTargetPos[0]);
-                            return;
-                        }
-                    }
                 }
 
                 nextAttackerPos = new Position(
