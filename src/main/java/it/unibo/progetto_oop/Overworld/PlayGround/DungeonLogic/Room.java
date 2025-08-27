@@ -1,7 +1,9 @@
-package it.unibo.progetto_oop.Overworld.PlayGround;
+package it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Pair;
 
 public class Room implements Iterable<Pair<Integer, Integer>>{
     int x, y, width, height;

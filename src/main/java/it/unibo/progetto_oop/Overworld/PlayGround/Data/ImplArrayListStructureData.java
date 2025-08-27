@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.PlayGround;
+package it.unibo.progetto_oop.Overworld.PlayGround.Data;
 
 import java.util.ArrayList;
 import java.util.stream.IntStream;

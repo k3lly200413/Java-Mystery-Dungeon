@@ -1,8 +1,10 @@
-package it.unibo.progetto_oop.Overworld.PlayGround;
+package it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
 
 public class Dungeon {
     private final List<Floor> floors = new ArrayList<>();
