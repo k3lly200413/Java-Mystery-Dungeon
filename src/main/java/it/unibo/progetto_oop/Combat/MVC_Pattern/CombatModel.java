@@ -199,97 +199,189 @@ public class CombatModel implements PossibleUser{
         return this.playerStaminaMax;
     }
 
+    /**
+     * Returns the player's current power.
+     * @return the player's power
+     */
     public final int getPlayerPower() {
         return this.playerPower;
     }
 
+    /**
+     * Returns the player's poison power.
+     * @return the player's poison power
+     */
     public final int getPlayerPoisonPower() {
         return this.playerPoisonPower;
     }
 
+    /**
+     * Returns the enemy's poison power.
+     * @return the enemy's poison power
+     */
     public final int getEnemyPoisonPower() {
         return this.enemyPoisonPower;
     }
 
+    /**
+     * Returns the player's long range power.
+     * @return the player's long range power
+     */
     public final int getPlayerLongRangePower() {
         return this.playerLongRangePower;
     }
 
+    /**
+     * Returns the enemy's long range power.
+     * @return the enemy's long range power
+     */
     public final int getEnemyLongRangePower() {
         return this.enemyLongRangePower;
     }
 
+    /**
+     * Returns the enemy's power.
+     * @return the enemy's power
+     */
     public final int getEnemyPower() {
         return this.enemyPower;
     }
 
+    /**
+     * Returns the enemy's speed.
+     * @return the enemy's speed
+     */
     public final int getEnemySpeed() {
         return this.enemySpeed;
     }
 
+    /**
+     * Returns the enemy's name.
+     * @return the enemy's name
+     */
     public final String getEnemyName() {
         return this.enemyName;
     }
 
+    /**
+     * Returns whether the enemy is poisoned.
+     * @return true if the enemy is poisoned, false otherwise
+     */
     public final boolean isEnemyPoisoned() {
         return this.enemyPoisoned;
     }
 
+    /**
+     * Returns whether the player is poisoned.
+     * @return true if the player is poisoned, false otherwise
+     */
     public final boolean isPlayerPoison() {
         return this.isPlayerPoison;
     }
 
+    /**
+     * Returns whether it is the player's turn.
+     * @return true if it is the player's turn, false otherwise
+     */
     public final boolean isPlayerTurn() {
         return this.isPlayerTurn;
     }
 
+    /**
+     * Returns the player's basic power.
+     * @return the player's basic power
+     */
     public final int getBasicPlayerPower() {
         return this.basicPlayerPower;
     }
 
+    /**
+     * Returns the position of the entity that died.
+     * @return the position of the entity that died
+     */
     public final Position getWhoDied() {
         return this.whoDied;
     }
 
+    /**
+     * Returns whether it is the boss's turn.
+     * @return true if it is the boss's turn, false otherwise
+     */
     public final boolean isBossTurn() {
         return this.isBossTurn;
     }
 
+    /**
+     * Returns the current boss attack counter.
+     * @return the boss attack counter
+     */
     public final int getBossAttackCounter() {
         return this.bossAttackCounter;
     }
 
+    /**
+     * Returns the maximum number of boss hits.
+     * @return the maximum boss hit count
+     */
     public final int getMaxBossHit() {
         return this.maxBossHit;
     }
 
+    /**
+     * Returns the current state of the boss.
+     * @return the current boss state
+     */
     public final String getCurrentBossState() {
         return this.currentBossState;
     }
 
+    /**
+     * Returns the path of the boss's death ray attack.
+     * @return the death ray path as a list of positions
+     */
     public final ArrayList<Position> getDeathRayPath() {
         return this.deathRayPath;
     }
 
+    /**
+     * Returns the boss turn counter.
+     * @return the boss turn counter
+     */
     public final int getBossTurnCounter() {
         return this.bossTurnCounter;
     }
 
+    /**
+     * Returns whether the poison animation is active.
+     * @return true if the poison animation is active, false otherwise
+     */
     public final boolean isPoisonAnimation() {
         return this.poisonAnimation;
     }
 
     // setters
-    public final void setPlayerPosition(final Position playerPosition) {
-        this.playerPosition = Objects.requireNonNull(playerPosition);
+    /**
+     * Sets the player's position.
+     * @param newPlayerPosition the new position for the player
+     */
+    public final void setPlayerPosition(final Position newPlayerPosition) {
+        this.playerPosition = Objects.requireNonNull(newPlayerPosition);
     }
 
-    public final void setEnemyPosition(final Position enemyPosition) {
-        this.enemyPosition = Objects.requireNonNull(enemyPosition);
+    /**
+     * Sets the enemy's position.
+     * @param newEnemyPosition the new position for the enemy
+     */
+    public final void setEnemyPosition(final Position newEnemyPosition) {
+        this.enemyPosition = Objects.requireNonNull(newEnemyPosition);
     }
 
-    public final void setAttackPosition(final Position attackPosition) {
-        this.attackPosition = Objects.requireNonNull(attackPosition);
+    /**
+     * Sets the attack position.
+     * @param newAttackPosition the new attack position
+     */
+    public final void setAttackPosition(final Position newAttackPosition) {
+        this.attackPosition = Objects.requireNonNull(newAttackPosition);
     }
 
     /**
