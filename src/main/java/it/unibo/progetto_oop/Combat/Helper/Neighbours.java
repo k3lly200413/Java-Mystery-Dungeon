@@ -3,9 +3,16 @@ package it.unibo.progetto_oop.Combat.Helper;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
 public class Neighbours {
-    
-    public Neighbours(){}
-    
+
+    /**
+     * Constructor for neighbours class.
+     * used to check if two enteties are close in combat
+     *
+     */
+    public Neighbours() {
+
+    }
+
     /**
      * Checks if two positions are within a given distance of each other.
      *
