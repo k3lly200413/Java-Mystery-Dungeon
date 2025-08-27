@@ -744,6 +744,11 @@ public class CombatController {
         animationTimer.start();
     }
 
+    private void makeBigger(int i, Runnable onZoomComplete) {
+        // TODO Auto-generated method stub
+        // throw new UnsupportedOperationException("Unimplemented method 'makeBigger'");
+    }
+
     private void animatePoisonDamage() {
         this.stopAnimationTimer();
         final int[] step = {4};
@@ -1045,9 +1050,11 @@ public class CombatController {
                 this.currentState.handleAnimationComplete(this);    // chiamo la funzione che tratta la fine delle animazioni 
             }
             else{
-                System.out.println("Conto => " + conto[0]);                                         // ridisegno tutto con il veleno che sale 
-                redrawView(true, true, false, false, 0, 1, 1, model.isGameOver(), model.getWhoDied(), (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()), true, conto[0], false, model.getDeathRayPath());
-                conto[0]--;                                         // faccio salire il veleno
+                System.out.println("Conto => " + conto[0]);
+                // ridisegno tutto con il veleno che sale
+                this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), 0, true, true, false, false, 1, 1, this.model.isGameOver(), this.model.getWhoDied(), false, new ArrayList<>(), true, conto[0], false, 0); 
+                // faccio salire il veleno
+                conto[0]--;
             }
         });
         animationTimer.start();                                     // faccio partire il timer (finisce tutte le prossime chiamate poi fa partire il timer non è coe un for (lo so è strano))

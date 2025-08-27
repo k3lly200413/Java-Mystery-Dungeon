@@ -15,7 +15,7 @@ public class Potion extends Item{
      * @param quantity Quantità nell'inventario
      * @param strategy Istanza di Pozione necessaria per chiamare i metodi necessari
      */
-    Potion( String name, String description, Position position, PotionStrategy strategy) {
+    public Potion( String name, String description, Position position, PotionStrategy strategy) {
         super(name, description, position);
         this.strategy = strategy;
     }

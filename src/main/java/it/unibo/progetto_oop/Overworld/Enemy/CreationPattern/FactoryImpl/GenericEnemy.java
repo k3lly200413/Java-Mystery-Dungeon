@@ -1,7 +1,6 @@
 package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl;
 
 import it.unibo.progetto_oop.Combat.Position.Position;
-import it.unibo.progetto_oop.Overworld.Enemy.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
@@ -14,7 +13,7 @@ public class GenericEnemy implements Enemy {
     private Position initialPosition;
     private Position currentPosition;
     private int currentHealth;
-    private OverworldModel model;
+    private OverworldModel model; 
     private GenericEnemyState currentState;
 
 
@@ -86,7 +85,7 @@ public class GenericEnemy implements Enemy {
     // methods
 
     @Override
-    public void takeTurn(Player player) {
+    public void takeTurn(OverworldModel model, Player player) {
         this.currentState.update(this, model, player);
     }
 
@@ -96,9 +95,9 @@ public class GenericEnemy implements Enemy {
      * 
      *  Based on the type of enemy, it will act differently when the player moves.
      */
-    public void playerMoved(Player player) {
+    public void playerMoved(Player player, OverworldModel model) {
         if (this.currentState != null){
-            this.currentState.onPlayerMoved(this, player, this.model);
+            this.currentState.onPlayerMoved(this, player, model);
         }
     } 
 }

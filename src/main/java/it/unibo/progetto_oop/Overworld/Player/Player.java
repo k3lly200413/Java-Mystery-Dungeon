@@ -21,10 +21,10 @@ public class Player {
 
     private List<PlayerObserver> observers;
 
-    public Player(int maxHP) {
+    public Player(int maxHP, Inventory inventory) {
         this.maxHP = maxHP;
         this.currentHP = this.maxHP;
-        this.inventory = new Inventory(); 
+        this.inventory = inventory; 
         this.observers = new ArrayList<>();
     }
 
@@ -68,16 +68,16 @@ public class Player {
      * 
      * @param item The item to be used.
      */
-    public void useItem(Item item){ // TODO: fix
+    public void useItem(Item item){ 
         if (this.inventory.hasItem(item)){ // check wether the item is in the inventory
             if (item instanceof Potion) {
                 Potion potion = (Potion) item;
                 PotionStrategy strategy = potion.getStrategy(); // the kind of potion
                 if (strategy != null) {
-                    System.out.println("Using potion " + "infos of potion"); // TODO --> print infos of potion
+                    System.out.println("Using potion " + potion.getDescription()); 
                     PossibleUser adaptedPlayer = new OverworldPlayerAdapter(this); 
                     potion.use(adaptedPlayer);
-                    this.inventory.decreseItemCount(item);
+                    this.inventory.decreaseItemCount(item); // TODO: maybe put in the observer pattern
                     this.notifyInventoryChanged();
                 }
                 else{
@@ -98,12 +98,7 @@ public class Player {
      * @param item item to add to the inventory
      */
     public void addItem(Item item){
-        if (this.inventory.addItem(item)){
-            System.out.println("Aggiunto nuovo int a chiave"); // TODO: remove this print
-        }
-        else{
-            System.out.println("Chiave Non presente quindi aggiunta"); // same as above
-        }
+        this.inventory.addItem(item);
         this.observers.stream().forEach(observer -> observer.playerInventoryChanged(inventory));
     }
 

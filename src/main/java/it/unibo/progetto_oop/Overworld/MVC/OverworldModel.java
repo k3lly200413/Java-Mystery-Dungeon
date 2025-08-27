@@ -7,13 +7,12 @@ import java.util.Optional;
 
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
+import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.Overworld.Enemy.Enemy;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
 public class OverworldModel {
     private final Player player;
-    private final OverworldApplication game;
 
     private List<Item> items = new ArrayList<>();
     private Inventory inventory;
@@ -29,14 +28,13 @@ public class OverworldModel {
     private boolean combatTransitionPending = false;
     private boolean inCombat;
 
-    public OverworldModel(Player player, List<Enemy> enemies,  List<Item> items, Set<Position> walls, OverworldApplication game, Inventory inventory) {
+    public OverworldModel(Player player, List<Enemy> enemies,  List<Item> items, Set<Position> walls, Inventory inventory) {
         this.player = player;
         this.items = items;
         this.inventory = inventory;
         this.walls = walls;
         this.enemies = enemies;
         this.inCombat = false;
-        this.game = game;
     }
 
     // --- getter methods ---
@@ -118,28 +116,28 @@ public class OverworldModel {
     /**
      * Clear the InCombat flag, indicating that the player is no longer in combat.
      */
-    private void clearInCombatFlag(){
+    public void clearInCombatFlag(){
         this.inCombat = false;
     }
 
     /**
      * Set the InCombat flag to true, indicating that the player has entered combat.
      */
-    private void setInCombatFlag(){
+    public void setInCombatFlag(){
         this.inCombat = true;
     }
 
     /**
      * Clear the combat transition flag, indicating that the combat transition is no longer pending.
      */
-    private void clearCombatTransitionFlag(){
+    public void clearCombatTransitionFlag(){
         this.combatTransitionPending = false;
     }
     
     /**
      * Set the combat transition flag to true, indicating that a combat transition is pending.
     */
-    private void setCombatTransitionFlag(){
+    public void setCombatTransitionFlag(){
         this.combatTransitionPending = false;
     }
 
@@ -151,7 +149,8 @@ public class OverworldModel {
      * @return an Optional containing the enemy if found, otherwise an empty Optional
      */
     private Optional<Enemy> checkEnemyHit(){
-        return this.enemies.stream().filter(enemy -> enemy.getCurrentPosition().equals(this.tempPosition)).findFirst();
+        return this.enemies.stream().filter(enemy -> enemy.getCurrentPosition()
+            .equals(this.tempPosition)).findFirst();
     }
 
     /**
@@ -188,7 +187,7 @@ public class OverworldModel {
      * This method should be called after the player has moved
      */
     private void triggerEnemyTurns(){
-        // TODO: for each enemy, check if it can move or attack
+        this.enemies.stream().forEach(enemy -> enemy.takeTurn(this, this.player));
     }
 
     /**
@@ -222,7 +221,7 @@ public class OverworldModel {
      * @param directionX direction of movement on axis x
      * @param directionY direction of movement on axis y
      */
-    public void MovePlayer(int directionX, int directionY){
+    public void movePlayer(int directionX, int directionY){
         Position currentPos = player.getPosition();
         tempPosition = new Position(currentPos.x()+directionX, currentPos.y()+directionY);
 
