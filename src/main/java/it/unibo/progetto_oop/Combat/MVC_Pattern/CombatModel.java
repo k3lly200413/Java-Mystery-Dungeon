@@ -327,4 +327,6 @@ public class CombatModel implements PossibleUser{
     public int getMaxHP() {
         return this.getMaxHealth();
     }
+
+    ptopghdf
 }
