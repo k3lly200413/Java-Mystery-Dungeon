@@ -66,6 +66,14 @@ public class CombatController {
      * This is a placeholder value
      */
     private static final int MINIMUM_STAMINA_FOR_SPECIAL_ATTACK = 5;
+    /**
+     * Height of each square in the grid.
+     */
+    private static final int SQUARE_HEIGHT = 20;
+    /**
+     * Width of each square in the grid.
+     */
+    private static final int SQUARE_WIDTH = 20;
 
     /**
      * Step counter for the zoomer animation.
@@ -103,7 +111,6 @@ public class CombatController {
         this.neighbours = new Neighbours();
 
         this.view.setHealthBarMax(model.getMaxHealth());
-        // TODO: make methods in model that divides playerMaxHleath and enemyMaxHealth
         this.view.updatePlayerHealth(model.getPlayerHealth());
         this.view.updateEnemyHealth(model.getEnemyHealth());
 
@@ -135,7 +142,7 @@ public class CombatController {
             (this.model.isPlayerTurn()
             ? this.model.getEnemyPosition()
             : this.model.getPlayerPosition()),
-            false, new ArrayList<Position>(), false, 0, false, 0, 20, 20);
+            false, new ArrayList<Position>(), false, 0, false, 0, SQUARE_HEIGHT, SQUARE_WIDTH);
     }
     /**
      * Redraws the view with specific parameters.
