@@ -1,5 +1,5 @@
 package it.unibo.progetto_oop.Overworld.PlayGround;
 
-public interface MapView extends FloorObserver {
+public interface MapView {
     void render(StructureData grid);
 }

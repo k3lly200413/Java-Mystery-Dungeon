@@ -4,9 +4,9 @@ public record FloorConfig(
         int width, int height,
         int nRooms,
         int minRoomW, int maxRoomW,
-        int minRoomH, int maxRoomH
-) {
-    /** Comodo: FloorConfig.builder().size(...).rooms(...).build(); */
+        int minRoomH, int maxRoomH,
+        int nFloors
+        ) {
     //classe innestata per comodita' di costruzione
     public static Builder builder() { return new Builder(); }
 
@@ -16,10 +16,6 @@ public record FloorConfig(
         private int minRoomW = 5, maxRoomW = 12;
         private int minRoomH = 5, maxRoomH = 10;
         private final int nFloors = 5;
-
-        public int getnFloors() {
-            return this.nFloors;
-        }
 
         public Builder size(int w, int h) {
             this.width = w;
@@ -50,7 +46,7 @@ public record FloorConfig(
             if (this.nFloors <= 0)
                 throw new IllegalArgumentException("At least 1 floor");
 
-            return new FloorConfig(width, height, nRooms, minRoomW, maxRoomW, minRoomH, maxRoomH);
+            return new FloorConfig(width, height, nRooms, minRoomW, maxRoomW, minRoomH, maxRoomH, nFloors);
         }
     }
 }

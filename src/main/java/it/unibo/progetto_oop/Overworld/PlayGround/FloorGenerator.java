@@ -8,24 +8,27 @@ import java.util.Random;
 public final class FloorGenerator {
     private final RoomPlacementStrategy roomPlacement;
     private final TunnelPlacementStrategy tunnelPlacement;
+    private final RandomPlacementStrategy objectPlacer;
     private final Random rand;
 
-    public FloorGenerator(RoomPlacementStrategy roomPlacement,
-                          TunnelPlacementStrategy tunnelPlacement,
-                          Random rand) {
+    public FloorGenerator(RoomPlacementStrategy roomPlacement, TunnelPlacementStrategy tunnelPlacement,
+                            RandomPlacementStrategy objectPlacer, Random rand) {
         this.roomPlacement = Objects.requireNonNull(roomPlacement);
         this.tunnelPlacement = Objects.requireNonNull(tunnelPlacement);
+        this.objectPlacer = Objects.requireNonNull(objectPlacer);
         this.rand = Objects.requireNonNull(rand);
     }
 
     public List<Room> generate(StructureData grid, FloorConfig conf) {
-        if (conf.nRooms() <= 0) throw new IllegalArgumentException("nRooms must be > 0");
+        if (conf.nRooms() <= 0)
+            throw new IllegalArgumentException("nRooms must be > 0");
         grid.fill(TileType.WALL);
         List<Room> rooms = new ArrayList<>();
         roomPlacement.placeRooms(grid, rooms, rand, conf);
         if (rooms.size() >= 2) {
             tunnelPlacement.connect(grid, rooms, rand);
         }
+        objectPlacer.placeObject(grid, TileType.STAIRS, 1, rand);
         return rooms; // Floor farà List.copyOf(...)
     }
 }

@@ -1,36 +1,27 @@
 package it.unibo.progetto_oop.Overworld.PlayGround;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
         final Random rand = new Random();
-        FloorGenerator gen = new FloorGenerator(new ImplRoomPlacement(), new ImplTunnelPlacement(), rand);
+        final RandomPlacementStrategy rps = new ImplRandomPlacement();
+        final RoomPlacementStrategy rrs = new ImplRoomPlacement();
+        final TunnelPlacementStrategy tps = new ImplTunnelPlacement();
+
+        FloorGenerator gen = new FloorGenerator(rrs, tps, rps, rand);
 
         FloorConfig config = new FloorConfig.Builder().build();
-        List<Floor> floors = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            floors.add(new Floor(config, gen));
-        }
 
-        FloorConfig bossConfig = new FloorConfig.Builder().rooms(1).build();
-        floors.add(new Floor(bossConfig, gen));
-
-        Dungeon dungeon = new Dungeon(floors);
+        Dungeon dungeon = new Dungeon(gen, config);
 
         // VIEW Swing
-        SwingMapView view = new SwingMapView("Mystery Dungeon - Map", 14);
-        dungeon.getCurrentFloor().addObserver(view); 
+        SwingMapView view = new SwingMapView("Java Mystery Dungeon", 14);
 
         // CONTROLLER
-        MapController controller = new MapController(dungeon, view);
+        MapController controller = new MapController(view, dungeon);
 
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            view.setVisible(true);
-            new javax.swing.Timer(1000, e -> controller.nextFloor(dungeon)).start();
-        });
+        javax.swing.SwingUtilities.invokeLater(controller::show);
     }
 }
 

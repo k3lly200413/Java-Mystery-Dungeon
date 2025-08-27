@@ -1,27 +1,27 @@
 package it.unibo.progetto_oop.Overworld.PlayGround;
 
-public class MapController {
-    private final Dungeon dungeon;
-    private final MapView view;
+import java.util.Objects;
 
-    public MapController(Dungeon dungeon, MapView view) {
-        this.dungeon = dungeon;
-        this.view = view;
-        Floor f = dungeon.getCurrentFloor();
-        f.addObserver(view);
-        view.render(f.grid());
+import javax.swing.SwingUtilities;
+
+public final class MapController {
+    private final SwingMapView view;
+    private final Dungeon dungeon;
+
+    public MapController(SwingMapView view, Dungeon dungeon) {
+        this.view = Objects.requireNonNull(view);
+        this.dungeon = Objects.requireNonNull(dungeon);
     }
 
     public void show() {
-        view.render(dungeon.getCurrentFloor().grid());
+        view.onNextFloorRequested(this::next);
+        next();
+        SwingUtilities.invokeLater(view::showView);
     }
 
-    public void nextFloor(Dungeon dungeon) {
-    if (dungeon.nextFloor()) {
-        Floor f = dungeon.getCurrentFloor();
-        f.addObserver(view);
-        view.render(f.grid());
+    public void next() {
+        dungeon.nextFloor();
+        StructureData grid = dungeon.getCurrentFloor().grid();
+        SwingUtilities.invokeLater(() -> view.render(grid));
     }
 }
-}
-
