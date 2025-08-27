@@ -122,8 +122,8 @@ public class CombatController {
 
     /**
      * Default method to redraw View.
-     * 
-     * 
+     *
+     *
      * @author kelly.applebee@studio.unibo.itc
      */
     public void redrawView() {
@@ -254,8 +254,7 @@ public class CombatController {
     }
 
     private void handleCurePoisonInput() {
-        CombatState currentState = new PlayerTurnState();
-        currentState.handleCurePoisonInput(this);
+        this.currentState.handleCurePoisonInput(this);
     }
     /**
      * Performs a physical attack by the player.
@@ -270,7 +269,7 @@ public class CombatController {
             return;
         }
         Runnable onPlayerAttackComplete = () -> {
-            this.model.setPlayerTurn(!this.model.isPlayerTurn());
+            this.model.setPlayerTurn(this.model.isPlayerTurn());
             new AnimatingState().handleAnimationComplete(this);
             // applyPostTurnEffects();
             // if (checkGameOver()) return; //Check if enemy was defeated
@@ -320,7 +319,7 @@ public class CombatController {
                 return; // Check if player was defeated
             }
 
-            model.setPlayerTurn(!this.model.isPlayerTurn());
+            model.setPlayerTurn(this.model.isPlayerTurn());
             view.setAllButtonsEnabled();
             view.showInfo("Player's turn!");
             view.showOriginalButtons();
@@ -338,8 +337,6 @@ public class CombatController {
 
     private void handlePlayerLongRangeAttack(
         final boolean applyPoison, final boolean applyFlameIntent) {
-        // CombatState playerState = new PlayerTurnState();
-        
         this.currentState.enterState(this);
         this.currentState.handleLongRangeAttackInput(
             this, applyPoison, applyFlameIntent);
@@ -417,7 +414,7 @@ public class CombatController {
                 // Reset flame position visually (optional, could just hide it)
                 model.setAttackPosition(attacker); // Move flame back instantly
                 redrawView();
-                if (!this.model.isPlayerTurn()) {
+                if (this.model.isPlayerTurn()) {
                     this.model.decreaseEnemyHealth(this.model.getPlayerLongRangePower());
                 } else {
                     this.model.decreasePlayerHealth(this.model.getEnemyLongRangePower());
@@ -723,7 +720,7 @@ public class CombatController {
                 model.getEnemyPower(),
                 onEnemyAttackComplete);
     }
-    
+
     private void performInfoZoomInAnimation(Runnable onZoomComplete) {
         this.stopAnimationTimer();
         this.view.setAllButtonsDisabled();
@@ -750,7 +747,7 @@ public class CombatController {
         // throw new UnsupportedOperationException("Unimplemented method 'makeBigger'");
     }
 
-    private void animatePoisonDamage() {
+    public void animatePoisonDamage() {
         this.stopAnimationTimer();
         final int[] step = {4};
         // TODO: Maybe add variable in model to show that we're in the poison animation
@@ -763,8 +760,7 @@ public class CombatController {
                     model.decreaseEnemyHealth(model.getPlayerPoisonPower());
                     view.updateEnemyHealth(model.getEnemyHealth());
                     this.setState(new EnemyTurnState());
-                }
-                else {
+                } else {
                     System.out.println("Enemy Poison Power => " + model.getEnemyPoisonPower());
                     this.model.decreasePlayerHealth(model.getEnemyPoisonPower());
                     System.out.println("Enemy Health => " + model.getEnemyHealth());
@@ -822,6 +818,7 @@ public class CombatController {
             view.showInfo("Enemy take poison damage!");
             model.decreaseEnemyHealth(model.getPlayerPoisonPower());
             view.updateEnemyHealth(model.getEnemyHealth());
+            this.animatePoisonDamage();
         }
     }
 
@@ -1000,24 +997,13 @@ public class CombatController {
         System.out.println(" Performing Long Range Attack");
 
         longRangeAttackAnimation(attacker, direction, applyFlameIntent, applyPoisonIntent, () -> {
-            // Animation finished - just signal the state machine
             if (currentState != null) {
-                // Pass the original intent along so the state knows if poison should be applied
-                // ON HIT
-                // We need a way to pass this... Modify handleAnimationComplete? Or handle
-                // poison within animation?
-                // --> Simpler approach for now: Handle poison status SETTING inside
-                // handleAnimationComplete <--
-                System.out.println("About to Apply posion");
-                System.out.println("\nCurrent State = > " + this.currentState.toString() + "\n");
                 if (applyPoisonIntent) {
                     // TODO: change to make it more efficient
-                    if (!this.model.isPlayerTurn()) {
+                    if (this.model.isPlayerTurn()) {
                         this.model.setEnemyPoisoned(applyPoisonIntent);
-                        this.model.setPlayerTurn(false);
                     } else {
                         this.model.setPlayerPoisoned(applyPoisonIntent);
-                        this.model.setPlayerTurn(true);
                     }
                 }
                 currentState.handleAnimationComplete(this); // No extra args needed if state handles it

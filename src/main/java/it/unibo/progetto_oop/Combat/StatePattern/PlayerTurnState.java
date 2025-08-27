@@ -44,15 +44,14 @@ public class PlayerTurnState implements CombatState{
         // TODO: Call controller and have it change state to animating state so this can
         // be all done during the animation
 
-        // Disable buttons during animation
-        context.getView().setAllButtonsDisabled();
-        context.getView().clearInfo();
+        context.setState(new AnimatingState());
         // TODO: call model to remove 20 (placeholder) points of stamina
         context.getView().showInfo("Player Has used Long Range Attack");
         System.out.println(
             "Debug Log: Requested Long Range\n"
             + "Current State: Player Turn State");
-        context.performPlayerLongRangeAttack(isPoison, isFalme);
+        context.performLongRangeAttack(
+            context.getModel().getPlayerPosition(), 1, isFalme, isPoison);
     }
 
     @Override
@@ -90,7 +89,7 @@ public class PlayerTurnState implements CombatState{
     public final void exitState(final CombatController context) {
         System.out.println("------ Exiting Player Turn State ------");
         context.getView().clearInfo();
-        context.getModel().setPlayerTurn(false);
+        // context.getModel().setPlayerTurn(false);
     }
 
     @Override

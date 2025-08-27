@@ -289,10 +289,12 @@ public class CombatModel implements PossibleUser{
     }
 
     public void setEnemyPoisoned(boolean enemyPoisoned) {
+        // TODO: sistemare questo controllare che quando è true non può essere false
         this.enemyPoisoned = enemyPoisoned;
     }
 
     public void setPlayerTurn(boolean isPlayerTurn) {
+        System.out.println("Changed player turn");
         this.isPlayerTurn = isPlayerTurn;
     }
 

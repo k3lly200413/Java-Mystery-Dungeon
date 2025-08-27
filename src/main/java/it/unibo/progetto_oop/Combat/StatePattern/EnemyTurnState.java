@@ -64,7 +64,7 @@ public class EnemyTurnState implements CombatState {
     @Override
     public void exitState(CombatController context) {
         // Logic for exiting enemy turn state
-        context.getModel().setPlayerTurn(true);
+        // context.getModel().setPlayerTurn(true);
         // context.getView().updatePlayerTurnView();
     }
 
