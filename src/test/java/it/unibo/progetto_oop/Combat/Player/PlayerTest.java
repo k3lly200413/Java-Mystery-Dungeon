@@ -12,19 +12,26 @@ import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Combat.PotionFactory.ItemFactory;
 
 public class PlayerTest {
+    Inventory inventory;
+    Item health;
+    Item antidote;
+
+
+    @BeforeEach
+    void setUp() {
+        // Create a inventory
+        inventory = new Inventory();
+
+        // Create some items
+        var potionFactory = new ItemFactory();
+        health = potionFactory.createItem("Health Potion", new Position(0,0));
+        antidote = potionFactory.createItem("Health Potion", new Position(1,0));
+    }
 
     @Test
     void useItemTest() {
-        // Create a inventory
-        var inventory = new Inventory();
-
-
-        // Create an item
-        var potionFactory = new ItemFactory();
-        Item potion = potionFactory.createItem("Health Potion", new Position(0,0));
-
         // add the item to the inventory
-        inventory.addItem(potion);
+        inventory.addItem(health);
 
         assertEquals(1, inventory.getCurrentSize());
 
@@ -32,10 +39,27 @@ public class PlayerTest {
         var player = new Player(100, inventory);
 
         // Use the item
-        player.useItem(potion);
+        player.useItem(health);
         
         // Verify that the inventory's useItem method was called with the correct item
         assertEquals(0, inventory.getCurrentSize());
+    }
+
+    @Test
+    void addItemTest() {
+        // add item to the inventory via inventory method
+        inventory.addItem(antidote);
+
+        assertEquals(1, inventory.getCurrentSize());
+
+        // Create a player with the inventory
+        var player = new Player(100, inventory);
+
+        // Add the item via player method
+        player.addItem(health);
+        
+        // Verify that the inventory's addItem method was called with the correct item
+        assertEquals(2, inventory.getCurrentSize());
     }
     
 }

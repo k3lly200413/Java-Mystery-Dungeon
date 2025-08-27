@@ -18,8 +18,12 @@ public class InventoryTest {
     Item attack;
     Item antidote;
 
+    Inventory inventory;
+
     @BeforeEach
     void setup() {
+        inventory = new Inventory(2); // capacity of 2 different items
+
         ItemFactory itemFactory = new ItemFactory();
         health = itemFactory.createItem("Health Potion", new Position(0,0));
         attack = itemFactory.createItem("Attack Buff", new Position(1,0));
@@ -29,8 +33,6 @@ public class InventoryTest {
 
     @Test 
     void addItemTest() {
-        Inventory inventory = new Inventory(2); // capacity of 2 different items
-
         // Add first item
         boolean added1 = inventory.addItem(health);
         assertEquals(true, added1);
@@ -70,7 +72,6 @@ public class InventoryTest {
 
     @Test
     void decreaseItemCountTest() {
-        Inventory inventory = new Inventory(2); // capacity of 2 different items
         inventory.addItem(health); // add 1 health potion
         assertEquals(1, inventory.getCurrentSize());
 
