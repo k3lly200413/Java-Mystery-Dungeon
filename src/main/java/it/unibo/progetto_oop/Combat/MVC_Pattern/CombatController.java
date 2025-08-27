@@ -66,6 +66,14 @@ public class CombatController {
      * This is a placeholder value
      */
     private static final int MINIMUM_STAMINA_FOR_SPECIAL_ATTACK = 5;
+    /**
+     * Height of each square in the grid.
+     */
+    private static final int SQUARE_HEIGHT = 20;
+    /**
+     * Width of each square in the grid.
+     */
+    private static final int SQUARE_WIDTH = 20;
 
     /**
      * Step counter for the zoomer animation.
@@ -134,7 +142,9 @@ public class CombatController {
             (this.model.isPlayerTurn()
             ? this.model.getEnemyPosition()
             : this.model.getPlayerPosition()),
-            false, new ArrayList<Position>(), false, 0, false, 0, 20, 20);
+            false, new ArrayList<Position>(),
+            false, 0,
+            false, 0, SQUARE_HEIGHT, SQUARE_WIDTH);
     }
     /**
      * Redraws the view with specific parameters.
@@ -171,7 +181,8 @@ public class CombatController {
             palyerPos, enemyPos, flamePos, flameSize, drawPlayer,
             drawEnemy, drawFlame, drawPoison, playerRange, enemyRange,
             isGameOver, whoDied, bossRayAttack, deathRayPath, drawPoisonDamage,
-            poisonYCoord, isCharging, chargingPosition, 20, 20);
+            poisonYCoord, isCharging,
+            chargingPosition, SQUARE_HEIGHT, SQUARE_WIDTH);
     }
 
     /**
@@ -180,13 +191,17 @@ public class CombatController {
     private void attachListeners() {
         this.view.addAttackButtonListener(e -> handleAttackMenu());
         this.view.addPhysicalButtonListener(e -> handlePlayerPhysicalAttack());
-        this.view.addLongRangeButtonListener(e -> handlePlayerLongRangeAttack(false, true));
-        this.view.addPoisonButtonListener(e -> handlePlayerLongRangeAttack(true, false));
+        this.view.addLongRangeButtonListener(
+            e -> handlePlayerLongRangeAttack(false, true));
+        this.view.addPoisonButtonListener(
+            e -> handlePlayerLongRangeAttack(true, false));
         this.view.addBackButtonListener(e -> handleBackToMainMenu());
         this.view.addInfoButtonListener(e -> handleInfo());
         this.view.addBagButtonListener(e -> handleBagMenu());
-        this.view.addRunButtonListener(e -> System.out.println("Run clicked - Not Yet Implemented"));
-        this.view.addCurePoisonButtonListener(e -> this.handleCurePoisonInput());
+        this.view.addRunButtonListener(
+            e -> System.out.println("Run clicked - Not Yet Implemented"));
+        this.view.addCurePoisonButtonListener(
+            e -> this.handleCurePoisonInput());
         this.view.addAttackButtonListener(e -> handleAttackBuff());
         this.view.addAttackBuffButtonListener(e -> handleAttackBuff());
         this.view.addHealButtonListener(e -> handleHeal());
@@ -195,11 +210,8 @@ public class CombatController {
     private void handleAttackMenu() {
         System.out.println("Attack Menu button clicked.");
         this.view.showAttackOptions(); // Show the attack sub-menu
-        // TODO: add getter in model to get stamina to
-        // then check if it's lower than the
-        // minimum then remove comment below
-
-        if (this.model.getPlayerStamina() < MINIMUM_STAMINA_FOR_SPECIAL_ATTACK) {
+        if (this.model.getPlayerStamina()
+        < MINIMUM_STAMINA_FOR_SPECIAL_ATTACK) {
             this.view.setCustomButtonDisabled(
                 this.view.getLongRangeAttackButton());
             this.view.setCustomButtonDisabled(
@@ -339,15 +351,7 @@ public class CombatController {
             this, applyPoison, applyFlameIntent);
     }
 
-    /**
-     * Handler for Generic Long range attack.
-     *
-     * @param applyPoison boolean to tell controller wether to apply poison to
-     *                    target or not
-     * @param applyFlameIntent boolean to tell controller wether to apply flame
-     *
-     * @author kelly.applebee@studio.unibo.it
-     
+    /*
     public void performPlayerLongRangeAttack(
         final boolean applyPoison, final boolean applyFlameIntent) {
         if (!this.model.isPlayerTurn() || this.isAnimationRunning()) {
@@ -466,10 +470,12 @@ public class CombatController {
         this.view.clearInfo();
         this.view.showInfo("Boss Unleasehs Death Ray");
 
-        this.longRangeAttackAnimation(model.getEnemyPosition(), -1, false, false, () -> {
+        this.longRangeAttackAnimation(
+            model.getEnemyPosition(), -1, false, false, () -> {
             // Animation finished - just signal the state machine
             if (currentState != null) {
-                currentState.handleAnimationComplete(this); // No extra args needed if state handles it
+                // No extra args needed if state handles it
+                currentState.handleAnimationComplete(this);
             }
         });
     }
@@ -531,6 +537,10 @@ public class CombatController {
         }
     }
 
+    /**
+     * Checks if the animation is currently running.
+     * @return true if the animation is running, false otherwise
+     */
     public final boolean isAnimationRunning() {
         return animationTimer != null && animationTimer.isRunning();
     }
@@ -541,7 +551,6 @@ public class CombatController {
             final boolean isPlayerAttacker,
             final int attackPower,
             final Runnable onComplete) {
-        //TODO: Correct State deligation, PlayerTurnState/AnimationState
         this.stopAnimationTimer();
 
         final int moveDirection = isPlayerAttacker ? 1 : -1;
