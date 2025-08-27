@@ -76,7 +76,7 @@ public class OverworldModelTest {
         EnemyFactory factory = new EnemyFactoryImpl();
 
         // create model
-        this.model = new OverworldModel(player, enemyList, items, walls, inventory);
+        this.model = new OverworldModel(player, enemyList, items, walls);
 
         Enemy hider = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, enemies.get(0), true, this.model, this.game);
         Enemy patroller = factory.createPatrollerEnemy(ENEMY_HP,ENEMY_POWER, enemies.get(0), true, this.model, this.game); 
