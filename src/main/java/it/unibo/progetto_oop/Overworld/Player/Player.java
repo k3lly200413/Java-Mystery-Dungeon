@@ -17,7 +17,7 @@ public class Player {
     private int maxHP;
     private Position position;
 
-    private Inventory inventory;
+    public Inventory inventory;
 
     private List<PlayerObserver> observers;
 

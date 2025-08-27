@@ -18,9 +18,9 @@ import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
 import it.unibo.progetto_oop.Combat.Helper.Neighbours;
 
 
-/**
+/**.
  * Controller class in Model View Controller Pattern
- * 
+ *
  * @author Kelly.applebee@studio.unibo.it
  */
 public class CombatController {
@@ -113,17 +113,17 @@ public class CombatController {
         this.currentState = new PlayerTurnState();
     }
 
-    /**
+    /**.
      * Makes the main combat window visible
      */
     public void startCombat() {
         this.view.display();
     }
 
-    /**
+    /**.
      * Default method to redraw View
-     * 
-     * 
+     *
+     *
      * @author kelly.applebee@studio.unibo.itc
      */
     public void redrawView() {
@@ -403,25 +403,33 @@ public class CombatController {
             false, 0, false, 0
         );
 
-        System.out.println("Attacker Position => " + attacker.equals(model.getEnemyPosition()));
+        System.out.println("Attacker Position => "
+        + attacker.equals(model.getEnemyPosition()));
 
         animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
             // Check if flame reached or passed the enemy
-            if (model.getAttackPosition().x() > model.getEnemyPosition().x() - 1 ||
-                    model.getAttackPosition().x() < model.getPlayerPosition().x() + 1) {
-                // if (model.getFlamePosition().x() >= enemy.x() -direction) { // -1 to hit when
+            if (model.getAttackPosition().x() > model.getEnemyPosition().x() - 1
+                ||
+                model.getAttackPosition().x() < model.
+                getPlayerPosition().x() + 1) {
+                // if (model.getFlamePosition().x() >= enemy.x() -direction) {
+                // -1 to hit when
                 // adjacent
                 System.out.println("\nFinished Long Range Attack Animation\n");
                 stopAnimationTimer();
                 // Reset flame position visually (optional, could just hide it)
                 model.setAttackPosition(attacker); // Move flame back instantly
                 redrawView();
-                if (!this.model.isPlayerTurn()) {
-                    this.model.decreaseEnemyHealth(this.model.getPlayerLongRangePower());
+
+                int remaining = model.applyAttackHealth(
+                    this.model.isPlayerTurn(),
+                    this.model.getPlayerLongRangePower()
+                    );
+
+                if (this.model.isPlayerTurn()) {
+                    view.updateEnemyHealth(remaining);
                 } else {
-                    this.model.decreasePlayerHealth(this.model.getEnemyLongRangePower());
-                    // TODO: refactor this to where it shuold be
-                    this.view.updatePlayerHealth(this.model.getPlayerHealth());
+                    view.updatePlayerHealth(remaining);
                 }
 
                 if (onHit != null) {
@@ -492,8 +500,9 @@ public class CombatController {
                 // we want to reset the position of the ray
                 deathRayLastPosition.clear();
                 this.redrawView();
-                // TODO: Change to longrange enemy power
-                this.model.decreasePlayerHealth(this.model.getEnemyPower());
+
+                this.model.decreasePlayerHealth(
+                    this.model.getEnemyLongRangePower());
                 if (onHit != null) {
                     System.out.println("\nI now have to apply poison status\n");
                     onHit.run(); // Execute the action upon hitting
@@ -527,7 +536,7 @@ public class CombatController {
         }
     }
 
-    public boolean isAnimationRunning() {
+    public final boolean isAnimationRunning() {
         return animationTimer != null && animationTimer.isRunning();
     }
 
@@ -537,7 +546,6 @@ public class CombatController {
             final boolean isPlayerAttacker,
             final int attackPower,
             final Runnable onComplete) {
-        //TODO: Move health logic management to model
         //TODO: Correct State deligation, PlayerTurnState/AnimationState
         this.stopAnimationTimer();
 
@@ -601,15 +609,14 @@ public class CombatController {
 
             } else if (state[0] == 1) {
                 if (!damageApplied[0]) {
-                    if (isPlayerAttacker) {
-                        this.model.decreaseEnemyHealth(attackPower);
-                        this.view.updateEnemyHealth(
-                            this.model.getEnemyHealth());
-                    } else {
-                        this.model.decreasePlayerHealth(attackPower);
-                        this.view.updatePlayerHealth(
-                            this.model.getPlayerHealth());
-                    }
+                    int remaining = this.model.
+                    applyAttackHealth(isPlayerAttacker, attackPower);
+                if (isPlayerAttacker) {
+                    view.updateEnemyHealth(remaining);
+                } else {
+                    view.updatePlayerHealth(remaining);
+                }
+
                     damageApplied[0] = true;
 
                     if (checkGameOver()) {
@@ -676,18 +683,15 @@ public class CombatController {
         });
         this.animationTimer.start();
     }
-    
     /**
      * Performs a super attack by the enemy.
      */
     public final void performEnemySuperAttack() {
         System.out.println("\nPerforming Super Attack\n");
 
-        
         Runnable onSuperAttackComplete = () -> {
             this.currentState.handleAnimationComplete(this);
         };
-        
         // Now start the animation itself
         int superAttackPower = (model.getEnemyPower() * 2);
         animatePhysicalMove(
@@ -697,7 +701,6 @@ public class CombatController {
             superAttackPower,
             onSuperAttackComplete
         );
-        
 
     }
 
@@ -722,8 +725,7 @@ public class CombatController {
                 model.getEnemyPower(),
                 onEnemyAttackComplete);
     }
-    
-    private void performInfoZoomInAnimation(Runnable onZoomComplete) {
+    private void performInfoZoomInAnimation(final Runnable onZoomComplete) {
         this.stopAnimationTimer();
         this.view.setAllButtonsDisabled();
 
@@ -744,7 +746,7 @@ public class CombatController {
         animationTimer.start();
     }
 
-    private void makeBigger(int i, Runnable onZoomComplete) {
+    private void makeBigger(final int i, final Runnable onZoomComplete) {
         // TODO Auto-generated method stub
         // throw new UnsupportedOperationException("Unimplemented method 'makeBigger'");
     }
@@ -758,16 +760,17 @@ public class CombatController {
                 step[0]--;
                 this.stopAnimationTimer();
                 this.redrawView();
+
+                int remaing = model.applyAttackHealth(
+                    this.model.isPlayerTurn(),
+                    this.model.getPlayerPoisonPower()
+                    );
+
                 if (this.model.isPlayerTurn()) {
-                    model.decreaseEnemyHealth(model.getPlayerPoisonPower());
-                    view.updateEnemyHealth(model.getEnemyHealth());
+                    view.updateEnemyHealth(remaing);
                     this.setState(new EnemyTurnState());
-                }
-                else {
-                    System.out.println("Enemy Poison Power => " + model.getEnemyPoisonPower());
-                    this.model.decreasePlayerHealth(model.getEnemyPoisonPower());
-                    System.out.println("Enemy Health => " + model.getEnemyHealth());
-                    view.updatePlayerHealth(model.getPlayerHealth());
+                } else {
+                    view.updatePlayerHealth(remaing);
                     this.setState(new PlayerTurnState());
                 }
             } else {
@@ -1007,8 +1010,8 @@ public class CombatController {
                 // poison within animation?
                 // --> Simpler approach for now: Handle poison status SETTING inside
                 // handleAnimationComplete <--
-                System.out.println("About to Apply posion");
-                System.out.println("\nCurrent State = > " + this.currentState.toString() + "\n");
+                System.out.println("About to Apply poison");
+                System.out.println("\nCurrent State =" + this.currentState.toString() + "\n");
                 if (applyPoisonIntent) {
                     // TODO: change to make it more efficient
                     if (!this.model.isPlayerTurn()) {
@@ -1033,9 +1036,9 @@ public class CombatController {
         return false;
     }
 
-    public void performPoisonEffectAnymation() {
+    public final void performPoisonEffectAnymation() {
         stopAnimationTimer();
-        final int conto[] = {4};                                            // array perché così posso dichiararlo final usarlo nel Timer se no sarebbe stato più scomodo
+        final int[] conto = {4};                                            // array perché così posso dichiararlo final usarlo nel Timer se no sarebbe stato più scomodo
         model.setPoisonAnimation(true);
         animationTimer = new Timer(500, e -> {                      // Timer con delay di 300 ms perché così potevo vedere da tablet che laggava ahahahahaha
             if (conto[0] == 1) {                                        // fine del timer resetto tutto

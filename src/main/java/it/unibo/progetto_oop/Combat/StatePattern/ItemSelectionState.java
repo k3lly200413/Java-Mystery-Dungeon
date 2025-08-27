@@ -54,9 +54,10 @@ public class ItemSelectionState implements CombatState {
 
 
     @Override
-    public void handlePotionUsed(CombatController context, Item selectedPotion, Player player) {
-        // TODO --> use item on player and update the state accordingly
-        // --> new player turn state
+    public void handlePotionUsed(
+        final CombatController context,
+        final Item selectedPotion, final Player player) {
+        selectedPotion.use(context.getModel());
     }
 
     @Override
