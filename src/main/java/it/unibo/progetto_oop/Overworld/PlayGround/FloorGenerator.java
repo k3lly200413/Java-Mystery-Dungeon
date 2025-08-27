@@ -29,6 +29,9 @@ public final class FloorGenerator {
             tunnelPlacement.connect(grid, rooms, rand);
         }
         objectPlacer.placeObject(grid, TileType.STAIRS, 1, rand);
+        objectPlacer.placeObject(grid, TileType.PLAYER, 1, rand);
+        objectPlacer.placeObject(grid, TileType.ENEMY, rooms.size()*2, rand);
+        objectPlacer.placeObject(grid, TileType.ITEM, rooms.size(), rand);
         return rooms; // Floor farà List.copyOf(...)
     }
 }
