@@ -1,6 +1,5 @@
 package it.unibo.progetto_oop.Overworld.MVC;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.Optional;
@@ -8,33 +7,31 @@ import java.util.Optional;
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
+import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.PickupSystem;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
 public class OverworldModel {
     private final Player player;
 
-    private List<Item> items = new ArrayList<>();
-    private Inventory inventory;
+    // utility systems
+    private final PickupSystem pickupSystem;
+    private final EnemySystem enemySystem;
 
-    private final Set<Position> walls;
-
-    private List<Enemy> enemies;
-    private List<Enemy> beatenEnemies = new ArrayList<>();
-    private Enemy encounteredEnemy;
+    private final Set<Position> walls; // TODO: integrare con Alice
 
     private Position tempPosition;
 
     private boolean combatTransitionPending = false;
     private boolean inCombat;
 
-    public OverworldModel(Player player, List<Enemy> enemies,  List<Item> items, Set<Position> walls, Inventory inventory) {
+    public OverworldModel(Player player, List<Enemy> enemies, List<Item> items, Set<Position> walls) { // TODO: integrare con Alice
         this.player = player;
-        this.items = items;
-        this.inventory = inventory;
         this.walls = walls;
-        this.enemies = enemies;
         this.inCombat = false;
+        this.pickupSystem = new PickupSystem(items, player);
+        this.enemySystem = new EnemySystem(enemies, player, this);
     }
 
     // --- getter methods ---
@@ -52,7 +49,7 @@ public class OverworldModel {
      * @return the list of items in the overworld
      */
     public List<Item> getItem(){
-        return this.items;
+        return this.pickupSystem.getItem();
     }
 
 
@@ -62,7 +59,7 @@ public class OverworldModel {
      */
 
     public Inventory getInventoryInstance(){
-        return this.inventory;
+        return this.pickupSystem.getInventoryInstance();
     }
 
     /**
@@ -78,14 +75,14 @@ public class OverworldModel {
      * @return list of enemies in the map
      */
     public List<Enemy> getEnemies(){
-        return this.enemies;
+        return this.enemySystem.getEnemies();
     }
 
     /**
      * @return the encountered enemy
      */
     public Enemy getEncounteredEnemy(){
-        return this.encounteredEnemy;
+        return this.enemySystem.getEncounteredEnemy();
     }
 
     /**
@@ -110,7 +107,7 @@ public class OverworldModel {
      * @param the encountered enemy
      */
     public void setEncounteredEnemy(Enemy encounteredEnemy){
-        this.encounteredEnemy = encounteredEnemy;
+        this.enemySystem.setEncounteredEnemy(encounteredEnemy);
     }
 
     /**
@@ -126,6 +123,7 @@ public class OverworldModel {
     public void setInCombatFlag(){
         this.inCombat = true;
     }
+
 
     /**
      * Clear the combat transition flag, indicating that the combat transition is no longer pending.
@@ -144,16 +142,6 @@ public class OverworldModel {
     // methods
 
     /**
-     * Check if the player has encountered an enemy at the current position
-     * 
-     * @return an Optional containing the enemy if found, otherwise an empty Optional
-     */
-    private Optional<Enemy> checkEnemyHit(){
-        return this.enemies.stream().filter(enemy -> enemy.getCurrentPosition()
-            .equals(this.tempPosition)).findFirst();
-    }
-
-    /**
      * Check if the player has hit a wall at the current position
      * @return true if the player has hit a wall, false otherwise
      */
@@ -161,58 +149,6 @@ public class OverworldModel {
         return this.walls.contains(this.tempPosition);
     }
 
-    /**
-     * Remove an enemy from the list of enemies and add it to the list of beaten enemies
-     * @param enemyToRemove
-     */
-    private void removeEnemy(Enemy enemyToRemove){
-        if (this.enemies.contains(enemyToRemove)){
-            this.enemies.remove(enemyToRemove);
-            this.beatenEnemies.add(enemyToRemove);
-        }
-    }
-
-    /**
-     * Remove an item from the overworld and add it to the player's inventory
-     * 
-     * @param item the item to remove
-     */
-    private void removeItem(Item itemToRemove){
-        this.inventory.addItem(itemToRemove);
-        this.items.remove(itemToRemove);
-    }
-
-    /**
-     * Trigger the enemy turns, allowing them to take actions
-     * This method should be called after the player has moved
-     */
-    private void triggerEnemyTurns(){
-        this.enemies.stream().forEach(enemy -> enemy.takeTurn(this, this.player));
-    }
-
-    /**
-     * Check if an item is found at the player's position
-     * @return an Optional containing the item if found, otherwise an empty Optional
-     */
-    private Optional<Item> ItemFoundAtPlayerPosition(){
-        return this.items.stream().filter(
-            item -> item.getPosition().equals(this.player.getPosition())
-            ).findFirst();
-    }
-
-    /**
-     * Check if an item is found at the player's position and add it to the inventory
-     * If an item is found, remove it from the overworld items list
-     */
-    private void checkAndAddItem(){
-        Optional<Item> itemOpt = this.ItemFoundAtPlayerPosition();
-
-        itemOpt.ifPresent(item -> {
-            System.out.println("Item found, picking it up "+item.getName());
-            this.removeItem(item);
-            this.inventory.printInventory();
-        });
-    }
 
     /**
      * Move the player checking if it encounters items, enemies or walls.
@@ -227,7 +163,7 @@ public class OverworldModel {
 
         // reset flag and encountered enemy
         this.clearCombatTransitionFlag();
-        this.encounteredEnemy = null;
+        this.setEncounteredEnemy(null);
 
         // Check Walls
         if (checkWallHit()) {
@@ -235,10 +171,10 @@ public class OverworldModel {
         }
     
         // Check Enemies
-        Optional<Enemy> enemyOpt = checkEnemyHit();
+        Optional<Enemy> enemyOpt = this.enemySystem.checkEnemyHit(tempPosition);
         if (enemyOpt.isPresent()) {
             this.setCombatTransitionFlag();
-            this.encounteredEnemy = enemyOpt.get();
+            this.setEncounteredEnemy(enemyOpt.get());
             System.out.println("Enemy encounter flagged at "+tempPosition);
             return; 
         }
@@ -247,10 +183,10 @@ public class OverworldModel {
         this.player.setPosition(tempPosition);
 
         // check items
-        this.checkAndAddItem(); 
+        this.pickupSystem.checkAndAddItem(); 
         
         // trigger enemy turn
-        this.triggerEnemyTurns();
+        this.enemySystem.triggerEnemyTurns();
     }
 
 

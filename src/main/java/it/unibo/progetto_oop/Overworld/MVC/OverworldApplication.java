@@ -83,7 +83,7 @@ public class OverworldApplication {
         List<Enemy> enemyList = new ArrayList<>();
 
         // create inventory
-        this.inventory = new Inventory(); // TODO
+        this.inventory = new Inventory();
         Potion healthPotion = (Potion) itemFactory.createItem("Health Potion", null);
         Potion antidote = (Potion) itemFactory.createItem("Antidote", null);
         Potion attackBuff = (Potion) itemFactory.createItem("Attack Buff", null);
@@ -92,7 +92,7 @@ public class OverworldApplication {
         this.inventory.addItem(attackBuff);
         
         // create model
-        this.model = new OverworldModel(player, enemyList, items, walls, inventory);
+        this.model = new OverworldModel(player, enemyList, items, walls);
 
         // Create enemies using the EnemyFactory
         EnemyFactory factory = new EnemyFactoryImpl();
