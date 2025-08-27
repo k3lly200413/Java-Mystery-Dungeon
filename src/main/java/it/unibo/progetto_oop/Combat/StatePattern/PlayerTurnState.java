@@ -45,6 +45,8 @@ public class PlayerTurnState implements CombatState{
         // be all done during the animation
 
         context.setState(new AnimatingState());
+        context.getModel().decreasePlayerStamina(10);
+        context.getView().updatePlayerStamina(context.getModel().getPlayerStamina());
         // TODO: call model to remove 20 (placeholder) points of stamina
         context.getView().showInfo("Player Has used Long Range Attack");
         System.out.println(

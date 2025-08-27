@@ -199,13 +199,14 @@ public class CombatController {
         // TODO: add getter in model to get stamina to
         // then check if it's lower than the
         // minimum then remove comment below
-        /*
-         * if (this.model.getPlayerStamina() < MINIMUM_STAMINA_FOR_SPECIALS){
-         * this.view.setCustomButtonDisabled(
-         * this.view.getLongRangeAttackButton())
-         * this.view.setCustomButtonDisabled(this.view.getPoisonAttackButton())
-         * }
-         */
+
+        if (this.model.getPlayerStamina() < MINIMUM_STAMINA_FOR_SPECIAL_ATTACK) {
+            this.view.setCustomButtonDisabled(
+                this.view.getLongRangeAttackButton());
+            this.view.setCustomButtonDisabled(
+                this.view.getPoisonAttackButton());
+        }
+
     }
 
     private void handleBagMenu() {
@@ -350,7 +351,7 @@ public class CombatController {
      * @param applyFlameIntent boolean to tell controller wether to apply flame
      *
      * @author kelly.applebee@studio.unibo.it
-     */
+     
     public void performPlayerLongRangeAttack(
         final boolean applyPoison, final boolean applyFlameIntent) {
         if (!this.model.isPlayerTurn() || this.isAnimationRunning()) {
@@ -382,7 +383,7 @@ public class CombatController {
             this.startDelayedEnemyTurn(POST_ATTACK_DELAY);
             this.redrawView();
         });
-    }
+    }*/
 
     private void longRangeAttackAnimation(final Position attacker, final int direction, final boolean isFlame,
             final boolean isPoison, final Runnable onHit) {
@@ -858,19 +859,30 @@ public class CombatController {
 
         if (isCharging) {
             // animating State
+            this.setState(new AnimatingState());
             this.animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
                 position[0]--;
                 this.redrawView(
                     this.model.getPlayerPosition(),
                     this.model.getEnemyPosition(),
                     this.model.getAttackPosition(),
-                    0, true, true, false, false, 1, 1, false,
+                    0, 
+                    true, 
+                    true, 
+                    false, 
+                    false, 
+                    1, 
+                    1, 
+                    false,
                     (model.isPlayerTurn()
                     ? model.getEnemyPosition()
                     : model.getPlayerPosition()),
-                    true, new ArrayList<Position>(),
-                    true, position[0], false, 0);
-            });
+                    false, 
+                    new ArrayList<Position>(),
+                    false,
+                    position[0],
+                    isCharging,
+                    position[0]);
             if (position[0] == 0) {
                 times[0]--;
                 if (times[0] == 0) {
@@ -883,26 +895,9 @@ public class CombatController {
                     position[0] = 4;
                 }
             }
-            this.animationTimer.start();
-        }
-
-        this.redrawView(
-            model.getPlayerPosition(),
-            model.getEnemyPosition(),
-            model.getAttackPosition(),
-            1, true, true, false,
-            false, 1, 2, true, model.getEnemyPosition(), false,
-            new ArrayList<Position>(), false, 0, false, 0);
+            
+        });
         this.animationTimer.start();
-        this.redrawView(
-            model.getPlayerPosition(),
-            model.getEnemyPosition(),
-            model.getAttackPosition(),
-            0, true, true, false,
-            false, 1, 2, true, model.getEnemyPosition(), false,
-            new ArrayList<Position>(), false, 0, false, 0);
-        if (onComplete != null) {
-            onComplete.run();
         }
     }
 

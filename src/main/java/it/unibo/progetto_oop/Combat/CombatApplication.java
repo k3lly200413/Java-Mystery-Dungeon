@@ -25,7 +25,7 @@ public class CombatApplication {
     public static void main(String[] args) {
         // --- Game Configuration ---
         int size = 12;
-        int playerPower = 7;
+        int playerPower = 99;
         int playerPoisonPower = 2;
         int enemyPower = 3;
         int enemySpeed = 3;
