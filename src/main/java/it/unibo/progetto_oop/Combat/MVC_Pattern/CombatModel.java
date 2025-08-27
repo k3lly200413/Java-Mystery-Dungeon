@@ -325,4 +325,16 @@ public class CombatModel implements PossibleUser{
     public int getMaxHP() {
         return this.getMaxHealth();
     }
+
+    public int applyAttackHealth(
+        boolean isPlayerAttacker, int damage) {
+    if (isPlayerAttacker) {
+        decreaseEnemyHealth(damage);
+        return getEnemyHealth();
+    } else {
+        decreasePlayerHealth(damage);
+        return getPlayerHealth();
+    }
+}
+
 }
