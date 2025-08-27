@@ -171,30 +171,58 @@ public class CombatModel implements PossibleUser{
         return this.playerPosition;
     }
 
+    /**
+     * Returns the enemy's position.
+     * @return the enemy's position
+     */
     public final Position getEnemyPosition() {
         return this.enemyPosition;
     }
 
+    /**
+     * Returns the current attack position.
+     * @return the attack position
+     */
     public final Position getAttackPosition() {
         return this.attackPosition;
     }
 
+    /**
+     * Returns the player's current health.
+     * @return the player's health
+     */
     public final int getPlayerHealth() {
         return this.playerHealth;
     }
 
+    /**
+     * Returns the enemy's current health.
+     * @return the enemy's health
+     */
     public final int getEnemyHealth() {
         return this.enemyHealth;
     }
 
+    /**
+     * Returns the maximum health value.
+     * @return the maximum health
+     */
     public final int getMaxHealth() {
         return this.maxHealth;
     }
 
+    /**
+     * Returns the player's current stamina.
+     * @return the player's stamina
+     */
     public final int getPlayerStamina() {
         return this.playerStamina;
     }
 
+    /**
+     * Returns the player's maximum stamina.
+     * @return the player's maximum stamina
+     */
     public final int getPlayerStaminaMax() {
         return this.playerStaminaMax;
     }
