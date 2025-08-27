@@ -19,8 +19,8 @@ import it.unibo.progetto_oop.Combat.Helper.Neighbours;
 
 
 /**
- * Controller class in Model View Controller Pattern
- * 
+ * Controller class in Model View Controller Pattern.
+ *
  * @author Kelly.applebee@studio.unibo.it
  */
 public class CombatController {
@@ -114,14 +114,14 @@ public class CombatController {
     }
 
     /**
-     * Makes the main combat window visible
+     * Makes the main combat window visible.
      */
     public void startCombat() {
         this.view.display();
     }
 
     /**
-     * Default method to redraw View
+     * Default method to redraw View.
      * 
      * 
      * @author kelly.applebee@studio.unibo.itc
@@ -176,7 +176,7 @@ public class CombatController {
     }
 
     /**
-     * Uses private methods to Assing Actionlisteners to buttons inside view
+     * Uses private methods to Assing Actionlisteners to buttons inside view.
      */
     private void attachListeners() {
         this.view.addAttackButtonListener(e -> handleAttackMenu());
@@ -191,17 +191,18 @@ public class CombatController {
         this.view.addAttackButtonListener(e -> handleAttackBuff());
         this.view.addAttackBuffButtonListener(e -> handleAttackBuff());
         this.view.addHealButtonListener(e -> handleHeal());
-
     }
 
     private void handleAttackMenu() {
         System.out.println("Attack Menu button clicked.");
         this.view.showAttackOptions(); // Show the attack sub-menu
-        // TODO: add getter in model to get stamina to then check if it's lower than the
+        // TODO: add getter in model to get stamina to
+        // then check if it's lower than the
         // minimum then remove comment below
         /*
          * if (this.model.getPlayerStamina() < MINIMUM_STAMINA_FOR_SPECIALS){
-         * this.view.setCustomButtonDisabled(this.view.getLongRangeAttackButton())
+         * this.view.setCustomButtonDisabled(
+         * this.view.getLongRangeAttackButton())
          * this.view.setCustomButtonDisabled(this.view.getPoisonAttackButton())
          * }
          */
@@ -229,7 +230,7 @@ public class CombatController {
     }
 
     private void handleInfo() {
-        CombatState newState = new PlayerTurnState();
+        CombatState newState = new InfoDisplayState();
         newState.enterState(this);
         newState.handleInfoInput(this);
     }
@@ -516,8 +517,8 @@ public class CombatController {
     }
 
     /**
-     * Method to cleanly stop a Timer which is running
-     * 
+     * Method to cleanly stop a Timer which is running.
+     *
      * @author kelly.applebee@studio.unibo.it
      */
     public void stopAnimationTimer() {
@@ -929,7 +930,7 @@ public class CombatController {
 
     /*
      * private void performAttack() {
-     * 
+     *
      * Timer playerTimer = new Timer(100, e -> {
      * model.movePlayer(1, 0);
      * if (model.areNeighbours(model.getEnemyPosition())) {
