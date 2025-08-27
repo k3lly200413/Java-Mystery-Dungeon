@@ -49,7 +49,6 @@ public class Neighbours {
      *         ° ° °
      *         ° ° ° Dead character
      *         ° ° °
-     *
      */
 
     public boolean deathNeighbours(
