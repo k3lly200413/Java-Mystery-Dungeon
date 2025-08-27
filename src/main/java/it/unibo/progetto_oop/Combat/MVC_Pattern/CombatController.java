@@ -103,7 +103,6 @@ public class CombatController {
         this.neighbours = new Neighbours();
 
         this.view.setHealthBarMax(model.getMaxHealth());
-        // TODO: make methods in model that divides playerMaxHleath and enemyMaxHealth
         this.view.updatePlayerHealth(model.getPlayerHealth());
         this.view.updateEnemyHealth(model.getEnemyHealth());
 

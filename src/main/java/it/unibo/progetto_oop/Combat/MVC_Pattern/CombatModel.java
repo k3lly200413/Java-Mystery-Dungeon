@@ -46,10 +46,10 @@ public class CombatModel implements PossibleUser{
 
 
 
-    public CombatModel(int size,int StaminaMax, int playerPower,
-            int playerPoisonPower, int playerLongRangePower, 
-            int enemyPower, int enemySpeed, String enemyName) {
-        
+    public CombatModel(final int size, final int StaminaMax, final int playerPower,
+            final int playerPoisonPower, final int playerLongRangePower,
+            final int enemyPower, final int enemySpeed, final String enemyName) {
+
         this.size = size;
         this.playerStaminaMax = StaminaMax;
         this.playerPower = playerPower;
@@ -85,251 +85,301 @@ public class CombatModel implements PossibleUser{
     }
 
     // for combat logic
-    public void increasePlayerHealth(int amount){
+    public final void increasePlayerHealth(final int amount) {
         this.playerHealth = Math.min(maxHealth, this.playerHealth + amount);
     }
 
-    public void increasePlayerPower(int power){
+    public final void increasePlayerPower(final int power) {
         this.playerPower += power;
     }
 
-    public void increaseEnemyPower(int power){
+    public final void increaseEnemyPower(final int power) {
         this.enemyPower += power;
     }
 
-    public void resetPlayerPower() {
+    public final void resetPlayerPower() {
         this.playerPower = this.basicPlayerPower; // Reset player power to basic value
     }
 
-    public void decreasePlayerHealth(int amount) {
-        this.playerHealth = Math.max(0, this.playerHealth - amount);  //only decrease health, do not allow negative values
+    public final void decreasePlayerHealth(final int amount) {
+        this.playerHealth = Math.max(0, this.playerHealth - amount); // only decrease health, do not allow negative
+                                                                     // values
     }
 
-    public void increasePlayerMaxStamina(int amount) {
+    public final void increasePlayerMaxStamina(final int amount) {
         this.playerStaminaMax += amount;
     }
 
-    public void decreasePlayerMaxStamina(int amount) {
+    public final void decreasePlayerMaxStamina(final int amount) {
         this.playerStaminaMax = Math.max(0, (this.playerStaminaMax - amount));
     }
-    public void decreasePlayerStamina(int amount) {
-        this.playerStamina = Math.max(0, this.playerStamina - amount);  //only decrease stamina, do not allow negative values
+
+    public final void decreasePlayerStamina(final int amount) {
+        this.playerStamina = Math.max(0, this.playerStamina - amount); // only decrease stamina, do not allow negative
+                                                                       // values
     }
 
-    public void increasePlayerStamina(int amount) {
-        this.playerStamina= Math.min(this.playerStaminaMax, (this.playerStamina + amount));
+    public final void increasePlayerStamina(final int amount) {
+        this.playerStamina = Math.min(this.playerStaminaMax, (this.playerStamina + amount));
     }
 
-    public void decreaseEnemyHealth(int amount) {
-        this.enemyHealth = Math.max(0, this.enemyHealth - amount);    //only decrease health, do not allow negative values
+    public final void decreaseEnemyHealth(final int amount) {
+        this.enemyHealth = Math.max(0, this.enemyHealth - amount); // only decrease health, do not allow negative values
     }
-    
-    public boolean isGameOver() {
-        if(this.playerHealth <= 0){
+
+    public final boolean isGameOver() {
+        if (this.playerHealth <= 0) {
             this.whoDied = this.getPlayerPosition();
             return true;
-        }else if(this.enemyHealth <= 0){
+        } else if (this.enemyHealth <= 0) {
             this.whoDied = this.getEnemyPosition();
             return true;
         }
         return false;
     }
 
-    public void clearBossAttackCount(){
+    public final void clearBossAttackCount() {
         this.bossAttackCounter = 0;
     }
 
-    public void increaseBossAttackCounter() {
+    public final void increaseBossAttackCounter() {
         this.bossAttackCounter++;
     }
-    public void increaseBossTurnCounter() {
+
+    public final void increaseBossTurnCounter() {
         this.bossTurnCounter++;
     }
-    
-    public void resetBossTurnCounter() {
+
+    public final void resetBossTurnCounter() {
         this.bossTurnCounter = 0;
     }
 
-    public void addDeathRayPosition(Position nextPosition) {
+    public final void addDeathRayPosition(final Position nextPosition) {
         this.deathRayPath.add(nextPosition);
     }
 
-    public void clearDeathRayPath() {
+    public final void clearDeathRayPath() {
         this.deathRayPath.clear();
     }
 
     // Getters
-    public int getSize() {
+    public final int getSize() {
         return this.size;
     }
 
-    public Position getPlayerPosition() {
+    public final Position getPlayerPosition() {
         return this.playerPosition;
     }
 
-    public Position getEnemyPosition() {
+    public final Position getEnemyPosition() {
         return this.enemyPosition;
     }
 
-    public Position getAttackPosition() {
+    public final Position getAttackPosition() {
         return this.attackPosition;
     }
 
-    public int getPlayerHealth() {
+    public final int getPlayerHealth() {
         return this.playerHealth;
     }
 
-    public int getEnemyHealth() {
+    public final int getEnemyHealth() {
         return this.enemyHealth;
     }
 
-    public int getMaxHealth() {
+    public final int getMaxHealth() {
         return this.maxHealth;
     }
 
-    public int getPlayerStamina() {
+    public final int getPlayerStamina() {
         return this.playerStamina;
     }
 
-    public int getPlayerStaminaMax() {
+    public final int getPlayerStaminaMax() {
         return this.playerStaminaMax;
     }
 
-    public int getPlayerPower() {
+    public final int getPlayerPower() {
         return this.playerPower;
     }
 
-    public int getPlayerPoisonPower() {
+    public final int getPlayerPoisonPower() {
         return this.playerPoisonPower;
     }
 
-    public int getEnemyPoisonPower() {
+    public final int getEnemyPoisonPower() {
         return this.enemyPoisonPower;
     }
 
-    public int getPlayerLongRangePower() {
+    public final int getPlayerLongRangePower() {
         return this.playerLongRangePower;
     }
 
-    public int getEnemyLongRangePower() {
+    public final int getEnemyLongRangePower() {
         return this.enemyLongRangePower;
     }
 
-    public int getEnemyPower() {
+    public final int getEnemyPower() {
         return this.enemyPower;
     }
 
-    public int getEnemySpeed() {
+    public final int getEnemySpeed() {
         return this.enemySpeed;
     }
 
-    public String getEnemyName() {
+    public final String getEnemyName() {
         return this.enemyName;
     }
 
-    public boolean isEnemyPoisoned() {
+    public final boolean isEnemyPoisoned() {
         return this.enemyPoisoned;
     }
 
-    public boolean isPlayerPoison() {
+    public final boolean isPlayerPoison() {
         return this.isPlayerPoison;
     }
 
-    public boolean isPlayerTurn() {
+    public final boolean isPlayerTurn() {
         return this.isPlayerTurn;
     }
 
-    public int getBasicPlayerPower() {
+    public final int getBasicPlayerPower() {
         return this.basicPlayerPower;
     }
 
-    public Position getWhoDied() {
+    public final Position getWhoDied() {
         return this.whoDied;
     }
 
-    public boolean isBossTurn() {
+    public final boolean isBossTurn() {
         return this.isBossTurn;
     }
 
-    public int getBossAttackCounter() {
+    public final int getBossAttackCounter() {
         return this.bossAttackCounter;
     }
 
-    public int getMaxBossHit() {
+    public final int getMaxBossHit() {
         return this.maxBossHit;
     }
 
-    public String getCurrentBossState() {
+    public final String getCurrentBossState() {
         return this.currentBossState;
     }
 
-    public ArrayList<Position> getDeathRayPath() {
+    public final ArrayList<Position> getDeathRayPath() {
         return this.deathRayPath;
     }
 
-    public int getBossTurnCounter() {
+    public final int getBossTurnCounter() {
         return this.bossTurnCounter;
     }
 
-    public boolean isPoisonAnimation() {
+    public final boolean isPoisonAnimation() {
         return this.poisonAnimation;
     }
-    
+
     // setters
-    public void setPlayerPosition(Position playerPosition) {
+    public final void setPlayerPosition(final Position playerPosition) {
         this.playerPosition = Objects.requireNonNull(playerPosition);
     }
 
-    public void setEnemyPosition(Position enemyPosition) {
+    public final void setEnemyPosition(final Position enemyPosition) {
         this.enemyPosition = Objects.requireNonNull(enemyPosition);
     }
 
-    public void setAttackPosition(Position attackPosition) {
+    public final void setAttackPosition(final Position attackPosition) {
         this.attackPosition = Objects.requireNonNull(attackPosition);
     }
 
-    public void setEnemyPoisoned(boolean enemyPoisoned) {
-        // TODO: sistemare questo controllare che quando è true non può essere false
-        this.enemyPoisoned = enemyPoisoned;
+    /**
+     * Sets the enemy's poisoned state to true
+     * if it was not already poisoned and the new value is true.
+     * @param newEnemyPoisoned true if the enemy should be poisoned,
+     * false otherwise
+     */
+    public final void setEnemyPoisoned(final boolean newEnemyPoisoned) {
+        if (!this.enemyPoisoned && newEnemyPoisoned) {
+            this.enemyPoisoned = true;
+        }
     }
 
-    public void setPlayerTurn(boolean isPlayerTurn) {
+    /**
+     * Sets whether it is the player's turn.
+     * @param playerTurn true if it is the player's turn, false otherwise
+     */
+    public final void setPlayerTurn(final boolean playerTurn) {
         System.out.println("Changed player turn");
-        this.isPlayerTurn = isPlayerTurn;
+        this.isPlayerTurn = playerTurn;
     }
 
-    public void setPlayerPoisoned(boolean isPoisoned) {
+    /**
+     * Sets whether the player is poisoned.
+     * @param isPoisoned true if the player is poisoned, false otherwise
+     */
+    @Override
+    public final void setPlayerPoisoned(final boolean isPoisoned) {
         this.isPlayerPoison = isPoisoned;
     }
 
-    public void setPoisonAnimation(boolean newState){
+    /**
+     * Sets the state of the poison animation.
+     * @param newState true if the poison animation should be active,
+     * false otherwise
+     */
+    public final void setPoisonAnimation(final boolean newState) {
         this.poisonAnimation = newState;
     }
 
-    public void setBossTurn(boolean bossTurn){
+    /**
+     * Sets whether it is the boss's turn.
+     * @param bossTurn true if it is the boss's turn, false otherwise
+     */
+    public final void setBossTurn(final boolean bossTurn) {
         this.isBossTurn = bossTurn;
     }
 
-    public void setBossAttackCounter(int bossAttackCounter) {
-        this.bossAttackCounter = bossAttackCounter;
+
+    /**
+     * Sets the boss attack counter to the specified value.
+     * This method is final to prevent unsafe overrides in subclasses.
+     * @param newBossAttackCounter the new value for the boss attack counter
+     */
+    public final void setBossAttackCounter(final int newBossAttackCounter) {
+        this.bossAttackCounter = newBossAttackCounter;
     }
 
-    public void setCurrentBossState(String currentBossState) {
-        this.currentBossState = currentBossState;
+    /**
+     * Sets the current state of the boss.
+     * @param newCurrentBossState the new state of the boss
+     */
+    public void setCurrentBossState(final String newCurrentBossState) {
+        this.currentBossState = newCurrentBossState;
     }
 
     @Override
-    public int getHp() {
+    public final int getHp() {
         return this.getPlayerHealth();
     }
-
+    /**
+     * Return the Max HP of the entity.
+     * @return max HP
+     */
     @Override
     public int getMaxHP() {
         return this.getMaxHealth();
     }
 
-    public int applyAttackHealth(
-        boolean isPlayerAttacker, int damage) {
+    /**
+     * Applies attack damage to either the player or the enemy,
+     * depending on the attacker.
+     * @param isPlayerAttacker true if the player is attacking,
+     * false if the enemy is attacking
+     * @param damage the amount of damage to apply
+     * @return the remaining health of the attacked entity
+     */
+    public final int applyAttackHealth(
+            final boolean isPlayerAttacker, final int damage) {
     if (isPlayerAttacker) {
         decreaseEnemyHealth(damage);
         return getEnemyHealth();
