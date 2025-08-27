@@ -18,9 +18,9 @@ import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
 import it.unibo.progetto_oop.Combat.Helper.Neighbours;
 
 
-/**
+/**.
  * Controller class in Model View Controller Pattern
- * 
+ *
  * @author Kelly.applebee@studio.unibo.it
  */
 public class CombatController {
@@ -113,17 +113,17 @@ public class CombatController {
         this.currentState = new PlayerTurnState();
     }
 
-    /**
+    /**.
      * Makes the main combat window visible
      */
     public void startCombat() {
         this.view.display();
     }
 
-    /**
+    /**.
      * Default method to redraw View
-     * 
-     * 
+     *
+     *
      * @author kelly.applebee@studio.unibo.itc
      */
     public void redrawView() {
@@ -403,25 +403,33 @@ public class CombatController {
             false, 0, false, 0
         );
 
-        System.out.println("Attacker Position => " + attacker.equals(model.getEnemyPosition()));
+        System.out.println("Attacker Position => "
+        + attacker.equals(model.getEnemyPosition()));
 
         animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
             // Check if flame reached or passed the enemy
-            if (model.getAttackPosition().x() > model.getEnemyPosition().x() - 1 ||
-                    model.getAttackPosition().x() < model.getPlayerPosition().x() + 1) {
-                // if (model.getFlamePosition().x() >= enemy.x() -direction) { // -1 to hit when
+            if (model.getAttackPosition().x() > model.getEnemyPosition().x() - 1
+                ||
+                model.getAttackPosition().x() < model.
+                getPlayerPosition().x() + 1) {
+                // if (model.getFlamePosition().x() >= enemy.x() -direction) {
+                // -1 to hit when
                 // adjacent
                 System.out.println("\nFinished Long Range Attack Animation\n");
                 stopAnimationTimer();
                 // Reset flame position visually (optional, could just hide it)
                 model.setAttackPosition(attacker); // Move flame back instantly
                 redrawView();
-                if (!this.model.isPlayerTurn()) {
-                    this.model.decreaseEnemyHealth(this.model.getPlayerLongRangePower());
+
+                int remaining = model.applyAttackHealth(
+                    this.model.isPlayerTurn(),
+                    this.model.getPlayerLongRangePower()
+                    );
+
+                if (this.model.isPlayerTurn()) {
+                    view.updateEnemyHealth(remaining);
                 } else {
-                    this.model.decreasePlayerHealth(this.model.getEnemyLongRangePower());
-                    // TODO: refactor this to where it shuold be
-                    this.view.updatePlayerHealth(this.model.getPlayerHealth());
+                    view.updatePlayerHealth(remaining);
                 }
 
                 if (onHit != null) {
@@ -492,8 +500,9 @@ public class CombatController {
                 // we want to reset the position of the ray
                 deathRayLastPosition.clear();
                 this.redrawView();
-                // TODO: Change to longrange enemy power
-                this.model.decreasePlayerHealth(this.model.getEnemyPower());
+
+                this.model.decreasePlayerHealth(
+                    this.model.getEnemyLongRangePower());
                 if (onHit != null) {
                     System.out.println("\nI now have to apply poison status\n");
                     onHit.run(); // Execute the action upon hitting
@@ -751,16 +760,17 @@ public class CombatController {
                 step[0]--;
                 this.stopAnimationTimer();
                 this.redrawView();
+
+                int remaing = model.applyAttackHealth(
+                    this.model.isPlayerTurn(),
+                    this.model.getPlayerPoisonPower()
+                    );
+
                 if (this.model.isPlayerTurn()) {
-                    model.decreaseEnemyHealth(model.getPlayerPoisonPower());
-                    view.updateEnemyHealth(model.getEnemyHealth());
+                    view.updateEnemyHealth(remaing);
                     this.setState(new EnemyTurnState());
-                }
-                else {
-                    System.out.println("Enemy Poison Power => " + model.getEnemyPoisonPower());
-                    model.decreasePlayerHealth(model.getEnemyPoisonPower());
-                    System.out.println("Enemy Health => " + model.getEnemyHealth());
-                    view.updatePlayerHealth(model.getPlayerHealth());
+                } else {
+                    view.updatePlayerHealth(remaing);
                     this.setState(new PlayerTurnState());
                 }
             } else {
