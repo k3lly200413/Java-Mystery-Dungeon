@@ -747,7 +747,6 @@ public class CombatController {
     public void animatePoisonDamage() {
         this.stopAnimationTimer();
         final int[] step = {4};
-        // TODO: Maybe add variable in model to show that we're in the poison animation
         this.animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, e -> {
             if (step[0] == 1) {
                 step[0]--;
@@ -864,18 +863,18 @@ public class CombatController {
                     this.model.getPlayerPosition(),
                     this.model.getEnemyPosition(),
                     this.model.getAttackPosition(),
-                    0, 
-                    true, 
-                    true, 
-                    false, 
-                    false, 
-                    1, 
-                    1, 
+                    0,
+                    true,
+                    true,
+                    false,
+                    false,
+                    1,
+                    1,
                     false,
                     (model.isPlayerTurn()
                     ? model.getEnemyPosition()
                     : model.getPlayerPosition()),
-                    false, 
+                    false,
                     new ArrayList<Position>(),
                     false,
                     position[0],
@@ -893,7 +892,6 @@ public class CombatController {
                     position[0] = 4;
                 }
             }
-            
         });
         this.animationTimer.start();
         }
@@ -947,20 +945,27 @@ public class CombatController {
     }
 
     public final void setState(final CombatState state) {
-        CombatState oldState = this.currentState; // Temporarily store the old state
-    
+        // Temporarily store the old state
+        CombatState oldState = this.currentState;
+
         if (oldState != null) {
-            System.out.println("setState: Calling exitState() on " + oldState.getClass().getSimpleName()); // Add debug
-            oldState.exitState(this); 
+            System.out.println(
+                "setState: Calling exitState() on "
+                + oldState.getClass().getSimpleName()); // Add debug
+            oldState.exitState(this);
         }
-            
+
         // Now update to the new state
-        System.out.println("setState: Changing currentState to " + state.getClass().getSimpleName()); // Add debug
+        System.out.println(
+            "setState: Changing currentState to "
+            + state.getClass().getSimpleName()); // Add debug
         this.currentState = state;
-    
+
         // And call enterState on the new one
         if (this.currentState != null) {
-            System.out.println("setState: Calling enterState() on " + this.currentState.getClass().getSimpleName()); // Add debug
+            System.out.println(
+                "setState: Calling enterState() on "
+                + this.currentState.getClass().getSimpleName()); // Add debug
             this.currentState.enterState(this);
         }
     }
