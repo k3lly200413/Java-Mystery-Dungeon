@@ -4,6 +4,10 @@ import java.util.Objects;
 
 import javax.swing.SwingUtilities;
 
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
+import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
+import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
+
 public final class MapController {
     private final SwingMapView view;
     private final Dungeon dungeon;

@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.PlayGround;
+package it.unibo.progetto_oop.Overworld.PlayGround.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,6 +10,9 @@ import java.util.Objects;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 
 public final class SwingMapView extends JFrame implements MapView {
     private final MapPanel panel;
