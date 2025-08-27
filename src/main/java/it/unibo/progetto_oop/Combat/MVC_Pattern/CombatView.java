@@ -228,7 +228,6 @@ public class CombatView extends JFrame {
         this.playerHealtBar.setStringPainted(true);
         this.playerHealtBar.setForeground(Color.GREEN);
 
-        // TODO: get values from model
         this.playerStaminaBar =
             new JProgressBar(
                 0, this.maxPlayerHealth); // Set max from model later
@@ -551,14 +550,24 @@ public class CombatView extends JFrame {
     public final JButton getPoisonAttackButton() {
         return this.poisonButton;
     }
+    /**
+     * Returns the cure poison button for the combat view.
+     * @return the cure poison button
+     */
     public final JButton getCurePoisonButton() {
         return this.curePoisonButton;
     }
-
+    /**
+     * Returns the back button for the combat view.
+     * @return the back button
+     */
     public final JButton getAttackBackButton() {
         return this.backAttackButton;
     }
-
+    /**
+     * Returns the bag button panel for the combat view.
+     * @return the bag button panel
+     */
     public final JPanel getBagButtonPanel() {
         return this.bagButtonPanel;
     }
