@@ -13,25 +13,33 @@ import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RoomPlacemen
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.TunnelPlacementStrategy;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
 
-public class Main {
-    public static void main(String[] args) {
+public final class Main {
+    /**
+     * Private constructor to prevent instantiation of this utility class.
+     */
+    private Main() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+    /**
+     * The main method to run the application.
+     *
+     * @param args command-line arguments (not used)
+     */
+    public static void main(final String[] args) {
+        // MODEL
         final Random rand = new Random();
         final RandomPlacementStrategy rps = new ImplRandomPlacement();
         final RoomPlacementStrategy rrs = new ImplRoomPlacement();
         final TunnelPlacementStrategy tps = new ImplTunnelPlacement();
-
         FloorGenerator gen = new FloorGenerator(rrs, tps, rps, rand);
-
         FloorConfig config = new FloorConfig.Builder().build();
-
         Dungeon dungeon = new Dungeon(gen, config);
-
-        // VIEW Swing
-        SwingMapView view = new SwingMapView("Java Mystery Dungeon", 14);
-
+        // VIEW
+        SwingMapView view = new SwingMapView(
+            "Java Mystery Dungeon", config.tileSize()
+        );
         // CONTROLLER
         MapController controller = new MapController(view, dungeon);
-
         javax.swing.SwingUtilities.invokeLater(controller::show);
     }
 }
