@@ -130,14 +130,14 @@ public class OverworldModel {
     /**
      * Clear the combat transition flag, indicating that the combat transition is no longer pending.
      */
-    private void clearCombatTransitionFlag(){
+    public void clearCombatTransitionFlag(){
         this.combatTransitionPending = false;
     }
     
     /**
      * Set the combat transition flag to true, indicating that a combat transition is pending.
     */
-    private void setCombatTransitionFlag(){
+    public void setCombatTransitionFlag(){
         this.combatTransitionPending = false;
     }
 

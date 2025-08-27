@@ -4,6 +4,7 @@ import java.util.Set;
 
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.MVC.OverworldApplication;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.*;
@@ -16,19 +17,19 @@ public class FollowerState implements GenericEnemyState{
     private final VisibilityUtil visibilityUtil; 
     private final MovementUtil movementUtil;
     private final MovementStrategy movementStrategy;
-    private final Set<Position> walls;
     private final boolean isVertical;
+    private final OverworldApplication game;
     
     // costants
     private final static int NEIGHBOUR_DISTANCE = 4; // Example value, adjust as needed
     private final static int COMBAT_DISTANCE = 1; // Example value, adjust as needed
 
-    public FollowerState(Set<Position> walls, VisibilityUtil visibilityUtil, MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical){
-        this.walls = walls;
+    public FollowerState(VisibilityUtil visibilityUtil, MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical, OverworldApplication game){
         this.visibilityUtil = visibilityUtil;
         this.movementUtil = movementUtil;
         this.isVertical = isVertical;
         this.movementStrategy = movementStrategy;
+        this.game = game;
     }
 
     /** 
@@ -37,7 +38,7 @@ public class FollowerState implements GenericEnemyState{
     @Override
     public void enterState(Enemy context, OverworldModel model) {
         System.out.println("Entering PatrolState");
-        currentDirection = movementUtil.getInitialGeneralMoveDirection(context.getCurrentPosition(), this.walls, this.isVertical);
+        currentDirection = movementUtil.getInitialGeneralMoveDirection(context.getCurrentPosition(), model.getWalls(), this.isVertical);
         if (this.currentDirection == MoveDirection.NONE){
             this.currentDirection = this.isVertical ? MoveDirection.DOWN : MoveDirection.UP;
         }
@@ -66,7 +67,7 @@ public class FollowerState implements GenericEnemyState{
                 enemy.setPosition(nextPos); // not close enough -> move closer towards the player
             }
         } else{ // else, continue patrolling
-            this.currentDirection = this.movementStrategy.executeMove(enemy, model, this.currentDirection);
+            this.currentDirection = this.movementStrategy.executeMove(enemy, model, this.game, this.currentDirection);
         }
     }
 
