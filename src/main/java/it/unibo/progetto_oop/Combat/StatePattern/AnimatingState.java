@@ -1,7 +1,5 @@
 package it.unibo.progetto_oop.Combat.StatePattern;
 
-import javax.swing.Timer;
-
 import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
@@ -95,8 +93,10 @@ public class AnimatingState implements CombatState {
                 System.out.println("Applying poison damage to enemy.");
                 view.showInfo("Enemy takes poison damage!");
                 context.performPoisonEffectAnymation();
-                model.decreaseEnemyHealth(model.getPlayerPoisonPower()); // Apply damage
-                view.updateEnemyHealth(model.getEnemyHealth());          // Update bar
+                model.decreaseEnemyHealth(
+                    model.getPlayerPoisonPower()); // Apply damage
+                view.updateEnemyHealth(
+                    model.getEnemyHealth());          // Update bar
             }
             System.out.println(model.isEnemyPoisoned());
             System.out.println(model.getEnemyHealth() > 0);
@@ -117,11 +117,9 @@ public class AnimatingState implements CombatState {
         }
 
         if (wasPlayerTurn) {
-            // TODO: Check if enemyTurnState sets model flags
             context.getModel().setPlayerTurn(false);
             context.setState(new EnemyTurnState());
         } else {
-            // TODO: Check if playerturnstate sets model flags
             context.getModel().setPlayerTurn(true);
             context.setState(new PlayerTurnState());
         }
