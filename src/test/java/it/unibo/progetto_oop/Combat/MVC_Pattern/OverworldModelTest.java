@@ -25,6 +25,7 @@ public class OverworldModelTest {
     private static final int ENEMY_HP = 100; // Example enemy max HP
     private static final int ENEMY_POWER = 20; // Example enemy power
 
+    private OverworldApplication game;
     private OverworldModel model;
     private Inventory inventory;
 
@@ -77,8 +78,8 @@ public class OverworldModelTest {
         // create model
         this.model = new OverworldModel(player, enemyList, items, walls, inventory);
 
-        Enemy hider = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, enemies.get(0), true, this.model);
-        Enemy patroller = factory.createPatrollerEnemy(ENEMY_HP,ENEMY_POWER, enemies.get(0), true, this.model); 
+        Enemy hider = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, enemies.get(0), true, this.model, this.game);
+        Enemy patroller = factory.createPatrollerEnemy(ENEMY_HP,ENEMY_POWER, enemies.get(0), true, this.model, this.game); 
         enemyList.add(hider);
         enemyList.add(patroller);
         

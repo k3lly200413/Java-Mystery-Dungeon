@@ -97,8 +97,8 @@ public class OverworldApplication {
         // Create enemies using the EnemyFactory
         EnemyFactory factory = new EnemyFactoryImpl();
 
-        Enemy hider = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, enemies.get(0), true, this.model);
-        Enemy patroller = factory.createPatrollerEnemy(ENEMY_HP,ENEMY_POWER, enemies.get(0), true, this.model); 
+        Enemy hider = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, enemies.get(0), true, this.model, this);
+        Enemy patroller = factory.createPatrollerEnemy(ENEMY_HP,ENEMY_POWER, enemies.get(0), true, this.model, this); 
         enemyList.add(hider);
         enemyList.add(patroller);
         
