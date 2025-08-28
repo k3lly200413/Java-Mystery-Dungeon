@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import it.unibo.progetto_oop.Overworld.PlayGround.FloorObserver;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.ImplArrayListStructureData;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Pair;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 
@@ -30,6 +30,19 @@ public final class Floor {
         return rooms;
     }
 
+    public List<Pair> getObjectsPositions(TileType tile) {
+        final List<Pair> positions = new ArrayList<>();
+        for (int x = 0; x < grid.width(); x++) {
+            for (int y = 0; y < grid.height(); y++) {
+                if (grid.get(x, y) == tile) {
+                    positions.add(new Pair(x, y));
+                }
+            }
+        }
+        return positions;
+    }
+     // Observer pattern
+
     public void addObserver(FloorObserver o) {
         observers.add(Objects.requireNonNull(o));
     }
@@ -43,7 +56,7 @@ public final class Floor {
             o.floorChanged(grid);
     }
 
-     // API di modifica che notificano automaticamente (usale per future mosse/oggetti)
+     // API di modifica che notificano automaticamente
     public void setTile(int x,int y, TileType t){
         if (grid.inBounds(x,y)) {
             grid.set(x,y,t);

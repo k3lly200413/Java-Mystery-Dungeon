@@ -118,8 +118,8 @@ public final class SwingMapView extends JFrame implements MapView {
 
         private Color colorFor(final TileType t) { // switch expression
             return switch (t) {
-                case WALL   -> new Color.DARK_GRAY;
-                case ROOM   -> new Color.LIGHT_GRAY;
+                case WALL   ->  Color.BLACK;
+                case ROOM   ->  Color.LIGHT_GRAY;
                 case TUNNEL -> new Color(255, 215, 0); 
                 case STAIRS -> new Color(0, 170, 255);
                 case PLAYER -> new Color(80, 200, 120);
