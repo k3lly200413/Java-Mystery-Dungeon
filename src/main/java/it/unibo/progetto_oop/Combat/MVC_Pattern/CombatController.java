@@ -740,7 +740,7 @@ public class CombatController {
     }
 
     /**
-     * 
+     *
      * @param size grandezza necessaria
      * @param onZoomComplete Runnable per fine animazione
      */
