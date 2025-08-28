@@ -367,7 +367,7 @@ public class CombatController {
             this, applyPoison, applyFlameIntent);
     }
 
-    /*
+    /* NOT USED, DELETE?
     public void performPlayerLongRangeAttack(
         final boolean applyPoison, final boolean applyFlameIntent) {
         if (!this.model.isPlayerTurn() || this.isAnimationRunning()) {

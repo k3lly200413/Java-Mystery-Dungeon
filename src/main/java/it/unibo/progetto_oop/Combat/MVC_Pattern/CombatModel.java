@@ -5,47 +5,124 @@ import java.util.Objects;
 import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 
-public class CombatModel implements PossibleUser{
+public class CombatModel implements PossibleUser {
 
-    private int size;
+    /** The size of the game board or arena. */
+    private final int size;
+
+    /** The current position of the player. */
     private Position playerPosition;
+
+    /** The current position of the enemy. */
+
     private Position enemyPosition;
+
+    /** The current position of the active attack. */
     private Position attackPosition;
 
+    /** The current health points of the player. */
     private int playerHealth;
+
+    /** The current health points of the enemy. */
     private int enemyHealth;
+
+    /** The maximum health points allowed for both player and enemy. */
     private final int maxHealth = 100;
 
+
+    /** The current stamina points of the player. */
     private int playerStamina;
+
+    /** The maximum stamina points of the player. */
     private int playerStaminaMax;
 
+    /** The current attack power of the player. */
     private int playerPower;
-    private final int playerPoisonPower;
-    private int enemyPoisonPower;
-    private int playerLongRangePower;
-    private int enemyLongRangePower;
-    private int enemyPower;
-    private final int enemySpeed; // If needed for future logic
-    private final String enemyName; // If needed
 
+    /** The poison attack power of the player. */
+    private final int playerPoisonPower;
+
+    /** The poison attack power of the enemy. */
+    private final int enemyPoisonPower;
+
+    /** The long-range attack power of the player. */
+    private final int playerLongRangePower;
+
+    /** The long-range attack power of the enemy. */
+    private final int enemyLongRangePower;
+
+    /** The current attack power of the enemy. */
+    private int enemyPower;
+
+    /** The speed of the enemy (reserved for future logic). */
+    private final int enemySpeed;
+
+    /** The name of the enemy (reserved for future use). */
+    private final String enemyName;
+
+    /** Whether the enemy is poisoned. */
     private boolean enemyPoisoned;
+
+    /** Whether the player is poisoned. */
     private boolean isPlayerPoison;
-    private boolean isPlayerTurn = true; // Added to manage turns
+
+    /** Indicates if it is currently the player's turn. */
+    private boolean isPlayerTurn = true;
+
+    /** The base power value of the player. */
     private final int basicPlayerPower;
+
+    /** The position of the last character who died. */
     private Position whoDied;
 
+    /** Indicates if it is currently the boss's turn. */
     private boolean isBossTurn;
+
+    /** Counter tracking the number of boss attacks. */
     private int bossAttackCounter = 0;
+
+    /** The maximum number of hits the boss can perform in one sequence. */
     private final int maxBossHit = 3;
 
+    /** Offset applied to the player's initial X coordinate. */
+    private static final int PLAYER_X_OFFSET = 2;
+
+    /** Divisor used to calculate the initial X
+     *  positions of player and enemy. */
+    private static final int DIVISOR = 3;
+
+    /** Offset applied to the enemy's initial X coordinate. */
+    private static final int ENEMY_OFFSET = 1;
+
+    /** Divisor used to calculate the initial Y
+     *  position (half of the board size). */
+    private static final int HALF_DIVISOR = 2;
+
+
+    /** The current state of the boss (e.g., NORMAL, ENRAGED). */
     private String currentBossState = "NORMAL";
+
+    /** The path of the boss's death ray attack. */
     private ArrayList<Position> deathRayPath = new ArrayList<>();
+
+    /** Counter tracking the number of turns taken by the boss. */
     private int bossTurnCounter = 0;
 
+    /** Whether the poison animation is active. */
     private boolean poisonAnimation;
 
-
-
+    /**
+     * Constructs a CombatModel with specified parameters.
+     *
+     * @param size the size of the combat area
+     * @param StaminaMax the maximum stamina of the player
+     * @param playerPower the attack power of the player
+     * @param playerPoisonPower the poison attack power of the player
+     * @param playerLongRangePower the long-range attack power of the player
+     * @param enemyPower the attack power of the enemy
+     * @param enemySpeed the speed of the enemy (reserved for future logic)
+     * @param enemyName the name of the enemy (reserved for future use)
+     */
     public CombatModel(final int size, final int StaminaMax, final int playerPower,
             final int playerPoisonPower, final int playerLongRangePower,
             final int enemyPower, final int enemySpeed, final String enemyName) {
@@ -83,10 +160,13 @@ public class CombatModel implements PossibleUser{
  * Same logic as the original Player() constructor.
  */
 public final void resetPositions() {
-    this.playerPosition = new Position((this.size / 3) - 2, (this.size / 2));
+    this.playerPosition = new Position((this.size / DIVISOR) - PLAYER_X_OFFSET,
+            (this.size / HALF_DIVISOR));
     this.enemyPosition = new Position(
-        this.size - ((this.size / 3) - 1), (this.size / 2));
+            this.size - ((this.size / DIVISOR) - ENEMY_OFFSET),
+            (this.size / HALF_DIVISOR));
 }
+
 
 /**
  * Increases the player's health by the specified amount,
