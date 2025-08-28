@@ -1,6 +1,5 @@
 package it.unibo.progetto_oop.Combat.PotionStrategy;
 
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 
 public interface PotionStrategy {
