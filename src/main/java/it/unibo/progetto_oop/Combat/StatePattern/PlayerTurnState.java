@@ -57,7 +57,7 @@ public class PlayerTurnState implements CombatState {
 
     @Override
     public final void handleInfoInput(final CombatController context) {
-        context.performInfo();
+        context.performInfoAnimation();
     }
 
     @Override
