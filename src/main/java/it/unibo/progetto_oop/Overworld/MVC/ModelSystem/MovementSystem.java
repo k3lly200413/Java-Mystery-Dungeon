@@ -62,6 +62,7 @@ public class MovementSystem {
         return this.walls.contains(this.tempPosition);
     }
 
+    // i could implement an observer pattern to notify pickupSystem and enemySystem
 
     /**
      * Move the player checking if it encounters items, enemies or walls.
