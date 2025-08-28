@@ -744,7 +744,7 @@ public class CombatController {
         // throw new UnsupportedOperationException("Unimplemented method 'makeBigger'");
     }
 
-    public void animatePoisonDamage() {
+    public final void animatePoisonDamage() {
         this.stopAnimationTimer();
         final int[] step = {4};
         this.animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, e -> {
@@ -1020,29 +1020,54 @@ public class CombatController {
 
     public final void performPoisonEffectAnymation() {
         stopAnimationTimer();
-        final int[] conto = {4};                                            // array perché così posso dichiararlo final usarlo nel Timer se no sarebbe stato più scomodo
+        final int[] conto = {4};
+        // array perché così posso dichiararlo
+        // final usarlo nel Timer se no sarebbe stato più scomodo
         model.setPoisonAnimation(true);
-        animationTimer = new Timer(500, e -> {                      // Timer con delay di 300 ms perché così potevo vedere da tablet che laggava ahahahahaha
-            if (conto[0] == 1) {                                        // fine del timer resetto tutto
-                conto[0]--;
+        animationTimer = new Timer(300, e -> {  // Timer con delay di 300 ms
+            // perché così potevo vedere da tablet che laggava ahahahahaha
+            if (conto[0] == 1) { // fine del timer resetto tutto
+                conto[0] = 0;
                 stopAnimationTimer();
                 redrawView();
-                /*
-                    * TODO
-                    * CHANGE TO USE FUNCTION BELOW
-                    */
                 model.setPoisonAnimation(false);
-                this.currentState.handleAnimationComplete(this);    // chiamo la funzione che tratta la fine delle animazioni 
-            }
-            else{
+                this.currentState.handleAnimationComplete(this);
+                // chiamo la funzione che tratta la fine delle animazioni
+
+                /* 'TODO': utilizzare applyAttackHealth
+                if (this.model.isPlayerTurn()) {
+                    model.decreaseEnemyHealth(model.getPlayerPoisonPower());
+                    view.updateEnemyHealth(model.getEnemyHealth());
+                }
+                else {
+                    System.out.println(
+                    "Enemy Poison Power => " + model.getEnemyPoisonPower());
+                    this.model.decreasePlayerHealth(
+                    model.getEnemyPoisonPower());
+                    System.out.println(
+                    "Enemy Health => " + model.getEnemyHealth());
+                    view.updatePlayerHealth(model.getPlayerHealth());
+                }
+                this.currentState.stateChange(this);
+                */
+
+            } else {
                 System.out.println("Conto => " + conto[0]);
                 // ridisegno tutto con il veleno che sale
-                this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(), this.model.getAttackPosition(), 0, true, true, false, false, 1, 1, this.model.isGameOver(), this.model.getWhoDied(), false, new ArrayList<>(), true, conto[0], false, 0); 
+                this.redrawView(this.model.getPlayerPosition(),
+                    this.model.getEnemyPosition(),
+                    this.model.getAttackPosition(), 0, true, true,
+                    false, false, 1, 1,
+                    this.model.isGameOver(), this.model.getWhoDied(),
+                    false, new ArrayList<>(), true,
+                    conto[0], false, 0);
                 // faccio salire il veleno
                 conto[0]--;
             }
         });
-        animationTimer.start();                                     // faccio partire il timer (finisce tutte le prossime chiamate poi fa partire il timer non è coe un for (lo so è strano))
+        animationTimer.start(); // faccio partire il timer
+        //(finisce tutte le prossime chiamate poi fa partire
+        //il timer non è coe un for (lo so è strano))
 
     }
 
