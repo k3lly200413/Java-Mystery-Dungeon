@@ -136,7 +136,7 @@ public class OverworldModel {
      * Set the combat transition flag to true, indicating that a combat transition is pending.
     */
     public void setCombatTransitionFlag(){
-        this.setCombatTransitionFlag();
+        this.movementSystem.setCombatTransitionFlag();
     }
 
     // methods
