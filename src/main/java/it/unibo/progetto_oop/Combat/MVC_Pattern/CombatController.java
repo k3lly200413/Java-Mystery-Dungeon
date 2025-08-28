@@ -811,10 +811,10 @@ public class CombatController {
 
     private void infoNextDrawAnimation(final Position originalEnemyPosition) {
         stopAnimationTimer();
-        final int SIZE = 6;
+        final int defaultZoom = 6;
         animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, e -> {
             zoomerStep++;
-            if (zoomerStep >= SIZE) {
+            if (zoomerStep >= defaultZoom) {
                 stopAnimationTimer();
                 model.setEnemyPosition(
                     originalEnemyPosition); // Reset enemy position
@@ -879,8 +879,11 @@ public class CombatController {
         // this.animationTimer.setRepeats(false);
         // this.animationTimer.start();
 
-        int[] position = {4};
-        int[] times = {3};
+        final int defaultPosition = 4;
+        final int defaultTimes = 3;
+
+        int[] position = {defaultPosition};
+        int[] times = {defaultTimes};
 
         if (isCharging) {
             // animating State
@@ -917,7 +920,7 @@ public class CombatController {
                         onComplete.run();
                     }
                 } else {
-                    position[0] = 4;
+                    position[0] = defaultPosition;
                 }
             }
         });
@@ -972,6 +975,13 @@ public class CombatController {
         }
     }
 
+    /**
+     * Sets the current state of the combat controller.
+     * This method handles the transition between states,
+     * calling exitState on the old state and enterState on the new one.
+     *
+     * @param state the new state to set
+     */
     public final void setState(final CombatState state) {
         // Temporarily store the old state
         CombatState oldState = this.currentState;
@@ -998,23 +1008,43 @@ public class CombatController {
         }
     }
 
+    /**
+     * Gets the current state of the combat controller.
+     * @return the current state
+     */
     public final CombatState getCurrentState() {
         return currentState;
     }
 
+    /**
+     * Performs an attack by the enemy.
+     * This method randomly selects between a physical attack
+     * and a long-range attack for the enemy.
+     */
     public final void performEnemyAttack() {
-        final int PHYSICAL = 0;
-        final int LONG_RANGE = 1;
+        final int physical = 0;
+        final int longRange = 1;
         int num = new Random().nextInt(2);
 
         switch (num) {
-            case PHYSICAL : performEnemyPhysicalAttack();
-            case LONG_RANGE : performLongRangeAttack(model.getEnemyPosition(), -1, false, true);
+            case physical: performEnemyPhysicalAttack();
+            case longRange: performLongRangeAttack(model.getEnemyPosition(),
+            -1, false, true);
             default:break;
         }
 
     }
 
+    /**
+     * Performs a long-range attack by the specified attacker.
+     * This method animates the long-range attack and applies any effects
+     * such as flame or poison.
+     *
+     * @param attacker the position of the attacker (player or enemy)
+     * @param direction the direction of the attack (1 for player, -1 for enemy)
+     * @param applyFlameIntent true if flame effect should be applied
+     * @param applyPoisonIntent true if poison effect should be applied
+     */
     public final void performLongRangeAttack(
         final Position attacker, final int direction,
         final boolean applyFlameIntent, final boolean applyPoisonIntent) {
@@ -1022,37 +1052,46 @@ public class CombatController {
 
         System.out.println(" Performing Long Range Attack");
 
-        longRangeAttackAnimation(attacker, direction, applyFlameIntent, applyPoisonIntent, () -> {
+        longRangeAttackAnimation(attacker, direction,
+        applyFlameIntent, applyPoisonIntent, () -> {
             if (currentState != null) {
                 if (applyPoisonIntent) {
-                    // TODO: change to make it more efficient
                     if (this.model.isPlayerTurn()) {
                         this.model.setEnemyPoisoned(applyPoisonIntent);
                     } else {
                         this.model.setPlayerPoisoned(applyPoisonIntent);
                     }
                 }
-                currentState.handleAnimationComplete(this); // No extra args needed if state handles it
+                currentState.handleAnimationComplete(this);
             }
         });
     }
 
+    /**
+     * Checks if the game is over and updates the view accordingly.
+     * @return true if the game is over, false otherwise.
+     */
     public final boolean checkGameOverAndUpdateView() {
         if (model.isGameOver()) {
             stopAnimationTimer(); // Controller still manages timers directly
-            // Game over display logic is now handled by GameOverState.enterState
+            // Game over display logic is
+            // now handled by GameOverState.enterState
             return true;
         }
         return false;
     }
 
-    public final void performPoisonEffectAnymation() {
+    /**
+    * Performs the poison effect animation.
+    * This method animates the poison effect on the affected character.
+    */
+    public final void performPoisonEffectAnimation() {
         stopAnimationTimer();
         final int[] conto = {4};
         // array perché così posso dichiararlo
         // final usarlo nel Timer se no sarebbe stato più scomodo
         model.setPoisonAnimation(true);
-        animationTimer = new Timer(300, e -> {  // Timer con delay di 300 ms
+        animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, e -> {
             // perché così potevo vedere da tablet che laggava ahahahahaha
             if (conto[0] == 1) { // fine del timer resetto tutto
                 conto[0] = 0;
