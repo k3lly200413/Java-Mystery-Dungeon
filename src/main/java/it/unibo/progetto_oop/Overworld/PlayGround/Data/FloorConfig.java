@@ -5,7 +5,8 @@ public record FloorConfig(
         int nRooms,
         int minRoomW, int maxRoomW,
         int minRoomH, int maxRoomH,
-        int nFloors
+        int nFloors,
+        int tileSize
         ) {
     //classe innestata per comodita' di costruzione
     public static Builder builder() { return new Builder(); }
@@ -16,6 +17,7 @@ public record FloorConfig(
         private int minRoomW = 5, maxRoomW = 12;
         private int minRoomH = 5, maxRoomH = 10;
         private final int nFloors = 5;
+        private final int tileSize = 14;
 
         public Builder size(int w, int h) {
             this.width = w;
