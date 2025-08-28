@@ -78,54 +78,110 @@ public class CombatModel implements PossibleUser{
 
     }
 
-    public final void resetPositions() {
-        // Same logic as original Player() method
-        this.playerPosition = new Position((this.size / 3) - 2, (this.size / 2));
-        this.enemyPosition = new Position(this.size - ((this.size / 3) - 1), (this.size / 2));
-    }
+    /**
+ * Resets player and enemy positions to their default values.
+ * Same logic as the original Player() constructor.
+ */
+public final void resetPositions() {
+    this.playerPosition = new Position((this.size / 3) - 2, (this.size / 2));
+    this.enemyPosition = new Position(
+        this.size - ((this.size / 3) - 1), (this.size / 2));
+}
 
-    // for combat logic
-    public final void increasePlayerHealth(final int amount) {
-        this.playerHealth = Math.min(maxHealth, this.playerHealth + amount);
-    }
+/**
+ * Increases the player's health by the specified amount,
+ * without exceeding the maximum health.
+ *
+ * @param amount the health points to add
+ */
+public final void increasePlayerHealth(final int amount) {
+    this.playerHealth = Math.min(maxHealth, this.playerHealth + amount);
+}
 
-    public final void increasePlayerPower(final int power) {
-        this.playerPower += power;
-    }
+/**
+ * Increases the player's power by the specified amount.
+ *
+ * @param power the power points to add
+ */
+public final void increasePlayerPower(final int power) {
+    this.playerPower += power;
+}
 
-    public final void increaseEnemyPower(final int power) {
-        this.enemyPower += power;
-    }
+/**
+ * Increases the enemy's power by the specified amount.
+ *
+ * @param power the power points to add
+ */
+public final void increaseEnemyPower(final int power) {
+    this.enemyPower += power;
+}
 
-    public final void resetPlayerPower() {
-        this.playerPower = this.basicPlayerPower; // Reset player power to basic value
-    }
+/**
+ * Resets the player's power to its base value.
+ */
+public final void resetPlayerPower() {
+    this.playerPower = this.basicPlayerPower;
+}
 
-    public final void decreasePlayerHealth(final int amount) {
-        this.playerHealth = Math.max(0, this.playerHealth - amount); // only decrease health, do not allow negative
-                                                                     // values
-    }
+/**
+ * Decreases the player's health by the specified amount,
+ * without allowing the value to go below zero.
+ *
+ * @param amount the health points to subtract
+ */
+public final void decreasePlayerHealth(final int amount) {
+    this.playerHealth = Math.max(0, this.playerHealth - amount);
+}
 
-    public final void increasePlayerMaxStamina(final int amount) {
-        this.playerStaminaMax += amount;
-    }
+/**
+ * Increases the player's maximum stamina by the specified amount.
+ *
+ * @param amount the stamina points to add
+ */
+public final void increasePlayerMaxStamina(final int amount) {
+    this.playerStaminaMax += amount;
+}
 
-    public final void decreasePlayerMaxStamina(final int amount) {
-        this.playerStaminaMax = Math.max(0, (this.playerStaminaMax - amount));
-    }
+/**
+ * Decreases the player's maximum stamina by the specified amount,
+ * without allowing the value to go below zero.
+ *
+ * @param amount the stamina points to subtract
+ */
+public final void decreasePlayerMaxStamina(final int amount) {
+    this.playerStaminaMax = Math.max(0, (this.playerStaminaMax - amount));
+}
 
-    public final void decreasePlayerStamina(final int amount) {
-        this.playerStamina = Math.max(0, this.playerStamina - amount); // only decrease stamina, do not allow negative
-                                                                       // values
-    }
+/**
+ * Decreases the player's stamina by the specified amount,
+ * without allowing the value to go below zero.
+ *
+ * @param amount the stamina points to subtract
+ */
+public final void decreasePlayerStamina(final int amount) {
+    this.playerStamina = Math.max(0, this.playerStamina - amount);
+}
 
-    public final void increasePlayerStamina(final int amount) {
-        this.playerStamina = Math.min(this.playerStaminaMax, (this.playerStamina + amount));
-    }
+/**
+ * Increases the player's stamina by the specified amount,
+ * without exceeding the maximum stamina.
+ *
+ * @param amount the stamina points to add
+ */
+public final void increasePlayerStamina(final int amount) {
+    this.playerStamina = Math.min(this.playerStaminaMax,
+        (this.playerStamina + amount));
+}
 
-    public final void decreaseEnemyHealth(final int amount) {
-        this.enemyHealth = Math.max(0, this.enemyHealth - amount); // only decrease health, do not allow negative values
-    }
+/**
+ * Decreases the enemy's health by the specified amount,
+ * without allowing the value to go below zero.
+ *
+ * @param amount the health points to subtract
+ */
+public final void decreaseEnemyHealth(final int amount) {
+    this.enemyHealth = Math.max(0, this.enemyHealth - amount);
+}
 
     /**
      * Checks if the game is over by verifying if either

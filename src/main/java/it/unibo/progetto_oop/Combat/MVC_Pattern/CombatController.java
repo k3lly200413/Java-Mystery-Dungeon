@@ -739,11 +739,39 @@ public class CombatController {
         animationTimer.start();
     }
 
-    private void makeBigger(final int i, final Runnable onZoomComplete) {
-        // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'makeBigger'");
+    /**
+     * 
+     * @param size grandezza necessaria
+     * @param onZoomComplete Runnable per fine animazione
+     */
+    private void makeBigger(final int size, final Runnable onZoomComplete) {
+        final int[] conto = {1};
+        animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
+            if (conto[0] > size) {
+                stopAnimationTimer();
+                conto[0] = 0;
+                if (onZoomComplete != null) {
+                    System.out.println("Zoom-in complete, executing callback.");
+                    onZoomComplete.run(); // farà partire nuovo State
+                }
+            } else {
+                view.redrawGrid(model.getPlayerPosition(),
+                model.getEnemyPosition(), model.getAttackPosition(), 0,
+                false, true, false, false, 1, conto[0],
+                false, model.getEnemyPosition(), false, 0,
+                (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()),
+                false,
+                model.getDeathRayPath(), false, 0);
+                conto[0]++;
+            }
+        });
+        animationTimer.start();
     }
 
+    /**
+     * Animates poison damage effect.
+     * This method animates the poison damage effect on the affected character.
+     */
     public final void animatePoisonDamage() {
         this.stopAnimationTimer();
         final int[] step = {4};
@@ -783,10 +811,10 @@ public class CombatController {
 
     private void infoNextDrawAnimation(final Position originalEnemyPosition) {
         stopAnimationTimer();
-
+        final int SIZE = 6;
         animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, e -> {
             zoomerStep++;
-            if (zoomerStep >= 6) {
+            if (zoomerStep >= SIZE) {
                 stopAnimationTimer();
                 model.setEnemyPosition(
                     originalEnemyPosition); // Reset enemy position
