@@ -1062,22 +1062,19 @@ public class CombatController {
                 this.currentState.handleAnimationComplete(this);
                 // chiamo la funzione che tratta la fine delle animazioni
 
-                /* 'TODO': utilizzare applyAttackHealth
+                int remaing = model.applyAttackHealth(
+                    this.model.isPlayerTurn(),
+                    this.model.getPlayerPoisonPower()
+                    );
+
                 if (this.model.isPlayerTurn()) {
-                    model.decreaseEnemyHealth(model.getPlayerPoisonPower());
-                    view.updateEnemyHealth(model.getEnemyHealth());
+                    view.updateEnemyHealth(remaing);
+                    this.setState(new EnemyTurnState());
+                } else {
+                    view.updatePlayerHealth(remaing);
+                    this.setState(new PlayerTurnState());
                 }
-                else {
-                    System.out.println(
-                    "Enemy Poison Power => " + model.getEnemyPoisonPower());
-                    this.model.decreasePlayerHealth(
-                    model.getEnemyPoisonPower());
-                    System.out.println(
-                    "Enemy Health => " + model.getEnemyHealth());
-                    view.updatePlayerHealth(model.getPlayerHealth());
-                }
-                this.currentState.stateChange(this);
-                */
+                //this.currentState.stateChange(this);
 
             } else {
                 System.out.println("Conto => " + conto[0]);
