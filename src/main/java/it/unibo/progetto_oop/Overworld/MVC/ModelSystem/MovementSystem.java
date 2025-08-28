@@ -5,6 +5,7 @@ import java.util.Set;
 
 import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
@@ -88,9 +89,12 @@ public class MovementSystem {
     
         // Check Enemies
         Optional<Enemy> enemyOpt = enemySystem.checkEnemyHit(tempPosition);
-        if (enemyOpt.isPresent()) {
+        if (enemyOpt.isPresent()) { // if enemy hit -> switch to combat
+            Enemy enemy = enemyOpt.get();
+
             this.setCombatTransitionFlag();
-            enemySystem.setEncounteredEnemy(enemyOpt.get());
+            enemySystem.setEncounteredEnemy(enemy);
+            enemy.setState(new CombatTransitionState(enemy.getState()), this.model);
             System.out.println("Enemy encounter flagged at "+tempPosition);
             return; 
         }
