@@ -105,8 +105,9 @@ public class AnimatingState implements CombatState {
             /* if (model.isPlayerPoisoned() && model.getPlayerHealth() > 0) {
                 System.out.println("Applying poison damage to player.");
                 view.showInfo("Player takes poison damage!");
-                context.performPoisonEffectAnymation();
-                model.decreasePlayerHealth(model.getEnemyPoisonPower()); // Or whatever the damage is
+                context.performPoisonEffectAnimation();
+                model.decreasePlayerHealth(model.getEnemyPoisonPower());
+                // Or whatever the damage is
                 view.updatePlayerHealth(model.getPlayerHealth());
             }*/
         // }

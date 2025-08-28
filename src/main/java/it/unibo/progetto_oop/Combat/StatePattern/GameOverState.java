@@ -6,6 +6,7 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class GameOverState implements  CombatState {
 
+    
     @Override
     public void enterState(final CombatController context) {
         System.out.println("\n\nEntered Game Over State\n\n");
