@@ -16,5 +16,5 @@ public interface MovementStrategy {
      * @param currDirection the current direction of movement
      * @return the new direction of movement
      */
-    MoveDirection executeMove(Enemy enemy, OverworldModel model, OverworldApplication game, MoveDirection currDirection); // TODO: need to add a parameter for game application
+    MoveDirection executeMove(Enemy enemy, OverworldModel model, MoveDirection currDirection); 
 }

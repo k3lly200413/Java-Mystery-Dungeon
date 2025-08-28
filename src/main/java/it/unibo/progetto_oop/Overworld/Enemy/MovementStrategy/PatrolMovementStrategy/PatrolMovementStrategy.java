@@ -4,23 +4,21 @@ import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveDirection;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldApplication;
+
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
 public class PatrolMovementStrategy implements MovementStrategy{
     private MoveDirection moveDirection; // The direction of this patrol movement
     OverworldModel model;
-    OverworldApplication game;
     
 
     @Override
-    public MoveDirection executeMove(Enemy enemy, OverworldModel model, OverworldApplication game, MoveDirection currDirection) {
+    public MoveDirection executeMove(Enemy enemy, OverworldModel model, MoveDirection currDirection) {
         Position currentPos = enemy.getCurrentPosition();
         Position targetPos = currentPos; // Initialize target position to current position
         this.moveDirection = currDirection; // Set the current direction
         this.model = model;
-        this.game = game;
 
         switch (moveDirection) {
             case UP:
@@ -46,7 +44,7 @@ public class PatrolMovementStrategy implements MovementStrategy{
         if (!targetPos.equals(currentPos) && !model.getWalls().contains(targetPos)) {
             enemy.setPosition(targetPos);
             if (model.getPlayer().getPosition().equals(targetPos) || model.getPlayer().getPosition().equals(currentPos)){
-                enemy.setState( new CombatTransitionState(this.game, enemy.getState()), this.model);
+                enemy.setState( new CombatTransitionState(enemy.getState()), this.model);
             }
             return this.moveDirection;
         } 
