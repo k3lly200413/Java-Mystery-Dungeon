@@ -6,7 +6,12 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class GameOverState implements  CombatState {
 
-
+    /**
+     *
+     * @param context Istance of the controller
+     *
+     * This method is called when entering a combat state.
+     */
     @Override
     public void enterState(final CombatController context) {
         System.out.println("\n\nEntered Game Over State\n\n");

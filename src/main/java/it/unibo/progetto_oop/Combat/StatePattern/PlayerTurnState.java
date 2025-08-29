@@ -10,7 +10,7 @@ public class PlayerTurnState implements CombatState {
     /**
      * Strategy for curing poison.
      */
-    private CurePoison curePoison;
+    private final CurePoison curePoison;
 
     /**
      * The amount of stamina to be removed after a special attack.
@@ -48,9 +48,6 @@ public class PlayerTurnState implements CombatState {
         context.getView().updatePlayerStamina(
             context.getModel().getPlayerStamina());
         context.getView().showInfo("Player Has used Long Range Attack");
-        System.out.println(
-            "Debug Log: Requested Long Range\n"
-            + "Current State: Player Turn State");
         context.performLongRangeAttack(
             context.getModel().getPlayerPosition(), 1, isFalme, isPoison);
     }
