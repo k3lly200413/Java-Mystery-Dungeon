@@ -1,27 +1,24 @@
 package it.unibo.progetto_oop.Overworld.Enemy.StatePattern;
 
+import java.util.Set;
+
+import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldApplication;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class CombatTransitionState implements GenericEnemyState{
-    private final OverworldApplication game;
     private final EnemyType enemyType;
 
-    public CombatTransitionState(OverworldApplication game, EnemyType enemyType) {
-        this.game = game;
+    public CombatTransitionState(EnemyType enemyType) {
         this.enemyType = enemyType;
     }
 
     @Override
-    public void enterState(Enemy context, OverworldModel model) {
-        model.setEncounteredEnemy(context);
+    public void enterState(Enemy context, Set<Position> walls) {
 
         // TODO: transition to combat state in the game application
 
-        model.clearCombatTransitionFlag(); // combat started, not in transition anymore
     }
 
     @Override
@@ -30,13 +27,13 @@ public class CombatTransitionState implements GenericEnemyState{
     }
 
     @Override
-    public void update(Enemy enemy, OverworldModel model, Player player) {
+    public void update(Enemy enemy, Set<Position> walls, Player player) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
-    public void onPlayerMoved(Enemy context, Player player, OverworldModel model) {
+    public void onPlayerMoved(Enemy context, Player player) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'onPlayerMoved'");
     }

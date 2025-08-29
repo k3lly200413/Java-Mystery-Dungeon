@@ -1,7 +1,10 @@
 package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy;
 
-import it.unibo.progetto_oop.Overworld.MVC.OverworldApplication;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
+import it.unibo.progetto_oop.Overworld.Player.Player;
+
+import java.util.Set;
+
+import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveDirection;;
 
@@ -16,5 +19,5 @@ public interface MovementStrategy {
      * @param currDirection the current direction of movement
      * @return the new direction of movement
      */
-    MoveDirection executeMove(Enemy enemy, OverworldModel model, OverworldApplication game, MoveDirection currDirection); // TODO: need to add a parameter for game application
+    MoveDirection executeMove(Enemy enemy,Set<Position> walls, Player player, MoveDirection currDirection); // TODO: need to add a parameter for game application
 }

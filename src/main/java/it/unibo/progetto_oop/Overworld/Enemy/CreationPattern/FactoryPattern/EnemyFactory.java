@@ -1,12 +1,14 @@
 package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern;
 
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
+
+import java.util.Set;
+
 import it.unibo.progetto_oop.Combat.Position.Position;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldApplication;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
+
 
 public interface EnemyFactory {
-    public Enemy createPatrollerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, OverworldModel model, OverworldApplication game); 
-    public Enemy createFollowerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, OverworldModel model, OverworldApplication game); 
-    public Enemy createSleeperEnemy(int hp, int power, Position spawnPosition, boolean isVertical, OverworldModel model, OverworldApplication game);
+    public Enemy createPatrollerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls); 
+    public Enemy createFollowerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls); 
+    public Enemy createSleeperEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls);
 }

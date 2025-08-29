@@ -1,8 +1,9 @@
 package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl;
 
+import java.util.Set;
+
 import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.GenericEnemyState;
 
@@ -13,16 +14,17 @@ public class GenericEnemy implements Enemy {
     private Position initialPosition;
     private Position currentPosition;
     private int currentHealth;
-    private OverworldModel model; 
     private GenericEnemyState currentState;
+    private Set<Position> walls;
 
 
-    public GenericEnemy(int maxHealth, int currentHealth, int power, Position initialPosition) {
+    public GenericEnemy(int maxHealth, int currentHealth, int power, Position initialPosition, Set<Position> walls) {
         this.maxHealth = maxHealth;
         this.power = power;
         this.initialPosition = initialPosition;
         this.currentHealth = currentHealth;
         this.currentPosition = this.initialPosition;
+        this.walls = walls;
     }
 
     
@@ -60,17 +62,11 @@ public class GenericEnemy implements Enemy {
         this.currentPosition = newPosition;
     }
 
-    private void setModel(OverworldModel model){
-        this.model = model;
-    }
-
     @Override
-    public void setState(GenericEnemyState newState, OverworldModel model) {
+    public void setState(GenericEnemyState newState) {
         if (newState == null || newState == this.currentState) {
             return;
         }
-
-        this.setModel(model);
 
         if (this.currentState != null) {
             this.currentState.exitState(this);
@@ -78,15 +74,15 @@ public class GenericEnemy implements Enemy {
 
         this.currentState = newState;
 
-        this.currentState.enterState(this, this.model);
+        this.currentState.enterState(this, this.walls);
     }
 
 
     // methods
 
     @Override
-    public void takeTurn(OverworldModel model, Player player) {
-        this.currentState.update(this, model, player);
+    public void takeTurn(Player player) {
+        this.currentState.update(this, this.walls, player);
     }
 
     /**
@@ -95,9 +91,9 @@ public class GenericEnemy implements Enemy {
      * 
      *  Based on the type of enemy, it will act differently when the player moves.
      */
-    public void playerMoved(Player player, OverworldModel model) {
+    public void playerMoved(Player player) {
         if (this.currentState != null){
-            this.currentState.onPlayerMoved(this, player, model);
+            this.currentState.onPlayerMoved(this, player);
         }
     } 
 }

@@ -2,7 +2,6 @@ package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl;
 
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.GenericEnemyState;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
@@ -30,7 +29,7 @@ public interface Enemy {
      * @param model The current model of the overworld.
      * @param player The player that the enemy is interacting with.
      */
-    public void takeTurn(OverworldModel model, Player player);
+    public void takeTurn(Player player);
     
     /**
      * @param newPosition the new position of the enemy
@@ -46,5 +45,5 @@ public interface Enemy {
      * @param newState the new state to set the enemy to
      * @param model OverworldModel instance to update the enemy's state
      */
-    public void setState(GenericEnemyState newState, OverworldModel model);
+    public void setState(GenericEnemyState newState);
 }

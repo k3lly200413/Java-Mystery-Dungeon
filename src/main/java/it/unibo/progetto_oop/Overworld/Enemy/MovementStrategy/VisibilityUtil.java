@@ -1,7 +1,6 @@
 package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy;
 
 import it.unibo.progetto_oop.Combat.Position.Position;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -15,12 +14,12 @@ public class VisibilityUtil {
      * check if the player is in the enemy's line of sight
      * @param enemy enemy's position
      * @param player player's position
-     * @param model Overworld model
+     * @param walls the walls in the floor
      * @param neighbourDistance the distance considered as "neighbour" for the enemy
      * @return
      */
-    public boolean inLos(Position enemy, Position player, OverworldModel model, int neighbourDistance){
-        if(this.neighbours(enemy, player, neighbourDistance) && this.hasLineOfSight(enemy, player, model.getWalls())){
+    public boolean inLos(Position enemy, Position player, Set<Position> walls , int neighbourDistance){
+        if(this.neighbours(enemy, player, neighbourDistance) && this.hasLineOfSight(enemy, player, walls)){
             return true;
         }
         return false;
