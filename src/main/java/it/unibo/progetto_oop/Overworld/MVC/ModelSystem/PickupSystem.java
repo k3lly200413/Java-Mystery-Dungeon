@@ -16,6 +16,8 @@ public class PickupSystem {
         this.player = player;
     }
 
+    // getters
+
     /**
      * 
      * @return the list of items in the overworld
@@ -32,6 +34,18 @@ public class PickupSystem {
     public Inventory getInventoryInstance(){
         return this.player.inventory;
     }
+
+    // setters
+
+    /**
+     * set the items on the current floor
+     * @param items the items to set
+     */
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    // methods
 
     /**
      * Remove an item from the overworld and add it to the player's inventory
