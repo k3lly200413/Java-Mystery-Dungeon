@@ -8,7 +8,6 @@ public interface GenericEnemyState {
     /**
      * Enter the state of the enemy.
      * @param context the enemy that is entering the state
-     * @param model OverworldModel instance to update the enemy's state
      */
     public void enterState(Enemy context);
     /**
@@ -29,7 +28,6 @@ public interface GenericEnemyState {
      * The specific action that a tipe of enemy should take when the player moves.
      * @param context the enemy that is taking the action
      * @param player the player that the enemy is interacting with
-     * @param model  OverworldModel instance to update the enemy's state
      */
     public void onPlayerMoved(Enemy context, Player player);
     

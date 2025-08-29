@@ -34,11 +34,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     }
 
     @Override
-<<<<<<< HEAD
-    public Enemy createFollowerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, OverworldModel model, viewManager game) {
-=======
     public Enemy createFollowerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls) {
->>>>>>> c10be239e276a0e972e842f268004520fb4bd541
         VisibilityUtil visibilityUtil = new VisibilityUtil();
         
         Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition, walls);
@@ -48,13 +44,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
     }
 
     @Override
-<<<<<<< HEAD
-    public Enemy createSleeperEnemy(int hp, int power, Position spawnPosition, boolean isVertical, OverworldModel model, viewManager game) {
-        Enemy enemy = new GenericEnemy(hp, hp, power,spawnPosition);
-=======
     public Enemy createSleeperEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls) {
         Enemy enemy = new GenericEnemy(hp, hp, power,spawnPosition, walls);
->>>>>>> c10be239e276a0e972e842f268004520fb4bd541
 
         enemy.setState(new SleeperState());
 

@@ -5,12 +5,6 @@ import java.util.Set;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-<<<<<<< HEAD
-import it.unibo.progetto_oop.Overworld.MVC.viewManager;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-=======
->>>>>>> c10be239e276a0e972e842f268004520fb4bd541
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.*;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveDirection;
@@ -22,20 +16,12 @@ public class FollowerState implements GenericEnemyState{
     private final MovementUtil movementUtil;
     private final MovementStrategy movementStrategy;
     private final boolean isVertical;
-<<<<<<< HEAD
-    private final viewManager game;
-=======
->>>>>>> c10be239e276a0e972e842f268004520fb4bd541
     
     // costants
     private final static int NEIGHBOUR_DISTANCE = 4; // Example value, adjust as needed
     private final static int COMBAT_DISTANCE = 1; // Example value, adjust as needed
 
-<<<<<<< HEAD
-    public FollowerState(VisibilityUtil visibilityUtil, MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical, viewManager game){
-=======
     public FollowerState(VisibilityUtil visibilityUtil, MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical){
->>>>>>> c10be239e276a0e972e842f268004520fb4bd541
         this.visibilityUtil = visibilityUtil;
         this.movementUtil = movementUtil;
         this.isVertical = isVertical;
