@@ -79,7 +79,7 @@ public class GenericEnemy implements Enemy {
 
         this.currentState = newState;
 
-        this.currentState.enterState(this, this.walls);
+        this.currentState.enterState(this);
     }
 
 
@@ -87,7 +87,7 @@ public class GenericEnemy implements Enemy {
 
     @Override
     public void takeTurn(Player player) {
-        this.currentState.update(this, this.walls, player);
+        this.currentState.update(this, player);
     }
 
     /**
