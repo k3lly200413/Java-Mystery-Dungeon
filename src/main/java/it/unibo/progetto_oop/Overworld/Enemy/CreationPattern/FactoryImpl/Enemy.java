@@ -1,5 +1,7 @@
 package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl;
 
+import java.util.Set;
+
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.GenericEnemyState;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
@@ -22,6 +24,12 @@ public interface Enemy {
      * @return the type(state) of the enemy
      */
     public EnemyType getState();
+
+    /**
+     * 
+     * @return the walls of the floor this enemy is moving on
+     */
+    public Set<Position> getWalls();
     
     /**
      * 

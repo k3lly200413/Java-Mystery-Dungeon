@@ -32,9 +32,9 @@ public class FollowerState implements GenericEnemyState{
      * initially the follower acts like a patroller
      */
     @Override
-    public void enterState(Enemy context, Set<Position> walls) {
+    public void enterState(Enemy context) {
         System.out.println("Entering PatrolState");
-        currentDirection = movementUtil.getInitialGeneralMoveDirection(context.getCurrentPosition(), walls, this.isVertical);
+        currentDirection = movementUtil.getInitialGeneralMoveDirection(context.getCurrentPosition(), context.getWalls(), this.isVertical);
         if (this.currentDirection == MoveDirection.NONE){
             this.currentDirection = this.isVertical ? MoveDirection.DOWN : MoveDirection.UP;
         }
@@ -46,23 +46,24 @@ public class FollowerState implements GenericEnemyState{
     }
 
     @Override
-    public void update(Enemy enemy, Set<Position> walls, Player player) {
-        Position nextPos = this.visibilityUtil.firstMove(enemy.getCurrentPosition(), player.getPosition());
+    public void update(Enemy context, Player player) {
+        Position nextPos = this.visibilityUtil.firstMove(context.getCurrentPosition(), player.getPosition());
+        Set<Position> walls = context.getWalls();
 
         // if the player is in the enemy's line of sight, move towards the player
         if ( player != null 
-            && this.visibilityUtil.inLos(enemy.getCurrentPosition(), player.getPosition(), walls, NEIGHBOUR_DISTANCE)
+            && this.visibilityUtil.inLos(context.getCurrentPosition(), player.getPosition(), walls, NEIGHBOUR_DISTANCE)
             && !walls.contains(nextPos)){
 
             // if the player and the enemy are close enough -> enter combat state
-            if (this.visibilityUtil.neighbours(enemy.getCurrentPosition(), player.getPosition(), COMBAT_DISTANCE)){
-                enemy.setState(new CombatTransitionState(enemy.getState()));
-                enemy.setPosition(player.getPosition());
+            if (this.visibilityUtil.neighbours(context.getCurrentPosition(), player.getPosition(), COMBAT_DISTANCE)){
+                context.setState(new CombatTransitionState(context.getState()));
+                context.setPosition(player.getPosition());
             } else {
-                enemy.setPosition(nextPos); // not close enough -> move closer towards the player
+                context.setPosition(nextPos); // not close enough -> move closer towards the player
             }
         } else{ // else, continue patrolling
-            this.currentDirection = this.movementStrategy.executeMove(enemy, walls, player, this.currentDirection);
+            this.currentDirection = this.movementStrategy.executeMove(context, walls, player, this.currentDirection);
         }
     }
 

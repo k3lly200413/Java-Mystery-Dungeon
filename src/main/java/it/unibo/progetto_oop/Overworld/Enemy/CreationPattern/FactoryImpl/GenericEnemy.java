@@ -54,6 +54,11 @@ public class GenericEnemy implements Enemy {
         return this.currentState.getType();
     }
 
+    @Override
+    public Set<Position> getWalls() {
+        return this.walls;
+    }
+
 
     // setters 
 
