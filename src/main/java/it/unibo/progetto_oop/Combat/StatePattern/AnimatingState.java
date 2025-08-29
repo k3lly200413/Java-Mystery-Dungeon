@@ -100,17 +100,16 @@ public class AnimatingState implements CombatState {
             }
             System.out.println(model.isEnemyPoisoned());
             System.out.println(model.getEnemyHealth() > 0);
-        } //else { // Enemy's turn just ended
+        } else { // Enemy's turn just ended
             // Apply effects to PLAYER after enemy's turn
-            /* if (model.isPlayerPoisoned() && model.getPlayerHealth() > 0) {
+            if (model.isPlayerPoison() && model.getPlayerHealth() > 0) {
                 System.out.println("Applying poison damage to player.");
                 view.showInfo("Player takes poison damage!");
                 context.performPoisonEffectAnimation();
                 model.decreasePlayerHealth(model.getEnemyPoisonPower());
-                // Or whatever the damage is
                 view.updatePlayerHealth(model.getPlayerHealth());
-            }*/
-        // }
+            }
+        }
 
         if (context.checkGameOver()) {
             context.setState(new GameOverState());
@@ -118,11 +117,15 @@ public class AnimatingState implements CombatState {
         }
 
         if (wasPlayerTurn) {
-            context.getModel().setPlayerTurn(false);
-            context.setState(new EnemyTurnState());
+            if (!model.isEnemyPoisoned()) {
+                context.getModel().setPlayerTurn(false);
+                context.setState(new EnemyTurnState());
+            }
         } else {
-            context.getModel().setPlayerTurn(true);
-            context.setState(new PlayerTurnState());
+            if (!model.isPlayerPoison()) {
+                context.getModel().setPlayerTurn(true);
+                context.setState(new PlayerTurnState());
+            }
         }
 
     }

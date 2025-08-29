@@ -17,13 +17,17 @@ public class EnemyTurnState implements CombatState {
         System.out.println("Entering enemy turn state.");
         CombatModel model = context.getModel();
 
-        // Check if this is a boss turn AND if its special attack sequence is active
+        // Check if this is a boss turn
+        // AND if its special attack sequence is active
         // context.setState(new BossState());
         System.out.println("Boss Turn : " + model.isBossTurn());
-        if (model.isBossTurn() && model.getBossAttackCounter() < model.getMaxBossHit()) {
+        if (model.isBossTurn()
+        && model.getBossAttackCounter() < model.getMaxBossHit()) {
             // --- The boss performs another attack in its sequence ---
-            model.increaseBossAttackCounter(); // We are performing hit #1, #2, or #3
-            System.out.println("Boss Sequence: Preparing hit #" + model.getBossAttackCounter());
+            // We are performing hit #1, #2, or #3
+            model.increaseBossAttackCounter();
+            System.out.println("Boss Sequence: Preparing hit #"
+            + model.getBossAttackCounter());
 
             // Use the controller's helper to perform a delayed action
             context.performDelayedEnemyAction(ENEMY_ACTION_DELAY, () -> {
@@ -31,28 +35,29 @@ public class EnemyTurnState implements CombatState {
                 // In this case, it's always the super attack.
                 context.performEnemySuperAttack();
             });
-            // The state machine will cycle through AnimatingState and come back here
+            // The state machine will
+            // cycle through AnimatingState and come back here
             // for the next hit if the sequence isn't over.
-        }
-        else {
-            if (model.isBossTurn() && model.getBossAttackCounter() > 0){
+        } else {
+            if (model.isBossTurn() && model.getBossAttackCounter() > 0) {
                 System.out.println("\n>>> Starting Boss Attack");
                 model.clearBossAttackCount();
                 model.setBossTurn(false);
                 context.setState(new PlayerTurnState());
                 model.setPlayerTurn(true);
-            }
-            else{
-                context.stopAnimationTimer();
+            } else {
+                // context.stopAnimationTimer();
                 System.out.println("No Boss Attack");
                 model.setBossTurn(false);
                 Timer enemyDelay = new Timer(ENEMY_ACTION_DELAY, e -> {
                     // Ensure we are still in the EnemyTurnState before acting
                     if (context.getCurrentState() == this) {
                         System.out.println("Enemy choosing action...");
-                        context.setState(new AnimatingState()); // Assume enemy action leads to animation
+                        // Assume enemy action leads to animation
+                        context.setState(new AnimatingState());
                         // context.performEnemySuperAttack();
-                        context.performEnemyAttack(); // Renamed controller method
+                        // Renamed controller method
+                        context.performEnemyAttack();
                     }
                 });
                 enemyDelay.setRepeats(false);

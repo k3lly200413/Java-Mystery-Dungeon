@@ -1136,7 +1136,7 @@ public class CombatController {
                 stopAnimationTimer();
                 redrawView();
                 model.setPoisonAnimation(false);
-                this.currentState.handleAnimationComplete(this);
+                // this.currentState.handleAnimationComplete(this);
                 // chiamo la funzione che tratta la fine delle animazioni
 
                 int remaing = model.applyAttackHealth(
@@ -1145,9 +1145,11 @@ public class CombatController {
                     );
 
                 if (this.model.isPlayerTurn()) {
+                    this.model.setPlayerTurn(false);
                     view.updateEnemyHealth(remaing);
                     this.setState(new EnemyTurnState());
                 } else {
+                    this.model.setPlayerTurn(true);
                     view.updatePlayerHealth(remaing);
                     this.setState(new PlayerTurnState());
                 }
