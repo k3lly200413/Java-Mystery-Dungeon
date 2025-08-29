@@ -8,9 +8,9 @@ import java.awt.event.KeyEvent;
 public class OverworldController {
     private final OverworldModel model;
     private final OverworldView view; 
-    private final OverworldApplication game;
+    private final viewManager game;
 
-    public OverworldController(OverworldModel model, OverworldView view, OverworldApplication game){
+    public OverworldController(OverworldModel model, OverworldView view, viewManager game){
         this.model = Objects.requireNonNull(model, "Model cannot be null");
         this.view = Objects.requireNonNull(view, "View cannot be null");
         this.game = Objects.requireNonNull(game, "Game Application cannot be null");

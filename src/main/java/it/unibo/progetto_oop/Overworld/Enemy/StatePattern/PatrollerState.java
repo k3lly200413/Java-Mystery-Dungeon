@@ -7,7 +7,7 @@ import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveDirection;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldApplication;
+import it.unibo.progetto_oop.Overworld.MVC.viewManager;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
@@ -16,9 +16,9 @@ public class PatrollerState implements GenericEnemyState {
     private final MovementUtil movementUtil; 
     private final boolean isVertical;
     private final MovementStrategy movementStrategy;
-    private final OverworldApplication game;
+    private final viewManager game;
 
-    public PatrollerState(MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical, OverworldApplication game){
+    public PatrollerState(MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical, viewManager game){
         this.movementUtil = movementUtil;
         this.isVertical = isVertical;
         this.movementStrategy = movementStrategy;

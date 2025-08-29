@@ -4,7 +4,7 @@ import java.util.Set;
 
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldApplication;
+import it.unibo.progetto_oop.Overworld.MVC.viewManager;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
@@ -18,13 +18,13 @@ public class FollowerState implements GenericEnemyState{
     private final MovementUtil movementUtil;
     private final MovementStrategy movementStrategy;
     private final boolean isVertical;
-    private final OverworldApplication game;
+    private final viewManager game;
     
     // costants
     private final static int NEIGHBOUR_DISTANCE = 4; // Example value, adjust as needed
     private final static int COMBAT_DISTANCE = 1; // Example value, adjust as needed
 
-    public FollowerState(VisibilityUtil visibilityUtil, MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical, OverworldApplication game){
+    public FollowerState(VisibilityUtil visibilityUtil, MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical, viewManager game){
         this.visibilityUtil = visibilityUtil;
         this.movementUtil = movementUtil;
         this.isVertical = isVertical;
