@@ -1,6 +1,6 @@
 package it.unibo.progetto_oop.Combat.DrawHelper;
 
-import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public class DrawHelper {
     public boolean neighbours(Position pos1, Position pos2, int dist) {

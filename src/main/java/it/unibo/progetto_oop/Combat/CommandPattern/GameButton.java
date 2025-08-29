@@ -2,7 +2,7 @@ package it.unibo.progetto_oop.Combat.CommandPattern;
 
 import java.util.List;
 
-import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 /**
  * Interface to be used by buttons.

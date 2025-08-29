@@ -5,11 +5,11 @@ import java.util.List;
 
 import it.unibo.progetto_oop.Overworld.AdapterPattern.OverworldPlayerAdapter;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.PlayerObserver.PlayerObserver;
 import it.unibo.progetto_oop.Combat.PotionStrategy.*;
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
-import it.unibo.progetto_oop.Combat.Position.Position;
 
 // The Player class - Acts as the Subject/Observable
 public class Player {

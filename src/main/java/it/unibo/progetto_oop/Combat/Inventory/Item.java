@@ -1,6 +1,6 @@
 package it.unibo.progetto_oop.Combat.Inventory;
-import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public abstract class Item {
     private final String name;

@@ -2,8 +2,8 @@ package it.unibo.progetto_oop.Combat.MVC_Pattern;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public class CombatModel implements PossibleUser{
 
