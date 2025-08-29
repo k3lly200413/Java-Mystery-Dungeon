@@ -23,9 +23,9 @@ public class InventoryView extends JPanel {
 
     private static final Color FLOOR_COLOR = Color.LIGHT_GRAY;
     private static final Color GRID_LINE_COLOR = Color.GRAY;
-    private static final Color ITEM_SLOT_1_COLOR = Color.BLACK;
-    private static final Color ITEM_SLOT_2_COLOR = Color.BLUE;
-    private static final Color ITEM_SLOT_3_COLOR = Color.CYAN;
+    private static final Color ITEM_SLOT_1_COLOR = Color.PINK;
+    private static final Color ITEM_SLOT_2_COLOR = Color.ORANGE;
+    private static final Color ITEM_SLOT_3_COLOR = Color.RED;
 
     private final OverworldApplication game;
     private Inventory inventory; 
@@ -165,9 +165,14 @@ public class InventoryView extends JPanel {
     */
     private JButton createItemButton(String text, Color color, String htmlDescriptionActionCommand) {
         JButton button = new JButton(text);
-        // TODO
+        button.setBackground(color);              // colore del pulsante
+        button.setActionCommand(htmlDescriptionActionCommand); // comando identificativo
+        button.setToolTipText(htmlDescriptionActionCommand);   // descrizione HTML
+        button.setFocusPainted(false);             //estetica: niente bordo focus
+        button.setOpaque(true);                      // necessario in certi LAF per mostrare il colore
         return button;
     }
+
 
     /**
      * Public method to be called when the view needs to reflect the current inventory state.

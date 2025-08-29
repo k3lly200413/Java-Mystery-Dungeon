@@ -1,17 +1,24 @@
 package it.unibo.progetto_oop.Overworld.MVC;
 
-import javax.swing.*;
-
 import java.awt.CardLayout;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-import it.unibo.progetto_oop.Combat.Inventory.*;
-import it.unibo.progetto_oop.Overworld.Player.Player;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
+import it.unibo.progetto_oop.Combat.Inventory.Inventory;
+import it.unibo.progetto_oop.Combat.Inventory.InventoryView;
+import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Combat.PotionFactory.ItemFactory;
 import it.unibo.progetto_oop.Combat.PotionStrategy.Potion;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.*;
+import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactory;
+import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactoryImpl;
+import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class OverworldApplication {
     // MVC components
