@@ -88,7 +88,7 @@ public class AnimatingState implements CombatState {
                 model.decreaseEnemyHealth(
                     model.getPlayerPoisonPower()); // Apply damage
                 view.updateEnemyHealth(
-                    model.getEnemyHealth());          // Update bar
+                    Math.round(model.getEnemyHealth()));          // Update bar
             }
             System.out.println(model.isEnemyPoisoned());
             System.out.println(model.getEnemyHealth() > 0);
@@ -111,7 +111,7 @@ public class AnimatingState implements CombatState {
         if (wasPlayerTurn) {
             if (!model.isEnemyPoisoned()) {
                 context.getModel().setPlayerTurn(false);
-                context.setState(new EnemyTurnState());
+                context.setState(new BossTurnState());
             }
         } else {
             if (!model.isPlayerPoison()) {

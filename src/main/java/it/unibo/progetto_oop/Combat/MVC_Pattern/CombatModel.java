@@ -106,7 +106,7 @@ public class CombatModel implements PossibleUser {
     private ArrayList<Position> deathRayPath = new ArrayList<>();
 
     /** Counter tracking the number of turns taken by the boss. */
-    private int bossTurnCounter = 0;
+    private int bossTurnCounter = 1;
 
     /** Whether the poison animation is active. */
     private boolean poisonAnimation;

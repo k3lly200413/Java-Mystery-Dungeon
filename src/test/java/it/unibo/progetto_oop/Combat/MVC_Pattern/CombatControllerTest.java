@@ -13,7 +13,6 @@ import org.mockito.Mockito;
 import it.unibo.progetto_oop.Combat.StatePattern.AnimatingState;
 import it.unibo.progetto_oop.Combat.StatePattern.BossTurnState;
 import it.unibo.progetto_oop.Combat.StatePattern.EnemyTurnState;
-import it.unibo.progetto_oop.Combat.StatePattern.FuryBossState;
 import it.unibo.progetto_oop.Combat.StatePattern.ItemSelectionState;
 import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
 
@@ -69,8 +68,8 @@ public class CombatControllerTest {
         assertTrue(this.controller.getCurrentState() instanceof AnimatingState);
         controller.setState(new BossTurnState());
         assertTrue(this.controller.getCurrentState() instanceof BossTurnState);
-        controller.setState(new FuryBossState());
-        assertTrue(this.controller.getCurrentState() instanceof FuryBossState);
+        controller.setState(new EnemyTurnState());
+        assertTrue(this.controller.getCurrentState() instanceof EnemyTurnState);
         controller.setState(new ItemSelectionState());
         assertTrue(this.controller.getCurrentState() instanceof ItemSelectionState);
     }

@@ -17,11 +17,11 @@ public class CombatApplication {
         final int size = 12;
         final int playerPower = 10;
         final int playerPoisonPower = 2;
-        final int enemyPower = 100;
+        final int enemyPower = 5;
         final int enemySpeed = 3;
         final String enemyName = "Dragon";
         final int playerMaxStamina = 100;
-        final int playerLongRangePower = 100;
+        final int playerLongRangePower = 5;
 
         final int viewWidthFactor = 20;
 
@@ -44,6 +44,8 @@ public class CombatApplication {
             playerMaxStamina, playerPower,
             playerPoisonPower, playerLongRangePower, enemyPower,
             enemySpeed, enemyName);
+
+            // model.setBossTurn(true);
 
             // 2. Create the View
             CombatView view = new CombatView(model.getSize(),

@@ -11,6 +11,7 @@ import it.unibo.progetto_oop.Combat.CommandPattern.LongRangeButton;
 import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
 import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Combat.StatePattern.AnimatingState;
+import it.unibo.progetto_oop.Combat.StatePattern.BossTurnState;
 import it.unibo.progetto_oop.Combat.StatePattern.CombatState;
 import it.unibo.progetto_oop.Combat.StatePattern.EnemyTurnState;
 import it.unibo.progetto_oop.Combat.StatePattern.InfoDisplayState;
@@ -102,9 +103,9 @@ public class CombatController {
         this.view = viewToUse;
         this.neighbours = new Neighbours();
 
-        this.view.setHealthBarMax(model.getMaxHealth());
+        this.view.setHealthBarMax(Math.round(model.getMaxHealth()));
         this.view.updatePlayerHealth(model.getPlayerHealth());
-        this.view.updateEnemyHealth(model.getEnemyHealth());
+        this.view.updateEnemyHealth(Math.round(model.getEnemyHealth()));
 
         this.attachListeners();
 
@@ -277,7 +278,8 @@ public class CombatController {
             enemyActionTimer.stop(); // Stop any previous timer
         }
         enemyActionTimer = new Timer(delay, e -> {
-            if (currentState instanceof EnemyTurnState) {
+            if (currentState instanceof EnemyTurnState
+            || currentState instanceof BossTurnState) {
                 action.run(); // Execute the action
             } else {
                 System.err.println(
@@ -388,7 +390,7 @@ public class CombatController {
         .flame(this.model.getAttackPosition())
         .drawPlayer(true)
         .drawEnemy(true)
-        .drawFlame(!isPoison)
+        .drawFlame(isAttack)
         .drawPoison(isPoison)
         .playerRange(1)
         .enemyRange(1)
@@ -455,7 +457,7 @@ public class CombatController {
             .flameSize((isAttack || isPoison) ? 0 : 1)
             .drawPlayer(true)
             .drawEnemy(true)
-            .drawFlame(!isPoison)
+            .drawFlame(isAttack)
             .drawPoison(isPoison)
             .playerRange(1)
             .enemyRange(1)
@@ -543,6 +545,8 @@ public class CombatController {
                 .flameSize(2)
                 .drawPlayer(true)
                 .drawEnemy(true)
+                .drawFlame(false)
+                .drawPoison(false)
                 .playerRange(1)
                 .enemyRange(1)
                 .isGameOver(this.model.isGameOver())
@@ -709,6 +713,8 @@ public class CombatController {
     public final void performEnemySuperAttack() {
         System.out.println("\nPerforming Super Attack\n");
 
+        this.setState(new AnimatingState());
+
         Runnable onSuperAttackComplete = () -> {
             this.currentState.handleAnimationComplete(this);
         };
@@ -848,7 +854,7 @@ public class CombatController {
 
                 if (this.model.isPlayerTurn()) {
                     view.updateEnemyHealth(remaing);
-                    this.setState(new EnemyTurnState());
+                    this.setState(new BossTurnState());
                 } else {
                     view.updatePlayerHealth(remaing);
                     this.setState(new PlayerTurnState());
@@ -919,7 +925,7 @@ public class CombatController {
         if (model.isEnemyPoisoned() && model.getEnemyHealth() > 0) {
             view.showInfo("Enemy take poison damage!");
             model.decreaseEnemyHealth(model.getPlayerPoisonPower());
-            view.updateEnemyHealth(model.getEnemyHealth());
+            view.updateEnemyHealth(Math.round(model.getEnemyHealth()));
             this.animatePoisonDamage();
         }
     }
@@ -1198,7 +1204,7 @@ public class CombatController {
                 if (this.model.isPlayerTurn()) {
                     this.model.setPlayerTurn(false);
                     view.updateEnemyHealth(remaing);
-                    this.setState(new EnemyTurnState());
+                    this.setState(new BossTurnState());
                 } else {
                     this.model.setPlayerTurn(true);
                     view.updatePlayerHealth(remaing);

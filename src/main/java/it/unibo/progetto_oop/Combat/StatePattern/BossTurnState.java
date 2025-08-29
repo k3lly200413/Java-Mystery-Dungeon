@@ -7,7 +7,7 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 public class BossTurnState implements CombatState {
 
     /** Indicates the boss health percentage. */
-    private int bossHealthPercent;
+    private float bossHealthPercent;
     /** Indicates the boss state. */
     private String bossState = "NORMAL";
 
@@ -89,8 +89,10 @@ private static final int PERCENT_CONVERSION = 100;
 @Override
 public final void enterState(final CombatController context) {
     System.out.println("\nBoss State: Entering Boss Turn State\n");
+    System.out.println("Boss Health: " + context.getModel().getEnemyHealth() + "/" + context.getModel().getMaxHealth());
+    float bossHealth = context.getModel().getEnemyHealth();
     this.bossHealthPercent =
-        (context.getModel().getEnemyHealth()
+        (bossHealth
         / context.getModel().getMaxHealth()) * PERCENT_CONVERSION;
 
     if (this.bossHealthPercent < BOSS_ENRAGED_THRESHOLD
@@ -104,7 +106,7 @@ public final void enterState(final CombatController context) {
         if (context.getModel().getBossTurnCounter() % DEATH_RAY_INTERVAL == 0) {
             context.setState(new AnimatingState());
             context.performBossDeathRayAttack();
-            context.getModel().setBossTurn(false);
+            context.getModel().setBossTurn(true);
             context.getModel().increaseBossTurnCounter();
         } else if (context.getModel().
         getBossTurnCounter() % SUPER_ATTACK_CHARGE_INTERVAL == 0) {
@@ -115,18 +117,18 @@ public final void enterState(final CombatController context) {
                 context.getModel().getEnemyPosition(), true, () -> {
                 context.getCurrentState().handleAnimationComplete(context);
             });
-            context.getModel().setBossTurn(false);
+            context.getModel().setBossTurn(true);
             context.getModel().increaseBossTurnCounter();
         } else if (context.getModel().
         getBossTurnCounter() % STANDARD_ATTACK_INTERVAL == 0) {
             context.setState(new AnimatingState());
             context.performEnemyAttack();
-            context.getModel().setBossTurn(false);
+            context.getModel().setBossTurn(true);
             context.getModel().increaseBossTurnCounter();
         } else {
             context.setState(new AnimatingState());
             context.performEnemyPhysicalAttack();
-            context.getModel().setBossTurn(false);
+            context.getModel().setBossTurn(true);
             context.getModel().increaseBossTurnCounter();
         }
     }
