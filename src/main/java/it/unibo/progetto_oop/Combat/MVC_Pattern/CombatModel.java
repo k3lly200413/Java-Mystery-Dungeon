@@ -114,26 +114,27 @@ public class CombatModel implements PossibleUser {
     /**
      * Constructs a CombatModel with specified parameters.
      *
-     * @param size the size of the combat area
-     * @param StaminaMax the maximum stamina of the player
-     * @param playerPower the attack power of the player
-     * @param playerPoisonPower the poison attack power of the player
-     * @param playerLongRangePower the long-range attack power of the player
-     * @param enemyPower the attack power of the enemy
-     * @param enemySpeed the speed of the enemy (reserved for future logic)
-     * @param enemyName the name of the enemy (reserved for future use)
+     * @param newSize the size of the combat area
+     * @param staminaMax the maximum stamina of the player
+     * @param newPlayerPower the initial power of the player
+     * @param newPlayerPoisonPower the poison power of the player
+     * @param newPlayerLongRangePower the long-range power of the player
+     * @param newEnemyPower the initial power of the enemy
+     * @param newEnemySpeed the speed of the enemy
+     * @param newEnemyName the name of the enemy
      */
-    public CombatModel(final int size, final int StaminaMax, final int playerPower,
-            final int playerPoisonPower, final int playerLongRangePower,
-            final int enemyPower, final int enemySpeed, final String enemyName) {
+    public CombatModel(final int newSize, final int staminaMax,
+            final int newPlayerPower, final int newPlayerPoisonPower,
+            final int newPlayerLongRangePower, final int newEnemyPower,
+            final int newEnemySpeed, final String newEnemyName) {
 
-        this.size = size;
-        this.playerStaminaMax = StaminaMax;
-        this.playerPower = playerPower;
-        this.playerPoisonPower = playerPoisonPower;
-        this.enemyPower = enemyPower;
-        this.enemySpeed = enemySpeed;
-        this.enemyName = enemyName;
+        this.size = newSize;
+        this.playerStaminaMax = staminaMax;
+        this.playerPower = newPlayerPower;
+        this.playerPoisonPower = newPlayerPoisonPower;
+        this.enemyPower = newEnemyPower;
+        this.enemySpeed = newEnemySpeed;
+        this.enemyName = newEnemyName;
         this.basicPlayerPower = this.playerPower;
 
         resetPositions();
@@ -141,10 +142,10 @@ public class CombatModel implements PossibleUser {
 
         this.playerHealth = maxHealth;
         this.enemyHealth = maxHealth;
-        this.playerStamina = StaminaMax;
+        this.playerStamina = staminaMax;
         this.enemyPoisonPower = playerPoisonPower;
-        this.playerLongRangePower = playerLongRangePower;
-        this.enemyLongRangePower = playerLongRangePower;
+        this.playerLongRangePower = newPlayerLongRangePower;
+        this.enemyLongRangePower = newPlayerLongRangePower;
 
         this.enemyPoisoned = false;
         this.isPlayerPoison = false;
@@ -174,6 +175,7 @@ public final void resetPositions() {
  *
  * @param amount the health points to add
  */
+@Override
 public final void increasePlayerHealth(final int amount) {
     this.playerHealth = Math.min(maxHealth, this.playerHealth + amount);
 }
@@ -183,6 +185,7 @@ public final void increasePlayerHealth(final int amount) {
  *
  * @param power the power points to add
  */
+@Override
 public final void increasePlayerPower(final int power) {
     this.playerPower += power;
 }
