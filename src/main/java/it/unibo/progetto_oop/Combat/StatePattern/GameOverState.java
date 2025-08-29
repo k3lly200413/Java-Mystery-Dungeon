@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop.Combat.StatePattern;
 
+import it.unibo.progetto_oop.Combat.Helper.RedrawContext;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 import it.unibo.progetto_oop.Overworld.Player.Player;
@@ -15,12 +16,24 @@ public class GameOverState implements  CombatState {
     @Override
     public void enterState(final CombatController context) {
         System.out.println("\n\nEntered Game Over State\n\n");
-        context.redrawView(context.getModel().getPlayerPosition(),
-        context.getModel().getEnemyPosition(),
-        context.getModel().getAttackPosition(),
-        0, true, true, false, false, 2, 2,
-        context.getModel().isGameOver(), context.getModel().getWhoDied(), false,
-        new java.util.ArrayList<>(), false, 0, false, 0);
+        RedrawContext defaultRedraw = new RedrawContext.Builder()
+        .player(context.getModel().getPlayerPosition())
+        .enemy(context.getModel().getEnemyPosition())
+        .flame(context.getModel().getAttackPosition())
+        .drawPlayer(true)
+        .drawEnemy(true)
+        .playerRange(2)
+        .enemyRange(2)
+        .isGameOver(context.getModel().isGameOver())
+        .whoDied(context.getModel().getWhoDied())
+        .build();
+        context.getView().redrawGrid(defaultRedraw);
+        // context.redrawView(context.getModel().getPlayerPosition(),
+        // context.getModel().getEnemyPosition(),
+        // context.getModel().getAttackPosition(),
+        // 0, true, true, false, false, 2, 2,
+        // context.getModel().isGameOver(), context.getModel().getWhoDied(), false,
+        // new java.util.ArrayList<>(), false, 0, false, 0);
     }
 
     /**

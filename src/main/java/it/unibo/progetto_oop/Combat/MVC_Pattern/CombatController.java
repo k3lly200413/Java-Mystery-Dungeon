@@ -16,6 +16,7 @@ import it.unibo.progetto_oop.Combat.StatePattern.EnemyTurnState;
 import it.unibo.progetto_oop.Combat.StatePattern.InfoDisplayState;
 import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
 import it.unibo.progetto_oop.Combat.Helper.Neighbours;
+import it.unibo.progetto_oop.Combat.Helper.RedrawContext;
 
 
 /**
@@ -134,17 +135,23 @@ public class CombatController {
      * @author kelly.applebee@studio.unibo.itc
      */
     public void redrawView() {
-        this.view.redrawGrid(
-            this.model.getPlayerPosition(), this.model.getEnemyPosition(),
-            this.model.getAttackPosition(), 0, true,
-            true, false, false, 1,
-            1, this.model.isGameOver(),
-            (this.model.isPlayerTurn()
-            ? this.model.getEnemyPosition()
-            : this.model.getPlayerPosition()),
-            false, new ArrayList<>(),
-            false, 0,
-            false, 0, SQUARE_HEIGHT, SQUARE_WIDTH);
+
+        RedrawContext defaultRedraw = new RedrawContext.Builder()
+        .player(this.model.getPlayerPosition())
+        .enemy(this.model.getEnemyPosition())
+        .drawPlayer(true)
+        .drawEnemy(true)
+        .playerRange(1)
+        .enemyRange(1)
+        .isGameOver(this.model.isGameOver())
+        .squareHeight(SQUARE_HEIGHT)
+        .squareWidth(SQUARE_WIDTH)
+        .whoDied(this.model.isPlayerTurn()
+        ? this.model.getEnemyPosition()
+        : this.model.getPlayerPosition())
+        .build();
+
+        this.view.redrawGrid(defaultRedraw);
     }
     /**
      * Redraws the view with specific parameters.
@@ -167,23 +174,23 @@ public class CombatController {
      * @param isCharging determine if the player is charging an attack
      * @param chargingPosition position of the charging attack
      */
-    public final void redrawView(
-        final Position palyerPos, final Position enemyPos,
-        final Position flamePos, final int flameSize,
-        final boolean drawPlayer, final boolean drawEnemy,
-        final boolean drawFlame, final boolean drawPoison,
-        final int playerRange, final int enemyRange,
-        final boolean isGameOver, final Position whoDied,
-        final boolean bossRayAttack, final ArrayList<Position> deathRayPath,
-        final boolean drawPoisonDamage, final int poisonYCoord,
-        final boolean isCharging, final int chargingPosition) {
-        this.view.redrawGrid(
-            palyerPos, enemyPos, flamePos, flameSize, drawPlayer,
-            drawEnemy, drawFlame, drawPoison, playerRange, enemyRange,
-            isGameOver, whoDied, bossRayAttack, deathRayPath, drawPoisonDamage,
-            poisonYCoord, isCharging,
-            chargingPosition, SQUARE_HEIGHT, SQUARE_WIDTH);
-    }
+    // public final void redrawView(
+    //     final Position palyerPos, final Position enemyPos,
+    //     final Position flamePos, final int flameSize,
+    //     final boolean drawPlayer, final boolean drawEnemy,
+    //     final boolean drawFlame, final boolean drawPoison,
+    //     final int playerRange, final int enemyRange,
+    //     final boolean isGameOver, final Position whoDied,
+    //     final boolean bossRayAttack, final ArrayList<Position> deathRayPath,
+    //     final boolean drawPoisonDamage, final int poisonYCoord,
+    //     final boolean isCharging, final int chargingPosition) {
+    //     this.view.redrawGrid(
+    //         palyerPos, enemyPos, flamePos, flameSize, drawPlayer,
+    //         drawEnemy, drawFlame, drawPoison, playerRange, enemyRange,
+    //         isGameOver, whoDied, bossRayAttack, deathRayPath, drawPoisonDamage,
+    //         poisonYCoord, isCharging,
+    //         chargingPosition, SQUARE_HEIGHT, SQUARE_WIDTH);
+    // }
 
     /**
      * Uses private methods to Assing Actionlisteners to buttons inside view.
@@ -423,14 +430,27 @@ public class CombatController {
         model.setAttackPosition(new Position(
             (attacker.x() + direction), attacker.y())); // Start flame at player
 
-        this.redrawView(
+        RedrawContext redrawContext = new RedrawContext.Builder()
+        .player(this.model.getPlayerPosition())
+        .enemy(this.model.getEnemyPosition())
+        .flame(this.model.getAttackPosition())
+        .drawPlayer(true)
+        .drawEnemy(true)
+        .drawFlame(!isPoison)
+        .drawPoison(isPoison)
+        .playerRange(1)
+        .enemyRange(1)
+        .isGameOver(this.model.isGameOver())
+        .build();
+        this.view.redrawGrid(redrawContext);
+        /*this.redrawView(
             this.model.getPlayerPosition(), this.model.getEnemyPosition(),
             this.model.getAttackPosition(), 0, true, true, !isPoison, isPoison,
             1, 1, this.model.isGameOver(), (model.isPlayerTurn()
             ? model.getEnemyPosition()
             : model.getPlayerPosition()), false, new ArrayList<>(),
             false, 0, false, 0
-        );
+        );*/
 
         System.out.println("Attacker Position => "
         + attacker.equals(model.getEnemyPosition()));
@@ -476,12 +496,30 @@ public class CombatController {
             Position nextFlamePos = longRangeCommand.execute().get(0);
             this.model.setAttackPosition(nextFlamePos);
             // Redraw showing the projectile
-
-            this.redrawView(this.model.getPlayerPosition(), this.model.getEnemyPosition(),
+            RedrawContext defaultRedraw = new RedrawContext.Builder()
+            .player(this.model.getPlayerPosition())
+            .enemy(this.model.getEnemyPosition())
+            .flame(this.model.getAttackPosition())
+            .flameSize((isAttack || isPoison) ? 0 : 1)
+            .drawPlayer(true)
+            .drawEnemy(true)
+            .drawFlame(!isPoison)
+            .drawPoison(isPoison)
+            .playerRange(1)
+            .enemyRange(1)
+            .drawBossRayAttack(!(isAttack || isPoison))
+            .isGameOver(this.model.isGameOver())
+            .build();
+            this.view.redrawGrid(defaultRedraw);
+            /*this.redrawView(
+                    this.model.getPlayerPosition(),
+                    this.model.getEnemyPosition(),
                     this.model.getAttackPosition(),
-                    (isAttack || isPoison) ? 0 : 1, true, true, !isPoison, isPoison, 1, 1, false,
-                    model.getPlayerPosition(), (isAttack || isPoison) ? false : true,
-                    new ArrayList<Position>(), false, 0, false, 0);
+                    (isAttack || isPoison) ? 0 : 1,
+                    true, true, !isPoison, isPoison, 1, 1, false,
+                    model.getPlayerPosition(),
+                    (isAttack || isPoison) ? false : true,
+                    new ArrayList<Position>(), false, 0, false, 0);*/
         });
         animationTimer.start();
     }
@@ -546,11 +584,25 @@ public class CombatController {
                         deathRayLastPosition.get(
                             deathRayLastPosition.size() - 1).x() - 1,
                         this.model.getEnemyPosition().y()));
-                this.redrawView(this.model.getPlayerPosition(),
+                RedrawContext defaultRedraw = new RedrawContext.Builder()
+                .player(this.model.getPlayerPosition())
+                .enemy(this.model.getEnemyPosition())
+                .flame(this.model.getAttackPosition())
+                .flameSize(2)
+                .drawPlayer(true)
+                .drawEnemy(true)
+                .playerRange(1)
+                .enemyRange(1)
+                .isGameOver(this.model.isGameOver())
+                .drawBossRayAttack(true)
+                .deathRayPath(deathRayLastPosition)
+                .build();
+                this.view.redrawGrid(defaultRedraw);
+                /*this.redrawView(this.model.getPlayerPosition(),
                         this.model.getEnemyPosition(), new Position(0, 0),
                         2, true, true, false,
                         false, 1, 1, false, new Position(0, 0),
-                        true, deathRayLastPosition, false, 0, false, 0);
+                        true, deathRayLastPosition, false, 0, false, 0);*/
             }
         });
 
@@ -765,13 +817,23 @@ public class CombatController {
                 model.setEnemyPosition(new Position(
                     model.getEnemyPosition().x() - 1,
                     model.getEnemyPosition().y()));
-                this.redrawView(this.model.getPlayerPosition(),
+                RedrawContext defaultRedraw = new RedrawContext.Builder()
+                .player(this.model.getPlayerPosition())
+                .enemy(this.model.getEnemyPosition())
+                .flame(this.model.getAttackPosition())
+                .drawEnemy(true)
+                .playerRange(1)
+                .enemyRange(1)
+                .isGameOver(this.model.isGameOver())
+                .build();
+                this.view.redrawGrid(defaultRedraw);
+                /*this.redrawView(this.model.getPlayerPosition(),
                 this.model.getEnemyPosition(), this.model.getAttackPosition(),
                 0, false, true, false, false, 1, 1,
                 this.model.isGameOver(), this.model.isPlayerTurn()
                 ? this.model.getEnemyPosition()
                 : this.model.getPlayerPosition(), false,
-                new ArrayList<>(), false, 0, false, 0);
+                new ArrayList<>(), false, 0, false, 0); */
             }
         });
         animationTimer.start();
@@ -793,13 +855,23 @@ public class CombatController {
                     onZoomComplete.run(); // farà partire nuovo State
                 }
             } else {
-                this.redrawView(this.model.getPlayerPosition(),
+                RedrawContext defaultRedraw = new RedrawContext.Builder()
+                .player(this.model.getPlayerPosition())
+                .enemy(this.model.getEnemyPosition())
+                .flame(this.model.getAttackPosition())
+                .drawEnemy(true)
+                .playerRange(1)
+                .enemyRange(1)
+                .isGameOver(this.model.isGameOver())
+                .build();
+                this.view.redrawGrid(defaultRedraw);
+                /* this.redrawView(this.model.getPlayerPosition(),
                 this.model.getEnemyPosition(), this.model.getAttackPosition(),
                 0, false, true, false, false, 1, 1,
                 this.model.isGameOver(), this.model.isPlayerTurn()
                 ? this.model.getEnemyPosition()
                 : this.model.getPlayerPosition(), false,
-                new ArrayList<>(), false, 0, false, 0);
+                new ArrayList<>(), false, 0, false, 0);*/
             }
         });
         animationTimer.start();
@@ -831,7 +903,23 @@ public class CombatController {
                     this.setState(new PlayerTurnState());
                 }
             } else {
-                redrawView(
+                RedrawContext defaultRedraw = new RedrawContext.Builder()
+                .player(this.model.getPlayerPosition())
+                .enemy(this.model.getEnemyPosition())
+                .flame(this.model.getAttackPosition())
+                .drawPlayer(true)
+                .drawEnemy(true)
+                .playerRange(1)
+                .enemyRange(1)
+                .isGameOver(this.model.isGameOver())
+                .drawPoisonDamage(true)
+                .whoIsPoisoned((this.model.isPlayerTurn()
+                    ? this.model.getEnemyPosition()
+                    : this.model.getPlayerPosition()))
+                .poisonYCoord(step[0])
+                .build();
+                this.view.redrawGrid(defaultRedraw);
+                /*redrawView(
                     this.model.getPlayerPosition(),
                     this.model.getEnemyPosition(),
                     this.model.getAttackPosition(),
@@ -839,7 +927,7 @@ public class CombatController {
                     (this.model.isPlayerTurn()
                     ? this.model.getEnemyPosition()
                     : this.model.getPlayerPosition()),
-                    false, new ArrayList<>(), true, step[0], false, 0);
+                    false, new ArrayList<>(), true, step[0], false, 0);*/
                 step[0]--;
             }
         });
@@ -927,7 +1015,20 @@ public class CombatController {
             this.setState(new AnimatingState());
             this.animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
                 position[0]--;
-                this.redrawView(
+                RedrawContext defaultRedraw = new RedrawContext.Builder()
+                .player(this.model.getPlayerPosition())
+                .enemy(this.model.getEnemyPosition())
+                .flame(this.model.getAttackPosition())
+                .drawPlayer(true)
+                .drawEnemy(true)
+                .playerRange(1)
+                .enemyRange(1)
+                .isGameOver(this.model.isGameOver())
+                .isCharging(isCharging)
+                .chargingCellDistance(position[0])
+                .build();
+                this.view.redrawGrid(defaultRedraw);
+                /* this.redrawView(
                     this.model.getPlayerPosition(),
                     this.model.getEnemyPosition(),
                     this.model.getAttackPosition(),
@@ -947,7 +1048,7 @@ public class CombatController {
                     false,
                     position[0],
                     isCharging,
-                    position[0]);
+                    position[0]);*/
             if (position[0] == 0) {
                 times[0]--;
                 if (times[0] == 0) {
@@ -1157,13 +1258,29 @@ public class CombatController {
             } else {
                 System.out.println("Conto => " + conto[0]);
                 // ridisegno tutto con il veleno che sale
-                this.redrawView(this.model.getPlayerPosition(),
+                RedrawContext defaultRedraw = new RedrawContext.Builder()
+                .player(this.model.getPlayerPosition())
+                .enemy(this.model.getEnemyPosition())
+                .flame(this.model.getAttackPosition())
+                .drawPlayer(true)
+                .drawEnemy(true)
+                .playerRange(1)
+                .enemyRange(1)
+                .drawPoisonDamage(true)
+                .poisonYCoord(conto[0])
+                .isGameOver(this.model.isGameOver())
+                .whoIsPoisoned((this.model.isPlayerTurn()
+                    ? this.model.getEnemyPosition()
+                    : this.model.getPlayerPosition()))
+                .build();
+                this.view.redrawGrid(defaultRedraw);
+                /* this.redrawView(this.model.getPlayerPosition(),
                     this.model.getEnemyPosition(),
                     this.model.getAttackPosition(), 0, true, true,
                     false, false, 1, 1,
                     this.model.isGameOver(), this.model.getWhoDied(),
                     false, new ArrayList<>(), true,
-                    conto[0], false, 0);
+                    conto[0], false, 0);*/
                 // faccio salire il veleno
                 conto[0]--;
             }

@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
 import it.unibo.progetto_oop.Combat.Helper.Neighbours;
+import it.unibo.progetto_oop.Combat.Helper.RedrawContext;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
 import java.awt.BorderLayout;
@@ -24,7 +25,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.FlowLayout;
@@ -369,83 +369,103 @@ public class CombatView extends JFrame {
     }
     /**
      * Redraws the grid with the specified parameters.
+     * @param context the context containing necessary information for redrawing
      */
-    public final void redrawGrid(
-        final Position player, final Position enemy, final Position flame,
-        final int flameSize, final boolean drawPlayer, final boolean drawEnemy,
-        final boolean drawflame, final boolean drawPoison,
-        final int playerRange, final int enemyRange,
-        final boolean isGameOver, final Position whoDied,
-        final boolean drawBossRayAttack, final ArrayList<Position> deathRayPath,
-        final boolean drawPoisonDamage, final int poisonYCoord,
-        final boolean isCharging, final int chargingCellDistance,
-        final int squareWidth, final int squareHeight) {
+    public final void redrawGrid(final RedrawContext context) {
 
         for (var entry : cells.entrySet()) {
             JLabel cellLabel = entry.getKey();
             Position cellPos = entry.getValue();
             Icon icon = null;
 
-            if (isGameOver) {
-                if (this.neighbours.deathNeighbours(
-                whoDied, cellPos, enemyRange)) {
+            if (context.isGameOver()) {
+                if (context.getWhoDied() != null
+                    && this.neighbours.deathNeighbours(
+                    context.getWhoDied(), cellPos, context.getEnemyRange())) {
                     icon =
                     this.getIconResource(
-                        whoDied.equals(player)
+                        context.getWhoDied().equals(context.getPlayer())
                         ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg",
-                        squareWidth, squareHeight);
+                        context.getSquareHeight(), context.getSquareWidth());
                 } else if (
-                    drawPlayer
+                    context.isDrawPlayer()
                     && neighbours.deathNeighbours(
-                        whoDied, cellPos, enemyRange)) {
+                        context.getWhoDied(),
+                        cellPos,
+                        context.getEnemyRange())) {
                     icon =
                     getIconResource(
-                        whoDied.equals(player)
+                        context.getWhoDied().equals(context.getPlayer())
                         ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg",
-                        squareWidth, squareHeight);
+                        context.getSquareWidth(), context.getSquareHeight());
                 }
-            } else if ((drawflame || drawPoison || drawBossRayAttack)
+            } else if ((context.isDrawFlame()
+            || context.isDrawPoison()
+            || context.isDrawBossRayAttack())
                     && this.neighbours.neighbours(
-                        cellPos, flame, flameSize)) {
-                icon = drawflame ? this.getIconResource("/yellow.jpg",
-                    squareWidth, squareHeight)
-                        : drawPoison
+                        cellPos, context.getFlame(), context.getFlameSize())) {
+                icon = context.isDrawFlame()
+                    ? this.getIconResource("/yellow.jpg",
+                    context.getSquareWidth(), context.getSquareHeight())
+                        : context.isDrawPoison()
                         ? this.getIconResource(
-                            "/green.jpg", squareWidth, squareHeight)
+                            "/green.jpg",
+                            context.getSquareWidth(),
+                            context.getSquareHeight())
                             : getIconResource("/purple.png",
-                            squareWidth, squareHeight);
+                            context.getSquareWidth(),
+                            context.getSquareHeight());
             } else if (
-                drawPoisonDamage
-                && entry.getValue().y() == poisonYCoord) {
+                context.isDrawPoisonDamage()
+                && context.getWhoIsPoisoned() != null
+                && entry.getValue().y() == context.getPoisonYCoord()
+                && entry.getValue().x() == context.getWhoIsPoisoned().x()) {
                 icon = this.getIconResource("/green.jpg",
-                squareWidth, squareHeight);
+                context.getSquareWidth(), context.getSquareHeight());
             } else if (
-                (drawflame || drawPoison)
+                (context.isDrawFlame() || context.isDrawPoison())
                 && this.neighbours.neighbours(
-                    cellPos, flame, 0)) {
-                icon = drawflame
-                ? this.getIconResource("/yellow.jpg", squareWidth, squareHeight)
-                : this.getIconResource("/green.jpg", squareWidth, squareHeight);
+                    cellPos, context.getFlame(), 0)) {
+                icon = context.isDrawFlame()
+                ? this.getIconResource(
+                    "/yellow.jpg",
+                    context.getSquareWidth(),
+                    context.getSquareHeight())
+                : this.getIconResource(
+                    "/green.jpg",
+                    context.getSquareWidth(),
+                    context.getSquareHeight());
             } else if (
-                drawPlayer
+                context.isDrawPlayer()
+                && context.getPlayer() != null
                 && this.neighbours.neighbours(
-                    player, cellPos, playerRange)) {
+                    context.getPlayer(), cellPos, context.getPlayerRange())) {
                 icon = this.getIconResource(
                     "/Screenshot 2025-03-25 164621.png",
-                    squareWidth, squareHeight);
+                    context.getSquareWidth(),
+                    context.getSquareHeight());
             } else if (
-                drawEnemy
+                context.isDrawEnemy()
+                && context.getEnemy() != null
                 && this.neighbours.neighbours(
-                    enemy, cellPos, enemyRange)) {
-                icon = getIconResource("/red.jpg", squareWidth, squareHeight);
+                    context.getEnemy(), cellPos, context.getEnemyRange())) {
+                icon = getIconResource(
+                    "/red.jpg",
+                    context.getSquareWidth(),
+                    context.getSquareHeight());
             } else if (
-                isCharging
+                context.isCharging()
                 && this.neighbours.deathNeighbours(
-                    enemy, cellPos, chargingCellDistance)) {
+                    context.getEnemy(),
+                    cellPos,
+                    context.getChargingCellDistance())) {
                 icon = getIconResource("/purple.png",
-                squareWidth, squareHeight);
+                context.getSquareWidth(), context.getSquareHeight());
             } else {
-                icon = getIconResource("/white.jpg", squareWidth, squareHeight);
+                icon = getIconResource(
+                    "/white.jpg",
+                    context.getSquareWidth(),
+                    context.getSquareHeight());
             }
             cellLabel.setIcon(icon);
         }

@@ -17,11 +17,11 @@ public class CombatApplication {
         final int size = 12;
         final int playerPower = 10;
         final int playerPoisonPower = 2;
-        final int enemyPower = 3;
+        final int enemyPower = 100;
         final int enemySpeed = 3;
         final String enemyName = "Dragon";
         final int playerMaxStamina = 100;
-        final int playerLongRangePower = 5;
+        final int playerLongRangePower = 100;
 
         final int viewWidthFactor = 20;
 
