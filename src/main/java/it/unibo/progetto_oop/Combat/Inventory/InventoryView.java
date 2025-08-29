@@ -1,13 +1,22 @@
 package it.unibo.progetto_oop.Combat.Inventory;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import it.unibo.progetto_oop.Overworld.MVC.OverworldApplication;
 
 public class InventoryView extends JPanel {
-     private static final int VIEWPORT_WIDTH_CELLS = 13;
+    private static final int VIEWPORT_WIDTH_CELLS = 13;
     private static final int VIEWPORT_HEIGHT_CELLS = 13;
     private static final int PREFERRED_CELL_WIDTH = 70;
     private static final int PREFERRED_CELL_HEIGHT = 60;
