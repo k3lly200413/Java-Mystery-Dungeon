@@ -113,7 +113,7 @@ public class AnimatingState implements CombatState {
         // }
 
         if (context.checkGameOver()) {
-            // Create gameOverState
+            context.setState(new GameOverState());
             return;
         }
 

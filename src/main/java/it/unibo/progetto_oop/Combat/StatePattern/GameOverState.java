@@ -6,14 +6,16 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class GameOverState implements  CombatState {
 
-    
+
     @Override
     public void enterState(final CombatController context) {
         System.out.println("\n\nEntered Game Over State\n\n");
-        context.redrawView(true, true, false, false, 0, 1, 2,
-        true, context.getModel().getWhoDied(),
+        context.redrawView(context.getModel().getPlayerPosition(),
         context.getModel().getEnemyPosition(),
-        false, 0, false, context.getModel().getDeathRayPath());
+        context.getModel().getAttackPosition(),
+        0, true, true, false, false, 2, 2,
+        context.getModel().isGameOver(), context.getModel().getWhoDied(), false,
+        new java.util.ArrayList<>(), false, 0, false, 0);
     }
 
     /**

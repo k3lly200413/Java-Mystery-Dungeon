@@ -766,12 +766,13 @@ public class CombatController {
                 model.setEnemyPosition(new Position(
                     model.getEnemyPosition().x() - 1,
                     model.getEnemyPosition().y()));
-                redrawView(false, true, false, false, 0, 1, 1, false,
-                model.getEnemyPosition(),
-                (model.isPlayerTurn() ? model.
-                getEnemyPosition() : model.getPlayerPosition()),
-                false, model.getEnemyPosition().y(),
-                false, model.getDeathRayPath());
+                this.redrawView(this.model.getPlayerPosition(),
+                this.model.getEnemyPosition(), this.model.getAttackPosition(),
+                0, false, true, false, false, 1, 1,
+                this.model.isGameOver(), this.model.isPlayerTurn()
+                ? this.model.getEnemyPosition()
+                : this.model.getPlayerPosition(), false,
+                new ArrayList<Position>(), false, 0, false, 0);
             }
         });
         animationTimer.start();
@@ -793,14 +794,13 @@ public class CombatController {
                     onZoomComplete.run(); // farà partire nuovo State
                 }
             } else {
-                view.redrawGrid(model.getPlayerPosition(),
-                model.getEnemyPosition(), model.getAttackPosition(), 0,
-                false, true, false, false, 1, conto[0],
-                false, model.getEnemyPosition(), false, 0,
-                (model.isPlayerTurn() ? model.getEnemyPosition() : model.getPlayerPosition()),
-                false,
-                model.getDeathRayPath(), false, 0);
-                conto[0]++;
+                this.redrawView(this.model.getPlayerPosition(),
+                this.model.getEnemyPosition(), this.model.getAttackPosition(),
+                0, false, true, false, false, 1, 1,
+                this.model.isGameOver(), this.model.isPlayerTurn()
+                ? this.model.getEnemyPosition()
+                : this.model.getPlayerPosition(), false,
+                new ArrayList<Position>(), false, 0, false, 0);
             }
         });
         animationTimer.start();
