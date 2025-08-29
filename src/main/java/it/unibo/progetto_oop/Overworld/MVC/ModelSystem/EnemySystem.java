@@ -24,6 +24,9 @@ public class EnemySystem {
         this.model = model;
         this.player = player;
     }
+
+    // getters
+
     /**
      * 
      * @return list of enemies in the map
@@ -40,12 +43,25 @@ public class EnemySystem {
     }
 
 
+    // setters
+
     /** 
      * @param the encountered enemy
      */
     public void setEncounteredEnemy(Enemy encounteredEnemy){
         this.encounteredEnemy = encounteredEnemy;
     }
+
+    /**
+     * Set the enemies on the current floor
+     * @param enemies the enemies to set
+     */
+    public void setEnemies(List<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
+
+    // methods 
 
     /**
      * Check if the player has encountered an enemy at the current position
@@ -73,7 +89,7 @@ public class EnemySystem {
      * This method should be called after the player has moved
      */
     public void triggerEnemyTurns(){
-        this.enemies.stream().forEach(enemy -> enemy.takeTurn(this.model, this.player));
+        this.enemies.stream().forEach(enemy -> enemy.takeTurn(this.player));
     }
 
 

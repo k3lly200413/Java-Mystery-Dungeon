@@ -10,7 +10,7 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class MovementSystem {
     private final Player player;
-    private final Set<Position> walls; // TODO: integrare con Alice
+    private Set<Position> walls; // TODO: integrare con Alice
     private Position tempPosition;
     private final OverworldModel model;
 
@@ -52,8 +52,17 @@ public class MovementSystem {
         this.combatTransitionPending = true;
     }
 
+    /**
+     * Set the walls on the current floor
+     * @param walls the walls to set
+     */
+    public void setWalls(Set<Position> walls){
+        this.walls = walls;
+    }
 
 
+    // methods
+    
     /**
      * Check if the player has hit a wall at the current position
      * @return true if the player has hit a wall, false otherwise

@@ -1,13 +1,11 @@
 package it.unibo.progetto_oop.Overworld.Enemy.StatePattern;
 
-import java.util.Set;
-
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveDirection;
-import it.unibo.progetto_oop.Overworld.MVC.viewManager;
+import it.unibo.progetto_oop.Overworld.MVC.OverworldApplication;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
@@ -16,18 +14,17 @@ public class PatrollerState implements GenericEnemyState {
     private final MovementUtil movementUtil; 
     private final boolean isVertical;
     private final MovementStrategy movementStrategy;
-    private final viewManager game;
+    private final OverworldApplication game;
 
-    public PatrollerState(MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical, viewManager game){
+    public PatrollerState(MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical, OverworldApplication game){
         this.movementUtil = movementUtil;
         this.isVertical = isVertical;
         this.movementStrategy = movementStrategy;
-        this.game = game;
     }
 
     @Override
-    public void enterState(Enemy context, OverworldModel model) {
-        currentDirection = movementUtil.getInitialGeneralMoveDirection(context.getCurrentPosition(), model.getWalls(), this.isVertical);
+    public void enterState(Enemy context) {
+        currentDirection = movementUtil.getInitialGeneralMoveDirection(context.getCurrentPosition(), context.getWalls(), this.isVertical);
         if (this.currentDirection == MoveDirection.NONE){
             this.currentDirection = this.isVertical ? MoveDirection.DOWN : MoveDirection.UP;
         }
@@ -39,12 +36,12 @@ public class PatrollerState implements GenericEnemyState {
     }
 
     @Override
-    public void update(Enemy enemy, OverworldModel model, Player player) {
-        this.currentDirection = this.movementStrategy.executeMove(enemy, model, this.game, this.currentDirection);
+    public void update(Enemy context, Player player) {
+        this.currentDirection = this.movementStrategy.executeMove(context, context.getWalls(), player, this.currentDirection);
     }
 
     @Override
-    public void onPlayerMoved(Enemy context, Player player, OverworldModel model) {}
+    public void onPlayerMoved(Enemy context, Player player) {}
 
     @Override
     public EnemyType getType() {

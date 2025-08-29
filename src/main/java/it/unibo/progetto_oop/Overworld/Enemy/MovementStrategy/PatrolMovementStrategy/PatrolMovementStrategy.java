@@ -4,23 +4,38 @@ import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveDirection;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
+<<<<<<< HEAD
 import it.unibo.progetto_oop.Overworld.MVC.viewManager;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
+=======
+import it.unibo.progetto_oop.Overworld.Player.Player;
+>>>>>>> c10be239e276a0e972e842f268004520fb4bd541
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import java.util.Set;
+
 
 public class PatrolMovementStrategy implements MovementStrategy{
     private MoveDirection moveDirection; // The direction of this patrol movement
+<<<<<<< HEAD
     OverworldModel model;
     viewManager game;
     
 
     @Override
     public MoveDirection executeMove(Enemy enemy, OverworldModel model, viewManager game, MoveDirection currDirection) {
+=======
+    private Player player;
+    private Set<Position> walls;
+    
+
+    @Override
+    public MoveDirection executeMove(Enemy enemy, Set<Position> walls, Player player, MoveDirection currDirection) {
+>>>>>>> c10be239e276a0e972e842f268004520fb4bd541
         Position currentPos = enemy.getCurrentPosition();
         Position targetPos = currentPos; // Initialize target position to current position
         this.moveDirection = currDirection; // Set the current direction
-        this.model = model;
-        this.game = game;
+        this.walls = walls;
+        this.player = player;
 
         switch (moveDirection) {
             case UP:
@@ -43,10 +58,10 @@ public class PatrolMovementStrategy implements MovementStrategy{
         }
         
         // Check if the target position is not the same as the current position and is not a wall
-        if (!targetPos.equals(currentPos) && !model.getWalls().contains(targetPos)) {
+        if (!targetPos.equals(currentPos) && this.walls.contains(targetPos)) {
             enemy.setPosition(targetPos);
-            if (model.getPlayer().getPosition().equals(targetPos) || model.getPlayer().getPosition().equals(currentPos)){
-                enemy.setState( new CombatTransitionState(this.game, enemy.getState()), this.model);
+            if (this.player.getPosition().equals(targetPos) || this.player.getPosition().equals(currentPos)){
+                enemy.setState( new CombatTransitionState(enemy.getState()));
             }
             return this.moveDirection;
         } 

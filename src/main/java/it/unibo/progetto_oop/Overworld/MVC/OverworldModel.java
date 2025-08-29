@@ -20,18 +20,23 @@ public class OverworldModel {
     private final EnemySystem enemySystem;
     private final MovementSystem movementSystem;
 
-    private final Set<Position> walls; // TODO: integrare con Alice
+    private Set<Position> walls; // TODO: integrare con Alice
 
     // flags
     private boolean inCombat;
 
     public OverworldModel(Player player, List<Enemy> enemies, List<Item> items, Set<Position> walls) { // TODO: integrare con Alice
         this.player = player;
-        this.walls = walls;
-        this.pickupSystem = new PickupSystem(items, player);
-        this.enemySystem = new EnemySystem(enemies, player, this);
-        this.movementSystem = new MovementSystem(walls, player, this);
         this.inCombat = false;
+
+        // initialize floor spawn objects 
+        this.walls = null;
+        this.pickupSystem = new PickupSystem(null, player);
+        this.enemySystem = new EnemySystem(null, player, this);
+        this.movementSystem = new MovementSystem(null, player, this);
+
+        // fill floor spawn objects
+        this.setSpawnObjects(enemies, items, walls);
     }
 
     // --- getter methods ---
@@ -137,6 +142,20 @@ public class OverworldModel {
     */
     public void setCombatTransitionFlag(){
         this.movementSystem.setCombatTransitionFlag();
+    }
+
+    /**
+     * this method is called each time the player changes floor so that the model can update accordingly.
+     * @param enemies the enemies on the current floor
+     * @param items the items on the current floor
+     * @param walls the walls one the current floor
+     */
+    private void setSpawnObjects(List<Enemy> enemies, List<Item> items, Set<Position> walls) {
+        this.walls = walls;
+        this.pickupSystem.setItems(items);
+        this.enemySystem.setEnemies(enemies);
+        this.movementSystem.setWalls(this.walls);
+        
     }
 
     // methods
