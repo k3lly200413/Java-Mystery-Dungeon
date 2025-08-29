@@ -153,6 +153,34 @@ public class CombatView extends JFrame {
      * Maximum health of the enemy.
      */
     private int maxEnemyHealth;
+    /**
+     * Default height of the health/stamina bars.
+     */
+    private static final int DEFAULT_BAR_HEIGHT = 20;
+    /**
+     * Default width of the health/stamina bars.
+     */
+    private static final int DEFAULT_BAR_WIDTH = 35;
+    /**
+     * Default space buffer between elements.
+     */
+    private static final int DEFAULT_SPACE_BUFFER = 5;
+    /**
+     * Default width of the squares.
+     */
+    private static final int DEFAULT_SQUARE_WIDTH = 20;
+    /**
+     * Default height of the squares.
+     */
+    private static final int DEFAULT_SQUARE_HEIGHT = 20;
+    /**
+     * Default height of the text fields.
+     */
+    private static final int DEFAULT_TEXT_FIELD_HEIGHT = 30;
+    /**
+     * Default width mutator for text fields.
+     */
+    private static final int DEFAULT_WIDTH_MUTATOR_FOR_TEXT_FIELD = 70;
 
     /**
      * Constructor for CombatView.
@@ -183,7 +211,13 @@ public class CombatView extends JFrame {
         this.neighbours = new Neighbours();
         this.setSize(heightModifier * size, widthModifier * size);
         this.setLayout(new BorderLayout());
-        this.initializeUI(size, 20, 35, 5, 20, 20);
+        this.initializeUI(
+            size,
+            DEFAULT_BAR_HEIGHT,
+            DEFAULT_BAR_WIDTH,
+            DEFAULT_SPACE_BUFFER,
+            DEFAULT_SQUARE_WIDTH,
+            DEFAULT_SQUARE_HEIGHT);
     }
 
     private void initializeUI(final int size,
@@ -308,7 +342,10 @@ public class CombatView extends JFrame {
         this.buttonPanelContainer.add(bagButtonPanel, "bagButtons");
 
         this.infoLabel = new JLabel("Combat Started!", SwingConstants.CENTER);
-        this.infoLabel.setPreferredSize(new Dimension(70 * size, 30));
+        this.infoLabel.setPreferredSize(
+            new Dimension(
+                DEFAULT_WIDTH_MUTATOR_FOR_TEXT_FIELD * size,
+                DEFAULT_TEXT_FIELD_HEIGHT));
 
         JPanel southPanel = new JPanel();
         southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
