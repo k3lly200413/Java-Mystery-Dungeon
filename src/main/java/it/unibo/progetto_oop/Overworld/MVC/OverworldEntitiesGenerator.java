@@ -1,12 +1,12 @@
 package it.unibo.progetto_oop.Overworld.MVC;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
-import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Combat.PotionFactory.ItemFactory;
-import it.unibo.progetto_oop.Combat.PotionStrategy.Potion;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactory;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactoryImpl;
@@ -21,7 +21,9 @@ public class OverworldEntitiesGenerator {
     List<Item> itemList = new ArrayList<>();
     ItemFactory itemFactory = new ItemFactory();
 
-    List<Item> enemyList = new ArrayList<>();
+    List<Enemy> enemyList = new ArrayList<>();
+    private static final int ENEMY_HP = 100;
+    private static final int ENEMY_POWER = 20;
 
     public OverworldEntitiesGenerator(Floor curreFloor, Player player) {
         generateItems(curreFloor);
@@ -30,24 +32,29 @@ public class OverworldEntitiesGenerator {
     }
     
     private void generateItems(Floor currentFloor) {
-        List<Position> posItems = new ArrayList<>();
-        posItems.addAll(currentFloor.getObjectsPositions(TileType.ITEM));
-        posItems.stream().forEach(pos -> itemList.add(itemFactory.createItem("null", pos)));
+        List<String> types = List.of("Health Potion", "Antidote", "Attack Buff");
+        var rand = ThreadLocalRandom.current();
+        for (Position pos : currentFloor.getObjectsPositions(TileType.ITEM)) {
+            String type = types.get(rand.nextInt(types.size()));
+            itemList.add(itemFactory.createItem(type, pos));
+        }
     }
 
     private void generateEnemies(Floor currentFloor) {
-        // TO DO
-        /* 
         EnemyFactory factory = new EnemyFactoryImpl();
-
-        Enemy hider = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, enemies.get(0), true, this.model, this);
-        Enemy patroller = factory.createPatrollerEnemy(ENEMY_HP, ENEMY_POWER, enemies.get(0), true, this.model, this);
-        enemyList.add(hider);
-        enemyList.add(patroller);*/
+        for (Position pos : currentFloor.getObjectsPositions(TileType.ENEMY)) {
+            int roll = ThreadLocalRandom.current().nextInt(3);
+            Enemy enemy;
+            switch (roll) {
+                case 0 -> enemy = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, pos, true, Collections.emptySet());
+                case 1 -> enemy = factory.createSleeperEnemy(ENEMY_HP, ENEMY_POWER, pos, true, Collections.emptySet());
+                default -> enemy = factory.createPatrollerEnemy(ENEMY_HP, ENEMY_POWER, pos, true, Collections.emptySet());
+            }
+            enemyList.add(enemy);
+        }
     }
 
     private void spawnPlayer(Floor currentFloor, Player player) {
         player.setPosition(currentFloor.getObjectsPositions(TileType.PLAYER).get(0));
-        //Da capire dove passare player
     }
 }
