@@ -13,8 +13,6 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
-import it.unibo.progetto_oop.Combat.CommandPattern.GameButton;
-import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
 import it.unibo.progetto_oop.Combat.Helper.Neighbours;
 import it.unibo.progetto_oop.Combat.Position.Position;
 
