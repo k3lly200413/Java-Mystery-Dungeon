@@ -162,7 +162,7 @@ public class CombatController {
             e -> System.out.println("Run clicked - Not Yet Implemented"));
         this.view.addCurePoisonButtonListener(
             e -> this.handleCurePoisonInput());
-        this.view.addAttackButtonListener(e -> handleAttackBuff());
+        this.view.addAttackButtonListener(e -> handleAttackMenu());
         this.view.addAttackBuffButtonListener(e -> handleAttackBuff());
         this.view.addHealButtonListener(e -> handleHeal());
     }
@@ -253,15 +253,6 @@ public class CombatController {
                 onPlayerAttackComplete);
     }
 
-    /* NOT USED, DELETE?
-    private void startDelayedEnemyTurn(final int delay) {
-        Timer enemyTurnDelayTimer = new Timer(delay, e -> {
-            enemyTurn();
-        });
-        enemyTurnDelayTimer.setRepeats(false); // ensure it only runs once
-        enemyTurnDelayTimer.start();
-    }*/
-
     /**
      * Executes a delayed enemy action using a Swing Timer.
      * Stops any existing timer and runs the given action after the delay
@@ -328,40 +319,6 @@ public class CombatController {
             this, applyPoison, applyFlameIntent);
     }
 
-    /* NOT USED, DELETE?
-    public void performPlayerLongRangeAttack(
-        final boolean applyPoison, final boolean applyFlameIntent) {
-        if (!this.model.isPlayerTurn() || this.isAnimationRunning()) {
-            return;
-        }
-        this.view.setAllButtonsDisabled();
-        this.view.clearInfo();
-        this.view.showInfo(
-            applyPoison ? "Player uses poison!"
-            : "Player uses long range attack!");
-
-        this.longRangeAttackAnimation(
-            this.model.getPlayerPosition(),
-            1, applyFlameIntent, !applyFlameIntent, () -> {
-            this.model.decreaseEnemyHealth(model.getPlayerPower());
-            if (applyPoison) {
-                this.model.setEnemyPoisoned(true);
-                this.view.showInfo("Enemy is Poisoned!");
-            }
-
-            this.view.updateEnemyHealth(this.model.getEnemyHealth());
-            new AnimatingState().handleAnimationComplete(this);
-            // this.applyPostTurnEffects();
-
-            if (checkGameOver()) {
-                return;
-            }
-
-            this.startDelayedEnemyTurn(POST_ATTACK_DELAY);
-            this.redrawView();
-        });
-    }*/
-
     /**
      * Animates a long-range attack.
      * This method handles the animation of a long-range attack,
@@ -397,14 +354,6 @@ public class CombatController {
         .isGameOver(this.model.isGameOver())
         .build();
         this.view.redrawGrid(redrawContext);
-        /*this.redrawView(
-            this.model.getPlayerPosition(), this.model.getEnemyPosition(),
-            this.model.getAttackPosition(), 0, true, true, !isPoison, isPoison,
-            1, 1, this.model.isGameOver(), (model.isPlayerTurn()
-            ? model.getEnemyPosition()
-            : model.getPlayerPosition()), false, new ArrayList<>(),
-            false, 0, false, 0
-        );*/
 
         System.out.println("Attacker Position => "
         + attacker.equals(model.getEnemyPosition()));
@@ -465,15 +414,6 @@ public class CombatController {
             .isGameOver(this.model.isGameOver())
             .build();
             this.view.redrawGrid(defaultRedraw);
-            /*this.redrawView(
-                    this.model.getPlayerPosition(),
-                    this.model.getEnemyPosition(),
-                    this.model.getAttackPosition(),
-                    (isAttack || isPoison) ? 0 : 1,
-                    true, true, !isPoison, isPoison, 1, 1, false,
-                    model.getPlayerPosition(),
-                    (isAttack || isPoison) ? false : true,
-                    new ArrayList<Position>(), false, 0, false, 0);*/
         });
         animationTimer.start();
     }
@@ -483,6 +423,7 @@ public class CombatController {
      * It should be called from the boss state.
      */
     public void handleBossDeathRayAttack() {
+        // TODO: fix!
         // call boss state and run handleBossDeathRayAttack(this);
     }
     /**
@@ -554,11 +495,6 @@ public class CombatController {
                 .deathRayPath(deathRayLastPosition)
                 .build();
                 this.view.redrawGrid(defaultRedraw);
-                /*this.redrawView(this.model.getPlayerPosition(),
-                        this.model.getEnemyPosition(), new Position(0, 0),
-                        2, true, true, false,
-                        false, 1, 1, false, new Position(0, 0),
-                        true, deathRayLastPosition, false, 0, false, 0);*/
             }
         });
 
@@ -784,13 +720,6 @@ public class CombatController {
                 .isGameOver(this.model.isGameOver())
                 .build();
                 this.view.redrawGrid(defaultRedraw);
-                /*this.redrawView(this.model.getPlayerPosition(),
-                this.model.getEnemyPosition(), this.model.getAttackPosition(),
-                0, false, true, false, false, 1, 1,
-                this.model.isGameOver(), this.model.isPlayerTurn()
-                ? this.model.getEnemyPosition()
-                : this.model.getPlayerPosition(), false,
-                new ArrayList<>(), false, 0, false, 0); */
             }
         });
         animationTimer.start();
@@ -822,13 +751,7 @@ public class CombatController {
                 .isGameOver(this.model.isGameOver())
                 .build();
                 this.view.redrawGrid(defaultRedraw);
-                /* this.redrawView(this.model.getPlayerPosition(),
-                this.model.getEnemyPosition(), this.model.getAttackPosition(),
-                0, false, true, false, false, 1, 1,
-                this.model.isGameOver(), this.model.isPlayerTurn()
-                ? this.model.getEnemyPosition()
-                : this.model.getPlayerPosition(), false,
-                new ArrayList<>(), false, 0, false, 0);*/
+
             }
         });
         animationTimer.start();
@@ -876,45 +799,11 @@ public class CombatController {
                 .poisonYCoord(step[0])
                 .build();
                 this.view.redrawGrid(defaultRedraw);
-                /*redrawView(
-                    this.model.getPlayerPosition(),
-                    this.model.getEnemyPosition(),
-                    this.model.getAttackPosition(),
-                    0, true, true, false, false, 1, 1, this.model.isGameOver(),
-                    (this.model.isPlayerTurn()
-                    ? this.model.getEnemyPosition()
-                    : this.model.getPlayerPosition()),
-                    false, new ArrayList<>(), true, step[0], false, 0);*/
                 step[0]--;
             }
         });
         this.animationTimer.start();
     }
-
-    /*private void infoNextDrawAnimation(final Position originalEnemyPosition) {
-        stopAnimationTimer();
-        final int defaultZoom = 6;
-        animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, e -> {
-            zoomerStep++;
-            if (zoomerStep >= defaultZoom) {
-                stopAnimationTimer();
-                model.setEnemyPosition(
-                    originalEnemyPosition); // Reset enemy position
-                redrawView();
-                this.view.setAllButtonsEnabled();
-                zoomerStep = 0;
-            } else {
-                this.redrawView(
-                    model.getPlayerPosition(),
-                    model.getEnemyPosition(),
-                    model.getAttackPosition(),
-                    0, true, true, false,
-                    false, 1, zoomerStep, false, model.getPlayerPosition(),
-                    false, new ArrayList<>(), false, 0, false, 0);
-            }
-        });
-        animationTimer.start();
-    }*/
 
     /**
      * Applies post-turn effects such as poison damage.
@@ -958,8 +847,6 @@ public class CombatController {
         final Position death,
         final boolean isCharging,
         final Runnable onComplete) {
-        // this.animationTimer.setRepeats(false);
-        // this.animationTimer.start();
 
         final int defaultPosition = 4;
         final int defaultTimes = 3;
@@ -985,27 +872,6 @@ public class CombatController {
                 .chargingCellDistance(position[0])
                 .build();
                 this.view.redrawGrid(defaultRedraw);
-                /* this.redrawView(
-                    this.model.getPlayerPosition(),
-                    this.model.getEnemyPosition(),
-                    this.model.getAttackPosition(),
-                    0,
-                    true,
-                    true,
-                    false,
-                    false,
-                    1,
-                    1,
-                    false,
-                    (model.isPlayerTurn()
-                    ? model.getEnemyPosition()
-                    : model.getPlayerPosition()),
-                    false,
-                    new ArrayList<>(),
-                    false,
-                    position[0],
-                    isCharging,
-                    position[0]);*/
             if (position[0] == 0) {
                 times[0]--;
                 if (times[0] == 0) {
@@ -1042,32 +908,18 @@ public class CombatController {
         return this.model;
     }
 
-    /*
-     * private void performAttack() {
-     *
-     * Timer playerTimer = new Timer(100, e -> {
-     * model.movePlayer(1, 0);
-     * if (model.areNeighbours(model.getEnemyPosition())) {
-     * model.decreaseEnemyHealth();
-     * ((Timer) e.getSource()).stop();
-     * }
-     * view.redraw(model.getCells(), model.getPlayerPosition(),
-     * model.getEnemyPosition());
-     * });
-     * playerTimer.start();
-     * }
-     */
-
     private void handleAttackBuff() {
-        if (this.currentState != null) {
-            currentState.handleAttackBuffInput(this);
-        }
+        this.currentState.handlePotionUsed(
+            this,
+            new ItemFactory()
+                .createItem("attack buff", new Position(0, 0)));
     }
 
     private void handleHeal() {
-        if (this.currentState != null) {
-            currentState.handleHealInput(this);
-        }
+        this.currentState.handlePotionUsed(
+            this,
+            new ItemFactory()
+                .createItem("Health Potion", new Position(0, 0)));
     }
 
     /**
@@ -1231,13 +1083,6 @@ public class CombatController {
                     : this.model.getPlayerPosition()))
                 .build();
                 this.view.redrawGrid(defaultRedraw);
-                /* this.redrawView(this.model.getPlayerPosition(),
-                    this.model.getEnemyPosition(),
-                    this.model.getAttackPosition(), 0, true, true,
-                    false, false, 1, 1,
-                    this.model.isGameOver(), this.model.getWhoDied(),
-                    false, new ArrayList<>(), true,
-                    conto[0], false, 0);*/
                 // faccio salire il veleno
                 conto[0]--;
             }
