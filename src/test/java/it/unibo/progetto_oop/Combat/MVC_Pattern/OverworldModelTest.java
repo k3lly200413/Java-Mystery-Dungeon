@@ -25,7 +25,7 @@ public class OverworldModelTest {
     private static final int ENEMY_HP = 100; // Example enemy max HP
     private static final int ENEMY_POWER = 20; // Example enemy power
 
-    private OverworldApplication game;
+    private viewManager game;
     private OverworldModel model;
     private Inventory inventory;
 

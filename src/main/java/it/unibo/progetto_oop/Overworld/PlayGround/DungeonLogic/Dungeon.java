@@ -64,7 +64,6 @@ public class Dungeon {
             floors.add(new Floor(cfg, generator));
         }
         currentFloor = nextIndex;
-        new OverworldEntitiesGenerator(this.getCurrentFloor());  //crea l'oggetto e lo mette nella posizione assegnata
         return true;
     }
 

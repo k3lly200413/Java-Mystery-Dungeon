@@ -11,6 +11,7 @@ import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.PatrolMovementStra
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.FollowerState;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.PatrollerState;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.SleeperState;
+import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public class EnemyFactoryImpl implements EnemyFactory {
@@ -19,7 +20,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     MovementStrategy patrolMovementStrategy = new PatrolMovementStrategy();
     
     @Override
-    public Enemy createPatrollerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls) {
+    public Enemy createPatrollerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, OverworldModel model) {
         // create generic enemy
         Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition, walls);
 
@@ -29,7 +30,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     }
 
     @Override
-    public Enemy createFollowerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls) {
+    public Enemy createFollowerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, OverworldModel model) {
         VisibilityUtil visibilityUtil = new VisibilityUtil();
         
         Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition, walls);
@@ -39,8 +40,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
     }
 
     @Override
-    public Enemy createSleeperEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls) {
-        Enemy enemy = new GenericEnemy(hp, hp, power,spawnPosition, walls);
+    public Enemy createSleeperEnemy(int hp, int power, Position spawnPosition, boolean isVertical, OverworldModel model) {
+        Enemy enemy = new GenericEnemy(hp, hp, power,spawnPosition);
 
         enemy.setState(new SleeperState());
 

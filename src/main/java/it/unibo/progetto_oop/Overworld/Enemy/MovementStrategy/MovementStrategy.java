@@ -1,10 +1,15 @@
 package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy;
 
+<<<<<<< HEAD
+import it.unibo.progetto_oop.Overworld.MVC.viewManager;
+import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
+=======
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 import java.util.Set;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+>>>>>>> c10be239e276a0e972e842f268004520fb4bd541
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveDirection;;
 
