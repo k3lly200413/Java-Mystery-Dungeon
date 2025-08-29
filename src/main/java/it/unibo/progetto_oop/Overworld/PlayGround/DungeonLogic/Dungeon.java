@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import it.unibo.progetto_oop.Overworld.MVC.OverworldEntitiesGenerator;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
 
 public class Dungeon {
@@ -55,7 +56,6 @@ public class Dungeon {
         if (currentFloor >= config.nFloors() - 1) {
             return false;
         }
-
         int nextIndex = currentFloor + 1;
         if (nextIndex >= floors.size()) {
             FloorConfig cfg = (nextIndex == config.nFloors() - 1)
@@ -63,12 +63,12 @@ public class Dungeon {
                     : config; // config base
             floors.add(new Floor(cfg, generator));
         }
-
         currentFloor = nextIndex;
+        new OverworldEntitiesGenerator(this.getCurrentFloor());  //crea l'oggetto e lo mette nella posizione assegnata
         return true;
     }
 
-    private static FloorConfig finalRoomConfig(final FloorConfig c) {
+    private FloorConfig finalRoomConfig(final FloorConfig c) {
         return new FloorConfig.Builder()
                 .size(c.width(), c.height())
                 .rooms(1)

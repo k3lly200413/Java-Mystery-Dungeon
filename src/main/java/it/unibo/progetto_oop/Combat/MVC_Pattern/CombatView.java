@@ -16,7 +16,7 @@ import javax.swing.border.BevelBorder;
 import it.unibo.progetto_oop.Combat.CommandPattern.GameButton;
 import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
 import it.unibo.progetto_oop.Combat.Helper.Neighbours;
-import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;

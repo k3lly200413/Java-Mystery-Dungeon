@@ -1,7 +1,8 @@
 package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy;
 
-import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+
 import java.util.*;
 import java.util.stream.IntStream;
 

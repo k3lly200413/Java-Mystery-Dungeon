@@ -5,8 +5,7 @@ import it.unibo.progetto_oop.Combat.PotionStrategy.AttackBuff;
 import it.unibo.progetto_oop.Combat.PotionStrategy.CurePoison;
 import it.unibo.progetto_oop.Combat.PotionStrategy.Healing;
 import it.unibo.progetto_oop.Combat.PotionStrategy.Potion;
-
-import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 /**
  * @author Laura Bertozzi

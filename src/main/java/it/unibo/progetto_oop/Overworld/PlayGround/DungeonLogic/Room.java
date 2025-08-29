@@ -3,9 +3,10 @@ package it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Pair;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
-public class Room implements Iterable<Pair<Integer, Integer>>{
+
+public class Room implements Iterable<Position>{
     int x, y, width, height;
 
     public Room(int x, int y, int width, int height) {
@@ -53,7 +54,7 @@ public class Room implements Iterable<Pair<Integer, Integer>>{
     }
 
     @Override
-    public Iterator<Pair<Integer, Integer>> iterator() {
+    public Iterator<Position> iterator() {
         return new Iterator<>() {
             private int cx = x, cy = y;
 
@@ -63,9 +64,9 @@ public class Room implements Iterable<Pair<Integer, Integer>>{
             }
 
             @Override
-            public Pair<Integer, Integer> next() {
+            public Position next() {
                 if (!hasNext()) throw new NoSuchElementException();
-                Pair<Integer, Integer> c = new Pair<>(cx, cy);
+                Position c = new Position(cx, cy);
                 cx++;
                 if (cx >= x + width) { cx = x; cy++; }
                 return c;
