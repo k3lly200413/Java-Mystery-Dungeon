@@ -18,18 +18,16 @@ public class FollowerState implements GenericEnemyState{
     private final MovementUtil movementUtil;
     private final MovementStrategy movementStrategy;
     private final boolean isVertical;
-    private final OverworldApplication game;
-    
+
     // costants
     private final static int NEIGHBOUR_DISTANCE = 4; // Example value, adjust as needed
     private final static int COMBAT_DISTANCE = 1; // Example value, adjust as needed
 
-    public FollowerState(VisibilityUtil visibilityUtil, MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical, OverworldApplication game){
+    public FollowerState(VisibilityUtil visibilityUtil, MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical){
         this.visibilityUtil = visibilityUtil;
         this.movementUtil = movementUtil;
         this.isVertical = isVertical;
         this.movementStrategy = movementStrategy;
-        this.game = game;
     }
 
     /** 
@@ -60,13 +58,13 @@ public class FollowerState implements GenericEnemyState{
 
             // if the player and the enemy are close enough -> enter combat state
             if (this.visibilityUtil.neighbours(enemy.getCurrentPosition(), player.getPosition(), COMBAT_DISTANCE)){
-                enemy.setState(new CombatTransitionState(game, enemy.getState()), model);
+                enemy.setState(new CombatTransitionState(enemy.getState()), model);
                 enemy.setPosition(player.getPosition());
             } else {
                 enemy.setPosition(nextPos); // not close enough -> move closer towards the player
             }
         } else{ // else, continue patrolling
-            this.currentDirection = this.movementStrategy.executeMove(enemy, model, this.game, this.currentDirection);
+            this.currentDirection = this.movementStrategy.executeMove(enemy, model, this.currentDirection);
         }
     }
 

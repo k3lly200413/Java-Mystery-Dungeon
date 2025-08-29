@@ -24,7 +24,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
         Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition);
 
         // set the correct state
-        enemy.setState(new PatrollerState(movementUtil, patrolMovementStrategy, isVertical, game), model);
+        enemy.setState(new PatrollerState(movementUtil, patrolMovementStrategy, isVertical), model);
         return enemy;
     }
 
@@ -34,7 +34,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
         
         Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition);
 
-        enemy.setState(new FollowerState(visibilityUtil, movementUtil, patrolMovementStrategy, isVertical, game), model);
+        enemy.setState(new FollowerState(visibilityUtil, movementUtil, patrolMovementStrategy, isVertical), model);
         return enemy;
     }
 

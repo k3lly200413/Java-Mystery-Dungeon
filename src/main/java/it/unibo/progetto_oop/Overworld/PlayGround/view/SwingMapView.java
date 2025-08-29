@@ -15,21 +15,30 @@ import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 
 public final class SwingMapView extends JFrame implements MapView {
+    /** The panel used to render the map. */
     private final MapPanel panel;
-    private Runnable nextFloorAction = () -> {};
 
-    public SwingMapView(String title, int cellSize) {
+    /** Action to be executed when the next floor is requested. */
+    private Runnable nextFloorAction = () -> { };
+
+    /**
+     * Constructs a SwingMapView with the specified title and cell size.
+     *
+     * @param title the title of the JFrame
+     * @param cellSize the size of each cell in the map
+     */
+    public SwingMapView(final String title, final int cellSize) {
         super(title);
         this.panel = new MapPanel(cellSize);
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(new JScrollPane(panel));
         //setLocationByPlatform(true);
 
-        // messo qui per semplicità e testing, dovrebbe essere il controller a dire alla view cosa fare
+        // messo qui per semplicità e testing,
+        // dovrebbe essere il controller a dire alla view cosa fare
         addKeyListener(new KeyAdapter() {
             @Override
-            public void keyPressed(KeyEvent e) {
+            public void keyPressed(final KeyEvent e) {
                 if (e.getKeyChar() == 'n') {
                     nextFloorAction.run();
                 }
@@ -38,40 +47,50 @@ public final class SwingMapView extends JFrame implements MapView {
         setFocusable(true);
     }
 
-    /**azione da fare quando premo n. */
-    public void onNextFloorRequested(Runnable action) {
+    /**
+     * Sets the action to be executed when the next floor is requested.
+     *
+     * @param action the action to execute when 'n' is pressed
+     */
+    public void onNextFloorRequested(final Runnable action) {
         this.nextFloorAction = Objects.requireNonNull(action);
     }
 
-    /** Mostra la finestra. */
+    /**
+     * Makes the view visible.
+     */
     public void showView() {
         pack();
         setVisible(true);
     }
 
-    /* ------------ MapView ------------ */
     @Override
-    public void render(StructureData grid) {
+    public void render(final StructureData grid) {
         panel.setGrid(grid);
         pack();
         panel.repaint();
-        if (!isVisible()) setVisible(true);
+        if (!isVisible()) {
+            setVisible(true);
+        }
     }
 
     /* ============ Panel ============ */
     private static final class MapPanel extends JPanel {
+        /** The grid structure representing the floor. */
         private StructureData grid;
+
+        /** The size of each cell in the map. */
         private final int cell;
 
-        MapPanel(int cellSize) {
-            this.cell = Math.max(4, cellSize);
+        MapPanel(final int cellSize) {
+            this.cell = cellSize;
             setBackground(Color.BLACK);
-            //setDoubleBuffered(true);
+            // setDoubleBuffered(true);
         }
 
-        void setGrid(StructureData g) {
+        void setGrid(final StructureData g) {
             this.grid = g;
-            //revalidate();
+            // revalidate();
         }
 
         @Override
@@ -82,9 +101,9 @@ public final class SwingMapView extends JFrame implements MapView {
         }
 
         @Override
-        protected void paintComponent(Graphics g) {
+        protected void paintComponent(final Graphics g) {
             super.paintComponent(g);
-            //if (grid == null) return;
+            // if (grid == null) return;
             for (int y = 0; y < grid.height(); y++) {
                 for (int x = 0; x < grid.width(); x++) {
                     TileType t = grid.get(x, y);
@@ -92,15 +111,15 @@ public final class SwingMapView extends JFrame implements MapView {
                     g.fillRect(x * cell, y * cell, cell, cell);
                     g.setColor(new Color(0, 0, 0, 40));
                     g.drawRect(x * cell, y * cell, cell, cell);
-                    
+
                 }
             }
         }
 
-        private Color colorFor(TileType t) { //switch expression
+        private Color colorFor(final TileType t) { // switch expression
             return switch (t) {
-                case WALL   -> new Color(120, 120, 120);
-                case ROOM   -> new Color(220, 220, 220);
+                case WALL   ->  Color.BLACK;
+                case ROOM   ->  Color.LIGHT_GRAY;
                 case TUNNEL -> new Color(255, 215, 0); 
                 case STAIRS -> new Color(0, 170, 255);
                 case PLAYER -> new Color(80, 200, 120);

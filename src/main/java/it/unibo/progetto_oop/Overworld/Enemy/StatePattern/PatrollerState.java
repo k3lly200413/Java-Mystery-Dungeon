@@ -16,13 +16,11 @@ public class PatrollerState implements GenericEnemyState {
     private final MovementUtil movementUtil; 
     private final boolean isVertical;
     private final MovementStrategy movementStrategy;
-    private final OverworldApplication game;
 
-    public PatrollerState(MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical, OverworldApplication game){
+    public PatrollerState(MovementUtil movementUtil, MovementStrategy movementStrategy, boolean isVertical){
         this.movementUtil = movementUtil;
         this.isVertical = isVertical;
         this.movementStrategy = movementStrategy;
-        this.game = game;
     }
 
     @Override
@@ -40,7 +38,7 @@ public class PatrollerState implements GenericEnemyState {
 
     @Override
     public void update(Enemy enemy, OverworldModel model, Player player) {
-        this.currentDirection = this.movementStrategy.executeMove(enemy, model, this.game, this.currentDirection);
+        this.currentDirection = this.movementStrategy.executeMove(enemy, model,this.currentDirection);
     }
 
     @Override

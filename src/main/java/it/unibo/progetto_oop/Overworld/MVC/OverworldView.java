@@ -1,7 +1,8 @@
 package it.unibo.progetto_oop.Overworld.MVC;
 
-import javax.swing.*;
 import java.util.Objects;
+
+import javax.swing.JPanel;
 
 public class OverworldView extends JPanel {
     private final OverworldModel model;
@@ -14,4 +15,4 @@ public class OverworldView extends JPanel {
         this.model = Objects.requireNonNull(model, "Model cannot be null");
     }
     
-}
+} //NON SERVE AL MOMENTO NON MOSTRA NULLA ( PROBABILMENTE NON SERVIRÀ MAI QUI)
