@@ -2,16 +2,13 @@ package it.unibo.progetto_oop.Overworld.Enemy.StatePattern;
 
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldApplication;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class CombatTransitionState implements GenericEnemyState{
-    private final OverworldApplication game;
     private final EnemyType enemyType;
 
-    public CombatTransitionState(OverworldApplication game, EnemyType enemyType) {
-        this.game = game;
+    public CombatTransitionState(EnemyType enemyType) {
         this.enemyType = enemyType;
     }
 
