@@ -14,10 +14,10 @@ public interface MovementStrategy {
     /**
      * Move the enemy
      * @param enemy the enemy to move
-     * @param model the overworld model
-     * @param game the game application
+     * @param walls walls present in the middle of the current floor
+     * @param player the player
      * @param currDirection the current direction of movement
      * @return the new direction of movement
      */
-    MoveDirection executeMove(Enemy enemy,Set<Position> walls, Player player, MoveDirection currDirection); // TODO: need to add a parameter for game application
+    MoveDirection executeMove(Enemy enemy,Set<Position> walls, Player player, MoveDirection currDirection); 
 }
