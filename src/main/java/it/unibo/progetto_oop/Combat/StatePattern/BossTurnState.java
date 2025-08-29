@@ -6,9 +6,9 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class BossTurnState implements CombatState {
 
-    private static final int ENEMY_ACTION_DELAY = 500; // ms delay before enemy acts
-    private static final int TOTAL_ATTACKS_IN_SEQUENCE = 3;
+    /** Indicates the boss health percentage. */
     private int bossHealthPercent;
+    /** Indicates the boss state. */
     private String bossState = "NORMAL";
 
     @Override
@@ -70,51 +70,68 @@ public class BossTurnState implements CombatState {
             "Unimplemented method 'handleCurePoisonInput'");
     }
 
-    @Override
-    public final void enterState(final CombatController context) {
-        System.out.println("\nBoss State: Entering Boss Turn State\n");
-        this.bossHealthPercent =
+    // Constants for Boss logic
+/** Health percentage threshold to switch the boss state to ENRAGED. */
+private static final int BOSS_ENRAGED_THRESHOLD = 50;
+
+/** Interval of turns for the boss to perform the Death Ray attack. */
+private static final int DEATH_RAY_INTERVAL = 5;
+
+/** Interval of turns for the boss to charge a super attack. */
+private static final int SUPER_ATTACK_CHARGE_INTERVAL = 4;
+
+/** Interval of turns for the boss to perform a standard enemy attack. */
+private static final int STANDARD_ATTACK_INTERVAL = 3;
+
+/** Conversion factor to percentage values (100%). */
+private static final int PERCENT_CONVERSION = 100;
+
+@Override
+public final void enterState(final CombatController context) {
+    System.out.println("\nBoss State: Entering Boss Turn State\n");
+    this.bossHealthPercent =
         (context.getModel().getEnemyHealth()
-        / context.getModel().getMaxHealth()) * 100;
+        / context.getModel().getMaxHealth()) * PERCENT_CONVERSION;
 
-        if (this.bossHealthPercent < 50
-            && this.bossState.toUpperCase().equals("NORMAL")) {
-            this.bossState = "ENRAGED";
-            context.getView().showInfo("The Boss is now ENRAGED");
-            // TODO: Change colour of Boss
-        }
-        if (this.bossState.toUpperCase().equals("ENRAGED")) {
-            context.performEnemySuperAttack();
-        } else {
-            if (context.getModel().getBossTurnCounter() % 5 == 0) {
-                context.setState(new AnimatingState());
-                context.performBossDeathRayAttack();
-                context.getModel().setBossTurn(false);
-                context.getModel().increaseBossTurnCounter();
-            } else if (context.getModel().getBossTurnCounter() % 4 == 0) {
-                context.getView().showInfo(
-                    "The Boss is charging up his Super Attack!");
-                context.setState(new AnimatingState());
-                context.performDeathAnimation(
-                    context.getModel().getEnemyPosition(), true, () -> {
-                    context.getCurrentState().handleAnimationComplete(context);
-                });
-                context.getModel().setBossTurn(false);
-                context.getModel().increaseBossTurnCounter();
-            } else if (context.getModel().getBossTurnCounter() % 3 == 0) {
-                context.setState(new AnimatingState());
-                context.performEnemyAttack();
-                context.getModel().setBossTurn(false);
-                context.getModel().increaseBossTurnCounter();
-            } else {
-                context.setState(new AnimatingState());
-                context.performEnemyPhysicalAttack();
-                context.getModel().setBossTurn(false);
-                context.getModel().increaseBossTurnCounter();
-            }
-        }
-
+    if (this.bossHealthPercent < BOSS_ENRAGED_THRESHOLD
+        && this.bossState.toUpperCase().equals("NORMAL")) {
+        this.bossState = "ENRAGED";
+        context.getView().showInfo("The Boss is now ENRAGED");
     }
+    if (this.bossState.toUpperCase().equals("ENRAGED")) {
+        context.performEnemySuperAttack();
+    } else {
+        if (context.getModel().getBossTurnCounter() % DEATH_RAY_INTERVAL == 0) {
+            context.setState(new AnimatingState());
+            context.performBossDeathRayAttack();
+            context.getModel().setBossTurn(false);
+            context.getModel().increaseBossTurnCounter();
+        } else if (context.getModel().
+        getBossTurnCounter() % SUPER_ATTACK_CHARGE_INTERVAL == 0) {
+            context.getView().showInfo(
+                "The Boss is charging up his Super Attack!");
+            context.setState(new AnimatingState());
+            context.performDeathAnimation(
+                context.getModel().getEnemyPosition(), true, () -> {
+                context.getCurrentState().handleAnimationComplete(context);
+            });
+            context.getModel().setBossTurn(false);
+            context.getModel().increaseBossTurnCounter();
+        } else if (context.getModel().
+        getBossTurnCounter() % STANDARD_ATTACK_INTERVAL == 0) {
+            context.setState(new AnimatingState());
+            context.performEnemyAttack();
+            context.getModel().setBossTurn(false);
+            context.getModel().increaseBossTurnCounter();
+        } else {
+            context.setState(new AnimatingState());
+            context.performEnemyPhysicalAttack();
+            context.getModel().setBossTurn(false);
+            context.getModel().increaseBossTurnCounter();
+        }
+    }
+}
+
 
     @Override
     public final void exitState(final CombatController context) {

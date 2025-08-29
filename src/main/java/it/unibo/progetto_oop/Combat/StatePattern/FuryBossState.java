@@ -6,12 +6,18 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class FuryBossState implements CombatState {
 
+    /** Counter to track the number of boss attacks
+     * performed in the fury state.
+     */
     private int bossCounter;
-    private String curranteBossState;
 
-    public FuryBossState(){
+    /** Current state of the boss, e.g., "NORMAL", "ENRAGED". */
+    private String currentBossState;
+
+    /** Constructor for FuryBossState. */
+    public FuryBossState() {
         this.bossCounter = 0;
-        this.curranteBossState = "NORMAL";
+        this.currentBossState = "NORMAL";
     }
 
 

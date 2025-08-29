@@ -7,14 +7,6 @@ import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatView;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class AnimatingState implements CombatState {
-    /**
-     * Indicates if it is the player's turn.
-     */
-    private final boolean playerTurn = true;
-    /**
-     * Delay for the animation in milliseconds.
-     */
-    private static final int ANIMATION_DELAY = 500;
 
     @Override
     public final void handlePhysicalAttackInput(

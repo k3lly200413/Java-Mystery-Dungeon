@@ -9,10 +9,22 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class EnemyTurnState implements CombatState {
 
-    private static final int ENEMY_ACTION_DELAY = 500; // Delay in milliseconds before enemy action
+    /** Delay in milliseconds before enemy action. */
+    private static final int ENEMY_ACTION_DELAY = 500;
 
+    /**
+     * Handles the transition logic when entering the enemy turn state.
+     *
+     * If the boss is active and still within its attack sequence,
+     * it performs a delayed super attack. Otherwise, it checks if the boss
+     * has completed its sequence and returns control to the player,
+     * or performs a standard enemy attack after a short delay.
+     *
+     * @param context the CombatController providing access
+     *                to the model, view, and state transitions
+     */
     @Override
-    public void enterState(CombatController context) {
+    public void enterState(final CombatController context) {
         // Logic for entering enemy turn state
         System.out.println("Entering enemy turn state.");
         CombatModel model = context.getModel();
@@ -67,76 +79,70 @@ public class EnemyTurnState implements CombatState {
     }
 
     @Override
-    public void exitState(CombatController context) {
+    public void exitState(final CombatController context) {
         // Logic for exiting enemy turn state
         // context.getModel().setPlayerTurn(true);
         // context.getView().updatePlayerTurnView();
     }
 
     @Override
-    public void handlePhysicalAttackInput(CombatController context) {
+    public void handlePhysicalAttackInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handlePhysicalAttackInput'");
+
     }
 
     @Override
-    public void handleLongRangeAttackInput(CombatController context, boolean isPoison, boolean isFlame) {
+    public void handleLongRangeAttackInput(final CombatController context,
+    final boolean isPoison, final boolean isFlame) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleLongRangeAttackInput'");
+
     }
 
     @Override
-    public void handleInfoInput(CombatController context) {
+    public void handleInfoInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleInfoInput'");
+
     }
 
     @Override
-    public void handleBackInput(CombatController context) {
+    public void handleBackInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleBackInput'");
     }
 
     @Override
-    public void handleBagInput(CombatController context) {
+    public void handleBagInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleBagInput'");
     }
 
     @Override
-    public void handleRunInput(CombatController context) {
+    public void handleRunInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleRunInput'");
     }
 
     @Override
-    public void handleAttackBuffInput(CombatController context) {
+    public void handleAttackBuffInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleAttackBuffInput'");
     }
 
     @Override
-    public void handleHealInput(CombatController context) {
+    public void handleHealInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleHealInput'");
     }
 
     @Override
-    public void handlePotionUsed(CombatController context, Item selectedPotion, Player player) {
+    public void handlePotionUsed(final CombatController context,
+    final Item selectedPotion, final Player player) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handlePotionUsed'");
     }
 
     @Override
-    public void handleCurePoisonInput(CombatController context) {
+    public void handleCurePoisonInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleCurePoisonInput'");
     }
 
     @Override
-    public void handleAnimationComplete(CombatController context) {
+    public void handleAnimationComplete(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleAnimationComplete'");
     }
 
 }

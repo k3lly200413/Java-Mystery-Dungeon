@@ -142,7 +142,7 @@ public class CombatController {
             (this.model.isPlayerTurn()
             ? this.model.getEnemyPosition()
             : this.model.getPlayerPosition()),
-            false, new ArrayList<Position>(),
+            false, new ArrayList<>(),
             false, 0,
             false, 0, SQUARE_HEIGHT, SQUARE_WIDTH);
     }
@@ -540,7 +540,6 @@ public class CombatController {
                     System.out.println("\nI now have to apply poison status\n");
                     onHit.run(); // Execute the action upon hitting
                 }
-                return;
             } else {
                 deathRayLastPosition.add(
                     new Position(
@@ -772,7 +771,7 @@ public class CombatController {
                 this.model.isGameOver(), this.model.isPlayerTurn()
                 ? this.model.getEnemyPosition()
                 : this.model.getPlayerPosition(), false,
-                new ArrayList<Position>(), false, 0, false, 0);
+                new ArrayList<>(), false, 0, false, 0);
             }
         });
         animationTimer.start();
@@ -800,7 +799,7 @@ public class CombatController {
                 this.model.isGameOver(), this.model.isPlayerTurn()
                 ? this.model.getEnemyPosition()
                 : this.model.getPlayerPosition(), false,
-                new ArrayList<Position>(), false, 0, false, 0);
+                new ArrayList<>(), false, 0, false, 0);
             }
         });
         animationTimer.start();
@@ -840,7 +839,7 @@ public class CombatController {
                     (this.model.isPlayerTurn()
                     ? this.model.getEnemyPosition()
                     : this.model.getPlayerPosition()),
-                    false, new ArrayList<Position>(), true, step[0], false, 0);
+                    false, new ArrayList<>(), true, step[0], false, 0);
                 step[0]--;
             }
         });
@@ -866,7 +865,7 @@ public class CombatController {
                     model.getAttackPosition(),
                     0, true, true, false,
                     false, 1, zoomerStep, false, model.getPlayerPosition(),
-                    false, new ArrayList<Position>(), false, 0, false, 0);
+                    false, new ArrayList<>(), false, 0, false, 0);
             }
         });
         animationTimer.start();
@@ -944,7 +943,7 @@ public class CombatController {
                     ? model.getEnemyPosition()
                     : model.getPlayerPosition()),
                     false,
-                    new ArrayList<Position>(),
+                    new ArrayList<>(),
                     false,
                     position[0],
                     isCharging,
