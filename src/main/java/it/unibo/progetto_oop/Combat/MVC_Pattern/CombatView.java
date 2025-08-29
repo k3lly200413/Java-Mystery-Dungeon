@@ -589,21 +589,38 @@ public class CombatView extends JFrame {
     public final JPanel getBagButtonPanel() {
         return this.bagButtonPanel;
     }
+    /**
+     * Returns the attack button panel for the combat view.
+     * @return the attack button panel
+     */
     public final JPanel getAttackButtonPanel() {
         return this.attackButtonPanel;
     }
+    /**
+     * Returns the original button panel for the combat view.
+     * @return the original button panel
+     */
     public final JPanel getOriginalButtonPanel() {
         return this.originalButtonPanel;
     }
-
+    /**
+     * Returns the button panel container for the combat view.
+     * @return the button panel container
+     */
     public final JPanel getButtonPanelContainer() {
         return this.buttonPanelContainer;
     }
-
+    /**
+     * Returns the player health bar for the combat view.
+     * @return the player health bar
+     */
     public final JProgressBar getPlayerHealthBar() {
         return this.playerHealtBar;
     }
-
+    /**
+     * Returns the enemy health bar for the combat view.
+     * @return the enemy health bar
+     */
     public final JProgressBar getEnemyHealthBar() {
         return this.enemyHealthBar;
     }

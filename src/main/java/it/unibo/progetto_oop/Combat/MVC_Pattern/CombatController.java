@@ -51,10 +51,6 @@ public class CombatController {
      */
     private static final int ANIMATION_DELAY = 100;                     //ms
     /**
-     * Post-attack delay before the next action can be taken.
-     */
-    private static final int POST_ATTACK_DELAY = 500;                   // ms
-    /**
      * Delay for the info zoom animation.
      */
     private static final int INFO_ZOOM_DELAY = 200;                     // ms
@@ -75,11 +71,6 @@ public class CombatController {
      * Width of each square in the grid.
      */
     private static final int SQUARE_WIDTH = 20;
-
-    /**
-     * Step counter for the zoomer animation.
-     */
-    private int zoomerStep = 0;
     /**
      * Timer for animations.
      * This is used to control the timing of animations in the combat.
@@ -153,45 +144,6 @@ public class CombatController {
 
         this.view.redrawGrid(defaultRedraw);
     }
-    /**
-     * Redraws the view with specific parameters.
-     * @param palyerPos position of the player
-     * @param enemyPos position of the enemy
-     * @param flamePos position of the flame
-     * @param flameSize size of the flame
-     * @param drawPlayer determine if player should be drawn
-     * @param drawEnemy determine if enemy should be drawn
-     * @param drawFlame determine if flame attack should be drawn
-     * @param drawPoison determine if poison attack should be drawn
-     * @param playerRange range of the player to draw
-     * @param enemyRange range of the enemy to draw
-     * @param isGameOver determine if the game is over
-     * @param whoDied position of the character that died
-     * @param bossRayAttack determine if the boss is using a death ray attack
-     * @param deathRayPath path of the death ray attack
-     * @param drawPoisonDamage if poison damage animation should be drawn
-     * @param poisonYCoord y-coordinate for poison damage
-     * @param isCharging determine if the player is charging an attack
-     * @param chargingPosition position of the charging attack
-     */
-    // public final void redrawView(
-    //     final Position palyerPos, final Position enemyPos,
-    //     final Position flamePos, final int flameSize,
-    //     final boolean drawPlayer, final boolean drawEnemy,
-    //     final boolean drawFlame, final boolean drawPoison,
-    //     final int playerRange, final int enemyRange,
-    //     final boolean isGameOver, final Position whoDied,
-    //     final boolean bossRayAttack, final ArrayList<Position> deathRayPath,
-    //     final boolean drawPoisonDamage, final int poisonYCoord,
-    //     final boolean isCharging, final int chargingPosition) {
-    //     this.view.redrawGrid(
-    //         palyerPos, enemyPos, flamePos, flameSize, drawPlayer,
-    //         drawEnemy, drawFlame, drawPoison, playerRange, enemyRange,
-    //         isGameOver, whoDied, bossRayAttack, deathRayPath, drawPoisonDamage,
-    //         poisonYCoord, isCharging,
-    //         chargingPosition, SQUARE_HEIGHT, SQUARE_WIDTH);
-    // }
-
     /**
      * Uses private methods to Assing Actionlisteners to buttons inside view.
      */
@@ -677,8 +629,7 @@ public class CombatController {
                             nextAttackerPos, nextTargetPos, meleeCheckDistance)
                             || !nextTargetPos.equals(currentTargetPos[0])) {
                         state[0] = 1;
-                    } else if (!nextAttackerPos.equals(currentAttackerPos[0])) {
-                    } else {
+                    } else if (nextAttackerPos.equals(currentAttackerPos[0])) {
                         if (this.neighbours.neighbours(
                                 nextAttackerPos,
                                 nextTargetPos,
