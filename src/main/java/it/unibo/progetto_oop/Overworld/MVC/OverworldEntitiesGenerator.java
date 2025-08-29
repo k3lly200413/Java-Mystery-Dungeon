@@ -49,5 +49,6 @@ public class OverworldEntitiesGenerator {
 
     private void spawnPlayer(Floor currentFloor) {
         player.setPosition(currentFloor.getObjectsPositions(TileType.PLAYER).get(0));
+        //Da capire dove passare player
     }
 }
