@@ -2,6 +2,7 @@ package it.unibo.progetto_oop.Overworld.PlayGround;
 
 import java.util.Random;
 
+import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.FloorGenerator;
@@ -12,6 +13,7 @@ import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RandomPlacem
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RoomPlacementStrategy;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.TunnelPlacementStrategy;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
+import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public final class Main {
     /**
@@ -26,6 +28,12 @@ public final class Main {
      * @param args command-line arguments (not used)
      */
     public static void main(final String[] args) {
+
+        //-------------DA VEDERE !!!----------
+        Inventory inventory = new Inventory();
+        Player player = new Player(100, inventory);
+        // ---------------!!!-----------------
+
         // MODEL
         final Random rand = new Random();
         final RandomPlacementStrategy rps = new ImplRandomPlacement();
@@ -33,7 +41,7 @@ public final class Main {
         final TunnelPlacementStrategy tps = new ImplTunnelPlacement();
         FloorGenerator gen = new FloorGenerator(rrs, tps, rps, rand);
         FloorConfig config = new FloorConfig.Builder().build();
-        Dungeon dungeon = new Dungeon(gen, config);
+        Dungeon dungeon = new Dungeon(gen, config, player);
         // VIEW
         SwingMapView view = new SwingMapView(
             "Java Mystery Dungeon", config.tileSize()

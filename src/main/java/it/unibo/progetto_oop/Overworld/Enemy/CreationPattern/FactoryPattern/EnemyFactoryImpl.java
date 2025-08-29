@@ -11,11 +11,6 @@ import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.PatrolMovementStra
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.FollowerState;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.PatrollerState;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.SleeperState;
-<<<<<<< HEAD
-import it.unibo.progetto_oop.Overworld.MVC.viewManager;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
-=======
->>>>>>> c10be239e276a0e972e842f268004520fb4bd541
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public class EnemyFactoryImpl implements EnemyFactory {

@@ -13,6 +13,7 @@ import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.Enem
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
+import it.unibo.progetto_oop.Overworld.Player.Player;
 
 //in questa classe vengono generati e inizializzati gli elementi in base alla posizione della grid
 //NON deve essere aggiornata la view
@@ -21,13 +22,11 @@ public class OverworldEntitiesGenerator {
     ItemFactory itemFactory = new ItemFactory();
 
     List<Item> enemyList = new ArrayList<>();
-    private static final int ENEMY_HP = 100;
-    private static final int ENEMY_POWER = 20;
 
-    public OverworldEntitiesGenerator(Floor curreFloor) {
+    public OverworldEntitiesGenerator(Floor curreFloor, Player player) {
         generateItems(curreFloor);
         generateEnemies(curreFloor);
-        spawnPlayer(curreFloor);
+        spawnPlayer(curreFloor, player);
     }
     
     private void generateItems(Floor currentFloor) {
@@ -47,7 +46,7 @@ public class OverworldEntitiesGenerator {
         enemyList.add(patroller);*/
     }
 
-    private void spawnPlayer(Floor currentFloor) {
+    private void spawnPlayer(Floor currentFloor, Player player) {
         player.setPosition(currentFloor.getObjectsPositions(TileType.PLAYER).get(0));
         //Da capire dove passare player
     }
