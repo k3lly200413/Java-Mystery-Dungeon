@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Combat.MVC_Pattern;
+package it.unibo.progetto_oop.combat.mvc_pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -13,10 +13,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.fest.swing.edt.FailOnThreadViolationRepaintManager;
 
-import it.unibo.progetto_oop.Combat.StatePattern.AnimatingState;
-import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
+import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
+import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
+
+import org.fest.swing.edt.FailOnThreadViolationRepaintManager;
 
 public class CombatViewTest {
     CombatView view;

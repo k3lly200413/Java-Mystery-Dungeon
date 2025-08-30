@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Combat.MVC_Pattern;
+package it.unibo.progetto_oop.combat.mvc_pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -13,9 +13,9 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
-import it.unibo.progetto_oop.Combat.Helper.Neighbours;
-import it.unibo.progetto_oop.Combat.Helper.RedrawContext;
-import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.combat.position.Position;
+import it.unibo.progetto_oop.combat.helper.Neighbours;
+import it.unibo.progetto_oop.combat.helper.RedrawContext;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;

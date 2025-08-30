@@ -1,10 +1,10 @@
-package it.unibo.progetto_oop.Combat;
+package it.unibo.progetto_oop.combat;
 
 import javax.swing.SwingUtilities;
 
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatView;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 
 public final class CombatApplication {
 

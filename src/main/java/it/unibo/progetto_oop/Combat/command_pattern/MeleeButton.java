@@ -1,10 +1,10 @@
-package it.unibo.progetto_oop.Combat.CommandPattern;
+package it.unibo.progetto_oop.combat.command_pattern;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import it.unibo.progetto_oop.Combat.Position.Position;
-import it.unibo.progetto_oop.Combat.Helper.Neighbours;
+import it.unibo.progetto_oop.combat.helper.Neighbours;
+import it.unibo.progetto_oop.combat.position.Position;
 
 public class MeleeButton implements GameButton {
 

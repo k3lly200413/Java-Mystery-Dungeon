@@ -1,20 +1,11 @@
 /**
  * Helper class to check for neighboring positions in the combat system.
  */
-package it.unibo.progetto_oop.Combat.Helper;
+package it.unibo.progetto_oop.combat.helper;
 
-import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.combat.position.Position;
 
 public class Neighbours {
-
-    /**
-     * Constructor for neighbours class.
-     * used to check if two enteties are close in combat
-     *
-     */
-    public Neighbours() {
-
-    }
 
     /**
      * Checks if two positions are within a given distance of each other.

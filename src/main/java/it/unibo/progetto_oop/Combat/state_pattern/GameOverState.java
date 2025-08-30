@@ -1,8 +1,8 @@
-package it.unibo.progetto_oop.Combat.StatePattern;
+package it.unibo.progetto_oop.combat.state_pattern;
 
-import it.unibo.progetto_oop.Combat.Helper.RedrawContext;
-import it.unibo.progetto_oop.Combat.Inventory.Item;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
+import it.unibo.progetto_oop.combat.Inventory.Item;
+import it.unibo.progetto_oop.combat.helper.RedrawContext;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 
 public class GameOverState implements  CombatState {
 

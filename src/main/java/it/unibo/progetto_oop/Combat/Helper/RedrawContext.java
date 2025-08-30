@@ -1,8 +1,8 @@
-package it.unibo.progetto_oop.Combat.Helper;
+package it.unibo.progetto_oop.combat.helper;
 
 import java.util.ArrayList;
 
-import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.combat.position.Position;
 
 public final class RedrawContext {
     /**
