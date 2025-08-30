@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import it.unibo.progetto_oop.Overworld.MVC.GridUpdater;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.GridUpdater;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.ImplArrayListStructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
@@ -57,6 +57,13 @@ public final class Floor implements GridUpdater{
     public void onItemRemoved(Position at) {
         // PLAYER sopra item
         grid.set(at.x(), at.y(), TileType.PLAYER);
+    }
+
+    @Override
+    public void onEnemyRemoved(Position at) {
+        if (grid.get(at.x(), at.y()) != TileType.PLAYER) {
+            grid.set(at.x(), at.y(), TileType.ROOM);
+        }
     }
 
 }

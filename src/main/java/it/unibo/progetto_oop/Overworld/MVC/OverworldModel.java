@@ -7,9 +7,10 @@ import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
-import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.PickupSystem;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.MovementSystem;
+import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.PickupSystem;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.GridUpdater;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class OverworldModel {
@@ -34,7 +35,7 @@ public class OverworldModel {
 
         // initialize floor spawn objects 
         this.walls = null;
-        this.pickupSystem = new PickupSystem(null, player);
+        this.pickupSystem = new PickupSystem(null, player, this);
         this.enemySystem = new EnemySystem(null, player, this);
         this.movementSystem = new MovementSystem(null, player, this);
 
@@ -177,12 +178,10 @@ public class OverworldModel {
 
 
 
-
-    
+    // @autor Alice
     public void setGridUpdater(GridUpdater grid) {
         this.grid = grid;
     }
-
     public void notifyPlayerMoved(Position from, Position to) {
         if (grid != null) grid.onPlayerMove(from, to);
     }
@@ -192,6 +191,8 @@ public class OverworldModel {
     public void notifyItemRemoved(Position at) {
         if (grid != null) grid.onItemRemoved(at);
     }
-
+    public void notifyEnemyRemoved(Position at) {
+        if (grid != null) grid.onEnemyRemoved(at);
+    }
 
 }

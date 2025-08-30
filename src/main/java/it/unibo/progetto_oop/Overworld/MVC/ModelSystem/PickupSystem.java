@@ -5,15 +5,18 @@ import java.util.Optional;
 
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
+import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class PickupSystem {
     private List<Item> items; // items present in the map
     private final Player player;
+    private final OverworldModel model; //@autor Alice
 
-    public PickupSystem(List<Item> items, Player player) {
+    public PickupSystem(List<Item> items, Player player, OverworldModel model) {
         this.items = items;
         this.player = player;
+        this.model = model;   //@autor Alice
     }
 
     // getters
@@ -55,6 +58,7 @@ public class PickupSystem {
     private void removeItem(Item itemToRemove){
         this.player.inventory.addItem(itemToRemove);
         this.items.remove(itemToRemove);
+        this.model.notifyItemRemoved(itemToRemove.getPosition());  // @autor Alice
     }
 
     /**

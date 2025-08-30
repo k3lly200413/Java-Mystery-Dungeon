@@ -78,8 +78,10 @@ public class EnemySystem {
      * @param enemyToRemove
      */
     private void removeEnemy(Enemy enemyToRemove){
-        if (this.enemies.contains(enemyToRemove)){
+        if (this.enemies.contains(enemyToRemove)) {
+            Position at = enemyToRemove.getCurrentPosition(); // @autor Alice
             this.enemies.remove(enemyToRemove);
+            model.notifyItemRemoved(at); // @autor Alice
             this.beatenEnemies.add(enemyToRemove);
         }
     }
