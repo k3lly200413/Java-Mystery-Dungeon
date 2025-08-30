@@ -25,10 +25,6 @@ public class MeleeButton implements GameButton {
      */
     private int where;
     /**
-     * The distance to check for contact.
-     */
-    private int distance;
-    /**
      * Neighbours instance to check if two positions are neighbours.
      */
     private Neighbours neighbours;
@@ -40,17 +36,14 @@ public class MeleeButton implements GameButton {
      * @param playerPosition The initial position of the player.
      * @param enemyPosition  The initial position of the enemy.
      * @param direction      The direction in which the player will move.
-     * @param distanceBuffer       The distance to check for contact.
      */
     public MeleeButton(
             final Position playerPosition,
             final Position enemyPosition,
-            final int direction,
-            final int distanceBuffer) {
+            final int direction) {
         this.player = playerPosition;
         this.enemy = enemyPosition;
         this.where = direction;
-        this.distance = distanceBuffer;
         this.neighbours = new Neighbours();
     }
 

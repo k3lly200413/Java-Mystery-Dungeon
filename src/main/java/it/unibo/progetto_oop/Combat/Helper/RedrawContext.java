@@ -1,6 +1,6 @@
 package it.unibo.progetto_oop.combat.helper;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import it.unibo.progetto_oop.combat.position.Position;
 
@@ -60,7 +60,7 @@ public final class RedrawContext {
     /**
      * Path of the death ray (if any).
      */
-    private ArrayList<Position> deathRayPath;
+    private List<Position> deathRayPath;
     /**
      * deciding whether to draw or not the poison damage.
      */
@@ -238,7 +238,7 @@ public final class RedrawContext {
      *
      * @return the path of the death ray
      */
-    public ArrayList<Position> getDeathRayPath() {
+    public List<Position> getDeathRayPath() {
         return deathRayPath;
     }
 
@@ -360,7 +360,7 @@ public final class RedrawContext {
         /**
          * Path of the death ray (if any).
          */
-        private ArrayList<Position> deathRayPath;
+        private List<Position> deathRayPath;
         /**
          * deciding whether to draw or not the poison damage.
          */
@@ -542,7 +542,7 @@ public final class RedrawContext {
          * @return the builder
          */
         public Builder deathRayPath(
-            final ArrayList<Position> deathRayPathArrayList) {
+            final List<Position> deathRayPathArrayList) {
                 this.deathRayPath = deathRayPathArrayList;
                 return this;
         }

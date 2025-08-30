@@ -463,7 +463,7 @@ public class CombatController {
     public final void animateBossDeathRay(final Runnable onHit) {
         this.stopAnimationTimer();
 
-        final ArrayList<Position> deathRayLastPosition = new ArrayList<>();
+        final List<Position> deathRayLastPosition = new ArrayList<>();
 
         this.animationTimer = new Timer(ANIMATION_DELAY, e -> {
             if (deathRayLastPosition.stream()
@@ -568,8 +568,7 @@ public class CombatController {
                     this.meleeCommand = new MeleeButton(
                             currentAttackerPos[0],
                             currentTargetPos[0],
-                            moveDirection,
-                            meleeCheckDistance);
+                            moveDirection);
                     List<Position> result = this.meleeCommand.execute();
                     nextAttackerPos = result.get(0);
                     nextTargetPos = result.get(1);

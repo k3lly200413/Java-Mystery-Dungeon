@@ -25,6 +25,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.FlowLayout;
@@ -57,10 +58,6 @@ public class CombatView extends JFrame {
      */
     private JProgressBar playerStaminaBar;
     /**
-     * Height and width of the player's stamina bar.
-     */
-    private JPanel gridpanel;
-    /**
      * Container for the button panels, allowing for card layout switching.
      */
     private JPanel buttonPanelContainer;
@@ -76,10 +73,6 @@ public class CombatView extends JFrame {
      * Panel containing the attack buttons.
      */
     private JPanel attackButtonPanel;
-    /**
-     * Panel containing the bag buttons.
-     */
-    private JPanel healthPanel;
     /**
      * Panel containing the bag buttons.
      */
@@ -140,10 +133,6 @@ public class CombatView extends JFrame {
      * Label for displaying information in the combat view.
      */
     private final Neighbours neighbours;
-    /**
-     * URL for loading icons in the combat view.
-     */
-    private java.net.URL imgURL;
 
     /**
      * Maximum health of the player.
@@ -227,8 +216,8 @@ public class CombatView extends JFrame {
     final int squareWidth,
     final int squareHeight) {
 
-        this.gridpanel = new JPanel(new GridLayout(size, size));
-        this.healthPanel = new JPanel();
+        JPanel gridpanel = new JPanel(new GridLayout(size, size));
+        JPanel healthPanel = new JPanel();
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -245,15 +234,15 @@ public class CombatView extends JFrame {
                 this.cells.put(
                     cellLabel,
                     new Position(j, i)); // Store the label and its position
-                this.gridpanel.add(
+                gridpanel.add(
                     cellLabel); // Add the label to the grid panel
             }
         }
-        this.add(this.gridpanel, BorderLayout.CENTER);
+        this.add(gridpanel, BorderLayout.CENTER);
 
-        this.healthPanel.setLayout(
+        healthPanel.setLayout(
             new BoxLayout(
-                this.healthPanel, BoxLayout.Y_AXIS));
+                healthPanel, BoxLayout.Y_AXIS));
 
         this.playerHealtBar = new JProgressBar(0, this.maxPlayerHealth);
         this.playerHealtBar.setValue(this.maxPlayerHealth);
@@ -278,13 +267,13 @@ public class CombatView extends JFrame {
         this.enemyHealthBar.setPreferredSize(
             new Dimension(barWidth * size, barHeight));
 
-        this.healthPanel.add(new JLabel("Player Health"));
-        this.healthPanel.add(this.playerHealtBar);
-        this.healthPanel.add(Box.createVerticalStrut(spaceBuffer));
+        healthPanel.add(new JLabel("Player Health"));
+        healthPanel.add(this.playerHealtBar);
+        healthPanel.add(Box.createVerticalStrut(spaceBuffer));
         healthPanel.add(new JLabel("Player Stamina: "));
         healthPanel.add(playerStaminaBar);
-        this.healthPanel.add(new JLabel("Enemy Health"));
-        this.healthPanel.add(enemyHealthBar);
+        healthPanel.add(new JLabel("Enemy Health"));
+        healthPanel.add(enemyHealthBar);
 
         this.add(healthPanel, BorderLayout.NORTH);
 
@@ -583,9 +572,9 @@ public class CombatView extends JFrame {
         final String path,
         final int width,
         final int height) {
-        this.imgURL = getClass().getResource(path);
-        if (this.imgURL != null) {
-            return new ImageIcon(this.imgURL);
+        URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
         } else {
             System.err.println("Was not able to find file: " + path);
             return this.createDefaultIcon(width, height);

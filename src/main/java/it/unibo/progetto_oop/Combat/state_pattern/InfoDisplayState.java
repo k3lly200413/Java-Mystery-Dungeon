@@ -7,21 +7,42 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 
 public class InfoDisplayState implements CombatState {
 
+    /**
+     * Handles the input for a physical attack.
+     *
+     * @param context Instance of the controller
+     */
     @Override
     public void handlePhysicalAttackInput(final CombatController context) {
-
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException(
+            "Unimplemented method 'handlePhysicalAttackInput'");
     }
 
+    /**
+     * Handles the input for a long-range attack.
+     *
+     * @param context Instance of the controller
+     * @param isFlame Indicates if the attack is flame-based
+     * @param isPoison Indicates if the attack is poison-based
+     */
     @Override
     public void handleLongRangeAttackInput(final CombatController context,
     final boolean isFlame, final boolean isPoison) {
         // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException(
+            "Unimplemented method 'handleLongRangeAttackInput'");
     }
-
+    /**
+     * Handles the input for displaying enemy information.
+     *
+     * @param context Instance of the controller
+     */
     @Override
     public void handleInfoInput(final CombatController context) {
         // TODO Auto-generated method stub
+        throw new UnsupportedOperationException(
+            "Unimplemented method 'handleInfoInput'");
     }
 
     /**

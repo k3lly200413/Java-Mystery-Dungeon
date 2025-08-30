@@ -1,12 +1,11 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
+import java.util.Locale;
+
 import it.unibo.progetto_oop.combat.Inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 
 public class BossTurnState implements CombatState {
-
-    /** Indicates the boss health percentage. */
-    private float bossHealthPercent;
     /** Indicates the boss state. */
     private String bossState = "NORMAL";
 
@@ -88,16 +87,16 @@ private static final int PERCENT_CONVERSION = 100;
 @Override
 public final void enterState(final CombatController context) {
     float bossHealth = context.getModel().getEnemyHealth();
-    this.bossHealthPercent =
+    float bossHealthPercent =
         (bossHealth
         / context.getModel().getMaxHealth()) * PERCENT_CONVERSION;
 
-    if (this.bossHealthPercent < BOSS_ENRAGED_THRESHOLD
-        && "NORMAL".equals(this.bossState.toUpperCase())) {
+    if (bossHealthPercent < BOSS_ENRAGED_THRESHOLD
+        && "NORMAL".equals(this.bossState.toUpperCase(Locale.ROOT))) {
         this.bossState = "ENRAGED";
         context.getView().showInfo("The Boss is now ENRAGED");
     }
-    if ("ENRAGED".equals(this.bossState.toUpperCase())) {
+    if ("ENRAGED".equals(this.bossState.toUpperCase(Locale.ROOT))) {
         context.performEnemySuperAttack();
     } else {
         if (context.getModel().getBossTurnCounter() % DEATH_RAY_INTERVAL == 0) {
