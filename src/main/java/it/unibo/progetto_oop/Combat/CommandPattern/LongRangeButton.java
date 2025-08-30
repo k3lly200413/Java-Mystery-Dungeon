@@ -6,7 +6,13 @@ import it.unibo.progetto_oop.Combat.Position.Position;
 
 public class LongRangeButton implements GameButton {
 
+    /**
+     * The position of the flame in the game.
+     */
     private Position flame;
+    /**
+     * The direction of the flame in the game.
+     */
     private int direction;
 
     /**

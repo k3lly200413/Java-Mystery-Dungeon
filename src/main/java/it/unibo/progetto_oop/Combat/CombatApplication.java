@@ -6,7 +6,13 @@ import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatView;
 
-public class CombatApplication {
+public final class CombatApplication {
+
+    // Prevent instantiation
+    private CombatApplication() {
+        throw new UnsupportedOperationException(
+            "This is a utility class and cannot be instantiated");
+    }
 
     /**
      *

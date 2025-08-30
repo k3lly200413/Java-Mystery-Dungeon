@@ -1,3 +1,6 @@
+/**
+ * Represents a strategy for applying an attack buff potion.
+ */
 package it.unibo.progetto_oop.Combat.PotionStrategy;
 
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;

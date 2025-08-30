@@ -1,3 +1,6 @@
+/**
+ * Helper class to check for neighboring positions in the combat system.
+ */
 package it.unibo.progetto_oop.Combat.Helper;
 
 import it.unibo.progetto_oop.Combat.Position.Position;

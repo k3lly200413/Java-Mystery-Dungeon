@@ -3,7 +3,6 @@ package it.unibo.progetto_oop.Combat.StatePattern;
 import it.unibo.progetto_oop.Combat.Helper.RedrawContext;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class GameOverState implements  CombatState {
 
@@ -28,12 +27,6 @@ public class GameOverState implements  CombatState {
         .whoDied(context.getModel().getWhoDied())
         .build();
         context.getView().redrawGrid(defaultRedraw);
-        // context.redrawView(context.getModel().getPlayerPosition(),
-        // context.getModel().getEnemyPosition(),
-        // context.getModel().getAttackPosition(),
-        // 0, true, true, false, false, 2, 2,
-        // context.getModel().isGameOver(), context.getModel().getWhoDied(), false,
-        // new java.util.ArrayList<>(), false, 0, false, 0);
     }
 
     /**
@@ -109,7 +102,7 @@ public class GameOverState implements  CombatState {
 
     @Override
     public void handlePotionUsed(final CombatController context,
-    final Item selectedPotion, final Player player) {
+    final Item selectedPotion) {
         // TODO Auto-generated method stub
 
     }

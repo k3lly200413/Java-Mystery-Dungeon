@@ -1,3 +1,6 @@
+/**
+ * Implementation of MVC Pattern for the combat system.
+ */
 package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
 import java.util.ArrayList;
@@ -9,21 +12,24 @@ import javax.swing.Timer;
 import it.unibo.progetto_oop.Combat.CommandPattern.GameButton;
 import it.unibo.progetto_oop.Combat.CommandPattern.LongRangeButton;
 import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
+import it.unibo.progetto_oop.Combat.Helper.Neighbours;
+import it.unibo.progetto_oop.Combat.Helper.RedrawContext;
 import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.Combat.PotionFactory.ItemFactory;
 import it.unibo.progetto_oop.Combat.StatePattern.AnimatingState;
 import it.unibo.progetto_oop.Combat.StatePattern.BossTurnState;
 import it.unibo.progetto_oop.Combat.StatePattern.CombatState;
 import it.unibo.progetto_oop.Combat.StatePattern.EnemyTurnState;
 import it.unibo.progetto_oop.Combat.StatePattern.InfoDisplayState;
+import it.unibo.progetto_oop.Combat.StatePattern.ItemSelectionState;
 import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
-import it.unibo.progetto_oop.Combat.Helper.Neighbours;
-import it.unibo.progetto_oop.Combat.Helper.RedrawContext;
 
 
 /**
  * Controller class in Model View Controller Pattern.
  *
  * @author Kelly.applebee@studio.unibo.it
+ * @author matteo.monari@studio.unibo.it
  */
 public class CombatController {
     /**
@@ -181,15 +187,16 @@ public class CombatController {
     }
 
     private void handleBagMenu() {
+        this.setState(new ItemSelectionState());
         this.view.showBagButtons();
         view.clearInfo();
         System.out.println("Debug: Pressed Bag Button");
     }
 
     private void handleBackToMainMenu() {
-        CombatState newState = new PlayerTurnState();
-        newState.enterState(this);
-        newState.handleBackInput(this);
+        this.setState(new PlayerTurnState());
+        currentState.handleBackInput(this);
+        this.redrawView();
     }
     /**
      * Handles the back button click event.
@@ -202,9 +209,9 @@ public class CombatController {
     }
 
     private void handleInfo() {
-        CombatState newState = new InfoDisplayState();
-        newState.enterState(this);
-        newState.handleInfoInput(this);
+        //CombatState newState = new InfoDisplayState();
+        currentState.enterState(this);
+        currentState.handleInfoInput(this);
     }
     /**
      * Handles the info button click event.
@@ -227,7 +234,8 @@ public class CombatController {
     }
 
     private void handleCurePoisonInput() {
-        this.currentState.handleCurePoisonInput(this);
+        this.currentState.handlePotionUsed(this,
+        new ItemFactory().createItem("Antidote", new Position(0, 0)));
     }
     /**
      * Performs a physical attack by the player.
@@ -423,7 +431,7 @@ public class CombatController {
      * It should be called from the boss state.
      */
     public void handleBossDeathRayAttack() {
-        // TODO: fix!
+        //  'TODO' fix this method
         // call boss state and run handleBossDeathRayAttack(this);
     }
     /**
@@ -691,7 +699,7 @@ public class CombatController {
 
     private void performInfoZoomInAnimation(final Runnable onZoomComplete) {
         this.stopAnimationTimer();
-        this.view.setAllButtonsDisabled();
+        //this.view.setAllButtonsDisabled();
 
         final int size = 5;
 
@@ -747,11 +755,11 @@ public class CombatController {
                 .flame(this.model.getAttackPosition())
                 .drawEnemy(true)
                 .playerRange(1)
-                .enemyRange(1)
+                .enemyRange(conto[0])
                 .isGameOver(this.model.isGameOver())
                 .build();
                 this.view.redrawGrid(defaultRedraw);
-
+                conto[0]++;
             }
         });
         animationTimer.start();

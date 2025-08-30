@@ -5,7 +5,6 @@ import javax.swing.Timer;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class EnemyTurnState implements CombatState {
 
@@ -131,7 +130,7 @@ public class EnemyTurnState implements CombatState {
 
     @Override
     public void handlePotionUsed(final CombatController context,
-    final Item selectedPotion, final Player player) {
+    final Item selectedPotion) {
         // TODO Auto-generated method stub
     }
 

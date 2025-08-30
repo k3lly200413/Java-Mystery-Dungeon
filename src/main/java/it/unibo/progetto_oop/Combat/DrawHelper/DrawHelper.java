@@ -1,3 +1,6 @@
+/**
+ * Helper class for drawing operations in the combat system.
+ */
 package it.unibo.progetto_oop.Combat.DrawHelper;
 
 import it.unibo.progetto_oop.Combat.Position.Position;

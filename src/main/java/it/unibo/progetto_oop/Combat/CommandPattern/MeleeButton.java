@@ -8,10 +8,25 @@ import it.unibo.progetto_oop.Combat.Helper.Neighbours;
 
 public class MeleeButton implements GameButton {
 
+    /**
+     * List of player positions.
+     */
     private List<Position> giocatori = new LinkedList<>();
+    /**
+     * The position of the player in the game.
+     */
     private Position player;
+    /**
+     * The position of the enemy in the game.
+     */
     private Position enemy;
+    /**
+     * The direction in which the player will move.
+     */
     private int where;
+    /**
+     * The distance to check for contact.
+     */
     private int distance;
     /**
      * Neighbours instance to check if two positions are neighbours.
