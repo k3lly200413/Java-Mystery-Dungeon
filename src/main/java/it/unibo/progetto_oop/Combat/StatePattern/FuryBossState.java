@@ -2,7 +2,6 @@ package it.unibo.progetto_oop.Combat.StatePattern;
 
 import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class FuryBossState implements CombatState {
 
@@ -108,8 +107,7 @@ public class FuryBossState implements CombatState {
     @Override
     public final void handlePotionUsed(
         final CombatController context,
-        final Item selectedPotion,
-        final Player player) {
+        final Item selectedPotion) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
                 "Unimplemented method 'handlePotionUsed'");

@@ -1,3 +1,6 @@
+/**
+ * Implementation of MVC Pattern for the combat system.
+ */
 package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
 import java.util.ArrayList;
