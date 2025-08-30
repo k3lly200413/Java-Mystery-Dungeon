@@ -160,18 +160,42 @@ public class InventoryView extends JPanel {
         this.gridPanel.repaint(); // repaint the panel()
     }
 
-    /**
-     * Helper method MATTE
-    */
-    private JButton createItemButton(String text, Color color, String htmlDescriptionActionCommand) {
-        JButton button = new JButton(text);
-        button.setBackground(color);              // colore del pulsante
-        button.setActionCommand(htmlDescriptionActionCommand); // comando identificativo
-        button.setToolTipText(htmlDescriptionActionCommand);   // descrizione HTML
-        button.setFocusPainted(false);             //estetica: niente bordo focus
-        button.setOpaque(true);                      // necessario in certi LAF per mostrare il colore
-        return button;
-    }
+/**
+ * Crea un pulsante per un item con stile e comportamento coerenti.
+ * @param text  Testo del pulsante (nome item)
+ * @param color Colore per evidenziare lo slot (bordo)
+ * @param htmlDescriptionActionCommand Descrizione HTML da mostrare/uso come action command
+ */
+private JButton createItemButton(String text, Color color, String htmlDescriptionActionCommand) {
+    // Testo del bottone
+    JButton button = new JButton(text);
+
+    // Aspetto
+    button.setFocusPainted(false);
+    button.setOpaque(true);
+    button.setBackground(new Color(235, 239, 245)); // un neutro chiaro che stacca dalla griglia
+    button.setBorder(BorderFactory.createCompoundBorder(
+        BorderFactory.createLineBorder(color, 2),          // bordo colorato per lo slot
+        BorderFactory.createEmptyBorder(6, 10, 6, 10)      // padding interno
+    ));
+
+    // Tooltip e action command (riutilizziamo la stessa descrizione HTML)
+    button.setToolTipText(htmlDescriptionActionCommand);
+    button.setActionCommand(htmlDescriptionActionCommand);
+
+    // Comportamento: al click mostra la descrizione nel box in basso
+    button.addActionListener(e -> {
+        if (this.bottomStatusLabel != null) {
+            this.bottomStatusLabel.setText(e.getActionCommand());
+            this.bottomStatusLabel.revalidate();
+            this.bottomStatusLabel.repaint();
+        }
+        // Se in futuro vuoi notificare il controller, puoi farlo qui.
+        // es: inventoryController.onItemSelected(text);
+    });
+
+    return button;
+}
 
 
     /**
