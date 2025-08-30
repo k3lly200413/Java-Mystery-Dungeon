@@ -9,20 +9,23 @@ import javax.swing.Timer;
 import it.unibo.progetto_oop.Combat.CommandPattern.GameButton;
 import it.unibo.progetto_oop.Combat.CommandPattern.LongRangeButton;
 import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
+import it.unibo.progetto_oop.Combat.Helper.Neighbours;
+import it.unibo.progetto_oop.Combat.Helper.RedrawContext;
 import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.Combat.PotionFactory.ItemFactory;
 import it.unibo.progetto_oop.Combat.StatePattern.AnimatingState;
 import it.unibo.progetto_oop.Combat.StatePattern.CombatState;
 import it.unibo.progetto_oop.Combat.StatePattern.EnemyTurnState;
 import it.unibo.progetto_oop.Combat.StatePattern.InfoDisplayState;
+import it.unibo.progetto_oop.Combat.StatePattern.ItemSelectionState;
 import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
-import it.unibo.progetto_oop.Combat.Helper.Neighbours;
-import it.unibo.progetto_oop.Combat.Helper.RedrawContext;
 
 
 /**
  * Controller class in Model View Controller Pattern.
  *
  * @author Kelly.applebee@studio.unibo.it
+ * @author matteo.monari@studio.unibo.it
  */
 public class CombatController {
     /**
@@ -153,7 +156,7 @@ public class CombatController {
 
         this.view.redrawGrid(defaultRedraw);
     }
-    /**
+    /*
      * Redraws the view with specific parameters.
      * @param palyerPos position of the player
      * @param enemyPos position of the enemy
@@ -187,7 +190,8 @@ public class CombatController {
     //     this.view.redrawGrid(
     //         palyerPos, enemyPos, flamePos, flameSize, drawPlayer,
     //         drawEnemy, drawFlame, drawPoison, playerRange, enemyRange,
-    //         isGameOver, whoDied, bossRayAttack, deathRayPath, drawPoisonDamage,
+    //         isGameOver, whoDied, bossRayAttack,
+    //deathRayPath, drawPoisonDamage,
     //         poisonYCoord, isCharging,
     //         chargingPosition, SQUARE_HEIGHT, SQUARE_WIDTH);
     // }
@@ -209,7 +213,7 @@ public class CombatController {
             e -> System.out.println("Run clicked - Not Yet Implemented"));
         this.view.addCurePoisonButtonListener(
             e -> this.handleCurePoisonInput());
-        this.view.addAttackButtonListener(e -> handleAttackBuff());
+        this.view.addAttackButtonListener(e -> handleAttackMenu());
         this.view.addAttackBuffButtonListener(e -> handleAttackBuff());
         this.view.addHealButtonListener(e -> handleHeal());
     }
@@ -228,15 +232,16 @@ public class CombatController {
     }
 
     private void handleBagMenu() {
+        this.setState(new ItemSelectionState());
         this.view.showBagButtons();
         view.clearInfo();
         System.out.println("Debug: Pressed Bag Button");
     }
 
     private void handleBackToMainMenu() {
-        CombatState newState = new PlayerTurnState();
-        newState.enterState(this);
-        newState.handleBackInput(this);
+        this.setState(new PlayerTurnState());
+        currentState.handleBackInput(this);
+        this.redrawView();
     }
     /**
      * Handles the back button click event.
@@ -249,9 +254,9 @@ public class CombatController {
     }
 
     private void handleInfo() {
-        CombatState newState = new InfoDisplayState();
-        newState.enterState(this);
-        newState.handleInfoInput(this);
+        //CombatState newState = new InfoDisplayState();
+        currentState.enterState(this);
+        currentState.handleInfoInput(this);
     }
     /**
      * Handles the info button click event.
@@ -274,7 +279,8 @@ public class CombatController {
     }
 
     private void handleCurePoisonInput() {
-        this.currentState.handleCurePoisonInput(this);
+        this.currentState.handlePotionUsed(this,
+        new ItemFactory().createItem("Antidote", new Position(0, 0)));
     }
     /**
      * Performs a physical attack by the player.
@@ -529,6 +535,7 @@ public class CombatController {
      * It should be called from the boss state.
      */
     public void handleBossDeathRayAttack() {
+        //  'TODO' fix this method
         // call boss state and run handleBossDeathRayAttack(this);
     }
     /**
@@ -678,6 +685,7 @@ public class CombatController {
                             || !nextTargetPos.equals(currentTargetPos[0])) {
                         state[0] = 1;
                     } else if (!nextAttackerPos.equals(currentAttackerPos[0])) {
+                        state[0] = 0;
                     } else {
                         if (this.neighbours.neighbours(
                                 nextAttackerPos,
@@ -798,7 +806,7 @@ public class CombatController {
 
     private void performInfoZoomInAnimation(final Runnable onZoomComplete) {
         this.stopAnimationTimer();
-        this.view.setAllButtonsDisabled();
+        //this.view.setAllButtonsDisabled();
 
         final int size = 5;
 
@@ -861,17 +869,11 @@ public class CombatController {
                 .flame(this.model.getAttackPosition())
                 .drawEnemy(true)
                 .playerRange(1)
-                .enemyRange(1)
+                .enemyRange(conto[0])
                 .isGameOver(this.model.isGameOver())
                 .build();
                 this.view.redrawGrid(defaultRedraw);
-                /* this.redrawView(this.model.getPlayerPosition(),
-                this.model.getEnemyPosition(), this.model.getAttackPosition(),
-                0, false, true, false, false, 1, 1,
-                this.model.isGameOver(), this.model.isPlayerTurn()
-                ? this.model.getEnemyPosition()
-                : this.model.getPlayerPosition(), false,
-                new ArrayList<>(), false, 0, false, 0);*/
+                conto[0]++;
             }
         });
         animationTimer.start();
@@ -1085,32 +1087,14 @@ public class CombatController {
         return this.model;
     }
 
-    /*
-     * private void performAttack() {
-     *
-     * Timer playerTimer = new Timer(100, e -> {
-     * model.movePlayer(1, 0);
-     * if (model.areNeighbours(model.getEnemyPosition())) {
-     * model.decreaseEnemyHealth();
-     * ((Timer) e.getSource()).stop();
-     * }
-     * view.redraw(model.getCells(), model.getPlayerPosition(),
-     * model.getEnemyPosition());
-     * });
-     * playerTimer.start();
-     * }
-     */
-
     private void handleAttackBuff() {
-        if (this.currentState != null) {
-            currentState.handleAttackBuffInput(this);
-        }
+        this.currentState.handlePotionUsed(this,
+        new ItemFactory().createItem("Attack Buff", new Position(0, 0)));
     }
 
     private void handleHeal() {
-        if (this.currentState != null) {
-            currentState.handleHealInput(this);
-        }
+        this.currentState.handlePotionUsed(this,
+        new ItemFactory().createItem("Health Potion", new Position(0, 0)));
     }
 
     /**
