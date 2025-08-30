@@ -4,22 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import it.unibo.progetto_oop.Overworld.MVC.GridUpdater;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.ImplArrayListStructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 
-public final class Floor {
+public final class Floor implements GridUpdater{
     private final StructureData grid;
     private final List<Room> rooms;
-    private final List<FloorObserver> observers = new ArrayList<>();
 
     public Floor(FloorConfig conf, FloorGenerator gen) {
         Objects.requireNonNull(gen);
         this.grid = new ImplArrayListStructureData(conf.width(),conf.height()); // oggi ArrayGrid; domani cambi qui.
         this.rooms = List.copyOf(gen.generate(grid, conf)); // Immutable list of rooms
-        notifyObservers();
     }
 
     public StructureData grid() {
@@ -41,30 +40,23 @@ public final class Floor {
         }
         return positions;
     }
-     // Observer pattern
 
-    public void addObserver(FloorObserver o) {
-        observers.add(Objects.requireNonNull(o));
+     @Override
+    public void onPlayerMove(Position from, Position to) {
+        grid.set(from.x(), from.y(), TileType.ROOM);
+        grid.set(to.x(),   to.y(),   TileType.PLAYER);
     }
 
-    public void removeObserver(FloorObserver o) {
-        observers.remove(o);
+    @Override
+    public void onEnemyMove(Position from, Position to) {
+        grid.set(from.x(), from.y(), TileType.ROOM);
+        grid.set(to.x(),   to.y(),   TileType.ENEMY);
     }
 
-    private void notifyObservers() {
-        for (var o : observers)
-            o.floorChanged(grid);
+    @Override
+    public void onItemRemoved(Position at) {
+        // PLAYER sopra item
+        grid.set(at.x(), at.y(), TileType.PLAYER);
     }
 
-     // API di modifica che notificano automaticamente
-    public void setTile(int x,int y, TileType t){
-        if (grid.inBounds(x,y)) {
-            grid.set(x,y,t);
-            notifyObservers();
-        }
-    }
-
-    public void refresh() {
-        notifyObservers();
-    } // utile per forzare un repaint
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import it.unibo.progetto_oop.Overworld.MVC.OverworldEntitiesGenerator;
+import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
@@ -26,7 +27,8 @@ public class Dungeon {
      * Configuration settings for the dungeon floors.
      */
     private final FloorConfig config;
-    private final Player player; 
+    private final Player player;
+    private final OverworldModel overworldModel;
 
     /**
      * Constructs a Dungeon with the specified generator and configuration.
@@ -34,10 +36,11 @@ public class Dungeon {
      * @param gen the generator used to create floors in the dungeon
      * @param conf the configuration settings for the dungeon floors
      */
-    public Dungeon(final FloorGenerator gen, final FloorConfig conf, Player player) {
+    public Dungeon(final FloorGenerator gen, final FloorConfig conf, Player player, OverworldModel model) {
         this.generator = Objects.requireNonNull(gen);
         this.config = Objects.requireNonNull(conf);
         this.player = Objects.requireNonNull(player);
+        this.overworldModel = Objects.requireNonNull(model);
     }
 
     /**
@@ -67,7 +70,11 @@ public class Dungeon {
             floors.add(new Floor(cfg, generator));
         }
         currentFloor = nextIndex;
-        new OverworldEntitiesGenerator(this.getCurrentFloor(), this.player);  //crea l'oggetto e lo mette nella posizione assegnata
+
+        //crea l'oggetto e lo mette nella posizione assegnata
+        new OverworldEntitiesGenerator(this.getCurrentFloor(), this.player);
+        overworldModel.setGridUpdater(this.getCurrentFloor());
+        
         return true;
     }
 

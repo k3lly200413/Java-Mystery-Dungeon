@@ -57,4 +57,12 @@ public class OverworldEntitiesGenerator {
     private void spawnPlayer(Floor currentFloor, Player player) {
         player.setPosition(currentFloor.getObjectsPositions(TileType.PLAYER).get(0));
     }
+
+    public List<Item> getItemList() {
+        return itemList;
+    }
+
+    public List<Enemy> getEnemyList() {
+        return enemyList;
+    }
 }

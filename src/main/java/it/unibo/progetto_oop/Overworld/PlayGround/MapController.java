@@ -21,7 +21,7 @@ public final class MapController {
     /**
      * Constructs a MapController with the specified view and dungeon.
      *
-     * @param mapView the SwingMapView instance to be used
+     * @param mapView    the SwingMapView instance to be used
      * @param mapDungeon the Dungeon instance to be used
      */
     public MapController(final SwingMapView mapView, final Dungeon mapDungeon) {

@@ -23,8 +23,15 @@ public final class ImplArrayListStructureData implements StructureData {
         fill(TileType.WALL); // ora funziona
     }
 
-    @Override public int width()  { return w; }
-    @Override public int height() { return h; }
+    @Override
+    public int width() {
+        return w;
+    }
+
+    @Override
+    public int height() {
+        return h;
+    }
 
     @Override public boolean inBounds(int x, int y) {
         return x >= 0 && x < w && y >= 0 && y < h;

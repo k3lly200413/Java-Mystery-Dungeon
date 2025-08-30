@@ -25,6 +25,9 @@ public class OverworldModel {
     // flags
     private boolean inCombat;
 
+    // per accedere alla griglia
+    private GridUpdater grid;
+
     public OverworldModel(Player player, List<Enemy> enemies, List<Item> items, Set<Position> walls) { // TODO: integrare con Alice
         this.player = player;
         this.inCombat = false;
@@ -173,6 +176,22 @@ public class OverworldModel {
     }
 
 
+
+
+    
+    public void setGridUpdater(GridUpdater grid) {
+        this.grid = grid;
+    }
+
+    public void notifyPlayerMoved(Position from, Position to) {
+        if (grid != null) grid.onPlayerMove(from, to);
+    }
+    public void notifyEnemyMoved(Position from, Position to) {
+        if (grid != null) grid.onEnemyMove(from, to);
+    }
+    public void notifyItemRemoved(Position at) {
+        if (grid != null) grid.onItemRemoved(at);
+    }
 
 
 }

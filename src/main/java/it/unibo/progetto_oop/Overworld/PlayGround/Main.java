@@ -1,8 +1,10 @@
 package it.unibo.progetto_oop.Overworld.PlayGround;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
+import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.FloorGenerator;
@@ -32,6 +34,7 @@ public final class Main {
         //-------------DA VEDERE !!!----------
         Inventory inventory = new Inventory();
         Player player = new Player(100, inventory);
+        OverworldModel overworldModel = new OverworldModel(player, new ArrayList<>(), new ArrayList<>(), null);
         // ---------------!!!-----------------
 
         // MODEL
@@ -41,7 +44,7 @@ public final class Main {
         final TunnelPlacementStrategy tps = new ImplTunnelPlacement();
         FloorGenerator gen = new FloorGenerator(rrs, tps, rps, rand);
         FloorConfig config = new FloorConfig.Builder().build();
-        Dungeon dungeon = new Dungeon(gen, config, player);
+        Dungeon dungeon = new Dungeon(gen, config, player, overworldModel);
         // VIEW
         SwingMapView view = new SwingMapView(
             "Java Mystery Dungeon", config.tileSize()
