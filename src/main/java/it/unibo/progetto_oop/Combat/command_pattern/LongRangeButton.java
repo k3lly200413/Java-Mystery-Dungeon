@@ -1,12 +1,18 @@
-package it.unibo.progetto_oop.Combat.CommandPattern;
+package it.unibo.progetto_oop.combat.command_pattern;
 
 import java.util.List;
 
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.combat.position.Position;
 
 public class LongRangeButton implements GameButton {
 
+    /**
+     * The position of the flame in the game.
+     */
     private Position flame;
+    /**
+     * The direction of the flame in the game.
+     */
     private int direction;
 
     /**

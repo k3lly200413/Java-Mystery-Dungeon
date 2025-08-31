@@ -1,49 +1,71 @@
-package it.unibo.progetto_oop.Combat;
+/**
+ * Main entry point for the Combat application.
+ */
+package it.unibo.progetto_oop.combat;
 
 import javax.swing.SwingUtilities;
 
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatView;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 
-public class CombatApplication {
+public final class CombatApplication {
+
+    // Prevent instantiation
+    private CombatApplication() {
+        throw new UnsupportedOperationException(
+            "This is a utility class and cannot be instantiated");
+    }
 
     /**
-     * Main method used to run the Application
-     * <p>
-     * <ul>
-     *   <li><b>invokeLater</b> Explenation
-     *   <li><ul>
-     *     <li> Used to make sure that all GUI elements are executed on EDT thread 
-     *          (thread used for graphics) so that there are no problems when it 
-     *          comes to sync with Timer and other actions 
-     *   </ul>
-     * </ul>
-     *
+     * Main method to launch the Combat application.
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         // --- Game Configuration ---
-        int size = 12;
-        int playerPower = 7;
-        int playerPoisonPower = 2;
-        int enemyPower = 3;
-        int enemySpeed = 3;
-        String enemyName = "Dragon";
-        int playerMaxStamina = 100;
-        int playerLongRangePower = 5;
+        final int size = 12;
+        final int playerPower = 10;
+        final int playerPoisonPower = 2;
+        final int enemyPower = 5;
+        final int enemySpeed = 3;
+        final String enemyName = "Dragon";
+        final int playerMaxStamina = 100;
+        final int playerLongRangePower = 5;
+
+        final int viewWidthFactor = 20;
+
+        final int viewHeightFactor = 50;
+
+        final int buttonWidth = 70;
+
+        final int buttonHeight = 75;
+
+        final int windowWidth = 100;
+
+        final int windowHeight = 100;
+
+        final int sizeDivisor = 3;
 
         // --- Application Startup ---
-        // Ensure UI creation happens on the Event Dispatch Thread (EDT) for safety.
         SwingUtilities.invokeLater(() -> {
             // 1. Create the Model with our configuration
-            CombatModel model = new CombatModel(size, playerMaxStamina, playerPower, playerPoisonPower, playerLongRangePower, enemyPower, enemySpeed, enemyName);
+            CombatModel model = new CombatModel(size,
+            playerMaxStamina, playerPower,
+            playerPoisonPower, playerLongRangePower, enemyPower,
+            enemySpeed, enemyName);
+
+            // model.setBossTurn(true);
 
             // 2. Create the View
-            CombatView view = new CombatView(model.getSize(), (20 * model.getSize()) / 3, (50 * model.getSize()) / 3, 70, 75, 100, 100);
+            CombatView view = new CombatView(model.getSize(),
+            (viewWidthFactor * model.getSize()) / sizeDivisor,
+            (viewHeightFactor * model.getSize()) / sizeDivisor,
+            buttonWidth, buttonHeight, windowWidth, windowHeight);
 
             // 3. Create the Controller, linking the Model and View
-            CombatController controller = new CombatController(model, view);
+            final CombatController controller = new CombatController(
+                model,
+                view);
 
             // 4. Start the combat UI, making the window visible
             controller.startCombat();

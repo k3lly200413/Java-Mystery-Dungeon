@@ -1,11 +1,12 @@
-package it.unibo.progetto_oop.Combat.Helper;
+/**
+ * Helper class to check for neighboring positions in the combat system.
+ */
+package it.unibo.progetto_oop.combat.helper;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public class Neighbours {
-    
-    public Neighbours(){}
-    
+
     /**
      * Checks if two positions are within a given distance of each other.
      *
@@ -42,7 +43,6 @@ public class Neighbours {
      *         ° ° °
      *         ° ° ° Dead character
      *         ° ° °
-     *
      */
 
     public boolean deathNeighbours(
@@ -59,5 +59,5 @@ public class Neighbours {
         || (deathPosition.x() == positionToCheck.x()
         && positionToCheck.y() == deathPosition.y());
     }
-    
+
 }

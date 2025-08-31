@@ -1,16 +1,20 @@
-package it.unibo.progetto_oop.Combat.StatePattern;
+package it.unibo.progetto_oop.combat.state_pattern;
 
-import it.unibo.progetto_oop.Combat.Inventory.Item;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
-import it.unibo.progetto_oop.Combat.PotionStrategy.CurePoison;
-import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.combat.Inventory.Item;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.potion_strategy.CurePoison;
 
-public class PlayerTurnState implements CombatState{
+public class PlayerTurnState implements CombatState {
 
     /**
      * Strategy for curing poison.
      */
-    private CurePoison curePoison;
+    private final CurePoison curePoison;
+
+    /**
+     * The amount of stamina to be removed after a special attack.
+     */
+    private static final int STAMINA_TO_REMOVE = 10;
 
     /**
      * Constructor for PlayerTurnState.
@@ -23,16 +27,12 @@ public class PlayerTurnState implements CombatState{
     @Override
     public final void handlePhysicalAttackInput(
         final CombatController context) {
-        // TODO: Call controller and have it change state to animating state so this can
-        // be all done during the animation
-
-        // Disable buttons during animation
         context.getView().setAllButtonsDisabled();
         context.getView().clearInfo();
-        // TODO: call model to remove 10 (placeholder) points of stamina
         context.getView().showInfo("Player Has used physical Attack");
         System.out.println(
             "Debug Log: Requested Physical\nCurrent State: Player Turn State");
+        context.setState(new AnimatingState());
         context.performPlayerPhysicalAttack();
     }
 
@@ -41,23 +41,19 @@ public class PlayerTurnState implements CombatState{
         final CombatController context,
         final boolean isPoison,
         final boolean isFalme) {
-        // TODO: Call controller and have it change state to animating state so this can
-        // be all done during the animation
 
-        // Disable buttons during animation
-        context.getView().setAllButtonsDisabled();
-        context.getView().clearInfo();
-        // TODO: call model to remove 20 (placeholder) points of stamina
+        context.setState(new AnimatingState());
+        context.getModel().decreasePlayerStamina(STAMINA_TO_REMOVE);
+        context.getView().updatePlayerStamina(
+            context.getModel().getPlayerStamina());
         context.getView().showInfo("Player Has used Long Range Attack");
-        System.out.println(
-            "Debug Log: Requested Long Range\n"
-            + "Current State: Player Turn State");
-        context.performPlayerLongRangeAttack(isPoison, isFalme);
+        context.performLongRangeAttack(
+            context.getModel().getPlayerPosition(), 1, isFalme, isPoison);
     }
 
     @Override
     public final void handleInfoInput(final CombatController context) {
-        context.performInfo();
+        context.performInfoAnimation();
     }
 
     @Override
@@ -90,7 +86,7 @@ public class PlayerTurnState implements CombatState{
     public final void exitState(final CombatController context) {
         System.out.println("------ Exiting Player Turn State ------");
         context.getView().clearInfo();
-        context.getModel().setPlayerTurn(false);
+        // context.getModel().setPlayerTurn(false);
     }
 
     @Override
@@ -108,8 +104,8 @@ public class PlayerTurnState implements CombatState{
     @Override
     public final void handleAttackBuffInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-                "Unimplemented method 'handleAttackBuffInput'");
+        // throw new UnsupportedOperationException(
+                // "Unimplemented method 'handleAttackBuffInput'");
     }
 
     @Override
@@ -122,8 +118,7 @@ public class PlayerTurnState implements CombatState{
     @Override
     public final void handlePotionUsed(
         final CombatController context,
-        final Item selectedPotion,
-        final Player player) {
+        final Item selectedPotion) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
                 "Unimplemented method 'handlePotionUsed'");

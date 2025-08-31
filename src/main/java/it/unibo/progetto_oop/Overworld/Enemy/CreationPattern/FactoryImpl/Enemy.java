@@ -6,6 +6,10 @@ import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.GenericEnemyState;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+<<<<<<< HEAD
+=======
+import it.unibo.progetto_oop.combat.position.Position;
+>>>>>>> 193bbdc31a0a30b1ddfa2952e5f3c0e623bcbbaa
 
 public interface Enemy {
     /** 

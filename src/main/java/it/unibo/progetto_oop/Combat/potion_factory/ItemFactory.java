@@ -1,17 +1,17 @@
-package it.unibo.progetto_oop.Combat.PotionFactory;
+package it.unibo.progetto_oop.combat.potion_factory;
 
-import it.unibo.progetto_oop.Combat.Inventory.Item;
-import it.unibo.progetto_oop.Combat.PotionStrategy.AttackBuff;
-import it.unibo.progetto_oop.Combat.PotionStrategy.CurePoison;
-import it.unibo.progetto_oop.Combat.PotionStrategy.Healing;
-import it.unibo.progetto_oop.Combat.PotionStrategy.Potion;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.combat.Inventory.Item;
+import it.unibo.progetto_oop.combat.position.Position;
+import it.unibo.progetto_oop.combat.potion_strategy.AttackBuff;
+import it.unibo.progetto_oop.combat.potion_strategy.CurePoison;
+import it.unibo.progetto_oop.combat.potion_strategy.Healing;
+import it.unibo.progetto_oop.combat.potion_strategy.Potion;
 
 /**
  * @author Laura Bertozzi
  */
 public class ItemFactory {
-    public Item createItem(String itemId, Position position){
+    public final Item createItem(final String itemId, final Position position){
         if("Health Potion".equalsIgnoreCase(itemId)){
             return new Potion("Health Potion", "Restores Player Health\nAmount restored: 25", position, new Healing() );
         }

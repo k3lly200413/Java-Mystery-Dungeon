@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Combat.MVC_Pattern;
+package it.unibo.progetto_oop.combat.mvc_pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,13 +9,14 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.progetto_oop.Combat.Inventory.Inventory;
-import it.unibo.progetto_oop.Combat.Inventory.Item;
-import it.unibo.progetto_oop.Combat.PotionFactory.ItemFactory;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactory;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactoryImpl;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.combat.Inventory.Inventory;
+import it.unibo.progetto_oop.combat.Inventory.Item;
+import it.unibo.progetto_oop.combat.position.Position;
+import it.unibo.progetto_oop.combat.potion_factory.ItemFactory;
 import it.unibo.progetto_oop.Overworld.MVC.*;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 

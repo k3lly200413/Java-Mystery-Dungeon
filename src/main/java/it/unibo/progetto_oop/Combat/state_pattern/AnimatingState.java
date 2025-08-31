@@ -1,28 +1,17 @@
-package it.unibo.progetto_oop.Combat.StatePattern;
+package it.unibo.progetto_oop.combat.state_pattern;
 
-import javax.swing.Timer;
-
-import it.unibo.progetto_oop.Combat.Inventory.Item;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
-import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.combat.Inventory.Item;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 
 public class AnimatingState implements CombatState {
-    /**
-     * Indicates if it is the player's turn.
-     */
-    private final boolean playerTurn = true;
-    /**
-     * Delay for the animation in milliseconds.
-     */
-    private static final int ANIMATION_DELAY = 500;
 
     @Override
     public final void handlePhysicalAttackInput(
         final CombatController context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
-
             "Unimplemented method 'handlePhysicalAttackInput'");
     }
 
@@ -78,14 +67,7 @@ public class AnimatingState implements CombatState {
 
     @Override
     public final void exitState(final CombatController context) {
-        System.out.println("------ Exeting Animating State ------");
-        if (context.getModel().isPlayerTurn()) {
-            context.getModel().setPlayerTurn(!this.playerTurn);
-        } else {
-            context.getModel().setPlayerTurn(this.playerTurn);
-            // TODO: implement setState in Controller
-            // context.setState(new PlayerturnState())
-        }
+        System.out.println("Exiting Animating State");
     }
 
     @Override
@@ -93,31 +75,48 @@ public class AnimatingState implements CombatState {
         System.out.println("Debug: Requested Handle Animation Complete");
 
         CombatModel model = context.getModel();
+        CombatView view = context.getView();
 
-        boolean wasPlayerTurn = !model.isPlayerTurn();
+        boolean wasPlayerTurn = model.isPlayerTurn();
 
         if (wasPlayerTurn) {
-            context.applyPostTurnEffects();
-            // TODO: Check what wasPlayerTurn is
-            // model.setPlayerTurn(false); // Flip the turn flag
-            // model.setBossTurn(false);
-            // context.setState(new EnemyTurnState());
-            // TODO: make applypostTurnEffects() generic
+            if (model.isEnemyPoisoned() && model.getEnemyHealth() > 0) {
+                System.out.println("Applying poison damage to enemy.");
+                view.showInfo("Enemy takes poison damage!");
+                context.performPoisonEffectAnimation();
+                model.decreaseEnemyHealth(
+                    model.getPlayerPoisonPower()); // Apply damage
+                view.updateEnemyHealth(
+                    Math.round(model.getEnemyHealth()));          // Update bar
+            }
+            System.out.println(model.isEnemyPoisoned());
+            System.out.println(model.getEnemyHealth() > 0);
+        } else { // Enemy's turn just ended
+            // Apply effects to PLAYER after enemy's turn
+            if (model.isPlayerPoison() && model.getPlayerHealth() > 0) {
+                System.out.println("Applying poison damage to player.");
+                view.showInfo("Player takes poison damage!");
+                context.performPoisonEffectAnimation();
+                model.decreasePlayerHealth(model.getEnemyPoisonPower());
+                view.updatePlayerHealth(model.getPlayerHealth());
+            }
         }
 
         if (context.checkGameOver()) {
-            // Create gameOverState
+            context.setState(new GameOverState());
             return;
         }
 
         if (wasPlayerTurn) {
-            // TODO: Check if enemyTurnState sets model flags
-            context.getModel().setPlayerTurn(false);
-            context.setState(new EnemyTurnState());
+            if (!model.isEnemyPoisoned()) {
+                context.getModel().setPlayerTurn(false);
+                context.setState(new BossTurnState());
+            }
         } else {
-            // TODO: Check if playerturnstate sets model flags
-            context.getModel().setPlayerTurn(true);
-            context.setState(new PlayerTurnState());
+            if (!model.isPlayerPoison()) {
+                context.getModel().setPlayerTurn(true);
+                context.setState(new PlayerTurnState());
+            }
         }
 
     }
@@ -133,7 +132,10 @@ public class AnimatingState implements CombatState {
      * Method to handle the boss death ray attack.
      * @param context The combat controller context.
      */
-    public void handleBossDeathRayAttack(final CombatController context) { }
+    public void handleBossDeathRayAttack(final CombatController context) {
+        throw new UnsupportedOperationException(
+            "Unimplemented method 'handleBossDeathRayAttack'");
+    }
 
     @Override
     public final void handleAttackBuffInput(final CombatController context) {
@@ -154,8 +156,7 @@ public class AnimatingState implements CombatState {
     @Override
     public final void handlePotionUsed(
         final CombatController context,
-        final Item selectedPotion,
-        final Player player) {
+        final Item selectedPotion) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 

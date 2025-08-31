@@ -12,7 +12,8 @@ plugins {
      * The runnable jar will be found in build/libs/projectname-all.jar
      */
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("org.danilopianini.gradle-java-qa") version "1.125.0"
+    id("org.danilopianini.gradle-java-qa") version "1.132.0"
+
 }
 
 repositories { // Where to search for dependencies
@@ -36,8 +37,6 @@ dependencies {
     // Logback backend for SLF4J
     runtimeOnly("ch.qos.logback:logback-classic:1.5.18")
 
-    // JUnit API and testing engine
-    val jUnitVersion = "5.11.4"
     // when dependencies share the same version, grouping in a val helps to keep them in sync
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
@@ -50,7 +49,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("iit.unibo.progetto_oop.Overworld.MVC.OverworldApplication") // DA CAMBIARE
+    mainClass.set("it.unibo.progetto_oop.combat.CombatApplication") // DA CAMBIARE
 }
 
 tasks.test {

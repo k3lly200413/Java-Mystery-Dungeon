@@ -13,10 +13,11 @@ public class CombatTransitionState implements GenericEnemyState{
     }
 
     @Override
-    public void enterState(Enemy context) {
-
+    public void enterState(Enemy context, OverworldModel model) {
         // TODO: transition to combat state in the game application
 
+        model.clearCombatTransitionFlag(); // combat started, not in transition anymore
+        model.setInCombatFlag(); 
     }
 
     @Override

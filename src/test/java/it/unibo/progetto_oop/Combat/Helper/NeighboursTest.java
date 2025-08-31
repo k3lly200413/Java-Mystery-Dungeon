@@ -6,7 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+<<<<<<< HEAD
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+=======
+import it.unibo.progetto_oop.combat.helper.Neighbours;
+import it.unibo.progetto_oop.combat.position.Position;
+>>>>>>> 193bbdc31a0a30b1ddfa2952e5f3c0e623bcbbaa
 
 public class NeighboursTest {
 
