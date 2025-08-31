@@ -6,7 +6,7 @@ import java.awt.CardLayout;
 
 import it.unibo.progetto_oop.Combat.Inventory.*;
 
-public class viewManager {
+public class ViewManager {
 
     private CardLayout cardLayout; 
     private JPanel mainCardPanel; 
@@ -15,7 +15,7 @@ public class viewManager {
     private InventoryView invView;
     public static final String INVENTORY_CARD = "INVENTORY";
 
-    private void start() {
+    public void start() {
         // Setup the CardLayout and main panel
         this.mainCardPanel = new JPanel();
         this.cardLayout = new CardLayout();
@@ -34,7 +34,7 @@ public class viewManager {
         frame.setVisible(true);      
 
         // Show the inventory for testing purposes
-        this.showInventory(inventory);
+        // this.showInventory(inventory);
     }
 
     public void showInventory(Inventory inventory){

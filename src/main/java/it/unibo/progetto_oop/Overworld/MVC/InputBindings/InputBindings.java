@@ -4,14 +4,18 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.InputMap;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 public class InputBindings {
+    private final JComponent panel;
 
-    public void setBindings(JPanel panel) {
-        // Bind pressed puttons to keys
+    public InputBindings(JComponent component) {
+        this.panel = component;
+    }
+
+    public void setBindings() {
         InputMap inputMap = panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+
         // keys
         final String MOVE_UP = "moveUp";
         final String MOVE_DOWN = "moveDown";

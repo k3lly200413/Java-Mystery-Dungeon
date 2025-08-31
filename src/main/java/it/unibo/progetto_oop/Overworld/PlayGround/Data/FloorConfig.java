@@ -48,7 +48,7 @@ public record FloorConfig(
             if (this.nFloors <= 0)
                 throw new IllegalArgumentException("At least 1 floor");
 
-            return new FloorConfig(width, height, nRooms, minRoomW, maxRoomW, minRoomH, maxRoomH, nFloors);
+            return new FloorConfig(width, height, nRooms, minRoomW, maxRoomW, minRoomH, maxRoomH, nFloors, tileSize);
         }
     }
 }

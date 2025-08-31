@@ -11,12 +11,12 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 public class PickupSystem {
     private List<Item> items; // items present in the map
     private final Player player;
-    private final OverworldModel model; //@autor Alice
+    private final OverworldModel model; 
 
     public PickupSystem(List<Item> items, Player player, OverworldModel model) {
         this.items = items;
         this.player = player;
-        this.model = model;   //@autor Alice
+        this.model = model;   
     }
 
     // getters

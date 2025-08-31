@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import it.unibo.progetto_oop.Overworld.MVC.viewManager;
+import it.unibo.progetto_oop.Overworld.MVC.ViewManager;
 
 public class InventoryView extends JPanel {
      private static final int VIEWPORT_WIDTH_CELLS = 13;
@@ -18,14 +18,14 @@ public class InventoryView extends JPanel {
     private static final Color ITEM_SLOT_2_COLOR = Color.BLUE;
     private static final Color ITEM_SLOT_3_COLOR = Color.CYAN;
 
-    private final viewManager game;
+    private final ViewManager game;
     private Inventory inventory; 
 
     private JPanel gridPanel; 
     private JLabel bottomStatusLabel;
     private JButton backButton;
 
-    public InventoryView(Inventory initialInventory, viewManager game) {
+    public InventoryView(Inventory initialInventory, ViewManager game) {
         this.inventory = initialInventory;
         this.game = game;
 
