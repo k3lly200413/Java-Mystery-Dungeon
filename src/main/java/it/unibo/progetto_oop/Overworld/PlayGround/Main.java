@@ -38,7 +38,7 @@ public final class Main {
         Inventory inventory = new Inventory();
         Player player = new Player(100, inventory);
         OverworldModel overworldModel = new OverworldModel(player, new ArrayList<>(), new ArrayList<>(), new HashSet<>()); 
-        // TODO: aggiungere i muri che confinano le stanze
+        // TODO: aggiungere i muri che confinano le stanze e gli altri dati
         // ---------------!!!-----------------
 
         // MODEL
@@ -53,12 +53,13 @@ public final class Main {
         SwingMapView view = new SwingMapView(
             "Java Mystery Dungeon", config.tileSize()
         );
-
-        ViewManager viewManager = new ViewManager();
-        viewManager.start();
+        
         // CONTROLLER
         MapController controller = new MapController(view, dungeon);
-        javax.swing.SwingUtilities.invokeLater(controller::show);
+        javax.swing.SwingUtilities.invokeLater(controller::show); // TODO: se vogliamo usare il cardlayout non ci deve essere show
+
+        ViewManager viewManager = new ViewManager();
+        viewManager.start(view);
 
         OverworldController movementController = new OverworldController(overworldModel, view, viewManager);
     }
