@@ -74,6 +74,10 @@ public final class SwingMapView extends JFrame implements MapView {
         }
     }
 
+    public JPanel getPanel() {
+        return this.panel;
+    }
+
     /* ============ Panel ============ */
     private static final class MapPanel extends JPanel {
         /** The grid structure representing the floor. */
