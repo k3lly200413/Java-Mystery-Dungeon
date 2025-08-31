@@ -1,3 +1,6 @@
+/**
+ * Main entry point for the Combat application.
+ */
 package it.unibo.progetto_oop.combat;
 
 import javax.swing.SwingUtilities;
@@ -15,7 +18,7 @@ public final class CombatApplication {
     }
 
     /**
-     *
+     * Main method to launch the Combat application.
      * @param args
      */
     public static void main(final String[] args) {
@@ -60,7 +63,9 @@ public final class CombatApplication {
             buttonWidth, buttonHeight, windowWidth, windowHeight);
 
             // 3. Create the Controller, linking the Model and View
-            CombatController controller = new CombatController(model, view);
+            final CombatController controller = new CombatController(
+                model,
+                view);
 
             // 4. Start the combat UI, making the window visible
             controller.startCombat();
