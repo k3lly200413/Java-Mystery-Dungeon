@@ -17,7 +17,7 @@ public final class Floor implements GridUpdater{
 
     public Floor(FloorConfig conf, FloorGenerator gen) {
         Objects.requireNonNull(gen);
-        this.grid = new ImplArrayListStructureData(conf.width(),conf.height()); // oggi ArrayGrid; domani cambi qui.
+        this.grid = new ImplArrayListStructureData(conf.width(),conf.height()); // oggi ArrayGrid; domani cambio qui
         this.rooms = List.copyOf(gen.generate(grid, conf)); // Immutable list of rooms
     }
 

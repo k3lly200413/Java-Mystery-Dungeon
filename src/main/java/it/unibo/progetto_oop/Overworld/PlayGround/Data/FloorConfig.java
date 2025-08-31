@@ -16,23 +16,35 @@ public record FloorConfig(
         private int nRooms = 8;
         private int minRoomW = 5, maxRoomW = 12;
         private int minRoomH = 5, maxRoomH = 10;
-        private final int nFloors = 5;
-        private final int tileSize = 14;
+        private int nFloors = 5;
+        private int tileSize = 14;
 
         public Builder size(int w, int h) {
             this.width = w;
             this.height = h;
             return this;
         }
+
         public Builder rooms(int n) {
             this.nRooms = n;
             return this;
         }
+
         public Builder roomSize(int minW, int maxW, int minH, int maxH) {
             this.minRoomW = minW;
             this.maxRoomW = maxW;
             this.minRoomH = minH;
             this.maxRoomH = maxH;
+            return this;
+        }
+        
+        public Builder floors(int n) {
+            this.nFloors = n;
+            return this;
+        }
+
+        public Builder tileSize(int s) {
+            this.tileSize = s;
             return this;
         }
 
@@ -48,7 +60,7 @@ public record FloorConfig(
             if (this.nFloors <= 0)
                 throw new IllegalArgumentException("At least 1 floor");
 
-            return new FloorConfig(width, height, nRooms, minRoomW, maxRoomW, minRoomH, maxRoomH, nFloors);
+            return new FloorConfig(width, height, nRooms, minRoomW, maxRoomW, minRoomH, maxRoomH, nFloors, tileSize);
         }
     }
 }

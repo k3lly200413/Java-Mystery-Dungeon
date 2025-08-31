@@ -44,6 +44,13 @@ public class Dungeon {
     }
 
     /**
+     * @return the index of the current floor
+     */
+    public int getCurrentFloorIndex() {
+        return this.currentFloor;
+    }
+    
+    /**
      * Give the current floor of the dungeon.
      *
      * @return the current floor

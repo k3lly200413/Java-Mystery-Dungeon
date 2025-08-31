@@ -21,6 +21,14 @@ public class Room implements Iterable<Position>{
                 this.y < other.y + other.height && this.y + this.height > other.y);
     }
 
+    public boolean contains(Position p) {
+    return p.x() >= this.x
+        && p.x() < this.x + this.width
+        && p.y() >= this.y
+        && p.y() < this.y + this.height;
+}
+
+
     public int getX() {
         return x;
     }
