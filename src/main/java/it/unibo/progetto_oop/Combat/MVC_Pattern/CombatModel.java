@@ -2,11 +2,33 @@ package it.unibo.progetto_oop.combat.mvc_pattern;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
+import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
 import it.unibo.progetto_oop.combat.position.Position;
 
+
+/**
+ * The CombatModel class represents the model component
+ * in the MVC pattern for a combat system.
+ * It manages the state and logic of the combat,
+ * including player and enemy attributes, positions,
+ * health, stamina, and turn management.
+ */
 public class CombatModel implements PossibleUser {
+
+    /** Offset applied to the player's initial X coordinate. */
+    private static final int PLAYER_X_OFFSET = 2;
+
+    /** Divisor used to calculate the initial X
+     *  positions of player and enemy. */
+    private static final int DIVISOR = 3;
+
+    /** Offset applied to the enemy's initial X coordinate. */
+    private static final int ENEMY_OFFSET = 1;
+
+    /** Divisor used to calculate the initial Y
+     *  position (half of the board size). */
+    private static final int HALF_DIVISOR = 2;
 
     /** The size of the game board or arena. */
     private final int size;
@@ -29,7 +51,6 @@ public class CombatModel implements PossibleUser {
 
     /** The maximum health points allowed for both player and enemy. */
     private final int maxHealth = 100;
-
 
     /** The current stamina points of the player. */
     private int playerStamina;
@@ -80,25 +101,10 @@ public class CombatModel implements PossibleUser {
     private boolean isBossTurn;
 
     /** Counter tracking the number of boss attacks. */
-    private int bossAttackCounter = 0;
+    private int bossAttackCounter;
 
     /** The maximum number of hits the boss can perform in one sequence. */
     private final int maxBossHit = 3;
-
-    /** Offset applied to the player's initial X coordinate. */
-    private static final int PLAYER_X_OFFSET = 2;
-
-    /** Divisor used to calculate the initial X
-     *  positions of player and enemy. */
-    private static final int DIVISOR = 3;
-
-    /** Offset applied to the enemy's initial X coordinate. */
-    private static final int ENEMY_OFFSET = 1;
-
-    /** Divisor used to calculate the initial Y
-     *  position (half of the board size). */
-    private static final int HALF_DIVISOR = 2;
-
 
     /** The current state of the boss (e.g., NORMAL, ENRAGED). */
     private String currentBossState = "NORMAL";
@@ -107,7 +113,7 @@ public class CombatModel implements PossibleUser {
     private ArrayList<Position> deathRayPath = new ArrayList<>();
 
     /** Counter tracking the number of turns taken by the boss. */
-    private int bossTurnCounter = 0;
+    private int bossTurnCounter;
 
     /** Whether the poison animation is active. */
     private boolean poisonAnimation;
@@ -148,16 +154,16 @@ public class CombatModel implements PossibleUser {
 
     }
 
-    /**
+/**
  * Resets player and enemy positions to their default values.
  * Same logic as the original Player() constructor.
  */
 public final void resetPositions() {
     this.playerPosition = new Position((this.size / DIVISOR) - PLAYER_X_OFFSET,
-            (this.size / HALF_DIVISOR));
+    (this.size / HALF_DIVISOR));
     this.enemyPosition = new Position(
-            this.size - ((this.size / DIVISOR) - ENEMY_OFFSET),
-            (this.size / HALF_DIVISOR));
+    this.size - (this.size / DIVISOR) - ENEMY_OFFSET,
+    this.size / HALF_DIVISOR);
 }
 
 /**
@@ -170,6 +176,7 @@ public final void resetPositions() {
 public final void increasePlayerHealth(final int amount) {
     this.playerHealth = Math.min(maxHealth, this.playerHealth + amount);
 }
+
 /**
  * Increases the player's power by the specified amount.
  *
@@ -179,6 +186,7 @@ public final void increasePlayerHealth(final int amount) {
 public final void increasePlayerPower(final int power) {
     this.playerPower += power;
 }
+
 /**
  * Increases the enemy's power by the specified amount.
  *
@@ -187,12 +195,14 @@ public final void increasePlayerPower(final int power) {
 public final void increaseEnemyPower(final int power) {
     this.enemyPower += power;
 }
+
 /**
  * Resets the player's power to its base value.
  */
 public final void resetPlayerPower() {
     this.playerPower = this.basicPlayerPower;
 }
+
 /**
  * Decreases the player's health by the specified amount,
  * without allowing the value to go below zero.
@@ -202,6 +212,7 @@ public final void resetPlayerPower() {
 public final void decreasePlayerHealth(final int amount) {
     this.playerHealth = Math.max(0, this.playerHealth - amount);
 }
+
 /**
  * Increases the player's maximum stamina by the specified amount.
  *
@@ -210,6 +221,7 @@ public final void decreasePlayerHealth(final int amount) {
 public final void increasePlayerMaxStamina(final int amount) {
     this.playerStaminaMax += amount;
 }
+
 /**
  * Decreases the player's maximum stamina by the specified amount,
  * without allowing the value to go below zero.
@@ -217,8 +229,9 @@ public final void increasePlayerMaxStamina(final int amount) {
  * @param amount the stamina points to subtract
  */
 public final void decreasePlayerMaxStamina(final int amount) {
-    this.playerStaminaMax = Math.max(0, (this.playerStaminaMax - amount));
+    this.playerStaminaMax = Math.max(0, this.playerStaminaMax - amount);
 }
+
 /**
  * Decreases the player's stamina by the specified amount,
  * without allowing the value to go below zero.
@@ -228,6 +241,7 @@ public final void decreasePlayerMaxStamina(final int amount) {
 public final void decreasePlayerStamina(final int amount) {
     this.playerStamina = Math.max(0, this.playerStamina - amount);
 }
+
 /**
  * Increases the player's stamina by the specified amount,
  * without exceeding the maximum stamina.
@@ -238,6 +252,7 @@ public final void increasePlayerStamina(final int amount) {
     this.playerStamina = Math.min(this.playerStaminaMax,
         (this.playerStamina + amount));
 }
+
 /**
  * Decreases the enemy's health by the specified amount,
  * without allowing the value to go below zero.
@@ -248,23 +263,23 @@ public final void decreaseEnemyHealth(final int amount) {
     this.enemyHealth = Math.max(0, this.enemyHealth - amount);
 }
 
-    /**
-     * Checks if the game is over by verifying if either
-     * the player or the enemy has 0 or less health.
-     * Sets whoDied to the position of the entity that died.
-     *
-     * @return true if the game is over, false otherwise
-     */
-    public final boolean isGameOver() {
-        if (this.playerHealth <= 0) {
-            this.whoDied = this.getPlayerPosition();
-            return true;
-        } else if (this.enemyHealth <= 0) {
-            this.whoDied = this.getEnemyPosition();
-            return true;
-        }
-        return false;
+/**
+ * Checks if the game is over by verifying if either
+ * the player or the enemy has 0 or less health.
+ * Sets whoDied to the position of the entity that died.
+ *
+ * @return true if the game is over, false otherwise
+ */
+public final boolean isGameOver() {
+    if (this.playerHealth <= 0) {
+        this.whoDied = this.getPlayerPosition();
+        return true;
+    } else if (this.enemyHealth <= 0) {
+        this.whoDied = this.getEnemyPosition();
+        return true;
     }
+    return false;
+}
 
     /**
      * Resets the boss attack counter to zero.
@@ -608,9 +623,9 @@ public final void decreaseEnemyHealth(final int amount) {
      * false otherwise
      */
     public final void setEnemyPoisoned(final boolean newEnemyPoisoned) {
-        if (!this.enemyPoisoned && newEnemyPoisoned) {
-            this.enemyPoisoned = true;
-        }
+            if (!this.enemyPoisoned && newEnemyPoisoned) {
+                this.enemyPoisoned = true;
+            }
     }
 
     /**
@@ -651,7 +666,6 @@ public final void decreaseEnemyHealth(final int amount) {
     public final void setBossTurn(final boolean bossTurn) {
         this.isBossTurn = bossTurn;
     }
-
 
     /**
      * Sets the boss attack counter to the specified value.
@@ -697,7 +711,7 @@ public final void decreaseEnemyHealth(final int amount) {
      * @return the remaining health of the attacked entity
      */
     public final int applyAttackHealth(
-            final boolean isPlayerAttacker, final int damage) {
+        final boolean isPlayerAttacker, final int damage) {
     if (isPlayerAttacker) {
         decreaseEnemyHealth(damage);
         return getEnemyHealth();

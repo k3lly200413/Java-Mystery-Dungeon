@@ -1122,18 +1122,18 @@ public class CombatController {
                 // this.currentState.handleAnimationComplete(this);
                 // chiamo la funzione che tratta la fine delle animazioni
 
-                final int remaing = model.applyAttackHealth(
+                final int remaining = model.applyAttackHealth(
                     this.model.isPlayerTurn(),
                     this.model.getPlayerPoisonPower()
                     );
 
                 if (this.model.isPlayerTurn()) {
                     this.model.setPlayerTurn(false);
-                    view.updateEnemyHealth(remaing);
+                    view.updateEnemyHealth(remaining);
                     this.setState(new EnemyTurnState());
                 } else {
                     this.model.setPlayerTurn(true);
-                    view.updatePlayerHealth(remaing);
+                    view.updatePlayerHealth(remaining);
                     this.setState(new PlayerTurnState());
                 }
                 //this.currentState.stateChange(this);
