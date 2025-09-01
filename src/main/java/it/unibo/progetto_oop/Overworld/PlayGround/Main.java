@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
-import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldController;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
@@ -17,7 +16,6 @@ import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RandomPlacem
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RoomPlacementStrategy;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.TunnelPlacementStrategy;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.MVC.ViewManager;
 
 public final class Main {
@@ -35,9 +33,7 @@ public final class Main {
     public static void main(final String[] args) {
 
         //-------------DA VEDERE !!!----------
-        Inventory inventory = new Inventory();
-        Player player = new Player(100, inventory);
-        OverworldModel overworldModel = new OverworldModel(player, new ArrayList<>(), new ArrayList<>(), new HashSet<>()); 
+        OverworldModel overworldModel = new OverworldModel(new ArrayList<>(), new ArrayList<>(), new HashSet<>()); 
         // TODO: aggiungere i muri che confinano le stanze
         // ---------------!!!-----------------
 
@@ -48,7 +44,7 @@ public final class Main {
         final TunnelPlacementStrategy tps = new ImplTunnelPlacement();
         FloorGenerator gen = new FloorGenerator(rrs, tps, rps, rand);
         FloorConfig config = new FloorConfig.Builder().build();
-        Dungeon dungeon = new Dungeon(gen, config, player, overworldModel);
+        Dungeon dungeon = new Dungeon(gen, config);
         // VIEW
         SwingMapView view = new SwingMapView(
             "Java Mystery Dungeon", config.tileSize()
