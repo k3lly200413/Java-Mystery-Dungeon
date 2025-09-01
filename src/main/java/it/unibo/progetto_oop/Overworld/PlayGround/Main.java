@@ -2,8 +2,11 @@ package it.unibo.progetto_oop.Overworld.PlayGround;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 
+import it.unibo.progetto_oop.Combat.Inventory.Item;
+import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldController;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
@@ -31,32 +34,32 @@ public final class Main {
      * @param args command-line arguments (not used)
      */
     public static void main(final String[] args) {
-
-        //-------------DA VEDERE !!!----------
-        OverworldModel overworldModel = new OverworldModel(new ArrayList<>(), new ArrayList<>(), new HashSet<>()); 
-        // TODO: aggiungere i muri che confinano le stanze
-        // ---------------!!!-----------------
-
         // MODEL
+        FloorConfig config = new FloorConfig.Builder().build();
+        
         final Random rand = new Random();
         final RandomPlacementStrategy rps = new ImplRandomPlacement();
         final RoomPlacementStrategy rrs = new ImplRoomPlacement();
         final TunnelPlacementStrategy tps = new ImplTunnelPlacement();
         FloorGenerator gen = new FloorGenerator(rrs, tps, rps, rand);
-        FloorConfig config = new FloorConfig.Builder().build();
+        
         Dungeon dungeon = new Dungeon(gen, config);
+        OverworldModel overworldModel = new OverworldModel(List.<Enemy>of(), List.<Item>of());
+
         // VIEW
         SwingMapView view = new SwingMapView(
             "Java Mystery Dungeon", config.tileSize()
         );
         
         // CONTROLLER
-        MapController controller = new MapController(view, dungeon);
+        final MapController controller = new MapController(view, dungeon, overworldModel);
+        controller.show();
+        
+        // -----------CARD LAYOUT------------
         javax.swing.SwingUtilities.invokeLater(controller::show); // TODO: se vogliamo usare il cardlayout non ci deve essere show
 
         ViewManager viewManager = new ViewManager();
         viewManager.start(view);
-
         OverworldController movementController = new OverworldController(overworldModel, view, viewManager);
     }
 }
