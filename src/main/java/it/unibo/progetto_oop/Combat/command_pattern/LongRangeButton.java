@@ -12,7 +12,7 @@ public class LongRangeButton implements GameButton {
     /**
      * The direction of the flame.
      */
-    private int direction;
+    private final int direction;
 
     /**
      * Constructor for LongRangeButton.

@@ -26,20 +26,16 @@ public class EnemyTurnState implements CombatState {
     @Override
     public void enterState(final CombatController context) {
         // Logic for entering enemy turn state
-        System.out.println("Entering enemy turn state.");
-        CombatModel model = context.getModel();
+        final CombatModel model = context.getModel();
 
         // Check if this is a boss turn
         // AND if its special attack sequence is active
         // context.setState(new BossState());
-        System.out.println("Boss Turn : " + model.isBossTurn());
         if (model.isBossTurn()
         && model.getBossAttackCounter() < model.getMaxBossHit()) {
             // --- The boss performs another attack in its sequence ---
             // We are performing hit #1, #2, or #3
             model.increaseBossAttackCounter();
-            System.out.println("Boss Sequence: Preparing hit #"
-            + model.getBossAttackCounter());
 
             // Use the controller's helper to perform a delayed action
             context.performDelayedEnemyAction(ENEMY_ACTION_DELAY, () -> {
@@ -52,19 +48,16 @@ public class EnemyTurnState implements CombatState {
             // for the next hit if the sequence isn't over.
         } else {
             if (model.isBossTurn() && model.getBossAttackCounter() > 0) {
-                System.out.println("\n>>> Starting Boss Attack");
                 model.clearBossAttackCount();
                 model.setBossTurn(false);
                 context.setState(new PlayerTurnState());
                 model.setPlayerTurn(true);
             } else {
                 // context.stopAnimationTimer();
-                System.out.println("No Boss Attack");
                 model.setBossTurn(false);
-                Timer enemyDelay = new Timer(ENEMY_ACTION_DELAY, e -> {
+                final Timer enemyDelay = new Timer(ENEMY_ACTION_DELAY, e -> {
                     // Ensure we are still in the EnemyTurnState before acting
-                    if (context.getCurrentState() == this) {
-                        System.out.println("Enemy choosing action...");
+                    if (context.getCurrentState().equals(this)) {
                         // Assume enemy action leads to animation
                         context.setState(new AnimatingState());
                         // context.performEnemySuperAttack();

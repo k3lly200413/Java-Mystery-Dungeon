@@ -67,18 +67,12 @@ public class InfoDisplayState implements CombatState {
      */
     @Override
     public void enterState(final CombatController context) {
-        System.out.println("Entering InfoDisplayState"); // Debug log
+        final CombatModel model = context.getModel();
+        final CombatView view = context.getView();
 
-        CombatModel model = context.getModel();
-        CombatView view = context.getView();
-
-        // --- Step 1: Explicitly Disable ALL standard combat buttons/panels ---
-        // This is crucial because the previous state (AnimatingState) likely
-        // disabled them, but we need to be certain only 'Back' will be active.
         view.setAllButtonsDisabled();
 
-        // --- Step 2: Display the Information ---
-        String infoText = String.format(
+        final String infoText = String.format(
             "<html>Enemy Info:<br>Name: %s<br>Power: %d<br>Speed: %d</html>",
             model.getEnemyName(),
             model.getEnemyPower(),
@@ -86,19 +80,8 @@ public class InfoDisplayState implements CombatState {
         );
         view.showInfo(infoText);
 
-        // --- Step 3: Enable ONLY the Back button ---
-        // Since setCustomButtonEnable only enables,
-        //we are sure only 'Back' is now active.
-
         view.showAttackOptions();
-        System.out.println("\nOriginal\n");
         view.setCustomButtonEnabled(view.getAttackBackButton());
-
-        // --- Step 4: Ensure zoomed view persists ---
-        // Do not reset positions here.
-        // Ensure the view is redrawn showing the enemy in the zoomed position.
-        // The exact parameters depend on the redrawView method signature.
-        // context.redrawView();
 
     }
 
@@ -114,7 +97,6 @@ public class InfoDisplayState implements CombatState {
      */
     @Override
     public void exitState(final CombatController context) {
-        System.out.println("Exiting InfoDisplayState");
         // Reset positions when leaving the info view
         context.getModel().resetPositions();
         // Clear the specific info text

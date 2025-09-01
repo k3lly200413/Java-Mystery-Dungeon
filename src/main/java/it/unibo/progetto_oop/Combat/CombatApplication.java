@@ -67,6 +67,7 @@ public final class CombatApplication {
             viewWidthFactor * model.getSize() / sizeDivisor,
             viewHeightFactor * model.getSize() / sizeDivisor,
             buttonWidth, buttonHeight, windowWidth, windowHeight);
+            view.init();
 
             // 3. Create the Controller, linking the Model and View
             final CombatController controller =

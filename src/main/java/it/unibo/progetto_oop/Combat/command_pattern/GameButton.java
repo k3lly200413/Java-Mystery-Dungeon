@@ -9,6 +9,7 @@ import it.unibo.progetto_oop.combat.position.Position;
  * Represents the action each button will be able to execute
  *
  */
+@FunctionalInterface
 public interface GameButton {
     /**
      * Executes a command.

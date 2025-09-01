@@ -23,11 +23,11 @@ public class MeleeButton implements GameButton {
     /**
      * The direction in which the player will move.
      */
-    private int where;
+    private final int where;
     /**
      * Neighbours instance to check if two positions are neighbours.
      */
-    private Neighbours neighbours;
+    private final Neighbours neighbours;
 
     /**
      * Constructor for MeleeButton.

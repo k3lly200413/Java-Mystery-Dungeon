@@ -15,8 +15,7 @@ public class GameOverState implements  CombatState {
      */
     @Override
     public void enterState(final CombatController context) {
-        System.out.println("\n\nEntered Game Over State\n\n");
-        RedrawContext defaultRedraw = new RedrawContext.Builder()
+        final RedrawContext defaultRedraw = new RedrawContext.Builder()
         .player(context.getModel().getPlayerPosition())
         .enemy(context.getModel().getEnemyPosition())
         .flame(context.getModel().getAttackPosition())
@@ -24,7 +23,7 @@ public class GameOverState implements  CombatState {
         .drawEnemy(true)
         .playerRange(2)
         .enemyRange(2)
-        .isGameOver(context.getModel().isGameOver())
+        .setIsGameOver(context.getModel().isGameOver())
         .whoDied(context.getModel().getWhoDied())
         .build();
         context.getView().redrawGrid(defaultRedraw);
@@ -38,7 +37,7 @@ public class GameOverState implements  CombatState {
      */
     @Override
     public void exitState(final CombatController context) {
-        System.out.println("\n\nExited Game Over State\n\n");
+        context.getView().showInfo("Exiting Game Over State");
     }
 
     /**
@@ -49,7 +48,7 @@ public class GameOverState implements  CombatState {
      */
     @Override
     public void handleAnimationComplete(final CombatController context) {
-        System.out.println("Animation Complete in Game Over State");
+        context.getView().showInfo("Animation Complete in Game Over State");
     }
 
     @Override

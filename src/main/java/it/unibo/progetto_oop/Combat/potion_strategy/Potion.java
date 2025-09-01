@@ -42,12 +42,9 @@ public class Potion extends Item {
     @Override
     public boolean use(final PossibleUser target) {
         if (this.strategy != null) {
-            System.out.println("Applying effect of: " + this.getName());
             this.strategy.applyEffect(target);
             return true;
         } else {
-            System.out.println("Warning: Potion "
-            + getName() + " has no strategy.");
             return false;
         }
     }

@@ -62,27 +62,27 @@ public class AnimatingState implements CombatState {
     public final void enterState(final CombatController context) {
         context.getView().showInfo(
             "Entered Animating State!\nNo issues for now");
-        System.out.println("------ Entered Animating State ------");
         context.getView().setAllButtonsDisabled();
     }
 
+    /**
+     * No actions required when exiting the AnimatingState.
+     */
     @Override
     public final void exitState(final CombatController context) {
-        System.out.println("Exiting Animating State");
+        context.getView().showInfo("Animation Completed");
     }
 
     @Override
     public final void handleAnimationComplete(final CombatController context) {
-        System.out.println("Debug: Requested Handle Animation Complete");
 
-        CombatModel model = context.getModel();
-        CombatView view = context.getView();
+        final CombatModel model = context.getModel();
+        final CombatView view = context.getView();
 
-        boolean wasPlayerTurn = model.isPlayerTurn();
+        final boolean wasPlayerTurn = model.isPlayerTurn();
 
         if (wasPlayerTurn) {
             if (model.isEnemyPoisoned() && model.getEnemyHealth() > 0) {
-                System.out.println("Applying poison damage to enemy.");
                 view.showInfo("Enemy takes poison damage!");
                 context.performPoisonEffectAnimation();
                 model.decreaseEnemyHealth(
@@ -90,12 +90,9 @@ public class AnimatingState implements CombatState {
                 view.updateEnemyHealth(
                     model.getEnemyHealth());          // Update bar
             }
-            System.out.println(model.isEnemyPoisoned());
-            System.out.println(model.getEnemyHealth() > 0);
         } else { // Enemy's turn just ended
             // Apply effects to PLAYER after enemy's turn
             if (model.isPlayerPoison() && model.getPlayerHealth() > 0) {
-                System.out.println("Applying poison damage to player.");
                 view.showInfo("Player takes poison damage!");
                 context.performPoisonEffectAnimation();
                 model.decreasePlayerHealth(model.getEnemyPoisonPower());

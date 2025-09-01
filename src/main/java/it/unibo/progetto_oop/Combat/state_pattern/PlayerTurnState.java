@@ -32,8 +32,6 @@ public class PlayerTurnState implements CombatState {
         context.getView().setAllButtonsDisabled();
         context.getView().clearInfo();
         context.getView().showInfo("Player Has used physical Attack");
-        System.out.println(
-            "Debug Log: Requested Physical\nCurrent State: Player Turn State");
         context.setState(new AnimatingState());
         context.performPlayerPhysicalAttack();
     }
@@ -65,7 +63,7 @@ public class PlayerTurnState implements CombatState {
 
     @Override
     public final void handleBagInput(final CombatController context) {
-        System.out.println("PlayerTurnState: Bag action requested");
+        context.getView().showInfo("Bag Selected");
     }
 
     @Override
@@ -81,12 +79,10 @@ public class PlayerTurnState implements CombatState {
         context.getView().setAllButtonsEnabled();
         context.getView().showOriginalButtons();
         context.getView().showInfo("Your Turn!");
-        System.out.println("------ Entering Player Turn State ------");
     }
 
     @Override
     public final void exitState(final CombatController context) {
-        System.out.println("------ Exiting Player Turn State ------");
         context.getView().clearInfo();
         // context.getModel().setPlayerTurn(false);
     }

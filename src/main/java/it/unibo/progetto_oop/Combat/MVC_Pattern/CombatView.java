@@ -33,6 +33,10 @@ import java.awt.Graphics2D;
 
 public class CombatView extends JFrame {
     /**
+     * Serial version UID for serialization.
+     */
+    private static final long serialVersionUID = 1L;
+    /**
      * Default height of the health bars.
      */
     private static final int DEFAULT_BAR_HEIGHT = 20;
@@ -61,9 +65,21 @@ public class CombatView extends JFrame {
      */
     private static final int DEFAULT_INFO_HEIGHT = 70;
     /**
+     * Size to use for the combat view.
+     */
+    private final int sizeToUse;
+    /**
      * Height and width of the buttons in the combat view.
      */
     private final int buttonHeight;
+    /**
+     * Height modifier for the combat view.
+     */
+    private final int heightModifier;
+    /**
+     * Width modifier for the combat view.
+     */
+    private final int widthModifier;
     /**
      * Width of the buttons in the combat view.
      */
@@ -163,11 +179,11 @@ public class CombatView extends JFrame {
     /**
      * Maximum health of the player.
      */
-    private int maxPlayerHealth;
+    private final int maxPlayerHealth;
     /**
      * Maximum health of the enemy.
      */
-    private int maxEnemyHealth;
+    private final int maxEnemyHealth;
 
     /**
      * Constructor for CombatView.
@@ -175,33 +191,41 @@ public class CombatView extends JFrame {
      * @param size the size of the combat view, used to scale components
      * @param buttonHeightToAssign the height of the buttons
      * @param buttonWidthToAssign the width of the buttons
-     * @param heightModifier the height modifier for scaling
-     * @param widthModifier the width modifier for scaling
+     * @param heightModifierToAssign the height modifier for scaling
+     * @param widthModifierToAssign the width modifier for scaling
      * @param maxPlayerHealthToAssign the maximum health of the player
      * @param maxEnemyHealthToAssign the maximum health of the enemy
      */
     public CombatView(final int size,
     final int buttonHeightToAssign,
     final int buttonWidthToAssign,
-    final int heightModifier,
-    final int widthModifier,
+    final int heightModifierToAssign,
+    final int widthModifierToAssign,
     final int maxPlayerHealthToAssign,
     final int maxEnemyHealthToAssign) {
+        super("Combat View");
+        this.sizeToUse = size;
+        this.heightModifier = heightModifierToAssign;
+        this.widthModifier = widthModifierToAssign;
         this.cells = new HashMap<>();
         // this.buttonHeight = (20 * size) / 3;
         this.buttonHeight = buttonHeightToAssign;
         // this.buttonWidth = (50 * size) / 3;
         this.buttonWidth = buttonWidthToAssign;
-        this.setTitle("Combat Screen");
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         // this.setSize(70 * size, 75 * size);
         this.maxPlayerHealth = maxPlayerHealthToAssign;
         this.maxEnemyHealth = maxEnemyHealthToAssign;
         this.neighbours = new Neighbours();
-        this.setSize(heightModifier * size, widthModifier * size);
+    }
+    /**
+     * Initialize the combat view.
+     * Created new method because of PMD
+     */
+    public void init() {
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.initializeUI(
-            size,
+            sizeToUse,
             DEFAULT_BAR_HEIGHT,
             DEFAULT_BAR_WIDTH,
             DEFAULT_SPACE_BUFFER,
@@ -216,8 +240,10 @@ public class CombatView extends JFrame {
     final int spaceBuffer,
     final int squareWidth,
     final int squareHeight) {
-        JPanel gridpanel = new JPanel(new GridLayout(size, size));
-        JPanel healthPanel = new JPanel();
+        this.setSize(heightModifier * size, widthModifier * size);
+
+        final JPanel gridpanel = new JPanel(new GridLayout(size, size));
+        final JPanel healthPanel = new JPanel();
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -338,7 +364,7 @@ public class CombatView extends JFrame {
             )
         );
 
-        JPanel southPanel = new JPanel();
+        final JPanel southPanel = new JPanel();
         southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
         southPanel.add(buttonPanelContainer);
         southPanel.add(infoLabel);
@@ -414,9 +440,9 @@ public class CombatView extends JFrame {
      */
     public final void redrawGrid(final RedrawContext context) {
 
-        for (var entry : cells.entrySet()) {
-            JLabel cellLabel = entry.getKey();
-            Position cellPos = entry.getValue();
+        for (final var entry : cells.entrySet()) {
+            final JLabel cellLabel = entry.getKey();
+            final Position cellPos = entry.getValue();
             Icon icon = null;
 
             if (context.isGameOver()) {
@@ -573,7 +599,7 @@ public class CombatView extends JFrame {
         final JPanel panel,
         final boolean enablePanel) {
         panel.setEnabled(enablePanel);
-        for (Component comp : panel.getComponents()) {
+        for (final Component comp : panel.getComponents()) {
             if (comp instanceof JButton) {
                 comp.setEnabled(enablePanel);
             }
@@ -598,11 +624,10 @@ public class CombatView extends JFrame {
         final String path,
         final int width,
         final int height) {
-        URL imgURL = getClass().getResource(path);
+        final URL imgURL = getClass().getResource(path);
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
-            System.err.println("Was not able to find file: " + path);
             return createDefaultIcon(width, height);
         }
     }
@@ -698,9 +723,9 @@ public class CombatView extends JFrame {
     }
 
     private ImageIcon createDefaultIcon(final int width, final int height) {
-        BufferedImage image =
+        final BufferedImage image =
         new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = image.createGraphics();
+        final Graphics2D g = image.createGraphics();
         g.setColor(Color.GRAY);
         g.fillRect(0, 0, width, height);
         g.dispose();
@@ -711,7 +736,7 @@ public class CombatView extends JFrame {
         final String name,
         final int height,
         final int length) {
-        JButton tempButton = new JButton(name);
+        final JButton tempButton = new JButton(name);
         tempButton.setPreferredSize(new Dimension(length, height));
         return tempButton;
     }

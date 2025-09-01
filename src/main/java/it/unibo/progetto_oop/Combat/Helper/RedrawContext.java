@@ -8,87 +8,87 @@ public final class RedrawContext {
     /**
      * Position of the player.
      */
-    private Position player;
+    private final Position player;
     /**
      * Position of the enemy.
      */
-    private Position enemy;
+    private final Position enemy;
     /**
      * Position of the flame.
      */
-    private Position flame;
+    private final Position flame;
     /**
      * Size of the flame.
      */
-    private int flameSize;
+    private final int flameSize;
     /**
      * deciding whether to draw or not the player.
      */
-    private boolean drawPlayer;
+    private final boolean drawPlayer;
     /**
      * deciding whether to draw or not the enemy.
      */
-    private boolean drawEnemy;
+    private final boolean drawEnemy;
     /**
      * deciding whether to draw or not the flame.
      */
-    private boolean drawFlame;
+    private final boolean drawFlame;
     /**
      * deciding whether to draw or not the poison.
      */
-    private boolean drawPoison;
+    private final boolean drawPoison;
     /**
      * Size range of the player.
      */
-    private int playerRange;
+    private final int playerRange;
     /**
      * Size range of the enemy.
      */
-    private int enemyRange;
+    private final int enemyRange;
     /**
      * checking if the game is over.
      */
-    private boolean isGameOver;
+    private final boolean isGameOver;
     /**
      * Position of who died (player or enemy).
      */
-    private Position whoDied;
+    private final Position whoDied;
     /**
      * deciding whether to draw or not the boss ray attack.
      */
-    private boolean drawBossRayAttack;
+    private final boolean drawBossRayAttack;
     /**
      * Path of the death ray (if any).
      */
-    private List<Position> deathRayPath;
+    private final List<Position> deathRayPath;
     /**
      * deciding whether to draw or not the poison damage.
      */
-    private boolean drawPoisonDamage;
+    private final boolean drawPoisonDamage;
     /**
      * Y coordinate of the poison damage.
      */
-    private int poisonYCoord;
+    private final int poisonYCoord;
     /**
      * deciding whether the enemy is charging an attack.
      */
-    private boolean isCharging;
+    private final boolean isCharging;
     /**
      * Distance of the charging " block " of the enemy.
      */
-    private int chargingCellDistance;
+    private final int chargingCellDistance;
     /**
      * Width of each square in the grid.
      */
-    private int squareWidth;
+    private final int squareWidth;
     /**
      * Height of each square in the grid.
      */
-    private int squareHeight;
+    private final int squareHeight;
     /**
      * Position of who is poisoned (player or enemy).
      */
-    private Position whoIsPoisoned;
+    private final Position whoIsPoisoned;
 
     private RedrawContext(final Builder builder) {
         this.player = builder.player;
@@ -508,7 +508,7 @@ public final class RedrawContext {
          * @param isGameOverboolean whether the game is over
          * @return the builder
          */
-        public Builder isGameOver(final boolean isGameOverboolean) {
+        public Builder setIsGameOver(final boolean isGameOverboolean) {
             this.isGameOver = isGameOverboolean;
             return this;
         }
@@ -576,7 +576,7 @@ public final class RedrawContext {
          * @param isChargingboolean whether the character is charging
          * @return the builder
          */
-        public Builder isCharging(final boolean isChargingboolean) {
+        public Builder setIsCharging(final boolean isChargingboolean) {
             this.isCharging = isChargingboolean;
             return this;
         }

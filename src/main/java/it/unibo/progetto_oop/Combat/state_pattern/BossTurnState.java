@@ -19,9 +19,6 @@ public class BossTurnState implements CombatState {
     private static final int STANDARD_ATTACK_INTERVAL = 3;
     /** Conversion factor to percentage values (100%). */
     private static final int PERCENT_CONVERSION = 100;
-
-    /** Indicates the boss health percentage. */
-    private int bossHealthPercent;
     /** Indicates the boss state. */
     private String bossState = "NORMAL";
 
@@ -87,17 +84,17 @@ public class BossTurnState implements CombatState {
     // Constants for Boss logic
     @Override
     public final void enterState(final CombatController context) {
-        System.out.println("\nBoss State: Entering Boss Turn State\n");
-        this.bossHealthPercent =
-            (context.getModel().getEnemyHealth()
-            / context.getModel().getMaxHealth()) * PERCENT_CONVERSION;
+        context.getView().showInfo("Starting Boss Turn");
+        final int bossHealthPercent =
+            context.getModel().getEnemyHealth()
+            / context.getModel().getMaxHealth() * PERCENT_CONVERSION;
 
-        if (this.bossHealthPercent < BOSS_ENRAGED_THRESHOLD
-            && this.bossState.toUpperCase().equals("NORMAL")) {
+        if (bossHealthPercent < BOSS_ENRAGED_THRESHOLD
+            && "NORMAL".equalsIgnoreCase(this.bossState)) {
             this.bossState = "ENRAGED";
             context.getView().showInfo("The Boss is now ENRAGED");
         }
-        if (this.bossState.toUpperCase().equals("ENRAGED")) {
+        if ("ENRAGED".equalsIgnoreCase(this.bossState)) {
             context.performEnemySuperAttack();
         } else {
             if (context.getModel().getBossTurnCounter()
@@ -134,7 +131,7 @@ public class BossTurnState implements CombatState {
 
     @Override
     public final void exitState(final CombatController context) {
-        System.out.println("\nBoss State: Exiting Boss Turn State\n");
+        context.getView().showInfo("Finished Boss turn");
     }
 
     @Override

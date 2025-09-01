@@ -12,43 +12,43 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 public class ItemSelectionState implements CombatState {
 
     @Override
-    public void enterState(CombatController context) {
-        System.out.println("\nEntered selection section");
+    public void enterState(final CombatController context) {
+        context.getView().showInfo("\nEntered selection section");
     }
 
     @Override
-    public void exitState(CombatController context) {
-        System.out.println("\nEXITING\n");
+    public void exitState(final CombatController context) {
+        context.getView().showInfo("\nEXITING\n");
 
     }
 
     @Override
-    public void handlePhysicalAttackInput(CombatController context) {
+    public void handlePhysicalAttackInput(final CombatController context) {
         throw new UnsupportedOperationException("Unimplemented method 'handlePhysicalAttackInput'");
     }
 
     @Override
-    public void handleInfoInput(CombatController context) {
+    public void handleInfoInput(final CombatController context) {
         throw new UnsupportedOperationException("Unimplemented method 'handleInfoInput'");
     }
 
     @Override
-    public void handleBackInput(CombatController context) {
+    public void handleBackInput(final CombatController context) {
         // TODO --> turn back the state to player state (need a function to set state in CombatController)
     }
 
     @Override
-    public void handleBagInput(CombatController context) {
+    public void handleBagInput(final CombatController context) {
         throw new UnsupportedOperationException("Unimplemented method 'handleBagInput'");
     }
 
     @Override
-    public void handleRunInput(CombatController context) {
+    public void handleRunInput(final CombatController context) {
         throw new UnsupportedOperationException("Unimplemented method 'handleRunInput'");
     }
 
     @Override
-    public void handleAnimationComplete(CombatController context) {
+    public void handleAnimationComplete(final CombatController context) {
         throw new UnsupportedOperationException("Unimplemented method 'handleAnimationComplete'");
     }
 
@@ -61,24 +61,24 @@ public class ItemSelectionState implements CombatState {
     }
 
     @Override
-    public void handleLongRangeAttackInput(CombatController context, boolean isPoison, boolean isFlame) {
+    public void handleLongRangeAttackInput(final CombatController context, boolean isPoison, boolean isFlame) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleLongRangeAttackInput'");
     }
 
     @Override
-    public void handleCurePoisonInput(CombatController context) {
+    public void handleCurePoisonInput(final CombatController context) {
         // this.handlePotionUsed(context, null, null); is this class needed???
     }
 
     @Override
-    public void handleAttackBuffInput(CombatController context) {
+    public void handleAttackBuffInput(final CombatController context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleAttackBuffInput'");
     }
 
     @Override
-    public void handleHealInput(CombatController context) {
+    public void handleHealInput(final CombatController context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleHealInput'");
     }
