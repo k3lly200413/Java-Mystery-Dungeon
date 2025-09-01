@@ -1,7 +1,5 @@
 package it.unibo.progetto_oop.Overworld.PlayGround;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 

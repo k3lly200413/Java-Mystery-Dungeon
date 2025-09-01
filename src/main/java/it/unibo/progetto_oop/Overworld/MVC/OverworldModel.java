@@ -62,15 +62,15 @@ public final class OverworldModel {
             this.gridView = null;
             if (this.gridNotifier != null) {
                 this.gridNotifier.setGridUpdater(null);
+            }
         }
-        return;
+        else {
+            this.gridView = floor.grid();
+            if (this.gridNotifier == null) {
+                this.gridNotifier = new GridNotifier(null);
+            }
+            this.gridNotifier.setGridUpdater(floor); // Floor implementa GridUpdater
         }
-        this.gridView = floor.grid();
-        if (this.gridNotifier == null) {
-            this.gridNotifier = new GridNotifier(null); // ulteriore safety net
-        }
-        this.gridNotifier.setGridUpdater(floor); // Floor implementa GridUpdater
-
     }
 
     public boolean nextFloor() {
