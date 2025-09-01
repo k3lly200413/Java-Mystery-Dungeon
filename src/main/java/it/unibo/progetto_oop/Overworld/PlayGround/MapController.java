@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import javax.swing.SwingUtilities;
 
+import it.unibo.progetto_oop.Overworld.MVC.OverworldEntitiesGenerator;
+import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
@@ -17,16 +19,17 @@ public final class MapController {
      * The Dungeon instance used to manage the dungeon floors.
      */
     private final Dungeon dungeon;
+    private final OverworldModel model;
+    private final OverworldEntitiesGenerator entitiesGenerator; // per creare nemici/items per il floor
 
-    /**
-     * Constructs a MapController with the specified view and dungeon.
-     *
-     * @param mapView    the SwingMapView instance to be used
-     * @param mapDungeon the Dungeon instance to be used
-     */
-    public MapController(final SwingMapView mapView, final Dungeon mapDungeon) {
+    public MapController(final SwingMapView mapView,
+                         final Dungeon mapDungeon,
+                         final OverworldModel model,
+                         final OverworldEntitiesGenerator entitiesGenerator) {
         this.view = Objects.requireNonNull(mapView);
         this.dungeon = Objects.requireNonNull(mapDungeon);
+        this.model = Objects.requireNonNull(model);
+        this.entitiesGenerator = Objects.requireNonNull(entitiesGenerator);
     }
 
     /**
