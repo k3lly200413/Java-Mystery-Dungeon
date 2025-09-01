@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Combat;
+package it.unibo.progetto_oop.combat;
 
 import javax.swing.SwingUtilities;
 
