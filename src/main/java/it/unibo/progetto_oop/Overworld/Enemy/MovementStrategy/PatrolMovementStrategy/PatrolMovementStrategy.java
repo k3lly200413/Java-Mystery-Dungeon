@@ -56,10 +56,7 @@ public class PatrolMovementStrategy implements MovementStrategy{
         if (!targetPos.equals(currentPos) && !walls.contains(targetPos)) {
             context.setPosition(targetPos);
             context.getGridNotifier().notifyEnemyMoved(currentPos, targetPos);
-
-            if (player.getPosition().equals(targetPos) || player.getPosition().equals(currentPos)){
-                context.setState( new CombatTransitionState(context.getState()));
-            }
+            
             return this.moveDirection;
         } 
         // if it's impossible to move in the current direction, reverse it

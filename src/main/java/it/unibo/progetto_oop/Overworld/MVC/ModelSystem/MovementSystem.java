@@ -98,8 +98,12 @@ public class MovementSystem {
         // Check Enemies
         Optional<Enemy> enemyOpt = enemySystem.checkEnemyHit(tempPosition);
         if (enemyOpt.isPresent()) {
+            Enemy enemy = enemyOpt.get();
+
             this.setCombatTransitionFlag();
-            enemySystem.setEncounteredEnemy(enemyOpt.get());
+            
+            enemySystem.setEncounteredEnemy(enemy);
+
             System.out.println("Enemy encounter flagged at "+tempPosition);
             return; 
         }

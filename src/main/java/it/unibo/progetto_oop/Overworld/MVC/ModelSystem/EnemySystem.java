@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
@@ -50,6 +51,11 @@ public class EnemySystem {
      */
     public void setEncounteredEnemy(Enemy encounteredEnemy){
         this.encounteredEnemy = encounteredEnemy;
+
+        if (this.model.isCombatTransitionPending()){
+            this.encounteredEnemy.setState(new CombatTransitionState(encounteredEnemy.getState()));
+        }
+        
     }
 
     /**
