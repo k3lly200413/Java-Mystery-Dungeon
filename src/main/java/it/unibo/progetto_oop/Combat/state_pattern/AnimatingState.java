@@ -132,9 +132,15 @@ public class AnimatingState implements CombatState {
 
     /**
      * Method to handle the boss death ray attack.
+     *
      * @param context The combat controller context.
      */
-    public void handleBossDeathRayAttack(final CombatController context) { }
+    public void handleBossDeathRayAttack(final CombatController context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException(
+
+            "Unimplemented method 'handleBossDeathRayAttack'");
+    }
 
     @Override
     public final void handleAttackBuffInput(final CombatController context) {

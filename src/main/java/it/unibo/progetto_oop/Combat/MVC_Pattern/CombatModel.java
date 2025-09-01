@@ -314,6 +314,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Adds a position to the boss's death ray path.
+     *
      * @param nextPosition the next position to add to the death ray path
      */
     public final void addDeathRayPosition(final Position nextPosition) {
@@ -592,6 +593,7 @@ public final void decreaseEnemyHealth(final int amount) {
     // setters
     /**
      * Sets the player's position.
+     *
      * @param newPlayerPosition the new position for the player
      */
     public final void setPlayerPosition(final Position newPlayerPosition) {
@@ -600,6 +602,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Sets the enemy's position.
+     *
      * @param newEnemyPosition the new position for the enemy
      */
     public final void setEnemyPosition(final Position newEnemyPosition) {
@@ -608,6 +611,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Sets the attack position.
+     *
      * @param newAttackPosition the new attack position
      */
     public final void setAttackPosition(final Position newAttackPosition) {
@@ -617,6 +621,7 @@ public final void decreaseEnemyHealth(final int amount) {
     /**
      * Sets the enemy's poisoned state to true
      * if it was not already poisoned and the new value is true.
+     *
      * @param newEnemyPoisoned true if the enemy should be poisoned,
      * false otherwise
      */
@@ -628,6 +633,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Sets whether it is the player's turn.
+     *
      * @param playerTurn true if it is the player's turn, false otherwise
      */
     public final void setPlayerTurn(final boolean playerTurn) {
@@ -637,6 +643,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Sets whether the player is poisoned.
+     *
      * @param isPoisoned true if the player is poisoned, false otherwise
      */
     @Override
@@ -646,6 +653,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Sets the state of the poison animation.
+     *
      * @param newState true if the poison animation should be active,
      * false otherwise
      */
@@ -655,6 +663,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Sets whether it is the boss's turn.
+     *
      * @param bossTurn true if it is the boss's turn, false otherwise
      */
     public final void setBossTurn(final boolean bossTurn) {
@@ -665,6 +674,7 @@ public final void decreaseEnemyHealth(final int amount) {
     /**
      * Sets the boss attack counter to the specified value.
      * This method is final to prevent unsafe overrides in subclasses.
+     *
      * @param newBossAttackCounter the new value for the boss attack counter
      */
     public final void setBossAttackCounter(final int newBossAttackCounter) {
@@ -673,6 +683,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Sets the current state of the boss.
+     *
      * @param newCurrentBossState the new state of the boss
      */
     public void setCurrentBossState(final String newCurrentBossState) {
@@ -697,6 +708,7 @@ public final void decreaseEnemyHealth(final int amount) {
     /**
      * Applies attack damage to either the player or the enemy,
      * depending on the attacker.
+     *
      * @param isPlayerAttacker true if the player is attacking,
      * false if the enemy is attacking
      * @param damage the amount of damage to apply

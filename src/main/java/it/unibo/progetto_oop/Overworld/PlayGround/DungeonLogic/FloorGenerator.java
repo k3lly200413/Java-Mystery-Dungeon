@@ -36,6 +36,7 @@ public final class FloorGenerator {
      * @param roomps the strategy for placing rooms
      * @param tunnelps the strategy for connecting rooms with tunnels
      * @param randps the strategy for placing objects like stairs...
+     *
      * @param r the random number generator used for placement strategies
      */
     public FloorGenerator(

@@ -34,7 +34,9 @@ public class MeleeButton implements GameButton {
      * Initializes the player and enemy positions, direction, and distance.
      *
      * @param playerPosition The initial position of the player.
+     *
      * @param enemyPosition  The initial position of the enemy.
+     *
      * @param direction      The direction in which the player will move.
      */
     public MeleeButton(

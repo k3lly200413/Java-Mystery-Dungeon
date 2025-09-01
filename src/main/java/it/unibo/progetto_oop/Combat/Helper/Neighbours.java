@@ -5,19 +5,12 @@ import it.unibo.progetto_oop.combat.position.Position;
 public class Neighbours {
 
     /**
-     * Constructor for neighbours class.
-     * used to check if two enteties are close in combat
-     *
-     */
-    public Neighbours() {
-
-    }
-
-    /**
      * Checks if two positions are within a given distance of each other.
      *
      * @param firstPosition   The first position.
+     *
      * @param secondPosition    The second position.
+     *
      * @param distanceBuffer The maximum distance to be considered neighbors.
      *
      * @return True if they are neighbors, false otherwise.

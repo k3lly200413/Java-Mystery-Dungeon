@@ -27,7 +27,9 @@ public interface Enemy {
     /**
      * 
      * Updates the enemy's state based on the player's position.
+     *
      * @param model The current model of the overworld.
+     *
      * @param player The player that the enemy is interacting with.
      */
     public void takeTurn(OverworldModel model, Player player);

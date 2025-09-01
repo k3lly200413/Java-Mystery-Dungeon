@@ -171,6 +171,7 @@ public class CombatView extends JFrame {
 
     /**
      * Constructor for CombatView.
+     *
      * @param size the size of the combat view, used to scale components
      * @param buttonHeightToAssign the height of the buttons
      * @param buttonWidthToAssign the width of the buttons
@@ -348,6 +349,7 @@ public class CombatView extends JFrame {
 
     /**
      * Sets the maximum value for the health bars.
+     *
      * @param max the maximum health value for both player and enemy
      */
     public final void setHealthBarMax(final int max) {
@@ -357,6 +359,7 @@ public class CombatView extends JFrame {
 
     /**
      * Updates the player's health bar with the current value.
+     *
      * @param value the current health value of the player
      */
     public final void updatePlayerHealth(final int value) {
@@ -367,6 +370,7 @@ public class CombatView extends JFrame {
 
     /**
      * Updates the player's stamina bar with the current value.
+     *
      * @param value the current stamina value of the player
      */
     public final void updatePlayerStamina(final int value) {
@@ -377,6 +381,7 @@ public class CombatView extends JFrame {
 
     /**
      * Updates the enemy's health bar with the current value.
+     *
      * @param value the current health value of the enemy
      */
     public final void updateEnemyHealth(final int value) {
@@ -387,6 +392,7 @@ public class CombatView extends JFrame {
 
     /**
      * Displays a message in the info label.
+     *
      * @param text the message to display
      */
     public final void showInfo(final String text) {
@@ -403,6 +409,7 @@ public class CombatView extends JFrame {
 
     /**
      * Redraws the grid with the specified parameters.
+     *
      * @param context the context containing necessary information for redrawing
      */
     public final void redrawGrid(final RedrawContext context) {
@@ -546,6 +553,7 @@ public class CombatView extends JFrame {
 
     /**
      * Enables a specific button in the combat view, allowing user interaction.
+     *
      * @param buttonToEnable the button to enable
      */
     public final void setCustomButtonEnabled(final JButton buttonToEnable) {
@@ -554,6 +562,7 @@ public class CombatView extends JFrame {
 
     /**
      * Disables a specific button in the combat view.
+     *
      * @param buttonToDisable the button to disable
      */
     public final void setCustomButtonDisabled(final JButton buttonToDisable) {
@@ -709,6 +718,7 @@ public class CombatView extends JFrame {
 
     /**
      * Adds an action listener to the attack button.
+     *
      * @param e the action listener to add
      */
     public final void addAttackButtonListener(final ActionListener e) {
@@ -717,6 +727,7 @@ public class CombatView extends JFrame {
 
     /**
      * Adds an action listener to the bag button.
+     *
      * @param e the action listener to add
      */
     public final void addBagButtonListener(final ActionListener e) {
@@ -725,6 +736,7 @@ public class CombatView extends JFrame {
 
     /**
      * Adds an action listener to the run button.
+     *
      * @param e the action listener to add
      */
     public final void addRunButtonListener(final ActionListener e) {
@@ -733,6 +745,7 @@ public class CombatView extends JFrame {
 
     /**
      * Adds an action listener to the info button.
+     *
      * @param e the action listener to add
      */
     public final void addInfoButtonListener(final ActionListener e) {
@@ -741,6 +754,7 @@ public class CombatView extends JFrame {
 
     /**
      * Adds an action listener to the physical attack button.
+     *
      * @param e the action listener to add
      */
     public final void addPhysicalButtonListener(final ActionListener e) {
@@ -749,6 +763,7 @@ public class CombatView extends JFrame {
 
     /**
      * Adds an action listener to the long-range attack button.
+     *
      * @param e the action listener to add
      */
     public final void addLongRangeButtonListener(final ActionListener e) {
@@ -757,6 +772,7 @@ public class CombatView extends JFrame {
 
     /**
      * Adds an action listener to the poison button.
+     *
      * @param e the action listener to add
      */
     public final void addPoisonButtonListener(final ActionListener e) {
@@ -765,6 +781,7 @@ public class CombatView extends JFrame {
 
     /**
      * Adds an action listener to the back button.
+     *
      * @param e the action listener to add
      */
     public final void addBackButtonListener(final ActionListener e) {
@@ -774,6 +791,7 @@ public class CombatView extends JFrame {
 
     /**
      * Adds an action listener to the attack buff button.
+     *
      * @param e the action listener to add
      */
     public final void addAttackBuffButtonListener(final ActionListener e) {
@@ -782,6 +800,7 @@ public class CombatView extends JFrame {
 
     /**
      * Adds an action listener to the attack buff button.
+     *
      * @param e the action listener to add
      */
     public final void addCurePoisonButtonListener(final ActionListener e) {
@@ -790,6 +809,7 @@ public class CombatView extends JFrame {
 
     /**
      * Adds an action listener to the attack buff button.
+     *
      * @param e the action listener to add
      */
     public final void addHealButtonListener(final ActionListener e) {

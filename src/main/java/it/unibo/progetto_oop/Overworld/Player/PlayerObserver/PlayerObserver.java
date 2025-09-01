@@ -8,19 +8,23 @@ public interface PlayerObserver {
 
     /**
      * This method is called when the player's HP changes.
+     *
      * @param hp The current HP of the player.
+     *
      * @param maxHp The maximum HP of the player.
      */
     public void playerHpChanged(int hp, int maxHp);
 
     /**
      * This method is called when the player's inventory changes.
+     *
      * @param inventory The current inventory of the player.
      */
     public void playerInventoryChanged(Inventory inventory);
 
     /**
      * This method is called when the player's position changes.
+     *
      * @param player The player whose position has changed.
      */
     void playerPositionChanged(Player player);

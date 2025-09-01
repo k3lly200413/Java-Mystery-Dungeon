@@ -51,6 +51,7 @@ public interface CombatState {
 
     /**
      * This method is called when running away is attempted during combat.
+     *
      * @param context Istance of the controller
      */
     void handleRunInput(CombatController context);  // Add if implementing

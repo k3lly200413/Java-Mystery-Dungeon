@@ -16,6 +16,7 @@ public class LongRangeButton implements GameButton {
 
     /**
      * Constructor for LongRangeButton.
+     *
      * @param flamePosition the initial position of the flame
      * @param flameDirection the direction of the flame, either 1 or -1
      */

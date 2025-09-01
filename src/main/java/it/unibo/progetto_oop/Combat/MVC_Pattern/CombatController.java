@@ -917,6 +917,7 @@ public class CombatController {
 
     /**
      * Performs the death animation for the player or enemy.
+     *
      * @param death
      * @param isCharging
      * @param onComplete
