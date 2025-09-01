@@ -18,34 +18,12 @@ import it.unibo.progetto_oop.combat.state_pattern.EnemyTurnState;
 import it.unibo.progetto_oop.combat.state_pattern.InfoDisplayState;
 import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
 
-
 /**
  * Controller class in Model View Controller Pattern.
  *
  * @author Kelly.applebee@studio.unibo.it
  */
 public class CombatController {
-    /**
-     * Model which holds information necessary to controller.
-     */
-    private final CombatModel model;
-    /**
-     * View which displays on screen information taken from controller.
-     */
-    private final CombatView view;
-    /**
-     * MeleeButton command for melee attacks.
-     */
-    private GameButton meleeCommand;
-    /**
-     * LongRangeButton command for long range attacks.
-     */
-    private GameButton longRangeCommand;
-    /**
-     * Neighbours instance to check if two positions are neighbours.
-     * This is used to determine if the player can attack the enemy.
-     */
-    private final Neighbours neighbours;
     /**
      * Animation delay for each step in the animation.
      */
@@ -72,6 +50,27 @@ public class CombatController {
      */
     private static final int SQUARE_WIDTH = 20;
     /**
+     * Model which holds information necessary to controller.
+     */
+    private final CombatModel model;
+    /**
+     * View which displays on screen information taken from controller.
+     */
+    private final CombatView view;
+    /**
+     * MeleeButton command for melee attacks.
+     */
+    private GameButton meleeCommand;
+    /**
+     * LongRangeButton command for long range attacks.
+     */
+    private GameButton longRangeCommand;
+    /**
+     * Neighbours instance to check if two positions are neighbours.
+     * This is used to determine if the player can attack the enemy.
+     */
+    private final Neighbours neighbours;
+    /**
      * Timer for animations.
      * This is used to control the timing of animations in the combat.
      */
@@ -85,14 +84,15 @@ public class CombatController {
      * This is used to manage the state of the combat.
      */
     private CombatState currentState;
+
     /**
-     * Contructor of CombatController takes in both model and view.
-     * <p>
-     * @param modelToUse Model which holds information necessary to controller
-     * @param viewToUse  View which displays on screen information
-     *
+     * Constructor of CombatController takes in both model and view.
      *
      * @author kelly.applebee@studio.unibo.it
+     * @author matteo.monari6@studio.unibo.it
+     *
+     * @param modelToUse Model which holds information necessary to controller
+     * @param viewToUse  View which displays on screen information
      */
     public CombatController(
         final CombatModel modelToUse,
@@ -719,7 +719,6 @@ public class CombatController {
                 onEnemyAttackComplete);
     }
 
-
     private void performInfoZoomInAnimation(final Runnable onZoomComplete) {
         this.stopAnimationTimer();
         this.view.setAllButtonsDisabled();
@@ -764,6 +763,7 @@ public class CombatController {
     }
 
     /**
+     * Animates size increase.
      *
      * @param size grandezza necessaria
      * @param onZoomComplete Runnable per fine animazione
@@ -918,9 +918,9 @@ public class CombatController {
     /**
      * Performs the death animation for the player or enemy.
      *
-     * @param death
-     * @param isCharging
-     * @param onComplete
+     * @param death Position of the character that died
+     * @param isCharging Whether the boss is charging
+     * @param onComplete Runnable to execute after animation completes
      */
     public final void performDeathAnimation(
         final Position death,
@@ -953,41 +953,20 @@ public class CombatController {
                 .chargingCellDistance(position[0])
                 .build();
                 this.view.redrawGrid(defaultRedraw);
-                /* this.redrawView(
-                    this.model.getPlayerPosition(),
-                    this.model.getEnemyPosition(),
-                    this.model.getAttackPosition(),
-                    0,
-                    true,
-                    true,
-                    false,
-                    false,
-                    1,
-                    1,
-                    false,
-                    (model.isPlayerTurn()
-                    ? model.getEnemyPosition()
-                    : model.getPlayerPosition()),
-                    false,
-                    new ArrayList<>(),
-                    false,
-                    position[0],
-                    isCharging,
-                    position[0]);*/
-            if (position[0] == 0) {
-                times[0]--;
-                if (times[0] == 0) {
-                    this.stopAnimationTimer();
-                    this.redrawView();
-                    if (onComplete != null) {
-                        onComplete.run();
+                if (position[0] == 0) {
+                    times[0]--;
+                    if (times[0] == 0) {
+                        this.stopAnimationTimer();
+                        this.redrawView();
+                        if (onComplete != null) {
+                            onComplete.run();
+                        }
+                    } else {
+                        position[0] = defaultPosition;
                     }
-                } else {
-                    position[0] = defaultPosition;
                 }
-            }
-        });
-        this.animationTimer.start();
+            });
+            this.animationTimer.start();
         }
     }
 
@@ -1154,9 +1133,9 @@ public class CombatController {
     }
 
     /**
-    * Performs the poison effect animation.
-    * This method animates the poison effect on the affected character.
-    */
+     * Performs the poison effect animation.
+     * This method animates the poison effect on the affected character.
+     */
     public final void performPoisonEffectAnimation() {
         stopAnimationTimer();
         final int[] conto = {4};
@@ -1203,9 +1182,9 @@ public class CombatController {
                 .drawPoisonDamage(true)
                 .poisonYCoord(conto[0])
                 .isGameOver(this.model.isGameOver())
-                .whoIsPoisoned((this.model.isPlayerTurn()
+                .whoIsPoisoned(this.model.isPlayerTurn()
                     ? this.model.getEnemyPosition()
-                    : this.model.getPlayerPosition()))
+                    : this.model.getPlayerPosition())
                 .build();
                 this.view.redrawGrid(defaultRedraw);
                 /* this.redrawView(this.model.getPlayerPosition(),

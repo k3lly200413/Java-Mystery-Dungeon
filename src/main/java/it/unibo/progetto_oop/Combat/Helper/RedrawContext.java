@@ -613,6 +613,7 @@ public final class RedrawContext {
             this.squareHeight = squareHeightInt;
             return this;
         }
+
         /**
          * Builder for the who is poisoned position.
          *
@@ -624,8 +625,10 @@ public final class RedrawContext {
             this.whoIsPoisoned = whoIsPoisonedPosition;
             return this;
         }
+
         /**
          * Builder for the square height.
+         *
          * @return the builder
          */
         public RedrawContext build() {

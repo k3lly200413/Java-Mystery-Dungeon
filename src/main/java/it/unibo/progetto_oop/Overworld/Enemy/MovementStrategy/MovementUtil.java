@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.function.ToIntFunction;
 
 import it.unibo.progetto_oop.combat.position.Position;
-
 /**
  * This class is used by the follower and patroller enemies
  */

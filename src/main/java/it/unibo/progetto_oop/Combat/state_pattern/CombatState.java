@@ -6,46 +6,41 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public interface CombatState {
     /**
+     * Handles the input for a physical attack during combat.
      *
-     * @param context Istance of the controller
-     *
-     * This method is called when a physical attack is performed during combat.
+     * @param context Instance of the controller
      */
     void handlePhysicalAttackInput(CombatController context);
 
     /**
-     *
-     * @param context Istance of the controller
-     * @param isPoison boolean that indicates if the attack is poison
-     * @param isFlame boolean that indicates if the attack is flame
-     *
      * This method is called when a long-range attack
      * is performed during combat.
+     *
+     * @param context Instance of the controller
+     * @param isPoison boolean that indicates if the attack is poison
+     * @param isFlame boolean that indicates if the attack is flame
      */
     void handleLongRangeAttackInput(CombatController context,
     boolean isPoison, boolean isFlame);
 
     /**
-     *
-     * @param context Istance of the controller
-     *
      * This method is called when info is requested during combat.
+     *
+     * @param context Instance of the controller
      */
     void handleInfoInput(CombatController context);
 
     /**
-     *
-     * @param context Istance of the controller
-     *
      * This method is called when running away is attempted during combat.
+     *
+     * @param context Instance of the controller
      */
     void handleBackInput(CombatController context);
 
     /**
-     *
-     * @param context Istance of the controller
-     *
      * This method is called when the bag is opened during combat.
+     *
+     * @param context Instance of the controller
      */
     void handleBagInput(CombatController context); // Add if implementing
 
@@ -57,63 +52,54 @@ public interface CombatState {
     void handleRunInput(CombatController context);  // Add if implementing
 
     /**
-     *
-     * @param context Istance of the controller
-     *
      * This method is called when an attack buff is used during combat.
+     *
+     * @param context Instance of the controller
      */
     void handleAttackBuffInput(CombatController context);
 
     /**
-     *
-     * @param context Istance of the controller
-     *
      * This method is called when healing is performed during combat.
+     *
+     * @param context Instance of the controller
      */
     void handleHealInput(CombatController context);
 
     /**
+     * This method is called when a potion is used during combat.
      *
-     * @param context Istance of the controller
+     * @param context Instance of the controller
      * @param selectedPotion The potion selected from the bag
      * @param player The player using the potion
-     *
-     * This method is called when a potion is used during combat.
      */
     void handlePotionUsed(CombatController context,
     Item selectedPotion, Player player);
 
     /**
-     *
-     * @param context Istance of the controller
-     *
      * This method is called when curing poison during combat.
+     *
+     * @param context Instance of the controller
      */
     void handleCurePoisonInput(CombatController context);
-    // void handleAttackBuffInput(CombatController context);
-    // void handleHealingInput(CombatController context);
 
     /**
+     * This method is called when curing flame during combat.
      *
-     * @param context Istance of the controller
-     *
-     * This method is called when entering a combat state.
+     * @param context Instance of the controller
      */
     void enterState(CombatController context);
 
     /**
-     *
-     * @param context Istance of the controller
-     *
      * This method is called when exiting a combat state.
+     *
+     * @param context Instance of the controller
      */
     void exitState(CombatController context);
 
     /**
-     *
-     * @param context Istance of the controller
-     *
      * This method is called when an animation is complete during combat.
+     *
+     * @param context Instance of the controller
      */
     void handleAnimationComplete(CombatController context);
 

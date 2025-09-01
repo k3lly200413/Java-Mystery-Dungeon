@@ -168,7 +168,6 @@ public final void resetPositions() {
             (this.size / HALF_DIVISOR));
 }
 
-
 /**
  * Increases the player's health by the specified amount,
  * without exceeding the maximum health.
@@ -179,7 +178,6 @@ public final void resetPositions() {
 public final void increasePlayerHealth(final int amount) {
     this.playerHealth = Math.min(maxHealth, this.playerHealth + amount);
 }
-
 /**
  * Increases the player's power by the specified amount.
  *
@@ -189,7 +187,6 @@ public final void increasePlayerHealth(final int amount) {
 public final void increasePlayerPower(final int power) {
     this.playerPower += power;
 }
-
 /**
  * Increases the enemy's power by the specified amount.
  *
@@ -198,14 +195,12 @@ public final void increasePlayerPower(final int power) {
 public final void increaseEnemyPower(final int power) {
     this.enemyPower += power;
 }
-
 /**
  * Resets the player's power to its base value.
  */
 public final void resetPlayerPower() {
     this.playerPower = this.basicPlayerPower;
 }
-
 /**
  * Decreases the player's health by the specified amount,
  * without allowing the value to go below zero.
@@ -215,7 +210,6 @@ public final void resetPlayerPower() {
 public final void decreasePlayerHealth(final int amount) {
     this.playerHealth = Math.max(0, this.playerHealth - amount);
 }
-
 /**
  * Increases the player's maximum stamina by the specified amount.
  *
@@ -224,7 +218,6 @@ public final void decreasePlayerHealth(final int amount) {
 public final void increasePlayerMaxStamina(final int amount) {
     this.playerStaminaMax += amount;
 }
-
 /**
  * Decreases the player's maximum stamina by the specified amount,
  * without allowing the value to go below zero.
@@ -234,7 +227,6 @@ public final void increasePlayerMaxStamina(final int amount) {
 public final void decreasePlayerMaxStamina(final int amount) {
     this.playerStaminaMax = Math.max(0, (this.playerStaminaMax - amount));
 }
-
 /**
  * Decreases the player's stamina by the specified amount,
  * without allowing the value to go below zero.
@@ -244,7 +236,6 @@ public final void decreasePlayerMaxStamina(final int amount) {
 public final void decreasePlayerStamina(final int amount) {
     this.playerStamina = Math.max(0, this.playerStamina - amount);
 }
-
 /**
  * Increases the player's stamina by the specified amount,
  * without exceeding the maximum stamina.
@@ -255,7 +246,6 @@ public final void increasePlayerStamina(final int amount) {
     this.playerStamina = Math.min(this.playerStaminaMax,
         (this.playerStamina + amount));
 }
-
 /**
  * Decreases the enemy's health by the specified amount,
  * without allowing the value to go below zero.
