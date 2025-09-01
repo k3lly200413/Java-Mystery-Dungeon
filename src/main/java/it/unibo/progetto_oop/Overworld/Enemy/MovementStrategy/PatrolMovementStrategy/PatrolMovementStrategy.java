@@ -53,7 +53,7 @@ public class PatrolMovementStrategy implements MovementStrategy{
         }
         
         // Check if the target position is not the same as the current position and is not a wall
-        if (!targetPos.equals(currentPos) && walls.contains(targetPos)) {
+        if (!targetPos.equals(currentPos) && !walls.contains(targetPos)) {
             context.setPosition(targetPos);
             context.getGridNotifier().notifyEnemyMoved(currentPos, targetPos);
 
