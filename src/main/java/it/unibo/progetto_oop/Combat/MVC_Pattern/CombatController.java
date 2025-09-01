@@ -127,7 +127,7 @@ public class CombatController {
      */
     public void redrawView() {
 
-        RedrawContext defaultRedraw = new RedrawContext.Builder()
+        final RedrawContext defaultRedraw = new RedrawContext.Builder()
         .player(this.model.getPlayerPosition())
         .enemy(this.model.getEnemyPosition())
         .drawPlayer(true)
@@ -187,7 +187,7 @@ public class CombatController {
     }
 
     private void handleBackToMainMenu() {
-        CombatState newState = new PlayerTurnState();
+        final CombatState newState = new PlayerTurnState();
         newState.enterState(this);
         newState.handleBackInput(this);
     }
@@ -203,7 +203,7 @@ public class CombatController {
     }
 
     private void handleInfo() {
-        CombatState newState = new InfoDisplayState();
+        final CombatState newState = new InfoDisplayState();
         newState.enterState(this);
         newState.handleInfoInput(this);
     }
@@ -222,7 +222,7 @@ public class CombatController {
     }
 
     private void handlePlayerPhysicalAttack() {
-        CombatState newState = new PlayerTurnState();
+        final CombatState newState = new PlayerTurnState();
         newState.enterState(this);
         newState.handlePhysicalAttackInput(this);
         // call playerturnstate and have it run performPlayerphysical Attack
@@ -244,7 +244,7 @@ public class CombatController {
         if (!model.isPlayerTurn() || isAnimationRunning()) {
             return;
         }
-        Runnable onPlayerAttackComplete = () -> {
+        final Runnable onPlayerAttackComplete = () -> {
             this.currentState.handleAnimationComplete(this);
         };
 
@@ -302,7 +302,7 @@ public class CombatController {
         view.showInfo("Enemy attacks!");
 
         // Enemy attacks player
-        Runnable onEnemyAttackComplete = () -> {
+        final Runnable onEnemyAttackComplete = () -> {
             if (checkGameOver()) {
                 return; // Check if player was defeated
             }
@@ -352,7 +352,7 @@ public class CombatController {
         model.setAttackPosition(new Position(
             attacker.x() + direction, attacker.y())); // Start flame at player
 
-        RedrawContext redrawContext = new RedrawContext.Builder()
+        final RedrawContext redrawContext = new RedrawContext.Builder()
         .player(this.model.getPlayerPosition())
         .enemy(this.model.getEnemyPosition())
         .flame(this.model.getAttackPosition())
@@ -392,7 +392,7 @@ public class CombatController {
                 model.setAttackPosition(attacker); // Move flame back instantly
                 redrawView();
 
-                int remaining = model.applyAttackHealth(
+                final int remaining = model.applyAttackHealth(
                     this.model.isPlayerTurn(),
                     this.model.getPlayerLongRangePower()
                     );
@@ -415,10 +415,10 @@ public class CombatController {
             // Move flame forward using the command
             longRangeCommand = new LongRangeButton(
                 this.model.getAttackPosition(), direction);
-            Position nextFlamePos = longRangeCommand.execute().get(0);
+            final Position nextFlamePos = longRangeCommand.execute().get(0);
             this.model.setAttackPosition(nextFlamePos);
             // Redraw showing the projectile
-            RedrawContext defaultRedraw = new RedrawContext.Builder()
+            final RedrawContext defaultRedraw = new RedrawContext.Builder()
             .player(this.model.getPlayerPosition())
             .enemy(this.model.getEnemyPosition())
             .flame(this.model.getAttackPosition())
@@ -508,7 +508,7 @@ public class CombatController {
                         deathRayLastPosition.get(
                             deathRayLastPosition.size() - 1).x() - 1,
                         this.model.getEnemyPosition().y()));
-                RedrawContext defaultRedraw = new RedrawContext.Builder()
+                final RedrawContext defaultRedraw = new RedrawContext.Builder()
                 .player(this.model.getPlayerPosition())
                 .enemy(this.model.getEnemyPosition())
                 .flame(this.model.getAttackPosition())
@@ -594,7 +594,7 @@ public class CombatController {
                             currentAttackerPos[0],
                             currentTargetPos[0],
                             moveDirection);
-                    List<Position> result = this.meleeCommand.execute();
+                    final List<Position> result = this.meleeCommand.execute();
                     nextAttackerPos = result.get(0);
                     nextTargetPos = result.get(1);
                     if (this.neighbours.neighbours(
@@ -617,7 +617,7 @@ public class CombatController {
                 }
                 case 1 -> {
                     if (!damageApplied[0]) {
-                        int remaining = this.model.
+                        final int remaining = this.model.
                                 applyAttackHealth(
                                     isPlayerAttacker, attackPower);
                         if (isPlayerAttacker) {
@@ -682,11 +682,11 @@ public class CombatController {
     public final void performEnemySuperAttack() {
         System.out.println("\nPerforming Super Attack\n");
 
-        Runnable onSuperAttackComplete = () -> {
+        final Runnable onSuperAttackComplete = () -> {
             this.currentState.handleAnimationComplete(this);
         };
         // Now start the animation itself
-        int superAttackPower = (model.getEnemyPower() * 2);
+        final int superAttackPower = model.getEnemyPower() * 2;
         animatePhysicalMove(
             model.getEnemyPosition(),
             model.getPlayerPosition(),
@@ -708,7 +708,7 @@ public class CombatController {
     public final void performEnemyPhysicalAttack() {
         view.clearInfo();
         view.showInfo("Enemy attacks!");
-        Runnable onEnemyAttackComplete = () -> {
+        final Runnable onEnemyAttackComplete = () -> {
             currentState.handleAnimationComplete(this);
         };
         this.animatePhysicalMove(
@@ -728,7 +728,7 @@ public class CombatController {
         final int targetX = model.getSize() / 2;
 
         this.animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
-            Position currentEnemyPosition = model.getEnemyPosition();
+            final Position currentEnemyPosition = model.getEnemyPosition();
             if (currentEnemyPosition.x() <= targetX) {
                 stopAnimationTimer(); // Increase offset for zoom effect
                 model.setEnemyPosition(
@@ -740,7 +740,7 @@ public class CombatController {
                 model.setEnemyPosition(new Position(
                     model.getEnemyPosition().x() - 1,
                     model.getEnemyPosition().y()));
-                RedrawContext defaultRedraw = new RedrawContext.Builder()
+                final RedrawContext defaultRedraw = new RedrawContext.Builder()
                 .player(this.model.getPlayerPosition())
                 .enemy(this.model.getEnemyPosition())
                 .flame(this.model.getAttackPosition())
@@ -779,7 +779,7 @@ public class CombatController {
                     onZoomComplete.run(); // farà partire nuovo State
                 }
             } else {
-                RedrawContext defaultRedraw = new RedrawContext.Builder()
+                final RedrawContext defaultRedraw = new RedrawContext.Builder()
                 .player(this.model.getPlayerPosition())
                 .enemy(this.model.getEnemyPosition())
                 .flame(this.model.getAttackPosition())
@@ -814,20 +814,20 @@ public class CombatController {
                 this.stopAnimationTimer();
                 this.redrawView();
 
-                int remaing = model.applyAttackHealth(
+                final int remaining = model.applyAttackHealth(
                     this.model.isPlayerTurn(),
                     this.model.getPlayerPoisonPower()
                     );
 
                 if (this.model.isPlayerTurn()) {
-                    view.updateEnemyHealth(remaing);
+                    view.updateEnemyHealth(remaining);
                     this.setState(new EnemyTurnState());
                 } else {
-                    view.updatePlayerHealth(remaing);
+                    view.updatePlayerHealth(remaining);
                     this.setState(new PlayerTurnState());
                 }
             } else {
-                RedrawContext defaultRedraw = new RedrawContext.Builder()
+                final RedrawContext defaultRedraw = new RedrawContext.Builder()
                 .player(this.model.getPlayerPosition())
                 .enemy(this.model.getEnemyPosition())
                 .flame(this.model.getAttackPosition())
@@ -837,9 +837,9 @@ public class CombatController {
                 .enemyRange(1)
                 .isGameOver(this.model.isGameOver())
                 .drawPoisonDamage(true)
-                .whoIsPoisoned((this.model.isPlayerTurn()
+                .whoIsPoisoned(this.model.isPlayerTurn()
                     ? this.model.getEnemyPosition()
-                    : this.model.getPlayerPosition()))
+                    : this.model.getPlayerPosition())
                 .poisonYCoord(step[0])
                 .build();
                 this.view.redrawGrid(defaultRedraw);
@@ -908,7 +908,8 @@ public class CombatController {
         if (model.isGameOver()) {
             stopAnimationTimer();
             view.setAllButtonsDisabled();
-            String winner = model.getPlayerHealth() <= 0 ? "Enemy" : "Player";
+            final String winner = model.getPlayerHealth() <= 0 ?
+            "Enemy" : "Player";
             view.showInfo("Game Over! " + winner + " wins!");
             return true;
         }
@@ -932,15 +933,15 @@ public class CombatController {
         final int defaultPosition = 4;
         final int defaultTimes = 3;
 
-        int[] position = {defaultPosition};
-        int[] times = {defaultTimes};
+        final int[] position = {defaultPosition};
+        final int[] times = {defaultTimes};
 
         if (isCharging) {
             // animating State
             this.setState(new AnimatingState());
             this.animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
                 position[0]--;
-                RedrawContext defaultRedraw = new RedrawContext.Builder()
+                final RedrawContext defaultRedraw = new RedrawContext.Builder()
                 .player(this.model.getPlayerPosition())
                 .enemy(this.model.getEnemyPosition())
                 .flame(this.model.getAttackPosition())
@@ -1026,7 +1027,7 @@ public class CombatController {
      */
     public final void setState(final CombatState state) {
         // Temporarily store the old state
-        CombatState oldState = this.currentState;
+        final CombatState oldState = this.currentState;
 
         if (oldState != null) {
             System.out.println(
@@ -1067,7 +1068,7 @@ public class CombatController {
     public final void performEnemyAttack() {
         final int physical = 0;
         final int longRange = 1;
-        int num = new Random().nextInt(2);
+        final int num = new Random().nextInt(2);
 
         switch (num) {
             case physical:
@@ -1152,18 +1153,18 @@ public class CombatController {
                 // this.currentState.handleAnimationComplete(this);
                 // chiamo la funzione che tratta la fine delle animazioni
 
-                int remaing = model.applyAttackHealth(
+                final int remaining = model.applyAttackHealth(
                     this.model.isPlayerTurn(),
                     this.model.getPlayerPoisonPower()
                     );
 
                 if (this.model.isPlayerTurn()) {
                     this.model.setPlayerTurn(false);
-                    view.updateEnemyHealth(remaing);
+                    view.updateEnemyHealth(remaining);
                     this.setState(new EnemyTurnState());
                 } else {
                     this.model.setPlayerTurn(true);
-                    view.updatePlayerHealth(remaing);
+                    view.updatePlayerHealth(remaining);
                     this.setState(new PlayerTurnState());
                 }
                 //this.currentState.stateChange(this);
@@ -1171,7 +1172,7 @@ public class CombatController {
             } else {
                 System.out.println("Conto => " + conto[0]);
                 // ridisegno tutto con il veleno che sale
-                RedrawContext defaultRedraw = new RedrawContext.Builder()
+                final RedrawContext defaultRedraw = new RedrawContext.Builder()
                 .player(this.model.getPlayerPosition())
                 .enemy(this.model.getEnemyPosition())
                 .flame(this.model.getAttackPosition())
