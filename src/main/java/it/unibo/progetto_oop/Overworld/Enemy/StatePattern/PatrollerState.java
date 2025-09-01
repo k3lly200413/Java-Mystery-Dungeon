@@ -34,8 +34,8 @@ public class PatrollerState implements GenericEnemyState {
     }
 
     @Override
-    public void update(Enemy enemy, OverworldModel model, Player player) {
-        this.currentDirection = this.movementStrategy.executeMove(enemy, model,this.currentDirection);
+    public void update(Enemy context, Player player) {
+        this.currentDirection = this.movementStrategy.executeMove(context, context.getWalls(), player, this.currentDirection);
     }
 
     @Override

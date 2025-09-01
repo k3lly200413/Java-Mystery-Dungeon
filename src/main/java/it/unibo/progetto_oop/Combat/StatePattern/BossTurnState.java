@@ -1,12 +1,14 @@
-package it.unibo.progetto_oop.combat.state_pattern;
+package it.unibo.progetto_oop.Combat.StatePattern;
 
-import java.util.Locale;
-
-import it.unibo.progetto_oop.combat.Inventory.Item;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.Combat.Inventory.Item;
+import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
+import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class BossTurnState implements CombatState {
-    /** Indicates the boss state. */
+
+    private static final int ENEMY_ACTION_DELAY = 500; // ms delay before enemy acts
+    private static final int TOTAL_ATTACKS_IN_SEQUENCE = 3;
+    private int bossHealthPercent;
     private String bossState = "NORMAL";
 
     @Override
@@ -68,68 +70,51 @@ public class BossTurnState implements CombatState {
             "Unimplemented method 'handleCurePoisonInput'");
     }
 
-    // Constants for Boss logic
-/** Health percentage threshold to switch the boss state to ENRAGED. */
-private static final int BOSS_ENRAGED_THRESHOLD = 50;
+    @Override
+    public final void enterState(final CombatController context) {
+        System.out.println("\nBoss State: Entering Boss Turn State\n");
+        this.bossHealthPercent =
+        (context.getModel().getEnemyHealth()
+        / context.getModel().getMaxHealth()) * 100;
 
-/** Interval of turns for the boss to perform the Death Ray attack. */
-private static final int DEATH_RAY_INTERVAL = 5;
-
-/** Interval of turns for the boss to charge a super attack. */
-private static final int SUPER_ATTACK_CHARGE_INTERVAL = 4;
-
-/** Interval of turns for the boss to perform a standard enemy attack. */
-private static final int STANDARD_ATTACK_INTERVAL = 3;
-
-/** Conversion factor to percentage values (100%). */
-private static final int PERCENT_CONVERSION = 100;
-
-@Override
-public final void enterState(final CombatController context) {
-    float bossHealth = context.getModel().getEnemyHealth();
-    float bossHealthPercent =
-        (bossHealth
-        / context.getModel().getMaxHealth()) * PERCENT_CONVERSION;
-
-    if (bossHealthPercent < BOSS_ENRAGED_THRESHOLD
-        && "NORMAL".equals(this.bossState.toUpperCase(Locale.ROOT))) {
-        this.bossState = "ENRAGED";
-        context.getView().showInfo("The Boss is now ENRAGED");
-    }
-    if ("ENRAGED".equals(this.bossState.toUpperCase(Locale.ROOT))) {
-        context.performEnemySuperAttack();
-    } else {
-        if (context.getModel().getBossTurnCounter() % DEATH_RAY_INTERVAL == 0) {
-            context.setState(new AnimatingState());
-            context.performBossDeathRayAttack();
-            context.getModel().setBossTurn(true);
-            context.getModel().increaseBossTurnCounter();
-        } else if (context.getModel().
-        getBossTurnCounter() % SUPER_ATTACK_CHARGE_INTERVAL == 0) {
-            context.getView().showInfo(
-                "The Boss is charging up his Super Attack!");
-            context.setState(new AnimatingState());
-            context.performDeathAnimation(
-                context.getModel().getEnemyPosition(), true, () -> {
-                context.getCurrentState().handleAnimationComplete(context);
-            });
-            context.getModel().setBossTurn(true);
-            context.getModel().increaseBossTurnCounter();
-        } else if (context.getModel().
-        getBossTurnCounter() % STANDARD_ATTACK_INTERVAL == 0) {
-            context.setState(new AnimatingState());
-            context.performEnemyAttack();
-            context.getModel().setBossTurn(true);
-            context.getModel().increaseBossTurnCounter();
-        } else {
-            context.setState(new AnimatingState());
-            context.performEnemyPhysicalAttack();
-            context.getModel().setBossTurn(true);
-            context.getModel().increaseBossTurnCounter();
+        if (this.bossHealthPercent < 50
+            && this.bossState.toUpperCase().equals("NORMAL")) {
+            this.bossState = "ENRAGED";
+            context.getView().showInfo("The Boss is now ENRAGED");
+            // TODO: Change colour of Boss
         }
-    }
-}
+        if (this.bossState.toUpperCase().equals("ENRAGED")) {
+            context.performEnemySuperAttack();
+        } else {
+            if (context.getModel().getBossTurnCounter() % 5 == 0) {
+                context.setState(new AnimatingState());
+                context.performBossDeathRayAttack();
+                context.getModel().setBossTurn(false);
+                context.getModel().increaseBossTurnCounter();
+            } else if (context.getModel().getBossTurnCounter() % 4 == 0) {
+                context.getView().showInfo(
+                    "The Boss is charging up his Super Attack!");
+                context.setState(new AnimatingState());
+                context.performDeathAnimation(
+                    context.getModel().getEnemyPosition(), true, () -> {
+                    context.getCurrentState().handleAnimationComplete(context);
+                });
+                context.getModel().setBossTurn(false);
+                context.getModel().increaseBossTurnCounter();
+            } else if (context.getModel().getBossTurnCounter() % 3 == 0) {
+                context.setState(new AnimatingState());
+                context.performEnemyAttack();
+                context.getModel().setBossTurn(false);
+                context.getModel().increaseBossTurnCounter();
+            } else {
+                context.setState(new AnimatingState());
+                context.performEnemyPhysicalAttack();
+                context.getModel().setBossTurn(false);
+                context.getModel().increaseBossTurnCounter();
+            }
+        }
 
+    }
 
     @Override
     public final void exitState(final CombatController context) {
@@ -160,7 +145,8 @@ public final void enterState(final CombatController context) {
     @Override
     public final void handlePotionUsed(
         final CombatController context,
-        final Item selectedPotion) {
+        final Item selectedPotion,
+        final Player player) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 "Unimplemented method 'handlePotionUsed'");

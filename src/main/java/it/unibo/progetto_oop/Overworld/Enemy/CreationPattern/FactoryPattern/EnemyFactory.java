@@ -3,9 +3,8 @@ package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern;
 import java.util.Set;
 
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldApplication;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
-import it.unibo.progetto_oop.combat.position.Position;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+
 
 public interface EnemyFactory {
     /**

@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.mvc_pattern;
+package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -13,9 +13,10 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
-import it.unibo.progetto_oop.combat.position.Position;
-import it.unibo.progetto_oop.combat.helper.Neighbours;
-import it.unibo.progetto_oop.combat.helper.RedrawContext;
+import it.unibo.progetto_oop.Combat.CommandPattern.GameButton;
+import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
+import it.unibo.progetto_oop.Combat.Helper.Neighbours;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -25,7 +26,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.FlowLayout;
@@ -58,6 +59,10 @@ public class CombatView extends JFrame {
      */
     private JProgressBar playerStaminaBar;
     /**
+     * Height and width of the player's stamina bar.
+     */
+    private JPanel gridpanel;
+    /**
      * Container for the button panels, allowing for card layout switching.
      */
     private JPanel buttonPanelContainer;
@@ -73,6 +78,10 @@ public class CombatView extends JFrame {
      * Panel containing the attack buttons.
      */
     private JPanel attackButtonPanel;
+    /**
+     * Panel containing the bag buttons.
+     */
+    private JPanel healthPanel;
     /**
      * Panel containing the bag buttons.
      */
@@ -133,6 +142,10 @@ public class CombatView extends JFrame {
      * Label for displaying information in the combat view.
      */
     private final Neighbours neighbours;
+    /**
+     * URL for loading icons in the combat view.
+     */
+    private java.net.URL imgURL;
 
     /**
      * Maximum health of the player.
@@ -142,34 +155,6 @@ public class CombatView extends JFrame {
      * Maximum health of the enemy.
      */
     private int maxEnemyHealth;
-    /**
-     * Default height of the health/stamina bars.
-     */
-    private static final int DEFAULT_BAR_HEIGHT = 20;
-    /**
-     * Default width of the health/stamina bars.
-     */
-    private static final int DEFAULT_BAR_WIDTH = 35;
-    /**
-     * Default space buffer between elements.
-     */
-    private static final int DEFAULT_SPACE_BUFFER = 5;
-    /**
-     * Default width of the squares.
-     */
-    private static final int DEFAULT_SQUARE_WIDTH = 20;
-    /**
-     * Default height of the squares.
-     */
-    private static final int DEFAULT_SQUARE_HEIGHT = 20;
-    /**
-     * Default height of the text fields.
-     */
-    private static final int DEFAULT_TEXT_FIELD_HEIGHT = 30;
-    /**
-     * Default width mutator for text fields.
-     */
-    private static final int DEFAULT_WIDTH_MUTATOR_FOR_TEXT_FIELD = 70;
 
     /**
      * Constructor for CombatView.
@@ -200,13 +185,7 @@ public class CombatView extends JFrame {
         this.neighbours = new Neighbours();
         this.setSize(heightModifier * size, widthModifier * size);
         this.setLayout(new BorderLayout());
-        this.initializeUI(
-            size,
-            DEFAULT_BAR_HEIGHT,
-            DEFAULT_BAR_WIDTH,
-            DEFAULT_SPACE_BUFFER,
-            DEFAULT_SQUARE_WIDTH,
-            DEFAULT_SQUARE_HEIGHT);
+        this.initializeUI(size, 20, 35, 5, 20, 20);
     }
 
     private void initializeUI(final int size,
@@ -216,8 +195,8 @@ public class CombatView extends JFrame {
     final int squareWidth,
     final int squareHeight) {
 
-        JPanel gridpanel = new JPanel(new GridLayout(size, size));
-        JPanel healthPanel = new JPanel();
+        this.gridpanel = new JPanel(new GridLayout(size, size));
+        this.healthPanel = new JPanel();
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -234,21 +213,22 @@ public class CombatView extends JFrame {
                 this.cells.put(
                     cellLabel,
                     new Position(j, i)); // Store the label and its position
-                gridpanel.add(
+                this.gridpanel.add(
                     cellLabel); // Add the label to the grid panel
             }
         }
-        this.add(gridpanel, BorderLayout.CENTER);
+        this.add(this.gridpanel, BorderLayout.CENTER);
 
-        healthPanel.setLayout(
+        this.healthPanel.setLayout(
             new BoxLayout(
-                healthPanel, BoxLayout.Y_AXIS));
+                this.healthPanel, BoxLayout.Y_AXIS));
 
         this.playerHealtBar = new JProgressBar(0, this.maxPlayerHealth);
         this.playerHealtBar.setValue(this.maxPlayerHealth);
         this.playerHealtBar.setStringPainted(true);
         this.playerHealtBar.setForeground(Color.GREEN);
 
+        // TODO: get values from model
         this.playerStaminaBar =
             new JProgressBar(
                 0, this.maxPlayerHealth); // Set max from model later
@@ -267,13 +247,13 @@ public class CombatView extends JFrame {
         this.enemyHealthBar.setPreferredSize(
             new Dimension(barWidth * size, barHeight));
 
-        healthPanel.add(new JLabel("Player Health"));
-        healthPanel.add(this.playerHealtBar);
-        healthPanel.add(Box.createVerticalStrut(spaceBuffer));
+        this.healthPanel.add(new JLabel("Player Health"));
+        this.healthPanel.add(this.playerHealtBar);
+        this.healthPanel.add(Box.createVerticalStrut(spaceBuffer));
         healthPanel.add(new JLabel("Player Stamina: "));
         healthPanel.add(playerStaminaBar);
-        healthPanel.add(new JLabel("Enemy Health"));
-        healthPanel.add(enemyHealthBar);
+        this.healthPanel.add(new JLabel("Enemy Health"));
+        this.healthPanel.add(enemyHealthBar);
 
         this.add(healthPanel, BorderLayout.NORTH);
 
@@ -331,10 +311,7 @@ public class CombatView extends JFrame {
         this.buttonPanelContainer.add(bagButtonPanel, "bagButtons");
 
         this.infoLabel = new JLabel("Combat Started!", SwingConstants.CENTER);
-        this.infoLabel.setPreferredSize(
-            new Dimension(
-                DEFAULT_WIDTH_MUTATOR_FOR_TEXT_FIELD * size,
-                DEFAULT_TEXT_FIELD_HEIGHT));
+        this.infoLabel.setPreferredSize(new Dimension(70 * size, 30));
 
         JPanel southPanel = new JPanel();
         southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
@@ -395,103 +372,83 @@ public class CombatView extends JFrame {
     }
     /**
      * Redraws the grid with the specified parameters.
-     * @param context the context containing necessary information for redrawing
      */
-    public final void redrawGrid(final RedrawContext context) {
+    public final void redrawGrid(
+        final Position player, final Position enemy, final Position flame,
+        final int flameSize, final boolean drawPlayer, final boolean drawEnemy,
+        final boolean drawflame, final boolean drawPoison,
+        final int playerRange, final int enemyRange,
+        final boolean isGameOver, final Position whoDied,
+        final boolean drawBossRayAttack, final ArrayList<Position> deathRayPath,
+        final boolean drawPoisonDamage, final int poisonYCoord,
+        final boolean isCharging, final int chargingCellDistance,
+        final int squareWidth, final int squareHeight) {
 
         for (var entry : cells.entrySet()) {
             JLabel cellLabel = entry.getKey();
             Position cellPos = entry.getValue();
             Icon icon = null;
 
-            if (context.isGameOver()) {
-                if (context.getWhoDied() != null
-                    && this.neighbours.deathNeighbours(
-                    context.getWhoDied(), cellPos, context.getEnemyRange())) {
+            if (isGameOver) {
+                if (this.neighbours.deathNeighbours(
+                whoDied, cellPos, enemyRange)) {
                     icon =
                     this.getIconResource(
-                        context.getWhoDied().equals(context.getPlayer())
+                        whoDied.equals(player)
                         ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg",
-                        context.getSquareHeight(), context.getSquareWidth());
+                        squareWidth, squareHeight);
                 } else if (
-                    context.isDrawPlayer()
+                    drawPlayer
                     && neighbours.deathNeighbours(
-                        context.getWhoDied(),
-                        cellPos,
-                        context.getEnemyRange())) {
+                        whoDied, cellPos, enemyRange)) {
                     icon =
                     getIconResource(
-                        context.getWhoDied().equals(context.getPlayer())
+                        whoDied.equals(player)
                         ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg",
-                        context.getSquareWidth(), context.getSquareHeight());
+                        squareWidth, squareHeight);
                 }
-            } else if ((context.isDrawFlame()
-            || context.isDrawPoison()
-            || context.isDrawBossRayAttack())
+            } else if ((drawflame || drawPoison || drawBossRayAttack)
                     && this.neighbours.neighbours(
-                        cellPos, context.getFlame(), context.getFlameSize())) {
-                icon = context.isDrawFlame()
-                    ? this.getIconResource("/yellow.jpg",
-                    context.getSquareWidth(), context.getSquareHeight())
-                        : context.isDrawPoison()
+                        cellPos, flame, flameSize)) {
+                icon = drawflame ? this.getIconResource("/yellow.jpg",
+                    squareWidth, squareHeight)
+                        : drawPoison
                         ? this.getIconResource(
-                            "/green.jpg",
-                            context.getSquareWidth(),
-                            context.getSquareHeight())
+                            "/green.jpg", squareWidth, squareHeight)
                             : getIconResource("/purple.png",
-                            context.getSquareWidth(),
-                            context.getSquareHeight());
+                            squareWidth, squareHeight);
             } else if (
-                context.isDrawPoisonDamage()
-                && context.getWhoIsPoisoned() != null
-                && entry.getValue().y() == context.getPoisonYCoord()
-                && entry.getValue().x() == context.getWhoIsPoisoned().x()) {
+                drawPoisonDamage
+                && entry.getValue().y() == poisonYCoord) {
                 icon = this.getIconResource("/green.jpg",
-                context.getSquareWidth(), context.getSquareHeight());
+                squareWidth, squareHeight);
             } else if (
-                (context.isDrawFlame() || context.isDrawPoison())
+                (drawflame || drawPoison)
                 && this.neighbours.neighbours(
-                    cellPos, context.getFlame(), 0)) {
-                icon = context.isDrawFlame()
-                ? this.getIconResource(
-                    "/yellow.jpg",
-                    context.getSquareWidth(),
-                    context.getSquareHeight())
-                : this.getIconResource(
-                    "/green.jpg",
-                    context.getSquareWidth(),
-                    context.getSquareHeight());
+                    cellPos, flame, 0)) {
+                icon = drawflame
+                ? this.getIconResource("/yellow.jpg", squareWidth, squareHeight)
+                : this.getIconResource("/green.jpg", squareWidth, squareHeight);
             } else if (
-                context.isDrawPlayer()
-                && context.getPlayer() != null
+                drawPlayer
                 && this.neighbours.neighbours(
-                    context.getPlayer(), cellPos, context.getPlayerRange())) {
+                    player, cellPos, playerRange)) {
                 icon = this.getIconResource(
                     "/Screenshot 2025-03-25 164621.png",
-                    context.getSquareWidth(),
-                    context.getSquareHeight());
+                    squareWidth, squareHeight);
             } else if (
-                context.isDrawEnemy()
-                && context.getEnemy() != null
+                drawEnemy
                 && this.neighbours.neighbours(
-                    context.getEnemy(), cellPos, context.getEnemyRange())) {
-                icon = getIconResource(
-                    "/red.jpg",
-                    context.getSquareWidth(),
-                    context.getSquareHeight());
+                    enemy, cellPos, enemyRange)) {
+                icon = getIconResource("/red.jpg", squareWidth, squareHeight);
             } else if (
-                context.isCharging()
+                isCharging
                 && this.neighbours.deathNeighbours(
-                    context.getEnemy(),
-                    cellPos,
-                    context.getChargingCellDistance())) {
+                    enemy, cellPos, chargingCellDistance)) {
                 icon = getIconResource("/purple.png",
-                context.getSquareWidth(), context.getSquareHeight());
+                squareWidth, squareHeight);
             } else {
-                icon = getIconResource(
-                    "/white.jpg",
-                    context.getSquareWidth(),
-                    context.getSquareHeight());
+                icon = getIconResource("/white.jpg", squareWidth, squareHeight);
             }
             cellLabel.setIcon(icon);
         }
@@ -572,9 +529,9 @@ public class CombatView extends JFrame {
         final String path,
         final int width,
         final int height) {
-        URL imgURL = getClass().getResource(path);
-        if (imgURL != null) {
-            return new ImageIcon(imgURL);
+        this.imgURL = getClass().getResource(path);
+        if (this.imgURL != null) {
+            return new ImageIcon(this.imgURL);
         } else {
             System.err.println("Was not able to find file: " + path);
             return this.createDefaultIcon(width, height);
@@ -594,59 +551,32 @@ public class CombatView extends JFrame {
     public final JButton getPoisonAttackButton() {
         return this.poisonButton;
     }
-    /**
-     * Returns the cure poison button for the combat view.
-     * @return the cure poison button
-     */
     public final JButton getCurePoisonButton() {
         return this.curePoisonButton;
     }
-    /**
-     * Returns the back button for the combat view.
-     * @return the back button
-     */
+
     public final JButton getAttackBackButton() {
         return this.backAttackButton;
     }
-    /**
-     * Returns the bag button panel for the combat view.
-     * @return the bag button panel
-     */
+
     public final JPanel getBagButtonPanel() {
         return this.bagButtonPanel;
     }
-    /**
-     * Returns the attack button panel for the combat view.
-     * @return the attack button panel
-     */
     public final JPanel getAttackButtonPanel() {
         return this.attackButtonPanel;
     }
-    /**
-     * Returns the original button panel for the combat view.
-     * @return the original button panel
-     */
     public final JPanel getOriginalButtonPanel() {
         return this.originalButtonPanel;
     }
-    /**
-     * Returns the button panel container for the combat view.
-     * @return the button panel container
-     */
+
     public final JPanel getButtonPanelContainer() {
         return this.buttonPanelContainer;
     }
-    /**
-     * Returns the player health bar for the combat view.
-     * @return the player health bar
-     */
+
     public final JProgressBar getPlayerHealthBar() {
         return this.playerHealtBar;
     }
-    /**
-     * Returns the enemy health bar for the combat view.
-     * @return the enemy health bar
-     */
+
     public final JProgressBar getEnemyHealthBar() {
         return this.enemyHealthBar;
     }

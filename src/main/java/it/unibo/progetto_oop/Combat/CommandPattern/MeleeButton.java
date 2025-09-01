@@ -1,29 +1,18 @@
-package it.unibo.progetto_oop.Combat.command_pattern;
+package it.unibo.progetto_oop.Combat.CommandPattern;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import it.unibo.progetto_oop.combat.helper.Neighbours;
-import it.unibo.progetto_oop.combat.position.Position;
+import it.unibo.progetto_oop.Combat.Helper.Neighbours;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public class MeleeButton implements GameButton {
 
-    /**
-     * List of player positions.
-     */
     private List<Position> giocatori = new LinkedList<>();
-    /**
-     * The position of the player in the game.
-     */
     private Position player;
-    /**
-     * The position of the enemy in the game.
-     */
     private Position enemy;
-    /**
-     * The direction in which the player will move.
-     */
     private int where;
+    private int distance;
     /**
      * Neighbours instance to check if two positions are neighbours.
      */
@@ -36,14 +25,17 @@ public class MeleeButton implements GameButton {
      * @param playerPosition The initial position of the player.
      * @param enemyPosition  The initial position of the enemy.
      * @param direction      The direction in which the player will move.
+     * @param distanceBuffer       The distance to check for contact.
      */
     public MeleeButton(
             final Position playerPosition,
             final Position enemyPosition,
-            final int direction) {
+            final int direction,
+            final int distanceBuffer) {
         this.player = playerPosition;
         this.enemy = enemyPosition;
         this.where = direction;
+        this.distance = distanceBuffer;
         this.neighbours = new Neighbours();
     }
 

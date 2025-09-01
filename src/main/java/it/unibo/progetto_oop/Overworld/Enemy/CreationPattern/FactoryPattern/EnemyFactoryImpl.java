@@ -1,10 +1,7 @@
 package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern;
 
-<<<<<<< HEAD
 import java.util.Set;
 
-=======
->>>>>>> 193bbdc31a0a30b1ddfa2952e5f3c0e623bcbbaa
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.GenericEnemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
@@ -14,9 +11,7 @@ import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.PatrolMovementStra
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.FollowerState;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.PatrollerState;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.SleeperState;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldApplication;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
-import it.unibo.progetto_oop.combat.position.Position;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public class EnemyFactoryImpl implements EnemyFactory {
 
@@ -29,11 +24,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
         Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition, walls);
 
         // set the correct state
-<<<<<<< HEAD
         enemy.setState(new PatrollerState(movementUtil, patrolMovementStrategy, isVertical));
-=======
-        enemy.setState(new PatrollerState(movementUtil, patrolMovementStrategy, isVertical), model);
->>>>>>> 193bbdc31a0a30b1ddfa2952e5f3c0e623bcbbaa
         return enemy;
     }
 
@@ -43,11 +34,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
         
         Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition, walls);
 
-<<<<<<< HEAD
         enemy.setState(new FollowerState(visibilityUtil, movementUtil, patrolMovementStrategy, isVertical));
-=======
-        enemy.setState(new FollowerState(visibilityUtil, movementUtil, patrolMovementStrategy, isVertical), model);
->>>>>>> 193bbdc31a0a30b1ddfa2952e5f3c0e623bcbbaa
         return enemy;
     }
 
