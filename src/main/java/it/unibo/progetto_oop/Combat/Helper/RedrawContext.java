@@ -1,8 +1,8 @@
-package it.unibo.progetto_oop.Combat.Helper;
+package it.unibo.progetto_oop.combat.helper;
 
 import java.util.ArrayList;
 
-import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.combat.position.Position;
 
 public final class RedrawContext {
     /**
@@ -295,8 +295,10 @@ public final class RedrawContext {
     public int getSquareHeight() {
         return squareHeight;
     }
+
     /**
      * Getter for whoIsPoisoned.
+     *
      * @return the position of who is poisoned
      */
     public Position getWhoIsPoisoned() {
@@ -389,7 +391,6 @@ public final class RedrawContext {
          * Position of who is poisoned (player or enemy).
          */
         private Position whoIsPoisoned;
-
 
         /**
          * Builder for the player position.

@@ -1,9 +1,9 @@
-package it.unibo.progetto_oop.Combat.MVC_Pattern;
+package it.unibo.progetto_oop.combat.mvc_pattern;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
+import it.unibo.progetto_oop.combat.position.Position;
 
 public class CombatModel implements PossibleUser {
 
@@ -270,6 +270,7 @@ public final void decreaseEnemyHealth(final int amount) {
      * Checks if the game is over by verifying if either
      * the player or the enemy has 0 or less health.
      * Sets whoDied to the position of the entity that died.
+     *
      * @return true if the game is over, false otherwise
      */
     public final boolean isGameOver() {
@@ -329,6 +330,7 @@ public final void decreaseEnemyHealth(final int amount) {
     // Getters
     /**
      * Returns the size of the combat area.
+     *
      * @return the size of the combat area
      */
     public final int getSize() {
@@ -337,6 +339,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the player's current position.
+     *
      * @return the player's position
      */
     public final Position getPlayerPosition() {
@@ -345,6 +348,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the enemy's position.
+     *
      * @return the enemy's position
      */
     public final Position getEnemyPosition() {
@@ -353,6 +357,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the current attack position.
+     *
      * @return the attack position
      */
     public final Position getAttackPosition() {
@@ -361,6 +366,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the player's current health.
+     *
      * @return the player's health
      */
     public final int getPlayerHealth() {
@@ -369,6 +375,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the enemy's current health.
+     *
      * @return the enemy's health
      */
     public final int getEnemyHealth() {
@@ -377,6 +384,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the maximum health value.
+     *
      * @return the maximum health
      */
     public final int getMaxHealth() {
@@ -385,6 +393,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the player's current stamina.
+     *
      * @return the player's stamina
      */
     public final int getPlayerStamina() {
@@ -393,6 +402,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the player's maximum stamina.
+     *
      * @return the player's maximum stamina
      */
     public final int getPlayerStaminaMax() {
@@ -401,6 +411,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the player's current power.
+     *
      * @return the player's power
      */
     public final int getPlayerPower() {
@@ -409,6 +420,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the player's poison power.
+     *
      * @return the player's poison power
      */
     public final int getPlayerPoisonPower() {
@@ -417,6 +429,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the enemy's poison power.
+     *
      * @return the enemy's poison power
      */
     public final int getEnemyPoisonPower() {
@@ -425,6 +438,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the player's long range power.
+     *
      * @return the player's long range power
      */
     public final int getPlayerLongRangePower() {
@@ -433,6 +447,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the enemy's long range power.
+     *
      * @return the enemy's long range power
      */
     public final int getEnemyLongRangePower() {
@@ -441,6 +456,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the enemy's power.
+     *
      * @return the enemy's power
      */
     public final int getEnemyPower() {
@@ -449,6 +465,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the enemy's speed.
+     *
      * @return the enemy's speed
      */
     public final int getEnemySpeed() {
@@ -457,6 +474,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the enemy's name.
+     *
      * @return the enemy's name
      */
     public final String getEnemyName() {
@@ -465,6 +483,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns whether the enemy is poisoned.
+     *
      * @return true if the enemy is poisoned, false otherwise
      */
     public final boolean isEnemyPoisoned() {
@@ -473,6 +492,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns whether the player is poisoned.
+     *
      * @return true if the player is poisoned, false otherwise
      */
     public final boolean isPlayerPoison() {
@@ -481,6 +501,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns whether it is the player's turn.
+     *
      * @return true if it is the player's turn, false otherwise
      */
     public final boolean isPlayerTurn() {
@@ -489,6 +510,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the player's basic power.
+     *
      * @return the player's basic power
      */
     public final int getBasicPlayerPower() {
@@ -497,6 +519,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the position of the entity that died.
+     *
      * @return the position of the entity that died
      */
     public final Position getWhoDied() {
@@ -505,6 +528,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns whether it is the boss's turn.
+     *
      * @return true if it is the boss's turn, false otherwise
      */
     public final boolean isBossTurn() {
@@ -513,6 +537,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the current boss attack counter.
+     *
      * @return the boss attack counter
      */
     public final int getBossAttackCounter() {
@@ -521,6 +546,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the maximum number of boss hits.
+     *
      * @return the maximum boss hit count
      */
     public final int getMaxBossHit() {
@@ -529,6 +555,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the current state of the boss.
+     *
      * @return the current boss state
      */
     public final String getCurrentBossState() {
@@ -537,6 +564,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the path of the boss's death ray attack.
+     *
      * @return the death ray path as a list of positions
      */
     public final ArrayList<Position> getDeathRayPath() {
@@ -545,6 +573,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns the boss turn counter.
+     *
      * @return the boss turn counter
      */
     public final int getBossTurnCounter() {
@@ -553,6 +582,7 @@ public final void decreaseEnemyHealth(final int amount) {
 
     /**
      * Returns whether the poison animation is active.
+     *
      * @return true if the poison animation is active, false otherwise
      */
     public final boolean isPoisonAnimation() {
@@ -653,8 +683,10 @@ public final void decreaseEnemyHealth(final int amount) {
     public final int getHp() {
         return this.getPlayerHealth();
     }
+
     /**
      * Return the Max HP of the entity.
+     *
      * @return max HP
      */
     @Override

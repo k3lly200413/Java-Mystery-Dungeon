@@ -1,9 +1,9 @@
-package it.unibo.progetto_oop.Combat.StatePattern;
+package it.unibo.progetto_oop.combat.state_pattern;
 
-import it.unibo.progetto_oop.Combat.Inventory.Item;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatView;
+import it.unibo.progetto_oop.combat.Inventory.Item;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class AnimatingState implements CombatState {
@@ -129,6 +129,7 @@ public class AnimatingState implements CombatState {
 
             "Unimplemented method 'handleCurePoisonInput'");
     }
+
     /**
      * Method to handle the boss death ray attack.
      * @param context The combat controller context.

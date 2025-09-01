@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Combat.Player;
+package it.unibo.progetto_oop.combat.Player;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -6,10 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.Combat.Inventory.Inventory;
-import it.unibo.progetto_oop.Combat.Inventory.Item;
-import it.unibo.progetto_oop.Combat.Position.Position;
-import it.unibo.progetto_oop.Combat.PotionFactory.ItemFactory;
+import it.unibo.progetto_oop.combat.Inventory.Inventory;
+import it.unibo.progetto_oop.combat.Inventory.Item;
+import it.unibo.progetto_oop.combat.PotionFactory.ItemFactory;
+import it.unibo.progetto_oop.combat.position.Position;
 
 public class PlayerTest {
     Inventory inventory;

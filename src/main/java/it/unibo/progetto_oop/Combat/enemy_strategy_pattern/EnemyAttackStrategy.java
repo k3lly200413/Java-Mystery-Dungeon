@@ -1,8 +1,8 @@
-package it.unibo.progetto_oop.Combat.EnemyStrategyPattern;
+package it.unibo.progetto_oop.combat.enemy_strategy_pattern;
 
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 
-public interface  EnemyAttackStrategy {
+public interface EnemyAttackStrategy {
 
     /**
      * Performs an attack using the specified context.

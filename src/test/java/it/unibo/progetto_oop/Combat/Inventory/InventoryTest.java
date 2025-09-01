@@ -1,12 +1,12 @@
-package it.unibo.progetto_oop.Combat.Inventory;
+package it.unibo.progetto_oop.combat.Inventory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.progetto_oop.Combat.Position.Position;
-import it.unibo.progetto_oop.Combat.PotionFactory.ItemFactory;
+import it.unibo.progetto_oop.combat.PotionFactory.ItemFactory;
+import it.unibo.progetto_oop.combat.position.Position;
 
 
 

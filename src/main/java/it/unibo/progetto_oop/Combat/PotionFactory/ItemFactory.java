@@ -1,12 +1,11 @@
-package it.unibo.progetto_oop.Combat.PotionFactory;
+package it.unibo.progetto_oop.combat.PotionFactory;
 
-import it.unibo.progetto_oop.Combat.Inventory.Item;
-import it.unibo.progetto_oop.Combat.PotionStrategy.AttackBuff;
-import it.unibo.progetto_oop.Combat.PotionStrategy.CurePoison;
-import it.unibo.progetto_oop.Combat.PotionStrategy.Healing;
-import it.unibo.progetto_oop.Combat.PotionStrategy.Potion;
-
-import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.combat.Inventory.Item;
+import it.unibo.progetto_oop.combat.position.Position;
+import it.unibo.progetto_oop.combat.potion_strategy.AttackBuff;
+import it.unibo.progetto_oop.combat.potion_strategy.CurePoison;
+import it.unibo.progetto_oop.combat.potion_strategy.Healing;
+import it.unibo.progetto_oop.combat.potion_strategy.Potion;
 
 /**
  * @author Laura Bertozzi

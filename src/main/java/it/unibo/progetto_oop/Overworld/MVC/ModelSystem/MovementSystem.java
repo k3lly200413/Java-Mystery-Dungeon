@@ -3,11 +3,11 @@ package it.unibo.progetto_oop.Overworld.MVC.ModelSystem;
 import java.util.Optional;
 import java.util.Set;
 
-import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.combat.position.Position;
 
 public class MovementSystem {
     private final Player player;

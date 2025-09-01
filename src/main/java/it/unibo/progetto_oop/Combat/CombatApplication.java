@@ -1,16 +1,24 @@
-package it.unibo.progetto_oop.Combat;
+package it.unibo.progetto_oop.combat;
 
 import javax.swing.SwingUtilities;
 
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatView;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 
-public class CombatApplication {
+/**
+ * Main entry point for the combat application.
+ */
+public final class CombatApplication {
+
+    // Private constructor to prevent instantiation
+    private CombatApplication() {
+        throw new UnsupportedOperationException("Utility class");
+    }
 
     /**
-     *
-     * @param args
+     * Main method to launch the combat application.
+     * @param args Command line arguments
      */
     public static void main(final String[] args) {
         // --- Game Configuration ---
@@ -40,19 +48,20 @@ public class CombatApplication {
         // --- Application Startup ---
         SwingUtilities.invokeLater(() -> {
             // 1. Create the Model with our configuration
-            CombatModel model = new CombatModel(size,
+            final CombatModel model = new CombatModel(size,
             playerMaxStamina, playerPower,
             playerPoisonPower, playerLongRangePower, enemyPower,
             enemySpeed, enemyName);
 
             // 2. Create the View
-            CombatView view = new CombatView(model.getSize(),
-            (viewWidthFactor * model.getSize()) / sizeDivisor,
-            (viewHeightFactor * model.getSize()) / sizeDivisor,
+            final CombatView view = new CombatView(model.getSize(),
+            viewWidthFactor * model.getSize() / sizeDivisor,
+            viewHeightFactor * model.getSize() / sizeDivisor,
             buttonWidth, buttonHeight, windowWidth, windowHeight);
 
             // 3. Create the Controller, linking the Model and View
-            CombatController controller = new CombatController(model, view);
+            final CombatController controller =
+                new CombatController(model, view);
 
             // 4. Start the combat UI, making the window visible
             controller.startCombat();

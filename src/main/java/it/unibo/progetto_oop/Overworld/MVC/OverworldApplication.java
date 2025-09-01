@@ -5,11 +5,11 @@ import javax.swing.*;
 import java.awt.CardLayout;
 import java.util.*;
 
-import it.unibo.progetto_oop.Combat.Inventory.*;
+import it.unibo.progetto_oop.combat.Inventory.*;
 import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.Combat.Position.Position;
-import it.unibo.progetto_oop.Combat.PotionFactory.ItemFactory;
-import it.unibo.progetto_oop.Combat.PotionStrategy.Potion;
+import it.unibo.progetto_oop.combat.PotionFactory.ItemFactory;
+import it.unibo.progetto_oop.combat.position.Position;
+import it.unibo.progetto_oop.combat.potion_strategy.Potion;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.*;
 

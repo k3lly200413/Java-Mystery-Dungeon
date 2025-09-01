@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.combat.position.Position;
 
 public class EnemySystem {
     private final Player player;
@@ -24,6 +24,7 @@ public class EnemySystem {
         this.model = model;
         this.player = player;
     }
+
     /**
      * 
      * @return list of enemies in the map

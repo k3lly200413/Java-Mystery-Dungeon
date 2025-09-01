@@ -3,8 +3,8 @@ package it.unibo.progetto_oop.Overworld.MVC.ModelSystem;
 import java.util.List;
 import java.util.Optional;
 
-import it.unibo.progetto_oop.Combat.Inventory.Inventory;
-import it.unibo.progetto_oop.Combat.Inventory.Item;
+import it.unibo.progetto_oop.combat.Inventory.Inventory;
+import it.unibo.progetto_oop.combat.Inventory.Item;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class PickupSystem {

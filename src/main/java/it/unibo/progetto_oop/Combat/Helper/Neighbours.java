@@ -1,6 +1,6 @@
-package it.unibo.progetto_oop.Combat.Helper;
+package it.unibo.progetto_oop.combat.helper;
 
-import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.combat.position.Position;
 
 public class Neighbours {
 
@@ -19,6 +19,7 @@ public class Neighbours {
      * @param firstPosition   The first position.
      * @param secondPosition    The second position.
      * @param distanceBuffer The maximum distance to be considered neighbors.
+     *
      * @return True if they are neighbors, false otherwise.
      */
     public boolean neighbours(

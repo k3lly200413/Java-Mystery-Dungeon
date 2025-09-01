@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Combat.MVC_Pattern;
+package it.unibo.progetto_oop.combat.mvc_pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -13,9 +13,9 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
-import it.unibo.progetto_oop.Combat.Helper.Neighbours;
-import it.unibo.progetto_oop.Combat.Helper.RedrawContext;
-import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.combat.helper.Neighbours;
+import it.unibo.progetto_oop.combat.helper.RedrawContext;
+import it.unibo.progetto_oop.combat.position.Position;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -25,13 +25,41 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 
 public class CombatView extends JFrame {
-
+    /**
+     * Default height of the health bars.
+     */
+    private static final int DEFAULT_BAR_HEIGHT = 20;
+    /**
+     * Default width of the health bars.
+     */
+    private static final int DEFAULT_BAR_WIDTH = 35;
+    /**
+     * Default space buffer between elements.
+     */
+    private static final int DEFAULT_SPACE_BUFFER = 5;
+    /**
+     * Default width of the squares in the grid.
+     */
+    private static final int DEFAULT_SQUARE_WIDTH = 20;
+    /**
+     * Default height of the squares in the grid.
+     */
+    private static final int DEFAULT_SQUARE_HEIGHT = 20;
+    /**
+     * Length mutator for the Info.
+     */
+    private static final int INFO_LENGTH_MUTATOR = 30;
+    /**
+     * Length mutator for the info in the combat view.
+     */
+    private static final int DEFAULT_INFO_HEIGHT = 70;
     /**
      * Height and width of the buttons in the combat view.
      */
@@ -43,7 +71,7 @@ public class CombatView extends JFrame {
     /**
      * Map to hold JLabel components and their corresponding Position.
      */
-    private final Map<JLabel, Position> cells = new HashMap<>();
+    private final Map<JLabel, Position> cells;
     /**
      * Height and width of the player's health bar.
      */
@@ -56,10 +84,6 @@ public class CombatView extends JFrame {
      * Height and width of the enemy's health bar.
      */
     private JProgressBar playerStaminaBar;
-    /**
-     * Height and width of the player's stamina bar.
-     */
-    private JPanel gridpanel;
     /**
      * Container for the button panels, allowing for card layout switching.
      */
@@ -76,10 +100,6 @@ public class CombatView extends JFrame {
      * Panel containing the attack buttons.
      */
     private JPanel attackButtonPanel;
-    /**
-     * Panel containing the bag buttons.
-     */
-    private JPanel healthPanel;
     /**
      * Panel containing the bag buttons.
      */
@@ -141,11 +161,6 @@ public class CombatView extends JFrame {
      */
     private final Neighbours neighbours;
     /**
-     * URL for loading icons in the combat view.
-     */
-    private java.net.URL imgURL;
-
-    /**
      * Maximum health of the player.
      */
     private int maxPlayerHealth;
@@ -171,6 +186,7 @@ public class CombatView extends JFrame {
     final int widthModifier,
     final int maxPlayerHealthToAssign,
     final int maxEnemyHealthToAssign) {
+        this.cells = new HashMap<>();
         // this.buttonHeight = (20 * size) / 3;
         this.buttonHeight = buttonHeightToAssign;
         // this.buttonWidth = (50 * size) / 3;
@@ -183,7 +199,14 @@ public class CombatView extends JFrame {
         this.neighbours = new Neighbours();
         this.setSize(heightModifier * size, widthModifier * size);
         this.setLayout(new BorderLayout());
-        this.initializeUI(size, 20, 35, 5, 20, 20);
+        this.initializeUI(
+            size,
+            DEFAULT_BAR_HEIGHT,
+            DEFAULT_BAR_WIDTH,
+            DEFAULT_SPACE_BUFFER,
+            DEFAULT_SQUARE_WIDTH,
+            DEFAULT_SQUARE_HEIGHT
+        );
     }
 
     private void initializeUI(final int size,
@@ -192,9 +215,8 @@ public class CombatView extends JFrame {
     final int spaceBuffer,
     final int squareWidth,
     final int squareHeight) {
-
-        this.gridpanel = new JPanel(new GridLayout(size, size));
-        this.healthPanel = new JPanel();
+        JPanel gridpanel = new JPanel(new GridLayout(size, size));
+        JPanel healthPanel = new JPanel();
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -211,15 +233,15 @@ public class CombatView extends JFrame {
                 this.cells.put(
                     cellLabel,
                     new Position(j, i)); // Store the label and its position
-                this.gridpanel.add(
+                gridpanel.add(
                     cellLabel); // Add the label to the grid panel
             }
         }
-        this.add(this.gridpanel, BorderLayout.CENTER);
+        this.add(gridpanel, BorderLayout.CENTER);
 
-        this.healthPanel.setLayout(
+        healthPanel.setLayout(
             new BoxLayout(
-                this.healthPanel, BoxLayout.Y_AXIS));
+                healthPanel, BoxLayout.Y_AXIS));
 
         this.playerHealtBar = new JProgressBar(0, this.maxPlayerHealth);
         this.playerHealtBar.setValue(this.maxPlayerHealth);
@@ -244,13 +266,13 @@ public class CombatView extends JFrame {
         this.enemyHealthBar.setPreferredSize(
             new Dimension(barWidth * size, barHeight));
 
-        this.healthPanel.add(new JLabel("Player Health"));
-        this.healthPanel.add(this.playerHealtBar);
-        this.healthPanel.add(Box.createVerticalStrut(spaceBuffer));
+        healthPanel.add(new JLabel("Player Health"));
+        healthPanel.add(this.playerHealtBar);
+        healthPanel.add(Box.createVerticalStrut(spaceBuffer));
         healthPanel.add(new JLabel("Player Stamina: "));
         healthPanel.add(playerStaminaBar);
-        this.healthPanel.add(new JLabel("Enemy Health"));
-        this.healthPanel.add(enemyHealthBar);
+        healthPanel.add(new JLabel("Enemy Health"));
+        healthPanel.add(enemyHealthBar);
 
         this.add(healthPanel, BorderLayout.NORTH);
 
@@ -308,7 +330,12 @@ public class CombatView extends JFrame {
         this.buttonPanelContainer.add(bagButtonPanel, "bagButtons");
 
         this.infoLabel = new JLabel("Combat Started!", SwingConstants.CENTER);
-        this.infoLabel.setPreferredSize(new Dimension(70 * size, 30));
+        this.infoLabel.setPreferredSize(
+            new Dimension(
+                INFO_LENGTH_MUTATOR * size,
+                DEFAULT_INFO_HEIGHT
+            )
+        );
 
         JPanel southPanel = new JPanel();
         southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
@@ -318,6 +345,7 @@ public class CombatView extends JFrame {
 
         this.showOriginalButtons();
     }
+
     /**
      * Sets the maximum value for the health bars.
      * @param max the maximum health value for both player and enemy
@@ -326,6 +354,7 @@ public class CombatView extends JFrame {
         this.playerHealtBar.setMaximum(max);
         this.enemyHealthBar.setMaximum(max);
     }
+
     /**
      * Updates the player's health bar with the current value.
      * @param value the current health value of the player
@@ -335,6 +364,7 @@ public class CombatView extends JFrame {
         this.playerHealtBar.setString(
             "Player: " + value + "/" + this.playerHealtBar.getMaximum());
     }
+
     /**
      * Updates the player's stamina bar with the current value.
      * @param value the current stamina value of the player
@@ -344,6 +374,7 @@ public class CombatView extends JFrame {
         this.playerStaminaBar.setString(
             "Stamina: " + value + "/" + playerStaminaBar.getMaximum());
     }
+
     /**
      * Updates the enemy's health bar with the current value.
      * @param value the current health value of the enemy
@@ -353,6 +384,7 @@ public class CombatView extends JFrame {
         enemyHealthBar.setString(
             "Enemy: " + value + "/" + this.enemyHealthBar.getMaximum());
     }
+
     /**
      * Displays a message in the info label.
      * @param text the message to display
@@ -361,12 +393,14 @@ public class CombatView extends JFrame {
         // Use HTML to allow for multi-line messages
         infoLabel.setText("<html>" + text.replace("\n", "<br>") + "</html>");
     }
+
     /**
      * Clears the info label, removing any displayed messages.
      */
     public final void clearInfo() {
         infoLabel.setText("");
     }
+
     /**
      * Redraws the grid with the specified parameters.
      * @param context the context containing necessary information for redrawing
@@ -472,24 +506,28 @@ public class CombatView extends JFrame {
         this.revalidate();
         this.repaint();
     }
+
     /**
      * Sets the visibility of the combat view.
      */
     public final void showAttackOptions() {
         this.cardLayout.show(buttonPanelContainer, "attackOptions");
     }
+
     /**
      * Sets the visibility of the bag buttons in the combat view.
      */
     public final void showOriginalButtons() {
         this.cardLayout.show(this.buttonPanelContainer, "originalButtons");
     }
+
     /**
      * Sets the visibility of the bag buttons in the combat view.
      */
     public final void showBagButtons() {
         this.cardLayout.show(this.buttonPanelContainer, "bagButtons");
     }
+
     /**
      * Enables all buttons in the combat view, allowing user interaction.
      */
@@ -497,6 +535,7 @@ public class CombatView extends JFrame {
         this.setPanelEnabled(this.originalButtonPanel, true);
         this.setPanelEnabled(this.attackButtonPanel, true);
     }
+
     /**
      * Disables all buttons in the combat view, preventing user interaction.
      */
@@ -504,6 +543,7 @@ public class CombatView extends JFrame {
         this.setPanelEnabled(this.originalButtonPanel, false);
         this.setPanelEnabled(this.attackButtonPanel, false);
     }
+
     /**
      * Enables a specific button in the combat view, allowing user interaction.
      * @param buttonToEnable the button to enable
@@ -511,6 +551,7 @@ public class CombatView extends JFrame {
     public final void setCustomButtonEnabled(final JButton buttonToEnable) {
         buttonToEnable.setEnabled(true);
     }
+
     /**
      * Disables a specific button in the combat view.
      * @param buttonToDisable the button to disable
@@ -529,12 +570,14 @@ public class CombatView extends JFrame {
             }
         }
     }
+
     /**
      * Sets the visibility of the combat view.
      */
     public final void display() {
         this.setVisible(true);
     }
+
     /**
      * Closes the combat view and releases resources.
      */
@@ -546,79 +589,99 @@ public class CombatView extends JFrame {
         final String path,
         final int width,
         final int height) {
-        this.imgURL = getClass().getResource(path);
-        if (this.imgURL != null) {
-            return new ImageIcon(this.imgURL);
+        URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
         } else {
             System.err.println("Was not able to find file: " + path);
-            return this.createDefaultIcon(width, height);
+            return createDefaultIcon(width, height);
         }
     }
+
     /**
      * Returns the attack button for the combat view.
+     *
      * @return the attack button
      */
     public final JButton getLongRangeAttackButton() {
         return this.longRangeButton;
     }
+
     /**
      * Returns the physical attack button for the combat view.
+     *
      * @return the physical attack button
      */
     public final JButton getPoisonAttackButton() {
         return this.poisonButton;
     }
+
     /**
      * Returns the cure poison button for the combat view.
+     *
      * @return the cure poison button
      */
     public final JButton getCurePoisonButton() {
         return this.curePoisonButton;
     }
+
     /**
      * Returns the back button for the combat view.
+     *
      * @return the back button
      */
     public final JButton getAttackBackButton() {
         return this.backAttackButton;
     }
+
     /**
      * Returns the bag button panel for the combat view.
+     *
      * @return the bag button panel
      */
     public final JPanel getBagButtonPanel() {
         return this.bagButtonPanel;
     }
+
     /**
      * Returns the attack button panel for the combat view.
+     *
      * @return the attack button panel
      */
     public final JPanel getAttackButtonPanel() {
         return this.attackButtonPanel;
     }
+
     /**
      * Returns the original button panel for the combat view.
+     *
      * @return the original button panel
      */
     public final JPanel getOriginalButtonPanel() {
         return this.originalButtonPanel;
     }
+
     /**
      * Returns the button panel container for the combat view.
+     *
      * @return the button panel container
      */
     public final JPanel getButtonPanelContainer() {
         return this.buttonPanelContainer;
     }
+
     /**
      * Returns the player health bar for the combat view.
+     *
      * @return the player health bar
      */
     public final JProgressBar getPlayerHealthBar() {
         return this.playerHealtBar;
     }
+
     /**
      * Returns the enemy health bar for the combat view.
+     *
      * @return the enemy health bar
      */
     public final JProgressBar getEnemyHealthBar() {
@@ -651,6 +714,7 @@ public class CombatView extends JFrame {
     public final void addAttackButtonListener(final ActionListener e) {
         this.attackButton.addActionListener(e);
     }
+
     /**
      * Adds an action listener to the bag button.
      * @param e the action listener to add
@@ -658,6 +722,7 @@ public class CombatView extends JFrame {
     public final void addBagButtonListener(final ActionListener e) {
         this.bagButton.addActionListener(e);
     }
+
     /**
      * Adds an action listener to the run button.
      * @param e the action listener to add
@@ -665,6 +730,7 @@ public class CombatView extends JFrame {
     public final void addRunButtonListener(final ActionListener e) {
         this.runButton.addActionListener(e);
     }
+
     /**
      * Adds an action listener to the info button.
      * @param e the action listener to add
@@ -672,6 +738,7 @@ public class CombatView extends JFrame {
     public final void addInfoButtonListener(final ActionListener e) {
         this.infoButton.addActionListener(e);
     }
+
     /**
      * Adds an action listener to the physical attack button.
      * @param e the action listener to add
@@ -679,6 +746,7 @@ public class CombatView extends JFrame {
     public final void addPhysicalButtonListener(final ActionListener e) {
         this.physicalAttackButton.addActionListener(e);
     }
+
     /**
      * Adds an action listener to the long-range attack button.
      * @param e the action listener to add
@@ -686,6 +754,7 @@ public class CombatView extends JFrame {
     public final void addLongRangeButtonListener(final ActionListener e) {
         this.longRangeButton.addActionListener(e);
     }
+
     /**
      * Adds an action listener to the poison button.
      * @param e the action listener to add
@@ -693,6 +762,7 @@ public class CombatView extends JFrame {
     public final void addPoisonButtonListener(final ActionListener e) {
         this.poisonButton.addActionListener(e);
     }
+
     /**
      * Adds an action listener to the back button.
      * @param e the action listener to add
@@ -701,6 +771,7 @@ public class CombatView extends JFrame {
         this.backButton.addActionListener(e);
         this.backAttackButton.addActionListener(e);
     }
+
     /**
      * Adds an action listener to the attack buff button.
      * @param e the action listener to add
@@ -708,6 +779,7 @@ public class CombatView extends JFrame {
     public final void addAttackBuffButtonListener(final ActionListener e) {
         this.attackBuffButton.addActionListener(e);
     }
+
     /**
      * Adds an action listener to the attack buff button.
      * @param e the action listener to add
@@ -715,6 +787,7 @@ public class CombatView extends JFrame {
     public final void addCurePoisonButtonListener(final ActionListener e) {
         this.curePoisonButton.addActionListener(e);
     }
+
     /**
      * Adds an action listener to the attack buff button.
      * @param e the action listener to add

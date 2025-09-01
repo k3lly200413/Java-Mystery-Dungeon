@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Combat.MVC_Pattern;
+package it.unibo.progetto_oop.combat.mvc_pattern;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,17 +6,17 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
-import it.unibo.progetto_oop.Combat.CommandPattern.GameButton;
-import it.unibo.progetto_oop.Combat.CommandPattern.LongRangeButton;
-import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
-import it.unibo.progetto_oop.Combat.Position.Position;
-import it.unibo.progetto_oop.Combat.StatePattern.AnimatingState;
-import it.unibo.progetto_oop.Combat.StatePattern.CombatState;
-import it.unibo.progetto_oop.Combat.StatePattern.EnemyTurnState;
-import it.unibo.progetto_oop.Combat.StatePattern.InfoDisplayState;
-import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
-import it.unibo.progetto_oop.Combat.Helper.Neighbours;
-import it.unibo.progetto_oop.Combat.Helper.RedrawContext;
+import it.unibo.progetto_oop.combat.command_pattern.GameButton;
+import it.unibo.progetto_oop.combat.command_pattern.LongRangeButton;
+import it.unibo.progetto_oop.combat.command_pattern.MeleeButton;
+import it.unibo.progetto_oop.combat.helper.Neighbours;
+import it.unibo.progetto_oop.combat.helper.RedrawContext;
+import it.unibo.progetto_oop.combat.position.Position;
+import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
+import it.unibo.progetto_oop.combat.state_pattern.CombatState;
+import it.unibo.progetto_oop.combat.state_pattern.EnemyTurnState;
+import it.unibo.progetto_oop.combat.state_pattern.InfoDisplayState;
+import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
 
 
 /**
@@ -144,6 +144,7 @@ public class CombatController {
 
         this.view.redrawGrid(defaultRedraw);
     }
+
     /**
      * Uses private methods to Assing Actionlisteners to buttons inside view.
      */
@@ -190,6 +191,7 @@ public class CombatController {
         newState.enterState(this);
         newState.handleBackInput(this);
     }
+
     /**
      * Handles the back button click event.
      * This method is called when the back button is clicked in the view.
@@ -205,6 +207,7 @@ public class CombatController {
         newState.enterState(this);
         newState.handleInfoInput(this);
     }
+
     /**
      * Handles the info button click event.
      * This method is called when the info button is clicked in the view.
@@ -228,6 +231,7 @@ public class CombatController {
     private void handleCurePoisonInput() {
         this.currentState.handleCurePoisonInput(this);
     }
+
     /**
      * Performs a physical attack by the player.
      * This method is called when the player performs a physical attack.
@@ -326,40 +330,6 @@ public class CombatController {
             this, applyPoison, applyFlameIntent);
     }
 
-    /* NOT USED, DELETE?
-    public void performPlayerLongRangeAttack(
-        final boolean applyPoison, final boolean applyFlameIntent) {
-        if (!this.model.isPlayerTurn() || this.isAnimationRunning()) {
-            return;
-        }
-        this.view.setAllButtonsDisabled();
-        this.view.clearInfo();
-        this.view.showInfo(
-            applyPoison ? "Player uses poison!"
-            : "Player uses long range attack!");
-
-        this.longRangeAttackAnimation(
-            this.model.getPlayerPosition(),
-            1, applyFlameIntent, !applyFlameIntent, () -> {
-            this.model.decreaseEnemyHealth(model.getPlayerPower());
-            if (applyPoison) {
-                this.model.setEnemyPoisoned(true);
-                this.view.showInfo("Enemy is Poisoned!");
-            }
-
-            this.view.updateEnemyHealth(this.model.getEnemyHealth());
-            new AnimatingState().handleAnimationComplete(this);
-            // this.applyPostTurnEffects();
-
-            if (checkGameOver()) {
-                return;
-            }
-
-            this.startDelayedEnemyTurn(POST_ATTACK_DELAY);
-            this.redrawView();
-        });
-    }*/
-
     /**
      * Animates a long-range attack.
      * This method handles the animation of a long-range attack,
@@ -380,7 +350,7 @@ public class CombatController {
         // Player => Flame <= Enemy
 
         model.setAttackPosition(new Position(
-            (attacker.x() + direction), attacker.y())); // Start flame at player
+            attacker.x() + direction, attacker.y())); // Start flame at player
 
         RedrawContext redrawContext = new RedrawContext.Builder()
         .player(this.model.getPlayerPosition())
@@ -475,6 +445,7 @@ public class CombatController {
         });
         animationTimer.start();
     }
+
     /**
      * Handles the boss death ray attack.
      * This method is called when the boss unleashes a death ray attack.
@@ -483,6 +454,7 @@ public class CombatController {
     public void handleBossDeathRayAttack() {
         // call boss state and run handleBossDeathRayAttack(this);
     }
+
     /**
      * Performs the boss death ray attack.
      * This method is called when the boss unleashes a death ray attack.
@@ -574,6 +546,7 @@ public class CombatController {
 
     /**
      * Checks if the animation is currently running.
+     *
      * @return true if the animation is running, false otherwise
      */
     public final boolean isAnimationRunning() {
@@ -620,8 +593,7 @@ public class CombatController {
                     this.meleeCommand = new MeleeButton(
                             currentAttackerPos[0],
                             currentTargetPos[0],
-                            moveDirection,
-                            meleeCheckDistance);
+                            moveDirection);
                     List<Position> result = this.meleeCommand.execute();
                     nextAttackerPos = result.get(0);
                     nextTargetPos = result.get(1);
@@ -703,6 +675,7 @@ public class CombatController {
         });
         this.animationTimer.start();
     }
+
     /**
      * Performs a super attack by the enemy.
      */
@@ -1099,6 +1072,7 @@ public class CombatController {
 
     /**
      * Gets the current state of the combat controller.
+     *
      * @return the current state
      */
     public final CombatState getCurrentState() {
@@ -1116,10 +1090,17 @@ public class CombatController {
         int num = new Random().nextInt(2);
 
         switch (num) {
-            case physical: performEnemyPhysicalAttack();
-            case longRange: performLongRangeAttack(model.getEnemyPosition(),
-            -1, false, true);
-            default:break;
+            case physical:
+                performEnemyPhysicalAttack();
+                break;
+            case longRange:
+                performLongRangeAttack(
+                    model.getEnemyPosition(),
+                    -1,
+                    false,
+                    true);
+                break;
+            default: break;
         }
 
     }
@@ -1158,6 +1139,7 @@ public class CombatController {
 
     /**
      * Checks if the game is over and updates the view accordingly.
+     *
      * @return true if the game is over, false otherwise.
      */
     public final boolean checkGameOverAndUpdateView() {

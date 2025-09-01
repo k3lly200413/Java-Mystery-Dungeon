@@ -1,6 +1,5 @@
 package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern;
 
-import it.unibo.progetto_oop.Combat.Position.Position;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.GenericEnemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
@@ -12,6 +11,7 @@ import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.PatrollerState;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.SleeperState;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldApplication;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
+import it.unibo.progetto_oop.combat.position.Position;
 
 public class EnemyFactoryImpl implements EnemyFactory {
 

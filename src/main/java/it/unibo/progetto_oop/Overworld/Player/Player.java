@@ -6,10 +6,10 @@ import java.util.List;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.OverworldPlayerAdapter;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 import it.unibo.progetto_oop.Overworld.Player.PlayerObserver.PlayerObserver;
-import it.unibo.progetto_oop.Combat.PotionStrategy.*;
-import it.unibo.progetto_oop.Combat.Inventory.Inventory;
-import it.unibo.progetto_oop.Combat.Inventory.Item;
-import it.unibo.progetto_oop.Combat.Position.Position;
+import it.unibo.progetto_oop.combat.position.Position;
+import it.unibo.progetto_oop.combat.potion_strategy.*;
+import it.unibo.progetto_oop.combat.Inventory.Inventory;
+import it.unibo.progetto_oop.combat.Inventory.Item;
 
 // The Player class - Acts as the Subject/Observable
 public class Player {
@@ -141,6 +141,7 @@ public class Player {
 
     /**
      * Get the current health points of the player.
+     *
      * @return the current health points of the player
      */
     public int getCurrentHp(){
@@ -149,6 +150,7 @@ public class Player {
 
     /**
      * Get the maximum health points of the player.
+     *
      * @return the maximum health points of the player
      */
     public int getMaxHp(){
