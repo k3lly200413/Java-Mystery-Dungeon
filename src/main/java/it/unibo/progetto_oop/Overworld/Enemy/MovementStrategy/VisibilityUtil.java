@@ -14,12 +14,11 @@ public class VisibilityUtil {
      * check if the player is in the enemy's line of sight
      * @param enemy enemy's position
      * @param player player's position
-     * @param walls the walls in the floor
      * @param neighbourDistance the distance considered as "neighbour" for the enemy
      * @return
      */
-    public boolean inLos(Position enemy, Position player, Set<Position> walls , int neighbourDistance){
-        if(this.neighbours(enemy, player, neighbourDistance) && this.hasLineOfSight(enemy, player, walls)){
+    public boolean inLos(Position enemy, Position player, int neighbourDistance){
+        if(this.neighbours(enemy, player, neighbourDistance) && this.hasLineOfSight(enemy, player)){
             return true;
         }
         return false;
@@ -29,11 +28,10 @@ public class VisibilityUtil {
      * Check if the enemy has line of sight to the player
      * @param startPos the enemy's position
      * @param endPos the player's position
-     * @param wallPositions the set of wall positions in the model
      * @return true if there is a clear line of sight, false otherwise
      */
-    private boolean hasLineOfSight(Position startPos, Position endPos, Set<Position> wallPositions) {
-        if (startPos == null || endPos == null || wallPositions == null) {
+    private boolean hasLineOfSight(Position startPos, Position endPos) {
+        if (startPos == null || endPos == null) {
             return false;
         }
         if (startPos.equals(endPos)){
@@ -51,7 +49,7 @@ public class VisibilityUtil {
         // check if any of the cells in the line (except the first and last) are walls
         boolean collisionDetected = IntStream.range(1, lineCells.size()-1) 
                                             .mapToObj(lineCells::get)
-                                            .anyMatch(wallPositions::contains);
+                                            .anyMatch(p -> WallCollision.inBounds(p));
 
         return !collisionDetected;
     }

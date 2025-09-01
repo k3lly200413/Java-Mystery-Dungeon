@@ -1,6 +1,5 @@
 package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern;
 
-import java.util.Set;
 
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.GenericEnemy;
@@ -19,9 +18,9 @@ public class EnemyFactoryImpl implements EnemyFactory {
     MovementStrategy patrolMovementStrategy = new PatrolMovementStrategy();
     
     @Override
-    public Enemy createPatrollerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls, GridNotifier gridNotifier) {
+    public Enemy createPatrollerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, GridNotifier gridNotifier) {
         // create generic enemy
-        Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition, walls, gridNotifier);
+        Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition, gridNotifier);
 
         // set the correct state
         enemy.setState(new PatrollerState(movementUtil, patrolMovementStrategy, isVertical));
@@ -29,16 +28,16 @@ public class EnemyFactoryImpl implements EnemyFactory {
     }
 
     @Override
-    public Enemy createFollowerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls,  GridNotifier gridNotifier) {
-        Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition, walls, gridNotifier);
+    public Enemy createFollowerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, GridNotifier gridNotifier) {
+        Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition, gridNotifier);
 
         enemy.setState(new FollowerState(movementUtil, patrolMovementStrategy, isVertical));
         return enemy;
     }
 
     @Override
-    public Enemy createSleeperEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls,  GridNotifier gridNotifier) {
-        Enemy enemy = new GenericEnemy(hp, hp, power,spawnPosition, walls, gridNotifier);
+    public Enemy createSleeperEnemy(int hp, int power, Position spawnPosition, boolean isVertical,  GridNotifier gridNotifier) {
+        Enemy enemy = new GenericEnemy(hp, hp, power,spawnPosition, gridNotifier);
 
         enemy.setState(new SleeperState());
         return enemy;

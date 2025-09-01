@@ -49,9 +49,9 @@ public class OverworldEntitiesGenerator {
             int roll = ThreadLocalRandom.current().nextInt(3);
             Enemy enemy;
             switch (roll) {
-                case 0 -> enemy = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, pos, true, Collections.emptySet(), gridNotifier);
-                case 1 -> enemy = factory.createSleeperEnemy(ENEMY_HP, ENEMY_POWER, pos, true, Collections.emptySet(), gridNotifier);
-                default -> enemy = factory.createPatrollerEnemy(ENEMY_HP, ENEMY_POWER, pos, false, Collections.emptySet(), gridNotifier);
+                case 0 -> enemy = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, pos, true, gridNotifier);
+                case 1 -> enemy = factory.createSleeperEnemy(ENEMY_HP, ENEMY_POWER, pos, true, gridNotifier);
+                default -> enemy = factory.createPatrollerEnemy(ENEMY_HP, ENEMY_POWER, pos, false, gridNotifier);
             }
             enemyList.add(enemy);
         }
