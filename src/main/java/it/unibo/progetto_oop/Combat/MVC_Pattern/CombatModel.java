@@ -137,7 +137,6 @@ public class CombatModel implements PossibleUser {
         this.enemyName = newEnemyName;
         this.basicPlayerPower = this.playerPower;
 
-    
         resetPositions();
         this.attackPosition = this.playerPosition;
 
