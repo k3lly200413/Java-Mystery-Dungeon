@@ -5,6 +5,7 @@ import java.util.Set;
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.GenericEnemyState;
+import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 
@@ -15,16 +16,20 @@ public class GenericEnemy implements Enemy {
     private Position currentPosition;
     private int currentHealth;
     private GenericEnemyState currentState;
-    private Set<Position> walls;
+
+    private Set<Position> walls; 
+    private GridNotifier gridNotifier;
 
 
-    public GenericEnemy(int maxHealth, int currentHealth, int power, Position initialPosition, Set<Position> walls) {
+    public GenericEnemy(int maxHealth, int currentHealth, int power, Position initialPosition, Set<Position> walls,  GridNotifier gridNotifier) {
         this.maxHealth = maxHealth;
         this.power = power;
         this.initialPosition = initialPosition;
         this.currentHealth = currentHealth;
         this.currentPosition = this.initialPosition;
+
         this.walls = walls;
+        this.gridNotifier = gridNotifier;
     }
 
     
@@ -59,6 +64,11 @@ public class GenericEnemy implements Enemy {
         return this.walls;
     }
 
+    @Override
+    public GridNotifier getGridNotifier() {
+        return this.gridNotifier;
+    }
+
 
     // setters 
 
@@ -80,6 +90,11 @@ public class GenericEnemy implements Enemy {
         this.currentState = newState;
 
         this.currentState.enterState(this);
+    }
+
+    @Override
+    public void setGridNotifier(GridNotifier gridNotifier) {
+        this.gridNotifier = gridNotifier;
     }
 
 

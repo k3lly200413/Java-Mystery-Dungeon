@@ -81,7 +81,7 @@ public class EnemySystem {
         if (this.enemies.contains(enemyToRemove)) {
             Position at = enemyToRemove.getCurrentPosition(); // @autor Alice
             this.enemies.remove(enemyToRemove);
-            model.notifyItemRemoved(at); // @autor Alice
+            model.gridNotifier.notifyItemRemoved(at); // @autor Alice
             this.beatenEnemies.add(enemyToRemove);
         }
     }

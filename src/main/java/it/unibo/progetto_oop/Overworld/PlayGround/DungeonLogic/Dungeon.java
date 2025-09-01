@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldEntitiesGenerator;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
@@ -79,8 +80,10 @@ public class Dungeon {
         currentFloor = nextIndex;
 
         //crea l'oggetto e lo mette nella posizione assegnata
-        new OverworldEntitiesGenerator(this.getCurrentFloor(), this.player, this.overworldModel);
-        overworldModel.setGridUpdater(this.getCurrentFloor());
+        GridNotifier gridNotifier = new GridNotifier(this.getCurrentFloor());
+
+        new OverworldEntitiesGenerator(this.getCurrentFloor(), this.player, this.overworldModel, gridNotifier);
+        overworldModel.setGridNotifier(gridNotifier);
         
         return true;
     }

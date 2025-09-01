@@ -6,10 +6,10 @@ import java.util.Set;
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.MovementSystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.PickupSystem;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.GridUpdater;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
@@ -26,8 +26,8 @@ public class OverworldModel {
     // flags
     private boolean inCombat;
 
-    // per accedere alla griglia
-    private GridUpdater grid;
+    // to access the grid
+    public GridNotifier gridNotifier;
 
     public OverworldModel(Player player, List<Enemy> enemies, List<Item> items, Set<Position> walls) { // TODO: integrare con Alice
         this.player = player;
@@ -162,6 +162,10 @@ public class OverworldModel {
         
     }
 
+    public void setGridNotifier(GridNotifier gridNotifier){
+        this.gridNotifier = gridNotifier;
+    }
+
     // methods
 
 
@@ -174,25 +178,6 @@ public class OverworldModel {
      */
     public void movePlayer(int directionX, int directionY){
         this.movementSystem.move(directionX, directionY, this.pickupSystem, this.enemySystem);
-    }
-
-
-
-    // @autor Alice
-    public void setGridUpdater(GridUpdater grid) {
-        this.grid = grid;
-    }
-    public void notifyPlayerMoved(Position from, Position to) {
-        if (grid != null) grid.onPlayerMove(from, to);
-    }
-    public void notifyEnemyMoved(Position from, Position to) {
-        if (grid != null) grid.onEnemyMove(from, to);
-    }
-    public void notifyItemRemoved(Position at) {
-        if (grid != null) grid.onItemRemoved(at);
-    }
-    public void notifyEnemyRemoved(Position at) {
-        if (grid != null) grid.onEnemyRemoved(at);
     }
 
 }

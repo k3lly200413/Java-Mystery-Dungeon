@@ -107,7 +107,7 @@ public class MovementSystem {
         Position from = player.getPosition(); // @autor Alice
         // the player can now change position
         this.player.setPosition(tempPosition);
-        model.notifyPlayerMoved(from, tempPosition); // @autor Alice
+        model.gridNotifier.notifyPlayerMoved(from, tempPosition); // @autor Alice
 
         // check items
         pickupSystem.checkAndAddItem(); 
