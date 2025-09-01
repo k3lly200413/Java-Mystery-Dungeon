@@ -29,12 +29,15 @@ public final class OverworldModel {
     private final Player player;
     private boolean inCombat;
 
+    private Dungeon dungeon;
+
     private final PickupSystem pickupSystem;
     private final EnemySystem enemySystem;
     private final MovementSystem movementSystem;
 
     // to access the grid
-    public GridNotifier gridNotifier;
+    public GridNotifier gridNotifier; // incapsula GridUpdater
+    private StructureData gridView; // read-only
 
     public OverworldModel(final List<Enemy> enemies, final List<Item> items) {
         this.player = new Player(100, new Inventory());
@@ -55,8 +58,8 @@ public final class OverworldModel {
 
     // Imposta quale floor è quello attivo
     public void bindCurrentFloor(final Floor floor) {
-        this.grid = floor;            // Floor implementa GridUpdater
-        this.gridView = floor.grid(); // read-only per movimenti
+        this.gridView = floor.grid();       // read-only
+        this.gridNotifier.setGridUpdater(floor); // Floor implementa GridUpdater
     }
 
     public boolean nextFloor() {
