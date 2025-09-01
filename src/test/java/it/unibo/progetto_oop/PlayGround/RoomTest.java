@@ -16,8 +16,7 @@ public class RoomTest {
 
     @Test
     void CellsOfRoom() {
-        Room r = new Room(2, 5, 3, 2); 
-        // Celle attese:
+        Room r = new Room(2, 5, 3, 2);
         // y=5: (2,5) (3,5) (4,5)
         // y=6: (2,6) (3,6) (4,6)
 
