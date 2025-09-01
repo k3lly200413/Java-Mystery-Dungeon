@@ -4,10 +4,10 @@ import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveDirection;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.VisibilityUtil;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import java.util.Set;
 
 
 
@@ -27,7 +27,6 @@ public class PatrolMovementStrategy implements MovementStrategy{
     @Override
     public MoveDirection executeMove(Enemy context, Player player, MoveDirection currDirection) {
         Position currentPos = context.getCurrentPosition();
-        Set<Position> walls = context.getWalls();
         Position targetPos = currentPos; // Initialize target position to current position
 
         this.moveDirection = currDirection; // Set the current direction
@@ -53,7 +52,7 @@ public class PatrolMovementStrategy implements MovementStrategy{
         }
         
         // Check if the target position is not the same as the current position and is not a wall
-        if (!targetPos.equals(currentPos) && !walls.contains(targetPos)) {
+        if (WallCollision.inBounds(targetPos)) {
             context.setPosition(targetPos);
             context.getGridNotifier().notifyEnemyMoved(currentPos, targetPos);
 
@@ -76,12 +75,10 @@ public class PatrolMovementStrategy implements MovementStrategy{
         Position currentPos = context.getCurrentPosition();
         Position targetPos = this.visibilityUtil.firstMove(context.getCurrentPosition(), player.getPosition());
 
-        Set<Position> walls = context.getWalls();
-
         // if the player is in the enemy's line of sight, move towards the player
         if ( player != null 
-            && this.visibilityUtil.inLos(context.getCurrentPosition(), player.getPosition(), walls, NEIGHBOUR_DISTANCE)
-            && !walls.contains(targetPos)){
+            && this.visibilityUtil.inLos(context.getCurrentPosition(), player.getPosition(), NEIGHBOUR_DISTANCE)
+            && WallCollision.inBounds(targetPos)){
 
             // if the player and the enemy are close enough -> enter combat state
             if (this.visibilityUtil.neighbours(context.getCurrentPosition(), player.getPosition(), COMBAT_DISTANCE)){

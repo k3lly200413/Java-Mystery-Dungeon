@@ -1,7 +1,5 @@
 package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl;
 
-import java.util.Set;
-
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.GenericEnemyState;
@@ -17,18 +15,15 @@ public class GenericEnemy implements Enemy {
     private int currentHealth;
     private GenericEnemyState currentState;
 
-    private Set<Position> walls; 
     private GridNotifier gridNotifier;
 
 
-    public GenericEnemy(int maxHealth, int currentHealth, int power, Position initialPosition, Set<Position> walls,  GridNotifier gridNotifier) {
+    public GenericEnemy(int maxHealth, int currentHealth, int power, Position initialPosition,  GridNotifier gridNotifier) {
         this.maxHealth = maxHealth;
         this.power = power;
         this.initialPosition = initialPosition;
         this.currentHealth = currentHealth;
         this.currentPosition = this.initialPosition;
-
-        this.walls = walls;
         this.gridNotifier = gridNotifier;
     }
 
@@ -59,10 +54,6 @@ public class GenericEnemy implements Enemy {
         return this.currentState.getType();
     }
 
-    @Override
-    public Set<Position> getWalls() {
-        return this.walls;
-    }
 
     @Override
     public GridNotifier getGridNotifier() {
