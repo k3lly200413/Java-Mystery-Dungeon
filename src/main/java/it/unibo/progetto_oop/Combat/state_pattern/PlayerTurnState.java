@@ -5,17 +5,18 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.potion_strategy.CurePoison;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
+/**
+ * Player's turn state in combat.
+ */
 public class PlayerTurnState implements CombatState {
-
-    /**
-     * Strategy for curing poison.
-     */
-    private final CurePoison curePoison;
-
     /**
      * The amount of stamina to be removed after a special attack.
      */
     private static final int STAMINA_TO_REMOVE = 10;
+    /**
+     * Strategy for curing poison.
+     */
+    private final CurePoison curePoison;
 
     /**
      * Constructor for PlayerTurnState.

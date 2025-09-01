@@ -6,7 +6,6 @@ import it.unibo.progetto_oop.combat.position.Position;
 import java.util.*;
 import java.util.stream.IntStream;
 
-
 /** 
  * visual range related utilities
  */
