@@ -14,6 +14,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
 import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
 
