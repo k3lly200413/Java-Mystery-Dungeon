@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Combat.combat_builder;
+package it.unibo.progetto_oop.combat.combat_builder;
 
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 
