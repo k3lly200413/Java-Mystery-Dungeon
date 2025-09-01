@@ -1,12 +1,9 @@
 package it.unibo.progetto_oop.Overworld.PlayGround;
 
-import java.util.List;
 import java.util.Objects;
 
 import javax.swing.SwingUtilities;
 
-import it.unibo.progetto_oop.Combat.Inventory.Item;
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldEntitiesGenerator;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;

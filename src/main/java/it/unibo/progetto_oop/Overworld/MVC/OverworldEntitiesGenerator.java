@@ -1,8 +1,6 @@
 package it.unibo.progetto_oop.Overworld.MVC;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
