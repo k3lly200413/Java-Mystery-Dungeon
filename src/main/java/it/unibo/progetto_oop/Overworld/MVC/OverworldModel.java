@@ -33,9 +33,6 @@ public final class OverworldModel {
     private final EnemySystem enemySystem;
     private final MovementSystem movementSystem;
 
-    // flags
-    private boolean inCombat;
-
     // to access the grid
     public GridNotifier gridNotifier;
 
