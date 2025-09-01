@@ -13,7 +13,7 @@ public class CombatTransitionState implements GenericEnemyState{
 
     @Override
     public void enterState(Enemy context) {
-
+        System.out.println("Entering CombatTransition");
         // TODO: transition to combat state in the game application
 
     }
@@ -25,14 +25,10 @@ public class CombatTransitionState implements GenericEnemyState{
 
     @Override
     public void update(Enemy context, Player player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
     public void onPlayerMoved(Enemy context, Player player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'onPlayerMoved'");
     }
 
     @Override
