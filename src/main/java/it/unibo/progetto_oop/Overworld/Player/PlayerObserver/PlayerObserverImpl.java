@@ -1,7 +1,5 @@
 package it.unibo.progetto_oop.Overworld.Player.PlayerObserver;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;

@@ -5,6 +5,7 @@ import java.util.List;
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.MovementSystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.PickupSystem;
@@ -32,9 +33,11 @@ public final class OverworldModel {
     private final EnemySystem enemySystem;
     private final MovementSystem movementSystem;
 
-    private Dungeon dungeon;
-    private StructureData gridView;   // read-only
-    private GridUpdater grid;
+    // flags
+    private boolean inCombat;
+
+    // to access the grid
+    public GridNotifier gridNotifier;
 
     public OverworldModel(final List<Enemy> enemies, final List<Item> items) {
         this.player = new Player(100, new Inventory());
@@ -129,6 +132,10 @@ public final class OverworldModel {
         return p.x() >= 0 && p.y() >= 0 && p.x() < this.gridView.width() && p.y() < this.gridView.height();
     }
 
+    public void setGridNotifier(GridNotifier gridNotifier){
+        this.gridNotifier = gridNotifier;
+    }
+
     // Regola entrabile = inBounds && non WALL
     public boolean canEnter(final Position to) {
         if (!inBounds(to))
@@ -136,23 +143,4 @@ public final class OverworldModel {
         return this.gridView.get(to.x(), to.y()) != TileType.WALL;
     }
 
-    
-    public void setGridUpdater(final GridUpdater grid) {
-        this.grid = grid;
-        if (grid instanceof Floor f) {
-            this.gridView = f.grid();
-        }
-    }
-    public void notifyPlayerMoved(final Position from, final Position to) {
-        if (this.grid != null) this.grid.onPlayerMove(from, to);
-    }
-    public void notifyEnemyMoved(final Position from, final Position to) {
-        if (this.grid != null) this.grid.onEnemyMove(from, to);
-    }
-    public void notifyItemRemoved(final Position at) {
-        if (this.grid != null) this.grid.onItemRemoved(at);
-    }
-    public void notifyEnemyRemoved(final Position at) {
-        if (this.grid != null) this.grid.onEnemyRemoved(at);
-    }
 }

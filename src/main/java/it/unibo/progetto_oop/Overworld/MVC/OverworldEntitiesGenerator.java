@@ -11,6 +11,7 @@ import it.unibo.progetto_oop.Combat.PotionFactory.ItemFactory;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactory;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactoryImpl;
+import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
@@ -26,9 +27,9 @@ public class OverworldEntitiesGenerator {
     private static final int ENEMY_HP = 100;
     private static final int ENEMY_POWER = 20;
 
-    public OverworldEntitiesGenerator(Floor curreFloor, Player player, OverworldModel overworldModel) {
+    public OverworldEntitiesGenerator(Floor curreFloor, Player player, OverworldModel overworldModel, GridNotifier gridNotifier) {
         generateItems(curreFloor);
-        generateEnemies(curreFloor);
+        generateEnemies(curreFloor, gridNotifier);
         spawnPlayer(curreFloor, player);
         overworldModel.setSpawnObjects(enemyList, itemList, new HashSet<>());  // l'ho messo per testare, poi vedi tu come vuoi implementare questa cosa
     }
@@ -42,15 +43,15 @@ public class OverworldEntitiesGenerator {
         }
     }
 
-    private void generateEnemies(Floor currentFloor) {
+    private void generateEnemies(Floor currentFloor, GridNotifier gridNotifier) {
         EnemyFactory factory = new EnemyFactoryImpl();
         for (Position pos : currentFloor.getObjectsPositions(TileType.ENEMY)) {
             int roll = ThreadLocalRandom.current().nextInt(3);
             Enemy enemy;
             switch (roll) {
-                case 0 -> enemy = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, pos, true, Collections.emptySet());
-                case 1 -> enemy = factory.createSleeperEnemy(ENEMY_HP, ENEMY_POWER, pos, true, Collections.emptySet());
-                default -> enemy = factory.createPatrollerEnemy(ENEMY_HP, ENEMY_POWER, pos, true, Collections.emptySet());
+                case 0 -> enemy = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, pos, true, Collections.emptySet(), gridNotifier);
+                case 1 -> enemy = factory.createSleeperEnemy(ENEMY_HP, ENEMY_POWER, pos, true, Collections.emptySet(), gridNotifier);
+                default -> enemy = factory.createPatrollerEnemy(ENEMY_HP, ENEMY_POWER, pos, false, Collections.emptySet(), gridNotifier);
             }
             enemyList.add(enemy);
         }

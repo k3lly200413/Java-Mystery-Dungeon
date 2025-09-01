@@ -6,11 +6,11 @@ import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.GenericEnemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.VisibilityUtil;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.PatrolMovementStrategy.PatrolMovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.FollowerState;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.PatrollerState;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.SleeperState;
+import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public class EnemyFactoryImpl implements EnemyFactory {
@@ -19,9 +19,9 @@ public class EnemyFactoryImpl implements EnemyFactory {
     MovementStrategy patrolMovementStrategy = new PatrolMovementStrategy();
     
     @Override
-    public Enemy createPatrollerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls) {
+    public Enemy createPatrollerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls, GridNotifier gridNotifier) {
         // create generic enemy
-        Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition, walls);
+        Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition, walls, gridNotifier);
 
         // set the correct state
         enemy.setState(new PatrollerState(movementUtil, patrolMovementStrategy, isVertical));
@@ -29,21 +29,18 @@ public class EnemyFactoryImpl implements EnemyFactory {
     }
 
     @Override
-    public Enemy createFollowerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls) {
-        VisibilityUtil visibilityUtil = new VisibilityUtil();
-        
-        Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition, walls);
+    public Enemy createFollowerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls,  GridNotifier gridNotifier) {
+        Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition, walls, gridNotifier);
 
-        enemy.setState(new FollowerState(visibilityUtil, movementUtil, patrolMovementStrategy, isVertical));
+        enemy.setState(new FollowerState(movementUtil, patrolMovementStrategy, isVertical));
         return enemy;
     }
 
     @Override
-    public Enemy createSleeperEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls) {
-        Enemy enemy = new GenericEnemy(hp, hp, power,spawnPosition, walls);
+    public Enemy createSleeperEnemy(int hp, int power, Position spawnPosition, boolean isVertical, Set<Position> walls,  GridNotifier gridNotifier) {
+        Enemy enemy = new GenericEnemy(hp, hp, power,spawnPosition, walls, gridNotifier);
 
         enemy.setState(new SleeperState());
-
         return enemy;
     }
     

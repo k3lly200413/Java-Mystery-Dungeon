@@ -5,7 +5,6 @@ import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveDirection;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class PatrollerState implements GenericEnemyState {
@@ -35,7 +34,7 @@ public class PatrollerState implements GenericEnemyState {
 
     @Override
     public void update(Enemy context, Player player) {
-        this.currentDirection = this.movementStrategy.executeMove(context, context.getWalls(), player, this.currentDirection);
+        this.currentDirection = this.movementStrategy.executeMove(context, player, this.currentDirection);
     }
 
     @Override
