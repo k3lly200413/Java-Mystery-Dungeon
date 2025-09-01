@@ -56,7 +56,7 @@ public final class Main {
         controller.show();
         
         // -----------CARD LAYOUT------------
-        javax.swing.SwingUtilities.invokeLater(controller::show); // TODO: se vogliamo usare il cardlayout non ci deve essere show
+        //TODO: se vogliamo usare il cardlayout non ci deve essere show
 
         ViewManager viewManager = new ViewManager();
         viewManager.start(view);

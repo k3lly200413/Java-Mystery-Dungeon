@@ -41,6 +41,7 @@ public final class OverworldModel {
     public OverworldModel(final List<Enemy> enemies, final List<Item> items) {
         this.player = new Player(100, new Inventory());
         this.inCombat = false;
+        this.gridNotifier = new GridNotifier(null);
 
         this.pickupSystem = new PickupSystem(null, this.player, this);
         this.enemySystem  = new EnemySystem(null, this.player, this);
@@ -57,8 +58,19 @@ public final class OverworldModel {
 
     // Imposta quale floor è quello attivo
     public void bindCurrentFloor(final Floor floor) {
-        this.gridView = floor.grid();       // read-only
+        if (floor == null) {
+            this.gridView = null;
+            if (this.gridNotifier != null) {
+                this.gridNotifier.setGridUpdater(null);
+        }
+        return;
+        }
+        this.gridView = floor.grid();
+        if (this.gridNotifier == null) {
+            this.gridNotifier = new GridNotifier(null); // ulteriore safety net
+        }
         this.gridNotifier.setGridUpdater(floor); // Floor implementa GridUpdater
+
     }
 
     public boolean nextFloor() {

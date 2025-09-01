@@ -46,6 +46,7 @@ public final class MapController {
      */
     public void next() {
         dungeon.nextFloor();
+        System.out.println(dungeon.getCurrentFloorIndex());
         final Floor currentFloor = dungeon.getCurrentFloor();
         model.bindCurrentFloor(currentFloor);
 
