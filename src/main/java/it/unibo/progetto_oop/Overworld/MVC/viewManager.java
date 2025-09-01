@@ -5,17 +5,20 @@ import javax.swing.*;
 import java.awt.CardLayout;
 
 import it.unibo.progetto_oop.Combat.Inventory.*;
+import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
 
-public class viewManager {
+public class ViewManager {
 
     private CardLayout cardLayout; 
     private JPanel mainCardPanel; 
+    private SwingMapView overworldView;
 
-    private Inventory inventory;
+   // private Inventory inventory;
     private InventoryView invView;
     public static final String INVENTORY_CARD = "INVENTORY";
+    public static final String OVERWORLD_CARD = "OVERWORLD";
 
-    private void start() {
+    public void start(SwingMapView overworldView) {
         // Setup the CardLayout and main panel
         this.mainCardPanel = new JPanel();
         this.cardLayout = new CardLayout();
@@ -33,8 +36,18 @@ public class viewManager {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);      
 
-        // Show the inventory for testing purposes
-        this.showInventory(inventory);
+        this.mainCardPanel = new JPanel();
+        this.cardLayout = new CardLayout();
+        this.mainCardPanel.setLayout(this.cardLayout);
+
+        /* 
+        
+        // Creo la view dell'overworld
+        this.overworldView = overworldView;
+        this.mainCardPanel.add(this.overworldView, OVERWORLD_CARD);
+
+        // Mostro l'overworld come default
+        this.cardLayout.show(this.mainCardPanel, OVERWORLD_CARD); */
     }
 
     public void showInventory(Inventory inventory){
