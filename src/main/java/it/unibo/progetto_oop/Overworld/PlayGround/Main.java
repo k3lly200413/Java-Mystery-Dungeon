@@ -38,7 +38,7 @@ public final class Main {
         Inventory inventory = new Inventory();
         Player player = new Player(100, inventory);
         OverworldModel overworldModel = new OverworldModel(player, new ArrayList<>(), new ArrayList<>(), new HashSet<>()); 
-        // TODO: aggiungere i muri che confinano le stanze e gli altri dati
+        // TODO: aggiungere i muri che confinano le stanze
         // ---------------!!!-----------------
 
         // MODEL

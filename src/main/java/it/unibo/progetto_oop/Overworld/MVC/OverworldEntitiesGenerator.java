@@ -2,6 +2,7 @@ package it.unibo.progetto_oop.Overworld.MVC;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -25,12 +26,13 @@ public class OverworldEntitiesGenerator {
     private static final int ENEMY_HP = 100;
     private static final int ENEMY_POWER = 20;
 
-    public OverworldEntitiesGenerator(Floor curreFloor, Player player) {
+    public OverworldEntitiesGenerator(Floor curreFloor, Player player, OverworldModel overworldModel) {
         generateItems(curreFloor);
         generateEnemies(curreFloor);
         spawnPlayer(curreFloor, player);
+        overworldModel.setSpawnObjects(enemyList, itemList, new HashSet<>());  // l'ho messo per testare, poi vedi tu come vuoi implementare questa cosa
     }
-    
+
     private void generateItems(Floor currentFloor) {
         List<String> types = List.of("Health Potion", "Antidote", "Attack Buff");
         var rand = ThreadLocalRandom.current();

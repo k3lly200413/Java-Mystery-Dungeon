@@ -79,7 +79,7 @@ public class Dungeon {
         currentFloor = nextIndex;
 
         //crea l'oggetto e lo mette nella posizione assegnata
-        new OverworldEntitiesGenerator(this.getCurrentFloor(), this.player);
+        new OverworldEntitiesGenerator(this.getCurrentFloor(), this.player, this.overworldModel);
         overworldModel.setGridUpdater(this.getCurrentFloor());
         
         return true;

@@ -154,7 +154,7 @@ public class OverworldModel {
      * @param items the items on the current floor
      * @param walls the walls one the current floor
      */
-    private void setSpawnObjects(List<Enemy> enemies, List<Item> items, Set<Position> walls) {
+    public void setSpawnObjects(List<Enemy> enemies, List<Item> items, Set<Position> walls) {
         this.walls = walls;
         this.pickupSystem.setItems(items);
         this.enemySystem.setEnemies(enemies);
