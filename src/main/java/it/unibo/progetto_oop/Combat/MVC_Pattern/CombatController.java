@@ -6,11 +6,11 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.command_pattern.GameButton;
 import it.unibo.progetto_oop.combat.command_pattern.LongRangeButton;
 import it.unibo.progetto_oop.combat.command_pattern.MeleeButton;
 import it.unibo.progetto_oop.combat.helper.Neighbours;
-import it.unibo.progetto_oop.combat.helper.RedrawContext;
 import it.unibo.progetto_oop.combat.position.Position;
 import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
 import it.unibo.progetto_oop.combat.state_pattern.CombatState;

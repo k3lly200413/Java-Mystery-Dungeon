@@ -1,18 +1,27 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
-import it.unibo.progetto_oop.combat.Inventory.Item;
+import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class AnimatingState implements CombatState {
+    /**
+     * Indicates if it is the player's turn.
+     */
+    private final boolean playerTurn = true;
+    /**
+     * Delay for the animation in milliseconds.
+     */
+    private static final int ANIMATION_DELAY = 500;
 
     @Override
     public final void handlePhysicalAttackInput(
         final CombatController context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
+
             "Unimplemented method 'handlePhysicalAttackInput'");
     }
 
@@ -101,21 +110,17 @@ public class AnimatingState implements CombatState {
         }
 
         if (context.checkGameOver()) {
-            context.setState(new GameOverState());
+            // Create gameOverState
             return;
         }
 
         if (wasPlayerTurn) {
-            if (!model.isEnemyPoisoned()) {
                 context.getModel().setPlayerTurn(false);
                 context.setState(new EnemyTurnState());
-            }
         } else {
-            if (!model.isPlayerPoison()) {
                 context.getModel().setPlayerTurn(true);
                 context.setState(new PlayerTurnState());
             }
-        }
 
     }
 

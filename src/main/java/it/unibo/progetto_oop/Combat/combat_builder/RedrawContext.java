@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.helper;
+package it.unibo.progetto_oop.combat.combat_builder;
 
 import java.util.List;
 

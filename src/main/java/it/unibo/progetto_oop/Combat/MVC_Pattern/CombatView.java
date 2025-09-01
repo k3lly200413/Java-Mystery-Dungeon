@@ -13,8 +13,8 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
+import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.helper.Neighbours;
-import it.unibo.progetto_oop.combat.helper.RedrawContext;
 import it.unibo.progetto_oop.combat.position.Position;
 
 import java.awt.BorderLayout;
