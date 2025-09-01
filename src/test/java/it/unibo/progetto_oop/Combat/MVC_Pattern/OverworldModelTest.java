@@ -9,9 +9,9 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.progetto_oop.combat.Inventory.Inventory;
-import it.unibo.progetto_oop.combat.Inventory.Item;
 import it.unibo.progetto_oop.combat.PotionFactory.ItemFactory;
+import it.unibo.progetto_oop.combat.inventory.Inventory;
+import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.position.Position;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactory;

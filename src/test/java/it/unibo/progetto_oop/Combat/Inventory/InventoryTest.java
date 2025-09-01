@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.progetto_oop.combat.PotionFactory.ItemFactory;
+import it.unibo.progetto_oop.combat.inventory.Inventory;
+import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.position.Position;
 
 

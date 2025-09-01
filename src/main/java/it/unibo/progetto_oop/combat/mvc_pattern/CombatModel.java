@@ -5,6 +5,7 @@ import java.util.Objects;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 import it.unibo.progetto_oop.combat.position.Position;
 
+
 public class CombatModel implements PossibleUser {
 
     /** The size of the game board or arena. */
