@@ -2,6 +2,7 @@ package it.unibo.progetto_oop.combat.mvc_pattern;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import it.unibo.progetto_oop.Combat.combat_builder.CombatBuilder;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 import it.unibo.progetto_oop.combat.position.Position;
 
@@ -114,27 +115,18 @@ public class CombatModel implements PossibleUser {
     /**
      * Constructs a CombatModel with specified parameters.
      *
-     * @param newSize the size of the combat area
-     * @param staminaMax the maximum stamina of the player
-     * @param newPlayerPower the initial power of the player
-     * @param newPlayerPoisonPower the poison power of the player
-     * @param newPlayerLongRangePower the long-range power of the player
-     * @param newEnemyPower the initial power of the enemy
-     * @param newEnemySpeed the speed of the enemy
-     * @param newEnemyName the name of the enemy
+     * @param builder the CombatBuilder instance containing
+     *                the configuration parameters
      */
-    public CombatModel(final int newSize, final int staminaMax,
-            final int newPlayerPower, final int newPlayerPoisonPower,
-            final int newPlayerLongRangePower, final int newEnemyPower,
-            final int newEnemySpeed, final String newEnemyName) {
+    public CombatModel(final CombatBuilder builder) {
 
-        this.size = newSize;
-        this.playerStaminaMax = staminaMax;
-        this.playerPower = newPlayerPower;
-        this.playerPoisonPower = newPlayerPoisonPower;
-        this.enemyPower = newEnemyPower;
-        this.enemySpeed = newEnemySpeed;
-        this.enemyName = newEnemyName;
+        this.size = builder.getSize();
+        this.playerStaminaMax = builder.getStaminaMax();
+        this.playerPower = builder.getPlayerPower();
+        this.playerPoisonPower = builder.getPlayerPoisonPower();
+        this.enemyPower = builder.getEnemyPower();
+        this.enemySpeed = builder.getEnemySpeed();
+        this.enemyName = builder.getEnemyName();
         this.basicPlayerPower = this.playerPower;
 
         resetPositions();
@@ -142,10 +134,10 @@ public class CombatModel implements PossibleUser {
 
         this.playerHealth = maxHealth;
         this.enemyHealth = maxHealth;
-        this.playerStamina = staminaMax;
-        this.enemyPoisonPower = playerPoisonPower;
-        this.playerLongRangePower = newPlayerLongRangePower;
-        this.enemyLongRangePower = newPlayerLongRangePower;
+        this.playerStamina = builder.getStaminaMax();
+        this.enemyPoisonPower = builder.getPlayerPoisonPower();
+        this.playerLongRangePower = builder.getPlayerLongRangePower();
+        this.enemyLongRangePower = builder.getPlayerLongRangePower();
 
         this.enemyPoisoned = false;
         this.isPlayerPoison = false;

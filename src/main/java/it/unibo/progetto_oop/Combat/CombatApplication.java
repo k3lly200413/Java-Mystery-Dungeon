@@ -2,6 +2,7 @@ package it.unibo.progetto_oop.combat;
 
 import javax.swing.SwingUtilities;
 
+import it.unibo.progetto_oop.Combat.combat_builder.CombatBuilder;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
@@ -49,10 +50,17 @@ public final class CombatApplication {
         // --- Application Startup ---
         SwingUtilities.invokeLater(() -> {
             // 1. Create the Model with our configuration
-            final CombatModel model = new CombatModel(size,
-            playerMaxStamina, playerPower,
-            playerPoisonPower, playerLongRangePower, enemyPower,
-            enemySpeed, enemyName);
+            final CombatModel model = new CombatBuilder()
+            .setSize(size)
+            .setStaminaMax(playerMaxStamina)
+            .setPlayerPower(playerPower)
+            .setPlayerPoisonPower(playerPoisonPower)
+            .setPlayerLongRangePower(playerLongRangePower)
+            .setEnemyPower(enemyPower)
+            .setEnemySpeed(enemySpeed)
+            .setEnemyName(enemyName)
+            .build();
+
 
             // 2. Create the View
             final CombatView view = new CombatView(model.getSize(),
