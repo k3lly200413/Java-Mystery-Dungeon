@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.Inventory;
+package it.unibo.progetto_oop.combat.inventory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
