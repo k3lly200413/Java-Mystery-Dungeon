@@ -35,32 +35,69 @@ public class CombatModel implements PossibleUser {
 
     /** The current position of the player. */
     private Position playerPosition;
+
+    /** The current position of the enemy. */
+
     private Position enemyPosition;
+
+    /** The current position of the active attack. */
     private Position attackPosition;
 
+    /** The current health points of the player. */
     private int playerHealth;
+
+    /** The current health points of the enemy. */
     private int enemyHealth;
+
+    /** The maximum health points allowed for both player and enemy. */
     private final int maxHealth = 100;
 
     /** The current stamina points of the player. */
     private int playerStamina;
+
+    /** The maximum stamina points of the player. */
     private int playerStaminaMax;
 
+    /** The current attack power of the player. */
     private int playerPower;
-    private final int playerPoisonPower;
-    private int enemyPoisonPower;
-    private int playerLongRangePower;
-    private int enemyLongRangePower;
-    private int enemyPower;
-    private final int enemySpeed; // If needed for future logic
-    private final String enemyName; // If needed
 
+    /** The poison attack power of the player. */
+    private final int playerPoisonPower;
+
+    /** The poison attack power of the enemy. */
+    private final int enemyPoisonPower;
+
+    /** The long-range attack power of the player. */
+    private final int playerLongRangePower;
+
+    /** The long-range attack power of the enemy. */
+    private final int enemyLongRangePower;
+
+    /** The current attack power of the enemy. */
+    private int enemyPower;
+
+    /** The speed of the enemy (reserved for future logic). */
+    private final int enemySpeed;
+
+    /** The name of the enemy (reserved for future use). */
+    private final String enemyName;
+
+    /** Whether the enemy is poisoned. */
     private boolean enemyPoisoned;
+
+    /** Whether the player is poisoned. */
     private boolean isPlayerPoison;
-    private boolean isPlayerTurn = true; // Added to manage turns
+
+    /** Indicates if it is currently the player's turn. */
+    private boolean isPlayerTurn = true;
+
+    /** The base power value of the player. */
     private final int basicPlayerPower;
+
+    /** The position of the last character who died. */
     private Position whoDied;
 
+    /** Indicates if it is currently the boss's turn. */
     private boolean isBossTurn;
 
     /** Counter tracking the number of boss attacks. */
@@ -71,11 +108,14 @@ public class CombatModel implements PossibleUser {
 
     /** The current state of the boss (e.g., NORMAL, ENRAGED). */
     private String currentBossState = "NORMAL";
+
+    /** The path of the boss's death ray attack. */
     private ArrayList<Position> deathRayPath = new ArrayList<>();
 
     /** Counter tracking the number of turns taken by the boss. */
     private int bossTurnCounter;
 
+    /** Whether the poison animation is active. */
     private boolean poisonAnimation;
 
     /**
@@ -137,28 +177,50 @@ public final void increasePlayerHealth(final int amount) {
     this.playerHealth = Math.min(maxHealth, this.playerHealth + amount);
 }
 
-    public void increaseEnemyPower(int power){
-        this.enemyPower += power;
-    }
+/**
+ * Increases the player's power by the specified amount.
+ *
+ * @param power the power points to add
+ */
+@Override
+public final void increasePlayerPower(final int power) {
+    this.playerPower += power;
+}
 
-    public void resetPlayerPower() {
-        this.playerPower = this.basicPlayerPower; // Reset player power to basic value
-    }
+/**
+ * Increases the enemy's power by the specified amount.
+ *
+ * @param power the power points to add
+ */
+public final void increaseEnemyPower(final int power) {
+    this.enemyPower += power;
+}
 
-    public void decreasePlayerHealth(int amount) {
-        this.playerHealth = Math.max(0, this.playerHealth - amount);  //only decrease health, do not allow negative values
-    }
+/**
+ * Resets the player's power to its base value.
+ */
+public final void resetPlayerPower() {
+    this.playerPower = this.basicPlayerPower;
+}
 
-    public void increasePlayerMaxStamina(int amount) {
-        this.playerStaminaMax += amount;
-    }
+/**
+ * Decreases the player's health by the specified amount,
+ * without allowing the value to go below zero.
+ *
+ * @param amount the health points to subtract
+ */
+public final void decreasePlayerHealth(final int amount) {
+    this.playerHealth = Math.max(0, this.playerHealth - amount);
+}
 
-    public void decreasePlayerMaxStamina(int amount) {
-        this.playerStaminaMax = Math.max(0, (this.playerStaminaMax - amount));
-    }
-    public void decreasePlayerStamina(int amount) {
-        this.playerStamina = Math.max(0, this.playerStamina - amount);  //only decrease stamina, do not allow negative values
-    }
+/**
+ * Increases the player's maximum stamina by the specified amount.
+ *
+ * @param amount the stamina points to add
+ */
+public final void increasePlayerMaxStamina(final int amount) {
+    this.playerStaminaMax += amount;
+}
 
 /**
  * Decreases the player's maximum stamina by the specified amount,
@@ -219,18 +281,31 @@ public final boolean isGameOver() {
     return false;
 }
 
-    public void clearBossAttackCount(){
+    /**
+     * Resets the boss attack counter to zero.
+     */
+    public final void clearBossAttackCount() {
         this.bossAttackCounter = 0;
     }
 
-    public void increaseBossAttackCounter() {
+    /**
+     * Increases the boss attack counter by one.
+     */
+    public final void increaseBossAttackCounter() {
         this.bossAttackCounter++;
     }
-    public void increaseBossTurnCounter() {
+
+    /**
+     * Increases the boss turn counter by one.
+     */
+    public final void increaseBossTurnCounter() {
         this.bossTurnCounter++;
     }
-    
-    public void resetBossTurnCounter() {
+
+    /**
+     * Resets the boss turn counter to zero.
+     */
+    public final void resetBossTurnCounter() {
         this.bossTurnCounter = 0;
     }
 
@@ -243,7 +318,10 @@ public final boolean isGameOver() {
         this.deathRayPath.add(nextPosition);
     }
 
-    public void clearDeathRayPath() {
+    /**
+     * Clears the boss's death ray path.
+     */
+    public final void clearDeathRayPath() {
         this.deathRayPath.clear();
     }
 
@@ -508,7 +586,7 @@ public final boolean isGameOver() {
     public final boolean isPoisonAnimation() {
         return this.poisonAnimation;
     }
-    
+
     // setters
     /**
      * Sets the player's position.
@@ -608,7 +686,7 @@ public final boolean isGameOver() {
     }
 
     @Override
-    public int getHp() {
+    public final int getHp() {
         return this.getPlayerHealth();
     }
 

@@ -72,11 +72,8 @@ public interface CombatState {
      * @param selectedPotion The potion selected from the bag
      * @param player The player using the potion
      */
-    void handlePotionUsed(CombatController context, Item selectedPotion, Player player);
-
-    void handleCurePoisonInput(CombatController context); // ??
-    // void handleAttackBuffInput(CombatController context); ???
-    // void handleHealingInput(CombatController context); // ???
+    void handlePotionUsed(CombatController context,
+    Item selectedPotion, Player player);
 
     /**
      * This method is called when curing poison during combat.
@@ -105,6 +102,5 @@ public interface CombatState {
      * @param context Instance of the controller
      */
     void handleAnimationComplete(CombatController context);
-
 
 }

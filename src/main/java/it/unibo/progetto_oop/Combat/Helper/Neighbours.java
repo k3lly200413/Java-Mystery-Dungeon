@@ -43,7 +43,6 @@ public class Neighbours {
      *         ° ° °
      *         ° ° ° Dead character
      *         ° ° °
-     *
      */
 
     public boolean deathNeighbours(
@@ -60,5 +59,5 @@ public class Neighbours {
         || (deathPosition.x() == positionToCheck.x()
         && positionToCheck.y() == deathPosition.y());
     }
-    
+
 }

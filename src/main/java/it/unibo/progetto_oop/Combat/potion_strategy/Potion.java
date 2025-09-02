@@ -1,38 +1,46 @@
 package it.unibo.progetto_oop.combat.potion_strategy;
 
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
+import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Combat.Inventory.Item;
 
-public class Potion extends Item{
+public class Potion extends Item {
 
+    /** The strategy for applying potion effects. */
     private final PotionStrategy strategy;
 
     /**
-     * 
-     * @param name Nome che descrive la pozione
-     * @param description Descrizione di funzione della pozione
-     * @param quantity Quantità nell'inventario
-     * @param strategy Istanza di Pozione necessaria per chiamare i metodi necessari
+     * Constructs a Potion with the specified parameters.
+     *
+     * @param name        the name of the potion
+     * @param description the description of the potion
+     * @param position    the position of the potion on the game board
+     * @param newStrategy    the effect strategy applied when the potion is used
      */
-    public Potion( String name, String description, Position position, PotionStrategy strategy) {
+    public Potion(final String name, final String description,
+                final Position position, final PotionStrategy newStrategy) {
         super(name, description, position);
-        this.strategy = strategy;
+        this.strategy = newStrategy;
     }
 
     /**
-     * @return the strategy
+     * Returns the strategy associated with this potion.
+     *
+     * @return the potion's {@link PotionStrategy}
      */
-    public PotionStrategy getStrategy(){
+    public PotionStrategy getStrategy() {
         return this.strategy;
     }
 
     /**
-     * 
-     * @param target Istance of CombatModel to call necessary functions to change player details
+     * Uses the potion on the specified target. If a strategy is defined,
+     * its effect is applied to the target.
+     *
+     * @param target instance of PossibleUser on which the effect is applied
+     * @return true if the effect was applied, false otherwise
      */
     @Override
-    public boolean use(PossibleUser target) {
+    public boolean use(final PossibleUser target) {
         if (this.strategy != null) {
             this.strategy.applyEffect(target);
             return true;
@@ -40,4 +48,5 @@ public class Potion extends Item{
             return false;
         }
     }
+
 }
