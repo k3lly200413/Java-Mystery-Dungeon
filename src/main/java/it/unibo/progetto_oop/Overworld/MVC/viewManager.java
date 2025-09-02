@@ -18,12 +18,13 @@ public class ViewManager {
     public static final String OVERWORLD_CARD = "OVERWORLD";
 
     public void start(SwingMapView overworldView) {
-        /*this.overworldView = overworldView.getPanel();
+        //this.overworldView = overworldView.getPanel();
 
         // Setup il CardLayout e il panel principale (solo UNA volta)
         this.cardLayout = new CardLayout();
         this.mainCardPanel = new JPanel(cardLayout);
 
+        /* 
         // Aggiungo l'overworld
         this.mainCardPanel.add(this.overworldView, OVERWORLD_CARD);
 
@@ -39,15 +40,40 @@ public class ViewManager {
         frame.setVisible(true);*/
     }
 
+    /* 
     public void showInventory(Inventory inventory){
         if (this.invView == null) {  // prima volta
             this.invView = new InventoryView(inventory, this);
             this.mainCardPanel.add(this.invView, INVENTORY_CARD);
+
         } else { // aggiorna la view esistente
             this.invView.updateInventoryModel(inventory); 
             this.invView.refreshView(); 
         }
         this.cardLayout.show(this.mainCardPanel, INVENTORY_CARD);
+        
+    }*/
+
+    public void showInventory(Inventory inventory) {
+        JFrame frame = new JFrame("Inventario");
+
+        if (this.invView == null) {
+            this.invView = new InventoryView(inventory, this);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setSize(600, 400);
+            frame.add(this.invView);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+
+        } else {
+            this.invView.updateInventoryModel(inventory); 
+            this.invView.refreshView(); 
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setSize(600, 400);
+            frame.add(this.invView);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        }
     }
 
     public void showOverworld() {

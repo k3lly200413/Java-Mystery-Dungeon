@@ -29,22 +29,24 @@ public class FollowMovementStrategy implements MovementStrategy{
         Position currentPos = context.getCurrentPosition();
         Position targetPos = this.visibilityUtil.firstMove(context.getCurrentPosition(), player.getPosition());
 
+        Position playerPos = player.getPosition();
+
         // if the player is in the enemy's line of sight, move towards the player
         if ( player != null 
-            && this.visibilityUtil.inLos(currentPos, player.getPosition(), NEIGHBOUR_DISTANCE)
+            && this.visibilityUtil.inLos(currentPos, playerPos, NEIGHBOUR_DISTANCE)
             && checker.canEnemyEnter(targetPos)){
 
             // if the player and the enemy are close enough -> enter combat state
-            if (this.visibilityUtil.neighbours(context.getCurrentPosition(), player.getPosition(), COMBAT_DISTANCE)){
+            /*if (this.visibilityUtil.neighbours(context.getCurrentPosition(), playerPos, COMBAT_DISTANCE)){
 
                 context.setState(new CombatTransitionState(context.getState()));
 
                 targetPos = player.getPosition();
                 context.setPosition(targetPos);
-            } else {
+            }*/ 
+            if (targetPos != playerPos ){
                 context.setPosition(targetPos); // not close enough -> move closer towards the player
-            }
-
+            } 
             context.getGridNotifier().notifyEnemyMoved(currentPos, targetPos);
             return currDirection; 
 
