@@ -18,7 +18,7 @@ public class ViewManager {
     public static final String OVERWORLD_CARD = "OVERWORLD";
 
     public void start(SwingMapView overworldView) {
-        this.overworldView = overworldView.getPanel();
+        /*this.overworldView = overworldView.getPanel();
 
         // Setup il CardLayout e il panel principale (solo UNA volta)
         this.cardLayout = new CardLayout();
@@ -36,7 +36,7 @@ public class ViewManager {
         frame.add(this.mainCardPanel);
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        frame.setVisible(true);*/
     }
 
     public void showInventory(Inventory inventory){
