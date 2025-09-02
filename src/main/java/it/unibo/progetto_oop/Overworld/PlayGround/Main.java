@@ -27,6 +27,7 @@ public final class Main {
     private Main() {
         throw new UnsupportedOperationException("Utility class");
     }
+
     /**
      * The main method to run the application.
      *
