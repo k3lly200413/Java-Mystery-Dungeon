@@ -58,9 +58,7 @@ public class PatrolMovementStrategy implements MovementStrategy{
         } 
         // if it's impossible to move in the current direction, reverse it
         else {
-            System.out.println("Patrol: Hit wall or no move for " + context + " at " + targetPos + ". Reversing direction.");
-            this.moveDirection = reverseDirection(this.moveDirection); 
-            System.out.println("Patrol: New direction for " + context + " is " + this.moveDirection);
+            this.moveDirection = reverseDirection(this.moveDirection);
         }
         return this.moveDirection;
     }
