@@ -8,6 +8,7 @@ import it.unibo.progetto_oop.Overworld.MVC.OverworldEntitiesGenerator;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
+import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
 
 public final class MapController {
@@ -20,16 +21,13 @@ public final class MapController {
      */
     private final Dungeon dungeon;
     private final OverworldModel model;
-    private final OverworldEntitiesGenerator entitiesGenerator; // per creare nemici/items per il floor
-
+    
     public MapController(final SwingMapView mapView,
                          final Dungeon mapDungeon,
-                         final OverworldModel model,
-                         final OverworldEntitiesGenerator entitiesGenerator) {
+                         final OverworldModel model) {
         this.view = Objects.requireNonNull(mapView);
         this.dungeon = Objects.requireNonNull(mapDungeon);
         this.model = Objects.requireNonNull(model);
-        this.entitiesGenerator = Objects.requireNonNull(entitiesGenerator);
     }
 
     /**
@@ -48,7 +46,20 @@ public final class MapController {
      */
     public void next() {
         dungeon.nextFloor();
-        StructureData grid = dungeon.getCurrentFloor().grid();
+        System.out.println(dungeon.getCurrentFloorIndex());
+        final Floor currentFloor = dungeon.getCurrentFloor();
+        model.bindCurrentFloor(currentFloor);
+
+        // 2) genera entità per QUESTO floor (usa lo stesso notifier del model)
+        new OverworldEntitiesGenerator(
+                currentFloor,
+                model.getPlayer(),
+                model,
+                model.gridNotifier   // è lo stesso che model ha bindato al floor
+        );
+
+        // Render UI
+        final StructureData grid = currentFloor.grid();
         SwingUtilities.invokeLater(() -> view.render(grid));
     }
 }

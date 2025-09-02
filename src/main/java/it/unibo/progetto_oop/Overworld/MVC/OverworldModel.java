@@ -26,7 +26,7 @@ public final class OverworldModel {
     private final Player player;
     private boolean inCombat;
 
-    private Dungeon dungeon;
+    //private Dungeon dungeon;
 
     private final PickupSystem pickupSystem;
     private final EnemySystem enemySystem;
@@ -34,38 +34,50 @@ public final class OverworldModel {
 
     // to access the grid
     public GridNotifier gridNotifier; // incapsula GridUpdater
-    private StructureData gridView; // read-only
+    private StructureData gridView; // read-only sarebbe da fare un interfaccia e non solo disciplina di codice
 
     public OverworldModel(final List<Enemy> enemies, final List<Item> items) {
         this.player = new Player(100, new Inventory());
         this.inCombat = false;
+        this.gridNotifier = new GridNotifier(null);
 
         this.pickupSystem = new PickupSystem(null, this.player, this);
         this.enemySystem  = new EnemySystem(null, this.player, this);
-        this.movementSystem = new MovementSystem(null, this.player, this);
+        this.movementSystem = new MovementSystem(this.player, this);
 
         setSpawnObjects(enemies, items);
     }
-
+/* 
     // Collega il dungeon e seleziona il primo Floor
     public void bindDungeon(final Dungeon dungeon) {
         this.dungeon = dungeon;
         bindCurrentFloor(dungeon.getCurrentFloor());
-    }
+    }*/
 
     // Imposta quale floor è quello attivo
     public void bindCurrentFloor(final Floor floor) {
-        this.gridView = floor.grid();       // read-only
-        this.gridNotifier.setGridUpdater(floor); // Floor implementa GridUpdater
+        if (floor == null) {
+            this.gridView = null;
+            if (this.gridNotifier != null) {
+                this.gridNotifier.setGridUpdater(null);
+            }
+        }
+        else {
+            this.gridView = floor.grid();
+            if (this.gridNotifier == null) {
+                this.gridNotifier = new GridNotifier(null);
+            }
+            this.gridNotifier.setGridUpdater(floor); // Floor implementa GridUpdater
+        }
     }
-
+/* 
     public boolean nextFloor() {
         final boolean changedFloor = this.dungeon.nextFloor();
         if (changedFloor) {
             bindCurrentFloor(dungeon.getCurrentFloor());
         }
         return changedFloor;
-    }
+    }*/
 
     public void setSpawnObjects(final List<Enemy> enemies, final List<Item> items) {
         this.pickupSystem.setItems(items);

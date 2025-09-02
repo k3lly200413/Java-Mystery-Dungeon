@@ -33,7 +33,7 @@ public class FloorGeneratorTest {
         FloorGenerator gen = new FloorGenerator(roomPlacer, tunnelPlacer, objPlacer, rng);
 
         grid = new ImplArrayListStructureData(cfg.width(), cfg.height());
-        rooms = gen.generate(grid, cfg);
+        rooms = gen.generate(grid, cfg, false);
 
         players = getPositions(grid, TileType.PLAYER);
         stairs = getPositions(grid, TileType.STAIRS);

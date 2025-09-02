@@ -64,16 +64,11 @@ public class Dungeon {
         }
         int nextIndex = currentFloor + 1;
         if (nextIndex >= floors.size()) {
-            FloorConfig cfg = (nextIndex == config.nFloors() - 1)
-                    ? finalRoomConfig(config) // ultimo piano una stanza
-                    : config; // config base
-            floors.add(new Floor(cfg, generator));
+            final boolean isFinal = (nextIndex == config.nFloors() - 1);
+            final FloorConfig cfg = isFinal ? finalRoomConfig(config) : config;
+            floors.add(new Floor(cfg, generator, isFinal));
         }
         currentFloor = nextIndex;
-
-        //crea l'oggetto e lo mette nella posizione assegnata
-        //TODO
-        
         return true;
     }
 
@@ -82,7 +77,7 @@ public class Dungeon {
                 .size(c.width(), c.height())
                 .rooms(1)
                 .roomSize(
-                    c.minRoomW(), c.maxRoomW(), c.minRoomH(), c.maxRoomH()
+                    c.minRoomW(), c.maxRoomW() - 5, c.minRoomH(), c.maxRoomH() - 5
                 )
                 .build();
     }

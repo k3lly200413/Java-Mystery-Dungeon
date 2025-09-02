@@ -1,8 +1,6 @@
 package it.unibo.progetto_oop.Overworld.MVC;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -27,11 +25,11 @@ public class OverworldEntitiesGenerator {
     private static final int ENEMY_HP = 100;
     private static final int ENEMY_POWER = 20;
 
-    public OverworldEntitiesGenerator(Floor curreFloor, Player player, OverworldModel overworldModel, GridNotifier gridNotifier) {
-        generateItems(curreFloor);
-        generateEnemies(curreFloor, gridNotifier);
-        spawnPlayer(curreFloor, player);
-        overworldModel.setSpawnObjects(enemyList, itemList);  // l'ho messo per testare, poi vedi tu come vuoi implementare questa cosa
+    public OverworldEntitiesGenerator(Floor currentFloor, Player player, OverworldModel overworldModel, GridNotifier gridNotifier) {
+        generateItems(currentFloor);
+        generateEnemies(currentFloor, gridNotifier);
+        spawnPlayer(currentFloor, player);
+        //overworldModel.setSpawnObjects(enemyList, itemList);   l'ho messo per testare, poi vedi tu come vuoi implementare questa cosa
     }
 
     private void generateItems(Floor currentFloor) {

@@ -6,8 +6,6 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.progetto_oop.Combat.Inventory.Inventory;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
@@ -15,7 +13,6 @@ import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.FloorGenerator;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.ImplRandomPlacement;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.ImplRoomPlacement;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.ImplTunnelPlacement;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 
 /**
  * Test basilari su Dungeon: creazione, avanzamento piano, limiti.
@@ -32,8 +29,7 @@ public class DungeonTest {
                 .build();
 
         FloorGenerator gen = new FloorGenerator(new ImplRoomPlacement(), new ImplTunnelPlacement(), new ImplRandomPlacement(), new Random());
-        Player p = new Player(100, new Inventory());
-        return new Dungeon(gen, conf, p, new OverworldModel(p, null, null, null));
+        return new Dungeon(gen, conf);
     }
 
     @Test
