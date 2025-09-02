@@ -1,9 +1,8 @@
-package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.PatrolMovementStrategy;
+package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategyImpl;
 
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveDirection;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.VisibilityUtil;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
 import it.unibo.progetto_oop.Overworld.Player.Player;
@@ -13,15 +12,6 @@ import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public class PatrolMovementStrategy implements MovementStrategy{
     private MoveDirection moveDirection; // The direction of this patrol movement
-    private VisibilityUtil visibilityUtil;
-
-    // costants
-    private final static int NEIGHBOUR_DISTANCE = 4; // Example value, adjust as needed
-    private final static int COMBAT_DISTANCE = 1; // Example value, adjust as needed
-
-    public PatrolMovementStrategy() {
-        this.visibilityUtil = new VisibilityUtil();
-    }
     
 
     @Override
@@ -52,7 +42,7 @@ public class PatrolMovementStrategy implements MovementStrategy{
         }
         
         // Check if the target position is not the same as the current position and is not a wall
-        if (WallCollision.inBounds(targetPos)) {
+        if (WallCollision.canEnemyEnter(targetPos)) {
             context.setPosition(targetPos);
             context.getGridNotifier().notifyEnemyMoved(currentPos, targetPos);
 
@@ -70,34 +60,6 @@ public class PatrolMovementStrategy implements MovementStrategy{
         return this.moveDirection;
     }
 
-    @Override
-    public MoveDirection executeFollowMove(Enemy context, Player player, MoveDirection currentDirection) {
-        Position currentPos = context.getCurrentPosition();
-        Position targetPos = this.visibilityUtil.firstMove(context.getCurrentPosition(), player.getPosition());
-
-        // if the player is in the enemy's line of sight, move towards the player
-        if ( player != null 
-            && this.visibilityUtil.inLos(context.getCurrentPosition(), player.getPosition(), NEIGHBOUR_DISTANCE)
-            && WallCollision.inBounds(targetPos)){
-
-            // if the player and the enemy are close enough -> enter combat state
-            if (this.visibilityUtil.neighbours(context.getCurrentPosition(), player.getPosition(), COMBAT_DISTANCE)){
-
-                context.setState(new CombatTransitionState(context.getState()));
-
-                targetPos = player.getPosition();
-                context.setPosition(targetPos);
-            } else {
-                context.setPosition(targetPos); // not close enough -> move closer towards the player
-            }
-
-            context.getGridNotifier().notifyEnemyMoved(currentPos, targetPos);
-            return currentDirection; 
-
-        } else{ // else, continue patrolling
-            return this.executeMove(context, player, currentDirection);
-        }
-    }
 
     private MoveDirection reverseDirection(MoveDirection dir) {
         switch (dir) {

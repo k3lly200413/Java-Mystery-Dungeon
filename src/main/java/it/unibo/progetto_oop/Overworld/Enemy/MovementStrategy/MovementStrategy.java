@@ -13,14 +13,5 @@ public interface MovementStrategy {
      * @param currDirection the current direction of movement
      * @return the new direction of movement
      */
-    MoveDirection executeMove(Enemy enemy, Player player, MoveDirection currDirection); 
-
-    /**
-     * Move the enemy in the follower state
-     * @param enemy the enemy to move
-     * @param player the player
-     * @param currDirection the current direction of movement
-     * @return the new direction of movement
-     */
-    MoveDirection executeFollowMove(Enemy context, Player player, MoveDirection currentDirection);
+    MoveDirection executeMove(Enemy context, Player player, MoveDirection currDirection); 
 }

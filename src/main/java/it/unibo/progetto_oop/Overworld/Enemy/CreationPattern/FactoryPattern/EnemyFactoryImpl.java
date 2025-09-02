@@ -5,7 +5,8 @@ import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.GenericEnemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.PatrolMovementStrategy.PatrolMovementStrategy;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategyImpl.FollowMovementStrategy;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategyImpl.PatrolMovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.FollowerState;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.PatrollerState;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.SleeperState;
@@ -16,6 +17,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
 
     MovementUtil movementUtil = new MovementUtil();
     MovementStrategy patrolMovementStrategy = new PatrolMovementStrategy();
+    MovementStrategy followMovementStrategy = new FollowMovementStrategy();
     
     @Override
     public Enemy createPatrollerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, GridNotifier gridNotifier) {
@@ -31,7 +33,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     public Enemy createFollowerEnemy(int hp, int power, Position spawnPosition, boolean isVertical, GridNotifier gridNotifier) {
         Enemy enemy = new GenericEnemy(hp, hp, power, spawnPosition, gridNotifier);
 
-        enemy.setState(new FollowerState(movementUtil, patrolMovementStrategy, isVertical));
+        enemy.setState(new FollowerState(movementUtil, followMovementStrategy, isVertical));
         return enemy;
     }
 

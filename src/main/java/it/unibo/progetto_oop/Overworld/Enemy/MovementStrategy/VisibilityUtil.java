@@ -49,7 +49,7 @@ public class VisibilityUtil {
         // check if any of the cells in the line (except the first and last) are walls
         boolean collisionDetected = IntStream.range(1, lineCells.size()-1) 
                                             .mapToObj(lineCells::get)
-                                            .anyMatch(p -> WallCollision.inBounds(p));
+                                            .anyMatch(p -> !WallCollision.canEnemyEnter(p));
 
         return !collisionDetected;
     }
