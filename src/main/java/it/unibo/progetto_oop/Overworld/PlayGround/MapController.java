@@ -50,7 +50,6 @@ public final class MapController {
         final Floor currentFloor = dungeon.getCurrentFloor();
         model.bindCurrentFloor(currentFloor);
 
-        // 2) genera entità per QUESTO floor (usa lo stesso notifier del model)
         new OverworldEntitiesGenerator(
                 currentFloor,
                 model.getPlayer(),
