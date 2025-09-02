@@ -150,22 +150,22 @@ public class CombatController {
      * Uses private methods to Assing Actionlisteners to buttons inside view.
      */
     private void attachListeners() {
-        this.view.addAttackButtonListener(e -> handleAttackMenu());
-        this.view.addPhysicalButtonListener(e -> handlePlayerPhysicalAttack());
+        this.view.addAttackButtonListener(_ -> handleAttackMenu());
+        this.view.addPhysicalButtonListener(_ -> handlePlayerPhysicalAttack());
         this.view.addLongRangeButtonListener(
-            e -> handlePlayerLongRangeAttack(false, true));
+            _ -> handlePlayerLongRangeAttack(false, true));
         this.view.addPoisonButtonListener(
-            e -> handlePlayerLongRangeAttack(true, false));
-        this.view.addBackButtonListener(e -> handleBackToMainMenu());
-        this.view.addInfoButtonListener(e -> handleInfo());
-        this.view.addBagButtonListener(e -> handleBagMenu());
+            _ -> handlePlayerLongRangeAttack(true, false));
+        this.view.addBackButtonListener(_ -> handleBackToMainMenu());
+        this.view.addInfoButtonListener(_ -> handleInfo());
+        this.view.addBagButtonListener(_ -> handleBagMenu());
         this.view.addRunButtonListener(
-            e -> System.out.println("Run clicked - Not Yet Implemented"));
+            _ -> System.out.println("Run clicked - Not Yet Implemented"));
         this.view.addCurePoisonButtonListener(
-            e -> this.handleCurePoisonInput());
-        this.view.addAttackButtonListener(e -> handleAttackBuff());
-        this.view.addAttackBuffButtonListener(e -> handleAttackBuff());
-        this.view.addHealButtonListener(e -> handleHeal());
+            _ -> this.handleCurePoisonInput());
+        this.view.addAttackButtonListener(_ -> handleAttackBuff());
+        this.view.addAttackBuffButtonListener(_ -> handleAttackBuff());
+        this.view.addHealButtonListener(_ -> handleHeal());
     }
 
     private void handleAttackMenu() {
@@ -253,7 +253,7 @@ public class CombatController {
 
     /* NOT USED, DELETE?
     private void startDelayedEnemyTurn(final int delay) {
-        Timer enemyTurnDelayTimer = new Timer(delay, e -> {
+        Timer enemyTurnDelayTimer = new Timer(delay, _ -> {
             enemyTurn();
         });
         enemyTurnDelayTimer.setRepeats(false); // ensure it only runs once
@@ -275,7 +275,7 @@ public class CombatController {
         if (enemyActionTimer != null && enemyActionTimer.isRunning()) {
             enemyActionTimer.stop(); // Stop any previous timer
         }
-        enemyActionTimer = new Timer(delay, e -> {
+        enemyActionTimer = new Timer(delay, _ -> {
             if (currentState instanceof EnemyTurnState) {
                 action.run(); // Execute the action
             }
@@ -366,7 +366,7 @@ public class CombatController {
             false, 0, false, 0
         );*/
 
-        animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
+        animationTimer = new Timer(INFO_ZOOM_DELAY, _ -> {
             // Check if flame reached or passed the enemy
             if (model.getAttackPosition().x() > model.getEnemyPosition().x() - 1
                 ||
@@ -471,7 +471,7 @@ public class CombatController {
 
         final List<Position> deathRayLastPosition = new ArrayList<>();
 
-        this.animationTimer = new Timer(ANIMATION_DELAY, e -> {
+        this.animationTimer = new Timer(ANIMATION_DELAY, _ -> {
             if (deathRayLastPosition.stream()
                     .anyMatch(
                             passsedPosition -> passsedPosition
@@ -566,7 +566,7 @@ public class CombatController {
         }
 
         this.animationTimer = new Timer(ANIMATION_DELAY, null);
-        this.animationTimer.addActionListener(event -> {
+        this.animationTimer.addActionListener(_ -> {
 
             final Position nextAttackerPos;
             final Position nextTargetPos;
@@ -709,7 +709,7 @@ public class CombatController {
 
         final int targetX = model.getSize() / 2;
 
-        this.animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
+        this.animationTimer = new Timer(INFO_ZOOM_DELAY, _ -> {
             final Position currentEnemyPosition = model.getEnemyPosition();
             if (currentEnemyPosition.x() <= targetX) {
                 stopAnimationTimer(); // Increase offset for zoom effect
@@ -752,7 +752,7 @@ public class CombatController {
      */
     private void makeBigger(final int size, final Runnable onZoomComplete) {
         final int[] conto = {1};
-        animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
+        animationTimer = new Timer(INFO_ZOOM_DELAY, _ -> {
             if (conto[0] > size) {
                 stopAnimationTimer();
                 conto[0] = 0;
@@ -789,7 +789,7 @@ public class CombatController {
     public final void animatePoisonDamage() {
         this.stopAnimationTimer();
         final int[] step = {4};
-        this.animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, e -> {
+        this.animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, _ -> {
             if (step[0] == 1) {
                 step[0]--;
                 this.stopAnimationTimer();
@@ -842,7 +842,7 @@ public class CombatController {
     /*private void infoNextDrawAnimation(final Position originalEnemyPosition) {
         stopAnimationTimer();
         final int defaultZoom = 6;
-        animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, e -> {
+        animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, _ -> {
             zoomerStep++;
             if (zoomerStep >= defaultZoom) {
                 stopAnimationTimer();
@@ -921,7 +921,7 @@ public class CombatController {
         if (isCharging) {
             // animating State
             this.setState(new AnimatingState());
-            this.animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
+            this.animationTimer = new Timer(INFO_ZOOM_DELAY, _ -> {
                 position[0]--;
                 final RedrawContext defaultRedraw = new RedrawContext.Builder()
                 .player(this.model.getPlayerPosition())
@@ -975,7 +975,7 @@ public class CombatController {
     /*
      * private void performAttack() {
      *
-     * Timer playerTimer = new Timer(100, e -> {
+     * Timer playerTimer = new Timer(100, _ -> {
      * model.movePlayer(1, 0);
      * if (model.areNeighbours(model.getEnemyPosition())) {
      * model.decreaseEnemyHealth();
@@ -1114,7 +1114,7 @@ public class CombatController {
         // array perché così posso dichiararlo
         // final usarlo nel Timer se no sarebbe stato più scomodo
         model.setPoisonAnimation(true);
-        animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, e -> {
+        animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, _ -> {
             // perché così potevo vedere da tablet che laggava ahahahahaha
             if (conto[0] == 1) { // fine del timer resetto tutto
                 conto[0] = 0;

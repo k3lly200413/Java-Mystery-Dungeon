@@ -55,7 +55,7 @@ public class EnemyTurnState implements CombatState {
             } else {
                 // context.stopAnimationTimer();
                 model.setBossTurn(false);
-                final Timer enemyDelay = new Timer(ENEMY_ACTION_DELAY, e -> {
+                final Timer enemyDelay = new Timer(ENEMY_ACTION_DELAY, _ -> {
                     // Ensure we are still in the EnemyTurnState before acting
                     if (context.getCurrentState().equals(this)) {
                         // Assume enemy action leads to animation
