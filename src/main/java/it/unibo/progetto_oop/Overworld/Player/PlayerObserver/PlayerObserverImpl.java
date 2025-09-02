@@ -1,9 +1,9 @@
 package it.unibo.progetto_oop.Overworld.Player.PlayerObserver;
 
 
+import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.combat.inventory.Inventory;
 
 public class PlayerObserverImpl implements PlayerObserver { //  TODO
     OverworldModel model;
