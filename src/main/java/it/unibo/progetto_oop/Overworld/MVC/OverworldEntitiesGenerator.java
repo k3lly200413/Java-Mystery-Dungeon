@@ -29,7 +29,7 @@ public class OverworldEntitiesGenerator {
         generateItems(currentFloor);
         generateEnemies(currentFloor, gridNotifier);
         spawnPlayer(currentFloor, player);
-        //overworldModel.setSpawnObjects(enemyList, itemList);   l'ho messo per testare, poi vedi tu come vuoi implementare questa cosa
+        overworldModel.setSpawnObjects(enemyList, itemList);   //l'ho messo per testare, poi vedi tu come vuoi implementare questa cosa
     }
 
     private void generateItems(Floor currentFloor) {

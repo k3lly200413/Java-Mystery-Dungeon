@@ -1,9 +1,10 @@
 package it.unibo.progetto_oop.Overworld.MVC.ModelSystem;
 
+import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
@@ -16,8 +17,8 @@ public class MovementSystem {
     private boolean combatTransitionPending = false;
     
     public MovementSystem(Player player, OverworldModel model) {
-        this.player = player;
-        this.model = model;
+        this.model = Objects.requireNonNull(model, "Model cannot be null");
+        this.player = Objects.requireNonNull(player, "Player cannot be null");
     }
 
 
@@ -67,7 +68,7 @@ public class MovementSystem {
         enemySystem.setEncounteredEnemy(null);
 
         // Check Walls
-        if (!model.canEnter(tempPosition)) {
+        if (!WallCollision.canEnter(tempPosition)) {
             System.out.println("Wall hit");
             return;
         }

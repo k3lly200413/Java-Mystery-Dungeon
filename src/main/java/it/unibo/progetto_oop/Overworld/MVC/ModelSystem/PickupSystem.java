@@ -1,6 +1,7 @@
 package it.unibo.progetto_oop.Overworld.MVC.ModelSystem;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
@@ -14,9 +15,9 @@ public class PickupSystem {
     private final OverworldModel model; 
 
     public PickupSystem(List<Item> items, Player player, OverworldModel model) {
-        this.items = items;
-        this.player = player;
-        this.model = model;   
+        this.model = Objects.requireNonNull(model, "Model cannot be null");
+        this.player = Objects.requireNonNull(player, "Player cannot be null");
+        this.items = items; 
     }
 
     // getters

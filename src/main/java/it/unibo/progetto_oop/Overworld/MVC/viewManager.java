@@ -11,54 +11,46 @@ public class ViewManager {
 
     private CardLayout cardLayout; 
     private JPanel mainCardPanel; 
-    private SwingMapView overworldView;
-
-   // private Inventory inventory;
+    private JPanel overworldView;
     private InventoryView invView;
+
     public static final String INVENTORY_CARD = "INVENTORY";
     public static final String OVERWORLD_CARD = "OVERWORLD";
 
     public void start(SwingMapView overworldView) {
-        // Setup the CardLayout and main panel
-        this.mainCardPanel = new JPanel();
+        this.overworldView = overworldView.getPanel();
+
+        // Setup il CardLayout e il panel principale (solo UNA volta)
         this.cardLayout = new CardLayout();
-        this.mainCardPanel.setLayout(this.cardLayout);
+        this.mainCardPanel = new JPanel(cardLayout);
 
-        // TODO: add overworld and combat views to the card panel
-
-        // Setup the Main Window (JFrame)
-        JFrame frame = new JFrame("Overworld Adventure"); // window title
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-
-        frame.add(this.mainCardPanel);
-
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);      
-
-        this.mainCardPanel = new JPanel();
-        this.cardLayout = new CardLayout();
-        this.mainCardPanel.setLayout(this.cardLayout);
-
-        /* 
-        
-        // Creo la view dell'overworld
-        this.overworldView = overworldView;
+        // Aggiungo l'overworld
         this.mainCardPanel.add(this.overworldView, OVERWORLD_CARD);
 
         // Mostro l'overworld come default
-        this.cardLayout.show(this.mainCardPanel, OVERWORLD_CARD); */
+        this.cardLayout.show(this.mainCardPanel, OVERWORLD_CARD);
+
+        // Setup del JFrame
+        JFrame frame = new JFrame("Overworld Adventure");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(this.mainCardPanel);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     public void showInventory(Inventory inventory){
-        if (this.invView == null) {  // first time
+        if (this.invView == null) {  // prima volta
             this.invView = new InventoryView(inventory, this);
             this.mainCardPanel.add(this.invView, INVENTORY_CARD);
-        } else { // update existing view
+        } else { // aggiorna la view esistente
             this.invView.updateInventoryModel(inventory); 
             this.invView.refreshView(); 
         }
-    
         this.cardLayout.show(this.mainCardPanel, INVENTORY_CARD);
+    }
+
+    public void showOverworld() {
+        this.cardLayout.show(this.mainCardPanel, OVERWORLD_CARD);
     }
 }

@@ -24,7 +24,7 @@ public class FollowerState implements GenericEnemyState{
      */
     @Override
     public void enterState(Enemy context) {
-        System.out.println("Entering PatrolState");
+        System.out.println("Entering Follow State");
         currentDirection = movementUtil.getInitialGeneralMoveDirection(context.getCurrentPosition(), this.isVertical);
         if (this.currentDirection == MoveDirection.NONE){
             this.currentDirection = this.isVertical ? MoveDirection.DOWN : MoveDirection.UP;
@@ -33,12 +33,12 @@ public class FollowerState implements GenericEnemyState{
 
     @Override
     public void exitState(Enemy context) {
-        System.out.println("Entering FollowerState");
+        System.out.println("Entering Follow State");
     }
 
     @Override
     public void update(Enemy context, Player player) {
-        this.currentDirection = this.movementStrategy.executeFollowMove(context, player, this.currentDirection);
+        this.currentDirection = this.movementStrategy.executeMove(context, player, this.currentDirection);
     }
 
     @Override

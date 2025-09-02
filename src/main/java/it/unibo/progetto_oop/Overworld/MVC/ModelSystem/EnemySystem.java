@@ -2,6 +2,7 @@ package it.unibo.progetto_oop.Overworld.MVC.ModelSystem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
@@ -19,10 +20,10 @@ public class EnemySystem {
     private Enemy encounteredEnemy;
 
     public EnemySystem(List<Enemy> enemies, Player player, OverworldModel model) {
+        this.model = Objects.requireNonNull(model, "Model cannot be null");
+        this.player = Objects.requireNonNull(player, "Player cannot be null");
         this.enemies = enemies;
         this.encounteredEnemy = null;
-        this.model = model;
-        this.player = player;
     }
 
     // getters

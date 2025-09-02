@@ -10,7 +10,6 @@ import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.MovementSystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.PickupSystem;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
-import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
@@ -33,7 +32,7 @@ public final class OverworldModel {
     private final MovementSystem movementSystem;
 
     // to access the grid
-    public GridNotifier gridNotifier; // incapsula GridUpdater
+    public GridNotifier gridNotifier; // incapsulates GridUpdater
     private StructureData gridView; // read-only sarebbe da fare un interfaccia e non solo disciplina di codice
 
     public OverworldModel(final List<Enemy> enemies, final List<Item> items) {
@@ -70,7 +69,8 @@ public final class OverworldModel {
             this.gridNotifier.setGridUpdater(floor); // Floor implementa GridUpdater
         }
     }
-/* 
+
+    /* 
     public boolean nextFloor() {
         final boolean changedFloor = this.dungeon.nextFloor();
         if (changedFloor) {
