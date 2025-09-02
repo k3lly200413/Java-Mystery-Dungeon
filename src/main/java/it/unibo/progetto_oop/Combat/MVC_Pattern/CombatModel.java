@@ -634,7 +634,6 @@ public final boolean isGameOver() {
      * @param playerTurn true if it is the player's turn, false otherwise
      */
     public final void setPlayerTurn(final boolean playerTurn) {
-        System.out.println("Changed player turn");
         this.isPlayerTurn = playerTurn;
     }
 
