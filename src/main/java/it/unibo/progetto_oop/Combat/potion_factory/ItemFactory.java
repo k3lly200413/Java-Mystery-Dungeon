@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.PotionFactory;
+package it.unibo.progetto_oop.combat.potion_factory;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.position.Position;

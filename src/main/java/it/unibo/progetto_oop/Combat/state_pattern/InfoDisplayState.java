@@ -10,7 +10,9 @@ public class InfoDisplayState implements CombatState {
 
     @Override
     public void handlePhysicalAttackInput(final CombatController context) {
-
+        /*
+         * Handle physical attack should not be called while in this state
+         */
     }
 
     @Override
