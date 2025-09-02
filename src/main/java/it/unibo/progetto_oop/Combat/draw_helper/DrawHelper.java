@@ -34,10 +34,10 @@ public class DrawHelper {
         final Position pos1, final Position pos2, final int dist) {
         // Check if two positions are neighbours (adjacent in any direction)
         return
-        (Math.abs(pos1.x() - pos2.x()) == dist
-        && Math.abs(pos1.y() - pos2.y()) == dist)
-        || (Math.abs(pos1.x() - pos2.x()) == dist && pos1.y() == pos2.y())
-        || (pos1.x() == pos2.x() && Math.abs(pos1.y() - pos2.y()) == dist)
-        || (pos1.x() == pos2.x() && pos2.y() == pos1.y());
+        Math.abs(pos1.x() - pos2.x()) == dist
+        && Math.abs(pos1.y() - pos2.y()) == dist
+        || Math.abs(pos1.x() - pos2.x()) == dist && pos1.y() == pos2.y()
+        || pos1.x() == pos2.x() && Math.abs(pos1.y() - pos2.y()) == dist
+        || pos1.x() == pos2.x() && pos2.y() == pos1.y();
     }
 }

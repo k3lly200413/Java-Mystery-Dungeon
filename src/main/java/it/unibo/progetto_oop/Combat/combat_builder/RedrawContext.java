@@ -4,6 +4,9 @@ import java.util.List;
 
 import it.unibo.progetto_oop.combat.position.Position;
 
+/**
+ * Context for redrawing the game elements.
+ */
 public final class RedrawContext {
     /**
      * Position of the player.
@@ -305,7 +308,9 @@ public final class RedrawContext {
         return whoIsPoisoned;
     }
 
-    // Builder class
+    /**
+     * Builder for the redraw context.
+     */
     public static class Builder {
         /**
          * Position of the player.

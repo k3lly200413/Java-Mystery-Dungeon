@@ -4,6 +4,9 @@ import java.util.List;
 
 import it.unibo.progetto_oop.combat.position.Position;
 
+/**
+ * Button for triggering a long-range attack.
+ */
 public class LongRangeButton implements GameButton {
     /**
      * The position of the flame.

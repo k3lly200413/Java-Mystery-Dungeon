@@ -61,7 +61,6 @@ public final class CombatApplication {
             .setEnemyName(enemyName)
             .build();
 
-
             // 2. Create the View
             final CombatView view = new CombatView(model.getSize(),
             viewWidthFactor * model.getSize() / sizeDivisor,
