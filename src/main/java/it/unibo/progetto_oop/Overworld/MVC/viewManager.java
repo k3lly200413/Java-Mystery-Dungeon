@@ -9,9 +9,10 @@ import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
 
 public class ViewManager {
 
-    private CardLayout cardLayout; 
-    private JPanel mainCardPanel; 
-    private SwingMapView overworldView;
+    private CardLayout cardLayout;
+    private JPanel mainCardPanel;
+    private JPanel overworldView;
+    private InventoryView invView;
 
    // private Inventory inventory;
     private InventoryView invView;
@@ -50,13 +51,13 @@ public class ViewManager {
         this.cardLayout.show(this.mainCardPanel, OVERWORLD_CARD); */
     }
 
-    public void showInventory(Inventory inventory){
-        if (this.invView == null) {  // first time
+    public void showInventory(Inventory inventory) {
+        if (this.invView == null) { // prima volta
             this.invView = new InventoryView(inventory, this);
             this.mainCardPanel.add(this.invView, INVENTORY_CARD);
-        } else { // update existing view
-            this.invView.updateInventoryModel(inventory); 
-            this.invView.refreshView(); 
+        } else { // aggiorna la view esistente
+            this.invView.updateInventoryModel(inventory);
+            this.invView.refreshView();
         }
     
         this.cardLayout.show(this.mainCardPanel, INVENTORY_CARD);

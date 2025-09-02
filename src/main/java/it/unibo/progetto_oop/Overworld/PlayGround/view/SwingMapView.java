@@ -9,16 +9,13 @@ import java.util.Objects;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 
 public final class SwingMapView extends JFrame implements MapView {
-    /** The panel used to render the map. */
-    private final MapPanel panel;
 
-    /** Action to be executed when the next floor is requested. */
+    private final MapPanel panel;
     private Runnable nextFloorAction = () -> { };
 
     /**
@@ -31,7 +28,12 @@ public final class SwingMapView extends JFrame implements MapView {
         super(title);
         this.panel = new MapPanel(cellSize);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setContentPane(new JScrollPane(panel));
+
+        setContentPane(panel);
+        setLocationByPlatform(true);
+        setMinimumSize(new Dimension(400, 300));
+        setResizable(true);
+
         //setLocationByPlatform(true);
 
         // messo qui per semplicità e testing,
@@ -67,11 +69,12 @@ public final class SwingMapView extends JFrame implements MapView {
     @Override
     public void render(final StructureData grid) {
         panel.setGrid(grid);
-        pack();
-        panel.repaint();
         if (!isVisible()) {
+            pack();
             setVisible(true);
         }
+        panel.revalidate(); //ricalcolo delle dimensioni
+        panel.repaint();
     }
 
     public JPanel getPanel() {
@@ -84,38 +87,49 @@ public final class SwingMapView extends JFrame implements MapView {
         private StructureData grid;
 
         /** The size of each cell in the map. */
-        private final int cell;
+        private final int initialCell;
 
         MapPanel(final int cellSize) {
-            this.cell = cellSize;
+            this.initialCell = cellSize;
             setBackground(Color.BLACK);
             // setDoubleBuffered(true);
         }
 
         void setGrid(final StructureData g) {
             this.grid = g;
-            // revalidate();
         }
 
         @Override
         public Dimension getPreferredSize() {
             int w = (grid == null ? 20 : grid.width());
             int h = (grid == null ? 15 : grid.height());
-            return new Dimension(w * cell, h * cell);
+            return new Dimension(w * initialCell, h * initialCell);
         }
 
         @Override
         protected void paintComponent(final Graphics g) {
             super.paintComponent(g);
-            // if (grid == null) return;
-            for (int y = 0; y < grid.height(); y++) {
-                for (int x = 0; x < grid.width(); x++) {
-                    TileType t = grid.get(x, y);
-                    g.setColor(colorFor(t));
-                    g.fillRect(x * cell, y * cell, cell, cell);
-                    g.setColor(new Color(0, 0, 0, 40));
-                    g.drawRect(x * cell, y * cell, cell, cell);
+            if (grid == null) return;
 
+            final int cols = grid.width();
+            final int rows = grid.height();
+
+            // cella dinamica
+            final int cell = Math.max(1, Math.min(getWidth() / cols, getHeight() / rows));
+
+            // centr0 la mappa nel pannello
+            final int mapW = cell * cols;
+            final int mapH = cell * rows;
+            final int offX = (getWidth()  - mapW) / 2;
+            final int offY = (getHeight() - mapH) / 2;
+
+            for (int y = 0; y < rows; y++) {
+                for (int x = 0; x < cols; x++) {
+                    final TileType t = grid.get(x, y);
+                    g.setColor(colorFor(t));
+                    g.fillRect(offX + x * cell, offY + y * cell, cell, cell);
+                    g.setColor(new Color(0, 0, 0, 40));
+                    g.drawRect(offX + x * cell, offY + y * cell, cell, cell);
                 }
             }
         }
