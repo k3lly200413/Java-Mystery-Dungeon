@@ -4,7 +4,6 @@ import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import java.util.*;
 import java.util.stream.IntStream;
 
-
 /** 
  * visual range related utilities
  */

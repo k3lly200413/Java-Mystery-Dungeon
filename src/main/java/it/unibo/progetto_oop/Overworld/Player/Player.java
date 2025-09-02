@@ -95,6 +95,7 @@ public class Player {
 
     /**
      * Add an item to the player's inventory.
+     *
      * @param item item to add to the inventory
      */
     public void addItem(Item item){
@@ -104,6 +105,7 @@ public class Player {
 
     /**
      * Heal the player by a specified amount of health.
+     *
      * @param hp amount of health to heal
      */
     public void heal(int hp){
@@ -114,6 +116,7 @@ public class Player {
 
     /**
      * Set the player's health points.
+     *
      * @param amount amount to increase the player's health points
      */
     public void setHp(int amount){
@@ -129,6 +132,7 @@ public class Player {
 
     /**
      * Set the player's position.
+     *
      * @param newPos the new position of the player
      */
     public void setPosition(Position newPos){
@@ -141,6 +145,7 @@ public class Player {
 
     /**
      * Get the current health points of the player.
+     *
      * @return the current health points of the player
      */
     public int getCurrentHp(){
@@ -149,6 +154,7 @@ public class Player {
 
     /**
      * Get the maximum health points of the player.
+     *
      * @return the maximum health points of the player
      */
     public int getMaxHp(){
