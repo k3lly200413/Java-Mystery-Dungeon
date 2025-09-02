@@ -7,7 +7,7 @@ import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.GenericEnemyState;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.combat.position.Position;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public interface Enemy {
     /** 
