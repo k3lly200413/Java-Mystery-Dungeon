@@ -162,7 +162,7 @@ public final void resetPositions() {
     this.playerPosition = new Position((this.size / DIVISOR) - PLAYER_X_OFFSET,
     (this.size / HALF_DIVISOR));
     this.enemyPosition = new Position(
-    this.size - (this.size / DIVISOR) - ENEMY_OFFSET,
+    this.size - (this.size / DIVISOR) + ENEMY_OFFSET,
     this.size / HALF_DIVISOR);
 }
 
