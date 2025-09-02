@@ -56,7 +56,9 @@ public final class Main {
         
         // CONTROLLER
         MapController controller = new MapController(view, dungeon);
-        javax.swing.SwingUtilities.invokeLater(controller::show); // TODO: se vogliamo usare il cardlayout non ci deve essere show
+        javax.swing.SwingUtilities.invokeLater(controller::show);
+        
+        // TODO: se vogliamo usare il cardlayout non ci deve essere show
 /* 
         ViewManager viewManager = new ViewManager();
         viewManager.start(view);

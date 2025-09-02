@@ -30,15 +30,9 @@ public final class SwingMapView extends JFrame implements MapView {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setContentPane(panel);
-        System.out.println("[SwingMapView] contentPane = " + getContentPane().getClass().getName());
-        assert !(getContentPane() instanceof javax.swing.JScrollPane) : "There should be NO JScrollPane here";
-
         setLocationByPlatform(true);
         setMinimumSize(new Dimension(400, 300));
         setResizable(true);
-
-        
-
         //setLocationByPlatform(true);
 
         // messo qui per semplicità e testing,
