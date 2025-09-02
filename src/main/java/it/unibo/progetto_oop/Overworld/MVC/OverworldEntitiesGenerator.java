@@ -9,6 +9,7 @@ import it.unibo.progetto_oop.Combat.PotionFactory.ItemFactory;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactory;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactoryImpl;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollisionImpl;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
@@ -27,7 +28,7 @@ public class OverworldEntitiesGenerator {
 
     public OverworldEntitiesGenerator(Floor currentFloor, Player player, OverworldModel overworldModel, GridNotifier gridNotifier) {
         generateItems(currentFloor);
-        generateEnemies(currentFloor, gridNotifier);
+        generateEnemies(currentFloor, gridNotifier, overworldModel);
         spawnPlayer(currentFloor, player);
         overworldModel.setSpawnObjects(enemyList, itemList);   //l'ho messo per testare, poi vedi tu come vuoi implementare questa cosa
     }
@@ -41,8 +42,8 @@ public class OverworldEntitiesGenerator {
         }
     }
 
-    private void generateEnemies(Floor currentFloor, GridNotifier gridNotifier) {
-        EnemyFactory factory = new EnemyFactoryImpl();
+    private void generateEnemies(Floor currentFloor, GridNotifier gridNotifier, OverworldModel overworldModel) {
+        EnemyFactory factory = new EnemyFactoryImpl(overworldModel.getWallCollision());
         for (Position pos : currentFloor.getObjectsPositions(TileType.ENEMY)) {
             int roll = ThreadLocalRandom.current().nextInt(3);
             Enemy enemy;

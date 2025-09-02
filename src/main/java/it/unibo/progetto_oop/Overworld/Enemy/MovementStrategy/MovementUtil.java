@@ -3,14 +3,22 @@ package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy;
 import java.util.Optional;
 import java.util.function.ToIntFunction;
 
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollisionImpl;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 /**
  * This class is used by the follower and patroller enemies
  */
 public class MovementUtil {
+    WallCollision checker;
+
     public enum MoveDirection {
         UP, DOWN, LEFT, RIGHT, NONE
+    }
+
+    public MovementUtil(WallCollision checker) {
+        this.checker = checker;
     }
 
     /**
@@ -37,9 +45,9 @@ public class MovementUtil {
         }
 
         if (isVerticalCheck) { // Checking vertically, X is fixed, Y is moving
-            return WallCollision.closestWall(enemyPosition, 0, 1);
+            return checker.closestWall(enemyPosition, 0, 1);
         } else { // Checking horizontally, Y is fixed, X is moving
-            return WallCollision.closestWall(enemyPosition, 1, 0);
+            return checker.closestWall(enemyPosition, 1, 0);
         }
 
     }

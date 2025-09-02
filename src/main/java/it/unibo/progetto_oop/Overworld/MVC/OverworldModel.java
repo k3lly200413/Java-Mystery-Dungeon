@@ -5,7 +5,8 @@ import java.util.List;
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollisionImpl;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.MovementSystem;
@@ -35,6 +36,7 @@ public final class OverworldModel {
     // to access the grid
     public GridNotifier gridNotifier; // incapsulates GridUpdater
     private StructureData gridView; // read-only sarebbe da fare un interfaccia e non solo disciplina di codice
+    private WallCollision wallCollision;
 
     public OverworldModel(final List<Enemy> enemies, final List<Item> items) {
         this.player = new Player(100, new Inventory());
@@ -69,7 +71,7 @@ public final class OverworldModel {
             }
             this.gridNotifier.setGridUpdater(floor); // Floor implementa GridUpdater
         }
-        WallCollision.setWalls(this.gridView);
+        this.wallCollision = new WallCollisionImpl(gridView);
     }
 
     /* 
@@ -112,6 +114,12 @@ public final class OverworldModel {
     }
     public boolean isCombatTransitionPending() {
         return this.movementSystem.isCombatTransitionPending();
+    }
+    public StructureData getGridView() {
+        return this.gridView;
+    }
+    public WallCollision getWallCollision() {
+        return this.wallCollision;
     }
 
     //------Combat flags---------

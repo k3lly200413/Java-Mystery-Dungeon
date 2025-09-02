@@ -41,8 +41,6 @@ public class OverworldPlayerAdapter implements PossibleUser{
     
     @Override
     public void setPlayerPoisoned(boolean poisoned) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setPlayerPoisoned'");
     }
     
 }

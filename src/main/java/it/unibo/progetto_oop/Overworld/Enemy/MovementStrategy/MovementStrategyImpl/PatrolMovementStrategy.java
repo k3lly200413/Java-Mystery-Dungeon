@@ -3,7 +3,7 @@ package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategyI
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveDirection;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
@@ -12,6 +12,11 @@ import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public class PatrolMovementStrategy implements MovementStrategy{
     private MoveDirection moveDirection; // The direction of this patrol movement
+    WallCollision checker;
+
+    public PatrolMovementStrategy(WallCollision checker) {
+        this.checker = checker;
+    }
     
 
     @Override
@@ -42,7 +47,7 @@ public class PatrolMovementStrategy implements MovementStrategy{
         }
         
         // Check if the target position is not the same as the current position and is not a wall
-        if (WallCollision.canEnemyEnter(targetPos)) {
+        if (checker.canEnemyEnter(targetPos)) {
             context.setPosition(targetPos);
             context.getGridNotifier().notifyEnemyMoved(currentPos, targetPos);
 

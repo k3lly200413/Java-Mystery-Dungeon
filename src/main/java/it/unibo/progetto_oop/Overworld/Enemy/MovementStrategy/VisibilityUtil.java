@@ -1,5 +1,7 @@
 package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy;
 
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollisionImpl;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import java.util.*;
 import java.util.stream.IntStream;
@@ -9,6 +11,11 @@ import java.util.stream.IntStream;
  * visual range related utilities
  */
 public class VisibilityUtil {
+    WallCollision checker;
+
+    public VisibilityUtil(WallCollision checker) {
+        this.checker = checker;
+    }
 
     /**
      * check if the player is in the enemy's line of sight
@@ -49,7 +56,7 @@ public class VisibilityUtil {
         // check if any of the cells in the line (except the first and last) are walls
         boolean collisionDetected = IntStream.range(1, lineCells.size()-1) 
                                             .mapToObj(lineCells::get)
-                                            .anyMatch(p -> !WallCollision.canEnemyEnter(p));
+                                            .anyMatch(p -> !checker.canEnemyEnter(p));
 
         return !collisionDetected;
     }
