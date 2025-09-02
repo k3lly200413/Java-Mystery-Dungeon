@@ -9,10 +9,7 @@ import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.MovementSystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.PickupSystem;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.GridUpdater;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
 import it.unibo.progetto_oop.Overworld.Player.Player;
@@ -127,20 +124,7 @@ public final class OverworldModel {
         this.movementSystem.move(dx, dy, this.pickupSystem, this.enemySystem);
     }
 
-    public boolean inBounds(final Position p) {
-        if (this.gridView == null) return false;
-        return p.x() >= 0 && p.y() >= 0 && p.x() < this.gridView.width() && p.y() < this.gridView.height();
-    }
-
     public void setGridNotifier(GridNotifier gridNotifier){
         this.gridNotifier = gridNotifier;
     }
-
-    // Regola entrabile = inBounds && non WALL
-    public boolean canEnter(final Position to) {
-        if (!inBounds(to))
-            return false;
-        return this.gridView.get(to.x(), to.y()) != TileType.WALL;
-    }
-
 }

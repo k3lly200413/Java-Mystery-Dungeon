@@ -33,7 +33,7 @@ public final class Main {
     public static void main(final String[] args) {
 
         //-------------DA VEDERE !!!----------
-        OverworldModel overworldModel = new OverworldModel(new ArrayList<>(), new ArrayList<>(), new HashSet<>()); 
+        OverworldModel overworldModel = new OverworldModel(new ArrayList<>(), new ArrayList<>()); 
         // TODO: aggiungere i muri che confinano le stanze
         // ---------------!!!-----------------
 
@@ -51,7 +51,7 @@ public final class Main {
         );
         
         // CONTROLLER
-        MapController controller = new MapController(view, dungeon);
+        MapController controller = new MapController(view, dungeon, overworldModel, );
         javax.swing.SwingUtilities.invokeLater(controller::show); // TODO: se vogliamo usare il cardlayout non ci deve essere show
 
         ViewManager viewManager = new ViewManager();
