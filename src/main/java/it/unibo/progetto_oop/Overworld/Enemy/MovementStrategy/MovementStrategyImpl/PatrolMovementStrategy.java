@@ -3,8 +3,8 @@ package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategyI
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveDirection;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
-import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
@@ -12,10 +12,12 @@ import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public class PatrolMovementStrategy implements MovementStrategy{
     private MoveDirection moveDirection; // The direction of this patrol movement
-    WallCollision checker;
+    WallCollision wallChecker;
+    CombatCollision combatTransitionChecker;
 
-    public PatrolMovementStrategy(WallCollision checker) {
-        this.checker = checker;
+    public PatrolMovementStrategy(WallCollision newWallChecker, CombatCollision newCombatTransitionChecker) {
+        this.wallChecker = newWallChecker;
+        this.combatTransitionChecker = newCombatTransitionChecker;
     }
     
 
@@ -47,13 +49,15 @@ public class PatrolMovementStrategy implements MovementStrategy{
         }
         
         // Check if the target position is not the same as the current position and is not a wall
-        if (checker.canEnemyEnter(targetPos)) {
+        if (wallChecker.canEnemyEnter(targetPos)) {
+            // if close enough to the player -> combat
+            if (this.combatTransitionChecker.checkCombatCollision(player.getPosition(), targetPos)){
+                this.combatTransitionChecker.initiateCombatTransition(context);
+            }
+
             context.setPosition(targetPos);
             context.getGridNotifier().notifyEnemyMoved(currentPos, targetPos);
 
-            if (player.getPosition().equals(targetPos) || player.getPosition().equals(currentPos)){
-                context.setState( new CombatTransitionState(context.getState()));
-            }
             return this.moveDirection;
         } 
         // if it's impossible to move in the current direction, reverse it

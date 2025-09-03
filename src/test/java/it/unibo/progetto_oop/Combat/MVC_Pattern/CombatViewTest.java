@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.mvc_pattern;
+package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.fest.swing.edt.FailOnThreadViolationRepaintManager;
 
-import it.unibo.progetto_oop.combat.StatePattern.AnimatingState;
-import it.unibo.progetto_oop.combat.StatePattern.PlayerTurnState;
+import it.unibo.progetto_oop.Combat.StatePattern.AnimatingState;
+import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
 
 public class CombatViewTest {
     CombatView view;

@@ -1,16 +1,14 @@
 package it.unibo.progetto_oop.Overworld.MVC.ModelSystem;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.Combat.draw_helper.DrawHelper;
 
 public class EnemySystem {
     private final Player player;
@@ -18,16 +16,13 @@ public class EnemySystem {
     private final OverworldModel model;
 
     private List<Enemy> enemies; // enemies present in the map
-    private List<Enemy> beatenEnemies = new ArrayList<>();
     private Enemy encounteredEnemy;
-    DrawHelper neighboursCheck;
 
     public EnemySystem(List<Enemy> enemies, Player player, OverworldModel model) {
         this.model = Objects.requireNonNull(model, "Model cannot be null");
         this.player = Objects.requireNonNull(player, "Player cannot be null");
         this.enemies = enemies;
         this.encounteredEnemy = null;
-        this.neighboursCheck = new DrawHelper();
     }
 
     // getters
@@ -56,10 +51,7 @@ public class EnemySystem {
     public void setEncounteredEnemy(Enemy encounteredEnemy){
         this.encounteredEnemy = encounteredEnemy;
         if(this.model.isCombatTransitionPending()) {
-            CombatTransitionState combat = new CombatTransitionState(encounteredEnemy.getState());
-            encounteredEnemy.setState(combat);
-            combat.enterState(encounteredEnemy);
-            
+            this.model.getCombatCollision().initiateCombatTransition(encounteredEnemy);
         }
     }
 
@@ -81,7 +73,8 @@ public class EnemySystem {
      */
     public Optional<Enemy> checkEnemyHit(Position tempPosition){
         return this.enemies.stream().filter(enemy -> 
-            this.neighboursCheck.neighbours(enemy.getCurrentPosition(), tempPosition, 1))
+            this.model.getCombatCollision().checkCombatCollision
+            (enemy.getCurrentPosition(), tempPosition))
             .findFirst();
     }
 
@@ -89,14 +82,14 @@ public class EnemySystem {
      * Remove an enemy from the list of enemies and add it to the list of beaten enemies
      * @param enemyToRemove
      */
-    private void removeEnemy(Enemy enemyToRemove){
+    /*private void removeEnemy(Enemy enemyToRemove){  // METODO INUTILE PERCHè GRID NOTIFIER VIENE CHIAMATO DAL COMBATTIMENTO
         if (this.enemies.contains(enemyToRemove)) {
             Position at = enemyToRemove.getCurrentPosition(); // @autor Alice
             this.enemies.remove(enemyToRemove);
             model.gridNotifier.notifyItemRemoved(at); // @autor Alice
             this.beatenEnemies.add(enemyToRemove);
         }
-    }
+    }*/
 
     /**
      * Trigger the enemy turns, allowing them to take actions

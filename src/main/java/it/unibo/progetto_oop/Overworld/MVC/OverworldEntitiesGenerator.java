@@ -43,7 +43,7 @@ public class OverworldEntitiesGenerator {
     }
 
     private void generateEnemies(Floor currentFloor, GridNotifier gridNotifier, OverworldModel overworldModel) {
-        EnemyFactory factory = new EnemyFactoryImpl(overworldModel.getWallCollision());
+        EnemyFactory factory = new EnemyFactoryImpl(overworldModel.getWallCollision(), overworldModel.getCombatCollision());
         for (Position pos : currentFloor.getObjectsPositions(TileType.ENEMY)) {
             int roll = ThreadLocalRandom.current().nextInt(3);
             Enemy enemy;

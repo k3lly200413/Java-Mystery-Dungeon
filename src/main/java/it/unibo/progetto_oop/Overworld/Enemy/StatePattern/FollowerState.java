@@ -33,7 +33,7 @@ public class FollowerState implements GenericEnemyState{
 
     @Override
     public void exitState(Enemy context) {
-        System.out.println("Entering Follow State");
+        System.out.println("Exiting Follow State");
     }
 
     @Override

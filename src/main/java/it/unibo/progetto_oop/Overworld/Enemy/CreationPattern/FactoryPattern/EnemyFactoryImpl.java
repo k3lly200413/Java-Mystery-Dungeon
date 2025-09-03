@@ -8,6 +8,7 @@ import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.VisibilityUtil;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategyImpl.FollowMovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategyImpl.PatrolMovementStrategy;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.FollowerState;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.PatrollerState;
@@ -16,17 +17,19 @@ import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public class EnemyFactoryImpl implements EnemyFactory {
-    WallCollision checker;
+    WallCollision wallChecker;
+    CombatCollision combatTransitionChecker;
     MovementUtil movementUtil;
     MovementStrategy patrolMovementStrategy;
     MovementStrategy followMovementStrategy;
     
-    public EnemyFactoryImpl(WallCollision checker){
-        this.checker = checker;
+    public EnemyFactoryImpl(WallCollision newWallChecker, CombatCollision newCombatTransitionChecker){
+        this.wallChecker = newWallChecker;
+        this.combatTransitionChecker = newCombatTransitionChecker;
 
-        this.movementUtil = new MovementUtil(checker);
-        this.patrolMovementStrategy = new PatrolMovementStrategy(checker);
-        this.followMovementStrategy = new FollowMovementStrategy(checker);
+        this.movementUtil = new MovementUtil(wallChecker);
+        this.patrolMovementStrategy = new PatrolMovementStrategy(wallChecker, combatTransitionChecker);
+        this.followMovementStrategy = new FollowMovementStrategy(wallChecker, combatTransitionChecker);
     }
     
     @Override

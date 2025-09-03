@@ -5,6 +5,7 @@ import java.util.List;
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollisionImpl;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
@@ -39,6 +40,7 @@ public final class OverworldModel {
     public GridNotifier gridNotifier; // incapsulates GridUpdater
     private StructureData gridView; // read-only sarebbe da fare un interfaccia e non solo disciplina di codice
     private WallCollision wallCollision;
+    private CombatCollision combatCollision;
 
     public OverworldModel(final List<Enemy> enemies, final List<Item> items) {
         this.player = new Player(100, new Inventory());
@@ -48,6 +50,8 @@ public final class OverworldModel {
         this.pickupSystem = new PickupSystem(null, this.player, this);
         this.enemySystem  = new EnemySystem(null, this.player, this);
         this.movementSystem = new MovementSystem(this.player, this);
+
+        this.combatCollision = new CombatCollision();
 
         setSpawnObjects(enemies, items);
     }
@@ -120,6 +124,9 @@ public final class OverworldModel {
     }
     public WallCollision getWallCollision() {
         return this.wallCollision;
+    }
+    public CombatCollision getCombatCollision() {
+        return this.combatCollision;
     }
 
     //------Combat flags---------
