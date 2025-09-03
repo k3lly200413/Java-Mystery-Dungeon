@@ -27,6 +27,7 @@ public final class Main {
     private Main() {
         throw new UnsupportedOperationException("Utility class");
     }
+
     /**
      * The main method to run the application.
      *
@@ -66,3 +67,4 @@ public final class Main {
         OverworldController movementController = new OverworldController(overworldModel, view, viewManager);
     }
 }
+
