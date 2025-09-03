@@ -77,9 +77,10 @@ public class MovementSystem {
         Optional<Enemy> enemyOpt = enemySystem.checkEnemyHit(tempPosition);
         if (enemyOpt.isPresent()) {
             this.setCombatTransitionFlag();
+
             enemySystem.setEncounteredEnemy(enemyOpt.get());
+
             System.out.println("Enemy encounter flagged at " + tempPosition);
-            return;
         }
        
         // the player can now change position

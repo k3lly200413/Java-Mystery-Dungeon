@@ -9,6 +9,7 @@ import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.Combat.DrawHelper.DrawHelper;
 
 public class EnemySystem {
     private final Player player;
@@ -18,12 +19,14 @@ public class EnemySystem {
     private List<Enemy> enemies; // enemies present in the map
     private List<Enemy> beatenEnemies = new ArrayList<>();
     private Enemy encounteredEnemy;
+    DrawHelper neighboursCheck;
 
     public EnemySystem(List<Enemy> enemies, Player player, OverworldModel model) {
         this.model = Objects.requireNonNull(model, "Model cannot be null");
         this.player = Objects.requireNonNull(player, "Player cannot be null");
         this.enemies = enemies;
         this.encounteredEnemy = null;
+        this.neighboursCheck = new DrawHelper();
     }
 
     // getters
@@ -70,8 +73,9 @@ public class EnemySystem {
      * @return an Optional containing the enemy if found, otherwise an empty Optional
      */
     public Optional<Enemy> checkEnemyHit(Position tempPosition){
-        return this.enemies.stream().filter(enemy -> enemy.getCurrentPosition()
-            .equals(tempPosition)).findFirst();
+        return this.enemies.stream().filter(enemy -> 
+            this.neighboursCheck.neighbours(enemy.getCurrentPosition(), tempPosition, 1))
+            .findFirst();
     }
 
     /**
