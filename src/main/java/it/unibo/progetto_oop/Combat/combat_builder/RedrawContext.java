@@ -2,7 +2,7 @@ package it.unibo.progetto_oop.combat.combat_builder;
 
 import java.util.List;
 
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.combat.position.Position;
 
 /**
  * Context for redrawing the game elements.

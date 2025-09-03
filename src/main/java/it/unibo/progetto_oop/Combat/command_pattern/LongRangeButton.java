@@ -2,7 +2,7 @@ package it.unibo.progetto_oop.combat.command_pattern;
 
 import java.util.List;
 
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.combat.position.Position;
 
 /**
  * Button for triggering a long-range attack.
