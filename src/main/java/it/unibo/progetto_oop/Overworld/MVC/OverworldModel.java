@@ -3,8 +3,9 @@ package it.unibo.progetto_oop.Overworld.MVC;
 import java.util.List;
 import java.util.Set;
 
-import it.unibo.progetto_oop.Combat.Inventory.Inventory;
-import it.unibo.progetto_oop.Combat.Inventory.Item;
+import it.unibo.progetto_oop.combat.inventory.Inventory;
+import it.unibo.progetto_oop.combat.inventory.Item;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
