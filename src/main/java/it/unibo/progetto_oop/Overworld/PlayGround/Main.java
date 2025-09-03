@@ -3,7 +3,7 @@ package it.unibo.progetto_oop.Overworld.PlayGround;
 import java.util.List;
 import java.util.Random;
 
-import it.unibo.progetto_oop.combat.Inventory.Item;
+import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldController;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;

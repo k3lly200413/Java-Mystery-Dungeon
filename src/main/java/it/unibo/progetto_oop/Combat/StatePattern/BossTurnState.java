@@ -1,7 +1,7 @@
-package it.unibo.progetto_oop.combat.StatePattern;
+package it.unibo.progetto_oop.Combat.StatePattern;
 
-import it.unibo.progetto_oop.combat.inventory.Item;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.Combat.Inventory.Item;
+import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class BossTurnState implements CombatState {

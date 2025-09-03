@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.helper;
+package it.unibo.progetto_oop.Combat.Helper;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 

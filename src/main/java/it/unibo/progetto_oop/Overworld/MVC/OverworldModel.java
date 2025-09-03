@@ -2,8 +2,8 @@ package it.unibo.progetto_oop.Overworld.MVC;
 
 import java.util.List;
 
-import it.unibo.progetto_oop.combat.inventory.Inventory;
-import it.unibo.progetto_oop.combat.inventory.Item;
+import it.unibo.progetto_oop.Combat.Inventory.Inventory;
+import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollisionImpl;
