@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Combat.MVC_Pattern;
+package it.unibo.progetto_oop.combat.mvc_pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,12 +10,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import it.unibo.progetto_oop.Combat.StatePattern.AnimatingState;
-import it.unibo.progetto_oop.Combat.StatePattern.BossTurnState;
-import it.unibo.progetto_oop.Combat.StatePattern.EnemyTurnState;
-import it.unibo.progetto_oop.Combat.StatePattern.FuryBossState;
-import it.unibo.progetto_oop.Combat.StatePattern.ItemSelectionState;
-import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
+import it.unibo.progetto_oop.combat.StatePattern.AnimatingState;
+import it.unibo.progetto_oop.combat.StatePattern.BossTurnState;
+import it.unibo.progetto_oop.combat.StatePattern.EnemyTurnState;
+import it.unibo.progetto_oop.combat.StatePattern.FuryBossState;
+import it.unibo.progetto_oop.combat.StatePattern.ItemSelectionState;
+import it.unibo.progetto_oop.combat.StatePattern.PlayerTurnState;
 
 public class CombatControllerTest {
     

@@ -1,12 +1,14 @@
-package it.unibo.progetto_oop.Combat;
+package it.unibo.progetto_oop.combat;
 
-import javax.swing.SwingUtilities;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatView;
+public class CombatLauncher {
 
-public class CombatApplication {
+    private CombatLauncher() {
+        throw new UnsupportedOperationException("Utility class");
+    }
 
     /**
      * Main method used to run the Application
@@ -20,9 +22,10 @@ public class CombatApplication {
      *   </ul>
      * </ul>
      *
-     * @param args
+     * @param args Command line arguments
+     * @return combatController instance
      */
-    public static void main(String[] args) {
+    public static CombatController buildCombat() {
         // --- Game Configuration ---
         int size = 12;
         int playerPower = 7;
@@ -35,7 +38,6 @@ public class CombatApplication {
 
         // --- Application Startup ---
         // Ensure UI creation happens on the Event Dispatch Thread (EDT) for safety.
-        SwingUtilities.invokeLater(() -> {
             // 1. Create the Model with our configuration
             CombatModel model = new CombatModel(size, playerMaxStamina, playerPower, playerPoisonPower, playerLongRangePower, enemyPower, enemySpeed, enemyName);
 
@@ -45,8 +47,6 @@ public class CombatApplication {
             // 3. Create the Controller, linking the Model and View
             CombatController controller = new CombatController(model, view);
 
-            // 4. Start the combat UI, making the window visible
-            controller.startCombat();
-        });
+            return controller;
     }
 }

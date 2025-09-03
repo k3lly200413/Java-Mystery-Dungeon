@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Combat.Inventory;
+package it.unibo.progetto_oop.combat.inventory;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
