@@ -29,7 +29,6 @@ public class MovementUtil {
 
     /**
      * Finds the closest wall on a specific axis (vertical or horizontal) from the enemy's position.
-     *
      * @param enemyPosition the position of the enemy
      * @param wallList the set of wall positions
      * @param isVerticalCheck true if checking for vertical walls(enemy is moving vertically), false for horizontal walls

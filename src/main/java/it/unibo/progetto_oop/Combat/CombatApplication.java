@@ -1,26 +1,26 @@
-package it.unibo.progetto_oop.combat;
+package it.unibo.progetto_oop.Combat;
 
 import javax.swing.SwingUtilities;
 
-import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
+import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
+import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatModel;
+import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatView;
 
-/**
- * Main entry point for the combat application.
- */
-public final class CombatApplication {
-
-    // Private constructor to prevent instantiation
-    private CombatApplication() {
-        throw new UnsupportedOperationException("Utility class");
-    }
+public class CombatApplication {
 
     /**
-     * Main method to launch the combat application.
+     * Main method used to run the Application
+     * <p>
+     * <ul>
+     *   <li><b>invokeLater</b> Explenation
+     *   <li><ul>
+     *     <li> Used to make sure that all GUI elements are executed on EDT thread 
+     *          (thread used for graphics) so that there are no problems when it 
+     *          comes to sync with Timer and other actions 
+     *   </ul>
+     * </ul>
      *
-     * @param args Command line arguments
+     * @param args
      */
     public static void main(String[] args) {
         // --- Game Configuration ---
@@ -37,28 +37,13 @@ public final class CombatApplication {
         // Ensure UI creation happens on the Event Dispatch Thread (EDT) for safety.
         SwingUtilities.invokeLater(() -> {
             // 1. Create the Model with our configuration
-            final CombatModel model = new CombatBuilder()
-            .setSize(size)
-            .setStaminaMax(playerMaxStamina)
-            .setPlayerPower(playerPower)
-            .setPlayerPoisonPower(playerPoisonPower)
-            .setPlayerLongRangePower(playerLongRangePower)
-            .setEnemyPower(enemyPower)
-            .setEnemySpeed(enemySpeed)
-            .setEnemyName(enemyName)
-            .build();
-
+            CombatModel model = new CombatModel(size, playerMaxStamina, playerPower, playerPoisonPower, playerLongRangePower, enemyPower, enemySpeed, enemyName);
 
             // 2. Create the View
-            final CombatView view = new CombatView(model.getSize(),
-            viewWidthFactor * model.getSize() / sizeDivisor,
-            viewHeightFactor * model.getSize() / sizeDivisor,
-            buttonWidth, buttonHeight, windowWidth, windowHeight);
-            view.init();
+            CombatView view = new CombatView(model.getSize(), (20 * model.getSize()) / 3, (50 * model.getSize()) / 3, 70, 75, 100, 100);
 
             // 3. Create the Controller, linking the Model and View
-            final CombatController controller =
-                new CombatController(model, view);
+            CombatController controller = new CombatController(model, view);
 
             // 4. Start the combat UI, making the window visible
             controller.startCombat();
