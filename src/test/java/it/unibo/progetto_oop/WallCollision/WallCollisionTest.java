@@ -13,7 +13,7 @@ import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 
-class WallCollisionImplTest {
+public class WallCollisionTest {
 
     private StructureData gridMock;
     private WallCollisionImpl wallCollision;
@@ -74,14 +74,15 @@ class WallCollisionImplTest {
         Position from = new Position(0, 0);
 
         // simuliamo muro a (3,0)
-        when(gridMock.get(1, 0)).thenReturn(TileType.ROOM);
         when(gridMock.get(2, 0)).thenReturn(TileType.ROOM);
-        when(gridMock.get(3, 0)).thenReturn(TileType.WALL);
+        when(gridMock.get(3, 0)).thenReturn(TileType.ROOM);
+        when(gridMock.get(4, 0)).thenReturn(TileType.WALL);
+        when(gridMock.get(1, 0)).thenReturn(TileType.ITEM);
 
         Optional<Position> wall = wallCollision.closestWall(from, 1, 0);
 
         assertTrue(wall.isPresent());
-        assertEquals(new Position(2, 0), wall.get());
+        assertEquals(new Position(1, 0), wall.get());
     }
 
     @Test

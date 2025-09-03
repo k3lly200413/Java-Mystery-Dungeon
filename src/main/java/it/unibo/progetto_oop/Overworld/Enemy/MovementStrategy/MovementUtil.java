@@ -21,17 +21,6 @@ public class MovementUtil {
     }
 
     /**
-    * Calculates the distance between two positions on a specific axis.
-    * @param p1 the first position
-    * @param p2 the second position
-    * @param getCoordinate a function to extract the coordinate from a position (e.g., Position::getX or Position::getY)
-    * @return the distance between the two positions on the specified axis
-    */
-    private int calculateDistanceOnAxis(Position p1, Position p2, ToIntFunction<Position> getCoordinate) {
-        return Math.abs(getCoordinate.applyAsInt(p1) - getCoordinate.applyAsInt(p2));
-    }
-
-    /**
      * Finds the closest wall on a specific axis (vertical or horizontal) from the enemy's position.
      * @param enemyPosition the position of the enemy
      * @param isVerticalCheck true if checking for vertical walls(enemy is moving vertically), false for horizontal walls
