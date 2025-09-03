@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.inventory;
+package it.unibo.progetto_oop.Combat.Inventory;
 
 import javax.swing.*;
 import java.awt.*;

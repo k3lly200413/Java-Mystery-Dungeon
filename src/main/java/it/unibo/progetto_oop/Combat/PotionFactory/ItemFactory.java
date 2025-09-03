@@ -1,10 +1,10 @@
-package it.unibo.progetto_oop.combat.PotionFactory;
+package it.unibo.progetto_oop.Combat.PotionFactory;
 
-import it.unibo.progetto_oop.combat.inventory.Item;
-import it.unibo.progetto_oop.combat.PotionStrategy.AttackBuff;
-import it.unibo.progetto_oop.combat.PotionStrategy.CurePoison;
-import it.unibo.progetto_oop.combat.PotionStrategy.Healing;
-import it.unibo.progetto_oop.combat.PotionStrategy.Potion;
+import it.unibo.progetto_oop.Combat.Inventory.Item;
+import it.unibo.progetto_oop.Combat.PotionStrategy.AttackBuff;
+import it.unibo.progetto_oop.Combat.PotionStrategy.CurePoison;
+import it.unibo.progetto_oop.Combat.PotionStrategy.Healing;
+import it.unibo.progetto_oop.Combat.PotionStrategy.Potion;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 /**

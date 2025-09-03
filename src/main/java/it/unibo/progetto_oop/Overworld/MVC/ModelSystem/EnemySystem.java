@@ -9,7 +9,7 @@ import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.Combat.DrawHelper.DrawHelper;
+import it.unibo.progetto_oop.Combat.draw_helper.DrawHelper;
 
 public class EnemySystem {
     private final Player player;
