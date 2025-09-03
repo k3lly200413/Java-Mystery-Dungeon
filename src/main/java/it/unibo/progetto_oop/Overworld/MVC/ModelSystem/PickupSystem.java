@@ -7,6 +7,8 @@ import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.combat.inventory.Inventory;
+import it.unibo.progetto_oop.combat.inventory.Item;
 
 public class PickupSystem {
     private List<Item> items; // items present in the map
