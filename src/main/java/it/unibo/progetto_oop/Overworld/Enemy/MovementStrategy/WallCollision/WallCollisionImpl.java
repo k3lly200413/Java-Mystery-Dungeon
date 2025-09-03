@@ -33,7 +33,8 @@ public final class WallCollisionImpl implements WallCollision{
     public boolean canEnter(final Position to) {
         if (!inBounds(to))
             return false;
-        return gridView.get(to.x(), to.y()) != TileType.WALL;
+        TyleTipe tyle = gridView.get(to.x(), to.y());
+        return tyle != TileType.WALL && tyle != TileType.ENEMY;
     }
 
     @Override
