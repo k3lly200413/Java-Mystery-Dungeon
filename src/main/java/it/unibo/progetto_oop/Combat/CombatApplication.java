@@ -33,8 +33,21 @@ public final class CombatApplication {
         int playerMaxStamina = 100;
         int playerLongRangePower = 5;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // --- Application Startup ---
-        // Ensure UI creation happens on the Event Dispatch Thread (EDT) for safety.
         SwingUtilities.invokeLater(() -> {
             // 1. Create the Model with our configuration
             final CombatModel model = new CombatBuilder()
