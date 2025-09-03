@@ -1,7 +1,8 @@
-package it.unibo.progetto_oop.combat.inventory;
+package it.unibo.progetto_oop.Combat.Inventory;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
 /**
  * @author Laura Bertozzi
  */

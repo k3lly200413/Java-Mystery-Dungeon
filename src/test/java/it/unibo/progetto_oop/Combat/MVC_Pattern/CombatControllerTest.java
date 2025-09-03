@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.mvc_pattern;
+package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,15 +10,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
-import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
-import it.unibo.progetto_oop.combat.state_pattern.BossTurnState;
-import it.unibo.progetto_oop.combat.state_pattern.EnemyTurnState;
-import it.unibo.progetto_oop.combat.state_pattern.ItemSelectionState;
-import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
+import it.unibo.progetto_oop.Combat.StatePattern.AnimatingState;
+import it.unibo.progetto_oop.Combat.StatePattern.BossTurnState;
+import it.unibo.progetto_oop.Combat.StatePattern.EnemyTurnState;
+import it.unibo.progetto_oop.Combat.StatePattern.FuryBossState;
+import it.unibo.progetto_oop.Combat.StatePattern.ItemSelectionState;
+import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
 
 public class CombatControllerTest {
     
@@ -29,19 +26,17 @@ public class CombatControllerTest {
     // Need before each because tests modify model and if I were to use BeforeAll it will modify the model so all tests will be affected
     @BeforeEach
     void setUp(){
-        this.model = new CombatBuilder()
-            .setSize(12)
-            .setStaminaMax(100)
-            .setPlayerPower(10)
-            .setPlayerPoisonPower(2)
-            .setPlayerLongRangePower(10)
-            .setEnemyPower(10)
-            .setEnemySpeed(3)
-            .setEnemyName("Dragon")
-            .build();
+        this.model = new CombatModel(12,     // size
+            100,    // playerMaxStamina
+            7,      // playerPower
+            2,      // playerPoisonPower
+            5,      // playerLongRangePower
+            3,      // enemyPower
+            3,      // enemySpeed
+            "Dragon");
 
         this.view = new CombatView(model.getSize(), (20 * model.getSize()) / 3, (50 * model.getSize()) / 3, 70, 75, 100, 100);
-        // this.view.init();
+
         this.controller = new CombatController(model, view);
     }
 
@@ -74,6 +69,8 @@ public class CombatControllerTest {
         assertTrue(this.controller.getCurrentState() instanceof AnimatingState);
         controller.setState(new BossTurnState());
         assertTrue(this.controller.getCurrentState() instanceof BossTurnState);
+        controller.setState(new FuryBossState());
+        assertTrue(this.controller.getCurrentState() instanceof FuryBossState);
         controller.setState(new ItemSelectionState());
         assertTrue(this.controller.getCurrentState() instanceof ItemSelectionState);
     }

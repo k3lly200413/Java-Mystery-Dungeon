@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.mvc_pattern;
+package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -13,15 +13,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
-import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
-import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
-
 import org.fest.swing.edt.FailOnThreadViolationRepaintManager;
+
+import it.unibo.progetto_oop.Combat.StatePattern.AnimatingState;
+import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
 
 public class CombatViewTest {
     CombatView view;
@@ -30,19 +25,15 @@ public class CombatViewTest {
 
     @BeforeEach
     void setUp() {
-        this.model = new CombatBuilder()
-            .setSize(12)
-            .setStaminaMax(100)
-            .setPlayerPower(10)
-            .setPlayerPoisonPower(2)
-            .setPlayerLongRangePower(10)
-            .setEnemyPower(10)
-            .setEnemySpeed(3)
-            .setEnemyName("Dragon")
-            .build();
-
+        this.model = new CombatModel(12,     // size
+            100,    // playerMaxStamina
+            7,      // playerPower
+            2,      // playerPoisonPower
+            5,      // playerLongRangePower
+            3,      // enemyPower
+            3,      // enemySpeed
+            "Dragon");
         this.view = new CombatView(model.getSize(), (20 * model.getSize()) / 3, (50 * model.getSize()) / 3, 70, 75, 100, 100);
-        // this.view.init();
         this.controller = new CombatController(model, view);
     }
 
