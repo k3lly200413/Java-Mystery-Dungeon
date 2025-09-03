@@ -44,9 +44,9 @@ public class FollowMovementStrategy implements MovementStrategy{
                 targetPos = player.getPosition();
                 context.setPosition(targetPos);
             }*/ 
-            if (targetPos != playerPos ){
-                context.setPosition(targetPos); // not close enough -> move closer towards the player
-            } 
+            
+            context.setPosition(targetPos); // not close enough -> move closer towards the player
+    
             context.getGridNotifier().notifyEnemyMoved(currentPos, targetPos);
             return currDirection; 
 

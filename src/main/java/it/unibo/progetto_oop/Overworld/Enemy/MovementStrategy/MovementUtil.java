@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.function.ToIntFunction;
 
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollisionImpl;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 /**
@@ -19,17 +18,6 @@ public class MovementUtil {
 
     public MovementUtil(WallCollision checker) {
         this.checker = checker;
-    }
-
-    /**
-    * Calculates the distance between two positions on a specific axis.
-    * @param p1 the first position
-    * @param p2 the second position
-    * @param getCoordinate a function to extract the coordinate from a position (e.g., Position::getX or Position::getY)
-    * @return the distance between the two positions on the specified axis
-    */
-    private int calculateDistanceOnAxis(Position p1, Position p2, ToIntFunction<Position> getCoordinate) {
-        return Math.abs(getCoordinate.applyAsInt(p1) - getCoordinate.applyAsInt(p2));
     }
 
     /**
