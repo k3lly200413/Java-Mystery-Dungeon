@@ -4,8 +4,11 @@ import javax.swing.*;
 
 import java.awt.CardLayout;
 
-import it.unibo.progetto_oop.Combat.Inventory.*;
+import it.unibo.progetto_oop.combat.inventory.*;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
+import it.unibo.progetto_oop.combat.CombatLauncher;
 
 public class ViewManager {
 
@@ -13,6 +16,8 @@ public class ViewManager {
     private JPanel mainCardPanel; 
     private JPanel overworldView;
     private InventoryView invView;
+    private CombatView combatView;
+    private CombatController combatController;
 
     public static final String INVENTORY_CARD = "INVENTORY";
     public static final String OVERWORLD_CARD = "OVERWORLD";
@@ -71,6 +76,25 @@ public class ViewManager {
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.setSize(600, 400);
             frame.add(this.invView);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        }
+    }
+
+    public void showCombat() {
+        JFrame frame = new JFrame("Combattimento");
+        if (this.combatView == null) {
+            this.combatController = CombatLauncher.buildCombat();
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setSize(600, 400);
+            frame.add(this.combatController.getView());
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        } else {
+            this.combatController.redrawView();
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setSize(600, 400);
+            frame.add(this.combatController.getView());
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
         }

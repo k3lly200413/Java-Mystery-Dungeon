@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Combat.MVC_Pattern;
+package it.unibo.progetto_oop.combat.mvc_pattern;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,16 +6,16 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
-import it.unibo.progetto_oop.Combat.CommandPattern.GameButton;
-import it.unibo.progetto_oop.Combat.CommandPattern.LongRangeButton;
-import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
-import it.unibo.progetto_oop.Combat.StatePattern.AnimatingState;
-import it.unibo.progetto_oop.Combat.StatePattern.CombatState;
-import it.unibo.progetto_oop.Combat.StatePattern.EnemyTurnState;
-import it.unibo.progetto_oop.Combat.StatePattern.InfoDisplayState;
-import it.unibo.progetto_oop.Combat.StatePattern.PlayerTurnState;
+import it.unibo.progetto_oop.combat.command_pattern.GameButton;
+import it.unibo.progetto_oop.combat.command_pattern.LongRangeButton;
+import it.unibo.progetto_oop.combat.command_pattern.MeleeButton;
+import it.unibo.progetto_oop.combat.StatePattern.AnimatingState;
+import it.unibo.progetto_oop.combat.StatePattern.CombatState;
+import it.unibo.progetto_oop.combat.StatePattern.EnemyTurnState;
+import it.unibo.progetto_oop.combat.StatePattern.InfoDisplayState;
+import it.unibo.progetto_oop.combat.StatePattern.PlayerTurnState;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Combat.Helper.Neighbours;
+import it.unibo.progetto_oop.combat.helper.Neighbours;
 
 
 /**.

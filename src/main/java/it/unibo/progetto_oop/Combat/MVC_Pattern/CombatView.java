@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Combat.MVC_Pattern;
+package it.unibo.progetto_oop.combat.mvc_pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -13,9 +13,9 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
-import it.unibo.progetto_oop.Combat.CommandPattern.GameButton;
-import it.unibo.progetto_oop.Combat.CommandPattern.MeleeButton;
-import it.unibo.progetto_oop.Combat.Helper.Neighbours;
+import it.unibo.progetto_oop.combat.command_pattern.GameButton;
+import it.unibo.progetto_oop.combat.command_pattern.MeleeButton;
+import it.unibo.progetto_oop.combat.helper.Neighbours;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 import java.awt.BorderLayout;
@@ -32,7 +32,7 @@ import java.util.Map;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 
-public class CombatView extends JFrame {
+public class CombatView extends JPanel {
 
     /**
      * Height and width of the buttons in the combat view.
@@ -177,8 +177,6 @@ public class CombatView extends JFrame {
         this.buttonHeight = buttonHeightToAssign;
         // this.buttonWidth = (50 * size) / 3;
         this.buttonWidth = buttonWidthToAssign;
-        this.setTitle("Combat Screen");
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         // this.setSize(70 * size, 75 * size);
         this.maxPlayerHealth = maxPlayerHealthToAssign;
         this.maxEnemyHealth = maxEnemyHealthToAssign;
@@ -517,12 +515,6 @@ public class CombatView extends JFrame {
      */
     public final void display() {
         this.setVisible(true);
-    }
-    /**
-     * Closes the combat view and releases resources.
-     */
-    public final void close() {
-        this.dispose();
     }
 
     private ImageIcon getIconResource(
