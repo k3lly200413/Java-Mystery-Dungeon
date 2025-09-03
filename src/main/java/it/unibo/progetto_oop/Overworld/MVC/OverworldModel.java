@@ -12,6 +12,7 @@ import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.MovementSystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.PickupSystem;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
+import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
@@ -24,6 +25,7 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
  */
 public final class OverworldModel {
 
+    private Dungeon dungeon;
     private final Player player;
     private boolean inCombat;
 
@@ -49,12 +51,11 @@ public final class OverworldModel {
 
         setSpawnObjects(enemies, items);
     }
-/* 
+
     // Collega il dungeon e seleziona il primo Floor
     public void bindDungeon(final Dungeon dungeon) {
         this.dungeon = dungeon;
-        bindCurrentFloor(dungeon.getCurrentFloor());
-    }*/
+    }
 
     // Imposta quale floor è quello attivo
     public void bindCurrentFloor(final Floor floor) {
@@ -74,14 +75,13 @@ public final class OverworldModel {
         this.wallCollision = new WallCollisionImpl(gridView);
     }
 
-    /* 
     public boolean nextFloor() {
         final boolean changedFloor = this.dungeon.nextFloor();
         if (changedFloor) {
             bindCurrentFloor(dungeon.getCurrentFloor());
         }
         return changedFloor;
-    }*/
+    }
 
     public void setSpawnObjects(final List<Enemy> enemies, final List<Item> items) {
         this.pickupSystem.setItems(items);

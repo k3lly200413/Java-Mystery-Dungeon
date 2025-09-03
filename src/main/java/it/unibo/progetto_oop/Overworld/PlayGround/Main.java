@@ -43,6 +43,7 @@ public final class Main {
         
         Dungeon dungeon = new Dungeon(gen, config);
         OverworldModel overworldModel = new OverworldModel(List.<Enemy>of(), List.<Item>of());
+        overworldModel.bindDungeon(dungeon);
 
         // VIEW
         SwingMapView view = new SwingMapView(

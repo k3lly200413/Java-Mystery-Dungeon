@@ -8,6 +8,7 @@ import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.Wall
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollisionImpl;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class MovementSystem {
@@ -79,13 +80,20 @@ public class MovementSystem {
         if (enemyOpt.isPresent()) {
             this.setCombatTransitionFlag();
             enemySystem.setEncounteredEnemy(enemyOpt.get());
-            System.out.println("Enemy encounter flagged at "+tempPosition);
-            return; 
+            System.out.println("Enemy encounter flagged at " + tempPosition);
+            return;
         }
        
         // the player can now change position
         this.player.setPosition(tempPosition);
+        // on stairs next floor and stop
+        if (model.getGridView().get(tempPosition.x(), tempPosition.y()) == TileType.STAIRS) {
+            model.nextFloor();
+            System.out.println("floor changed");
+            return; // no pickup/enemy turn on old floor
+        }
         model.gridNotifier.notifyPlayerMoved(currentPos, tempPosition);
+
 
         // check items
         pickupSystem.checkAndAddItem(); 
