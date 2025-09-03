@@ -1,18 +1,17 @@
-package it.unibo.progetto_oop.combat.helper;
+package it.unibo.progetto_oop.Combat.Helper;
 
-import it.unibo.progetto_oop.combat.position.Position;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public class Neighbours {
-
+    
+    public Neighbours(){}
+    
     /**
      * Checks if two positions are within a given distance of each other.
      *
      * @param firstPosition   The first position.
-     *
      * @param secondPosition    The second position.
-     *
      * @param distanceBuffer The maximum distance to be considered neighbors.
-     *
      * @return True if they are neighbors, false otherwise.
      */
     public boolean neighbours(
