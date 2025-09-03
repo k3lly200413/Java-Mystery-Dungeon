@@ -77,7 +77,7 @@ public class PickupSystem {
     private void removeItem(final Item itemToRemove){
         this.player.getInventory().addItem(itemToRemove);
         this.items.remove(itemToRemove);
-        this.model.gridNotifier.
+        this.model.getGridNotifier().
             notifyItemRemoved(itemToRemove.getPosition());  // @autor Alice
     }
 

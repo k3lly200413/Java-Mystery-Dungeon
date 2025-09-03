@@ -92,7 +92,7 @@ public class MovementSystem {
             System.out.println("floor changed");
             return; // no pickup/enemy turn on old floor
         }
-        model.gridNotifier.notifyPlayerMoved(currentPos, tempPosition);
+        model.getGridNotifier().notifyPlayerMoved(currentPos, tempPosition);
 
 
         // check items

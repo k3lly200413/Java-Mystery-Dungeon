@@ -36,6 +36,9 @@ public final class MapController {
      */
     public void show() {
         view.onNextFloorRequested(this::next);
+        this.model.setModelListener(newGrid -> 
+            SwingUtilities.invokeLater(() -> view.render(newGrid))
+        );
         next();
         SwingUtilities.invokeLater(view::showView);
     }
@@ -54,7 +57,7 @@ public final class MapController {
                 currentFloor,
                 model.getPlayer(),
                 model,
-                model.gridNotifier   // è lo stesso che model ha bindato al floor
+                model.getGridNotifier()   // è lo stesso che model ha bindato al floor
         );
 
         // Render UI

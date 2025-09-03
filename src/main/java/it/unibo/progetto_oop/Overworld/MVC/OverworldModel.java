@@ -11,6 +11,7 @@ import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.MovementSystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.PickupSystem;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.ChangeFloorListener;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
@@ -36,7 +37,9 @@ public final class OverworldModel {
     private final MovementSystem movementSystem;
 
     // to access the grid
-    public GridNotifier gridNotifier; // incapsulates GridUpdater
+    private GridNotifier gridNotifier; // incapsulates GridUpdater
+
+    private ChangeFloorListener changeFloorListener;
     private StructureData gridView; // read-only sarebbe da fare un interfaccia e non solo disciplina di codice
     private WallCollision wallCollision;
 
@@ -79,6 +82,7 @@ public final class OverworldModel {
         final boolean changedFloor = this.dungeon.nextFloor();
         if (changedFloor) {
             bindCurrentFloor(dungeon.getCurrentFloor());
+            this.changeFloorListener.onFloorChange(this.gridView);
         }
         return changedFloor;
     }
@@ -89,10 +93,17 @@ public final class OverworldModel {
     }
 
     //---------Getters----------
-/* 
+    /* 
     public Floor getCurrentFloor() {
-        return this.dungeon.getCurrentFloor();
+    return this.dungeon.getCurrentFloor();
     }*/
+
+    public void setModelListener(final ChangeFloorListener l) {
+        this.changeFloorListener = l;
+    }
+        public GridNotifier getGridNotifier() {
+        return gridNotifier;
+    }
 
     public Player getPlayer() {
         return this.player;
