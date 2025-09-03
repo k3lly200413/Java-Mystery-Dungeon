@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.mvc_pattern;
+package it.unibo.progetto_oop.Combat.MVC_Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -13,9 +13,9 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
-import it.unibo.progetto_oop.combat.command_pattern.GameButton;
-import it.unibo.progetto_oop.combat.command_pattern.MeleeButton;
-import it.unibo.progetto_oop.combat.helper.Neighbours;
+import it.unibo.progetto_oop.Combat.command_pattern.GameButton;
+import it.unibo.progetto_oop.Combat.command_pattern.MeleeButton;
+import it.unibo.progetto_oop.Combat.Helper.Neighbours;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 import java.awt.BorderLayout;

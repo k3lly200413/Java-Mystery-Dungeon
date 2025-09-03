@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.mvc_pattern;
+package it.unibo.progetto_oop.Combat.MVC_Pattern;
 import java.util.ArrayList;
 import java.util.Objects;
 
