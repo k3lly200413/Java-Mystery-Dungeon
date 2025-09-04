@@ -1,6 +1,8 @@
 package it.unibo.progetto_oop.Overworld.MVC;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
@@ -12,6 +14,7 @@ import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.MovementSystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.PickupSystem;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.ChangeFloorListener;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
@@ -37,9 +40,12 @@ public final class OverworldModel {
     private final MovementSystem movementSystem;
 
     // to access the grid
-    public GridNotifier gridNotifier; // incapsulates GridUpdater
+    private GridNotifier gridNotifier; // incapsulates GridUpdater
+
+    private ChangeFloorListener changeFloorListener;
     private StructureData gridView; // read-only sarebbe da fare un interfaccia e non solo disciplina di codice
     private WallCollision wallCollision;
+    private Consumer<Floor> floorInitializer = f -> {};
     private CombatCollision combatCollision;
 
     public OverworldModel(final List<Enemy> enemies, final List<Item> items) {
@@ -82,7 +88,10 @@ public final class OverworldModel {
     public boolean nextFloor() {
         final boolean changedFloor = this.dungeon.nextFloor();
         if (changedFloor) {
-            bindCurrentFloor(dungeon.getCurrentFloor());
+            final Floor floor = this.dungeon.getCurrentFloor();
+            bindCurrentFloor(floor);
+            floorInitializer.accept(floor);
+            this.changeFloorListener.onFloorChange(this.gridView);
         }
         return changedFloor;
     }
@@ -92,12 +101,21 @@ public final class OverworldModel {
         this.enemySystem.setEnemies(enemies);
     }
 
-    //---------Getters----------
-/* 
-    public Floor getCurrentFloor() {
-        return this.dungeon.getCurrentFloor();
-    }*/
+    public void setFloorInitializer(Consumer<Floor> init) {
+        this.floorInitializer = Objects.requireNonNull(init);
+    }
+    
+    public void setChangeFloorListener(final ChangeFloorListener l) {
+        this.changeFloorListener = l;
+    }
 
+    //---------Getters----------
+    public Floor getCurrentFloor() {
+    return this.dungeon.getCurrentFloor();
+    }
+    public GridNotifier getGridNotifier() {
+        return gridNotifier;
+    }
     public Player getPlayer() {
         return this.player;
     }

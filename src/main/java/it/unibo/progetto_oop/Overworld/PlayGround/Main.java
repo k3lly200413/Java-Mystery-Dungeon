@@ -51,7 +51,7 @@ public final class Main {
         );
         
         // CONTROLLER
-        final MapController controller = new MapController(view, dungeon, overworldModel);
+        final MapController controller = new MapController(view, overworldModel);
         controller.show();
         
         // -----------CARD LAYOUT------------
