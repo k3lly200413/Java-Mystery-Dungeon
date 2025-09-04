@@ -77,7 +77,7 @@ public class Dungeon {
                 .size(c.width(), c.height())
                 .rooms(1)
                 .roomSize(
-                    c.minRoomW(), c.maxRoomW() - 5, c.minRoomH(), c.maxRoomH() - 5
+                    c.minRoomW()+1, c.maxRoomW() - 4, c.minRoomH()+1, c.maxRoomH() - 4
                 )
                 .build();
     }
