@@ -1,8 +1,17 @@
 package it.unibo.progetto_oop.combat.inventory;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import it.unibo.progetto_oop.Overworld.MVC.ViewManager;
 
@@ -17,6 +26,29 @@ public class InventoryView extends JPanel {
     private static final Color ITEM_SLOT_1_COLOR = Color.BLACK;
     private static final Color ITEM_SLOT_2_COLOR = Color.BLUE;
     private static final Color ITEM_SLOT_3_COLOR = Color.CYAN;
+
+    /** Default background color (R component). */
+    private static final int BG_COLOR_R = 235;
+
+    /** Default background color (G component). */
+    private static final int BG_COLOR_G = 239;
+
+    /** Default background color (B component). */
+    private static final int BG_COLOR_B = 245;
+
+    /**
+    * Border line thickness in pixels.
+    */
+    private static final int BORDER_THICKNESS = 2;
+
+    /**
+    * Top and bottom padding in pixels.
+    */
+    private static final int BORDER_PADDING_VERTICAL = 6;
+    /**
+    * Left and right padding in pixels.
+    */
+    private static final int BORDER_PADDING_HORIZONTAL = 10;
 
     private final ViewManager game;
     private Inventory inventory; 
@@ -152,11 +184,41 @@ public class InventoryView extends JPanel {
     }
 
     /**
-     * Helper method MATTE
+    * Creates a button for an item with consistent style and behavior.
+    * @param text Button text (item name)
+    * @param color Color to highlight the slot (border)
+    * @param htmlDescriptionActionCommand HTML description
+    * to display/use as an action command
+    * @return configured JButton
     */
-    private JButton createItemButton(String text, Color color, String htmlDescriptionActionCommand) {
+    private JButton createItemButton(final String text, final Color color,
+            final String htmlDescriptionActionCommand) {
+
         JButton button = new JButton(text);
-        // TODO
+
+        button.setFocusPainted(false);
+        button.setOpaque(true);
+        button.setBackground(
+            new Color(BG_COLOR_R, BG_COLOR_G, BG_COLOR_B));
+        button.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(color, BORDER_THICKNESS),
+            BorderFactory.createEmptyBorder(
+                BORDER_PADDING_VERTICAL, BORDER_PADDING_HORIZONTAL,
+                BORDER_PADDING_VERTICAL, BORDER_PADDING_HORIZONTAL)
+        ));
+
+        button.setToolTipText(htmlDescriptionActionCommand);
+        button.setActionCommand(htmlDescriptionActionCommand);
+
+        button.addActionListener(e -> {
+            if (this.bottomStatusLabel != null) {
+                this.bottomStatusLabel.setText(e.getActionCommand());
+                this.bottomStatusLabel.revalidate();
+                this.bottomStatusLabel.repaint();
+            }
+
+        });
+
         return button;
     }
 
