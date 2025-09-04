@@ -3,12 +3,10 @@ package it.unibo.progetto_oop.Overworld.MVC.ModelSystem;
 import java.util.List;
 import java.util.Optional;
 
-import it.unibo.progetto_oop.Combat.Inventory.Inventory;
-import it.unibo.progetto_oop.Combat.Inventory.Item;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
+import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
+import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class PickupSystem {
     private List<Item> items; // items present in the map

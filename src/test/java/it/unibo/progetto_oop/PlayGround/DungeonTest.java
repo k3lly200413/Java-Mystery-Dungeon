@@ -6,7 +6,7 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.progetto_oop.Combat.Inventory.Inventory;
+import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;

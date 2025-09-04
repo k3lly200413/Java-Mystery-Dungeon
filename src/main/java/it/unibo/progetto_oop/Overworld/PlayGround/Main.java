@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
-import it.unibo.progetto_oop.Combat.Inventory.Inventory;
+import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldController;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;

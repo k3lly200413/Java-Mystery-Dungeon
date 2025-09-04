@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import java.awt.CardLayout;
 
-import it.unibo.progetto_oop.Combat.Inventory.*;
+import it.unibo.progetto_oop.combat.inventory.*;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
 
 public class ViewManager {
@@ -12,7 +12,6 @@ public class ViewManager {
     private CardLayout cardLayout;
     private JPanel mainCardPanel;
     private JPanel overworldView;
-    private InventoryView invView;
 
    // private Inventory inventory;
     private InventoryView invView;

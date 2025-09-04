@@ -588,7 +588,7 @@ public class CombatController {
                     nextTargetPos = result.get(1);
                     if (this.neighbours.neighbours(
                     nextAttackerPos, nextTargetPos, meleeCheckDistance)
-                            || !nextTargetPos.equals(currentTargetPos[0]))/*Da cambiare  */ { // Check slightly wider range
+                            || !nextTargetPos.equals(currentTargetPos[0])) {
                         state[0] = 1;
                     } else if (nextAttackerPos.equals(currentAttackerPos[0])) {
                         if (this.neighbours.neighbours(
@@ -600,8 +600,8 @@ public class CombatController {
                             state[0] = 1;
                         }
                     }
-                    /*
-                     * da cambiare */
+                    currentAttackerPos[0] = nextAttackerPos;
+                    currentTargetPos[0] = nextTargetPos;
                 }
                 case 1 -> {
                     if (!damageApplied[0]) {
@@ -793,7 +793,7 @@ private void performInfoZoomInAnimation(final Runnable onZoomComplete) {
      * Animates poison damage effect.
      * This method animates the poison damage effect on the affected character.
      */
-    private void animatePoisonDamage() {
+    private final void animatePoisonDamage() {
         this.stopAnimationTimer();
         final int[] step = {4};
         this.animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, e -> {
@@ -1055,14 +1055,18 @@ private void performInfoZoomInAnimation(final Runnable onZoomComplete) {
         final int num = new Random().nextInt(2);
 
         switch (num) {
-            case physical -> performEnemyPhysicalAttack();
-            case longRange -> performLongRangeAttack(
+            case physical : 
+                performEnemyPhysicalAttack();
+                break;
+            case longRange :
+                performLongRangeAttack(
                     model.getEnemyPosition(),
                     -1,
                     false,
                     true);
-            default -> {
-            }
+                    break;
+            default :
+                break;
         }
 
     }

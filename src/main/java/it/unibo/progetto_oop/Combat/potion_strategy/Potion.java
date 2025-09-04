@@ -2,7 +2,7 @@ package it.unibo.progetto_oop.combat.potion_strategy;
 
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 import it.unibo.progetto_oop.combat.inventory.Item;
-import it.unibo.progetto_oop.combat.position.Position;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public class Potion extends Item {
 
