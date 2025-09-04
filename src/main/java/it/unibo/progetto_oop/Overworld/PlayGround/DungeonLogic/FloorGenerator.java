@@ -74,7 +74,7 @@ public final class FloorGenerator {
         if (!finalFloor) {
             objectPlacer.placeObject(grid, TileType.STAIRS, 1, rand);
             objectPlacer.placeObject(grid, TileType.PLAYER, 1, rand);
-            objectPlacer.placeObject(grid, TileType.ENEMY, 1/*rooms.size() * 2*/, rand);
+            objectPlacer.placeObject(grid, TileType.ENEMY, rooms.size(), rand);
             objectPlacer.placeObject(grid, TileType.ITEM, rooms.size(), rand);
         } 
         else {

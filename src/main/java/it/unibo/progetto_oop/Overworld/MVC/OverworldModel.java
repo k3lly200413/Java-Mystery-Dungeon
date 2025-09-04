@@ -8,6 +8,7 @@ import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollisionImpl;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollisionImpl;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
@@ -57,7 +58,7 @@ public final class OverworldModel {
         this.enemySystem  = new EnemySystem(null, this.player, this);
         this.movementSystem = new MovementSystem(this.player, this);
 
-        this.combatCollision = new CombatCollision();
+        this.combatCollision = new CombatCollisionImpl();
 
         setSpawnObjects(enemies, items);
     }
