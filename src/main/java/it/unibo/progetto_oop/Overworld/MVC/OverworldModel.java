@@ -1,6 +1,8 @@
 package it.unibo.progetto_oop.Overworld.MVC;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 import it.unibo.progetto_oop.Combat.Inventory.Item;
@@ -42,6 +44,7 @@ public final class OverworldModel {
     private ChangeFloorListener changeFloorListener;
     private StructureData gridView; // read-only sarebbe da fare un interfaccia e non solo disciplina di codice
     private WallCollision wallCollision;
+    private Consumer<Floor> floorInitializer = f -> {};
 
     public OverworldModel(final List<Enemy> enemies, final List<Item> items) {
         this.player = new Player(100, new Inventory());
@@ -81,7 +84,9 @@ public final class OverworldModel {
     public boolean nextFloor() {
         final boolean changedFloor = this.dungeon.nextFloor();
         if (changedFloor) {
-            bindCurrentFloor(dungeon.getCurrentFloor());
+            final Floor floor = this.dungeon.getCurrentFloor();
+            bindCurrentFloor(floor);
+            floorInitializer.accept(floor);
             this.changeFloorListener.onFloorChange(this.gridView);
         }
         return changedFloor;
@@ -92,19 +97,21 @@ public final class OverworldModel {
         this.enemySystem.setEnemies(enemies);
     }
 
-    //---------Getters----------
-    /* 
-    public Floor getCurrentFloor() {
-    return this.dungeon.getCurrentFloor();
-    }*/
-
-    public void setModelListener(final ChangeFloorListener l) {
+    public void setFloorInitializer(Consumer<Floor> init) {
+        this.floorInitializer = Objects.requireNonNull(init);
+    }
+    
+    public void setChangeFloorListener(final ChangeFloorListener l) {
         this.changeFloorListener = l;
     }
-        public GridNotifier getGridNotifier() {
+
+    //---------Getters----------
+    public Floor getCurrentFloor() {
+    return this.dungeon.getCurrentFloor();
+    }
+    public GridNotifier getGridNotifier() {
         return gridNotifier;
     }
-
     public Player getPlayer() {
         return this.player;
     }
