@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy;
 
+import it.unibo.progetto_oop.Combat.draw_helper.DrawHelper;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import java.util.*;
@@ -10,10 +11,12 @@ import java.util.stream.IntStream;
  * visual range related utilities
  */
 public class VisibilityUtil {
-    WallCollision checker;
+    WallCollision wallChecker;
+    DrawHelper neighboursChecker;
 
-    public VisibilityUtil(WallCollision checker) {
-        this.checker = checker;
+    public VisibilityUtil(WallCollision newWallChecker) {
+        this.wallChecker = newWallChecker;
+        this.neighboursChecker = new DrawHelper();
     }
 
     /**
@@ -24,7 +27,7 @@ public class VisibilityUtil {
      * @return
      */
     public boolean inLos(Position enemy, Position player, int neighbourDistance){
-        if(this.neighbours(enemy, player, neighbourDistance) && this.hasLineOfSight(enemy, player)){
+        if(this.neighboursChecker.neighbours(enemy, player, neighbourDistance) && this.hasLineOfSight(enemy, player)){
             return true;
         }
         return false;
@@ -55,7 +58,7 @@ public class VisibilityUtil {
         // check if any of the cells in the line (except the first and last) are walls
         boolean collisionDetected = IntStream.range(1, lineCells.size()-1) 
                                             .mapToObj(lineCells::get)
-                                            .anyMatch(p -> !checker.canEnemyEnter(p));
+                                            .anyMatch(p -> !wallChecker.canEnemyEnter(p));
 
         return !collisionDetected;
     }
@@ -109,17 +112,6 @@ public class VisibilityUtil {
             }
         }                                
         return line;
-    }
-
-    /**
-     * Check if the enemy and player are within a certain distance(neighbors)
-     * @param enemy enemy's position
-     * @param player player's position
-     * @param distance distance to consider as "neighbour"
-     * @return true if they are neighbours, false otherwise
-     */
-    public boolean neighbours(Position enemy, Position player, int distance){
-        return Math.abs(enemy.x()-player.x())<distance && Math.abs(enemy.y()-player.y())<distance;
     }
 
     /**

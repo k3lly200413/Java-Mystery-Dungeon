@@ -14,6 +14,7 @@ public class CombatCollision {
     public CombatCollision() {
         this.neighboursCheck = new DrawHelper();
     }
+
     public boolean checkCombatCollision(Position player, Position enemy) {
         return this.neighboursCheck.neighbours(player, enemy, COMBAT_DISTANCE);
     }
