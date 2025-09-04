@@ -87,12 +87,11 @@ public class MovementSystem {
         this.player.setPosition(tempPosition);
         // on stairs next floor and stop
         if (model.getGridView().get(tempPosition.x(), tempPosition.y()) == TileType.STAIRS) {
-            model.nextFloor();
-            System.out.println("floor changed");
+            model.getGridNotifier().notifyPlayerMoved(currentPos, tempPosition);
+            javax.swing.SwingUtilities.invokeLater(model::nextFloor);
             return; // no pickup/enemy turn on old floor
         }
         model.getGridNotifier().notifyPlayerMoved(currentPos, tempPosition);
-
 
         // check items
         pickupSystem.checkAndAddItem(); 
