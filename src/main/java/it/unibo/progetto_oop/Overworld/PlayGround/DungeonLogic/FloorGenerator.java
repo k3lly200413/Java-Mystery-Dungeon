@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Random;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RandomPlacementStrategy;
@@ -72,14 +73,14 @@ public final class FloorGenerator {
             tunnelPlacement.connect(grid, rooms, rand);
         }
         if (!finalFloor) {
-            objectPlacer.placeObject(grid, TileType.STAIRS, 1, rand);
-            objectPlacer.placeObject(grid, TileType.PLAYER, 1, rand);
-            objectPlacer.placeObject(grid, TileType.ENEMY, rooms.size(), rand);
-            objectPlacer.placeObject(grid, TileType.ITEM, rooms.size(), rand);
+            Position playerPos = objectPlacer.placePlayer(grid, TileType.PLAYER, rand);
+            objectPlacer.placeObject(grid, TileType.STAIRS, 1, rand, playerPos, 2);
+            objectPlacer.placeObject(grid, TileType.ENEMY, rooms.size(), rand, playerPos, 3);
+            objectPlacer.placeObject(grid, TileType.ITEM, rooms.size(), rand, playerPos, 3);
         } 
         else {
-            objectPlacer.placeObject(grid, TileType.PLAYER, 1, rand);
-            objectPlacer.placeObject(grid, TileType.ENEMY, 1, rand);
+            Position playerPos = objectPlacer.placePlayer(grid, TileType.PLAYER, rand);
+            objectPlacer.placeObject(grid, TileType.ENEMY, rooms.size(), rand, playerPos, 3);
         }
         return rooms; // Floor farà List.copyOf(...)
     }
