@@ -22,30 +22,30 @@ public final class CombatApplication {
      *
      * @param args Command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         // --- Game Configuration ---
-        int size = 12;
-        int playerPower = 7;
-        int playerPoisonPower = 2;
-        int enemyPower = 3;
-        int enemySpeed = 3;
-        String enemyName = "Dragon";
-        int playerMaxStamina = 100;
-        int playerLongRangePower = 5;
+        final int size = 12;
+        final int playerPower = 10;
+        final int playerPoisonPower = 2;
+        final int enemyPower = 100;
+        final int enemySpeed = 3;
+        final String enemyName = "Dragon";
+        final int playerMaxStamina = 100;
+        final int playerLongRangePower = 100;
 
+        final int viewWidthFactor = 20;
 
+        final int viewHeightFactor = 50;
 
+        final int buttonWidth = 70;
 
+        final int buttonHeight = 75;
 
+        final int windowWidth = 100;
 
+        final int windowHeight = 100;
 
-
-
-
-
-
-
-
+        final int sizeDivisor = 3;
 
         // --- Application Startup ---
         SwingUtilities.invokeLater(() -> {

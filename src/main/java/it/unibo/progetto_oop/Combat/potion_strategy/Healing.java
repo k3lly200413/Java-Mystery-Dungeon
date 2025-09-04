@@ -6,8 +6,9 @@ public class Healing implements PotionStrategy {
     /** The amount of health to restore. */
     private static final int HEAL_AMOUNT = 30;
 
+    /** Applies the healing effect to the @param user. */
     @Override
-    public void applyEffect(PossibleUser user) {
+    public void applyEffect(final PossibleUser user) {
         // Logic to apply the healing effect
         // Restore player's health by healAmount
         user.increasePlayerHealth(HEAL_AMOUNT);

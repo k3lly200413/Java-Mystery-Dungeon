@@ -1,10 +1,10 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
+import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class InfoDisplayState implements CombatState {
 
@@ -19,46 +19,54 @@ public class InfoDisplayState implements CombatState {
     public void handleLongRangeAttackInput(final CombatController context,
     final boolean isFlame, final boolean isPoison) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handlePhysicalAttackInput'");
+
     }
 
     @Override
-    public void handleLongRangeAttackInput(CombatController context, boolean isFlame, boolean isPoison) {
+    public void handleInfoInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleLongRangeAttackInput'");
     }
 
+    /**
+     *
+     * @param context Instance of the controller
+     *
+     * This method is called when the back button is pressed.
+     */
     @Override
-    public void handleInfoInput(CombatController context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleInfoInput'");
-    }
-
-    @Override
-    public void handleBackInput(CombatController context) {
+    public void handleBackInput(final CombatController context) {
         context.getModel().resetPositions();
         context.redrawView();
         context.setState(new PlayerTurnState());
     }
 
     @Override
-    public void handleBagInput(CombatController context) {
+    public void handleBagInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleBagInput'");
+
     }
 
     @Override
-    public void handleRunInput(CombatController context) {
+    public void handleRunInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleRunInput'");
     }
 
     @Override
-    public void handleAnimationComplete(CombatController context) {
+    public void handleAnimationComplete(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleAnimationComplete'");
     }
 
+    /**
+     * Handles the transition logic when entering the InfoDisplayState.
+     *
+     * Disables all combat buttons, displays enemy information on the view,
+     * and enables only the Back button
+     * while keeping the zoomed view persistent.
+     *
+     *
+     * @param context the CombatController providing access to the model
+     *                and view for updating the UI state
+     */
     @Override
     public void enterState(final CombatController context) {
         final CombatModel model = context.getModel();
@@ -81,38 +89,43 @@ public class InfoDisplayState implements CombatState {
 
 // --- Make sure exitState or PlayerTurnState.enterState handles the reset ---
 
-
+    /**
+     * Handles the transition logic when exiting the InfoDisplayState.
+     *
+     * Resets all positions and prepares the view for the next state.
+     *
+     * @param context the CombatController providing access to the model
+     *                and view for updating the UI state
+     */
     @Override
     public void exitState(final CombatController context) {
         // Reset positions when leaving the info view
         context.getModel().resetPositions();
         // Clear the specific info text
         context.getView().clearInfo();
-        // The next state's enterState will handle redrawing and enabling buttons.
+        // The next state's enterState will
+        // handle redrawing and enabling buttons.
     }
 
     @Override
-    public void handleAttackBuffInput(CombatController context) {
+    public void handleAttackBuffInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleAttackBuffInput'");
     }
 
     @Override
-    public void handleHealInput(CombatController context) {
+    public void handleHealInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleHealInput'");
     }
 
     @Override
-    public void handleCurePoisonInput(CombatController context) {
+    public void handleCurePoisonInput(final CombatController context) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleCurePoisonInput'");
     }
 
     @Override
-    public void handlePotionUsed(CombatController context, Item selectedPotion, Player player) {
+    public void handlePotionUsed(final CombatController context,
+    final Item selectedPotion, final Player player) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handlePotionUsed'");
     }
-    
+
 }
