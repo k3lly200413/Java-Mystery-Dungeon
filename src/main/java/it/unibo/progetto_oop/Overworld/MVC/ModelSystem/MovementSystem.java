@@ -80,7 +80,6 @@ public class MovementSystem {
             enemySystem.setEncounteredEnemy(enemyOpt.get());
 
             System.out.println("Enemy encounter flagged at " + tempPosition);
-            return;
         }
        
         // the player can now change position
