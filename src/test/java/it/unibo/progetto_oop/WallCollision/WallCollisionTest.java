@@ -70,19 +70,35 @@ public class WallCollisionTest {
     }
 
     @Test
-    void testClosestWall_FindsWall() {
-        Position from = new Position(0, 0);
+    void testClosestWall_FindsWall_x() {
+        Position from = new Position(1, 0);
 
-        // simuliamo muro a (3,0)
+        when(gridMock.width()).thenReturn(6);
+
         when(gridMock.get(2, 0)).thenReturn(TileType.ROOM);
-        when(gridMock.get(3, 0)).thenReturn(TileType.ROOM);
-        when(gridMock.get(4, 0)).thenReturn(TileType.WALL);
-        when(gridMock.get(1, 0)).thenReturn(TileType.ITEM);
+        when(gridMock.get(4, 0)).thenReturn(TileType.ROOM);
+        when(gridMock.get(0, 0)).thenReturn(TileType.WALL);
+        when(gridMock.get(3, 0)).thenReturn(TileType.ITEM);
 
         Optional<Position> wall = wallCollision.closestWall(from, 1, 0);
 
         assertTrue(wall.isPresent());
-        assertEquals(new Position(1, 0), wall.get());
+        assertEquals(new Position(0, 0), wall.get());
+    }
+
+    @Test
+    void testClosestWall_FindsWall_Y() {
+        Position from = new Position(0, 3);
+
+        when(gridMock.get(0, 1)).thenReturn(TileType.ROOM);
+        when(gridMock.get(4, 2)).thenReturn(TileType.ROOM);
+        when(gridMock.get(0, 0)).thenReturn(TileType.WALL);
+        when(gridMock.get(0, 4)).thenReturn(TileType.ITEM);
+
+        Optional<Position> wall = wallCollision.closestWall(from, 0, 1);
+
+        assertTrue(wall.isPresent());
+        assertEquals(new Position(0, 4), wall.get());
     }
 
     @Test

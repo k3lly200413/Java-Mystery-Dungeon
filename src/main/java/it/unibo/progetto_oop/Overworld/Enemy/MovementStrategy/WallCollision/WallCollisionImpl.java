@@ -48,22 +48,33 @@ public final class WallCollisionImpl implements WallCollision{
     public Optional<Position> closestWall(Position from, int dx, int dy) {
         int maxSteps;
         ToIntFunction<Position> axisGetter;
+        int startX;
+        int startY;
 
         if (dx!=0){ // if i move orizontally i'll be interested with the width
             maxSteps = gridView.width();
             axisGetter = Position :: x;
 
+            startX = 0;
+            startY = from.y(); // will remain the same
+
         } else { // same as above but with height
             maxSteps = gridView.height();
             axisGetter = Position :: y;
+
+            startX = from.x(); // will remain the same
+            startY = 0;
         }
 
         // test right or down
-        return IntStream.rangeClosed(0, maxSteps)
-                .mapToObj(step -> new Position(from.x() + step * dx, from.y() + step * dy))
+        return IntStream.rangeClosed(0, maxSteps + 1)
+                .mapToObj(step -> new Position(startX + step * dx, startY+ step * dy))
                 .filter(pos -> inBounds(pos)) // only in bounds positions
+                // i'm filtering all tipes of "obstacles"
                 .filter(pos -> gridView.get(pos.x(), pos.y()) == TileType.WALL 
-                    || gridView.get(pos.x(), pos.y()) == TileType.ITEM) // i'm searching for walls or items
+                    || gridView.get(pos.x(), pos.y()) == TileType.ITEM 
+                    || gridView.get(pos.x(), pos.y()) == TileType.TUNNEL
+                    || gridView.get(pos.x(), pos.y()) == TileType.STAIRS)
                 .min(Comparator.comparingInt(wallPos ->
                         calculateDistanceOnAxis(from, wallPos, axisGetter) // i want the closest
                 ));
