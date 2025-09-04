@@ -71,6 +71,10 @@ public class MovementSystem {
             System.out.println("Wall hit");
             return;
         }
+
+        // the player can now change position
+        this.player.setPosition(tempPosition);
+        model.getGridNotifier().notifyPlayerMoved(currentPos, tempPosition);
     
         // Check Enemies
         Optional<Enemy> enemyOpt = enemySystem.checkEnemyHit(tempPosition);
@@ -83,15 +87,12 @@ public class MovementSystem {
             return;
         }
        
-        // the player can now change position
-        this.player.setPosition(tempPosition);
         // on stairs next floor and stop
         if (model.getGridView().get(tempPosition.x(), tempPosition.y()) == TileType.STAIRS) {
             model.getGridNotifier().notifyPlayerMoved(currentPos, tempPosition);
             javax.swing.SwingUtilities.invokeLater(model::nextFloor);
             return; // no pickup/enemy turn on old floor
         }
-        model.getGridNotifier().notifyPlayerMoved(currentPos, tempPosition);
 
         // check items
         pickupSystem.checkAndAddItem(); 
