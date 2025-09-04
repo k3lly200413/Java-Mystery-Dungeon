@@ -23,6 +23,7 @@ import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
  * Controller class in Model View Controller Pattern
  *
  * @author Kelly.applebee@studio.unibo.it
+ * @author matteo.monari6@studio.unibo.it
  */
 public class CombatController {
     /**
@@ -793,7 +794,7 @@ private void performInfoZoomInAnimation(final Runnable onZoomComplete) {
      * Animates poison damage effect.
      * This method animates the poison damage effect on the affected character.
      */
-    private final void animatePoisonDamage() {
+    public final void animatePoisonDamage() {
         this.stopAnimationTimer();
         final int[] step = {4};
         this.animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, e -> {
@@ -1055,17 +1056,17 @@ private void performInfoZoomInAnimation(final Runnable onZoomComplete) {
         final int num = new Random().nextInt(2);
 
         switch (num) {
-            case physical : 
+            case physical:
                 performEnemyPhysicalAttack();
                 break;
-            case longRange :
+            case longRange:
                 performLongRangeAttack(
                     model.getEnemyPosition(),
                     -1,
                     false,
                     true);
                     break;
-            default :
+            default:
                 break;
         }
 
@@ -1186,6 +1187,5 @@ private void performInfoZoomInAnimation(final Runnable onZoomComplete) {
         //il timer non è coe un for (lo so è strano))
 
     }
-
 
 }
