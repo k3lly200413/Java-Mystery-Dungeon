@@ -1,6 +1,7 @@
-package it.unibo.progetto_oop.Combat.PotionStrategy;
+package it.unibo.progetto_oop.combat.PotionStrategy;
 
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
+import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
 
 public class AttackBuff implements PotionStrategy{
 
