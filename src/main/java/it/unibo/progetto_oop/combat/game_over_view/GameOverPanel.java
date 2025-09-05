@@ -14,14 +14,16 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+
 /**
- * Schermata Game Over riutilizzabile.
- * Usa GridBagLayout per centrare tutto, disegna una cornice,
- * e collega Invio/Space al bottone "Ricomincia".
+ * A JPanel representing the Game Over screen.
+ * This panel is designed to be reusable and can be integrated
+ * into different parts of the application where a game over
+ * scenario needs to be displayed.
  */
 public class GameOverPanel extends JPanel {
 
-    // Colori e font (puoi ajustarli a piacere)
+    
     private static final Color TITLE_COLOR = Color.BLUE;
 
     public GameOverPanel() {
@@ -36,7 +38,7 @@ public class GameOverPanel extends JPanel {
         gbc.insets = new Insets(12, 12, 12, 12);
         gbc.fill = GridBagConstraints.NONE;
 
-        // Titolo
+        // Title
         final JLabel title = new JLabel("GAME OVER");
         title.setForeground(TITLE_COLOR);
         title.setFont(title.getFont().deriveFont(Font.BOLD, 64f));
@@ -44,8 +46,6 @@ public class GameOverPanel extends JPanel {
 
 
     }
-
-    /* ---- Demo standalone (puoi eliminarla nel tuo progetto) ---- */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame f = new JFrame("Game Over");
