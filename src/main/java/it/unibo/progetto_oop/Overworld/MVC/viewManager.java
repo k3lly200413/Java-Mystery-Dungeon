@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import java.awt.CardLayout;
 
-import it.unibo.progetto_oop.combat.inventory.*;
+import it.unibo.progetto_oop.Combat.Inventory.*;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
 import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatView;

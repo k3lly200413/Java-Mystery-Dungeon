@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import it.unibo.progetto_oop.combat.inventory.Inventory;
-import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
@@ -21,6 +19,8 @@ import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.Combat.Inventory.Inventory;
+import it.unibo.progetto_oop.Combat.Inventory.Item;
 
 /**
  * OverworldModel: orchestratore del mondo di gioco.

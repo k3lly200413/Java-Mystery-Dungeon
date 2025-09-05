@@ -1,7 +1,7 @@
 package it.unibo.progetto_oop.Overworld.Player.PlayerObserver;
 
 import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.combat.inventory.Inventory;
+import it.unibo.progetto_oop.Combat.Inventory.Inventory;
 
 // Interface for objects that want to observe the Player
 public interface PlayerObserver {
