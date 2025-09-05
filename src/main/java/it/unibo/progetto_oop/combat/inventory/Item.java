@@ -5,7 +5,7 @@ import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 public abstract class Item {
     private final String name;
     private final String description;
-     private final Position position;
+    private final Position position;
     
     public Item(String name, String description, Position position) {
         this.name = name;

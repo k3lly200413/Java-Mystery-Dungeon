@@ -12,13 +12,18 @@ import it.unibo.progetto_oop.combat.command_pattern.GameButton;
 import it.unibo.progetto_oop.combat.command_pattern.LongRangeButton;
 import it.unibo.progetto_oop.combat.command_pattern.MeleeButton;
 import it.unibo.progetto_oop.combat.helper.Neighbours;
+import it.unibo.progetto_oop.combat.potion_strategy.AttackBuff;
+import it.unibo.progetto_oop.combat.potion_strategy.CurePoison;
+import it.unibo.progetto_oop.combat.potion_strategy.Healing;
 import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
 import it.unibo.progetto_oop.combat.state_pattern.BossTurnState;
 import it.unibo.progetto_oop.combat.state_pattern.CombatState;
 import it.unibo.progetto_oop.combat.state_pattern.EnemyTurnState;
 import it.unibo.progetto_oop.combat.state_pattern.GameOverState;
 import it.unibo.progetto_oop.combat.state_pattern.InfoDisplayState;
+import it.unibo.progetto_oop.combat.state_pattern.ItemSelectionState;
 import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
+
 
 /**.
  * Controller class in Model View Controller Pattern
@@ -27,6 +32,21 @@ import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
  * @author matteo.monari6@studio.unibo.it
  */
 public class CombatController {
+    /**
+     * Attack buff instance for handling attack buffs.
+     */
+    private static final AttackBuff ATTACK_BUFF = new AttackBuff();
+
+    /**
+     * Healing instance for handling healing potions.
+     */
+    private static final Healing HEALING = new Healing();
+
+    /**
+     * Cure poison instance for handling poison curing.
+     */
+    private static final CurePoison CURE_POISON = new CurePoison();
+
     /**
      * Animation delay for each step in the animation.
      */
@@ -165,7 +185,7 @@ public class CombatController {
             e -> System.out.println("Run clicked - Not Yet Implemented"));
         this.view.addCurePoisonButtonListener(
             e -> this.handleCurePoisonInput());
-        this.view.addAttackButtonListener(e -> handleAttackBuff());
+        this.view.addAttackButtonListener(e -> handleAttackMenu());
         this.view.addAttackBuffButtonListener(e -> handleAttackBuff());
         this.view.addHealButtonListener(e -> handleHeal());
     }
@@ -183,11 +203,13 @@ public class CombatController {
     }
 
     private void handleBagMenu() {
+        this.setState(new ItemSelectionState());
         this.view.showBagButtons();
         view.clearInfo();
     }
 
     private void handleBackToMainMenu() {
+        this.setState(new PlayerTurnState());
         this.currentState.enterState(this);
         this.currentState.handleBackInput(this);
     }
