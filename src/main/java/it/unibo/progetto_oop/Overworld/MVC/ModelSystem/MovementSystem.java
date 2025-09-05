@@ -8,7 +8,6 @@ import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public class MovementSystem {
     private final Player player;

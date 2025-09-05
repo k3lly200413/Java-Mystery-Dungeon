@@ -3,7 +3,6 @@ package it.unibo.progetto_oop.Overworld.PlayGround;
 import java.util.List;
 import java.util.Random;
 
-import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldController;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
@@ -17,6 +16,7 @@ import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RandomPlacem
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RoomPlacementStrategy;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.TunnelPlacementStrategy;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
+import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.Overworld.MVC.ViewManager;
 
 public final class Main {

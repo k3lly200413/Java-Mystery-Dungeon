@@ -5,9 +5,9 @@ import javax.swing.*;
 import java.awt.CardLayout;
 
 import it.unibo.progetto_oop.combat.inventory.*;
+import it.unibo.progetto_oop.combat.mvc_Pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_Pattern.CombatView;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 import it.unibo.progetto_oop.combat.CombatLauncher;
 
 public class ViewManager {
