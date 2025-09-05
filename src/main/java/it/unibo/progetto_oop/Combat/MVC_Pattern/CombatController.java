@@ -304,7 +304,7 @@ public class CombatController {
                 return; // Check if player was defeated
             }
 
-            model.setPlayerTurn(!this.model.isPlayerTurn());
+            model.setPlayerTurn(this.model.isPlayerTurn());
             view.setAllButtonsEnabled();
             view.showInfo("Player's turn!");
             view.showOriginalButtons();
