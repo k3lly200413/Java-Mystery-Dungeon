@@ -6,12 +6,12 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.command_pattern.GameButton;
 import it.unibo.progetto_oop.combat.command_pattern.LongRangeButton;
 import it.unibo.progetto_oop.combat.command_pattern.MeleeButton;
 import it.unibo.progetto_oop.combat.helper.Neighbours;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
 import it.unibo.progetto_oop.combat.state_pattern.BossTurnState;
 import it.unibo.progetto_oop.combat.state_pattern.CombatState;
@@ -1058,18 +1058,14 @@ public class CombatController {
         final int num = new Random().nextInt(2);
 
         switch (num) {
-            case physical:
-                performEnemyPhysicalAttack();
-                break;
-            case longRange:
-                performLongRangeAttack(
+            case physical -> performEnemyPhysicalAttack();
+            case longRange -> performLongRangeAttack(
                     model.getEnemyPosition(),
                     -1,
                     false,
                     true);
-                    break;
-            default:
-                break;
+            default -> {
+            }
         }
 
     }
