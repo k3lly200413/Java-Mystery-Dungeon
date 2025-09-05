@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
-import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
 
 
 /**

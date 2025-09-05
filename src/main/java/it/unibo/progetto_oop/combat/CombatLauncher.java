@@ -5,7 +5,7 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 
-public class CombatLauncher {
+public final class CombatLauncher {
 
     private CombatLauncher() {
         throw new UnsupportedOperationException("Utility class");
@@ -14,7 +14,6 @@ public class CombatLauncher {
     /**
      * Main method to launch the combat application.
      *
-     * @param args Command line arguments
      * @return combatController instance
      */
     public static CombatController buildCombat() {
@@ -43,7 +42,8 @@ public class CombatLauncher {
         final int sizeDivisor = 3;
 
         // --- Application Startup ---
-        // Ensure UI creation happens on the Event Dispatch Thread (EDT) for safety.
+        // Ensure UI creation happens on the Event
+        // Dispatch Thread (EDT) for safety.
             // 1. Create the Model with our configuration
             final CombatModel model = new CombatBuilder()
             .setSize(size)
