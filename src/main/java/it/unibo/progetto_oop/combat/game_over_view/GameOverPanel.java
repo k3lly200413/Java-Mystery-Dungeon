@@ -9,11 +9,8 @@ import java.awt.Insets;
 
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 
@@ -133,7 +130,7 @@ public class GameOverPanel extends JPanel {
      * Creates a JFrame to host the panel and
      * demonstrates its appearance and functionality.
      * @param args command line arguments (not used)
-     */
+
     public static void main(final String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame f = new JFrame("Java Mystery Dungeon - Game Over ");
@@ -147,6 +144,6 @@ public class GameOverPanel extends JPanel {
             f.setLocationRelativeTo(null);
             f.setVisible(true);
         });
-    }
+    } */
 }
 

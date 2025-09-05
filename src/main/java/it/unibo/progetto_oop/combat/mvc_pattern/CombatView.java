@@ -1,34 +1,37 @@
 package it.unibo.progetto_oop.combat.mvc_pattern;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
-
-import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
-import it.unibo.progetto_oop.combat.helper.Neighbours;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.awt.FlowLayout;
-import java.awt.Graphics2D;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.border.BevelBorder;
+
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
+import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
+import it.unibo.progetto_oop.combat.helper.Neighbours;
 
 public class CombatView extends JPanel {
     /**
@@ -829,5 +832,28 @@ public class CombatView extends JPanel {
      */
     public final void addHealButtonListener(final ActionListener e) {
         this.healButton.addActionListener(e);
+    }
+
+    public void showGameOver(final Runnable onRestart) {
+        // Recupera il JFrame che contiene questa view
+        final JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        if (frame == null) {
+            // Safety: se la view non è ancora attaccata ad un frame
+            return;
+        }
+        // Costruisci il pannello di Game Over
+        final GameOverPanel panel =
+            new GameOverPanel(() -> {
+                // Chi verrà eseguito al click su "Restart"
+                // TODO: qui in futuro resetta il modello e torna alla schermata di gioco, es.:
+                // controller.restartMatch();
+                // controller.setState(new PlayerTurnState());
+                // this. (ri)mostra la UI del combattimento
+            });
+
+        // Mostra il pannello di Game Over dentro lo stesso frame
+        frame.setContentPane(panel);
+        frame.revalidate();
+        frame.repaint();
     }
 }

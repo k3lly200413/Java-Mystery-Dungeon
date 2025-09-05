@@ -21,7 +21,7 @@ public final class CombatLauncher {
         final int size = 12;
         final int playerPower = 10;
         final int playerPoisonPower = 2;
-        final int enemyPower = 5;
+        final int enemyPower = 60;
         final int enemySpeed = 3;
         final String enemyName = "Dragon";
         final int playerMaxStamina = 100;

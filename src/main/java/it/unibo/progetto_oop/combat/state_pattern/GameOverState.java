@@ -2,6 +2,7 @@ package it.unibo.progetto_oop.combat.state_pattern;
 
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
+import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
 
@@ -27,6 +28,12 @@ public class GameOverState implements  CombatState {
         .whoDied(context.getModel().getWhoDied())
         .build();
         context.getView().redrawGrid(defaultRedraw);
+
+        context.getView().showGameOver(() -> {
+            // TODO: qui in futuro resetta il Model e cambia stato, es:
+            // context.restartMatch();
+            // context.setState(new PlayerTurnState());
+        });
     }
 
     /**
