@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,6 +27,7 @@ public class GameOverPanel extends JPanel {
 
     
     private static final Color TITLE_COLOR = Color.BLUE;
+    private final JButton restartButton;
 
     public GameOverPanel(final Runnable onRestart){
         setOpaque(true);
@@ -56,6 +58,20 @@ public class GameOverPanel extends JPanel {
         gbc.gridy = 2;
         gbc.insets = new Insets(24, 12, 24, 12);
         add(Box.createVerticalStrut(10), gbc);
+
+        // Restart Button
+        gbc.gridy = 3;
+        restartButton = new JButton("Restart");
+        restartButton.setFocusPainted(false);
+        restartButton.setFont(restartButton.getFont().deriveFont(Font.BOLD, 22f));
+        restartButton.setPreferredSize(new Dimension(360, 56));
+        restartButton.addActionListener(e -> {
+            if (onRestart != null) {
+                onRestart.run();
+            }
+        });
+        add(restartButton, gbc);
+
 
     }
     public static void main(String[] args) {
