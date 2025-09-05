@@ -708,13 +708,13 @@ public class CombatController {
                 onEnemyAttackComplete);
     }
 
-private void performInfoZoomInAnimation(final Runnable onZoomComplete) {
+    private void performInfoZoomInAnimation(final Runnable onZoomComplete) {
         this.stopAnimationTimer();
         this.view.setAllButtonsDisabled();
 
-        final int size = 5;
+        final int size = (model.getSize() / 2) - 2; // Target size for zoom
 
-        final int targetX = model.getSize() / 2;
+        final int targetX = (model.getSize() / 2);
 
         this.animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
             final Position currentEnemyPosition = model.getEnemyPosition();
@@ -773,10 +773,11 @@ private void performInfoZoomInAnimation(final Runnable onZoomComplete) {
                 .flame(this.model.getAttackPosition())
                 .drawEnemy(true)
                 .playerRange(1)
-                .enemyRange(1)
+                .enemyRange(conto[0])
                 .setIsGameOver(this.model.isGameOver())
                 .build();
                 this.view.redrawGrid(defaultRedraw);
+                conto[0]++;
                 /* this.redrawView(this.model.getPlayerPosition(),
                 this.model.getEnemyPosition(), this.model.getAttackPosition(),
                 0, false, true, false, false, 1, 1,
