@@ -60,7 +60,7 @@ public final class Main {
 
         ViewManager viewManager = new ViewManager();
         viewManager.start(view);
-        OverworldController movementController = new OverworldController(overworldModel, view, viewManager);
+        new OverworldController(overworldModel, view, viewManager);
     }
 }
 
