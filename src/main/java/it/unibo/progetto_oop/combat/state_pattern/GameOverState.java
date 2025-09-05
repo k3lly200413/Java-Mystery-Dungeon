@@ -2,8 +2,8 @@ package it.unibo.progetto_oop.combat.state_pattern;
 
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
-import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
 
 public class GameOverState implements  CombatState {
 
@@ -102,7 +102,7 @@ public class GameOverState implements  CombatState {
 
     @Override
     public void handlePotionUsed(final CombatController context,
-    final Item selectedPotion, final Player player) {
+    final PotionStrategy selectedPotion, final Player player) {
         // TODO Auto-generated method stub
 
     }

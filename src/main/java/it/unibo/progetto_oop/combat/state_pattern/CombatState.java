@@ -1,8 +1,8 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
 import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
 
 public interface CombatState {
     /**
@@ -73,7 +73,7 @@ public interface CombatState {
      * @param player The player using the potion
      */
     void handlePotionUsed(CombatController context,
-    Item selectedPotion, Player player);
+    PotionStrategy selectedPotion, Player player);
 
     /**
      * This method is called when curing poison during combat.
