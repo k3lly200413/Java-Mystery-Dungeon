@@ -61,8 +61,13 @@ public class GameOverPanel extends JPanel {
     /** Height of the frame for testing purposes. */
     private static final int FRAME_HEIGHT = 600;
 
+    /** Number of rows in the layout grid. */
+    private final int row = 3;
+
     /** Button to restart the game. */
     private final JButton restartButton;
+
+
 
     /**
      * Constructs a GameOverPanel with a restart button.
@@ -106,7 +111,7 @@ public class GameOverPanel extends JPanel {
         add(Box.createVerticalStrut(VERTICAL_SPACING), gbc);
 
         // Restart Button
-        gbc.gridy = 3;
+        gbc.gridy = row;
         restartButton = new JButton("Restart");
         restartButton.setFocusPainted(false);
         restartButton.setFont(restartButton.getFont().
