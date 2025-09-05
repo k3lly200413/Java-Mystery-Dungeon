@@ -6,7 +6,6 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -31,6 +30,7 @@ import java.util.Map;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 
+<<<<<<< HEAD
 public class CombatView extends JFrame {
     /**
      * Serial version UID for serialization.
@@ -68,7 +68,10 @@ public class CombatView extends JFrame {
      * Size to use for the combat view.
      */
     private final int sizeToUse;
+=======
+public class CombatView extends JPanel {
 
+>>>>>>> CombatTransition
     /**
      * Height and width of the buttons in the combat view.
      */
@@ -204,7 +207,6 @@ public class CombatView extends JFrame {
     final int widthModifierToAssign,
     final int maxPlayerHealthToAssign,
     final int maxEnemyHealthToAssign) {
-        super("Combat View");
         this.sizeToUse = size;
         this.heightModifier = heightModifierToAssign;
         this.widthModifier = widthModifierToAssign;
@@ -223,7 +225,6 @@ public class CombatView extends JFrame {
      * Created new method because of PMD
      */
     public void init() {
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.initializeUI(
             sizeToUse,
@@ -613,6 +614,7 @@ public class CombatView extends JFrame {
     public final void display() {
         this.setVisible(true);
     }
+<<<<<<< HEAD
 
     /**
      * Closes the combat view and releases resources.
@@ -620,6 +622,8 @@ public class CombatView extends JFrame {
     public final void close() {
         this.dispose();
     }
+=======
+>>>>>>> CombatTransition
 
     private ImageIcon getIconResource(
         final String path,

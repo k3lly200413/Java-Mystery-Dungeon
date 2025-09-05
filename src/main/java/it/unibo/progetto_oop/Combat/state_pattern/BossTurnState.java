@@ -5,7 +5,7 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 /**
- * Boss' Turn State during Combat.
+ * Boss' Turn State during combat.
  */
 public class BossTurnState implements CombatState {
 

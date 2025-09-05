@@ -1,4 +1,3 @@
-
 package it.unibo.progetto_oop.combat.command_pattern;
 
 import java.util.List;
