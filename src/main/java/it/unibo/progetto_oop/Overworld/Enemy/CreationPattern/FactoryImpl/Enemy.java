@@ -1,13 +1,10 @@
 package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl;
 
-import java.util.Set;
-
 import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.GenericEnemyState;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 public interface Enemy {
     /** 

@@ -5,7 +5,6 @@ import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.GenericEnemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.VisibilityUtil;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategyImpl.FollowMovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategyImpl.PatrolMovementStrategy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
