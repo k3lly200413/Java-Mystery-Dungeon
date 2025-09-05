@@ -2,7 +2,6 @@ package it.unibo.progetto_oop.combat.state_pattern;
 
 import javax.swing.Timer;
 
-import it.unibo.progetto_oop.combat.inventory.Item;r;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
@@ -136,6 +135,12 @@ public class EnemyTurnState implements CombatState {
     @Override
     public void handleAnimationComplete(final CombatController context) {
         // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void handlePotionUsed(CombatController context, Item selectedPotion, Player player) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'handlePotionUsed'");
     }
 
 }
