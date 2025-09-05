@@ -13,6 +13,7 @@ import it.unibo.progetto_oop.combat.command_pattern.MeleeButton;
 import it.unibo.progetto_oop.combat.helper.Neighbours;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
+import it.unibo.progetto_oop.combat.state_pattern.BossTurnState;
 import it.unibo.progetto_oop.combat.state_pattern.CombatState;
 import it.unibo.progetto_oop.combat.state_pattern.EnemyTurnState;
 import it.unibo.progetto_oop.combat.state_pattern.GameOverState;
@@ -810,7 +811,7 @@ private void performInfoZoomInAnimation(final Runnable onZoomComplete) {
 
                 if (this.model.isPlayerTurn()) {
                     view.updateEnemyHealth(remaining);
-                    this.setState(new EnemyTurnState());
+                    this.setState(new BossTurnState());
                 } else {
                     view.updatePlayerHealth(remaining);
                     this.setState(new PlayerTurnState());
@@ -1145,7 +1146,7 @@ private void performInfoZoomInAnimation(final Runnable onZoomComplete) {
                 if (this.model.isPlayerTurn()) {
                     this.model.setPlayerTurn(false);
                     view.updateEnemyHealth(remaining);
-                    this.setState(new EnemyTurnState());
+                    this.setState(new BossTurnState());
                 } else {
                     this.model.setPlayerTurn(true);
                     view.updatePlayerHealth(remaining);

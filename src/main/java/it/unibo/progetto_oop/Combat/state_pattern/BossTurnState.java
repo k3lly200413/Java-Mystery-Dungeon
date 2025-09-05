@@ -10,15 +10,11 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 public class BossTurnState implements CombatState {
 
     /** Health percentage threshold to switch the boss state to ENRAGED. */
-    private static final int BOSS_ENRAGED_THRESHOLD = 50;
+    private static final int BOSS_ENRAGED_THRESHOLD = 20;
     /** Interval of turns for the boss to perform the Death Ray attack. */
     private static final int DEATH_RAY_INTERVAL = 5;
     /** Interval of turns for the boss to charge a super attack. */
     private static final int SUPER_ATTACK_CHARGE_INTERVAL = 4;
-    /** Interval of turns for the boss to perform a standard enemy attack. */
-    private static final int STANDARD_ATTACK_INTERVAL = 3;
-    /** Conversion factor to percentage values (100%). */
-    private static final int PERCENT_CONVERSION = 100;
     /** Indicates the boss state. */
     private String bossState = "NORMAL";
 
@@ -85,19 +81,21 @@ public class BossTurnState implements CombatState {
     @Override
     public final void enterState(final CombatController context) {
         context.getView().showInfo("Starting Boss Turn");
-        final int bossHealthPercent =
-            context.getModel().getEnemyHealth()
-            / context.getModel().getMaxHealth() * PERCENT_CONVERSION;
-
-        if (bossHealthPercent < BOSS_ENRAGED_THRESHOLD
+        if (context.getModel().getEnemyHealth() < BOSS_ENRAGED_THRESHOLD
             && "NORMAL".equalsIgnoreCase(this.bossState)) {
             this.bossState = "ENRAGED";
             context.getView().showInfo("The Boss is now ENRAGED");
         }
         if ("ENRAGED".equalsIgnoreCase(this.bossState)) {
+            context.setState(new AnimatingState());
             context.performEnemySuperAttack();
         } else {
-            if (context.getModel().getBossTurnCounter()
+            if (context.getModel().getBossTurnCounter() == 0) {
+                context.setState(new AnimatingState());
+                context.performEnemyPhysicalAttack();
+                context.getModel().setBossTurn(false);
+                context.getModel().increaseBossTurnCounter();
+            } else if (context.getModel().getBossTurnCounter()
                 % DEATH_RAY_INTERVAL == 0) {
                 context.setState(new AnimatingState());
                 context.performBossDeathRayAttack();
@@ -114,15 +112,9 @@ public class BossTurnState implements CombatState {
                 });
                 context.getModel().setBossTurn(false);
                 context.getModel().increaseBossTurnCounter();
-            } else if (context.getModel().
-            getBossTurnCounter() % STANDARD_ATTACK_INTERVAL == 0) {
-                context.setState(new AnimatingState());
-                context.performEnemyAttack();
-                context.getModel().setBossTurn(false);
-                context.getModel().increaseBossTurnCounter();
             } else {
                 context.setState(new AnimatingState());
-                context.performEnemyPhysicalAttack();
+                context.performEnemyAttack();
                 context.getModel().setBossTurn(false);
                 context.getModel().increaseBossTurnCounter();
             }

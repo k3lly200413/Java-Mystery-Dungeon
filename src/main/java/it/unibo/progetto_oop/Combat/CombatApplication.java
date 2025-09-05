@@ -25,7 +25,7 @@ public final class CombatApplication {
     public static void main(final String[] args) {
         // --- Game Configuration ---
         final int size = 12;
-        final int playerPower = 40;
+        final int playerPower = 10;
         final int playerPoisonPower = 2;
         final int enemyPower = 5;
         final int enemySpeed = 3;
