@@ -21,7 +21,7 @@ public class PatrollerState implements GenericEnemyState {
 
     @Override
     public void enterState(Enemy context) {
-        currentDirection = movementUtil.getInitialGeneralMoveDirection(context.getCurrentPosition(), context.getWalls(), this.isVertical);
+        currentDirection = movementUtil.getInitialGeneralMoveDirection(context.getCurrentPosition(), this.isVertical);
         if (this.currentDirection == MoveDirection.NONE){
             this.currentDirection = this.isVertical ? MoveDirection.DOWN : MoveDirection.UP;
         }

@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldEntitiesGenerator;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class Dungeon {
     /**
@@ -28,8 +24,6 @@ public class Dungeon {
      * Configuration settings for the dungeon floors.
      */
     private final FloorConfig config;
-    private final Player player;
-    private final OverworldModel overworldModel;
 
     /**
      * Constructs a Dungeon with the specified generator and configuration.
@@ -37,11 +31,9 @@ public class Dungeon {
      * @param gen the generator used to create floors in the dungeon
      * @param conf the configuration settings for the dungeon floors
      */
-    public Dungeon(final FloorGenerator gen, final FloorConfig conf, Player player, OverworldModel model) {
+    public Dungeon(final FloorGenerator gen, final FloorConfig conf) {
         this.generator = Objects.requireNonNull(gen);
         this.config = Objects.requireNonNull(conf);
-        this.player = Objects.requireNonNull(player);
-        this.overworldModel = Objects.requireNonNull(model);
     }
 
     /**
@@ -72,19 +64,11 @@ public class Dungeon {
         }
         int nextIndex = currentFloor + 1;
         if (nextIndex >= floors.size()) {
-            FloorConfig cfg = (nextIndex == config.nFloors() - 1)
-                    ? finalRoomConfig(config) // ultimo piano una stanza
-                    : config; // config base
-            floors.add(new Floor(cfg, generator));
+            final boolean isFinal = (nextIndex == config.nFloors() - 1);
+            final FloorConfig cfg = isFinal ? finalRoomConfig(config) : config;
+            floors.add(new Floor(cfg, generator, isFinal));
         }
         currentFloor = nextIndex;
-
-        //crea l'oggetto e lo mette nella posizione assegnata
-        GridNotifier gridNotifier = new GridNotifier(this.getCurrentFloor());
-
-        new OverworldEntitiesGenerator(this.getCurrentFloor(), this.player, this.overworldModel, gridNotifier);
-        overworldModel.setGridNotifier(gridNotifier);
-        
         return true;
     }
 
@@ -93,7 +77,7 @@ public class Dungeon {
                 .size(c.width(), c.height())
                 .rooms(1)
                 .roomSize(
-                    c.minRoomW(), c.maxRoomW(), c.minRoomH(), c.maxRoomH()
+                    c.minRoomW()+1, c.maxRoomW() - 4, c.minRoomH()+1, c.maxRoomH() - 4
                 )
                 .build();
     }

@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import it.unibo.progetto_oop.Overworld.MVC.ViewManager;
 
@@ -88,7 +89,7 @@ public class InventoryView extends JPanel {
         this.backButton = new JButton("Back to Game");
         this.backButton.addActionListener(e -> {
             if (this.game != null) {
-                // TODO: back to overworld
+                SwingUtilities.getWindowAncestor(this).dispose();
             }
         });
         backButtonPanel.add(this.backButton);

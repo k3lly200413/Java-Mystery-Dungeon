@@ -1,13 +1,11 @@
 package it.unibo.progetto_oop.Overworld.MVC;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import it.unibo.progetto_oop.Combat.Inventory.Item;
-import it.unibo.progetto_oop.Combat.PotionFactory.ItemFactory;
+import it.unibo.progetto_oop.combat.inventory.Item;
+import it.unibo.progetto_oop.combat.potion_factory.ItemFactory;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactory;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactoryImpl;
@@ -27,11 +25,11 @@ public class OverworldEntitiesGenerator {
     private static final int ENEMY_HP = 100;
     private static final int ENEMY_POWER = 20;
 
-    public OverworldEntitiesGenerator(Floor curreFloor, Player player, OverworldModel overworldModel, GridNotifier gridNotifier) {
-        generateItems(curreFloor);
-        generateEnemies(curreFloor, gridNotifier);
-        spawnPlayer(curreFloor, player);
-        overworldModel.setSpawnObjects(enemyList, itemList, new HashSet<>());  // l'ho messo per testare, poi vedi tu come vuoi implementare questa cosa
+    public OverworldEntitiesGenerator(Floor currentFloor, Player player, OverworldModel overworldModel, GridNotifier gridNotifier) {
+        generateItems(currentFloor);
+        generateEnemies(currentFloor, gridNotifier, overworldModel);
+        spawnPlayer(currentFloor, player);
+        overworldModel.setSpawnObjects(enemyList, itemList);   //l'ho messo per testare, poi vedi tu come vuoi implementare questa cosa
     }
 
     private void generateItems(Floor currentFloor) {
@@ -43,15 +41,15 @@ public class OverworldEntitiesGenerator {
         }
     }
 
-    private void generateEnemies(Floor currentFloor, GridNotifier gridNotifier) {
-        EnemyFactory factory = new EnemyFactoryImpl();
+    private void generateEnemies(Floor currentFloor, GridNotifier gridNotifier, OverworldModel overworldModel) {
+        EnemyFactory factory = new EnemyFactoryImpl(overworldModel.getWallCollision(), overworldModel.getCombatCollision());
         for (Position pos : currentFloor.getObjectsPositions(TileType.ENEMY)) {
             int roll = ThreadLocalRandom.current().nextInt(3);
             Enemy enemy;
             switch (roll) {
-                case 0 -> enemy = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, pos, true, Collections.emptySet(), gridNotifier);
-                case 1 -> enemy = factory.createSleeperEnemy(ENEMY_HP, ENEMY_POWER, pos, true, Collections.emptySet(), gridNotifier);
-                default -> enemy = factory.createPatrollerEnemy(ENEMY_HP, ENEMY_POWER, pos, false, Collections.emptySet(), gridNotifier);
+                case 0 -> enemy = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, pos, true, gridNotifier);
+                case 1 -> enemy = factory.createSleeperEnemy(ENEMY_HP, ENEMY_POWER, pos, true, gridNotifier);
+                default -> enemy = factory.createPatrollerEnemy(ENEMY_HP, ENEMY_POWER, pos, false, gridNotifier);
             }
             enemyList.add(enemy);
         }

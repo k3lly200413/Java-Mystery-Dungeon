@@ -13,6 +13,7 @@ import it.unibo.progetto_oop.combat.command_pattern.MeleeButton;
 import it.unibo.progetto_oop.combat.helper.Neighbours;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
+import it.unibo.progetto_oop.combat.state_pattern.BossTurnState;
 import it.unibo.progetto_oop.combat.state_pattern.CombatState;
 import it.unibo.progetto_oop.combat.state_pattern.EnemyTurnState;
 import it.unibo.progetto_oop.combat.state_pattern.GameOverState;
@@ -23,6 +24,7 @@ import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
  * Controller class in Model View Controller Pattern
  *
  * @author Kelly.applebee@studio.unibo.it
+ * @author matteo.monari6@studio.unibo.it
  */
 public class CombatController {
     /**
@@ -303,7 +305,7 @@ public class CombatController {
                 return; // Check if player was defeated
             }
 
-            model.setPlayerTurn(!this.model.isPlayerTurn());
+            model.setPlayerTurn(this.model.isPlayerTurn());
             view.setAllButtonsEnabled();
             view.showInfo("Player's turn!");
             view.showOriginalButtons();
@@ -588,7 +590,7 @@ public class CombatController {
                     nextTargetPos = result.get(1);
                     if (this.neighbours.neighbours(
                     nextAttackerPos, nextTargetPos, meleeCheckDistance)
-                            || !nextTargetPos.equals(currentTargetPos[0]))/*Da cambiare  */ { // Check slightly wider range
+                            || !nextTargetPos.equals(currentTargetPos[0])) {
                         state[0] = 1;
                     } else if (nextAttackerPos.equals(currentAttackerPos[0])) {
                         if (this.neighbours.neighbours(
@@ -600,8 +602,8 @@ public class CombatController {
                             state[0] = 1;
                         }
                     }
-                    /*
-                     * da cambiare */
+                    currentAttackerPos[0] = nextAttackerPos;
+                    currentTargetPos[0] = nextTargetPos;
                 }
                 case 1 -> {
                     if (!damageApplied[0]) {
@@ -794,7 +796,7 @@ public class CombatController {
      * Animates poison damage effect.
      * This method animates the poison damage effect on the affected character.
      */
-    private void animatePoisonDamage() {
+    public final void animatePoisonDamage() {
         this.stopAnimationTimer();
         final int[] step = {4};
         this.animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, e -> {
@@ -810,7 +812,7 @@ public class CombatController {
 
                 if (this.model.isPlayerTurn()) {
                     view.updateEnemyHealth(remaining);
-                    this.setState(new EnemyTurnState());
+                    this.setState(new BossTurnState());
                 } else {
                     view.updatePlayerHealth(remaining);
                     this.setState(new PlayerTurnState());
@@ -1056,14 +1058,18 @@ public class CombatController {
         final int num = new Random().nextInt(2);
 
         switch (num) {
-            case physical -> performEnemyPhysicalAttack();
-            case longRange -> performLongRangeAttack(
+            case physical:
+                performEnemyPhysicalAttack();
+                break;
+            case longRange:
+                performLongRangeAttack(
                     model.getEnemyPosition(),
                     -1,
                     false,
                     true);
-            default -> {
-            }
+                    break;
+            default:
+                break;
         }
 
     }
@@ -1141,7 +1147,7 @@ public class CombatController {
                 if (this.model.isPlayerTurn()) {
                     this.model.setPlayerTurn(false);
                     view.updateEnemyHealth(remaining);
-                    this.setState(new EnemyTurnState());
+                    this.setState(new BossTurnState());
                 } else {
                     this.model.setPlayerTurn(true);
                     view.updatePlayerHealth(remaining);
@@ -1183,6 +1189,5 @@ public class CombatController {
         //il timer non è coe un for (lo so è strano))
 
     }
-
 
 }

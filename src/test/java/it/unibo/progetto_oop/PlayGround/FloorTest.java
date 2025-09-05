@@ -26,7 +26,7 @@ public class FloorTest {
                 .build();
 
         FloorGenerator gen = new FloorGenerator(new ImplRoomPlacement(), new ImplTunnelPlacement(), new ImplRandomPlacement(), new Random());
-        return new Floor(conf, gen);
+        return new Floor(conf, gen, false);
     }
 
     @Test

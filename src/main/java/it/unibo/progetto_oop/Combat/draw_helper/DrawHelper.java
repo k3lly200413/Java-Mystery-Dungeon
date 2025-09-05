@@ -1,3 +1,4 @@
+
 package it.unibo.progetto_oop.combat.draw_helper;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
@@ -39,5 +40,6 @@ public class DrawHelper {
         || Math.abs(pos1.x() - pos2.x()) == dist && pos1.y() == pos2.y()
         || pos1.x() == pos2.x() && Math.abs(pos1.y() - pos2.y()) == dist
         || pos1.x() == pos2.x() && pos2.y() == pos1.y();
+
     }
 }

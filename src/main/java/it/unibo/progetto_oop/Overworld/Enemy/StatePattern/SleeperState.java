@@ -20,10 +20,8 @@ public class SleeperState implements GenericEnemyState {
 
     @Override
     public void update(Enemy context, Player player) {
-        System.out.println("In Sleeper State so no action taken");
-        Position curPos = context.getCurrentPosition();
-        
-        context.getGridNotifier().notifyEnemyMoved(curPos, curPos);
+        Position currentPos = context.getCurrentPosition();
+        context.getGridNotifier().notifyEnemyMoved(currentPos, currentPos);
     }
 
     @Override
