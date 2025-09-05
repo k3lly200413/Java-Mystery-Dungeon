@@ -8,7 +8,7 @@ import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
 
-// The Player class - Acts as the Subject/Observable
+// The Player class - Observer-free version
 public class Player {
     /**
      * the player current hp value.
@@ -30,6 +30,10 @@ public class Player {
      */
     private Inventory inventory;
 
+    /**
+     * the list of observers.
+     */
+    private List<PlayerObserver> observers;
 
     /**
      * constructor for player class.
@@ -51,14 +55,12 @@ public class Player {
         if (this.inventory.hasItem(item)) {
             if (item instanceof Potion) {
                 Potion potion = (Potion) item;
-                PotionStrategy strategy =
-                    potion.getStrategy(); // the kind of potion
+                PotionStrategy strategy = potion.getStrategy(); // the kind of potion
                 if (strategy != null) {
-                    System.out.println("Using potion "
-                        + potion.getDescription());
-                    PossibleUser adaptedPlayer =
-                        new OverworldPlayerAdapter(this);
+                    System.out.println("Using potion " + potion.getDescription());
+                    PossibleUser adaptedPlayer = new OverworldPlayerAdapter(this);
                     potion.use(adaptedPlayer);
+                    //TODO maybe put in the observer pattern
                     this.inventory.decreaseItemCount(item);
                 } else {
                     System.out.println("Strategy is null");
@@ -102,8 +104,7 @@ public class Player {
             // if currentHP + amount > maxHP, set it to maxHP
             this.currentHP = Math.min(this.maxHP, this.currentHP + amount);
         } else {
-            System.out.println(
-                "Nothing changed because either Max health or no health");
+            System.out.println("Nothing changed because either Max health or no health");
         }
     }
 
@@ -124,7 +125,6 @@ public class Player {
         this.inventory = newInventory;
     }
 
-
     // ---- GETTERS ----
 
     /**
@@ -144,7 +144,6 @@ public class Player {
     public int getMaxHp() {
         return this.maxHP;
     }
-
 
     /**
      * Get the player position.
