@@ -1,8 +1,8 @@
 package it.unibo.progetto_oop.combat.potion_strategy;
 
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
-import it.unibo.progetto_oop.combat.Inventory.Item;
-import it.unibo.progetto_oop.combat.position.Position;
+import it.unibo.progetto_oop.combat.inventory.Item;ata.Position;
+import it.unibo.progetto_oop.combat.inventory.Item;
 
 public class Potion extends Item {
 
@@ -42,12 +42,9 @@ public class Potion extends Item {
     @Override
     public boolean use(final PossibleUser target) {
         if (this.strategy != null) {
-            System.out.println("Applying effect of: " + this.getName());
             this.strategy.applyEffect(target);
             return true;
         } else {
-            System.out.println("Warning: Potion "
-            + getName() + " has no strategy.");
             return false;
         }
     }

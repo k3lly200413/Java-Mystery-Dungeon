@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.Inventory;
+package it.unibo.progetto_oop.combat.inventory;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 import it.unibo.progetto_oop.combat.position.Position;
 

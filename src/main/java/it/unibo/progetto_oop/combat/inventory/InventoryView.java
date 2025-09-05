@@ -1,8 +1,17 @@
-package it.unibo.progetto_oop.combat.Inventory;
+package it.unibo.progetto_oop.combat.inventory;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import it.unibo.progetto_oop.Overworld.MVC.OverworldApplication;
 

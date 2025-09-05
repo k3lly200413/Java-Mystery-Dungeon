@@ -1,8 +1,8 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
-import it.unibo.progetto_oop.combat.Inventory.Item;
+import it.unibo.progetto_oop.combat.inventory.Item;r;
+import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public interface CombatState {
     /**
