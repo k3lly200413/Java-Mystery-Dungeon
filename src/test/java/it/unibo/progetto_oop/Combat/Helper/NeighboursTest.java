@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.helper;
+package it.unibo.progetto_oop.combat.Helper;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

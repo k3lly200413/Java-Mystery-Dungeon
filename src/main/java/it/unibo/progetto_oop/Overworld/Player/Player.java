@@ -31,11 +31,6 @@ public class Player {
     private Inventory inventory;
 
     /**
-     * the list of observers.
-     */
-    private List<PlayerObserver> observers;
-
-    /**
      * constructor for player class.
      * @param maxHp
      * @param newInventory

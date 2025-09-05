@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.mvc_pattern;
+package it.unibo.progetto_oop.combat.MVC_Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
