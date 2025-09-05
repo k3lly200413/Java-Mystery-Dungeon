@@ -1,16 +1,12 @@
 package it.unibo.progetto_oop.Overworld.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import it.unibo.progetto_oop.Overworld.AdapterPattern.OverworldPlayerAdapter;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.Player.PlayerObserver.PlayerObserver;
-import it.unibo.progetto_oop.Combat.potion_strategy.Potion;
-import it.unibo.progetto_oop.Combat.Inventory.Inventory;
-import it.unibo.progetto_oop.Combat.Inventory.Item;
-import it.unibo.progetto_oop.Combat.potion_strategy.PotionStrategy;
+import it.unibo.progetto_oop.combat.potion_strategy.Potion;
+import it.unibo.progetto_oop.combat.inventory.Inventory;
+import it.unibo.progetto_oop.combat.inventory.Item;
+import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
 
 // The Player class - Acts as the Subject/Observable
 public class Player {
@@ -34,10 +30,6 @@ public class Player {
      */
     private Inventory inventory;
 
-    /**
-     * the list of observers.
-     */
-    private List<PlayerObserver> observers;
 
     /**
      * constructor for player class.
@@ -48,57 +40,6 @@ public class Player {
         this.maxHP = maxHp;
         this.currentHP = this.maxHP;
         this.inventory = newInventory;
-        this.observers = new ArrayList<>();
-    }
-
-    // obserbver methods
-
-    /**
-     * add an observer.
-     * @param observer the observer to add
-     */
-    public void addObservers(final PlayerObserver observer) {
-        if (!this.observers.contains(observer)) { // if not already present
-            this.observers.add(observer);
-        }
-    }
-
-    /** remove an observer.
-     *  @param observer the observer to remove
-    */
-    public void removeObservers(final PlayerObserver observer) {
-        if (!this.observers.remove(observer)) {
-            System.out.println("Observer not found");
-        }
-    }
-
-    /** Notify observers about hp change.
-     * @param currentHp the current value for health point
-     * @param maxHp the maximum value for health point
-     */
-    private void notifyHpChange(final int currentHp, final int maxHp) {
-        this.observers.stream()
-            .forEach(
-                observer -> observer.playerHpChanged(
-                    currentHp, maxHp));
-    }
-
-    /**
-     * Notify observers about inventory changes.
-     */
-    private void notifyInventoryChanged() {
-        this.observers.stream().
-            forEach(
-                observer -> observer.playerInventoryChanged(this.inventory));
-    }
-
-    /**
-     * Notify observers about position changes.
-     */
-    private void notifyPositionChanged() {
-        this.observers.stream().
-            forEach(
-                observer -> observer.playerPositionChanged(this));
     }
 
     /**
@@ -118,9 +59,7 @@ public class Player {
                     PossibleUser adaptedPlayer =
                         new OverworldPlayerAdapter(this);
                     potion.use(adaptedPlayer);
-                    //TODO maybe put in the observer pattern
                     this.inventory.decreaseItemCount(item);
-                    this.notifyInventoryChanged();
                 } else {
                     System.out.println("Strategy is null");
                 }
@@ -140,8 +79,6 @@ public class Player {
      */
     public void addItem(final Item item) {
         this.inventory.addItem(item);
-        this.observers.stream()
-            .forEach(observer -> observer.playerInventoryChanged(inventory));
     }
 
     /**
@@ -164,7 +101,6 @@ public class Player {
         if (this.currentHP != this.maxHP && this.currentHP != 0) {
             // if currentHP + amount > maxHP, set it to maxHP
             this.currentHP = Math.min(this.maxHP, this.currentHP + amount);
-            this.notifyHpChange(this.currentHP, this.maxHP);
         } else {
             System.out.println(
                 "Nothing changed because either Max health or no health");
@@ -178,7 +114,6 @@ public class Player {
      */
     public void setPosition(final Position newPos) {
         this.position = newPos;
-        this.notifyPositionChanged();
     }
 
     /**

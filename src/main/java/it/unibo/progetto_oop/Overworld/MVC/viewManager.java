@@ -4,11 +4,12 @@ import javax.swing.*;
 
 import java.awt.CardLayout;
 
-import it.unibo.progetto_oop.Combat.Inventory.*;
+import it.unibo.progetto_oop.combat.inventory.Inventory;
+import it.unibo.progetto_oop.combat.inventory.InventoryView;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatController;
-import it.unibo.progetto_oop.Combat.MVC_Pattern.CombatView;
-import it.unibo.progetto_oop.Combat.CombatLauncher;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
+import it.unibo.progetto_oop.combat.CombatLauncher;
 
 public class ViewManager {
 

@@ -13,14 +13,8 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
-<<<<<<< HEAD
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.helper.Neighbours;
-=======
-import it.unibo.progetto_oop.Combat.command_pattern.GameButton;
-import it.unibo.progetto_oop.Combat.command_pattern.MeleeButton;
-import it.unibo.progetto_oop.Combat.Helper.Neighbours;
->>>>>>> CombatTransition
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 
 import java.awt.BorderLayout;
@@ -37,7 +31,6 @@ import java.util.Map;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 
-<<<<<<< HEAD
 public class CombatView extends JFrame {
     /**
      * Serial version UID for serialization.
@@ -75,10 +68,7 @@ public class CombatView extends JFrame {
      * Size to use for the combat view.
      */
     private final int sizeToUse;
-=======
-public class CombatView extends JPanel {
 
->>>>>>> CombatTransition
     /**
      * Height and width of the buttons in the combat view.
      */
@@ -623,7 +613,6 @@ public class CombatView extends JPanel {
     public final void display() {
         this.setVisible(true);
     }
-<<<<<<< HEAD
 
     /**
      * Closes the combat view and releases resources.
@@ -631,8 +620,6 @@ public class CombatView extends JPanel {
     public final void close() {
         this.dispose();
     }
-=======
->>>>>>> CombatTransition
 
     private ImageIcon getIconResource(
         final String path,
