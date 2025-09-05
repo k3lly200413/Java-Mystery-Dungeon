@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.Player;
+package it.unibo.progetto_oop.Player;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.progetto_oop.combat.potion_factory.ItemFactory;
+import it.unibo.progetto_oop.Combat.Inventory.Inventory;
+import it.unibo.progetto_oop.Combat.Inventory.Item;
+import it.unibo.progetto_oop.Combat.PotionFactory.ItemFactory;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-
-
 
 
 

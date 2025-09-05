@@ -1,10 +1,10 @@
 package it.unibo.progetto_oop.Overworld.PlayGround;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 
-import it.unibo.progetto_oop.combat.inventory.Inventory;
+import it.unibo.progetto_oop.Combat.Inventory.Item;
+import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldController;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
@@ -17,7 +17,6 @@ import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RandomPlacem
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RoomPlacementStrategy;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.TunnelPlacementStrategy;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.MVC.ViewManager;
 
 public final class Main {
@@ -34,36 +33,33 @@ public final class Main {
      * @param args command-line arguments (not used)
      */
     public static void main(final String[] args) {
-
-        //-------------DA VEDERE !!!----------
-        Inventory inventory = new Inventory();
-        Player player = new Player(100, inventory);
-        OverworldModel overworldModel = new OverworldModel(player, new ArrayList<>(), new ArrayList<>(), new HashSet<>()); 
-        // TODO: aggiungere i muri che confinano le stanze
-        // ---------------!!!-----------------
-
         // MODEL
+        FloorConfig config = new FloorConfig.Builder().build();
+        
         final Random rand = new Random();
         final RandomPlacementStrategy rps = new ImplRandomPlacement();
         final RoomPlacementStrategy rrs = new ImplRoomPlacement();
         final TunnelPlacementStrategy tps = new ImplTunnelPlacement();
         FloorGenerator gen = new FloorGenerator(rrs, tps, rps, rand);
-        FloorConfig config = new FloorConfig.Builder().build();
-        Dungeon dungeon = new Dungeon(gen, config, player, overworldModel);
+        
+        Dungeon dungeon = new Dungeon(gen, config);
+        OverworldModel overworldModel = new OverworldModel(List.<Enemy>of(), List.<Item>of());
+        overworldModel.bindDungeon(dungeon);
+
         // VIEW
         SwingMapView view = new SwingMapView(
             "Java Mystery Dungeon", config.tileSize()
         );
         
         // CONTROLLER
-        MapController controller = new MapController(view, dungeon);
-        javax.swing.SwingUtilities.invokeLater(controller::show);
+        final MapController controller = new MapController(view, overworldModel);
+        controller.show();
         
-        // TODO: se vogliamo usare il cardlayout non ci deve essere show
+        // -----------CARD LAYOUT------------
+        //TODO: se vogliamo usare il cardlayout non ci deve essere show
 
         ViewManager viewManager = new ViewManager();
         viewManager.start(view);
-
         OverworldController movementController = new OverworldController(overworldModel, view, viewManager);
     }
 }

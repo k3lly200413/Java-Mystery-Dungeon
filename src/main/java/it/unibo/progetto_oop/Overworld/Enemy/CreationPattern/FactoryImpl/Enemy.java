@@ -32,12 +32,6 @@ public interface Enemy {
 
     /**
      * 
-     * @return the walls of the floor this enemy is moving on
-     */
-    public Set<Position> getWalls();
-
-    /**
-     * 
      * @return the enemy's gridNotifier
      */
     public GridNotifier getGridNotifier();

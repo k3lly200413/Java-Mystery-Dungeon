@@ -88,7 +88,7 @@ public class InventoryView extends JPanel {
         this.backButton = new JButton("Back to Game");
         this.backButton.addActionListener(e -> {
             if (this.game != null) {
-                // TODO: back to overworld
+                SwingUtilities.getWindowAncestor(this).dispose();
             }
         });
         backButtonPanel.add(this.backButton);

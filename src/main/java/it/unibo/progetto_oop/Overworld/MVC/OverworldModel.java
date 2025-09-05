@@ -1,184 +1,179 @@
 package it.unibo.progetto_oop.Overworld.MVC;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollisionImpl;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollisionImpl;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.MovementSystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.PickupSystem;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.ChangeFloorListener;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
+import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
+import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
-public class OverworldModel {
-    private final Player player;
+/**
+ * OverworldModel: orchestratore del mondo di gioco.
+ * - possiede Player e i systems (movement/pickup/enemy)
+ * - valida i movimenti contro la griglia del Floor corrente (read-only)
+ * - inoltra gli aggiornamenti al Floor tramite GridUpdater (notify*)
+ * - contiene il Dungeon e gestisce il cambio piano (binding del Floor corrente)
+ */
+public final class OverworldModel {
 
-    // utility systems
+    private Dungeon dungeon;
+    private final Player player;
+    private boolean inCombat;
+
+    //private Dungeon dungeon;
+
     private final PickupSystem pickupSystem;
     private final EnemySystem enemySystem;
     private final MovementSystem movementSystem;
 
-    private Set<Position> walls; // TODO: integrare con Alice
-
-    // flags
-    private boolean inCombat;
-
     // to access the grid
-    public GridNotifier gridNotifier;
+    private GridNotifier gridNotifier; // incapsulates GridUpdater
 
-    public OverworldModel(Player player, List<Enemy> enemies, List<Item> items, Set<Position> walls) { // TODO: integrare con Alice
-        this.player = player;
+    private ChangeFloorListener changeFloorListener;
+    private StructureData gridView; // read-only sarebbe da fare un interfaccia e non solo disciplina di codice
+    private WallCollision wallCollision;
+    private Consumer<Floor> floorInitializer = f -> {};
+    private CombatCollision combatCollision;
+
+    public OverworldModel(final List<Enemy> enemies, final List<Item> items) {
+        this.player = new Player(100, new Inventory());
         this.inCombat = false;
+        this.gridNotifier = new GridNotifier(null);
 
-        // initialize floor spawn objects 
-        this.walls = null;
-        this.pickupSystem = new PickupSystem(null, player, this);
-        this.enemySystem = new EnemySystem(null, player, this);
-        this.movementSystem = new MovementSystem(null, player, this);
+        this.pickupSystem = new PickupSystem(null, this.player, this);
+        this.enemySystem  = new EnemySystem(null, this.player, this);
+        this.movementSystem = new MovementSystem(this.player, this);
 
-        // fill floor spawn objects
-        this.setSpawnObjects(enemies, items, walls);
+        this.combatCollision = new CombatCollisionImpl();
+
+        setSpawnObjects(enemies, items);
     }
 
-    // --- getter methods ---
-
-    /**
-     * 
-     * @return Posizione del giocatore
-     */
-    public Player getPlayer(){
-        return this.player;
+    // Collega il dungeon e seleziona il primo Floor
+    public void bindDungeon(final Dungeon dungeon) {
+        this.dungeon = dungeon;
     }
 
-    /**
-     * 
-     * @return the list of items in the overworld
-     */
-    public List<Item> getItem(){
-        return this.pickupSystem.getItem();
+    // Imposta quale floor è quello attivo
+    public void bindCurrentFloor(final Floor floor) {
+        if (floor == null) {
+            this.gridView = null;
+            if (this.gridNotifier != null) {
+                this.gridNotifier.setGridUpdater(null);
+            }
+        }
+        else {
+            this.gridView = floor.grid();
+            if (this.gridNotifier == null) {
+                this.gridNotifier = new GridNotifier(null);
+            }
+            this.gridNotifier.setGridUpdater(floor); // Floor implementa GridUpdater
+        }
+        this.wallCollision = new WallCollisionImpl(gridView);
     }
 
-
-    /**
-     * 
-     * @return the player's inventory
-     */
-
-    public Inventory getInventoryInstance(){
-        return this.pickupSystem.getInventoryInstance();
+    public boolean nextFloor() {
+        final boolean changedFloor = this.dungeon.nextFloor();
+        if (changedFloor) {
+            final Floor floor = this.dungeon.getCurrentFloor();
+            bindCurrentFloor(floor);
+            floorInitializer.accept(floor);
+            this.changeFloorListener.onFloorChange(this.gridView);
+        }
+        return changedFloor;
     }
 
-    /**
-     * 
-     * @return set of walls
-     */
-    public Set<Position> getWalls(){
-        return this.walls;
+    public void setSpawnObjects(final List<Enemy> enemies, final List<Item> items) {
+        this.pickupSystem.setItems(items);
+        this.enemySystem.setEnemies(enemies);
     }
 
-    /**
-     * 
-     * @return list of enemies in the map
-     */
-    public List<Enemy> getEnemies(){
-        return this.enemySystem.getEnemies();
-    }
-
-    /**
-     * @return the encountered enemy
-     */
-    public Enemy getEncounteredEnemy(){
-        return this.enemySystem.getEncounteredEnemy();
-    }
-
-    /**
-     * 
-     * @return if the player is in combat
-     */
-    public boolean isInCombat(){
-        return this.inCombat;
-    }
-
-    /**
-     * 
-     * @return if a combat transition is pending
-     */
-    public boolean isCombatTransitionPending(){
-        return this.movementSystem.isCombatTransitionPending();
-    }
-
-    // setters
-
-    /** 
-     * @param the encountered enemy
-     */
-    public void setEncounteredEnemy(Enemy encounteredEnemy){
-        this.enemySystem.setEncounteredEnemy(encounteredEnemy);
-    }
-
-    /**
-     * Clear the InCombat flag, indicating that the player is no longer in combat.
-     */
-    public void clearInCombatFlag(){
-        this.inCombat = false;
-    }
-
-    /**
-     * Set the InCombat flag to true, indicating that the player has entered combat.
-     */
-    public void setInCombatFlag(){
-        this.inCombat = true;
-    }
-
-
-    /**
-     * Clear the combat transition flag, indicating that the combat transition is no longer pending.
-     */
-    public void clearCombatTransitionFlag(){
-        this.movementSystem.clearCombatTransitionFlag();
+    public void setFloorInitializer(Consumer<Floor> init) {
+        this.floorInitializer = Objects.requireNonNull(init);
     }
     
-    /**
-     * Set the combat transition flag to true, indicating that a combat transition is pending.
-    */
-    public void setCombatTransitionFlag(){
+    public void setChangeFloorListener(final ChangeFloorListener l) {
+        this.changeFloorListener = l;
+    }
+
+    //---------Getters----------
+    public Floor getCurrentFloor() {
+    return this.dungeon.getCurrentFloor();
+    }
+    public GridNotifier getGridNotifier() {
+        return gridNotifier;
+    }
+    public Player getPlayer() {
+        return this.player;
+    }
+    public List<Item> getItem() {
+        return this.pickupSystem.getItem();
+    }
+    public Inventory getInventoryInstance() {
+        return this.pickupSystem.getInventoryInstance();
+    }
+    public List<Enemy> getEnemies() {
+        return this.enemySystem.getEnemies();
+    }
+    public Enemy getEncounteredEnemy() {
+        return this.enemySystem.getEncounteredEnemy();
+    }
+    public boolean isInCombat() {
+        return this.inCombat;
+    }
+    public boolean isCombatTransitionPending() {
+        return this.movementSystem.isCombatTransitionPending();
+    }
+    public StructureData getGridView() {
+        return this.gridView;
+    }
+    public WallCollision getWallCollision() {
+        return this.wallCollision;
+    }
+    public CombatCollision getCombatCollision() {
+        return this.combatCollision;
+    }
+
+    //------Combat flags---------
+
+    public void setEncounteredEnemy(final Enemy e) {
+        this.enemySystem.setEncounteredEnemy(e);
+    }
+    public void clearInCombatFlag() {
+        this.inCombat = false;
+    }
+    public void setInCombatFlag() {
+        this.inCombat = true;
+    }
+    public void clearCombatTransitionFlag() {
+        this.movementSystem.clearCombatTransitionFlag();
+    }
+    public void setCombatTransitionFlag() {
         this.movementSystem.setCombatTransitionFlag();
     }
 
-    /**
-     * this method is called each time the player changes floor so that the model can update accordingly.
-     * @param enemies the enemies on the current floor
-     * @param items the items on the current floor
-     * @param walls the walls one the current floor
-     */
-    public void setSpawnObjects(List<Enemy> enemies, List<Item> items, Set<Position> walls) {
-        this.walls = walls;
-        this.pickupSystem.setItems(items);
-        this.enemySystem.setEnemies(enemies);
-        this.movementSystem.setWalls(this.walls);
-        
+    //---------Movimento---------
+
+    public void movePlayer(final int dx, final int dy) {
+        this.movementSystem.move(dx, dy, this.pickupSystem, this.enemySystem);
     }
 
     public void setGridNotifier(GridNotifier gridNotifier){
         this.gridNotifier = gridNotifier;
     }
-
-    // methods
-
-
-    /**
-     * Move the player checking if it encounters items, enemies or walls.
-     * If it encounters an enemy transition to combat
-     * 
-     * @param directionX direction of movement on axis x
-     * @param directionY direction of movement on axis y
-     */
-    public void movePlayer(int directionX, int directionY){
-        this.movementSystem.move(directionX, directionY, this.pickupSystem, this.enemySystem);
-    }
-
 }

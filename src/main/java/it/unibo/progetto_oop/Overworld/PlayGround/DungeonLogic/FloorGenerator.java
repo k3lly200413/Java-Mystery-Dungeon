@@ -6,11 +6,13 @@ import java.util.Objects;
 import java.util.Random;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RandomPlacementStrategy;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RoomPlacementStrategy;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.TunnelPlacementStrategy;
+
 //SINGLETON??
 public final class FloorGenerator {
     /**
@@ -33,18 +35,16 @@ public final class FloorGenerator {
     /**
      * Constructs a FloorGenerator with the specified placement strategies.
      *
-     * @param roomps the strategy for placing rooms
+     * @param roomps   the strategy for placing rooms
      * @param tunnelps the strategy for connecting rooms with tunnels
-     * @param randps the strategy for placing objects like stairs...
-     *
-     * @param r the random number generator used for placement strategies
+     * @param randps   the strategy for placing objects like stairs...
+     * @param r        the random number generator used for placement strategies
      */
     public FloorGenerator(
             final RoomPlacementStrategy roomps,
             final TunnelPlacementStrategy tunnelps,
             final RandomPlacementStrategy randps,
-            final Random r
-    ) {
+            final Random r) {
         this.roomPlacement = Objects.requireNonNull(roomps);
         this.tunnelPlacement = Objects.requireNonNull(tunnelps);
         this.objectPlacer = Objects.requireNonNull(randps);
@@ -61,8 +61,8 @@ public final class FloorGenerator {
      */
     public List<Room> generate(
             final StructureData grid,
-            final FloorConfig conf
-    ) {
+            final FloorConfig conf,
+            final boolean finalFloor) {
         if (conf.nRooms() <= 0) {
             throw new IllegalArgumentException("nRooms must be > 0");
         }
@@ -72,10 +72,16 @@ public final class FloorGenerator {
         if (rooms.size() >= 2) {
             tunnelPlacement.connect(grid, rooms, rand);
         }
-        objectPlacer.placeObject(grid, TileType.STAIRS, 1, rand);
-        objectPlacer.placeObject(grid, TileType.PLAYER, 1, rand);
-        objectPlacer.placeObject(grid, TileType.ENEMY, rooms.size() * 2, rand);
-        objectPlacer.placeObject(grid, TileType.ITEM, rooms.size(), rand);
+        if (!finalFloor) {
+            Position playerPos = objectPlacer.placePlayer(grid, TileType.PLAYER, rand);
+            objectPlacer.placeObject(grid, TileType.STAIRS, 1, rand, playerPos, 2);
+            objectPlacer.placeObject(grid, TileType.ENEMY, rooms.size(), rand, playerPos, 3);
+            objectPlacer.placeObject(grid, TileType.ITEM, rooms.size(), rand, playerPos, 3);
+        } 
+        else {
+            Position playerPos = objectPlacer.placePlayer(grid, TileType.PLAYER, rand);
+            objectPlacer.placeObject(grid, TileType.ENEMY, rooms.size(), rand, playerPos, 3);
+        }
         return rooms; // Floor farà List.copyOf(...)
     }
 }

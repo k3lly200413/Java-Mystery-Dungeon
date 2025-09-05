@@ -1,32 +1,27 @@
 package it.unibo.progetto_oop.Overworld.PlayGround;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.swing.SwingUtilities;
 
+import it.unibo.progetto_oop.Overworld.MVC.OverworldEntitiesGenerator;
+import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.ChangeFloorListener;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
-import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
+import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
 
-public final class MapController {
+public final class MapController implements ChangeFloorListener {
     /**
      * The SwingMapView instance used to display the map.
      */
     private final SwingMapView view;
-    /**
-     * The Dungeon instance used to manage the dungeon floors.
-     */
-    private final Dungeon dungeon;
-
-    /**
-     * Constructs a MapController with the specified view and dungeon.
-     *
-     * @param mapView    the SwingMapView instance to be used
-     * @param mapDungeon the Dungeon instance to be used
-     */
-    public MapController(final SwingMapView mapView, final Dungeon mapDungeon) {
+    private final OverworldModel model;
+    
+    public MapController(final SwingMapView mapView, final OverworldModel model) {
         this.view = Objects.requireNonNull(mapView);
-        this.dungeon = Objects.requireNonNull(mapDungeon);
+        this.model = Objects.requireNonNull(model);
     }
 
     /**
@@ -35,6 +30,8 @@ public final class MapController {
      */
     public void show() {
         view.onNextFloorRequested(this::next);
+        model.setChangeFloorListener(this);
+        model.setFloorInitializer(this::initFloor);
         next();
         SwingUtilities.invokeLater(view::showView);
     }
@@ -44,8 +41,24 @@ public final class MapController {
      * with the new floor's structure data.
      */
     public void next() {
-        dungeon.nextFloor();
-        StructureData grid = dungeon.getCurrentFloor().grid();
+        model.nextFloor();
+        model.bindCurrentFloor(model.getCurrentFloor());
+    }
+    
+    private void initFloor(Floor floor) {
+        // tolgo ogetti dal piano precedente
+        model.setSpawnObjects(List.of(), List.of());
+        // genero ogg nuovo piano
+        new OverworldEntitiesGenerator(
+            floor,
+            model.getPlayer(),
+            model,
+            model.getGridNotifier()
+        );
+    }
+
+    @Override
+    public void onFloorChange(StructureData grid) {
         SwingUtilities.invokeLater(() -> view.render(grid));
     }
 }

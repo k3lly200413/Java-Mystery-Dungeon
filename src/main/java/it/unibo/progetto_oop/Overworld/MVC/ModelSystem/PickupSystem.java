@@ -1,6 +1,7 @@
 package it.unibo.progetto_oop.Overworld.MVC.ModelSystem;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
@@ -9,20 +10,39 @@ import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class PickupSystem {
-    private List<Item> items; // items present in the map
-    private final Player player;
-    private final OverworldModel model; 
-
-    public PickupSystem(List<Item> items, Player player, OverworldModel model) {
-        this.items = items;
-        this.player = player;
-        this.model = model;   
-    }
-
-    // getters
+    /**
+     * the items on the map.
+     */
+    private List<Item> items;
 
     /**
-     * 
+     * the player.
+     */
+    private final Player player;
+
+    /**
+     * the Overworld model.
+     */
+    private final OverworldModel model;
+
+    /**
+     * contructor.
+     * @param newItems the items on the map
+     * @param newPlayer the player
+     * @param newModel the Overworld model
+     */
+    public PickupSystem(final List<Item> newItems,
+                        final Player newPlayer, final OverworldModel newModel) {
+        this.model = Objects.requireNonNull(newModel, "Model cannot be null");
+        this.player = Objects.requireNonNull(
+            newPlayer, "Player cannot be null");
+        this.items = newItems;
+    }
+
+    //---- GETTERS ----
+
+    /**
+     * get the items on the map.
      * @return the list of items in the overworld
      */
     public List<Item> getItem(){
@@ -30,12 +50,12 @@ public class PickupSystem {
     }
 
     /**
-     * 
+     * get the player's inventory.
      * @return the player's inventory
      */
 
-    public Inventory getInventoryInstance(){
-        return this.player.inventory;
+    public Inventory getInventoryInstance() {
+        return this.player.getInventory();
     }
 
     // setters
@@ -51,14 +71,14 @@ public class PickupSystem {
     // methods
 
     /**
-     * Remove an item from the overworld and add it to the player's inventory
-     * 
-     * @param item the item to remove
+     * Remove an item from the overworld and add it to the player's inventory.
+     * @param itemToRemove the item to remove
      */
-    private void removeItem(Item itemToRemove){
-        this.player.inventory.addItem(itemToRemove);
+    private void removeItem(final Item itemToRemove){
+        this.player.getInventory().addItem(itemToRemove);
         this.items.remove(itemToRemove);
-        this.model.gridNotifier.notifyItemRemoved(itemToRemove.getPosition());  // @autor Alice
+        this.model.getGridNotifier().
+            notifyItemRemoved(itemToRemove.getPosition());  // @autor Alice
     }
 
     /**
@@ -79,9 +99,9 @@ public class PickupSystem {
         Optional<Item> itemOpt = this.ItemFoundAtPlayerPosition();
 
         itemOpt.ifPresent(item -> {
-            System.out.println("Item found, picking it up "+item.getName());
+            System.out.println("Item found, picking it up " + item.getName());
             this.removeItem(item);
-            this.player.inventory.printInventory();
+            this.player.getInventory().printInventory();
         });
     }
 }

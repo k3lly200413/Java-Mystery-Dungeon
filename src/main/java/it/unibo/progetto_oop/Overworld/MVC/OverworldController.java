@@ -94,6 +94,7 @@ public class OverworldController {
         actionMap.put("Space", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                viewManager.showCombat();
             }
         });
     }

@@ -15,10 +15,10 @@ public final class Floor implements GridUpdater{
     private final StructureData grid;
     private final List<Room> rooms;
 
-    public Floor(FloorConfig conf, FloorGenerator gen) {
+    public Floor(FloorConfig conf, FloorGenerator gen, final boolean finalFloor) {
         Objects.requireNonNull(gen);
-        this.grid = new ImplArrayListStructureData(conf.width(),conf.height()); // oggi ArrayGrid; domani cambio qui
-        this.rooms = List.copyOf(gen.generate(grid, conf)); // Immutable list of rooms
+        this.grid = new ImplArrayListStructureData(conf.width(), conf.height()); // oggi ArrayGrid; domani cambio qui
+        this.rooms = List.copyOf(gen.generate(grid, conf, finalFloor)); // Immutable list of rooms
     }
 
     public StructureData grid() {
