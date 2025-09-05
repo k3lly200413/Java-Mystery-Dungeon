@@ -40,7 +40,7 @@ public class CombatController {
     /**
      * Healing instance for handling healing potions.
      */
-    private static final Healing HEALING = new Healing();
+    private static final Healing HEAL = new Healing();
 
     /**
      * Cure poison instance for handling poison curing.
@@ -261,7 +261,7 @@ public class CombatController {
     }
 
     private void handleCurePoisonInput() {
-        this.currentState.handleCurePoisonInput(this);
+        this.currentState.handlePotionUsed(this, CURE_POISON, null);
     }
 
     /**
@@ -1026,13 +1026,14 @@ public class CombatController {
 
     private void handleAttackBuff() {
         if (this.currentState != null) {
-            currentState.handleAttackBuffInput(this);
+            currentState.handlePotionUsed(this, ATTACK_BUFF, null);
         }
     }
 
     private void handleHeal() {
         if (this.currentState != null) {
-            currentState.handleHealInput(this);
+            currentState.handlePotionUsed(this, HEAL, null);
+            this.view.updatePlayerHealth(this.model.getPlayerHealth());
         }
     }
 
