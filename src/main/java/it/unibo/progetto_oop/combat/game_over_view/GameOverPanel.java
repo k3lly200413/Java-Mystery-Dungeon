@@ -7,6 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,9 +27,9 @@ public class GameOverPanel extends JPanel {
     
     private static final Color TITLE_COLOR = Color.BLUE;
 
-    public GameOverPanel() {
+    public GameOverPanel(final Runnable onRestart){
         setOpaque(true);
-        setBackground(Color.DARK_GRAY);
+        setBackground(Color.LIGHT_GRAY);
         setLayout(new GridBagLayout());
         setBorder(new EmptyBorder(24, 24, 24, 24));
 
@@ -44,6 +45,17 @@ public class GameOverPanel extends JPanel {
         title.setFont(title.getFont().deriveFont(Font.BOLD, 64f));
         add(title, gbc);
 
+        // Subtitle
+        gbc.gridy = 1;
+        final JLabel subtitle = new JLabel("You're dead");
+        subtitle.setForeground(Color.BLACK);
+        subtitle.setFont(subtitle.getFont().deriveFont(Font.PLAIN, 28f));
+        add(subtitle, gbc);
+
+        // Spacer
+        gbc.gridy = 2;
+        gbc.insets = new Insets(24, 12, 24, 12);
+        add(Box.createVerticalStrut(10), gbc);
 
     }
     public static void main(String[] args) {
@@ -52,7 +64,10 @@ public class GameOverPanel extends JPanel {
             f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             f.setMinimumSize(new Dimension(900, 600));
 
-
+            GameOverPanel panel = new GameOverPanel(() -> {
+                    System.out.println("Restart richiesto!");
+            });
+            f.setContentPane(panel);
             f.setLocationRelativeTo(null);
             f.setVisible(true);
         });
