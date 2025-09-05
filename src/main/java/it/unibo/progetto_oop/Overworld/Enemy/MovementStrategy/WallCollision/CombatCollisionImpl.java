@@ -1,6 +1,6 @@
 package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
 
-import it.unibo.progetto_oop.Combat.draw_helper.DrawHelper;
+import it.unibo.progetto_oop.combat.draw_helper.DrawHelper;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
