@@ -237,6 +237,16 @@ public class CombatController {
     private void handleBagMenu() {
         this.setState(new ItemSelectionState());
         this.view.showBagButtons();
+        if (this.player.getInventory().getItemCount(attackBuffItem) <= 0) {
+            this.view.setCustomButtonDisabled(this.view.getAttackBuffButton());
+
+        } if (this.player.getInventory().getItemCount(attackBuffItem) <= 0) {
+            this.view.setCustomButtonDisabled(this.view.getCurePoisonButton());
+
+        } if (this.player.getInventory().getItemCount(attackBuffItem) <= 0) {
+            this.view.setCustomButtonDisabled(this.view.getHealingButton());
+
+        }
         view.clearInfo();
     }
 
@@ -296,6 +306,7 @@ public class CombatController {
 
     private void handleCurePoisonInput() {
         this.currentState.handlePotionUsed(this, this.curePoisonItem, null);
+        currentState.handleBackInput(this);
     }
 
     /**
@@ -1061,6 +1072,7 @@ public class CombatController {
     private void handleAttackBuff() {
         if (this.currentState != null) {
             currentState.handlePotionUsed(this, this.attackBuffItem, null);
+            currentState.handleBackInput(this);
         }
     }
 
@@ -1068,6 +1080,7 @@ public class CombatController {
         if (this.currentState != null) {
             currentState.handlePotionUsed(this, this.healingItem, null);
             this.view.updatePlayerHealth(this.model.getPlayerHealth());
+            currentState.handleBackInput(this);
         }
     }
 
