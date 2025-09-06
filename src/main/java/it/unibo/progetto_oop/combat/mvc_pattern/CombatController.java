@@ -123,11 +123,11 @@ public class CombatController {
      */
     private CombatState currentState;
 
-    /** Combat collision handler 
+    /** Combat collision handler */
     private CombatCollision combatCollision;
 
-    Grid notifier for managing grid updates 
-    private GridNotifier gridNotifier;*/
+    /** Grid notifier for managing grid updates */
+    private GridNotifier gridNotifier;
 
     /**
      * Constructor of CombatController takes in both model and view.
@@ -140,7 +140,8 @@ public class CombatController {
      */
     public CombatController(
         final CombatModel modelToUse,
-        final CombatView viewToUse, final Player player) {
+        final CombatView viewToUse, final Player player,
+        final CombatCollision combatCollision, final GridNotifier gridNotifier) {
 
         this.model = modelToUse;
         this.view = viewToUse;
@@ -149,6 +150,9 @@ public class CombatController {
         this.view.setHealthBarMax(model.getMaxHealth());
         this.view.updatePlayerHealth(model.getPlayerHealth());
         this.view.updateEnemyHealth(model.getEnemyHealth());
+
+        this.combatCollision = combatCollision;
+        this.gridNotifier = gridNotifier;
 
         this.attachListeners();
 
@@ -223,8 +227,8 @@ public class CombatController {
             enemyActionTimer.stop();
         }
         enemyActionTimer = null;
-        //gridNotifier.notifyEnemyRemoved(this.model.getEnemyPosition());
-        //combatCollision.setInCombat(false);
+        gridNotifier.notifyEnemyRemoved(this.model.getEnemyPosition());
+        combatCollision.setInCombat(false);
         this.view.close();
     }
 
@@ -966,7 +970,7 @@ public class CombatController {
             final String winner =
                 model.getPlayerHealth() <= 0 ? "Enemy" : "Player";
             view.showInfo("Game Over! " + winner + " wins!");
-            this.setState(new GameOverState());
+            this.setState(new GameOverState(combatCollision, gridNotifier));
             return true;
         }
         return false;
