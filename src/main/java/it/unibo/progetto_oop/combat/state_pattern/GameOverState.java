@@ -2,8 +2,6 @@ package it.unibo.progetto_oop.combat.state_pattern;
 
 import javax.swing.Timer;
 
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
-import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.inventory.Item;
@@ -11,9 +9,14 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 
 public class GameOverState implements  CombatState {
 
-    private CombatCollision combatCollision;
+    /*private CombatCollision combatCollision;
 
     private GridNotifier gridNotifier;
+
+    public GameOverState(final CombatCollision combatCollision, final GridNotifier gridNotifier) {
+        this.combatCollision = combatCollision;
+        this.gridNotifier = gridNotifier;
+    }*/
     /**
      *
      * @param context Istance of the controller
@@ -21,7 +24,7 @@ public class GameOverState implements  CombatState {
      * This method is called when entering a combat state.
      */
     @Override
-    public void enterState(final CombatController context) {
+    public void enterState(final CombatController context ) {
         Timer enemyActionTimer = new Timer(700, e -> {
             if (context.getModel().getPlayerHealth() <= 0) {
                 context.getView().showGameOver(() -> {

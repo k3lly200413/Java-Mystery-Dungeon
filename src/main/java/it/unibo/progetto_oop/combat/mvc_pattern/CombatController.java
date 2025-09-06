@@ -123,11 +123,11 @@ public class CombatController {
      */
     private CombatState currentState;
 
-    /** Combat collision handler */
+    /** Combat collision handler 
     private CombatCollision combatCollision;
 
-    /** Grid notifier for managing grid updates */
-    private GridNotifier gridNotifier;
+    Grid notifier for managing grid updates 
+    private GridNotifier gridNotifier;*/
 
     /**
      * Constructor of CombatController takes in both model and view.
