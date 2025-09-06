@@ -244,6 +244,8 @@ public class CombatController {
      */
     public final void performBackToMainMenu() {
         view.showOriginalButtons(); // Go back to the main menu
+        this.model.resetPositions();
+        this.redrawView();
     }
 
     private void handleInfo() {
