@@ -7,12 +7,14 @@ import java.util.Random;
 import javax.swing.Timer;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.command_pattern.GameButton;
 import it.unibo.progetto_oop.combat.command_pattern.LongRangeButton;
 import it.unibo.progetto_oop.combat.command_pattern.MeleeButton;
 import it.unibo.progetto_oop.combat.helper.Neighbours;
 import it.unibo.progetto_oop.combat.inventory.Item;
+import it.unibo.progetto_oop.combat.potion_factory.ItemFactory;
 import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
 import it.unibo.progetto_oop.combat.state_pattern.BossTurnState;
 import it.unibo.progetto_oop.combat.state_pattern.CombatState;
@@ -74,6 +76,16 @@ public class CombatController {
     private Item healingItem;
 
     /**
+     * Static instance of Player item to be used across states.
+     */
+    private final Player player;
+
+    /**
+     * Static instance of ItemFactory to be used across states.
+     */
+    private final ItemFactory itemFactory;
+
+    /**
      * Model which holds information necessary to controller.
      */
     private final CombatModel model;
@@ -120,7 +132,7 @@ public class CombatController {
      */
     public CombatController(
         final CombatModel modelToUse,
-        final CombatView viewToUse) {
+        final CombatView viewToUse, final Player player) {
 
         this.model = modelToUse;
         this.view = viewToUse;
@@ -134,6 +146,13 @@ public class CombatController {
 
         this.redrawView();
         this.currentState = new PlayerTurnState();
+
+        this.itemFactory = new ItemFactory();
+        this.player = player;
+        this.attackBuffItem = itemFactory.createItem("AttackBuff",null);
+        this.curePoisonItem = itemFactory.createItem("Antidote",null);
+        this.healingItem = itemFactory.createItem("HealingItem",null);
+        //this.checkIfPlayerHasItemsAndActivateButtons();
     }
 
     /**

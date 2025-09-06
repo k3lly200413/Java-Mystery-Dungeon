@@ -66,7 +66,7 @@ public final class CombatLauncher {
 
             // 3. Create the Controller, linking the Model and View
             final CombatController controller =
-                new CombatController(model, view);
+                new CombatController(model, view,null);
 
             return controller;
     }
