@@ -1,10 +1,10 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
-import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
 
 public class InfoDisplayState implements CombatState {
 
@@ -124,7 +124,7 @@ public class InfoDisplayState implements CombatState {
 
     @Override
     public void handlePotionUsed(final CombatController context,
-    final PotionStrategy selectedPotion, final Player player) {
+    final Item selectedPotion, final Player player) {
         // TODO Auto-generated method stub
     }
 

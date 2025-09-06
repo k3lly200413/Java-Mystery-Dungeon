@@ -1,8 +1,8 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
-import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
 
 /**
  * Boss' Turn State during combat.
@@ -150,10 +150,11 @@ public class BossTurnState implements CombatState {
     @Override
     public final void handlePotionUsed(
         final CombatController context,
-        final PotionStrategy selectedPotion,
+        final Item selectedPotion,
         final Player player) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 "Unimplemented method 'handlePotionUsed'");
     }
+
 }

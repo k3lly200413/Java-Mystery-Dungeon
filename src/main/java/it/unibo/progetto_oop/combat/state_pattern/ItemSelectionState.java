@@ -4,8 +4,8 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
-import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
 
 
 
@@ -56,8 +56,8 @@ public class ItemSelectionState implements CombatState {
     @Override
     public void handlePotionUsed(
         final CombatController context,
-        final PotionStrategy selectedPotion, final Player player) {
-        selectedPotion.applyEffect(context.getModel());
+        final Item selectedPotion, final Player player) {
+        selectedPotion.use(context.getModel());
     }
 
     @Override
@@ -82,4 +82,5 @@ public class ItemSelectionState implements CombatState {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleHealInput'");
     }
+
 }
