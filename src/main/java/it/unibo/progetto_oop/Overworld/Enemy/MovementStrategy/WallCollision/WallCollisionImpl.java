@@ -44,7 +44,7 @@ public final class WallCollisionImpl implements WallCollision {
             return false;
         final TileType t = baseGrid.get(to.x(), to.y());
         final TileType eg = entityGrid.get(to.x(), to.y());
-        return t == TileType.ROOM || t == TileType.TUNNEL || t == TileType.STAIRS || eg != TileType.ENEMY;
+        return (t != TileType.WALL) && (eg != TileType.ENEMY);
     }
 
     // Passo valido per i nemici
