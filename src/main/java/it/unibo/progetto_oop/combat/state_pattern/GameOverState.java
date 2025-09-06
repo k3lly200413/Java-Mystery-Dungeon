@@ -1,5 +1,7 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
+import javax.swing.Timer;
+
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.inventory.Item;
@@ -7,6 +9,14 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 
 public class GameOverState implements  CombatState {
 
+    /*private CombatCollision combatCollision;
+
+    private GridNotifier gridNotifier;
+
+    public GameOverState(final CombatCollision combatCollision, final GridNotifier gridNotifier) {
+        this.combatCollision = combatCollision;
+        this.gridNotifier = gridNotifier;
+    }*/
     /**
      *
      * @param context Istance of the controller
@@ -14,7 +24,25 @@ public class GameOverState implements  CombatState {
      * This method is called when entering a combat state.
      */
     @Override
-    public void enterState(final CombatController context) {
+    public void enterState(final CombatController context ) {
+        Timer enemyActionTimer = new Timer(700, e -> {
+            if (context.getModel().getPlayerHealth() <= 0) {
+                context.getView().showGameOver(() -> {
+                // TODO: qui in futuro resetta il Model e cambia stato, es:
+                // context.restartMatch();
+                // context.setState(new PlayerTurnState());
+                });
+            } else if (context.getModel().getEnemyHealth() <= 0) {
+                //gridNotifier.notifyEnemyRemoved(context.getModel().getEnemyPosition());
+                //combatCollision.setInCombat(false);
+                context.getView().showInfo("You Win! Returning to Overworld...");
+                context.getView().close();
+                
+            }
+        });
+        enemyActionTimer.setRepeats(false);
+        enemyActionTimer.start();
+
         final RedrawContext defaultRedraw = new RedrawContext.Builder()
         .player(context.getModel().getPlayerPosition())
         .enemy(context.getModel().getEnemyPosition())
@@ -28,17 +56,6 @@ public class GameOverState implements  CombatState {
         .build();
         context.getView().redrawGrid(defaultRedraw);
 
-        if (context.getModel().getPlayerHealth() <= 0) {
-            context.getView().showGameOver(() -> {
-            // TODO: qui in futuro resetta il Model e cambia stato, es:
-            // context.restartMatch();
-            // context.setState(new PlayerTurnState());
-        });
-        } else if (context.getModel().getEnemyHealth() <= 0) {
-            context.getView().showInfo("You Win! Closing in 3 seconds...");
-            context.getView().close();
-        }
-        
     }
 
     /**

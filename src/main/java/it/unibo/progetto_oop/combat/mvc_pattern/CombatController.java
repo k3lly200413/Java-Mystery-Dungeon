@@ -6,6 +6,8 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
+import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
@@ -121,6 +123,12 @@ public class CombatController {
      */
     private CombatState currentState;
 
+    /** Combat collision handler 
+    private CombatCollision combatCollision;
+
+    Grid notifier for managing grid updates 
+    private GridNotifier gridNotifier;*/
+
     /**
      * Constructor of CombatController takes in both model and view.
      *
@@ -218,7 +226,8 @@ public class CombatController {
             enemyActionTimer.stop();
         }
         enemyActionTimer = null;
-        
+        //gridNotifier.notifyEnemyRemoved(this.model.getEnemyPosition());
+        //combatCollision.setInCombat(false);
         this.view.close();
     }
 

@@ -9,4 +9,6 @@ public interface CombatCollision {
 
     public void initiateCombatTransition(Enemy enemy, Player player);
 
+    public void setInCombat(boolean inCombat);
+
 }

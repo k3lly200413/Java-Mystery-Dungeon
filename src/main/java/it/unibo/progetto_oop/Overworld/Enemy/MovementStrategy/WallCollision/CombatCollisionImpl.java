@@ -1,13 +1,13 @@
 package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
 
-import it.unibo.progetto_oop.combat.CombatLauncher;
-import it.unibo.progetto_oop.combat.draw_helper.DrawHelper;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
 import it.unibo.progetto_oop.Overworld.MVC.ViewManager;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.combat.CombatLauncher;
+import it.unibo.progetto_oop.combat.draw_helper.DrawHelper;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 
 public class CombatCollisionImpl implements CombatCollision{
     private final DrawHelper neighboursCheck;
@@ -33,7 +33,11 @@ public class CombatCollisionImpl implements CombatCollision{
         enemy.setState(combat);
         inCombat = true;
 
-        CombatController combatController = CombatLauncher.buildCombat(player);
+    CombatController combatController = CombatLauncher.buildCombat(player);
         new ViewManager().showCombat(combatController);
+    }
+
+    public void setInCombat(boolean inCombat) {
+        this.inCombat = inCombat;
     }
 }
