@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
@@ -108,6 +109,12 @@ public class CombatController {
      * This is used to determine if the player can attack the enemy.
      */
     private final Neighbours neighbours;
+
+    /**
+     * Static instance of Enemy to be used across states.
+     */
+    private final Enemy enemy;
+
     /**
      * Timer for animations.
      * This is used to control the timing of animations in the combat.
@@ -141,7 +148,8 @@ public class CombatController {
     public CombatController(
         final CombatModel modelToUse,
         final CombatView viewToUse, final Player player,
-        final CombatCollision combatCollision, final GridNotifier gridNotifier) {
+        final CombatCollision combatCollision, final GridNotifier gridNotifier,
+        final Enemy enemy) {
 
         this.model = modelToUse;
         this.view = viewToUse;
@@ -153,6 +161,7 @@ public class CombatController {
 
         this.combatCollision = combatCollision;
         this.gridNotifier = gridNotifier;
+        this.enemy = enemy;
 
         this.attachListeners();
 
@@ -230,7 +239,7 @@ public class CombatController {
             enemyActionTimer.stop();
         }
         enemyActionTimer = null;
-        gridNotifier.notifyEnemyRemoved(this.model.getEnemyPosition());
+        gridNotifier.notifyEnemyRemoved(enemy.getCurrentPosition());
         combatCollision.setInCombat(false);
         this.view.close();
     }
@@ -986,7 +995,7 @@ public class CombatController {
             final String winner =
                 model.getPlayerHealth() <= 0 ? "Enemy" : "Player";
             view.showInfo("Game Over! " + winner + " wins!");
-            this.setState(new GameOverState(combatCollision, gridNotifier));
+            this.setState(new GameOverState(combatCollision, gridNotifier,enemy));
             return true;
         }
         return false;

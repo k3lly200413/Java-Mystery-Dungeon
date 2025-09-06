@@ -2,6 +2,7 @@ package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
 
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
+import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.MVC.ViewManager;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
@@ -12,11 +13,13 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 public class CombatCollisionImpl implements CombatCollision{
     private final DrawHelper neighboursCheck;
     private boolean inCombat = false;
+    private GridNotifier gridNotifier;
 
-    private static int COMBAT_DISTANCE = 1; 
+    private static int COMBAT_DISTANCE = 1;
 
-    public CombatCollisionImpl() {
+    public CombatCollisionImpl(GridNotifier gridNotifier) {
         this.neighboursCheck = new DrawHelper();
+        this.gridNotifier = gridNotifier;
     }
 
     public boolean checkCombatCollision(Position player, Position enemy) {
@@ -31,7 +34,7 @@ public class CombatCollisionImpl implements CombatCollision{
         enemy.setState(combat);
         inCombat = true;
 
-    CombatController combatController = CombatLauncher.buildCombat(player,this);
+    CombatController combatController = CombatLauncher.buildCombat(player,this, gridNotifier, enemy);
         new ViewManager().showCombat(combatController);
     }
 

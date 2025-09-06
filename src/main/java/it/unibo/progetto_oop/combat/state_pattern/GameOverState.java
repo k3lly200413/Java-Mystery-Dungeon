@@ -2,6 +2,7 @@ package it.unibo.progetto_oop.combat.state_pattern;
 
 import javax.swing.Timer;
 
+import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.Player.Player;
@@ -15,9 +16,12 @@ public class GameOverState implements  CombatState {
 
     private GridNotifier gridNotifier;
 
-    public GameOverState(final CombatCollision combatCollision, final GridNotifier gridNotifier) {
+    private Enemy enemy;
+
+    public GameOverState(final CombatCollision combatCollision, final GridNotifier gridNotifier, final Enemy enemy) {
         this.combatCollision = combatCollision;
         this.gridNotifier = gridNotifier;
+        this.enemy = enemy;
     }
     /**
      *
@@ -35,7 +39,7 @@ public class GameOverState implements  CombatState {
                 // context.setState(new PlayerTurnState());
                 });
             } else if (context.getModel().getEnemyHealth() <= 0) {
-                gridNotifier.notifyEnemyRemoved(context.getModel().getEnemyPosition());
+                gridNotifier.notifyEnemyRemoved(enemy.getCurrentPosition());
                 combatCollision.setInCombat(false);
                 context.getView().showInfo("You Win! Returning to Overworld...");
                 context.getView().close();
