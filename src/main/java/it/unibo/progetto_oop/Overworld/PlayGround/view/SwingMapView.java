@@ -201,7 +201,6 @@ public final class SwingMapView extends JFrame implements MapView {
                 case ENEMY  -> enemyImg;
                 case ITEM   -> itemImg;
 
-                // Nessuno / default
                 case NONE   -> null;
                 default     -> null;
             };
