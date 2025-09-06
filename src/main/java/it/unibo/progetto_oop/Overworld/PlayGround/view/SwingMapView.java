@@ -88,7 +88,9 @@ public final class SwingMapView extends JFrame implements MapView {
         // dimensione cella base
         private final int initialCell;
 
-        // Sprite originali
+        // Sprite 
+        private BufferedImage floorImg;
+        private BufferedImage stairsImg;
         private BufferedImage playerImg;
         private BufferedImage enemyImg;
         private BufferedImage itemImg;
@@ -97,9 +99,11 @@ public final class SwingMapView extends JFrame implements MapView {
             this.initialCell = cellSize;
             setBackground(Color.BLACK);
             // Carica sprite dalle risorse
+            this.floorImg = loadSprite("/spritesOverworld/floor.png");
+            this.stairsImg = loadSprite("/spritesOverworld/stairs.png");
             this.playerImg = loadSprite("/spritesOverworld/link.png");
             this.enemyImg  = loadSprite("/spritesOverworld/gengar.png");
-            //this.itemImg   = loadSprite("/spritesOverworld/item.png");
+            this.itemImg   = loadSprite("/spritesOverworld/potion.png");
         }
 
         void setGrid(final StructureData g) {
@@ -141,11 +145,13 @@ public final class SwingMapView extends JFrame implements MapView {
                     final int px = offX + x * cell;
                     final int py = offY + y * cell;
 
-                    g.setColor(colorFor(t));
-                    g.fillRect(px, py, cell, cell);
-
-                    g.setColor(new Color(0, 0, 0, 40));
-                    g.drawRect(px, py, cell, cell);
+                    final BufferedImage baseSprite = spriteFor(t);
+                    if (baseSprite != null) {
+                        g.drawImage(baseSprite, px, py, cell, cell, null);
+                    } else {
+                        g.setColor(colorFor(t));
+                        g.fillRect(px, py, cell, cell);
+                    }
                 }
             }
 
@@ -159,35 +165,12 @@ public final class SwingMapView extends JFrame implements MapView {
                         final int px = offX + x * cell;
                         final int py = offY + y * cell;
 
-                        switch (e) {
-                            case PLAYER -> {
-                                if (playerImg != null) {
-                                    g.drawImage(playerImg, px, py, cell, cell, null);
-                                } else {
-                                    g.setColor(colorFor(e));
-                                    g.fillRect(px, py, cell, cell);
-                                }
-                            }
-                            case ENEMY -> {
-                                if (enemyImg != null) {
-                                    g.drawImage(enemyImg, px, py, cell, cell, null);
-                                } else {
-                                    g.setColor(colorFor(e));
-                                    g.fillRect(px, py, cell, cell);
-                                }
-                            }
-                            case ITEM -> {
-                                if (itemImg != null) {
-                                    g.drawImage(itemImg, px, py, cell, cell, null);
-                                } else {
-                                    g.setColor(colorFor(e));
-                                    g.fillRect(px, py, cell, cell);
-                                }
-                            }
-                            default -> {
-                                g.setColor(colorFor(e));
-                                g.fillRect(px, py, cell, cell);
-                            }
+                        final BufferedImage entSprite = spriteFor(e);
+                        if (entSprite != null) {
+                            g.drawImage(entSprite, px, py, cell, cell, null);
+                        } else {
+                            g.setColor(colorFor(e));
+                            g.fillRect(px, py, cell, cell);
                         }
 
                         // bordo celle
@@ -204,6 +187,24 @@ public final class SwingMapView extends JFrame implements MapView {
             } catch (Exception e) {
                 return null;
             }
+        }
+
+        private BufferedImage spriteFor(final TileType t) {
+            return switch (t) {
+                // Terreno
+                case ROOM -> floorImg;
+                case TUNNEL -> floorImg;
+                case STAIRS -> stairsImg;
+
+                // Entità
+                case PLAYER -> playerImg;
+                case ENEMY  -> enemyImg;
+                case ITEM   -> itemImg;
+
+                // Nessuno / default
+                case NONE   -> null;
+                default     -> null;
+            };
         }
 
         private Color colorFor(final TileType t) {
