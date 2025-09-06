@@ -12,13 +12,11 @@ import it.unibo.progetto_oop.Overworld.Player.Player;
 public class CombatCollisionImpl implements CombatCollision{
     private final DrawHelper neighboursCheck;
     private boolean inCombat = false;
-    private final Player player;
 
     private static int COMBAT_DISTANCE = 1; 
 
-    public CombatCollisionImpl(Player player) {
+    public CombatCollisionImpl() {
         this.neighboursCheck = new DrawHelper();
-        this.player = player;
     }
 
     public boolean checkCombatCollision(Position player, Position enemy) {
