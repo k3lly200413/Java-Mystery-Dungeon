@@ -12,9 +12,7 @@ import it.unibo.progetto_oop.combat.command_pattern.GameButton;
 import it.unibo.progetto_oop.combat.command_pattern.LongRangeButton;
 import it.unibo.progetto_oop.combat.command_pattern.MeleeButton;
 import it.unibo.progetto_oop.combat.helper.Neighbours;
-import it.unibo.progetto_oop.combat.potion_strategy.AttackBuff;
-import it.unibo.progetto_oop.combat.potion_strategy.CurePoison;
-import it.unibo.progetto_oop.combat.potion_strategy.Healing;
+import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
 import it.unibo.progetto_oop.combat.state_pattern.BossTurnState;
 import it.unibo.progetto_oop.combat.state_pattern.CombatState;
@@ -32,20 +30,6 @@ import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
  * @author matteo.monari6@studio.unibo.it
  */
 public class CombatController {
-    /**
-     * Attack buff instance for handling attack buffs.
-     */
-    private static final AttackBuff ATTACK_BUFF = new AttackBuff();
-
-    /**
-     * Healing instance for handling healing potions.
-     */
-    private static final Healing HEAL = new Healing();
-
-    /**
-     * Cure poison instance for handling poison curing.
-     */
-    private static final CurePoison CURE_POISON = new CurePoison();
 
     /**
      * Animation delay for each step in the animation.
@@ -72,6 +56,23 @@ public class CombatController {
      * Width of each square in the grid.
      */
     private static final int SQUARE_WIDTH = 20;
+
+    /**
+     * Static instance of CurePoison item to be used across states.
+     */
+    private Item curePoisonItem;
+
+    /**
+     * Static instance of AttackBuff item to be used across states.
+     */
+    private Item attackBuffItem;
+
+
+    /**
+     * Static instance of HealingItem item to be used across states.
+     */
+    private Item healingItem;
+
     /**
      * Model which holds information necessary to controller.
      */
@@ -261,7 +262,7 @@ public class CombatController {
     }
 
     private void handleCurePoisonInput() {
-        this.currentState.handlePotionUsed(this, CURE_POISON, null);
+        this.currentState.handlePotionUsed(this, this.curePoisonItem, null);
     }
 
     /**
@@ -1026,13 +1027,13 @@ public class CombatController {
 
     private void handleAttackBuff() {
         if (this.currentState != null) {
-            currentState.handlePotionUsed(this, ATTACK_BUFF, null);
+            currentState.handlePotionUsed(this, this.attackBuffItem, null);
         }
     }
 
     private void handleHeal() {
         if (this.currentState != null) {
-            currentState.handlePotionUsed(this, HEAL, null);
+            currentState.handlePotionUsed(this, this.healingItem, null);
             this.view.updatePlayerHealth(this.model.getPlayerHealth());
         }
     }
