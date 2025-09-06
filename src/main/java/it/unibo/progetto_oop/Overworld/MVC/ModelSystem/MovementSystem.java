@@ -72,15 +72,6 @@ public class MovementSystem {
             return;
         }
 
-        // Check Enemies
-        Optional<Enemy> enemyOpt = enemySystem.checkEnemyHit(tempPosition);
-        if (enemyOpt.isPresent()) {
-            this.setCombatTransitionFlag();
-            enemySystem.setEncounteredEnemy(enemyOpt.get());
-            System.out.println("Enemy encounter flagged at " + tempPosition);
-            return;
-        }
-
         // the player can now change position
         this.player.setPosition(tempPosition);
 
@@ -90,11 +81,19 @@ public class MovementSystem {
             System.out.println("floor changed");
             return; // no pickup/enemy turn on old floor
         }
-
         model.getGridNotifier().notifyPlayerMoved(currentPos, tempPosition);
 
         // check items
         pickupSystem.checkAndAddItem();
+
+        // Check Enemies
+        Optional<Enemy> enemyOpt = enemySystem.checkEnemyHit(tempPosition);
+        if (enemyOpt.isPresent()) {
+            this.setCombatTransitionFlag();
+            enemySystem.setEncounteredEnemy(enemyOpt.get());
+            System.out.println("Enemy encounter flagged at " + tempPosition);
+            return;
+        }
 
         // trigger enemy turn
         enemySystem.triggerEnemyTurns();

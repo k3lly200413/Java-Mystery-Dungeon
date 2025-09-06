@@ -43,7 +43,8 @@ public final class WallCollisionImpl implements WallCollision {
         if (!inBounds(to))
             return false;
         final TileType t = baseGrid.get(to.x(), to.y());
-        return t == TileType.ROOM || t == TileType.TUNNEL || t == TileType.STAIRS;
+        final TileType eg = entityGrid.get(to.x(), to.y());
+        return t == TileType.ROOM || t == TileType.TUNNEL || t == TileType.STAIRS || eg != TileType.ENEMY;
     }
 
     // Passo valido per i nemici
@@ -51,8 +52,8 @@ public final class WallCollisionImpl implements WallCollision {
     public boolean canEnemyEnter(final Position to) {
         if (!canEnter(to))
             return false;
-        final TileType occ = entityGrid.get(to.x(), to.y());
-        return occ == TileType.NONE || occ == TileType.PLAYER;
+        final TileType eg = entityGrid.get(to.x(), to.y());
+        return eg == TileType.NONE || eg == TileType.PLAYER;
     }
 
     @Override
