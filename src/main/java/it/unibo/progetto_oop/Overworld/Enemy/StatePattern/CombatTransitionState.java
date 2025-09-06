@@ -15,7 +15,7 @@ public class CombatTransitionState implements GenericEnemyState{
     @Override
     public void enterState(Enemy context) {
         System.out.println("Entering CombatTransition");
-        new ViewManager().showCombat();
+        
     }
 
     @Override

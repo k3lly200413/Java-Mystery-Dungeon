@@ -82,10 +82,10 @@ public class ViewManager {
         }
     }
 
-    public void showCombat() {
+    public void showCombat(CombatController combatController) {
         JFrame frame = new JFrame("Combattimento");
         if (this.combatView == null) {
-            this.combatController = CombatLauncher.buildCombat();
+            this.combatController = combatController;
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.setSize(600, 400);
             frame.add(this.combatController.getView());

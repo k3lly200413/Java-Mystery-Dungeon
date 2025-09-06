@@ -152,6 +152,9 @@ public class CombatController {
         this.attackBuffItem = itemFactory.createItem("Attack Buff",null);
         this.curePoisonItem = itemFactory.createItem("Antidote",null);
         this.healingItem = itemFactory.createItem("Health Potion",null);
+        System.out.println("attackBuffItem => " + this.player.getInventory().getItemCount(attackBuffItem));
+        System.out.println("curePoisonItem => " + this.player.getInventory().getItemCount(curePoisonItem));
+        System.out.println("healingItem => " + this.player.getInventory().getItemCount(healingItem));
         //this.checkIfPlayerHasItemsAndActivateButtons();
     }
 
@@ -234,6 +237,16 @@ public class CombatController {
     private void handleBagMenu() {
         this.setState(new ItemSelectionState());
         this.view.showBagButtons();
+        if (this.player.getInventory().getItemCount(attackBuffItem) <= 0) {
+            this.view.setCustomButtonDisabled(this.view.getAttackBuffButton());
+
+        } if (this.player.getInventory().getItemCount(attackBuffItem) <= 0) {
+            this.view.setCustomButtonDisabled(this.view.getCurePoisonButton());
+
+        } if (this.player.getInventory().getItemCount(attackBuffItem) <= 0) {
+            this.view.setCustomButtonDisabled(this.view.getHealingButton());
+
+        }
         view.clearInfo();
     }
 
@@ -250,6 +263,8 @@ public class CombatController {
      */
     public final void performBackToMainMenu() {
         view.showOriginalButtons(); // Go back to the main menu
+        this.model.resetPositions();
+        this.redrawView();
     }
 
     private void handleInfo() {
@@ -291,6 +306,7 @@ public class CombatController {
 
     private void handleCurePoisonInput() {
         this.currentState.handlePotionUsed(this, this.curePoisonItem, null);
+        currentState.handleBackInput(this);
     }
 
     /**
@@ -1056,6 +1072,7 @@ public class CombatController {
     private void handleAttackBuff() {
         if (this.currentState != null) {
             currentState.handlePotionUsed(this, this.attackBuffItem, null);
+            currentState.handleBackInput(this);
         }
     }
 
@@ -1063,6 +1080,7 @@ public class CombatController {
         if (this.currentState != null) {
             currentState.handlePotionUsed(this, this.healingItem, null);
             this.view.updatePlayerHealth(this.model.getPlayerHealth());
+            currentState.handleBackInput(this);
         }
     }
 
