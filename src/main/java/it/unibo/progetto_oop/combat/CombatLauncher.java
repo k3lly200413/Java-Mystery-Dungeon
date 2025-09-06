@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop.combat;
 
+import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
@@ -16,7 +17,7 @@ public final class CombatLauncher {
      *
      * @return combatController instance
      */
-    public static CombatController buildCombat() {
+    public static CombatController buildCombat(Player player) {
         // --- Game Configuration ---
         final int size = 12;
         final int playerPower = 10;
@@ -66,7 +67,7 @@ public final class CombatLauncher {
 
             // 3. Create the Controller, linking the Model and View
             final CombatController controller =
-                new CombatController(model, view,null);
+                new CombatController(model, view, player);
 
             return controller;
     }

@@ -52,7 +52,7 @@ public class PatrolMovementStrategy implements MovementStrategy{
         if (wallChecker.canEnemyEnter(targetPos)) {
             // if close enough to the player -> combat
             if (this.combatTransitionChecker.checkCombatCollision(player.getPosition(), targetPos)){
-                this.combatTransitionChecker.initiateCombatTransition(context);
+                this.combatTransitionChecker.initiateCombatTransition(context, player);
             }
 
             context.setPosition(targetPos);

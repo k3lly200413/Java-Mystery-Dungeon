@@ -152,6 +152,9 @@ public class CombatController {
         this.attackBuffItem = itemFactory.createItem("Attack Buff",null);
         this.curePoisonItem = itemFactory.createItem("Antidote",null);
         this.healingItem = itemFactory.createItem("Health Potion",null);
+        System.out.println("attackBuffItem => " + this.player.getInventory().getItemCount(attackBuffItem));
+        System.out.println("curePoisonItem => " + this.player.getInventory().getItemCount(curePoisonItem));
+        System.out.println("healingItem => " + this.player.getInventory().getItemCount(healingItem));
         //this.checkIfPlayerHasItemsAndActivateButtons();
     }
 
@@ -250,6 +253,8 @@ public class CombatController {
      */
     public final void performBackToMainMenu() {
         view.showOriginalButtons(); // Go back to the main menu
+        this.model.resetPositions();
+        this.redrawView();
     }
 
     private void handleInfo() {
