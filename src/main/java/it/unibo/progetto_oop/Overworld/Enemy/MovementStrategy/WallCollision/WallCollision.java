@@ -9,6 +9,8 @@ public interface WallCollision{
 
     public void setGrid(StructureData newGridView);
 
+    public void setEntityGrid(StructureData newEntityGridView);
+
     public boolean inBounds(final Position p);
 
     public boolean canEnter(final Position to);

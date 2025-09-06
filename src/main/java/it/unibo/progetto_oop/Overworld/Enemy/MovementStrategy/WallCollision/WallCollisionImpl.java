@@ -1,94 +1,77 @@
 package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
 
-import java.util.Comparator;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.function.ToIntFunction;
-import java.util.stream.IntStream;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 
+public final class WallCollisionImpl implements WallCollision {
 
-public final class WallCollisionImpl implements WallCollision{
-    private StructureData gridView;   // read-only
+    private StructureData baseGrid;
+    private StructureData entityGrid;
 
-    public WallCollisionImpl(StructureData newGridView) {
-        gridView = newGridView;
+    public WallCollisionImpl(final StructureData baseGrid, final StructureData entityGrid) {
+        this.baseGrid   = Objects.requireNonNull(baseGrid, "baseGrid cannot be null");
+        this.entityGrid = Objects.requireNonNull(entityGrid, "entityGrid cannot be null");
     }
 
     @Override
-    public void setGrid(StructureData newGridView) {
-        gridView = newGridView;
+    public void setGrid(final StructureData newGridView) {
+        this.baseGrid = Objects.requireNonNull(newGridView, "baseGrid cannot be null");
+    }
+
+    @Override
+    public void setEntityGrid(final StructureData newEntityGrid) {
+        this.entityGrid = Objects.requireNonNull(newEntityGrid, "entityGrid cannot be null");
     }
 
     @Override
     public boolean inBounds(final Position p) {
-        if (gridView == null) return false;
-        return p.x() >= 0 && p.y() >= 0 && p.x() < gridView.width() && p.y() < gridView.height();
+        return p.x() >= 0 && p.y() >= 0
+            && p.x() < baseGrid.width()
+            && p.y() < baseGrid.height();
     }
 
-    // Regola entrabile = inBounds && non WALL
+    // Passo valido per tutti
     @Override
     public boolean canEnter(final Position to) {
         if (!inBounds(to))
             return false;
-        TileType tyle = gridView.get(to.x(), to.y());
-        return tyle != TileType.WALL && tyle != TileType.ENEMY;
+        final TileType t = baseGrid.get(to.x(), to.y());
+        return t == TileType.ROOM || t == TileType.TUNNEL || t == TileType.STAIRS;
     }
 
+    // Passo valido per i nemici
     @Override
     public boolean canEnemyEnter(final Position to) {
-        if (!inBounds(to))
+        if (!canEnter(to))
             return false;
-        return gridView.get(to.x(), to.y()) == TileType.ROOM;
+        final TileType occ = entityGrid.get(to.x(), to.y());
+        return occ == TileType.NONE || occ == TileType.PLAYER;
     }
-    
+
     @Override
-    public Optional<Position> closestWall(Position from, int dx, int dy) {
-        int maxSteps;
-        ToIntFunction<Position> axisGetter;
-        int startX;
-        int startY;
-
-        if (dx!=0){ // if i move orizontally i'll be interested with the width
-            maxSteps = gridView.width();
-            axisGetter = Position :: x;
-
-            startX = 0;
-            startY = from.y(); // will remain the same
-
-        } else { // same as above but with height
-            maxSteps = gridView.height();
-            axisGetter = Position :: y;
-
-            startX = from.x(); // will remain the same
-            startY = 0;
+    public Optional<Position> closestWall(final Position from, final int dx, final int dy) {
+        if ((dx == 0 && dy == 0) || !inBounds(from)) {
+            return Optional.empty();
         }
+        final int sx = Integer.signum(dx);  //normalize -1, 0, +1
+        final int sy = Integer.signum(dy);
 
-        // test right or down
-        return IntStream.rangeClosed(0, maxSteps + 1)
-                .mapToObj(step -> new Position(startX + step * dx, startY+ step * dy))
-                .filter(pos -> inBounds(pos)) // only in bounds positions
-                // i'm filtering all tipes of "obstacles"
-                .filter(pos -> gridView.get(pos.x(), pos.y()) == TileType.WALL 
-                    || gridView.get(pos.x(), pos.y()) == TileType.ITEM 
-                    || gridView.get(pos.x(), pos.y()) == TileType.TUNNEL
-                    || gridView.get(pos.x(), pos.y()) == TileType.STAIRS)
-                .min(Comparator.comparingInt(wallPos ->
-                        calculateDistanceOnAxis(from, wallPos, axisGetter) // i want the closest
-                ));
+        int x = from.x();
+        int y = from.y();
+        while (true) {
+            x += sx;
+            y += sy;
+            final Position p = new Position(x, y);
+            if (!inBounds(p)) {
+                return Optional.empty();
+            }
+            if (baseGrid.get(x, y) == TileType.WALL) {
+                return Optional.of(p);
+            }
+        }
     }
-
-    /**
-    * Calculates the distance between two positions on a specific axis.
-    * @param p1 the first position
-    * @param p2 the second position
-    * @param getCoordinate a function to extract the coordinate from a position (e.g., Position::getX or Position::getY)
-    * @return the distance between the two positions on the specified axis
-    */
-    private int calculateDistanceOnAxis(Position p1, Position p2, ToIntFunction<Position> getCoordinate) {
-        return Math.abs(getCoordinate.applyAsInt(p1) - getCoordinate.applyAsInt(p2));
-    }
-    
 }
