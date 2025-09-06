@@ -149,9 +149,12 @@ public class CombatController {
 
         this.itemFactory = new ItemFactory();
         this.player = player;
-        this.attackBuffItem = itemFactory.createItem("AttackBuff",null);
+        this.attackBuffItem = itemFactory.createItem("Attack Buff",null);
         this.curePoisonItem = itemFactory.createItem("Antidote",null);
-        this.healingItem = itemFactory.createItem("HealingItem",null);
+        this.healingItem = itemFactory.createItem("Health Potion",null);
+        System.out.println("attackBuffItem => " + this.player.getInventory().getItemCount(attackBuffItem));
+        System.out.println("curePoisonItem => " + this.player.getInventory().getItemCount(curePoisonItem));
+        System.out.println("healingItem => " + this.player.getInventory().getItemCount(healingItem));
         //this.checkIfPlayerHasItemsAndActivateButtons();
     }
 
