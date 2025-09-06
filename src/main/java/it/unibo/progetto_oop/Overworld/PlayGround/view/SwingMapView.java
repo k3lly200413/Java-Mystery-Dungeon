@@ -3,12 +3,15 @@ package it.unibo.progetto_oop.Overworld.PlayGround.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.util.Objects;
-
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
@@ -33,10 +36,8 @@ public final class SwingMapView extends JFrame implements MapView {
         setLocationByPlatform(true);
         setMinimumSize(new Dimension(400, 300));
         setResizable(true);
-        //setLocationByPlatform(true);
 
-        // messo qui per semplicità e testing,
-        // dovrebbe essere il controller a dire alla view cosa fare
+        // Tasto 'n' per next floor (il controller imposta la callback)
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(final KeyEvent e) {
@@ -48,18 +49,12 @@ public final class SwingMapView extends JFrame implements MapView {
         setFocusable(true);
     }
 
-    /**
-     * Sets the action to be executed when the next floor is requested.
-     *
-     * @param action the action to execute when 'n' is pressed
-     */
+    // Imposta l'azione eseguita quando si preme 'n'
     public void onNextFloorRequested(final Runnable action) {
         this.nextFloorAction = Objects.requireNonNull(action);
     }
 
-    /**
-     * Makes the view visible.
-     */
+    // Mostra la view.
     public void showView() {
         pack();
         setVisible(true);
@@ -72,7 +67,7 @@ public final class SwingMapView extends JFrame implements MapView {
             pack();
             setVisible(true);
         }
-        panel.revalidate(); //ricalcolo delle dimensioni
+        panel.revalidate(); // ricalcolo dimensioni preferite
         panel.repaint();
     }
 
@@ -80,22 +75,39 @@ public final class SwingMapView extends JFrame implements MapView {
         return this.panel;
     }
 
+    // Imposta la griglia delle entità
+    public void setEntityGrid(final StructureData entity) {
+        panel.setEntityGrid(entity);
+    }
+
     /* ============ Panel ============ */
     private static final class MapPanel extends JPanel {
-        /** The grid structure representing the floor. */
-        private StructureData grid;
+        private StructureData grid;        // base
+        private StructureData entityGrid;  // overlay
 
-        /** The size of each cell in the map. */
+        // dimensione cella base
         private final int initialCell;
+
+        // Sprite originali
+        private BufferedImage playerImg;
+        private BufferedImage enemyImg;
+        private BufferedImage itemImg;
 
         MapPanel(final int cellSize) {
             this.initialCell = cellSize;
             setBackground(Color.BLACK);
-            // setDoubleBuffered(true);
+            // Carica sprite dalle risorse
+            this.playerImg = loadSprite("/spritesOverworld/link.png");
+            this.enemyImg  = loadSprite("/spritesOverworld/gengar.png");
+            //this.itemImg   = loadSprite("/spritesOverworld/item.png");
         }
 
         void setGrid(final StructureData g) {
             this.grid = g;
+        }
+
+        void setEntityGrid(final StructureData eg) {
+            this.entityGrid = eg;
         }
 
         @Override
@@ -113,36 +125,98 @@ public final class SwingMapView extends JFrame implements MapView {
             final int cols = grid.width();
             final int rows = grid.height();
 
-            // cella dinamica
+            // cell size dinamica
             final int cell = Math.max(1, Math.min(getWidth() / cols, getHeight() / rows));
 
-            // centr0 la mappa nel pannello
+            // centra la mappa
             final int mapW = cell * cols;
             final int mapH = cell * rows;
             final int offX = (getWidth()  - mapW) / 2;
             final int offY = (getHeight() - mapH) / 2;
 
+            // Disegna TERRENO
             for (int y = 0; y < rows; y++) {
                 for (int x = 0; x < cols; x++) {
                     final TileType t = grid.get(x, y);
+                    final int px = offX + x * cell;
+                    final int py = offY + y * cell;
+
                     g.setColor(colorFor(t));
-                    g.fillRect(offX + x * cell, offY + y * cell, cell, cell);
+                    g.fillRect(px, py, cell, cell);
+
                     g.setColor(new Color(0, 0, 0, 40));
-                    g.drawRect(offX + x * cell, offY + y * cell, cell, cell);
+                    g.drawRect(px, py, cell, cell);
+                }
+            }
+
+            // Disegna ENTITÀ sopra
+            if (entityGrid != null) {
+                for (int y = 0; y < rows; y++) {
+                    for (int x = 0; x < cols; x++) {
+                        final TileType e = entityGrid.get(x, y);
+                        if (e == TileType.NONE) continue;
+
+                        final int px = offX + x * cell;
+                        final int py = offY + y * cell;
+
+                        switch (e) {
+                            case PLAYER -> {
+                                if (playerImg != null) {
+                                    g.drawImage(playerImg, px, py, cell, cell, null);
+                                } else {
+                                    g.setColor(colorFor(e));
+                                    g.fillRect(px, py, cell, cell);
+                                }
+                            }
+                            case ENEMY -> {
+                                if (enemyImg != null) {
+                                    g.drawImage(enemyImg, px, py, cell, cell, null);
+                                } else {
+                                    g.setColor(colorFor(e));
+                                    g.fillRect(px, py, cell, cell);
+                                }
+                            }
+                            case ITEM -> {
+                                if (itemImg != null) {
+                                    g.drawImage(itemImg, px, py, cell, cell, null);
+                                } else {
+                                    g.setColor(colorFor(e));
+                                    g.fillRect(px, py, cell, cell);
+                                }
+                            }
+                            default -> {
+                                g.setColor(colorFor(e));
+                                g.fillRect(px, py, cell, cell);
+                            }
+                        }
+
+                        // bordo celle
+                        g.setColor(new Color(0, 0, 0, 40));
+                        g.drawRect(px, py, cell, cell);
+                    }
                 }
             }
         }
 
-        private Color colorFor(final TileType t) { // switch expression
+        private static BufferedImage loadSprite(final String path) {
+            try (var is = SwingMapView.class.getResourceAsStream(path)) {
+                return is == null ? null : ImageIO.read(is);
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        private Color colorFor(final TileType t) {
             return switch (t) {
                 case WALL   ->  Color.BLACK;
                 case ROOM   ->  Color.LIGHT_GRAY;
-                case TUNNEL -> new Color(255, 215, 0); 
+                case TUNNEL -> new Color(255, 215, 0);
                 case STAIRS -> new Color(0, 170, 255);
                 case PLAYER -> new Color(80, 200, 120);
-                case ENEMY  -> new Color(200, 50, 50);  
+                case ENEMY  -> new Color(200, 50, 50);
                 case ITEM   -> new Color(160, 120, 255);
-                default     -> Color.MAGENTA;         
+                case NONE   -> new Color(0, 0, 0, 0); // trasparente
+                default     -> Color.MAGENTA;
             };
         }
     }
