@@ -60,7 +60,7 @@ public class MovementSystem {
      */
     public void move(int directionX, int directionY, PickupSystem pickupSystem, EnemySystem enemySystem){
         Position currentPos = player.getPosition();
-        Position tempPosition = new Position(currentPos.x()+directionX, currentPos.y()+directionY);
+        Position tempPosition = new Position(currentPos.x() + directionX, currentPos.y() + directionY);
 
         // reset flag and encountered enemy
         this.clearCombatTransitionFlag();
@@ -71,35 +71,33 @@ public class MovementSystem {
             System.out.println("Wall hit");
             return;
         }
-    
+
         // Check Enemies
         Optional<Enemy> enemyOpt = enemySystem.checkEnemyHit(tempPosition);
         if (enemyOpt.isPresent()) {
-            Enemy enemy = enemyOpt.get();
-
             this.setCombatTransitionFlag();
-
             enemySystem.setEncounteredEnemy(enemyOpt.get());
-
             System.out.println("Enemy encounter flagged at " + tempPosition);
+            return;
         }
-       
+
         // the player can now change position
         this.player.setPosition(tempPosition);
-        // on stairs next floor and stop
-        if (model.getGridView().get(tempPosition.x(), tempPosition.y()) == TileType.STAIRS) {
+
+        if (model.getBaseGridView().get(tempPosition.x(), tempPosition.y()) == TileType.STAIRS) {
             model.getGridNotifier().notifyPlayerMoved(currentPos, tempPosition);
             model.nextFloor();
             System.out.println("floor changed");
             return; // no pickup/enemy turn on old floor
         }
+
         model.getGridNotifier().notifyPlayerMoved(currentPos, tempPosition);
 
-
         // check items
-        pickupSystem.checkAndAddItem(); 
-        
+        pickupSystem.checkAndAddItem();
+
         // trigger enemy turn
         enemySystem.triggerEnemyTurns();
     }
+
 }
