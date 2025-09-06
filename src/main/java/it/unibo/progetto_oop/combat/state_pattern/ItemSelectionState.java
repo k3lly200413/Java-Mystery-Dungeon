@@ -34,7 +34,7 @@ public class ItemSelectionState implements CombatState {
 
     @Override
     public void handleBackInput(final CombatController context) {
-        // TODO --> turn back the state to player state (need a function to set state in CombatController)
+        context.performBackToMainMenu();
     }
 
     @Override

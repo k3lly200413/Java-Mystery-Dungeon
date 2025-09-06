@@ -651,6 +651,14 @@ public class CombatView extends JPanel {
         return this.curePoisonButton;
     }
 
+    public final JButton getAttackBuffButton() {
+        return this.attackBuffButton;
+    }
+
+    public final JButton getHealingButton() {
+        return this.healButton;
+    }
+
     /**
      * Returns the back button for the combat view.
      *

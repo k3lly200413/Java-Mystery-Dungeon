@@ -1,28 +1,18 @@
 package it.unibo.progetto_oop.combat.inventory;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
 
-public abstract class Item {
-    private final String name;
-    private final String description;
-    private final Position position;
-    
-    public Item(String name, String description, Position position) {
-        this.name = name;
-        this.description = description;
-        this.position = position;
-    }
+public interface Item {
 
-    public String getName() {
-        return name;
-    }
+    public String getName();
 
-    public String getDescription() {
-        return description;
-    }
+    public String getDescription();
 
-    public Position getPosition(){
-        return this.position;
+    public Position getPosition();
+
+    default PotionStrategy getStrategy() {
+        return null;
     }
 
     public abstract boolean use(PossibleUser target);

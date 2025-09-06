@@ -50,7 +50,7 @@ public class EnemySystem {
     public void setEncounteredEnemy(Enemy encounteredEnemy){
         this.encounteredEnemy = encounteredEnemy;
         if(this.model.isCombatTransitionPending()) {
-            this.model.getCombatCollision().initiateCombatTransition(encounteredEnemy);
+            this.model.getCombatCollision().initiateCombatTransition(encounteredEnemy, this.player);
         }
     }
 

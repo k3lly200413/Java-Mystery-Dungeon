@@ -3,7 +3,6 @@ package it.unibo.progetto_oop.Overworld.Player;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.OverworldPlayerAdapter;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.combat.potion_strategy.Potion;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
@@ -48,21 +47,15 @@ public class Player {
     public void useItem(final Item item) {
         // check wether the item is in the inventory
         if (this.inventory.hasItem(item)) {
-            if (item instanceof Potion) {
-                Potion potion = (Potion) item;
-                PotionStrategy strategy = potion.getStrategy(); // the kind of potion
-                if (strategy != null) {
-                    System.out.println("Using potion " + potion.getDescription());
-                    PossibleUser adaptedPlayer = new OverworldPlayerAdapter(this);
-                    potion.use(adaptedPlayer);
-                    //TODO maybe put in the observer pattern
-                    this.inventory.decreaseItemCount(item);
-                } else {
-                    System.out.println("Strategy is null");
-                }
+            
+            PotionStrategy strategy = item.getStrategy(); // the kind of potion
+            if (strategy != null) {
+                System.out.println("Using potion " + item.getDescription());
+                PossibleUser adaptedPlayer = new OverworldPlayerAdapter(this);
+                item.use(adaptedPlayer);
+                this.inventory.decreaseItemCount(item);
             } else {
-                // the only usable objects are potions
-                System.out.println("Not an istance of Potion, input ignored");
+                System.out.println("Strategy is null");
             }
         } else {
             System.out.println("Object not in inventory, input ignored");

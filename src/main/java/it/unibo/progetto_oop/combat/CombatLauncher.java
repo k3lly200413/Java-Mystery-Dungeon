@@ -22,10 +22,10 @@ public final class CombatLauncher {
      *
      * @return combatController instance
      */
-    public static CombatController buildCombat() {
+    public static CombatController buildCombat(Player player) {
         // --- Game Configuration ---
         final int size = 12;
-        final int playerPower = 100;
+        final int playerPower = 10;
         final int playerPoisonPower = 2;
         final int enemyPower = 10;
         final int enemySpeed = 3;
