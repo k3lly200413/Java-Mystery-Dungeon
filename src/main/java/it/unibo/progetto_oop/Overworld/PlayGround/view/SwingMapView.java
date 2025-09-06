@@ -33,7 +33,6 @@ public final class SwingMapView extends JFrame implements MapView {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setContentPane(panel);
-        setLocationByPlatform(true);
         setMinimumSize(new Dimension(400, 300));
         setResizable(true);
 
