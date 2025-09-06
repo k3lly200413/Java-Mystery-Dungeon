@@ -28,11 +28,16 @@ public class GameOverState implements  CombatState {
         .build();
         context.getView().redrawGrid(defaultRedraw);
 
-        context.getView().showGameOver(() -> {
+        if (context.getModel().getPlayerHealth() <= 0) {
+            context.getView().showGameOver(() -> {
             // TODO: qui in futuro resetta il Model e cambia stato, es:
             // context.restartMatch();
             // context.setState(new PlayerTurnState());
         });
+        } else if (context.getModel().getEnemyHealth() <= 0) {
+            context.getView().showInfo("You Win! Closing in 3 seconds...");
+            context.getView().close();
+        }
     }
 
     /**
