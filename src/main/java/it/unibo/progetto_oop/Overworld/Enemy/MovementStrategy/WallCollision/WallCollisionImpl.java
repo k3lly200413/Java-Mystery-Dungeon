@@ -1,7 +1,10 @@
 package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
 
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.ToIntFunction;
+import java.util.stream.IntStream;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
@@ -53,25 +56,49 @@ public final class WallCollisionImpl implements WallCollision {
     }
 
     @Override
-    public Optional<Position> closestWall(final Position from, final int dx, final int dy) {
-        if ((dx == 0 && dy == 0) || !inBounds(from)) {
-            return Optional.empty();
-        }
-        final int sx = Integer.signum(dx);  //normalize -1, 0, +1
-        final int sy = Integer.signum(dy);
+    public Optional<Position> closestWall(Position from, int dx, int dy) {
+        int maxSteps;
+        ToIntFunction<Position> axisGetter;
+        int startX;
+        int startY;
 
-        int x = from.x();
-        int y = from.y();
-        while (true) {
-            x += sx;
-            y += sy;
-            final Position p = new Position(x, y);
-            if (!inBounds(p)) {
-                return Optional.empty();
-            }
-            if (baseGrid.get(x, y) == TileType.WALL) {
-                return Optional.of(p);
-            }
+        if (dx!=0){ // if i move orizontally i'll be interested with the width
+            maxSteps = baseGrid.width();
+            axisGetter = Position :: x;
+
+            startX = 0;
+            startY = from.y(); // will remain the same
+
+        } else { // same as above but with height
+            maxSteps = baseGrid.height();
+            axisGetter = Position :: y;
+
+            startX = from.x(); // will remain the same
+            startY = 0;
         }
+
+        // test right or down
+        return IntStream.rangeClosed(0, maxSteps + 1)
+                .mapToObj(step -> new Position(startX + step * dx, startY+ step * dy))
+                .filter(pos -> inBounds(pos)) // only in bounds positions
+                // i'm filtering all tipes of "obstacles"
+                .filter(pos -> baseGrid.get(pos.x(), pos.y()) == TileType.WALL
+                    || entityGrid.get(pos.x(), pos.y()) == TileType.ITEM
+                    || baseGrid.get(pos.x(), pos.y()) == TileType.TUNNEL
+                    || baseGrid.get(pos.x(), pos.y()) == TileType.STAIRS)
+                .min(Comparator.comparingInt(wallPos ->
+                        calculateDistanceOnAxis(from, wallPos, axisGetter) // i want the closest
+                ));
+    }
+
+    /**
+    * Calculates the distance between two positions on a specific axis.
+    * @param p1 the first position
+    * @param p2 the second position
+    * @param getCoordinate a function to extract the coordinate from a position (e.g., Position::getX or Position::getY)
+    * @return the distance between the two positions on the specified axis
+    */
+    private int calculateDistanceOnAxis(Position p1, Position p2, ToIntFunction<Position> getCoordinate) {
+        return Math.abs(getCoordinate.applyAsInt(p1) - getCoordinate.applyAsInt(p2));
     }
 }
