@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-
-import org.jooq.lambda.Window;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
@@ -152,9 +149,9 @@ public class CombatController {
 
         this.itemFactory = new ItemFactory();
         this.player = player;
-        this.attackBuffItem = itemFactory.createItem("AttackBuff",null);
+        this.attackBuffItem = itemFactory.createItem("Attack Buff",null);
         this.curePoisonItem = itemFactory.createItem("Antidote",null);
-        this.healingItem = itemFactory.createItem("HealingItem",null);
+        this.healingItem = itemFactory.createItem("Health Potion",null);
         //this.checkIfPlayerHasItemsAndActivateButtons();
     }
 
