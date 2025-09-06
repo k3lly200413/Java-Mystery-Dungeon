@@ -1,9 +1,9 @@
 package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
 
-import it.unibo.progetto_oop.combat.draw_helper.DrawHelper;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.combat.draw_helper.DrawHelper;
 
 public class CombatCollisionImpl implements CombatCollision{
     private final DrawHelper neighboursCheck;
@@ -26,5 +26,9 @@ public class CombatCollisionImpl implements CombatCollision{
         CombatTransitionState combat = new CombatTransitionState(enemy.getState());
         enemy.setState(combat);
         inCombat = true;
+    }
+
+    public void setInCombat(boolean inCombat) {
+        this.inCombat = inCombat;
     }
 }

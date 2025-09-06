@@ -19,7 +19,7 @@ public final class CombatLauncher {
     public static CombatController buildCombat() {
         // --- Game Configuration ---
         final int size = 12;
-        final int playerPower = 10;
+        final int playerPower = 100;
         final int playerPoisonPower = 2;
         final int enemyPower = 10;
         final int enemySpeed = 3;

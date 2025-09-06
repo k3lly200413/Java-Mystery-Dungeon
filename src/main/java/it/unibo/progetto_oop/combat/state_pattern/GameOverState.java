@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.inventory.Item;
@@ -7,6 +8,7 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 
 public class GameOverState implements  CombatState {
 
+    CombatCollision combatCollision;
     /**
      *
      * @param context Istance of the controller
@@ -35,9 +37,27 @@ public class GameOverState implements  CombatState {
             // context.setState(new PlayerTurnState());
         });
         } else if (context.getModel().getEnemyHealth() <= 0) {
-            context.getView().showInfo("You Win! Closing in 3 seconds...");
+            combatCollision.setInCombat(false);
+            context.getView().showInfo("You Win! Returning to Overworld...");
             context.getView().close();
         }
+
+         enemyActionTimer.setRepeats(false); // Ensure it only runs once
+        enemyActionTimer.start();
+
+
+        final RedrawContext defaultRedraw = new RedrawContext.Builder()
+        .player(context.getModel().getPlayerPosition())
+        .enemy(context.getModel().getEnemyPosition())
+        .flame(context.getModel().getAttackPosition())
+        .drawPlayer(true)
+        .drawEnemy(true)
+        .playerRange(2)
+        .enemyRange(2)
+        .setIsGameOver(context.getModel().isGameOver())
+        .whoDied(context.getModel().getWhoDied())
+        .build();
+        context.getView().redrawGrid(defaultRedraw);
     }
 
     /**

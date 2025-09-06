@@ -8,4 +8,6 @@ public interface CombatCollision {
 
     public void initiateCombatTransition(Enemy enemy);
 
+    public void setInCombat(boolean inCombat);
+
 }
