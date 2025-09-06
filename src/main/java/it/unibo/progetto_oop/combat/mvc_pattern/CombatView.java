@@ -817,7 +817,7 @@ public class CombatView extends JPanel {
     }
 
     /**
-     * Adds an action listener to the attack buff button.
+     * Adds an action listener to the cure button.
      *
      * @param e the action listener to add
      */
@@ -826,7 +826,7 @@ public class CombatView extends JPanel {
     }
 
     /**
-     * Adds an action listener to the attack buff button.
+     * Adds an action listener to the heal button.
      *
      * @param e the action listener to add
      */

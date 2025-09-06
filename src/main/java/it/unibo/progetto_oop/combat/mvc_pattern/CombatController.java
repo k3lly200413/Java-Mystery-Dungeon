@@ -201,13 +201,16 @@ public class CombatController {
         this.view.addBackButtonListener(e -> handleBackToMainMenu());
         this.view.addInfoButtonListener(e -> handleInfo());
         this.view.addBagButtonListener(e -> handleBagMenu());
-        this.view.addRunButtonListener(
-            e -> System.out.println("Run clicked - Not Yet Implemented"));
+        this.view.addRunButtonListener(e -> exitCombat());
         this.view.addCurePoisonButtonListener(
             e -> this.handleCurePoisonInput());
         this.view.addAttackButtonListener(e -> handleAttackMenu());
         this.view.addAttackBuffButtonListener(e -> handleAttackBuff());
         this.view.addHealButtonListener(e -> handleHeal());
+    }
+
+    private void exitCombat() {
+        System.err.println("Exiting Combat - to be implemented");
     }
 
     private void handleAttackMenu() {
