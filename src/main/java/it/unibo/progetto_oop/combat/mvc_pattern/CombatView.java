@@ -9,8 +9,7 @@ import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.net.URL;
+import java.awt.image.BufferedImage;import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -835,25 +834,27 @@ public class CombatView extends JPanel {
     }
 
     public void showGameOver(final Runnable onRestart) {
-        // Recupera il JFrame che contiene questa view
         final JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (frame == null) {
-            // Safety: se la view non è ancora attaccata ad un frame
             return;
         }
-        // Costruisci il pannello di Game Over
         final GameOverPanel panel =
             new GameOverPanel(() -> {
-                // Chi verrà eseguito al click su "Restart"
-                // TODO: qui in futuro resetta il modello e torna alla schermata di gioco, es.:
-                // controller.restartMatch();
-                // controller.setState(new PlayerTurnState());
-                // this. (ri)mostra la UI del combattimento
+                // TODO add reset logic
             });
-
-        // Mostra il pannello di Game Over dentro lo stesso frame
         frame.setContentPane(panel);
         frame.revalidate();
         frame.repaint();
     }
+
+    /**
+     * Closes the view.
+     */
+    public void close() {
+        java.awt.Window w = SwingUtilities.getWindowAncestor(this);
+        if (w != null) {
+            w.dispose();
+        }
+    }
+    
 }

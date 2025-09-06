@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+
+import org.jooq.lambda.Window;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
@@ -210,7 +213,13 @@ public class CombatController {
     }
 
     private void exitCombat() {
-        System.err.println("Exiting Combat - to be implemented");
+        stopAnimationTimer();
+        if (enemyActionTimer != null && enemyActionTimer.isRunning()) {
+            enemyActionTimer.stop();
+        }
+        enemyActionTimer = null;
+        
+        this.view.close();
     }
 
     private void handleAttackMenu() {
