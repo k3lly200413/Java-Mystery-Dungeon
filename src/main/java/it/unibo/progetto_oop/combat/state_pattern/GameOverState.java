@@ -1,5 +1,7 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
+import javax.swing.Timer;
+
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
@@ -17,35 +19,22 @@ public class GameOverState implements  CombatState {
      */
     @Override
     public void enterState(final CombatController context) {
-        final RedrawContext defaultRedraw = new RedrawContext.Builder()
-        .player(context.getModel().getPlayerPosition())
-        .enemy(context.getModel().getEnemyPosition())
-        .flame(context.getModel().getAttackPosition())
-        .drawPlayer(true)
-        .drawEnemy(true)
-        .playerRange(2)
-        .enemyRange(2)
-        .setIsGameOver(context.getModel().isGameOver())
-        .whoDied(context.getModel().getWhoDied())
-        .build();
-        context.getView().redrawGrid(defaultRedraw);
-
-        if (context.getModel().getPlayerHealth() <= 0) {
-            context.getView().showGameOver(() -> {
-            // TODO: qui in futuro resetta il Model e cambia stato, es:
-            // context.restartMatch();
-            // context.setState(new PlayerTurnState());
+        Timer enemyActionTimer = new Timer(700, e -> {
+            if (context.getModel().getPlayerHealth() <= 0) {
+                context.getView().showGameOver(() -> {
+                // TODO: qui in futuro resetta il Model e cambia stato, es:
+                // context.restartMatch();
+                // context.setState(new PlayerTurnState());
+                });
+            } else if (context.getModel().getEnemyHealth() <= 0) {
+                combatCollision.setInCombat(false);
+                context.getView().showInfo("You Win! Returning to Overworld...");
+                context.getView().close();
+            }
         });
-        } else if (context.getModel().getEnemyHealth() <= 0) {
-            combatCollision.setInCombat(false);
-            context.getView().showInfo("You Win! Returning to Overworld...");
-            context.getView().close();
-        }
-
-         enemyActionTimer.setRepeats(false); // Ensure it only runs once
+        enemyActionTimer.setRepeats(false);
         enemyActionTimer.start();
 
-
         final RedrawContext defaultRedraw = new RedrawContext.Builder()
         .player(context.getModel().getPlayerPosition())
         .enemy(context.getModel().getEnemyPosition())
@@ -58,6 +47,7 @@ public class GameOverState implements  CombatState {
         .whoDied(context.getModel().getWhoDied())
         .build();
         context.getView().redrawGrid(defaultRedraw);
+
     }
 
     /**
