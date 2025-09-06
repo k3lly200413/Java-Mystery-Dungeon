@@ -9,9 +9,7 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 
 public final class CombatLauncher {
-    private static Player player;
     private static GridNotifier gridNotifier;
-    private static CombatCollision combatCollisionImpl;
 
     private CombatLauncher() {
         throw new UnsupportedOperationException("Utility class");
@@ -22,7 +20,7 @@ public final class CombatLauncher {
      *
      * @return combatController instance
      */
-    public static CombatController buildCombat(Player player) {
+    public static CombatController buildCombat(Player player, CombatCollision combatCollision) {
         // --- Game Configuration ---
         final int size = 12;
         final int playerPower = 10;
@@ -72,7 +70,7 @@ public final class CombatLauncher {
 
             // 3. Create the Controller, linking the Model and View
             final CombatController controller =
-                new CombatController(model, view, player, combatCollisionImpl, gridNotifier);
+                new CombatController(model, view, player, combatCollision, gridNotifier);
             return controller;
     }
 }

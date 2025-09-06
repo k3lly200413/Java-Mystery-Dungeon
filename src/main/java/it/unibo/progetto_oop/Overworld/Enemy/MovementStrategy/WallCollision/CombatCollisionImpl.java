@@ -31,7 +31,7 @@ public class CombatCollisionImpl implements CombatCollision{
         enemy.setState(combat);
         inCombat = true;
 
-    CombatController combatController = CombatLauncher.buildCombat(player);
+    CombatController combatController = CombatLauncher.buildCombat(player,this);
         new ViewManager().showCombat(combatController);
     }
 
