@@ -36,7 +36,7 @@ public class CombatViewTest {
 
         this.view = new CombatView(model.getSize(), (20 * model.getSize()) / 3, (50 * model.getSize()) / 3, 70, 75, 100, 100);
         // this.view.init();
-        this.controller = new CombatController(model, view, null,null, null);
+        this.controller = new CombatController(model, view, null,null);
     }
 
     @Test

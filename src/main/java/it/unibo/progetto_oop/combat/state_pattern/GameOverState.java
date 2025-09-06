@@ -35,7 +35,7 @@ public class GameOverState implements  CombatState {
                 // context.setState(new PlayerTurnState());
                 });
             } else if (context.getModel().getEnemyHealth() <= 0) {
-                gridNotifier.notifyEnemyRemoved(context.getModel().getEnemyPosition());
+                //gridNotifier.notifyEnemyRemoved(context.getModel().getEnemyPosition());
                 combatCollision.setInCombat(false);
                 context.getView().showInfo("You Win! Returning to Overworld...");
                 context.getView().close();

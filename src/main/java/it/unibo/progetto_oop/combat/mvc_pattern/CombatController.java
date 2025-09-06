@@ -141,7 +141,7 @@ public class CombatController {
     public CombatController(
         final CombatModel modelToUse,
         final CombatView viewToUse, final Player player,
-        final CombatCollision combatCollision, final GridNotifier gridNotifier) {
+        final CombatCollision combatCollision) {
 
         this.model = modelToUse;
         this.view = viewToUse;
@@ -152,7 +152,7 @@ public class CombatController {
         this.view.updateEnemyHealth(model.getEnemyHealth());
 
         this.combatCollision = combatCollision;
-        this.gridNotifier = gridNotifier;
+        //this.gridNotifier = gridNotifier;
 
         this.attachListeners();
 
@@ -230,7 +230,7 @@ public class CombatController {
             enemyActionTimer.stop();
         }
         enemyActionTimer = null;
-        gridNotifier.notifyEnemyRemoved(this.model.getEnemyPosition());
+        //gridNotifier.notifyEnemyRemoved(this.model.getEnemyPosition());
         combatCollision.setInCombat(false);
         this.view.close();
     }

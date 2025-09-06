@@ -23,9 +23,9 @@ public final class CombatLauncher {
     public static CombatController buildCombat(Player player, CombatCollision combatCollision) {
         // --- Game Configuration ---
         final int size = 12;
-        final int playerPower = 10;
+        final int playerPower = 30;
         final int playerPoisonPower = 2;
-        final int enemyPower = 10;
+        final int enemyPower = 30;
         final int enemySpeed = 3;
         final String enemyName = "Dragon";
         final int playerMaxStamina = 100;
@@ -70,7 +70,7 @@ public final class CombatLauncher {
 
             // 3. Create the Controller, linking the Model and View
             final CombatController controller =
-                new CombatController(model, view, player, combatCollision, gridNotifier);
+                new CombatController(model, view, player, combatCollision);
             return controller;
     }
 }
