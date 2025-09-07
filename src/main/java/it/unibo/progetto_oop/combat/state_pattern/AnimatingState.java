@@ -7,6 +7,12 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 
 public class AnimatingState implements CombatState {
+
+    private final CombatState enemyState;
+
+    public AnimatingState(CombatState enemyState) {
+        this.enemyState = enemyState;
+    }
     @Override
     public final void handlePhysicalAttackInput(
         final CombatController context) {
@@ -109,7 +115,7 @@ public class AnimatingState implements CombatState {
 
         if (wasPlayerTurn && !model.isEnemyPoisoned()) {
                 context.getModel().setPlayerTurn(false);
-                context.setState(new EnemyTurnState());
+                context.setState(enemyState);
         } else if (!wasPlayerTurn && !model.isPlayerPoison()) {
                 context.getModel().setPlayerTurn(true);
                 context.setState(new PlayerTurnState());

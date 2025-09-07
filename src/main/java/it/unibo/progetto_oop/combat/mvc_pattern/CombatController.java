@@ -19,7 +19,6 @@ import it.unibo.progetto_oop.combat.helper.Neighbours;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_factory.ItemFactory;
 import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
-import it.unibo.progetto_oop.combat.state_pattern.BossTurnState;
 import it.unibo.progetto_oop.combat.state_pattern.CombatState;
 import it.unibo.progetto_oop.combat.state_pattern.EnemyTurnState;
 import it.unibo.progetto_oop.combat.state_pattern.GameOverState;
@@ -166,6 +165,9 @@ public class CombatController {
         this.attachListeners();
 
         this.redrawView();
+
+        
+
         this.currentState = new PlayerTurnState();
 
         this.itemFactory = new ItemFactory();
@@ -901,7 +903,7 @@ public class CombatController {
 
                 if (this.model.isPlayerTurn()) {
                     view.updateEnemyHealth(remaining);
-                    this.setState(new EnemyTurnState());
+                    this.setState(model.getEnemyState());
                 } else {
                     view.updatePlayerHealth(remaining);
                     this.setState(new PlayerTurnState());
@@ -1023,7 +1025,7 @@ public class CombatController {
 
         if (isCharging) {
             // animating State
-            this.setState(new AnimatingState());
+            this.setState(new AnimatingState(model.getEnemyState()));
             this.animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
                 position[0]--;
                 final RedrawContext defaultRedraw = new RedrawContext.Builder()
@@ -1237,7 +1239,7 @@ public class CombatController {
                 if (this.model.isPlayerTurn()) {
                     this.model.setPlayerTurn(false);
                     view.updateEnemyHealth(remaining);
-                    this.setState(new EnemyTurnState());
+                    this.setState(model.getEnemyState());
                 } else {
                     this.model.setPlayerTurn(true);
                     view.updatePlayerHealth(remaining);
