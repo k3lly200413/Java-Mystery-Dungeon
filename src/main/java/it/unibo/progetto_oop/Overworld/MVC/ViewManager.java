@@ -3,6 +3,7 @@ package it.unibo.progetto_oop.Overworld.MVC;
 import javax.swing.*;
 
 import java.awt.CardLayout;
+import java.awt.Dimension;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
@@ -43,6 +44,8 @@ public class ViewManager {
         // prima card
         this.mainCardPanel.add(this.playGroundView, OVERWORLD_CARD);
         this.frame.setContentPane(this.mainCardPanel);
+        this.frame.setPreferredSize(new Dimension(1000, 700));
+        this.mainCardPanel.setMinimumSize(new Dimension(960, 640));
         this.frame.pack();
         this.frame.setVisible(true);
 
@@ -108,4 +111,6 @@ public class ViewManager {
     public void showOverworld() {
         this.cardLayout.show(this.mainCardPanel, OVERWORLD_CARD);
     }
+
+    
 }
