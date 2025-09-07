@@ -7,6 +7,7 @@ import java.awt.Dimension;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
+import it.unibo.progetto_oop.Overworld.PlayGround.view.GameStartView;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
@@ -22,17 +23,19 @@ public class ViewManager {
     private JFrame frame;
     private CardLayout cardLayout; 
     private JPanel mainCardPanel;
+    
     private InventoryView invView;
     private CombatView combatView;
     private SwingMapView playGroundView;
-    //private GameStartView startView;
+
+    private GameStartView startView;
     //private GameOverView gameOverView;
 
     private CombatController combatController;
 
 
-    public void start(SwingMapView playGroundView) {
-        this.playGroundView = playGroundView;
+    public void start(GameStartView startView) {
+        this.startView = startView;
         this.frame = new JFrame("Java Mystery Dungeon");
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -42,15 +45,24 @@ public class ViewManager {
 
         
         // prima card
-        this.mainCardPanel.add(this.playGroundView, OVERWORLD_CARD);
+        this.mainCardPanel.add(this.startView, START_GAME);
         this.frame.setContentPane(this.mainCardPanel);
         this.frame.setPreferredSize(new Dimension(1000, 700));
         this.mainCardPanel.setMinimumSize(new Dimension(960, 640));
         this.frame.pack();
         this.frame.setVisible(true);
 
-        // Mostro l'overworld come default
+        // Mostro start game come default
+        this.cardLayout.show(this.mainCardPanel, START_GAME);
+    }
+
+    public void showOverworld() {
         this.cardLayout.show(this.mainCardPanel, OVERWORLD_CARD);
+    }
+
+    public void setPlayGroundView(SwingMapView playGroundView) {
+        this.playGroundView = playGroundView;
+        this.mainCardPanel.add(playGroundView, OVERWORLD_CARD);
     }
 
     /* 
@@ -107,10 +119,4 @@ public class ViewManager {
             frame.setVisible(true);
         }
     }
-
-    public void showOverworld() {
-        this.cardLayout.show(this.mainCardPanel, OVERWORLD_CARD);
-    }
-
-    
 }
