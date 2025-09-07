@@ -52,8 +52,9 @@ public final class WallCollisionImpl implements WallCollision {
     public boolean canEnemyEnter(final Position to) {
         if (!canEnter(to))
             return false;
+        final TileType t = baseGrid.get(to.x(), to.y());
         final TileType eg = entityGrid.get(to.x(), to.y());
-        return eg == TileType.NONE || eg == TileType.PLAYER;
+        return (eg == TileType.NONE || eg == TileType.PLAYER) && (t != TileType.STAIRS);
     }
 
     @Override
