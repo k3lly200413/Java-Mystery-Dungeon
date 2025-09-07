@@ -239,7 +239,6 @@ public class CombatController {
             enemyActionTimer.stop();
         }
         enemyActionTimer = null;
-        gridNotifier.notifyEnemyRemoved(enemy.getCurrentPosition());
         combatCollision.setInCombat(false);
         this.view.close();
     }
