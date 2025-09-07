@@ -7,6 +7,7 @@ import java.util.Optional;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public class PickupSystem {
@@ -74,11 +75,15 @@ public class PickupSystem {
      * Remove an item from the overworld and add it to the player's inventory.
      * @param itemToRemove the item to remove
      */
-    private void removeItem(final Item itemToRemove){
-        this.player.getInventory().addItem(itemToRemove);
-        this.items.remove(itemToRemove);
-        this.model.getGridNotifier().
-            notifyItemRemoved(itemToRemove.getPosition());  // @autor Alice
+    public boolean removeItemAt(Position itemToRemove){
+        this.player.getInventory().addItem(
+            this.items.stream()
+                      .filter(item -> item.getPosition().equals(itemToRemove))
+                      .findFirst()
+                      .orElseThrow(() -> new IllegalArgumentException("Item not found at position: " + itemToRemove))
+        );
+        return this.items.removeIf(item -> item.getPosition().equals(itemToRemove));
+        //this.model.getGridNotifier().notifyItemRemoved(itemToRemove);
     }
 
     /**
@@ -100,7 +105,7 @@ public class PickupSystem {
 
         itemOpt.ifPresent(item -> {
             System.out.println("Item found, picking it up " + item.getName());
-            this.removeItem(item);
+            this.removeItemAt(item.getPosition());
             this.player.getInventory().printInventory();
         });
     }

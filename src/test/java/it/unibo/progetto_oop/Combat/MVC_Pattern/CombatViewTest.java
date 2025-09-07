@@ -1,18 +1,13 @@
 package it.unibo.progetto_oop.combat.MVC_Pattern;
 
+import javax.swing.JButton;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
@@ -20,8 +15,6 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
 import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
-
-import org.fest.swing.edt.FailOnThreadViolationRepaintManager;
 
 public class CombatViewTest {
     CombatView view;
@@ -43,7 +36,7 @@ public class CombatViewTest {
 
         this.view = new CombatView(model.getSize(), (20 * model.getSize()) / 3, (50 * model.getSize()) / 3, 70, 75, 100, 100);
         // this.view.init();
-        this.controller = new CombatController(model, view, null);
+        this.controller = new CombatController(model, view, null,null, null, null);
     }
 
     @Test
