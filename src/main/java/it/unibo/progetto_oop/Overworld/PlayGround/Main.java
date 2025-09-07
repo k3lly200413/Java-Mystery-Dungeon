@@ -48,7 +48,7 @@ public final class Main {
 
         // VIEW
         SwingMapView view = new SwingMapView(
-            "-Java Mystery Dungeon", config.tileSize()
+            "Java Mystery Dungeon", config.tileSize()
         );
         
         // CONTROLLER

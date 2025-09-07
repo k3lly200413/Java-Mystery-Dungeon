@@ -7,6 +7,7 @@ import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 
 public interface RandomPlacementStrategy {
-    void placeObject(StructureData g, TileType type, int n, Random rand, Position player, int dist);
-    Position placePlayer(StructureData g, TileType type, Random rand);
+    void placeObject(StructureData base, StructureData entity, TileType type, int n, Random rand, Position player, int dist);
+    Position placePlayer(StructureData base, StructureData entity, Random rand);
+    void placeOnBase(StructureData base, TileType type, int n, Random rand);
 }
