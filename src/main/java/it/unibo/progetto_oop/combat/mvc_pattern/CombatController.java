@@ -286,6 +286,7 @@ public class CombatController {
         view.showOriginalButtons(); // Go back to the main menu
         this.model.resetPositions();
         this.redrawView();
+        this.setState(new PlayerTurnState());
     }
 
     private void handleInfo() {
