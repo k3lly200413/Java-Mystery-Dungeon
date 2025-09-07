@@ -12,11 +12,12 @@ import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.FloorGenerator;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.*;
+import it.unibo.progetto_oop.Overworld.PlayGround.view.GameStartView;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 
-public final class OverworldLuncher {
+public final class GameLuncher {
 
     private final FloorConfig config = new FloorConfig.Builder().build();
     private final Random rand = new Random();
@@ -44,15 +45,23 @@ public final class OverworldLuncher {
         OverworldModel model = createModel(dungeon);
 
         SwingUtilities.invokeLater(() -> {
+            
             SwingMapView view = createView();
+            
+            GameStartView startView = new GameStartView();
+            ViewManager viewManager = new ViewManager();
+            viewManager.start(startView);
+            startView.setOnStart(() -> {
+                viewManager.setPlayGroundView(view);
+                viewManager.showOverworld();
+            });
+
 
             MapController mapController = new MapController(view, model);
             mapController.start();
 
-            ViewManager viewManager = new ViewManager();
-            viewManager.start(view);
-
             new OverworldController(model, view, viewManager);
+
         });
     }
 }
