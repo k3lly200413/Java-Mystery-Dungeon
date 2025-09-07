@@ -50,7 +50,7 @@ public class CombatModel implements PossibleUser {
     private int enemyHealth;
 
     /** The maximum health points allowed for both player and enemy. */
-    private final int maxHealth = 100;
+    private int maxHealth;
 
     /** The current stamina points of the player. */
     private int playerStamina;
@@ -126,6 +126,7 @@ public class CombatModel implements PossibleUser {
      */
     public CombatModel(final CombatBuilder builder) {
 
+        this.maxHealth = builder.getMaxHealth();
         this.size = builder.getSize();
         this.playerStaminaMax = builder.getStaminaMax();
         this.playerPower = builder.getPlayerPower();
@@ -175,6 +176,16 @@ public final void resetPositions() {
 @Override
 public final void increasePlayerHealth(final int amount) {
     this.playerHealth = Math.min(maxHealth, this.playerHealth + amount);
+}
+
+/**
+ * Increases the player's health by the specified amount,
+ * without exceeding the maximum health.
+ *
+ * @param amount the health points to add
+ */
+public final void increasePlayerMaxHealth(final int amount) {
+    this.maxHealth = this.maxHealth + amount;
 }
 
 /**

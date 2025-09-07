@@ -995,7 +995,7 @@ public class CombatController {
             final String winner =
                 model.getPlayerHealth() <= 0 ? "Enemy" : "Player";
             view.showInfo("Game Over! " + winner + " wins!");
-            this.setState(new GameOverState(combatCollision, gridNotifier,enemy));
+            this.setState(new GameOverState(combatCollision, gridNotifier,enemy,player));
             return true;
         }
         return false;
