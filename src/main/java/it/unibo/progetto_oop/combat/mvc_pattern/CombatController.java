@@ -901,7 +901,7 @@ public class CombatController {
 
                 if (this.model.isPlayerTurn()) {
                     view.updateEnemyHealth(remaining);
-                    this.setState(new BossTurnState());
+                    this.setState(new EnemyTurnState());
                 } else {
                     view.updatePlayerHealth(remaining);
                     this.setState(new PlayerTurnState());
@@ -1237,7 +1237,7 @@ public class CombatController {
                 if (this.model.isPlayerTurn()) {
                     this.model.setPlayerTurn(false);
                     view.updateEnemyHealth(remaining);
-                    this.setState(new BossTurnState());
+                    this.setState(new EnemyTurnState());
                 } else {
                     this.model.setPlayerTurn(true);
                     view.updatePlayerHealth(remaining);

@@ -1,25 +1,19 @@
 package it.unibo.progetto_oop.Overworld.PlayGround.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.util.Objects;
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 
-public final class SwingMapView extends JFrame implements MapView {
+public final class SwingMapView extends JPanel implements MapView {
 
     private final MapPanel panel;
-    private Runnable nextFloorAction = () -> { };
 
     /**
      * Constructs a SwingMapView with the specified title and cell size.
@@ -27,59 +21,26 @@ public final class SwingMapView extends JFrame implements MapView {
      * @param title the title of the JFrame
      * @param cellSize the size of each cell in the map
      */
-    public SwingMapView(final String title, final int cellSize) {
-        super(title);
+    public SwingMapView(final int cellSize) {
         this.panel = new MapPanel(cellSize);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        setContentPane(panel);
-        setMinimumSize(new Dimension(400, 300));
-        setResizable(true);
-
-        // Tasto 'n' per next floor (il controller imposta la callback)
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(final KeyEvent e) {
-                if (e.getKeyChar() == 'n') {
-                    nextFloorAction.run();
-                }
-            }
-        });
-        setFocusable(true);
-    }
-
-    // Imposta l'azione eseguita quando si preme 'n'
-    public void onNextFloorRequested(final Runnable action) {
-        this.nextFloorAction = Objects.requireNonNull(action);
-    }
-
-    // Mostra la view.
-    public void showView() {
-        pack();
-        setVisible(true);
+        setLayout(new BorderLayout());
+        add(this.panel, BorderLayout.CENTER);
     }
 
     @Override
     public void render(final StructureData grid) {
         panel.setGrid(grid);
-        if (!isVisible()) {
-            pack();
-            setVisible(true);
-        }
-        panel.revalidate(); // ricalcolo dimensioni preferite
-        panel.repaint();
-    }
-
-    public JPanel getPanel() {
-        return this.panel;
+        revalidate();
+        repaint();
     }
 
     // Imposta la griglia delle entità
     public void setEntityGrid(final StructureData entity) {
         panel.setEntityGrid(entity);
+        repaint();
     }
 
-    /* ============ Panel ============ */
+    /* ============ Canvas ============ */
     private static final class MapPanel extends JPanel {
         private StructureData grid;        // base
         private StructureData entityGrid;  // overlay

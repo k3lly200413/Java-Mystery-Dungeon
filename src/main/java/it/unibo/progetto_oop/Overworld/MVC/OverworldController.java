@@ -23,7 +23,7 @@ public class OverworldController {
     }
 
     public void initializeImputBindings() {
-        JPanel panel = this.view.getPanel();
+        JPanel panel = this.view;
 
         // Bind pressed puttons to keys
         InputBindings bindings = new InputBindings(panel);

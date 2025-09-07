@@ -20,12 +20,10 @@ public final class MapController implements ChangeFloorListener {
         this.model = Objects.requireNonNull(model);
     }
 
-    public void show() {
-        view.onNextFloorRequested(this::next);
+    public void start() {
         model.setChangeFloorListener(this);
         model.setFloorInitializer(this::initFloor);
         model.nextFloor();
-        SwingUtilities.invokeLater(view::showView);
     }
 
     public void next() {
