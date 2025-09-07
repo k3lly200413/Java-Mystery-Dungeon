@@ -39,7 +39,7 @@ public class OverworldController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.movePlayer(dx, dy);  
+                model.movePlayer(dx, dy);
                 view.repaint();
             }
         });

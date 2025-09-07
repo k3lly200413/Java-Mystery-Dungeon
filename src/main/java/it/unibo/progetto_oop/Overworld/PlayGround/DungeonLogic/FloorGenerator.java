@@ -73,14 +73,7 @@ public final class FloorGenerator {
             tunnelPlacement.connect(grid, rooms, rand);
         }
         if (!finalFloor) {
-            Position playerPos = objectPlacer.placePlayer(grid, TileType.PLAYER, rand);
-            objectPlacer.placeObject(grid, TileType.STAIRS, 1, rand, playerPos, 2);
-            objectPlacer.placeObject(grid, TileType.ENEMY, rooms.size(), rand, playerPos, 3);
-            objectPlacer.placeObject(grid, TileType.ITEM, rooms.size(), rand, playerPos, 3);
-        } 
-        else {
-            Position playerPos = objectPlacer.placePlayer(grid, TileType.PLAYER, rand);
-            objectPlacer.placeObject(grid, TileType.ENEMY, rooms.size(), rand, playerPos, 3);
+            objectPlacer.placeOnBase(grid, TileType.STAIRS, 1, rand);
         }
         return rooms; // Floor farà List.copyOf(...)
     }
