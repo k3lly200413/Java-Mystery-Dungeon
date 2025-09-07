@@ -13,12 +13,11 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 
 public class ViewManager {
-
     private static final String START_GAME = "START GAME";
     public static final String INVENTORY_CARD = "INVENTORY";
     public static final String OVERWORLD_CARD = "OVERWORLD";
     public static final String COMBAT_CARD = "COMBAT";
-    private static final String GAME_OVER = "GAME OVER";
+    //private static final String GAME_OVER = "GAME OVER";
 
     private JFrame frame;
     private CardLayout cardLayout; 
@@ -62,7 +61,7 @@ public class ViewManager {
 
     public void setPlayGroundView(SwingMapView playGroundView) {
         this.playGroundView = playGroundView;
-        this.mainCardPanel.add(playGroundView, OVERWORLD_CARD);
+        this.mainCardPanel.add(this.playGroundView, OVERWORLD_CARD);
     }
 
     /* 
