@@ -9,41 +9,45 @@ import it.unibo.progetto_oop.combat.inventory.InventoryView;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
-import it.unibo.progetto_oop.combat.CombatLauncher;
 
 public class ViewManager {
 
-    private CardLayout cardLayout; 
-    private JPanel mainCardPanel; 
-    private JPanel overworldView;
-    private InventoryView invView;
-    private CombatView combatView;
-    private CombatController combatController;
-
+    private static final String START_GAME = "START GAME";
     public static final String INVENTORY_CARD = "INVENTORY";
     public static final String OVERWORLD_CARD = "OVERWORLD";
+    public static final String COMBAT_CARD = "COMBAT";
+    private static final String GAME_OVER = "GAME OVER";
 
-    public void start(SwingMapView overworldView) {
-        //this.overworldView = overworldView.getPanel();
+    private JFrame frame;
+    private CardLayout cardLayout; 
+    private JPanel mainCardPanel;
+    private InventoryView invView;
+    private CombatView combatView;
+    private SwingMapView playGroundView;
+    //private GameStartView startView;
+    //private GameOverView gameOverView;
 
-        // Setup il CardLayout e il panel principale (solo UNA volta)
+    private CombatController combatController;
+
+
+    public void start(SwingMapView playGroundView) {
+        this.playGroundView = playGroundView;
+        this.frame = new JFrame("Java Mystery Dungeon");
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Setup il CardLayout e il panel principale
         this.cardLayout = new CardLayout();
         this.mainCardPanel = new JPanel(cardLayout);
 
-        /* 
-        // Aggiungo l'overworld
-        this.mainCardPanel.add(this.overworldView, OVERWORLD_CARD);
+        
+        // prima card
+        this.mainCardPanel.add(this.playGroundView, OVERWORLD_CARD);
+        this.frame.setContentPane(this.mainCardPanel);
+        this.frame.pack();
+        this.frame.setVisible(true);
 
         // Mostro l'overworld come default
         this.cardLayout.show(this.mainCardPanel, OVERWORLD_CARD);
-
-        // Setup del JFrame
-        JFrame frame = new JFrame("Overworld Adventure");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(this.mainCardPanel);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);*/
     }
 
     /* 

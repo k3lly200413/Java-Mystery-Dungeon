@@ -35,7 +35,7 @@ public final class OverworldLuncher {
     }
 
     private SwingMapView createView() {
-        return new SwingMapView("Java Mystery Dungeon", config.tileSize());
+        return new SwingMapView(config.tileSize());
     }
 
     public void start() {
@@ -47,7 +47,7 @@ public final class OverworldLuncher {
             SwingMapView view = createView();
 
             MapController mapController = new MapController(view, model);
-            mapController.show();
+            mapController.start();
 
             ViewManager viewManager = new ViewManager();
             viewManager.start(view);
