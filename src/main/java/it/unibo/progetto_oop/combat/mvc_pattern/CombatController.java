@@ -239,7 +239,6 @@ public class CombatController {
             enemyActionTimer.stop();
         }
         enemyActionTimer = null;
-        gridNotifier.notifyEnemyRemoved(enemy.getCurrentPosition());
         combatCollision.setInCombat(false);
         this.view.close();
     }
@@ -259,13 +258,13 @@ public class CombatController {
     private void handleBagMenu() {
         this.setState(new ItemSelectionState());
         this.view.showBagButtons();
-        if (this.player.getInventory().getItemCount(attackBuffItem) <= 0) {
+        if (!this.player.getInventory().canUseItem(this.attackBuffItem)) {
             this.view.setCustomButtonDisabled(this.view.getAttackBuffButton());
 
-        } if (this.player.getInventory().getItemCount(attackBuffItem) <= 0) {
+        } if (!this.player.getInventory().canUseItem(this.curePoisonItem)) {
             this.view.setCustomButtonDisabled(this.view.getCurePoisonButton());
 
-        } if (this.player.getInventory().getItemCount(attackBuffItem) <= 0) {
+        } if (!this.player.getInventory().canUseItem(this.healingItem)) {
             this.view.setCustomButtonDisabled(this.view.getHealingButton());
 
         }
@@ -328,6 +327,7 @@ public class CombatController {
 
     private void handleCurePoisonInput() {
         this.currentState.handlePotionUsed(this, this.curePoisonItem, null);
+        this.player.getInventory().decreaseItemCount(curePoisonItem);
         currentState.handleBackInput(this);
     }
 
@@ -1095,6 +1095,7 @@ public class CombatController {
         if (this.currentState != null) {
             currentState.handlePotionUsed(this, this.attackBuffItem, null);
             currentState.handleBackInput(this);
+            this.player.getInventory().decreaseItemCount(attackBuffItem);
         }
     }
 
@@ -1103,6 +1104,7 @@ public class CombatController {
             currentState.handlePotionUsed(this, this.healingItem, null);
             this.view.updatePlayerHealth(this.model.getPlayerHealth());
             currentState.handleBackInput(this);
+            this.player.getInventory().decreaseItemCount(healingItem);
         }
     }
 

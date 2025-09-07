@@ -2,7 +2,7 @@ package it.unibo.progetto_oop.Overworld.MVC;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_factory.ItemFactory;
@@ -11,59 +11,85 @@ import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.Enem
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactoryImpl;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
+import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.ImplRandomPlacement;
+import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RandomPlacementStrategy;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
-//in questa classe vengono generati e inizializzati gli elementi in base alla posizione della grid
-//NON deve essere aggiornata la view
 public class OverworldEntitiesGenerator {
-    List<Item> itemList = new ArrayList<>();
-    ItemFactory itemFactory = new ItemFactory();
 
-    List<Enemy> enemyList = new ArrayList<>();
+    private final List<Item>  itemList  = new ArrayList<>();
+    private final List<Enemy> enemyList = new ArrayList<>();
+    private final ItemFactory itemFactory = new ItemFactory();
+    private final Random rand = new Random();
+
     private static final int ENEMY_HP = 100;
     private static final int ENEMY_POWER = 20;
+    private static final int MIN_DIST_FROM_PLAYER  = 2;
 
-    public OverworldEntitiesGenerator(Floor currentFloor, Player player, OverworldModel overworldModel, GridNotifier gridNotifier) {
-        generateItems(currentFloor);
-        generateEnemies(currentFloor, gridNotifier, overworldModel);
-        spawnPlayer(currentFloor, player);
-        overworldModel.setSpawnObjects(enemyList, itemList);   //l'ho messo per testare, poi vedi tu come vuoi implementare questa cosa
+    public OverworldEntitiesGenerator(final Floor currentFloor,
+                                      final Player player,
+                                      final OverworldModel model,
+                                      final GridNotifier gridNotifier) {
+
+        final StructureData base   = model.getBaseGridView();
+        final StructureData entity = model.getEntityGridView();
+        final RandomPlacementStrategy placer = new ImplRandomPlacement();
+
+        // PLAYER
+        final Position playerPos = placer.placePlayer(base, entity, rand);
+        if (playerPos == null) {
+            throw new IllegalStateException("Impossibile piazzare il PLAYER: nessuna cella valida.");
+        }
+        player.setPosition(playerPos);
+
+        // 2) ENEMY
+        placer.placeObject(base, entity, TileType.ENEMY, model.getCurrentFloor().rooms().size(),
+                rand, playerPos, MIN_DIST_FROM_PLAYER);
+
+        // 3) ITEM
+        placer.placeObject(base, entity, TileType.ITEM, model.getCurrentFloor().rooms().size(),
+                rand, null, MIN_DIST_FROM_PLAYER);
+
+        // entities generation
+        generateEnemiesFromEntityGrid(model, gridNotifier);
+        generateItemsFromEntityGrid(model);
+        model.setSpawnObjects(enemyList, itemList);
     }
 
-    private void generateItems(Floor currentFloor) {
-        List<String> types = List.of("Health Potion", "Antidote", "Attack Buff");
-        var rand = ThreadLocalRandom.current();
-        for (Position pos : currentFloor.getObjectsPositions(TileType.ITEM)) {
+    private void generateItemsFromEntityGrid(final OverworldModel model) {
+        final List<String> types = List.of("Health Potion", "Antidote", "Attack Buff");
+        for (Position pos : getPositionsOfType(TileType.ITEM, model.getEntityGridView())) {
             String type = types.get(rand.nextInt(types.size()));
             itemList.add(itemFactory.createItem(type, pos));
         }
     }
 
-    private void generateEnemies(Floor currentFloor, GridNotifier gridNotifier, OverworldModel overworldModel) {
-        EnemyFactory factory = new EnemyFactoryImpl(overworldModel.getWallCollision(), overworldModel.getCombatCollision());
-        for (Position pos : currentFloor.getObjectsPositions(TileType.ENEMY)) {
-            int roll = ThreadLocalRandom.current().nextInt(3);
-            Enemy enemy;
-            switch (roll) {
-                case 0 -> enemy = factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, pos, true, gridNotifier);
-                case 1 -> enemy = factory.createSleeperEnemy(ENEMY_HP, ENEMY_POWER, pos, true, gridNotifier);
-                default -> enemy = factory.createPatrollerEnemy(ENEMY_HP, ENEMY_POWER, pos, false, gridNotifier);
-            }
+    private void generateEnemiesFromEntityGrid(final OverworldModel model, final GridNotifier gridNotifier) {
+        final EnemyFactory factory = new EnemyFactoryImpl(model.getWallCollision(), model.getCombatCollision());
+        for (Position pos : getPositionsOfType(
+                TileType.ENEMY, model.getEntityGridView())) {
+            int roll = rand.nextInt(3);
+            Enemy enemy = switch (roll) {
+                case 0 -> factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, pos, true, gridNotifier);
+                case 1 -> factory.createSleeperEnemy(ENEMY_HP, ENEMY_POWER, pos, true, gridNotifier);
+                default -> factory.createPatrollerEnemy(ENEMY_HP, ENEMY_POWER, pos, false, gridNotifier);
+            };
             enemyList.add(enemy);
         }
     }
 
-    private void spawnPlayer(Floor currentFloor, Player player) {
-        player.setPosition(currentFloor.getObjectsPositions(TileType.PLAYER).get(0));
-    }
-
-    public List<Item> getItemList() {
-        return itemList;
-    }
-
-    public List<Enemy> getEnemyList() {
-        return enemyList;
+    private List<Position> getPositionsOfType(final TileType type, final StructureData entity) {
+        final List<Position> out = new ArrayList<>();
+        for (int y = 0; y < entity.height(); y++) {
+            for (int x = 0; x < entity.width(); x++) {
+                if (entity.get(x, y) == type) {
+                    out.add(new Position(x, y));
+                }
+            }
+        }
+        return out;
     }
 }

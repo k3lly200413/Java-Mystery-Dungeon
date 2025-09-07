@@ -10,11 +10,17 @@ import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.Comb
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollisionImpl;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
+import it.unibo.progetto_oop.Overworld.GridNotifier.ListEnemyUpdater;
+import it.unibo.progetto_oop.Overworld.GridNotifier.ListItemUpdater;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.MovementSystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.PickupSystem;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.ChangeFloorListener;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.EntityGridUpdater;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.ImplArrayListStructureData;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
 import it.unibo.progetto_oop.Overworld.Player.Player;
@@ -39,12 +45,14 @@ public final class OverworldModel {
     private final PickupSystem pickupSystem;
     private final EnemySystem enemySystem;
     private final MovementSystem movementSystem;
+    
+    // current floor's grid (read-only)
+    private StructureData baseGrid;   // playground: WALL/ROOM/TUNNEL/STAIRS
+    private StructureData entityGrid; // entities: PLAYER/ENEMY/ITEM/NONE
 
     // to access the grid
     private GridNotifier gridNotifier; // incapsulates GridUpdater
-
     private ChangeFloorListener changeFloorListener;
-    private StructureData gridView; // read-only sarebbe da fare un interfaccia e non solo disciplina di codice
     private WallCollision wallCollision;
     private Consumer<Floor> floorInitializer = f -> {};
     private CombatCollision combatCollision;
@@ -71,19 +79,27 @@ public final class OverworldModel {
     // Imposta quale floor è quello attivo
     public void bindCurrentFloor(final Floor floor) {
         if (floor == null) {
-            this.gridView = null;
+            this.baseGrid = null;
+            this.entityGrid = null;
             if (this.gridNotifier != null) {
                 this.gridNotifier.setGridUpdater(null);
+                this.gridNotifier.setListEnemyUpdater(null);
+                this.gridNotifier.setListItemUpdater(null);
             }
         }
         else {
-            this.gridView = floor.grid();
+            this.baseGrid = floor.grid(); // il Floor ha solo il terreno
+            entityGrid = new ImplArrayListStructureData(baseGrid.width(), baseGrid.height());
+            entityGrid.fill(TileType.NONE);
             if (this.gridNotifier == null) {
                 this.gridNotifier = new GridNotifier(null);
             }
-            this.gridNotifier.setGridUpdater(floor); // Floor implementa GridUpdater
+            this.gridNotifier.setGridUpdater(new EntityGridUpdater(this.entityGrid));
+            this.gridNotifier.setListEnemyUpdater(pos -> this.enemySystem.removeEnemyAt(pos));
+            this.gridNotifier.setListItemUpdater(pos -> this.pickupSystem.removeItemAt(pos));
+
         }
-        this.wallCollision = new WallCollisionImpl(gridView);
+        this.wallCollision = new WallCollisionImpl(baseGrid, entityGrid);
     }
 
     public boolean nextFloor() {
@@ -92,11 +108,12 @@ public final class OverworldModel {
             final Floor floor = this.dungeon.getCurrentFloor();
             bindCurrentFloor(floor);
             floorInitializer.accept(floor);
-            this.changeFloorListener.onFloorChange(this.gridView);
+            this.changeFloorListener.onFloorChange(this.baseGrid);
         }
         return changedFloor;
     }
 
+    //---------Setters----------
     public void setSpawnObjects(final List<Enemy> enemies, final List<Item> items) {
         this.pickupSystem.setItems(items);
         this.enemySystem.setEnemies(enemies);
@@ -110,6 +127,10 @@ public final class OverworldModel {
         this.changeFloorListener = l;
     }
 
+    public void setEntityAt(Position p, TileType t) {
+        entityGrid.set(p.x(), p.y(), t);
+    }
+    
     //---------Getters----------
     public Floor getCurrentFloor() {
     return this.dungeon.getCurrentFloor();
@@ -138,14 +159,24 @@ public final class OverworldModel {
     public boolean isCombatTransitionPending() {
         return this.movementSystem.isCombatTransitionPending();
     }
-    public StructureData getGridView() {
-        return this.gridView;
-    }
     public WallCollision getWallCollision() {
         return this.wallCollision;
     }
+
     public CombatCollision getCombatCollision() {
         return this.combatCollision;
+    }
+
+    public StructureData getBaseGridView() {
+        return baseGrid;
+    }
+
+    public StructureData getEntityGridView() {
+        return entityGrid;
+    }
+
+    public TileType getEntityAt(Position p) {
+        return entityGrid.get(p.x(), p.y());
     }
 
     //------Combat flags---------

@@ -81,14 +81,9 @@ public class EnemySystem {
      * Remove an enemy from the list of enemies and add it to the list of beaten enemies
      * @param enemyToRemove
      */
-    /*private void removeEnemy(Enemy enemyToRemove){  // METODO INUTILE PERCHè GRID NOTIFIER VIENE CHIAMATO DAL COMBATTIMENTO
-        if (this.enemies.contains(enemyToRemove)) {
-            Position at = enemyToRemove.getCurrentPosition(); // @autor Alice
-            this.enemies.remove(enemyToRemove);
-            model.getGridNotifier().notifyItemRemoved(at); // @autor Alice
-            this.beatenEnemies.add(enemyToRemove);
-        }
-    }*/
+    public boolean removeEnemyAt(Position enemyToRemove){
+        return this.enemies.removeIf(enemy -> enemy.getCurrentPosition().equals(enemyToRemove));
+    }
 
     /**
      * Trigger the enemy turns, allowing them to take actions

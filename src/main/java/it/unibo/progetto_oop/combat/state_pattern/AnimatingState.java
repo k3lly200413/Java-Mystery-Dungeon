@@ -97,6 +97,8 @@ public class AnimatingState implements CombatState {
                 context.performPoisonEffectAnimation();
                 //model.decreasePlayerHealth(model.getEnemyPoisonPower());
                 //view.updatePlayerHealth(model.getPlayerHealth());
+                // model.decreasePlayerHealth(model.getEnemyPoisonPower());
+                // view.updatePlayerHealth(model.getPlayerHealth());
             }
         }
 
