@@ -1,5 +1,8 @@
 package it.unibo.progetto_oop.combat;
 
+import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
+import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
@@ -17,12 +20,12 @@ public final class CombatLauncher {
      *
      * @return combatController instance
      */
-    public static CombatController buildCombat(Player player) {
+    public static CombatController buildCombat(Player player, CombatCollision combatCollision, GridNotifier gridNotifier, Enemy enemy) {
         // --- Game Configuration ---
         final int size = 12;
-        final int playerPower = 10;
+        final int playerPower = 30;
         final int playerPoisonPower = 2;
-        final int enemyPower = 10;
+        final int enemyPower = 30;
         final int enemySpeed = 3;
         final String enemyName = "Dragon";
         final int playerMaxStamina = 100;
@@ -67,8 +70,7 @@ public final class CombatLauncher {
 
             // 3. Create the Controller, linking the Model and View
             final CombatController controller =
-                new CombatController(model, view, player);
-
+                new CombatController(model, view, player, combatCollision, gridNotifier, enemy);
             return controller;
     }
 }

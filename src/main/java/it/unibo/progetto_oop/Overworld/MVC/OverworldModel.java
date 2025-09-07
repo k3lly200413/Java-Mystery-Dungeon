@@ -64,7 +64,7 @@ public final class OverworldModel {
         this.enemySystem  = new EnemySystem(null, this.player, this);
         this.movementSystem = new MovementSystem(this.player, this);
 
-        this.combatCollision = new CombatCollisionImpl();
+        this.combatCollision = new CombatCollisionImpl(this.gridNotifier);
 
         setSpawnObjects(enemies, items);
     }
