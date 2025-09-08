@@ -1,9 +1,9 @@
-package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
+package it.unibo.progetto_oop.Overworld.combat_collision;
 
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.ViewManagerObserver.ViewManagerObserver;
+import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.FactoryImpl.Enemy;
 
 public interface CombatCollision {
     /**
@@ -30,7 +30,7 @@ public interface CombatCollision {
 
     /**
      * get the inCombat flag.
-     * @param curranteViewManagerObserver the current view manager observer
+     * @param currentViewManagerObserver the current view manager observer
      */
     void setViewManagerListener(ViewManagerObserver currentViewManagerObserver);
 

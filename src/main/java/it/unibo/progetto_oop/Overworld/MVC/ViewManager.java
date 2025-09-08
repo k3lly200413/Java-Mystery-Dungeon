@@ -7,9 +7,9 @@ import java.awt.Dimension;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.GameStartView;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
+import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 
@@ -34,6 +34,10 @@ public class ViewManager {
     private CombatController combatController;
 
 
+    /**
+     * Method to start the view manager with the initial start view.
+     * @param startView the start view to display
+     */
     public void start(GameStartView startView) {
         this.startView = startView;
         this.frame = new JFrame("Java Mystery Dungeon");
@@ -42,7 +46,7 @@ public class ViewManager {
         // Setup il CardLayout e il panel principale
         this.cardLayout = new CardLayout();
         this.mainCardPanel = new JPanel(cardLayout);
-        
+
         // prima card
         this.mainCardPanel.add(this.startView, START_GAME);
         this.frame.setContentPane(this.mainCardPanel);
@@ -64,27 +68,33 @@ public class ViewManager {
         this.mainCardPanel.add(this.playGroundView, OVERWORLD_CARD);
     }
 
-    public void setInventoryView(InventoryView newInvView) {
+    /**
+     * Method to set the inventory view.
+     * @param newInvView the inventory view to set
+     */
+    public void setInventoryView(final InventoryView newInvView) {
         this.invView = newInvView;
         this.mainCardPanel.add(this.invView, INVENTORY_CARD);
     }
 
-    
     public void setCombatController(CombatController currentCombatController) {
         this.combatController = currentCombatController;
         this.mainCardPanel.add(combatController.getView(), COMBAT_CARD);
     }
 
 
-    public void showInventory(Inventory inventory){
+    /**
+     * Method to show the inventory view.
+     * @param inventory the inventory to display
+     */
+    public void showInventory(final Inventory inventory) {
         if (this.invView == null) {  // prima volta
             this.setInventoryView(new InventoryView(inventory, this));
         } else { // aggiorna la view esistente
-            this.invView.updateInventoryModel(inventory); 
-            this.invView.refreshView(); 
+            this.invView.updateInventoryModel(inventory);
+            this.invView.refreshView();
         }
         this.cardLayout.show(this.mainCardPanel, INVENTORY_CARD);
-        
     }
 
     /*

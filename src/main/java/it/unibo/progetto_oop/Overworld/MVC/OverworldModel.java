@@ -4,11 +4,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollisionImpl;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollisionImpl;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.MovementSystem;
@@ -23,6 +18,11 @@ import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.ViewManagerObserver.ViewManagerObserver;
+import it.unibo.progetto_oop.Overworld.combat_collision.CombatCollision;
+import it.unibo.progetto_oop.Overworld.combat_collision.CombatCollisionImpl;
+import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.wall_collision.WallCollision;
+import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.wall_collision.WallCollisionImpl;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 

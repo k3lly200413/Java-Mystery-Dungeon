@@ -7,25 +7,39 @@ import java.util.Optional;
  */
 
 public class Inventory {
+    /**
+     * Map that contains the items and their quantities.
+     */
     private final Map<Item, Integer> items;
+
+    /**
+     * Maximum capacity of the inventory.
+     */
     private final int capacity;
 
-    public Inventory(int capacity){
+    /**
+     * Constructor of the Inventory class.
+     * @param newCapacity
+     */
+    public Inventory(final int newCapacity) {
         this.items = new HashMap<>();
-        this.capacity = capacity > 0 ? capacity : Integer.MAX_VALUE; // Set to Integer.MAX_VALUE if capacity is not specified
-        System.out.println("New inventory with capacity: "+this.capacity);
+        // Set to Integer.MAX_VALUE if capacity is not specified
+        this.capacity = newCapacity > 0 ? newCapacity : Integer.MAX_VALUE;
     }
 
-    public Inventory(){
+    /**
+     * Default constructor with infinite capacity.
+     */
+    public Inventory() {
         this(0);
-        System.out.println("New inventory with no capacity limit");
     }
 
-    public int getCurrentSize(){
+
+    public int getCurrentSize() {
         return this.items.size();
     }
 
-    public boolean addItem(Item item){ // add one item
+    public boolean addItem(Item item) { // add one item
         if (item == null){ 
             System.out.println("Item is null");
             return false;

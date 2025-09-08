@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
+package it.unibo.progetto_oop.Overworld.enemy.movement_strategy.wall_collision;
 
 import java.util.Comparator;
 import java.util.Objects;
@@ -12,22 +12,39 @@ import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 
 public final class WallCollisionImpl implements WallCollision {
 
+    /**
+     * the grid representing the base structure (walls, floors, etc.).
+     */
     private StructureData baseGrid;
+
+    /**
+     * the grid representing entities (player, enemies, items, etc.).
+     */
     private StructureData entityGrid;
 
-    public WallCollisionImpl(final StructureData baseGrid, final StructureData entityGrid) {
-        this.baseGrid   = Objects.requireNonNull(baseGrid, "baseGrid cannot be null");
-        this.entityGrid = Objects.requireNonNull(entityGrid, "entityGrid cannot be null");
+    /**
+     * Constructor for WallCollisionImpl.
+     * @param newBaseGrid the base grid structure
+     * @param newEntityGrid the entity grid structure
+     */
+    public WallCollisionImpl(
+    final StructureData newBaseGrid, final StructureData newEntityGrid) {
+        this.baseGrid   = Objects.requireNonNull(
+            newBaseGrid, "baseGrid cannot be null");
+        this.entityGrid = Objects.requireNonNull(
+            newEntityGrid, "entityGrid cannot be null");
     }
 
     @Override
     public void setGrid(final StructureData newGridView) {
-        this.baseGrid = Objects.requireNonNull(newGridView, "baseGrid cannot be null");
+        this.baseGrid = Objects.requireNonNull(
+            newGridView, "baseGrid cannot be null");
     }
 
     @Override
     public void setEntityGrid(final StructureData newEntityGrid) {
-        this.entityGrid = Objects.requireNonNull(newEntityGrid, "entityGrid cannot be null");
+        this.entityGrid = Objects.requireNonNull(
+            newEntityGrid, "entityGrid cannot be null");
     }
 
     @Override

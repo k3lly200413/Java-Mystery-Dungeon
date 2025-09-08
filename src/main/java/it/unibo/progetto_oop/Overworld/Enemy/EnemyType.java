@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.Enemy;
+package it.unibo.progetto_oop.Overworld.enemy;
 
 public enum EnemyType {
     /**

@@ -1,20 +1,22 @@
-package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern;
+package it.unibo.progetto_oop.Overworld.enemy.creation_pattern.FactoryPattern;
 
 
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.BossEnemy;
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.GenericEnemy;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategyImpl.FollowMovementStrategy;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategyImpl.PatrolMovementStrategy;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
-import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.FollowerState;
-import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.PatrollerState;
-import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.SleeperState;
+import java.util.Objects;
+
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.Overworld.combat_collision.CombatCollision;
+import it.unibo.progetto_oop.Overworld.enemy.CreationPattern.FactoryImpl.BossEnemy;
+import it.unibo.progetto_oop.Overworld.enemy.CreationPattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.enemy.CreationPattern.FactoryImpl.GenericEnemy;
+import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.MovementStrategy;
+import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.MovementUtil;
+import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.movement_strategy_impl.FollowMovementStrategy;
+import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.movement_strategy_impl.PatrolMovementStrategy;
+import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.wall_collision.WallCollision;
+import it.unibo.progetto_oop.Overworld.enemy.state_pattern.FollowerState;
+import it.unibo.progetto_oop.Overworld.enemy.state_pattern.PatrollerState;
+import it.unibo.progetto_oop.Overworld.enemy.state_pattern.SleeperState;
 
 public class EnemyFactoryImpl implements EnemyFactory {
     /**
@@ -50,8 +52,11 @@ public class EnemyFactoryImpl implements EnemyFactory {
      */
     public EnemyFactoryImpl(final WallCollision newWallChecker,
     final CombatCollision newCombatTransitionChecker) {
-        this.wallChecker = newWallChecker;
-        this.combatTransitionChecker = newCombatTransitionChecker;
+        this.wallChecker = Objects.requireNonNull(
+            newWallChecker, "WallChecker cannot be null");
+        this.combatTransitionChecker = Objects.requireNonNull(
+            newCombatTransitionChecker,
+            "CombatTransitionChecker cannot be null");
 
         this.movementUtil = new MovementUtil(wallChecker);
         this.patrolMovementStrategy =

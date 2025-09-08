@@ -1,11 +1,11 @@
-package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
+package it.unibo.progetto_oop.Overworld.enemy.movement_strategy.wall_collision;
 
 import java.util.Optional;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 
-public interface WallCollision{
+public interface WallCollision {
 
     /**
      * set the grid view.

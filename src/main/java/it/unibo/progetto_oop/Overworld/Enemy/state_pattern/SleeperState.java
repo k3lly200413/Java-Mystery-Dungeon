@@ -1,37 +1,36 @@
-package it.unibo.progetto_oop.Overworld.Enemy.StatePattern;
+package it.unibo.progetto_oop.Overworld.enemy.state_pattern;
 
 
-import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.Overworld.enemy.EnemyType;
+import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.FactoryImpl.Enemy;
 
 public class SleeperState implements GenericEnemyState {
 
     @Override
-    public void enterState(Enemy context) {
+    public final void enterState(final Enemy context) {
         System.out.println("Entered Sleeper State");
     }
 
     @Override
-    public void exitState(Enemy context) {
+    public final void exitState(final Enemy context) {
         System.out.println("Exiting Sleeper State");
     }
 
     @Override
-    public void update(Enemy context, Player player) {
+    public final void update(final Enemy context, final Player player) {
         Position currentPos = context.getCurrentPosition();
         context.getGridNotifier().notifyEnemyMoved(currentPos, currentPos);
     }
 
     @Override
-    public void onPlayerMoved(Enemy context, Player player) {
+    public final void onPlayerMoved(final Enemy context, final Player player) {
         System.out.println("In Sleeper State so no action taken");
     }
 
     @Override
-    public EnemyType getType() {
+    public final EnemyType getType() {
         return EnemyType.SLEEPER;
     }
-    
 }

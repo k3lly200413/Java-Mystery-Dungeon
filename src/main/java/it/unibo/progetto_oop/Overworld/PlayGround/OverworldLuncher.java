@@ -9,7 +9,7 @@ import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.FloorGenerator;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.*;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.combat.inventory.Item;
 
 public final class OverworldLuncher {

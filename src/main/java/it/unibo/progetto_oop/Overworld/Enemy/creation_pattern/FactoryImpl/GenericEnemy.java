@@ -1,9 +1,11 @@
-package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl;
+package it.unibo.progetto_oop.Overworld.enemy.creation_pattern.FactoryImpl;
 
-import it.unibo.progetto_oop.Overworld.Enemy.EnemyType;
+import java.util.Objects;
+
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.Overworld.enemy.EnemyType;
+import it.unibo.progetto_oop.Overworld.enemy.state_pattern.GenericEnemyState;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.GenericEnemyState;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 
 
@@ -54,6 +56,17 @@ public class GenericEnemy implements Enemy {
     public GenericEnemy(final int newMaxHealth, final int newCurrentHealth,
     final int newPower, final Position newInitialPosition,
     final GridNotifier newGridNotifier) {
+        if (newMaxHealth <= 0) {
+            throw new IllegalArgumentException("hp must be > 0");
+        }
+        if (newPower <= 0) {
+            throw new IllegalArgumentException("power must be > 0");
+        }
+
+        Objects.requireNonNull(
+            newInitialPosition, "spawnPosition cannot be null");
+        Objects.requireNonNull(newGridNotifier, "gridNotifier cannot be null");
+
         this.maxHealth = newMaxHealth;
         this.power = newPower;
         this.initialPosition = newInitialPosition;

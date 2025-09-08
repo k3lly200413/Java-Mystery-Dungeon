@@ -1,11 +1,9 @@
-package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
-
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
+package it.unibo.progetto_oop.Overworld.combat_collision;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.ViewManagerObserver.ViewManagerObserver;
-
+import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.combat.draw_helper.DrawHelper;
 
 
@@ -32,20 +30,19 @@ public class CombatCollisionImpl implements CombatCollision {
 
     /**
      * Constructor for CombatCollisionImpl.
-     * @param newGridNotifier the grid notifier
      */
     public CombatCollisionImpl() {
         this.neighboursCheck = new DrawHelper();
     }
-    
+
     @Override
-    public boolean checkCombatCollision(final Position player,
+    public final boolean checkCombatCollision(final Position player,
     final Position enemy) {
         return this.neighboursCheck.neighbours(player, enemy, COMBAT_DISTANCE);
     }
 
     @Override
-    public void showCombat(final Enemy enemy,
+    public final void showCombat(final Enemy enemy,
     final Player player) {
         if (!inCombat) {
             inCombat = true;
@@ -54,17 +51,18 @@ public class CombatCollisionImpl implements CombatCollision {
     }
 
     @Override
-    public void showOverworld() {
+    public final void showOverworld() {
         this.viewManagerObserver.onEnemyDefeat();
     }
 
     @Override
-    public void setInCombat(final boolean inCombatValue) {
+    public final void setInCombat(final boolean inCombatValue) {
         this.inCombat = inCombatValue;
     }
-    
+
     @Override
-    public void setViewManagerListener(final ViewManagerObserver currentViewManagerObserver) {
+    public final void setViewManagerListener(
+    final ViewManagerObserver currentViewManagerObserver) {
         this.viewManagerObserver = currentViewManagerObserver;
     }
 }
