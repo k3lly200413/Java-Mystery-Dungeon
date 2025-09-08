@@ -29,9 +29,15 @@ public final class CombatLauncher {
     final GridNotifier gridNotifier, final Enemy enemy) {
         // --- Game Configuration ---
         final int size = 12;
+<<<<<<< HEAD
         final int playerPower = 50;
         final int playerPoisonPower = 2;
         final int enemyPower = 30;
+=======
+        final int playerPower = 31;
+        final int playerPoisonPower = 90;
+        final int enemyPower = 10;
+>>>>>>> poison-death-fix
         final int enemySpeed = 3;
         final String enemyName = "Dragon";
         final int playerMaxStamina = 100;
