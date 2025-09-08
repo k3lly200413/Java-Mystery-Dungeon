@@ -23,7 +23,11 @@ public interface PossibleUser {
      * Increase the player's power by the given amount.
      * @param amount the amount to increase the player's power
      */
-    void increasePlayerPower(int amount);
+    public void increasePlayerMaxPower(int amount);
+
+    public void increasePlayerMaxStamina(final int amount);
+
+    public void increasePlayerMaxHealth(final int amount);
 
     /**
      * Set the player's poisoned status.

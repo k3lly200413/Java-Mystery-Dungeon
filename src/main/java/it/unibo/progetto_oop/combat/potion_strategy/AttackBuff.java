@@ -15,6 +15,6 @@ public class AttackBuff implements PotionStrategy {
     public void applyEffect(final PossibleUser user) {
         // Logic to apply the attack buff effect
         // Increase player's attack power by buffAmount
-        user.increasePlayerPower(BUFF_AMOUNT);
+        user.increasePlayerMaxPower(BUFF_AMOUNT);
     }
 }

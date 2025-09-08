@@ -8,11 +8,6 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 
 public class AnimatingState implements CombatState {
 
-    private final CombatState enemyState;
-
-    public AnimatingState(CombatState enemyState) {
-        this.enemyState = enemyState;
-    }
     @Override
     public final void handlePhysicalAttackInput(
         final CombatController context) {
@@ -108,19 +103,15 @@ public class AnimatingState implements CombatState {
             }
         }
 
-        if (context.checkGameOver()) {
-            // Create gameOverState
-            return;
+        if (!context.checkGameOver()) {
+            if (wasPlayerTurn && !model.isEnemyPoisoned()) {
+                    context.getModel().setPlayerTurn(false);
+                    context.setState(new EnemyTurnState());
+            } else if (!wasPlayerTurn && !model.isPlayerPoison()) {
+                    context.getModel().setPlayerTurn(true);
+                    context.setState(new PlayerTurnState());
+            }
         }
-
-        if (wasPlayerTurn && !model.isEnemyPoisoned()) {
-                context.getModel().setPlayerTurn(false);
-                context.setState(enemyState);
-        } else if (!wasPlayerTurn && !model.isPlayerPoison()) {
-                context.getModel().setPlayerTurn(true);
-                context.setState(new PlayerTurnState());
-        }
-
     }
 
     @Override
@@ -159,6 +150,7 @@ public class AnimatingState implements CombatState {
             "Unimplemented method 'handleHealInput'");
     }
 
+    /** */
     @Override
     public void handlePotionUsed(
         final CombatController context,

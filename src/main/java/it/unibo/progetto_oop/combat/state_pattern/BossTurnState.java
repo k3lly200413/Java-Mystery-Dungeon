@@ -3,8 +3,6 @@ package it.unibo.progetto_oop.combat.state_pattern;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
-
 /**
  * Boss' Turn State during combat.
  */
@@ -18,10 +16,6 @@ public class BossTurnState implements CombatState {
     private static final int SUPER_ATTACK_CHARGE_INTERVAL = 4;
     /** Indicates the boss state. */
     private String bossState = "NORMAL";
-
-    private CombatModel model;
-
-    private final CombatState enemyState = model.getEnemyState();
 
     @Override
     public final void handlePhysicalAttackInput(
@@ -92,17 +86,17 @@ public class BossTurnState implements CombatState {
             context.getView().showInfo("The Boss is now ENRAGED");
         }
         if ("ENRAGED".equalsIgnoreCase(this.bossState)) {
-            context.setState(new AnimatingState(enemyState));
+            context.setState(new AnimatingState());
             context.performEnemySuperAttack();
         } else {
             if (context.getModel().getBossTurnCounter() == 0) {
-                context.setState(new AnimatingState(enemyState));
+                context.setState(new AnimatingState());
                 context.performEnemyPhysicalAttack();
                 context.getModel().setBossTurn(false);
                 context.getModel().increaseBossTurnCounter();
             } else if (context.getModel().getBossTurnCounter()
                 % DEATH_RAY_INTERVAL == 0) {
-                context.setState(new AnimatingState(enemyState));
+                context.setState(new AnimatingState());
                 context.performBossDeathRayAttack();
                 context.getModel().setBossTurn(false);
                 context.getModel().increaseBossTurnCounter();
@@ -110,7 +104,7 @@ public class BossTurnState implements CombatState {
             getBossTurnCounter() % SUPER_ATTACK_CHARGE_INTERVAL == 0) {
                 context.getView().showInfo(
                     "The Boss is charging up his Super Attack!");
-                context.setState(new AnimatingState(enemyState));
+                context.setState(new AnimatingState());
                 context.performDeathAnimation(
                     context.getModel().getEnemyPosition(), true, () -> {
                     context.getCurrentState().handleAnimationComplete(context);
@@ -118,7 +112,7 @@ public class BossTurnState implements CombatState {
                 context.getModel().setBossTurn(false);
                 context.getModel().increaseBossTurnCounter();
             } else {
-                context.setState(new AnimatingState(enemyState));
+                context.setState(new AnimatingState());
                 context.performEnemyAttack();
                 context.getModel().setBossTurn(false);
                 context.getModel().increaseBossTurnCounter();

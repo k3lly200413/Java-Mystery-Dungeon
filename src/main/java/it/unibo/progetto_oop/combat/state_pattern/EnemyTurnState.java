@@ -12,12 +12,6 @@ public class EnemyTurnState implements CombatState {
     /** Delay in milliseconds before enemy action. */
     private static final int ENEMY_ACTION_DELAY = 500;
 
-    private final CombatState enemyState;
-
-    public EnemyTurnState(CombatState enemyState) {
-        this.enemyState = enemyState;
-    }
-
     /**
      * Handles the transition logic when entering the enemy turn state.
      *
@@ -65,7 +59,7 @@ public class EnemyTurnState implements CombatState {
                     // Ensure we are still in the EnemyTurnState before acting
                     if (context.getCurrentState().equals(this)) {
                         // Assume enemy action leads to animation
-                        context.setState(new AnimatingState(enemyState));
+                        context.setState(new AnimatingState());
                         // context.performEnemySuperAttack();
                         // Renamed controller method
                         context.performEnemyAttack();

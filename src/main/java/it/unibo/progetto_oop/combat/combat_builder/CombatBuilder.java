@@ -154,9 +154,11 @@ public class CombatBuilder {
         return maxHealth;
     }
 
-    /** @param maxHealth the maximum health points to set */
-    public CombatBuilder setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
+    /** @param newMaxHealth the maximum health points to set
+     *  @return the maximum health points
+     */
+    public CombatBuilder setMaxHealth(final int newMaxHealth) {
+        this.maxHealth = newMaxHealth;
         return this;
     }
 }

@@ -5,9 +5,6 @@ import java.util.Objects;
 import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
-import it.unibo.progetto_oop.combat.state_pattern.BossTurnState;
-import it.unibo.progetto_oop.combat.state_pattern.CombatState;
-import it.unibo.progetto_oop.combat.state_pattern.EnemyTurnState;
 
 
 /**
@@ -121,7 +118,6 @@ public class CombatModel implements PossibleUser {
     /** Whether the poison animation is active. */
     private boolean poisonAnimation;
 
-    private CombatState enemyState;
     /**
      * Constructs a CombatModel with specified parameters.
      *
@@ -159,19 +155,6 @@ public class CombatModel implements PossibleUser {
 
     }
 
-
-    
-public void setEnemyState(CombatState enemyState) {
-        this.enemyState = enemy.isBoss() ? new BossTurnState(this.enemyState)
-                                    : new EnemyTurnState(this.enemyState);
-    }
-
-public CombatState getEnemyState() {
-    return enemyState;
-}
-
-
-
 /**
  * Resets player and enemy positions to their default values.
  * Same logic as the original Player() constructor.
@@ -201,6 +184,7 @@ public final void increasePlayerHealth(final int amount) {
  *
  * @param amount the health points to add
  */
+@Override
 public final void increasePlayerMaxHealth(final int amount) {
     this.maxHealth = this.maxHealth + amount;
 }
@@ -211,7 +195,7 @@ public final void increasePlayerMaxHealth(final int amount) {
  * @param power the power points to add
  */
 @Override
-public final void increasePlayerPower(final int power) {
+public final void increasePlayerMaxPower(final int power) {
     this.playerPower += power;
 }
 
@@ -246,6 +230,7 @@ public final void decreasePlayerHealth(final int amount) {
  *
  * @param amount the stamina points to add
  */
+@Override
 public final void increasePlayerMaxStamina(final int amount) {
     this.playerStaminaMax += amount;
 }

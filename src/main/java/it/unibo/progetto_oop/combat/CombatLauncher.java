@@ -18,12 +18,18 @@ public final class CombatLauncher {
     /**
      * Main method to launch the combat application.
      *
+     * @param player the player instance
+     * @param combatCollision the combat collision instance
+     * @param gridNotifier the grid notifier instance
+     * @param enemy the enemy instance
      * @return combatController instance
      */
-    public static CombatController buildCombat(Player player, CombatCollision combatCollision, GridNotifier gridNotifier, Enemy enemy) {
+    public static CombatController buildCombat(final Player player,
+    final CombatCollision combatCollision,
+    final GridNotifier gridNotifier, final Enemy enemy) {
         // --- Game Configuration ---
         final int size = 12;
-        final int playerPower = 50;
+        final int playerPower = player.getPower();
         final int playerPoisonPower = 2;
         final int enemyPower = 30;
         final int enemySpeed = 3;
@@ -45,7 +51,7 @@ public final class CombatLauncher {
 
         final int sizeDivisor = 3;
 
-        final int maxHealth = 100;
+        final int maxHealth = player.getMaxHp();
 
         // --- Application Startup ---
         // Ensure UI creation happens on the Event
@@ -73,7 +79,8 @@ public final class CombatLauncher {
 
             // 3. Create the Controller, linking the Model and View
             final CombatController controller =
-                new CombatController(model, view, player, combatCollision, gridNotifier, enemy);
+                new CombatController(model, view, player,
+                combatCollision, gridNotifier, enemy);
             return controller;
     }
 }

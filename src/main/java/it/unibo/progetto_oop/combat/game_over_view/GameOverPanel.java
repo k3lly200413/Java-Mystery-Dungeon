@@ -52,12 +52,6 @@ public class GameOverPanel extends JPanel {
     /** Extra vertical spacing before the button. */
     private static final int EXTRA_VERTICAL_SPACING = 24;
 
-    /** Width of the frame for testing purposes. */
-    private static final int FRAME_WIDTH = 900;
-
-    /** Height of the frame for testing purposes. */
-    private static final int FRAME_HEIGHT = 600;
-
     /** Number of rows in the layout grid. */
     private final int row = 3;
 
@@ -124,26 +118,5 @@ public class GameOverPanel extends JPanel {
 
 
     }
-
-    /**
-     * Main method for testing the GameOverPanel independently.
-     * Creates a JFrame to host the panel and
-     * demonstrates its appearance and functionality.
-     * @param args command line arguments (not used)
-
-    public static void main(final String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame f = new JFrame("Java Mystery Dungeon - Game Over ");
-            f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            f.setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
-
-            GameOverPanel panel = new GameOverPanel(() -> {
-                    System.out.println("Restart button clicked!");
-            });
-            f.setContentPane(panel);
-            f.setLocationRelativeTo(null);
-            f.setVisible(true);
-        });
-    } */
 }
 
