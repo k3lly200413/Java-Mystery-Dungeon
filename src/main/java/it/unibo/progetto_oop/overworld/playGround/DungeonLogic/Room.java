@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld.PlayGround.DungeonLogic;
+package it.unibo.progetto_oop.overworld.playGround.DungeonLogic;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

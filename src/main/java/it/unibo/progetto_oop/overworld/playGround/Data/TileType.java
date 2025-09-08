@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld.PlayGround.Data;
+package it.unibo.progetto_oop.overworld.playGround.Data;
 
 public enum TileType {
     WALL, 

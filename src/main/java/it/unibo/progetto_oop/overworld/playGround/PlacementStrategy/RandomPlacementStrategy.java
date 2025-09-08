@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld.PlayGround.PlacementStrategy;
+package it.unibo.progetto_oop.overworld.playGround.PlacementStrategy;
 
 import java.util.Random;
 

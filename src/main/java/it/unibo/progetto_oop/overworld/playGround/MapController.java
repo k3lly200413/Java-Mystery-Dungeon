@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld.PlayGround;
+package it.unibo.progetto_oop.overworld.playGround;
 
 import java.util.List;
 import java.util.Objects;
