@@ -1,14 +1,14 @@
-package it.unibo.progetto_oop.overworld.playground.DungeonLogic;
+package it.unibo.progetto_oop.overworld.playGround.DungeonLogic;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
-import it.unibo.progetto_oop.overworld.playground.data.ImplArrayListStructureData;
-import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData;
-import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playGround.data.FloorConfig;
+import it.unibo.progetto_oop.overworld.playGround.data.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.playGround.data.Position;
+import it.unibo.progetto_oop.overworld.playGround.data.StructureData;
+import it.unibo.progetto_oop.overworld.playGround.data.TileType;
 
 public final class Floor{
     private final StructureData grid;

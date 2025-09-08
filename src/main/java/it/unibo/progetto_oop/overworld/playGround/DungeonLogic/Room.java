@@ -1,9 +1,9 @@
-package it.unibo.progetto_oop.overworld.playground.DungeonLogic;
+package it.unibo.progetto_oop.overworld.playGround.DungeonLogic;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import it.unibo.progetto_oop.overworld.playground.data.Position;
+import it.unibo.progetto_oop.overworld.playGround.data.Position;
 
 
 public class Room implements Iterable<Position>{

@@ -10,8 +10,8 @@ import it.unibo.progetto_oop.combat.inventory.InventoryView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
-import it.unibo.progetto_oop.overworld.playground.view.GameStartView;
-import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
+import it.unibo.progetto_oop.overworld.playGround.view.GameStartView;
+import it.unibo.progetto_oop.overworld.playGround.view.SwingMapView;
 
 public class ViewManager {
     private static final String START_GAME = "START GAME";

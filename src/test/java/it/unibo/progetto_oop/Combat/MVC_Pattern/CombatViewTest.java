@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.combat.MVC_Pattern;
+package it.unibo.progetto_oop.combat.mvc_pattern;
 
 import javax.swing.JButton;
 

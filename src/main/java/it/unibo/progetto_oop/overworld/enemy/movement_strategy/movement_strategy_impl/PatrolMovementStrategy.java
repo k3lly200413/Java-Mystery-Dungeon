@@ -5,8 +5,8 @@ import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementStrategy;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementUtil.MoveDirection;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollision;
+import it.unibo.progetto_oop.overworld.playGround.data.Position;
 import it.unibo.progetto_oop.overworld.player.Player;
-import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 
 

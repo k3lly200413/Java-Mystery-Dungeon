@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld.playground;
+package it.unibo.progetto_oop.overworld.playGround;
 
 import java.util.List;
 import java.util.Random;
@@ -15,6 +15,11 @@ import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.RandomPlacem
 import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.RoomPlacementStrategy;
 import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.TunnelPlacementStrategy;
 import it.unibo.progetto_oop.overworld.playGround.data.FloorConfig;
+import it.unibo.progetto_oop.overworld.playGround.view.SwingMapView;
+
+public final class OverworldLuncher {
+    private final OverworldModel model;
+    private final SwingMapView view;
     private final MapController mapController;
 
     public OverworldLuncher(FloorConfig config, Random rand) {

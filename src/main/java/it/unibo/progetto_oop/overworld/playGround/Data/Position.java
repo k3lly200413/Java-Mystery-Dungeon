@@ -1,3 +1,3 @@
-package it.unibo.progetto_oop.overworld.playground.data;
+package it.unibo.progetto_oop.overworld.playGround.data;
 
 public record Position(int x, int y) { }
