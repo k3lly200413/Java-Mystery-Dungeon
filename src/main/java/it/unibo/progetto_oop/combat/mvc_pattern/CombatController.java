@@ -442,28 +442,29 @@ public class CombatController {
 
         model.setAttackPosition(new Position(
             attacker.x() + direction, attacker.y())); // Start flame at player
-
-        final RedrawContext redrawContext = new RedrawContext.Builder()
-        .player(this.model.getPlayerPosition())
-        .enemy(this.model.getEnemyPosition())
-        .flame(this.model.getAttackPosition())
-        .drawPlayer(true)
-        .drawEnemy(true)
-        .drawFlame(!isPoison)
-        .drawPoison(isPoison)
-        .playerRange(1)
-        .enemyRange(1)
-        .setIsGameOver(this.model.isGameOver())
-        .build();
-        this.view.redrawGrid(redrawContext);
-        /*this.redrawView(
-            this.model.getPlayerPosition(), this.model.getEnemyPosition(),
-            this.model.getAttackPosition(), 0, true, true, !isPoison, isPoison,
-            1, 1, this.model.isGameOver(), (model.isPlayerTurn()
-            ? model.getEnemyPosition()
-            : model.getPlayerPosition()), false, new ArrayList<>(),
-            false, 0, false, 0
-        );*/
+        if (!this.checkGameOver()){
+            final RedrawContext redrawContext = new RedrawContext.Builder()
+            .player(this.model.getPlayerPosition())
+            .enemy(this.model.getEnemyPosition())
+            .flame(this.model.getAttackPosition())
+            .drawPlayer(true)
+            .drawEnemy(true)
+            .drawFlame(!isPoison)
+            .drawPoison(isPoison)
+            .playerRange(1)
+            .enemyRange(1)
+            .setIsGameOver(this.model.isGameOver())
+            .build();
+            this.view.redrawGrid(redrawContext);
+            /*this.redrawView(
+                this.model.getPlayerPosition(), this.model.getEnemyPosition(),
+                this.model.getAttackPosition(), 0, true, true, !isPoison, isPoison,
+                1, 1, this.model.isGameOver(), (model.isPlayerTurn()
+                ? model.getEnemyPosition()
+                : model.getPlayerPosition()), false, new ArrayList<>(),
+                false, 0, false, 0
+            );*/
+        }
 
         animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
             // Check if flame reached or passed the enemy
@@ -903,7 +904,7 @@ public class CombatController {
                     this.model.getPlayerPoisonPower()
                     );
 
-                if (this.model.isPlayerTurn()) {
+                if (this.model.isPlayerTurn() && !this.checkGameOver()) {
                     view.updateEnemyHealth(remaining);
                     this.setState(new EnemyTurnState());
                 } else {
@@ -1236,10 +1237,12 @@ public class CombatController {
                 // this.currentState.handleAnimationComplete(this);
                 // chiamo la funzione che tratta la fine delle animazioni
                 final int remaining = model.applyAttackHealth(
-                        CombatController.this.model.isPlayerTurn(),
-                        CombatController.this.model.getPlayerPoisonPower());
-                if (CombatController.this.model.isPlayerTurn()) {
-                    CombatController.this.model.setPlayerTurn(false);
+                    this.model.isPlayerTurn(),
+                    this.model.getPlayerPoisonPower()
+                    );
+
+                if (this.model.isPlayerTurn() && !this.checkGameOver()) {
+                    this.model.setPlayerTurn(false);
                     view.updateEnemyHealth(remaining);
                     CombatController.this.setState(new EnemyTurnState());
                 } else {
