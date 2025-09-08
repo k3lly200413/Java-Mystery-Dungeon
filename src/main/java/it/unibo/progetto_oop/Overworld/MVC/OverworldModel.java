@@ -57,8 +57,12 @@ public final class OverworldModel {
     private Consumer<Floor> floorInitializer = f -> {};
     private CombatCollision combatCollision;
 
+    private static int PLAYER_MAX_HP = 100;
+    private static int PLAYER_STAMINA = 10;
+    private static int PLAYER_POWER= 10;
+
     public OverworldModel(final List<Enemy> enemies, final List<Item> items) {
-        this.player = new Player(100, new Inventory());
+        this.player = new Player(PLAYER_MAX_HP, PLAYER_STAMINA, PLAYER_POWER, new Inventory());
         this.inCombat = false;
         this.gridNotifier = new GridNotifier(null);
 

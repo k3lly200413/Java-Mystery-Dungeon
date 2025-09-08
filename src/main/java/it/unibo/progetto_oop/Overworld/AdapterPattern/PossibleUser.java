@@ -25,9 +25,13 @@ public interface PossibleUser {
      */
     void increasePlayerPower(int amount);
 
+    public void increasePlayerMaxStamina(final int amount);
+
     /**
      * Set the player's poisoned status.
      * @param poisoned true if the player is poisoned, false otherwise
      */
     void setPlayerPoisoned(boolean poisoned);
+
+    public void increasePlayerMaxPower(final int amount);
 }
