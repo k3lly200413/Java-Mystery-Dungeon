@@ -2,13 +2,8 @@ package it.unibo.progetto_oop.combat.MVC_Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-
-import javax.swing.JButton;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
@@ -42,7 +37,7 @@ public class CombatControllerTest {
 
         this.view = new CombatView(model.getSize(), (20 * model.getSize()) / 3, (50 * model.getSize()) / 3, 70, 75, 100, 100);
         // this.view.init();
-        this.controller = new CombatController(model, view, null);
+        this.controller = new CombatController(model, view, null,null, null, null);
     }
 
     @Test

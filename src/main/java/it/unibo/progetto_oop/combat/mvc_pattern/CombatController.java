@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
@@ -108,6 +109,12 @@ public class CombatController {
      * This is used to determine if the player can attack the enemy.
      */
     private final Neighbours neighbours;
+
+    /**
+     * Static instance of Enemy to be used across states.
+     */
+    private final Enemy enemy;
+
     /**
      * Timer for animations.
      * This is used to control the timing of animations in the combat.
@@ -123,11 +130,11 @@ public class CombatController {
      */
     private CombatState currentState;
 
-    /** Combat collision handler 
+    /** Combat collision handler */
     private CombatCollision combatCollision;
 
-    Grid notifier for managing grid updates 
-    private GridNotifier gridNotifier;*/
+    /** Grid notifier for managing grid updates */
+    private GridNotifier gridNotifier;
 
     /**
      * Constructor of CombatController takes in both model and view.
@@ -140,7 +147,9 @@ public class CombatController {
      */
     public CombatController(
         final CombatModel modelToUse,
-        final CombatView viewToUse, final Player player) {
+        final CombatView viewToUse, final Player player,
+        final CombatCollision combatCollision, final GridNotifier gridNotifier,
+        final Enemy enemy) {
 
         this.model = modelToUse;
         this.view = viewToUse;
@@ -149,6 +158,10 @@ public class CombatController {
         this.view.setHealthBarMax(model.getMaxHealth());
         this.view.updatePlayerHealth(model.getPlayerHealth());
         this.view.updateEnemyHealth(model.getEnemyHealth());
+
+        this.combatCollision = combatCollision;
+        this.gridNotifier = gridNotifier;
+        this.enemy = enemy;
 
         this.attachListeners();
 
@@ -226,8 +239,7 @@ public class CombatController {
             enemyActionTimer.stop();
         }
         enemyActionTimer = null;
-        //gridNotifier.notifyEnemyRemoved(this.model.getEnemyPosition());
-        //combatCollision.setInCombat(false);
+        combatCollision.setInCombat(false);
         this.view.close();
     }
 
@@ -274,6 +286,7 @@ public class CombatController {
         view.showOriginalButtons(); // Go back to the main menu
         this.model.resetPositions();
         this.redrawView();
+        this.setState(new PlayerTurnState());
     }
 
     private void handleInfo() {
@@ -889,7 +902,7 @@ public class CombatController {
 
                 if (this.model.isPlayerTurn()) {
                     view.updateEnemyHealth(remaining);
-                    this.setState(new BossTurnState());
+                    this.setState(new EnemyTurnState());
                 } else {
                     view.updatePlayerHealth(remaining);
                     this.setState(new PlayerTurnState());
@@ -983,7 +996,7 @@ public class CombatController {
             final String winner =
                 model.getPlayerHealth() <= 0 ? "Enemy" : "Player";
             view.showInfo("Game Over! " + winner + " wins!");
-            this.setState(new GameOverState());
+            this.setState(new GameOverState(combatCollision, gridNotifier,enemy));
             return true;
         }
         return false;
@@ -1225,7 +1238,7 @@ public class CombatController {
                 if (this.model.isPlayerTurn()) {
                     this.model.setPlayerTurn(false);
                     view.updateEnemyHealth(remaining);
-                    this.setState(new BossTurnState());
+                    this.setState(new EnemyTurnState());
                 } else {
                     this.model.setPlayerTurn(true);
                     view.updatePlayerHealth(remaining);

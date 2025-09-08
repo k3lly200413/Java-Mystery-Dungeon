@@ -10,6 +10,8 @@ import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.Comb
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollisionImpl;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
+import it.unibo.progetto_oop.Overworld.GridNotifier.ListEnemyUpdater;
+import it.unibo.progetto_oop.Overworld.GridNotifier.ListItemUpdater;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.MovementSystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.PickupSystem;
@@ -64,7 +66,7 @@ public final class OverworldModel {
         this.enemySystem  = new EnemySystem(null, this.player, this);
         this.movementSystem = new MovementSystem(this.player, this);
 
-        this.combatCollision = new CombatCollisionImpl();
+        this.combatCollision = new CombatCollisionImpl(this.gridNotifier);
 
         setSpawnObjects(enemies, items);
     }
@@ -81,6 +83,8 @@ public final class OverworldModel {
             this.entityGrid = null;
             if (this.gridNotifier != null) {
                 this.gridNotifier.setGridUpdater(null);
+                this.gridNotifier.setListEnemyUpdater(null);
+                this.gridNotifier.setListItemUpdater(null);
             }
         }
         else {
@@ -91,6 +95,9 @@ public final class OverworldModel {
                 this.gridNotifier = new GridNotifier(null);
             }
             this.gridNotifier.setGridUpdater(new EntityGridUpdater(this.entityGrid));
+            this.gridNotifier.setListEnemyUpdater(pos -> this.enemySystem.removeEnemyAt(pos));
+            this.gridNotifier.setListItemUpdater(pos -> this.pickupSystem.removeItemAt(pos));
+
         }
         this.wallCollision = new WallCollisionImpl(baseGrid, entityGrid);
     }
