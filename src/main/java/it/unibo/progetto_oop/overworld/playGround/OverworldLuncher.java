@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld.playGround;
+package it.unibo.progetto_oop.overworld.playground;
 
 import java.util.List;
 import java.util.Random;
@@ -6,18 +6,16 @@ import java.util.Random;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
-
-import it.unibo.progetto_oop.overworld.playGround.data.FloorConfig;
-import it.unibo.progetto_oop.overworld.playGround.dungeonLogic.Dungeon;
-import it.unibo.progetto_oop.overworld.playGround.dungeonLogic.FloorGenerator;
-import it.unibo.progetto_oop.overworld.playGround.placementStrategy.ImplRandomPlacement;
-import it.unibo.progetto_oop.overworld.playGround.placementStrategy.ImplRoomPlacement;
-
-import it.unibo.progetto_oop.overworld.playGround.placementStrategy.ImplTunnelPlacement;
-import it.unibo.progetto_oop.overworld.playGround.placementStrategy.RandomPlacementStrategy;
-import it.unibo.progetto_oop.overworld.playGround.placementStrategy.RoomPlacementStrategy;
-import it.unibo.progetto_oop.overworld.playGround.placementStrategy.TunnelPlacementStrategy;
-import it.unibo.progetto_oop.overworld.playGround.view.SwingMapView;
+import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
+import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Dungeon;
+import it.unibo.progetto_oop.overworld.playground.dungeon_logic.FloorGenerator;
+import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRandomPlacement;
+import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRoomPlacement;
+import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplTunnelPlacement;
+import it.unibo.progetto_oop.overworld.playground.placement_strategy.RandomPlacementStrategy;
+import it.unibo.progetto_oop.overworld.playground.placement_strategy.RoomPlacementStrategy;
+import it.unibo.progetto_oop.overworld.playground.placement_strategy.TunnelPlacementStrategy;
+import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
 
 public final class OverworldLuncher {
     private final OverworldModel model;

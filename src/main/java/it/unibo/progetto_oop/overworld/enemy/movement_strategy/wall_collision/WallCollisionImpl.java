@@ -6,9 +6,9 @@ import java.util.Optional;
 import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
 
-import it.unibo.progetto_oop.overworld.playGround.data.Position;
-import it.unibo.progetto_oop.overworld.playGround.data.StructureData;
-import it.unibo.progetto_oop.overworld.playGround.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.TileType;
 
 public final class WallCollisionImpl implements WallCollision {
 

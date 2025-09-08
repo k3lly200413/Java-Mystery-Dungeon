@@ -2,8 +2,8 @@ package it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision;
 
 import java.util.Optional;
 
-import it.unibo.progetto_oop.overworld.playGround.data.Position;
-import it.unibo.progetto_oop.overworld.playGround.data.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData;
 
 public interface WallCollision {
 

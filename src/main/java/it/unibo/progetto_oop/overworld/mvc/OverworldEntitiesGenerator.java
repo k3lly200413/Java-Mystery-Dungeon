@@ -10,13 +10,13 @@ import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_pattern.EnemyFactory;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_pattern.EnemyFactoryImpl;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
-import it.unibo.progetto_oop.overworld.playGround.data.Position;
-import it.unibo.progetto_oop.overworld.playGround.data.StructureData;
-import it.unibo.progetto_oop.overworld.playGround.data.TileType;
-import it.unibo.progetto_oop.overworld.playGround.dungeonLogic.Floor;
-import it.unibo.progetto_oop.overworld.playGround.placementStrategy.ImplRandomPlacement;
-import it.unibo.progetto_oop.overworld.playGround.placementStrategy.RandomPlacementStrategy;
 import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
+import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRandomPlacement;
+import it.unibo.progetto_oop.overworld.playground.placement_strategy.RandomPlacementStrategy;
 
 public class OverworldEntitiesGenerator {
 

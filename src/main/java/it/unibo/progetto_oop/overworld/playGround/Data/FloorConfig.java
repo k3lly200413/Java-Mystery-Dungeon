@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld.playGround.data;
+package it.unibo.progetto_oop.overworld.playground.data;
 
 public record FloorConfig(
         int width, int height,

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementUtil;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollision;
-import it.unibo.progetto_oop.overworld.playGround.data.Position;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 class MovementUtilTest {
 

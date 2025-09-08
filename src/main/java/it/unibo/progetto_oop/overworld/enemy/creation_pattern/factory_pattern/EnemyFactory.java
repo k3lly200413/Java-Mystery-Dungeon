@@ -2,7 +2,7 @@ package it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_pattern;
 
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
-import it.unibo.progetto_oop.overworld.playGround.data.Position;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 
 public interface EnemyFactory {

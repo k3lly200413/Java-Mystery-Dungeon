@@ -1,10 +1,10 @@
-package it.unibo.progetto_oop.overworld.playGround.dungeonLogic;
+package it.unibo.progetto_oop.overworld.playground.dungeon_logic;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import it.unibo.progetto_oop.overworld.playGround.data.FloorConfig;
+import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
 
 public class Dungeon {
     /**
