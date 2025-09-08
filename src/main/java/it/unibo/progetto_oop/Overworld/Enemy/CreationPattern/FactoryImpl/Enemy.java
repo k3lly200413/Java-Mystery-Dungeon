@@ -57,8 +57,22 @@ public interface Enemy {
     public Position getCurrentPosition();
     
     /**
-     * Set the state of the enemy to a new state
+     * Set the state of the enemy to a new state.
      * @param newState the new state to set the enemy to
      */
     public void setState(GenericEnemyState newState);
+
+    /**
+     * @param player The player that has moved. 
+     * @param model The current model of the overworld.
+     * 
+     *  Based on the type of enemy, it will act differently when the player moves.
+     */
+    public void playerMoved(Player player);
+
+    /**
+     * method to know if the enemy is a boss.
+     * @return if the enemy is a boss or not
+     */
+    public boolean isBoss();
 }

@@ -1,6 +1,7 @@
 package it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern;
 
 
+import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.BossEnemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.GenericEnemy;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementStrategy;
@@ -52,6 +53,14 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public Enemy createSleeperEnemy(int hp, int power, Position spawnPosition, boolean isVertical,  GridNotifier gridNotifier) {
         Enemy enemy = new GenericEnemy(hp, hp, power,spawnPosition, gridNotifier);
+
+        enemy.setState(new SleeperState());
+        return enemy;
+    }
+
+    @Override
+    public Enemy createBossEnemy(int hp, int power, Position spawnPosition, boolean isVertical, GridNotifier gridNotifier) {
+        Enemy enemy = new BossEnemy(hp, hp, power,spawnPosition, gridNotifier);
 
         enemy.setState(new SleeperState());
         return enemy;

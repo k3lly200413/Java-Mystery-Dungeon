@@ -38,7 +38,7 @@ public class CombatCollisionImpl implements CombatCollision{
         new ViewManager().showCombat(combatController);
     }
 
-    public void setInCombat(boolean inCombat) {
-        this.inCombat = inCombat;
+    public void setInCombat(boolean inCombatValue) {
+        this.inCombat = inCombatValue;
     }
 }

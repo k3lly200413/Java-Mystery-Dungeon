@@ -7,7 +7,7 @@ import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.GenericEnemyState;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 
 
-public class GenericEnemy implements Enemy {
+public class BossEnemy implements Enemy {
     private int maxHealth;
     private final int power;
     private Position initialPosition;
@@ -18,7 +18,7 @@ public class GenericEnemy implements Enemy {
     private GridNotifier gridNotifier;
 
 
-    public GenericEnemy(int maxHealth, int currentHealth, int power, Position initialPosition,  GridNotifier gridNotifier) {
+    public BossEnemy(int maxHealth, int currentHealth, int power, Position initialPosition,  GridNotifier gridNotifier) {
         this.maxHealth = maxHealth;
         this.power = power;
         this.initialPosition = initialPosition;
@@ -105,6 +105,6 @@ public class GenericEnemy implements Enemy {
 
     @Override
     public boolean isBoss() {
-        return false;
+        return true;
     }
 }
