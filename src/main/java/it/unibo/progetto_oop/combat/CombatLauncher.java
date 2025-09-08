@@ -1,29 +1,33 @@
 package it.unibo.progetto_oop.combat;
 
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
-import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
+import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
+import it.unibo.progetto_oop.overworld.player.Player;
 
 public final class CombatLauncher {
 
-    private CombatLauncher() {
-        throw new UnsupportedOperationException("Utility class");
-    }
+    private CombatController combatController;
 
     /**
      * Main method to launch the combat application.
      *
+     * @param player the player instance
+     * @param combatCollision the combat collision instance
+     * @param gridNotifier the grid notifier instance
+     * @param enemy the enemy instance
      * @return combatController instance
      */
-    public static CombatController buildCombat(Player player, CombatCollision combatCollision, GridNotifier gridNotifier, Enemy enemy) {
+    public final CombatController buildCombat(final Player player,
+    final CombatCollision combatCollision,
+    final GridNotifier gridNotifier) {
         // --- Game Configuration ---
         final int size = 12;
-        final int playerPower = 30;
+        final int playerPower = player.getPower();
         final int playerPoisonPower = 2;
         final int enemyPower = 30;
         final int enemySpeed = 3;
@@ -45,6 +49,8 @@ public final class CombatLauncher {
 
         final int sizeDivisor = 3;
 
+        final int maxHealth = player.getMaxHp();
+
         // --- Application Startup ---
         // Ensure UI creation happens on the Event
         // Dispatch Thread (EDT) for safety.
@@ -58,6 +64,7 @@ public final class CombatLauncher {
             .setEnemyPower(enemyPower)
             .setEnemySpeed(enemySpeed)
             .setEnemyName(enemyName)
+            .setMaxHealth(maxHealth)
             .build();
 
 
@@ -69,8 +76,14 @@ public final class CombatLauncher {
             view.init();
 
             // 3. Create the Controller, linking the Model and View
-            final CombatController controller =
-                new CombatController(model, view, player, combatCollision, gridNotifier, enemy);
-            return controller;
+            this.combatController =
+                new CombatController(model, view, player,
+                combatCollision, gridNotifier);
+            return this.combatController;
     }
+
+    public final void setEncounteredEnemy(Enemy encounteredEnemey) {
+        this.combatController.setEncounteredEnemy(encounteredEnemey);
+    }
+
 }

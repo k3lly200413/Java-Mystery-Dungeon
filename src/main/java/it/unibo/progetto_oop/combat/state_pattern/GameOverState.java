@@ -2,26 +2,52 @@ package it.unibo.progetto_oop.combat.state_pattern;
 
 import javax.swing.Timer;
 
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
-import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
+import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.OverworldPlayerAdapter;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
 public class GameOverState implements CombatState {
 
-    private CombatCollision combatCollision;
+    /** Combat collision instance. */
+    private final CombatCollision combatCollision;
 
-    private GridNotifier gridNotifier;
+    /** Grid notifier instance. */
+    private final GridNotifier gridNotifier;
 
-    private Enemy enemy;
+    /** Enemy instance. */
+    private final Enemy enemy;
 
-    public GameOverState(final CombatCollision combatCollision, final GridNotifier gridNotifier, final Enemy enemy) {
-        this.combatCollision = combatCollision;
-        this.gridNotifier = gridNotifier;
-        this.enemy = enemy;
+    /** User player instance. */
+    private final PossibleUser userPlayer;
+
+    /** Amount to increase player stats. */
+    private final int increaseAmount = 5;
+
+    /** Timer duration in milliseconds. */
+    private final int timerDuration = 700;
+
+    /**
+     *
+     * @param newCombatCollision
+     * @param newGridNotifier
+     * @param newEnemy
+     * @param player
+     *
+     * Constructor of the GameOverState class.
+     */
+    public GameOverState(final CombatCollision newCombatCollision,
+    final GridNotifier newGridNotifier,
+    final Enemy newEnemy, final Player player) {
+        this.combatCollision = newCombatCollision;
+        this.gridNotifier = newGridNotifier;
+        this.enemy = newEnemy;
+        this.userPlayer = new OverworldPlayerAdapter(player);
     }
 
     /**
@@ -32,19 +58,25 @@ public class GameOverState implements CombatState {
      */
     @Override
     public void enterState(final CombatController context) {
-        Timer enemyActionTimer = new Timer(700, e -> {
+        Timer enemyActionTimer = new Timer(timerDuration, e -> {
             if (context.getModel().getPlayerHealth() <= 0) {
                 context.getView().showGameOver(() -> {
-                    // TODO: qui in futuro resetta il Model e cambia stato, es:
+                    // 'TODO': qui in futuro resetta
+                    // il Model e cambia stato, es:
                     // context.restartMatch();
                     // context.setState(new PlayerTurnState());
                 });
             } else if (context.getModel().getEnemyHealth() <= 0) {
+                userPlayer.increasePlayerMaxPower(increaseAmount);
+                userPlayer.increasePlayerMaxHealth(increaseAmount);
+                userPlayer.increasePlayerMaxStamina(increaseAmount);
+                userPlayer.increasePlayerHealth(increaseAmount);
                 gridNotifier.notifyEnemyRemoved(enemy.getCurrentPosition());
                 gridNotifier.notifyListEnemyRemoved(enemy.getCurrentPosition());
                 combatCollision.setInCombat(false);
-                context.getView().showInfo("You Win! Returning to Overworld...");
                 context.getView().close();
+                context.getView().showInfo("You Win! Returning to Overworld...");
+                this.combatCollision.showOverworld();
 
             }
         });

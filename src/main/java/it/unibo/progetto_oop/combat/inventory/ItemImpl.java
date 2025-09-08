@@ -1,42 +1,61 @@
 package it.unibo.progetto_oop.combat.inventory;
 import java.util.Objects;
 
-import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
 /**
  * @author Laura Bertozzi
  */
 public abstract class ItemImpl implements Item {
+    /**
+     * the name of the item.
+     */
     private final String name;
+
+    /**
+     * the description of the item.
+     */
     private final String description;
+
+    /**
+     * the position of the item.
+     */
     private final Position position;
-    
-    public ItemImpl(String name, String description, Position position) {
-        this.name = name;
-        this.description = description;
-        this.position = position;
+
+    /**
+     * Constructor for ItemImpl.
+     * @param newName the name of the item
+     * @param newDescription the description of the item
+     * @param newPosition the position of the item
+     */
+    public ItemImpl(final String newName, final String newDescription,
+    final Position newPosition) {
+        this.name = newName;
+        this.description = newDescription;
+        this.position = newPosition;
     }
 
     @Override
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
     @Override
-    public String getDescription() {
+    public final String getDescription() {
         return description;
     }
 
     @Override
-    public Position getPosition(){
+    public final Position getPosition() {
         return this.position;
     }
 
+    @Override
     public abstract boolean use(PossibleUser target);
 
     @Override
-    public boolean equals(Object o) {
+    public final boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -44,12 +63,12 @@ public abstract class ItemImpl implements Item {
             return false;
         }
         ItemImpl other = (ItemImpl) o;
-        return Objects.equals(name, other.name) &&
-               Objects.equals(description, other.description);
+        return Objects.equals(name, other.name)
+        && Objects.equals(description, other.description);
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(name, description);
     }
 }

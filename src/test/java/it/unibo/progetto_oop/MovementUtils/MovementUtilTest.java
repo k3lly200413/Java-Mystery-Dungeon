@@ -8,9 +8,9 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementUtil;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollision;
 
 class MovementUtilTest {
 

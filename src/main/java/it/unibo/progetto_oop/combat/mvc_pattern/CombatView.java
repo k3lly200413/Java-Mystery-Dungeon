@@ -9,7 +9,8 @@ import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;import java.net.URL;
+import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,10 +28,10 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.helper.Neighbours;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
 
 public class CombatView extends JPanel {
     /**
@@ -651,10 +652,20 @@ public class CombatView extends JPanel {
         return this.curePoisonButton;
     }
 
+    /**
+     * Returns the attack buff button for the combat view.
+     *
+     * @return the attack buff button
+     */
     public final JButton getAttackBuffButton() {
         return this.attackBuffButton;
     }
 
+    /**
+     * Returns the heal button for the combat view.
+     *
+     * @return the heal button
+     */
     public final JButton getHealingButton() {
         return this.healButton;
     }
@@ -841,6 +852,12 @@ public class CombatView extends JPanel {
         this.healButton.addActionListener(e);
     }
 
+    /**
+     * Displays the game over panel with a restart option.
+     *
+     * @param onRestart the runnable
+     * to execute when the restart button is clicked
+     */
     public void showGameOver(final Runnable onRestart) {
         final JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (frame == null) {
@@ -864,5 +881,5 @@ public class CombatView extends JPanel {
             w.dispose();
         }
     }
-    
+
 }

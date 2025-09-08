@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.MVC;
+package it.unibo.progetto_oop.overworld.mvc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,35 +6,35 @@ import java.util.Random;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_factory.ItemFactory;
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactory;
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryPattern.EnemyFactoryImpl;
-import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
-import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
-import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.ImplRandomPlacement;
-import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RandomPlacementStrategy;
-import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.StructureData;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.TileType;
+import it.unibo.progetto_oop.overworld.PlayGround.DungeonLogic.Floor;
+import it.unibo.progetto_oop.overworld.PlayGround.PlacementStrategy.ImplRandomPlacement;
+import it.unibo.progetto_oop.overworld.PlayGround.PlacementStrategy.RandomPlacementStrategy;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_pattern.EnemyFactory;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_pattern.EnemyFactoryImpl;
+import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
+import it.unibo.progetto_oop.overworld.player.Player;
 
 public class OverworldEntitiesGenerator {
 
-    private final List<Item>  itemList  = new ArrayList<>();
+    private final List<Item> itemList = new ArrayList<>();
     private final List<Enemy> enemyList = new ArrayList<>();
     private final ItemFactory itemFactory = new ItemFactory();
     private final Random rand = new Random();
 
     private static final int ENEMY_HP = 100;
     private static final int ENEMY_POWER = 20;
-    private static final int MIN_DIST_FROM_PLAYER  = 2;
+    private static final int MIN_DIST_FROM_PLAYER = 2;
 
     public OverworldEntitiesGenerator(final Floor currentFloor,
-                                      final Player player,
-                                      final OverworldModel model,
-                                      final GridNotifier gridNotifier) {
+            final Player player,
+            final OverworldModel model,
+            final GridNotifier gridNotifier) {
 
-        final StructureData base   = model.getBaseGridView();
+        final StructureData base = model.getBaseGridView();
         final StructureData entity = model.getEntityGridView();
         final RandomPlacementStrategy placer = new ImplRandomPlacement();
 

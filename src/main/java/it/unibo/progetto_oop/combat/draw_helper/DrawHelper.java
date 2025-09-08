@@ -1,7 +1,7 @@
 
 package it.unibo.progetto_oop.combat.draw_helper;
 
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
 
 /**
  * Helper class for drawing operations in the combat system.

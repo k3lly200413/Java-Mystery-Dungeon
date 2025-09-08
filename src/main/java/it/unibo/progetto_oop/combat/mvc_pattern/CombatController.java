@@ -1,16 +1,12 @@
 package it.unibo.progetto_oop.combat.mvc_pattern;
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import javax.swing.Timer;
 
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
-import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.command_pattern.GameButton;
 import it.unibo.progetto_oop.combat.command_pattern.LongRangeButton;
@@ -19,13 +15,17 @@ import it.unibo.progetto_oop.combat.helper.Neighbours;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_factory.ItemFactory;
 import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
-import it.unibo.progetto_oop.combat.state_pattern.BossTurnState;
 import it.unibo.progetto_oop.combat.state_pattern.CombatState;
 import it.unibo.progetto_oop.combat.state_pattern.EnemyTurnState;
 import it.unibo.progetto_oop.combat.state_pattern.GameOverState;
 import it.unibo.progetto_oop.combat.state_pattern.InfoDisplayState;
 import it.unibo.progetto_oop.combat.state_pattern.ItemSelectionState;
 import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
+import it.unibo.progetto_oop.overworld.player.Player;
 
 
 /**.
@@ -65,18 +65,18 @@ public class CombatController {
     /**
      * Static instance of CurePoison item to be used across states.
      */
-    private Item curePoisonItem;
+    private final Item curePoisonItem;
 
     /**
      * Static instance of AttackBuff item to be used across states.
      */
-    private Item attackBuffItem;
+    private final Item attackBuffItem;
 
 
     /**
      * Static instance of HealingItem item to be used across states.
      */
-    private Item healingItem;
+    private final Item healingItem;
 
     /**
      * Static instance of Player item to be used across states.
@@ -113,7 +113,7 @@ public class CombatController {
     /**
      * Static instance of Enemy to be used across states.
      */
-    private final Enemy enemy;
+    private Enemy enemy;
 
     /**
      * Timer for animations.
@@ -130,11 +130,11 @@ public class CombatController {
      */
     private CombatState currentState;
 
-    /** Combat collision handler */
-    private CombatCollision combatCollision;
+    /** Combat collision handler. */
+    private final CombatCollision combatCollision;
 
-    /** Grid notifier for managing grid updates */
-    private GridNotifier gridNotifier;
+    /** Grid notifier for managing grid updates. */
+    private final GridNotifier gridNotifier;
 
     /**
      * Constructor of CombatController takes in both model and view.
@@ -144,12 +144,16 @@ public class CombatController {
      *
      * @param modelToUse Model which holds information necessary to controller
      * @param viewToUse  View which displays on screen information
+     * @param newPlayer  Player instance to manage inventory and stats
+     * @param newCombatCollision Collision handler for combat state
+     * @param newGridNotifier Grid notifier for managing grid updates
+     * @param newEnemy Enemy instance representing the current combat opponent
      */
     public CombatController(
         final CombatModel modelToUse,
-        final CombatView viewToUse, final Player player,
-        final CombatCollision combatCollision, final GridNotifier gridNotifier,
-        final Enemy enemy) {
+        final CombatView viewToUse, final Player newPlayer,
+        final CombatCollision newCombatCollision,
+        final GridNotifier newGridNotifier) {
 
         this.model = modelToUse;
         this.view = viewToUse;
@@ -159,24 +163,20 @@ public class CombatController {
         this.view.updatePlayerHealth(model.getPlayerHealth());
         this.view.updateEnemyHealth(model.getEnemyHealth());
 
-        this.combatCollision = combatCollision;
-        this.gridNotifier = gridNotifier;
-        this.enemy = enemy;
+        this.combatCollision = newCombatCollision;
+        this.gridNotifier = newGridNotifier;
 
         this.attachListeners();
 
         this.redrawView();
+
         this.currentState = new PlayerTurnState();
 
         this.itemFactory = new ItemFactory();
-        this.player = player;
-        this.attackBuffItem = itemFactory.createItem("Attack Buff",null);
-        this.curePoisonItem = itemFactory.createItem("Antidote",null);
-        this.healingItem = itemFactory.createItem("Health Potion",null);
-        System.out.println("attackBuffItem => " + this.player.getInventory().getItemCount(attackBuffItem));
-        System.out.println("curePoisonItem => " + this.player.getInventory().getItemCount(curePoisonItem));
-        System.out.println("healingItem => " + this.player.getInventory().getItemCount(healingItem));
-        //this.checkIfPlayerHasItemsAndActivateButtons();
+        this.player = newPlayer;
+        this.attackBuffItem = itemFactory.createItem("Attack Buff", null);
+        this.curePoisonItem = itemFactory.createItem("Antidote", null);
+        this.healingItem = itemFactory.createItem("Health Potion", null);
     }
 
     /**
@@ -260,11 +260,11 @@ public class CombatController {
         this.view.showBagButtons();
         if (!this.player.getInventory().canUseItem(this.attackBuffItem)) {
             this.view.setCustomButtonDisabled(this.view.getAttackBuffButton());
-
-        } if (!this.player.getInventory().canUseItem(this.curePoisonItem)) {
+        }
+        if (!this.player.getInventory().canUseItem(this.curePoisonItem)) {
             this.view.setCustomButtonDisabled(this.view.getCurePoisonButton());
-
-        } if (!this.player.getInventory().canUseItem(this.healingItem)) {
+        }
+        if (!this.player.getInventory().canUseItem(this.healingItem)) {
             this.view.setCustomButtonDisabled(this.view.getHealingButton());
 
         }
@@ -439,28 +439,29 @@ public class CombatController {
 
         model.setAttackPosition(new Position(
             attacker.x() + direction, attacker.y())); // Start flame at player
-
-        final RedrawContext redrawContext = new RedrawContext.Builder()
-        .player(this.model.getPlayerPosition())
-        .enemy(this.model.getEnemyPosition())
-        .flame(this.model.getAttackPosition())
-        .drawPlayer(true)
-        .drawEnemy(true)
-        .drawFlame(!isPoison)
-        .drawPoison(isPoison)
-        .playerRange(1)
-        .enemyRange(1)
-        .setIsGameOver(this.model.isGameOver())
-        .build();
-        this.view.redrawGrid(redrawContext);
-        /*this.redrawView(
-            this.model.getPlayerPosition(), this.model.getEnemyPosition(),
-            this.model.getAttackPosition(), 0, true, true, !isPoison, isPoison,
-            1, 1, this.model.isGameOver(), (model.isPlayerTurn()
-            ? model.getEnemyPosition()
-            : model.getPlayerPosition()), false, new ArrayList<>(),
-            false, 0, false, 0
-        );*/
+        if (!this.checkGameOver()){
+            final RedrawContext redrawContext = new RedrawContext.Builder()
+            .player(this.model.getPlayerPosition())
+            .enemy(this.model.getEnemyPosition())
+            .flame(this.model.getAttackPosition())
+            .drawPlayer(true)
+            .drawEnemy(true)
+            .drawFlame(!isPoison)
+            .drawPoison(isPoison)
+            .playerRange(1)
+            .enemyRange(1)
+            .setIsGameOver(this.model.isGameOver())
+            .build();
+            this.view.redrawGrid(redrawContext);
+            /*this.redrawView(
+                this.model.getPlayerPosition(), this.model.getEnemyPosition(),
+                this.model.getAttackPosition(), 0, true, true, !isPoison, isPoison,
+                1, 1, this.model.isGameOver(), (model.isPlayerTurn()
+                ? model.getEnemyPosition()
+                : model.getPlayerPosition()), false, new ArrayList<>(),
+                false, 0, false, 0
+            );*/
+        }
 
         animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
             // Check if flame reached or passed the enemy
@@ -900,7 +901,7 @@ public class CombatController {
                     this.model.getPlayerPoisonPower()
                     );
 
-                if (this.model.isPlayerTurn()) {
+                if (this.model.isPlayerTurn() && !this.checkGameOver()) {
                     view.updateEnemyHealth(remaining);
                     this.setState(new EnemyTurnState());
                 } else {
@@ -996,7 +997,8 @@ public class CombatController {
             final String winner =
                 model.getPlayerHealth() <= 0 ? "Enemy" : "Player";
             view.showInfo("Game Over! " + winner + " wins!");
-            this.setState(new GameOverState(combatCollision, gridNotifier,enemy));
+            this.setState(new GameOverState(
+                combatCollision, gridNotifier, enemy, player));
             return true;
         }
         return false;
@@ -1133,6 +1135,10 @@ public class CombatController {
         }
     }
 
+    public final void setEncounteredEnemy(Enemy encounteredEnemy) {
+        this.enemy = encounteredEnemy;
+    }
+
     /**
      * Gets the current state of the combat controller.
      *
@@ -1220,57 +1226,56 @@ public class CombatController {
         // array perché così posso dichiararlo
         // final usarlo nel Timer se no sarebbe stato più scomodo
         model.setPoisonAnimation(true);
-        animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, e -> {
+        animationTimer = new Timer(INFO_NEXT_DRAW_DELAY,
+        (final ActionEvent e) -> {
             // perché così potevo vedere da tablet che laggava ahahahahaha
-            if (conto[0] == 1) { // fine del timer resetto tutto
+            if (conto[0] == 1) {
+                // fine del timer resetto tutto
                 conto[0] = 0;
                 stopAnimationTimer();
                 redrawView();
                 model.setPoisonAnimation(false);
                 // this.currentState.handleAnimationComplete(this);
                 // chiamo la funzione che tratta la fine delle animazioni
-
                 final int remaining = model.applyAttackHealth(
                     this.model.isPlayerTurn(),
                     this.model.getPlayerPoisonPower()
                     );
 
-                if (this.model.isPlayerTurn()) {
+                if (this.model.isPlayerTurn() && !this.checkGameOver()) {
                     this.model.setPlayerTurn(false);
                     view.updateEnemyHealth(remaining);
-                    this.setState(new EnemyTurnState());
+                    CombatController.this.setState(new EnemyTurnState());
                 } else {
-                    this.model.setPlayerTurn(true);
+                    CombatController.this.model.setPlayerTurn(true);
                     view.updatePlayerHealth(remaining);
-                    this.setState(new PlayerTurnState());
+                    CombatController.this.setState(new PlayerTurnState());
                 }
                 //this.currentState.stateChange(this);
-
             } else {
                 // ridisegno tutto con il veleno che sale
-                final RedrawContext defaultRedraw = new RedrawContext.Builder()
-                .player(this.model.getPlayerPosition())
-                .enemy(this.model.getEnemyPosition())
-                .flame(this.model.getAttackPosition())
-                .drawPlayer(true)
-                .drawEnemy(true)
-                .playerRange(1)
-                .enemyRange(1)
-                .drawPoisonDamage(true)
-                .poisonYCoord(conto[0])
-                .setIsGameOver(this.model.isGameOver())
-                .whoIsPoisoned(this.model.isPlayerTurn()
-                    ? this.model.getEnemyPosition()
-                    : this.model.getPlayerPosition())
-                .build();
-                this.view.redrawGrid(defaultRedraw);
+                final RedrawContext defaultRedraw =
+                    new RedrawContext.Builder()
+                        .player(CombatController.this.model.getPlayerPosition())
+                        .enemy(CombatController.this.model.getEnemyPosition())
+                        .flame(CombatController.this.model.getAttackPosition())
+                        .drawPlayer(true).drawEnemy(true)
+                        .playerRange(1).enemyRange(1)
+                        .drawPoisonDamage(true).poisonYCoord(conto[0])
+                        .setIsGameOver(CombatController.this.model.isGameOver())
+                        .whoIsPoisoned(
+                            CombatController.this.model.isPlayerTurn()
+                                ? CombatController.this.model.getEnemyPosition()
+                                : CombatController.this.model
+                                .getPlayerPosition()).build();
+                CombatController.this.view.redrawGrid(defaultRedraw);
                 /* this.redrawView(this.model.getPlayerPosition(),
-                    this.model.getEnemyPosition(),
-                    this.model.getAttackPosition(), 0, true, true,
-                    false, false, 1, 1,
-                    this.model.isGameOver(), this.model.getWhoDied(),
-                    false, new ArrayList<>(), true,
-                    conto[0], false, 0);*/
+                this.model.getEnemyPosition(),
+                this.model.getAttackPosition(), 0, true, true,
+                false, false, 1, 1,
+                this.model.isGameOver(), this.model.getWhoDied(),
+                false, new ArrayList<>(), true,
+                conto[0], false, 0);*/
                 // faccio salire il veleno
                 conto[0]--;
             }
