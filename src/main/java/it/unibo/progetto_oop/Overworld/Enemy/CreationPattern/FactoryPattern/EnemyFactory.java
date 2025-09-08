@@ -39,4 +39,15 @@ public interface EnemyFactory {
      * @return a new sleeper enemy
      */
     public Enemy createSleeperEnemy(int hp, int power, Position spawnPosition, boolean isVertical, GridNotifier grid);
+
+    /**
+     * create a new boss enemy.
+     * @param hp health points
+     * @param power power
+     * @param spawnPosition where the enemy will spawn 
+     * @param isVertical will it be moving vertically
+     * @param walls walls in the middle of the current floor
+     * @return a new boss enemy
+     */
+    public Enemy createBossEnemy(int hp, int power, Position spawnPosition, boolean isVertical, GridNotifier grid);
 }
