@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.enemy.creation_pattern.FactoryImpl;
+package it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_impl;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;

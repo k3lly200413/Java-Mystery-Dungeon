@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.MVC.ModelSystem;
+package it.unibo.progetto_oop.Overworld.mvc.ModelSystem;
 
 import java.util.List;
 import java.util.Objects;
@@ -6,9 +6,9 @@ import java.util.Optional;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.Overworld.mvc.OverworldModel;
 
 public class PickupSystem {
     /**

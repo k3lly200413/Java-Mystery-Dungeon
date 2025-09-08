@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.MVC;
+package it.unibo.progetto_oop.Overworld.mvc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +14,9 @@ import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.ImplRandomPlacement;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RandomPlacementStrategy;
 import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.FactoryPattern.EnemyFactory;
-import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.FactoryPattern.EnemyFactoryImpl;
+import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_pattern.EnemyFactory;
+import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_pattern.EnemyFactoryImpl;
 
 public class OverworldEntitiesGenerator {
 

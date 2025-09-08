@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.MVC.InputBindings;
+package it.unibo.progetto_oop.Overworld.mvc.input_bindings;
 
 import java.awt.event.KeyEvent;
 

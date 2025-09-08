@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.MVC;
+package it.unibo.progetto_oop.Overworld.mvc;
 
 import javax.swing.*;
 
@@ -9,7 +9,7 @@ import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.GameStartView;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
-import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 

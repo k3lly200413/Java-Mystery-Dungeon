@@ -3,7 +3,7 @@ package it.unibo.progetto_oop.Overworld.enemy.movement_strategy.movement_strateg
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.combat_collision.CombatCollision;
-import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.MovementStrategy;
 import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.VisibilityUtil;
 import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.MovementUtil.MoveDirection;
