@@ -87,7 +87,7 @@ public final class OverworldModel {
     /**
      * player max hp.
      */
-    private static final int PLAYER_MAX_HP = 100;
+    private static final int PLAYER_MAX_HP = 50;
 
     /**
      * player stamina.
