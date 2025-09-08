@@ -32,6 +32,9 @@ public class CombatBuilder {
     /** The name of the enemy. */
     private String enemyName;
 
+    /** The maximum health points allowed for both player and enemy. */
+    private int maxHealth;
+
     /** @return the configured size of the combat area */
     public int getSize() {
         return size;
@@ -143,6 +146,19 @@ public class CombatBuilder {
     */
     public CombatBuilder setEnemyName(final String newEnemyName) {
         this.enemyName = newEnemyName;
+        return this;
+    }
+
+    /** @return the maximum health points */
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    /** @param newMaxHealth the maximum health points to set
+     *  @return the maximum health points
+     */
+    public CombatBuilder setMaxHealth(final int newMaxHealth) {
+        this.maxHealth = newMaxHealth;
         return this;
     }
 }

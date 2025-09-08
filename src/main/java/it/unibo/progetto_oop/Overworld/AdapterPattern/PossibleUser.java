@@ -33,5 +33,4 @@ public interface PossibleUser {
      */
     void setPlayerPoisoned(boolean poisoned);
 
-    public void increasePlayerMaxPower(final int amount);
 }

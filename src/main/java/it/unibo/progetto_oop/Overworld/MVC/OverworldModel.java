@@ -10,8 +10,6 @@ import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.Comb
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
 import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollisionImpl;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
-import it.unibo.progetto_oop.Overworld.GridNotifier.ListEnemyUpdater;
-import it.unibo.progetto_oop.Overworld.GridNotifier.ListItemUpdater;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.MovementSystem;
 import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.PickupSystem;
@@ -39,8 +37,6 @@ public final class OverworldModel {
     private Dungeon dungeon;
     private final Player player;
     private boolean inCombat;
-
-    //private Dungeon dungeon;
 
     private final PickupSystem pickupSystem;
     private final EnemySystem enemySystem;

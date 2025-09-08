@@ -23,7 +23,7 @@ public final class CombatLauncher {
     public static CombatController buildCombat(Player player, CombatCollision combatCollision, GridNotifier gridNotifier, Enemy enemy) {
         // --- Game Configuration ---
         final int size = 12;
-        final int playerPower = 30;
+        final int playerPower = 50;
         final int playerPoisonPower = 2;
         final int enemyPower = 30;
         final int enemySpeed = 3;
@@ -45,6 +45,8 @@ public final class CombatLauncher {
 
         final int sizeDivisor = 3;
 
+        final int maxHealth = 100;
+
         // --- Application Startup ---
         // Ensure UI creation happens on the Event
         // Dispatch Thread (EDT) for safety.
@@ -58,6 +60,7 @@ public final class CombatLauncher {
             .setEnemyPower(enemyPower)
             .setEnemySpeed(enemySpeed)
             .setEnemyName(enemyName)
+            .setMaxHealth(maxHealth)
             .build();
 
 
