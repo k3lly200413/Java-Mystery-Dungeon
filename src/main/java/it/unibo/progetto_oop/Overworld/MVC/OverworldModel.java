@@ -126,6 +126,14 @@ public final class OverworldModel {
     public void setEntityAt(Position p, TileType t) {
         entityGrid.set(p.x(), p.y(), t);
     }
+
+    public void setBaseGridView(StructureData base) {
+        this.baseGrid = base;
+    }
+
+    public void setEntityGridView(StructureData entity) {
+        this.entityGrid = entity;
+    }
     
     //---------Getters----------
     public Floor getCurrentFloor() {
@@ -137,7 +145,7 @@ public final class OverworldModel {
     public Player getPlayer() {
         return this.player;
     }
-    public List<Item> getItem() {
+    public List<Item> getItems() {
         return this.pickupSystem.getItem();
     }
     public Inventory getInventoryInstance() {

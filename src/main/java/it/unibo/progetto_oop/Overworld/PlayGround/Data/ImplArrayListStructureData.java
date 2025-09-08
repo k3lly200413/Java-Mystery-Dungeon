@@ -5,22 +5,23 @@ import java.util.stream.IntStream;
 
 public final class ImplArrayListStructureData implements StructureData {
     private final int w, h;
-    private final ArrayList<ArrayList<TileType>> grid; // grid[y][x]
+    private final ArrayList<ArrayList<TileType>> grid;
 
     public ImplArrayListStructureData(int w, int h) {
-        if (w <= 0 || h <= 0) throw new IllegalArgumentException("Invalid size");
+        if (w <= 0 || h <= 0)
+            throw new IllegalArgumentException("Invalid size");
         this.w = w;
         this.h = h;
 
-        this.grid = new ArrayList<>(h);          // h righe
+        this.grid = new ArrayList<>(h);
         for (int y = 0; y < h; y++) {
             ArrayList<TileType> row = new ArrayList<>(w);
-            // PRE-RIEMPI la riga con w elementi (placeholder) per poter usare set()
-            for (int x = 0; x < w; x++) row.add(null);
+            for (int x = 0; x < w; x++)
+                row.add(null);
             this.grid.add(row);
         }
 
-        fill(TileType.WALL); // ora funziona
+        fill(TileType.WALL);
     }
 
     @Override
@@ -38,7 +39,7 @@ public final class ImplArrayListStructureData implements StructureData {
     }
 
     @Override public TileType get(int x, int y) {
-        return grid.get(y).get(x); // row-major: prima y (riga), poi x (colonna)
+        return grid.get(y).get(x);
     }
 
     @Override public void set(int x, int y, TileType t) {
@@ -49,7 +50,6 @@ public final class ImplArrayListStructureData implements StructureData {
     public void fill(TileType t) {
         grid.forEach(row ->
             IntStream.range(0, w).forEach(i -> row.set(i, t))
-            // In alternativa: java.util.Collections.fill(row, t);
         );
     }
 }
