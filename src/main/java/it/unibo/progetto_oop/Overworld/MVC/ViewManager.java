@@ -64,20 +64,23 @@ public class ViewManager {
         this.mainCardPanel.add(this.playGroundView, OVERWORLD_CARD);
     }
 
-    /* 
+    public void setInventoryView(InventoryView newInvView) {
+        this.invView = newInvView;
+        this.mainCardPanel.add(this.invView, INVENTORY_CARD);
+    }
+
+    
     public void showInventory(Inventory inventory){
         if (this.invView == null) {  // prima volta
-            this.invView = new InventoryView(inventory, this);
-            this.mainCardPanel.add(this.invView, INVENTORY_CARD);
-
+            this.setInventoryView(new InventoryView(inventory, this));
         } else { // aggiorna la view esistente
             this.invView.updateInventoryModel(inventory); 
             this.invView.refreshView(); 
         }
         this.cardLayout.show(this.mainCardPanel, INVENTORY_CARD);
         
-    }*/
-
+    }
+    /* 
     public void showInventory(Inventory inventory) {
         JFrame frame = new JFrame("Inventario");
 
@@ -98,7 +101,7 @@ public class ViewManager {
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
         }
-    }
+    } */
 
     public void showCombat(CombatController combatController) {
         JFrame frame = new JFrame("Combattimento");
