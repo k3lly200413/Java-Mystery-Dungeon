@@ -36,11 +36,15 @@ public class CombatCollisionImpl implements CombatCollision {
      */
     private static final int COMBAT_DISTANCE = 1;
 
-    public CombatCollisionImpl(GridNotifier gridNotifier) {
+    /**
+     * Constructor for CombatCollisionImpl.
+     * @param newGridNotifier the grid notifier
+     */
+    public CombatCollisionImpl(final GridNotifier newGridNotifier) {
         this.neighboursCheck = new DrawHelper();
-        this.gridNotifier = gridNotifier;
+        this.gridNotifier = newGridNotifier;
     }
-
+    
     /**
      * Check if the player is close enough to the enemy.
      * @param player the position of the player
@@ -68,7 +72,7 @@ public class CombatCollisionImpl implements CombatCollision {
         this.viewManagerObserver.onPlayerEnemyContact(enemy);
         CombatController combatController =
             CombatLauncher.buildCombat(player, this, gridNotifier, enemy);
-            new ViewManager().showCombat(combatController);
+            new ViewManager().showCombat(enemy);
         }
     }
 

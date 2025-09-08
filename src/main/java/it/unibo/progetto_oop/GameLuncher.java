@@ -31,7 +31,8 @@ public final class GameLuncher {
                 CombatLauncher.buildCombat(
                     session.getModel().getPlayer(), 
                     session.getModel().getCombatCollision(),
-                    session.getModel().getGridNotifier()
+                    session.getModel().getGridNotifier(),
+                    null
                 );
                 viewManager.setPlayGroundView(session.getView());
                 viewManager.setCombatController(combatController);
