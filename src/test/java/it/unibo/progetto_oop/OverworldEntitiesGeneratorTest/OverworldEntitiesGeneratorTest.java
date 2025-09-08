@@ -5,6 +5,8 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -52,6 +54,8 @@ public class OverworldEntitiesGeneratorTest {
         model = new OverworldModel(enemies, items);
         Dungeon d = newDungeon(3);
         this.model.bindDungeon(d);
+        assertTrue(d.nextFloor(), "nextFloor() piano 0");
+        assertEquals(0, d.getCurrentFloorIndex(), "indice deve essere 0");
 
         base = new ImplArrayListStructureData(5, 5);
         entity = new ImplArrayListStructureData(5, 5);
