@@ -210,20 +210,15 @@ public final class OverworldModel {
         entityGrid.set(p.x(), p.y(), t);
     }
 
-    /**
-     * Set the grid notifier.
-     * @param newGridNotifier
-     */
-    public void setGridNotifier(final GridNotifier newGridNotifier) {
-        this.gridNotifier = newGridNotifier;
+    public void setBaseGridView(StructureData base) {
+        this.baseGrid = base;
     }
 
-    //--------- Getters ---------- //
-
-    /**
-     * Get the current floor.
-     * @return the current floor
-     */
+    public void setEntityGridView(StructureData entity) {
+        this.entityGrid = entity;
+    }
+    
+    //---------Getters----------
     public Floor getCurrentFloor() {
     return this.dungeon.getCurrentFloor();
     }
@@ -243,11 +238,6 @@ public final class OverworldModel {
     public Player getPlayer() {
         return this.player;
     }
-
-    /**
-     * Get the pickup system.
-     * @return the pickup system
-     */
     public List<Item> getItem() {
         return this.pickupSystem.getItem();
     }

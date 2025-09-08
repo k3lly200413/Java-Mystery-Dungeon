@@ -6,14 +6,12 @@ import java.util.Objects;
 import java.util.Random;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RandomPlacementStrategy;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RoomPlacementStrategy;
 import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.TunnelPlacementStrategy;
 
-//SINGLETON??
 public final class FloorGenerator {
     /**
      * Strategy for placing rooms.
@@ -75,6 +73,6 @@ public final class FloorGenerator {
         if (!finalFloor) {
             objectPlacer.placeOnBase(grid, TileType.STAIRS, 1, rand);
         }
-        return rooms; // Floor farà List.copyOf(...)
+        return rooms; // Floor farà List.copyOf()
     }
 }

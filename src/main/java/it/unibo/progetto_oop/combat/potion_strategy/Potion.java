@@ -28,6 +28,7 @@ public class Potion extends ItemImpl {
      *
      * @return the potion's {@link PotionStrategy}
      */
+    @Override
     public PotionStrategy getStrategy() {
         return this.strategy;
     }

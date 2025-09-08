@@ -1,7 +1,6 @@
 package it.unibo.progetto_oop.Player;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +35,7 @@ public class PlayerTest {
         assertEquals(1, inventory.getCurrentSize());
 
         // Create a player with the inventory
-        var player = new Player(100, inventory);
+        var player = new Player(100, 100, 10, inventory);
 
         // Use the item
         player.useItem(health);
@@ -53,7 +52,7 @@ public class PlayerTest {
         assertEquals(1, inventory.getCurrentSize());
 
         // Create a player with the inventory
-        var player = new Player(100, inventory);
+        var player = new Player(100, 100, 10, inventory);
 
         // Add the item via player method
         player.addItem(health);
