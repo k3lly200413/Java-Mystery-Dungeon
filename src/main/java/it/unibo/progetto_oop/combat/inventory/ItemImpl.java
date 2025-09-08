@@ -1,7 +1,7 @@
 package it.unibo.progetto_oop.combat.inventory;
 import java.util.Objects;
 
-import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.playGround.data.Position;
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
 /**

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_factory.ItemFactory;
-import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.playGround.data.Position;
 import it.unibo.progetto_oop.overworld.player.Player;
 
 public class PlayerTest {
