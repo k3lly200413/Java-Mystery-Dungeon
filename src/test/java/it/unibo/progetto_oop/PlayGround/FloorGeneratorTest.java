@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.PlayGround;
+package it.unibo.progetto_oop.playGround;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;
@@ -6,8 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.progetto_oop.overworld.playGround.data.*;
-import it.unibo.progetto_oop.overworld.playGround.DungeonLogic.*;
-import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.*;
+import it.unibo.progetto_oop.overworld.playGround.dungeonLogic.*;
+import it.unibo.progetto_oop.overworld.playGround.placementStrategy.*;
 
 public class FloorGeneratorTest {
 

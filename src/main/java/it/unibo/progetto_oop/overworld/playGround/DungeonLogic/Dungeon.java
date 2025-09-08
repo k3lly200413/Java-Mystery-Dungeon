@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld.playGround.DungeonLogic;
+package it.unibo.progetto_oop.overworld.playGround.dungeonLogic;
 
 import java.util.ArrayList;
 import java.util.List;

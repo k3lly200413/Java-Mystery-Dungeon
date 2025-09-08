@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld.playGround.PlacementStrategy;
+package it.unibo.progetto_oop.overworld.playGround.placementStrategy;
 
 import java.util.ArrayList;
 import java.util.Collections;

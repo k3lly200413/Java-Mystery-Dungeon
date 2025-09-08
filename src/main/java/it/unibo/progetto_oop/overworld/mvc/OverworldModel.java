@@ -16,14 +16,14 @@ import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.mvc.model_system.EnemySystem;
 import it.unibo.progetto_oop.overworld.mvc.model_system.MovementSystem;
 import it.unibo.progetto_oop.overworld.mvc.model_system.PickupSystem;
-import it.unibo.progetto_oop.overworld.playGround.DungeonLogic.Dungeon;
-import it.unibo.progetto_oop.overworld.playGround.DungeonLogic.Floor;
 import it.unibo.progetto_oop.overworld.playGround.data.ChangeFloorListener;
 import it.unibo.progetto_oop.overworld.playGround.data.EntityGridUpdater;
 import it.unibo.progetto_oop.overworld.playGround.data.ImplArrayListStructureData;
 import it.unibo.progetto_oop.overworld.playGround.data.Position;
 import it.unibo.progetto_oop.overworld.playGround.data.StructureData;
 import it.unibo.progetto_oop.overworld.playGround.data.TileType;
+import it.unibo.progetto_oop.overworld.playGround.dungeonLogic.Dungeon;
+import it.unibo.progetto_oop.overworld.playGround.dungeonLogic.Floor;
 import it.unibo.progetto_oop.overworld.player.Player;
 
 /**
