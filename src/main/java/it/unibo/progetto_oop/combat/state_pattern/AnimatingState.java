@@ -100,19 +100,15 @@ public class AnimatingState implements CombatState {
             }
         }
 
-        if (context.checkGameOver()) {
-            // Create gameOverState
-            return;
+        if (!context.checkGameOver()) {
+            if (wasPlayerTurn && !model.isEnemyPoisoned()) {
+                    context.getModel().setPlayerTurn(false);
+                    context.setState(new EnemyTurnState());
+            } else if (!wasPlayerTurn && !model.isPlayerPoison()) {
+                    context.getModel().setPlayerTurn(true);
+                    context.setState(new PlayerTurnState());
+            }
         }
-
-        if (wasPlayerTurn && !model.isEnemyPoisoned()) {
-                context.getModel().setPlayerTurn(false);
-                context.setState(new EnemyTurnState());
-        } else if (!wasPlayerTurn && !model.isPlayerPoison()) {
-                context.getModel().setPlayerTurn(true);
-                context.setState(new PlayerTurnState());
-        }
-
     }
 
     @Override
