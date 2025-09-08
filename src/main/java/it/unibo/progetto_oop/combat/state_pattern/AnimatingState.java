@@ -7,6 +7,12 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 
 public class AnimatingState implements CombatState {
+
+    private final CombatState enemyState;
+
+    public AnimatingState(CombatState enemyState) {
+        this.enemyState = enemyState;
+    }
     @Override
     public final void handlePhysicalAttackInput(
         final CombatController context) {
@@ -85,16 +91,18 @@ public class AnimatingState implements CombatState {
             if (model.isEnemyPoisoned() && model.getEnemyHealth() > 0) {
                 view.showInfo("Enemy takes poison damage!");
                 context.performPoisonEffectAnimation();
-                // model.decreaseEnemyHealth(
-                //     model.getPlayerPoisonPower()); // Apply damage
-                // view.updateEnemyHealth(
-                //     model.getEnemyHealth());          // Update bar
+                /*model.decreaseEnemyHealth(
+                    model.getPlayerPoisonPower()); // Apply damage
+                view.updateEnemyHealth(
+                    model.getEnemyHealth());          // Update bar*/
             }
         } else { // Enemy's turn just ended
             // Apply effects to PLAYER after enemy's turn
             if (model.isPlayerPoison() && model.getPlayerHealth() > 0) {
                 view.showInfo("Player takes poison damage!");
                 context.performPoisonEffectAnimation();
+                //model.decreasePlayerHealth(model.getEnemyPoisonPower());
+                //view.updatePlayerHealth(model.getPlayerHealth());
                 // model.decreasePlayerHealth(model.getEnemyPoisonPower());
                 // view.updatePlayerHealth(model.getPlayerHealth());
             }
@@ -107,7 +115,7 @@ public class AnimatingState implements CombatState {
 
         if (wasPlayerTurn && !model.isEnemyPoisoned()) {
                 context.getModel().setPlayerTurn(false);
-                context.setState(new EnemyTurnState());
+                context.setState(enemyState);
         } else if (!wasPlayerTurn && !model.isPlayerPoison()) {
                 context.getModel().setPlayerTurn(true);
                 context.setState(new PlayerTurnState());

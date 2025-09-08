@@ -30,4 +30,5 @@ public interface PossibleUser {
      * @param poisoned true if the player is poisoned, false otherwise
      */
     void setPlayerPoisoned(boolean poisoned);
+
 }
