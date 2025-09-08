@@ -7,84 +7,136 @@ import java.util.Optional;
  */
 
 public class Inventory {
+    /**
+     * Map that contains the items and their quantities.
+     */
     private final Map<Item, Integer> items;
+
+    /**
+     * Maximum capacity of the inventory.
+     */
     private final int capacity;
 
-    public Inventory(int capacity){
+    /**
+     * Constructor of the Inventory class.
+     * @param newCapacity
+     */
+    public Inventory(final int newCapacity) {
         this.items = new HashMap<>();
-        this.capacity = capacity > 0 ? capacity : Integer.MAX_VALUE; // Set to Integer.MAX_VALUE if capacity is not specified
-        System.out.println("New inventory with capacity: "+this.capacity);
+        // Set to Integer.MAX_VALUE if capacity is not specified
+        this.capacity = newCapacity > 0 ? newCapacity : Integer.MAX_VALUE;
     }
 
-    public Inventory(){
+    /**
+     * Default constructor with infinite capacity.
+     */
+    public Inventory() {
         this(0);
-        System.out.println("New inventory with no capacity limit");
     }
 
-    public int getCurrentSize(){
+
+    /**
+     * Get the current size of the inventory (number of different items).
+     * @return the current size of the inventory
+     */
+    public int getCurrentSize() {
         return this.items.size();
     }
 
-    public boolean addItem(Item item){ // add one item
-        if (item == null){ 
+    /**
+     * Add one item to the inventory.
+     * @param item the item to be added
+     * @return true if the item was added, false otherwise
+     */
+    public boolean addItem(final Item item) { // add one item
+        if (item == null) {
             System.out.println("Item is null");
             return false;
         }
-        if (!this.items.containsKey(item) && items.size() >= this.capacity){
+        if (!this.items.containsKey(item) && items.size() >= this.capacity) {
             System.out.println("Full cannot add new item");
             return false;
         }
         // updating item amount
-        int currentCount = this.items.getOrDefault(item, 0); 
+        int currentCount = this.items.getOrDefault(item, 0);
         items.put(item, currentCount + 1);
         return true;
     }
 
-    public boolean addItem(Item item, int quantity){ // add "quantity" items
-        if (item == null){ 
+    /**
+     * Add multiple items to the inventory.
+     * @param item the item to be added
+     * @param quantity the quantity of the item to be added
+     * @return true if the items were added, false otherwise
+     */
+    public boolean addItem(final Item item, final int quantity) {
+        if (item == null) {
             System.out.println("Item is null");
             return false;
         }
-        if (!this.items.containsKey(item) && items.size() >= capacity){
+        if (!this.items.containsKey(item) && items.size() >= capacity) {
             System.out.println("Full cannot add new item");
             return false;
         }
         // updating item amount
-        int currentCount = this.items.getOrDefault(item, 0); 
+        int currentCount = this.items.getOrDefault(item, 0);
         this.items.put(item, currentCount + quantity);
         return true;
     }
 
-    public boolean decreaseItemCount(Item item){
-        if (item == null){
+    /**
+     * Decrease the quantity of an item in the inventory by one.
+     * @param item the item to be decreased
+     * @return true if the item was decreased, false otherwise
+     */
+    public boolean decreaseItemCount(final Item item) {
+        if (item == null) {
             System.out.println("Item is null");
             return false;
         }
-        if (!this.items.containsKey(item)){
+        if (!this.items.containsKey(item)) {
             System.err.println("Item does not have a key. Please Fix");
             return false;
         }
         int currentAmount = this.items.get(item);
 
-        if (currentAmount <= 1){ // when i'll decrease the count will be 0, so remove the item from the inventory
+        // when i'll decrease the count will be 0,
+        // so remove the item from the inventory
+        if (currentAmount <= 1) {
             this.items.remove(item);
-            System.out.println("Item removed becuause you don't have it anymore in the inventory");
+            System.out.println(
+                "Item removed becuause you don't have it anymore");
             return true;
-        } 
+        }
         this.items.replace(item, currentAmount - 1);
         System.out.println("Removed from inventory because used");
         return true;
     }
 
-    public int getItemCount(Item item){
+    /**
+     * Get the quantity of a specific item in the inventory.
+     * @param item the item to check
+     * @return the quantity of the item in the inventory
+     */
+    public int getItemCount(final Item item) {
         return this.items.getOrDefault(item, 0);
     }
 
-    public boolean hasItem(Item item){
+    /**
+     * Check if the inventory contains at least one of the specified item.
+     * @param item the item to check
+     * @return true if the item is in the inventory, false otherwise
+     */
+    public boolean hasItem(final Item item) {
         return this.getItemCount(item) > 0;
     }
 
-    public boolean canUseItem(Item item) {
+    /**
+     * Check if the item can be used (exists in inventory).
+     * @param item the item to check
+     * @return true if the item can be used, false otherwise
+     */
+    public boolean canUseItem(final Item item) {
         if (item == null) {
             System.out.println("Item provided is NULL.");
             return false;
@@ -92,37 +144,70 @@ public class Inventory {
         return this.hasItem(item);
     }
 
-    public boolean isEmpty(){
+    /**
+     * Check if the inventory is empty.
+     * @return true if the inventory is empty, false otherwise
+     */
+    public boolean isEmpty() {
         return this.items.isEmpty();
     }
 
-    public int getCapacity(){
+    /**
+     * Get the maximum capacity of the inventory.
+     * @return the maximum capacity of the inventory
+     */
+    public int getCapacity() {
         return this.capacity;
     }
 
-    public Map<Item, Integer> getFullInventory(){
+    /**
+     * Get the full inventory as a map.
+     * @return a map representing the full inventory
+     */
+    public Map<Item, Integer> getFullInventory() {
         return this.items;
     }
 
-    public void clear(){
+    /**
+     * Clear the inventory.
+     */
+    public void clear() {
         this.items.clear();
     }
 
+    /**
+     * Print the inventory.
+     */
     public void printInventory() {
-        this.items.entrySet().stream().forEach(key -> System.out.println(key.getKey().getName() + ":" + key.getValue()));
+        this.items.entrySet()
+            .stream()
+            .forEach(
+                key -> System.out.println(
+                    key.getKey().getName() + ":" + key.getValue()));
     }
 
-    public String getItemDescription(int index){
+    /**
+     * Get the description of the item at the specified index.
+     * @param index the index of the item
+     * @return the description of the item, or an error message if not found
+     */
+    public String getItemDescription(final int index) {
         Optional<Item> possibleItem = this.getNthItem(index);
-        if (possibleItem.isPresent()){
-            return possibleItem.get().getName() + ":" + possibleItem.get().getDescription();
-        }
-        else {
+        if (possibleItem.isPresent()) {
+            return possibleItem.get()
+                .getName() + ":" + possibleItem.get().getDescription();
+        } else {
             return "No item at the index : " + index + "Please fix";
         }
     }
 
-    public Optional<Item> getNthItem(int index) {
+    /**
+     * Get the nth item in the inventory.
+     * @param index the index of the item
+     * @return an Optional containing the item if found,
+     * or an empty Optional if not found
+     */
+    public Optional<Item> getNthItem(final int index) {
         return this.items.keySet().stream().skip(index).findFirst();
     }
 }

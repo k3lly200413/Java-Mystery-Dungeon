@@ -1,11 +1,11 @@
-package it.unibo.progetto_oop.Overworld.Player;
+package it.unibo.progetto_oop.overworld.player;
 
-import it.unibo.progetto_oop.Overworld.AdapterPattern.OverworldPlayerAdapter;
-import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.OverworldPlayerAdapter;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
 // The Player class - Observer-free version
 public class Player {
@@ -20,7 +20,7 @@ public class Player {
     private int maxHP;
 
     /**
-     * the player stamina value;
+     * the player stamina value.
      */
     private int stamina;
 
@@ -41,10 +41,13 @@ public class Player {
 
     /**
      * constructor for player class.
-     * @param maxHp
-     * @param newInventory
+     * @param maxHp the player's max hp value
+     * @param newInventory the player's inventory
+     * @param newStamina the players' stamina value
+     * @param newPower the player's power value
      */
-    public Player(final int maxHp, final int newStamina, final int newPower, final Inventory newInventory) {
+    public Player(final int maxHp, final int newStamina, final int newPower,
+    final Inventory newInventory) {
         this.maxHP = maxHp;
         this.currentHP = this.maxHP;
         this.inventory = newInventory;
@@ -59,7 +62,6 @@ public class Player {
     public void useItem(final Item item) {
         // check wether the item is in the inventory
         if (this.inventory.hasItem(item)) {
-            
             PotionStrategy strategy = item.getStrategy(); // the kind of potion
             if (strategy != null) {
                 System.out.println("Using potion " + item.getDescription());
@@ -74,8 +76,6 @@ public class Player {
         }
     }
 
-    
-
 
     /**
      * Add an item to the player's inventory.
@@ -86,39 +86,51 @@ public class Player {
         this.inventory.addItem(item);
     }
 
+    /**
+     * increase the player's max hp value.
+     * @param amount the amount to increase
+     */
     public void increaseMaxHp(final int amount) {
-        if (amount >= 0) {
-            this.setMaxHp(amount + this.maxHP);
-        } else {
-            System.out.println("Nothing changed because the new amount is less than zero");
+        if (amount < 0) {
+        throw new IllegalArgumentException("Amount must not be negative");
         }
+        this.setMaxHp(amount + this.maxHP);
     }
 
+    /**
+     * increase the player's stamina.
+     * @param amount the amount to increase.
+     */
     public void increaseStamina(final int amount) {
-        if (amount >= 0) {
-            this.setStamina(amount + this.stamina);
-        } else {
-            System.out.println("Nothing changed because the new amount is less than zero");
+        if (amount < 0) {
+        throw new IllegalArgumentException("Amount must not be negative");
         }
+        this.setStamina(amount + this.stamina);
     }
 
+    /**
+     * Increase the player power.
+     * @param amount the amount to increase.
+     */
     public void increasePower(final int amount) {
-        if (amount >= 0) {
-            this.setPower(amount + this.power);
-        } else {
-            System.out.println("Nothing changed because the new amount is less than zero");
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount must not be negative");
         }
+        this.setPower(this.power + amount);
     }
 
+    /**
+     * increase the player current hp.
+     * @param amount the amount to increase
+     */
     public void heal(final int amount) {
-        if (amount >= 0) {
-            if (this.currentHP != this.maxHP && this.currentHP != 0) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount must not be negative");
+        }
+        if (this.currentHP != this.maxHP && this.currentHP != 0) {
                 // if currentHP + amount > maxHP, set it to maxHP
                 this.setHp(Math.min(this.maxHP, this.currentHP + amount));
             }
-        } else {
-            System.out.println("Nothing changed");
-        }
     }
 
     //---- SETTERS ----
@@ -126,26 +138,38 @@ public class Player {
     /**
      * Set the player's health points.
      *
-     * @param amount amount to increase the player's health points
+     * @param amount new hp value
      */
     public void setHp(final int amount) {
         this.currentHP = amount;
     }
 
+    /**
+     * Set the player's maximum health points.
+     *
+     * @param amount new max hp value
+     */
     public void setMaxHp(final int amount) {
         this.maxHP = amount;
     }
 
+    /**
+     * Set the player's power.
+     *
+     * @param amount new power value
+     */
     public void setPower(final int amount) {
         this.power = amount;
     }
 
+    /**
+     * Set the player's stamina.
+     *
+     * @param amount new stamina value
+     */
     public void setStamina(final int amount) {
         this.stamina = amount;
     }
-
-
-    
 
     /**
      * Set the player's position.

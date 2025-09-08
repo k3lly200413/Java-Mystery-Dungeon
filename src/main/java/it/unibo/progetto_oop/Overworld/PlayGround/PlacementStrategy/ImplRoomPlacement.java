@@ -1,12 +1,12 @@
-package it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy;
+package it.unibo.progetto_oop.overworld.PlayGround.PlacementStrategy;
 
 import java.util.List;
 import java.util.Random;
 
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
-import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Room;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.FloorConfig;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.StructureData;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.TileType;
+import it.unibo.progetto_oop.overworld.PlayGround.DungeonLogic.Room;
 
 public class ImplRoomPlacement implements RoomPlacementStrategy {
 

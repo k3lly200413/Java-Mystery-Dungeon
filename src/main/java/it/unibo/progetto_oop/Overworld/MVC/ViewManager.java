@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.MVC;
+package it.unibo.progetto_oop.overworld.mvc;
 
 import javax.swing.*;
 
@@ -7,10 +7,11 @@ import java.awt.Dimension;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
-import it.unibo.progetto_oop.Overworld.PlayGround.view.GameStartView;
-import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
+import it.unibo.progetto_oop.overworld.PlayGround.view.GameStartView;
+import it.unibo.progetto_oop.overworld.PlayGround.view.SwingMapView;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 
 public class ViewManager {
     private static final String START_GAME = "START GAME";
@@ -33,6 +34,10 @@ public class ViewManager {
     private CombatController combatController;
 
 
+    /**
+     * Method to start the view manager with the initial start view.
+     * @param startView the start view to display
+     */
     public void start(GameStartView startView) {
         this.startView = startView;
         this.frame = new JFrame("Java Mystery Dungeon");
@@ -42,7 +47,6 @@ public class ViewManager {
         this.cardLayout = new CardLayout();
         this.mainCardPanel = new JPanel(cardLayout);
 
-        
         // prima card
         this.mainCardPanel.add(this.startView, START_GAME);
         this.frame.setContentPane(this.mainCardPanel);
@@ -64,23 +68,36 @@ public class ViewManager {
         this.mainCardPanel.add(this.playGroundView, OVERWORLD_CARD);
     }
 
-    public void setInventoryView(InventoryView newInvView) {
+    /**
+     * Method to set the inventory view.
+     * @param newInvView the inventory view to set
+     */
+    public void setInventoryView(final InventoryView newInvView) {
         this.invView = newInvView;
         this.mainCardPanel.add(this.invView, INVENTORY_CARD);
     }
 
-    
-    public void showInventory(Inventory inventory){
+    public void setCombatController(CombatController currentCombatController) {
+        this.combatController = currentCombatController;
+        this.mainCardPanel.add(combatController.getView(), COMBAT_CARD);
+    }
+
+
+    /**
+     * Method to show the inventory view.
+     * @param inventory the inventory to display
+     */
+    public void showInventory(final Inventory inventory) {
         if (this.invView == null) {  // prima volta
             this.setInventoryView(new InventoryView(inventory, this));
         } else { // aggiorna la view esistente
-            this.invView.updateInventoryModel(inventory); 
-            this.invView.refreshView(); 
+            this.invView.updateInventoryModel(inventory);
+            this.invView.refreshView();
         }
         this.cardLayout.show(this.mainCardPanel, INVENTORY_CARD);
-        
     }
-    /* 
+
+    /*
     public void showInventory(Inventory inventory) {
         JFrame frame = new JFrame("Inventario");
 
@@ -103,22 +120,18 @@ public class ViewManager {
         }
     } */
 
-    public void showCombat(CombatController combatController) {
+    public void showCombat(Enemy encounteredEnemy) {
         JFrame frame = new JFrame("Combattimento");
-        if (this.combatView == null) {
-            this.combatController = combatController;
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.setSize(600, 400);
-            frame.add(this.combatController.getView());
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        } else {
+        // if (this.combatView == null) {
+            // frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            // frame.setSize(600, 400);
+            // frame.add(this.combatController.getView());
+            // frame.setLocationRelativeTo(null);
+            // frame.setVisible(true);
+        // } else {
             this.combatController.redrawView();
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.setSize(600, 400);
-            frame.add(this.combatController.getView());
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        }
+            this.combatController.setEncounteredEnemy(encounteredEnemy);
+        // }
+        this.cardLayout.show(this.mainCardPanel, COMBAT_CARD);
     }
 }

@@ -1,8 +1,19 @@
-package it.unibo.progetto_oop.Overworld.PlayGround.view;
+package it.unibo.progetto_oop.overworld.PlayGround.view;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.util.Objects;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public final class GameStartView extends JPanel {
 
@@ -14,7 +25,7 @@ public final class GameStartView extends JPanel {
     public GameStartView() {
 
         // Carica immagine dalle risorse
-        var url = getClass().getResource("/spritesOverworld/startBackground.png");
+        var url = getClass().getResource("/spritesOverWorld/startBackground.png");
         this.backgroundImage = new ImageIcon(url).getImage();
 
         setLayout(new BorderLayout());

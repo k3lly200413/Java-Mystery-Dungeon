@@ -4,18 +4,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_factory.ItemFactory;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.player.Player;
 
 public class PlayerTest {
-    Inventory inventory;
-    Item health;
-    Item antidote;
+    /**
+     * the inventory mock.
+     */
+    private Inventory inventory;
+
+    /**
+     * health potion mock.
+     */
+    private Item health;
+
+    /**
+     * antidote mock.
+     */
+    private Item antidote;
 
 
+
+    /**
+     * set up the test.
+     */
     @BeforeEach
     void setUp() {
         // Create a inventory
@@ -23,8 +38,9 @@ public class PlayerTest {
 
         // Create some items
         var potionFactory = new ItemFactory();
-        health = potionFactory.createItem("Health Potion", new Position(0,0));
-        antidote = potionFactory.createItem("Health Potion", new Position(1,0));
+        health = potionFactory.createItem("Health Potion", new Position(0, 0));
+        antidote = potionFactory.createItem("Health Potion",
+         new Position(1, 0));
     }
 
     @Test
@@ -39,7 +55,7 @@ public class PlayerTest {
 
         // Use the item
         player.useItem(health);
-        
+
         // Verify that the inventory's useItem method was called with the correct item
         assertEquals(0, inventory.getCurrentSize());
     }
@@ -56,9 +72,9 @@ public class PlayerTest {
 
         // Add the item via player method
         player.addItem(health);
-        
-        // Verify that the inventory's addItem method was called with the correct item
+
+        // Verify that the inventory's addItem method
+        // was called with the correct item
         assertEquals(2, inventory.getCurrentSize());
     }
-    
 }

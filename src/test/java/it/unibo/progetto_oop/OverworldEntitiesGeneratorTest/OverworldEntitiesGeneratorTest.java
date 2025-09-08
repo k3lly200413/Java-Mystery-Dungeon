@@ -1,30 +1,23 @@
 package it.unibo.progetto_oop.OverworldEntitiesGeneratorTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.ArrayList;
-import java.util.Random;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldEntitiesGenerator;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.ImplArrayListStructureData;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
-import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
-import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.FloorGenerator;
-import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.ImplRandomPlacement;
-import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.ImplRoomPlacement;
-import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.ImplTunnelPlacement;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.StructureData;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.TileType;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
+import it.unibo.progetto_oop.overworld.mvc.OverworldEntitiesGenerator;
+import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
+import it.unibo.progetto_oop.overworld.player.Player;
 
 public class OverworldEntitiesGeneratorTest {
 

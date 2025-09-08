@@ -1,16 +1,16 @@
-package it.unibo.progetto_oop.Overworld.PlayGround;
+package it.unibo.progetto_oop.overworld.PlayGround;
 
 import java.util.List;
 import java.util.Random;
 
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
-import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
-import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.FloorGenerator;
-import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.*;
-import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.combat.inventory.Item;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.FloorConfig;
+import it.unibo.progetto_oop.overworld.PlayGround.DungeonLogic.Dungeon;
+import it.unibo.progetto_oop.overworld.PlayGround.DungeonLogic.FloorGenerator;
+import it.unibo.progetto_oop.overworld.PlayGround.PlacementStrategy.*;
+import it.unibo.progetto_oop.overworld.PlayGround.view.SwingMapView;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 
 public final class OverworldLuncher {
     private final OverworldModel model;
