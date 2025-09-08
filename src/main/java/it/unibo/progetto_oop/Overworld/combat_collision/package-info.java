@@ -1,4 +1,4 @@
 /**
  * Package for handling combat collision in the game.
  */
-package it.unibo.progetto_oop.Overworld.combat_collision;
+package it.unibo.progetto_oop.overworld.combat_collision;

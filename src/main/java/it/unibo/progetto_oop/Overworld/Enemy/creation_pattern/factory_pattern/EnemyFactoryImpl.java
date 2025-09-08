@@ -1,22 +1,22 @@
-package it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_pattern;
+package it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_pattern;
 
 
 import java.util.Objects;
 
-import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.combat_collision.CombatCollision;
-import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_impl.BossEnemy;
-import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_impl.Enemy;
-import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_impl.GenericEnemy;
-import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.MovementStrategy;
-import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.MovementUtil;
-import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.movement_strategy_impl.FollowMovementStrategy;
-import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.movement_strategy_impl.PatrolMovementStrategy;
-import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.wall_collision.WallCollision;
-import it.unibo.progetto_oop.Overworld.enemy.state_pattern.FollowerState;
-import it.unibo.progetto_oop.Overworld.enemy.state_pattern.PatrollerState;
-import it.unibo.progetto_oop.Overworld.enemy.state_pattern.SleeperState;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.BossEnemy;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.GenericEnemy;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementStrategy;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementUtil;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.movement_strategy_impl.FollowMovementStrategy;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.movement_strategy_impl.PatrolMovementStrategy;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollision;
+import it.unibo.progetto_oop.overworld.enemy.state_pattern.FollowerState;
+import it.unibo.progetto_oop.overworld.enemy.state_pattern.PatrollerState;
+import it.unibo.progetto_oop.overworld.enemy.state_pattern.SleeperState;
+import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 
 public class EnemyFactoryImpl implements EnemyFactory {
     /**

@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.mvc;
+package it.unibo.progetto_oop.overworld.mvc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,17 +6,17 @@ import java.util.Random;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_factory.ItemFactory;
-import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
-import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
-import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.ImplRandomPlacement;
-import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.RandomPlacementStrategy;
-import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_impl.Enemy;
-import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_pattern.EnemyFactory;
-import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_pattern.EnemyFactoryImpl;
-import it.unibo.progetto_oop.Overworld.player.Player;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.StructureData;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.TileType;
+import it.unibo.progetto_oop.overworld.PlayGround.DungeonLogic.Floor;
+import it.unibo.progetto_oop.overworld.PlayGround.PlacementStrategy.ImplRandomPlacement;
+import it.unibo.progetto_oop.overworld.PlayGround.PlacementStrategy.RandomPlacementStrategy;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_pattern.EnemyFactory;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_pattern.EnemyFactoryImpl;
+import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
+import it.unibo.progetto_oop.overworld.player.Player;
 
 public class OverworldEntitiesGenerator {
 

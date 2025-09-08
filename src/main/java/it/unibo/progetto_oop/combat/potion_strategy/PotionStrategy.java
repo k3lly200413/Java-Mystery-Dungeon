@@ -1,6 +1,6 @@
 package it.unibo.progetto_oop.combat.potion_strategy;
 
-import it.unibo.progetto_oop.Overworld.player.adapter_pattern.PossibleUser;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
 @FunctionalInterface
 public interface PotionStrategy {

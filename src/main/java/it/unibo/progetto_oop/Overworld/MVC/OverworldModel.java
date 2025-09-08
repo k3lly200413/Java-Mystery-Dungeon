@@ -1,30 +1,30 @@
-package it.unibo.progetto_oop.Overworld.mvc;
+package it.unibo.progetto_oop.overworld.mvc;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.ChangeFloorListener;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.EntityGridUpdater;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.ImplArrayListStructureData;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
-import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
-import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
-import it.unibo.progetto_oop.Overworld.ViewManagerObserver.ViewManagerObserver;
-import it.unibo.progetto_oop.Overworld.combat_collision.CombatCollision;
-import it.unibo.progetto_oop.Overworld.combat_collision.CombatCollisionImpl;
-import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_impl.Enemy;
-import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.wall_collision.WallCollision;
-import it.unibo.progetto_oop.Overworld.enemy.movement_strategy.wall_collision.WallCollisionImpl;
-import it.unibo.progetto_oop.Overworld.mvc.model_system.EnemySystem;
-import it.unibo.progetto_oop.Overworld.mvc.model_system.MovementSystem;
-import it.unibo.progetto_oop.Overworld.mvc.model_system.PickupSystem;
-import it.unibo.progetto_oop.Overworld.player.Player;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.ChangeFloorListener;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.EntityGridUpdater;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.StructureData;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.TileType;
+import it.unibo.progetto_oop.overworld.PlayGround.DungeonLogic.Dungeon;
+import it.unibo.progetto_oop.overworld.PlayGround.DungeonLogic.Floor;
+import it.unibo.progetto_oop.overworld.ViewManagerObserver.ViewManagerObserver;
+import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
+import it.unibo.progetto_oop.overworld.combat_collision.CombatCollisionImpl;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollision;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollisionImpl;
+import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
+import it.unibo.progetto_oop.overworld.mvc.model_system.EnemySystem;
+import it.unibo.progetto_oop.overworld.mvc.model_system.MovementSystem;
+import it.unibo.progetto_oop.overworld.mvc.model_system.PickupSystem;
+import it.unibo.progetto_oop.overworld.player.Player;
 
 /**
  * OverworldModel: orchestratore del mondo di gioco.

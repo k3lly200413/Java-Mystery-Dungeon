@@ -1,13 +1,13 @@
-package it.unibo.progetto_oop.Overworld.mvc.model_system;
+package it.unibo.progetto_oop.overworld.mvc.model_system;
 
 import java.util.Objects;
 import java.util.Optional;
 
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
-import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_impl.Enemy;
-import it.unibo.progetto_oop.Overworld.mvc.OverworldModel;
-import it.unibo.progetto_oop.Overworld.player.Player;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.TileType;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
+import it.unibo.progetto_oop.overworld.player.Player;
 
 public class MovementSystem {
     /**

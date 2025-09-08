@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import it.unibo.progetto_oop.Overworld.mvc.ViewManager;
+import it.unibo.progetto_oop.overworld.mvc.ViewManager;
 
 public class InventoryView extends JPanel {
      private static final int VIEWPORT_WIDTH_CELLS = 13;

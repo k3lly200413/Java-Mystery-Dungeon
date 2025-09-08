@@ -9,8 +9,8 @@ import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Room;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.PlayGround.DungeonLogic.Room;
 
 public class RoomTest {
 

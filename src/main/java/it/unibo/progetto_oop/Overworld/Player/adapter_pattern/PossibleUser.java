@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.player.adapter_pattern;
+package it.unibo.progetto_oop.overworld.player.adapter_pattern;
 
 public interface PossibleUser {
     /**

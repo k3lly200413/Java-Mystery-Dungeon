@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.enemy.movement_strategy.wall_collision;
+package it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision;
 
 import java.util.Comparator;
 import java.util.Objects;
@@ -6,9 +6,9 @@ import java.util.Optional;
 import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
 
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.StructureData;
+import it.unibo.progetto_oop.overworld.PlayGround.Data.TileType;
 
 public final class WallCollisionImpl implements WallCollision {
 
