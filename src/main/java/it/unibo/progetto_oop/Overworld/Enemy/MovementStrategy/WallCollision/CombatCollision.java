@@ -28,8 +28,15 @@ public interface CombatCollision {
     */
     void setInCombat(boolean inCombat);
 
-    public void setViewManagerListener(ViewManagerObserver curranteViewManagerObserver);
+    /**
+     * get the inCombat flag.
+     * @param curranteViewManagerObserver the current view manager observer
+     */
+    void setViewManagerListener(ViewManagerObserver currentViewManagerObserver);
 
-    public void showOverworld();
+    /**
+     * show the overworld view.
+     */
+    void showOverworld();
 
 }
