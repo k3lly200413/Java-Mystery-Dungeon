@@ -29,7 +29,7 @@ public final class CombatLauncher {
     final GridNotifier gridNotifier, final Enemy enemy) {
         // --- Game Configuration ---
         final int size = 12;
-        final int playerPower = 50;
+        final int playerPower = player.getPower();
         final int playerPoisonPower = 2;
         final int enemyPower = 30;
         final int enemySpeed = 3;
@@ -51,7 +51,7 @@ public final class CombatLauncher {
 
         final int sizeDivisor = 3;
 
-        final int maxHealth = 100;
+        final int maxHealth = player.getMaxHp();
 
         // --- Application Startup ---
         // Ensure UI creation happens on the Event
