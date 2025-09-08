@@ -2,7 +2,7 @@ package it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl;
 
 import java.util.Objects;
 
-import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.playGround.Data.Position;
 import it.unibo.progetto_oop.overworld.enemy.EnemyType;
 import it.unibo.progetto_oop.overworld.enemy.state_pattern.GenericEnemyState;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;

@@ -3,7 +3,7 @@ package it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_pattern;
 
 import java.util.Objects;
 
-import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.playGround.Data.Position;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.BossEnemy;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;

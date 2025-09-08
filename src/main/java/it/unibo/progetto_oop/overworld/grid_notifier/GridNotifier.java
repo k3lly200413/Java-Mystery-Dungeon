@@ -1,7 +1,7 @@
 package it.unibo.progetto_oop.overworld.grid_notifier;
 
-import it.unibo.progetto_oop.overworld.PlayGround.Data.GridUpdater;
-import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.playGround.Data.GridUpdater;
+import it.unibo.progetto_oop.overworld.playGround.Data.Position;
 
 public class GridNotifier {
     GridUpdater grid;

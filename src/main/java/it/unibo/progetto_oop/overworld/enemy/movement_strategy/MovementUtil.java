@@ -3,7 +3,7 @@ package it.unibo.progetto_oop.overworld.enemy.movement_strategy;
 import java.util.Optional;
 import java.util.function.ToIntFunction;
 
-import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.playGround.Data.Position;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollision;
 /**
  * This class is used by the follower and patroller enemies.

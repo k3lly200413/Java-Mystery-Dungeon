@@ -9,8 +9,8 @@ import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
-import it.unibo.progetto_oop.overworld.PlayGround.view.GameStartView;
-import it.unibo.progetto_oop.overworld.PlayGround.view.SwingMapView;
+import it.unibo.progetto_oop.overworld.playGround.view.GameStartView;
+import it.unibo.progetto_oop.overworld.playGround.view.SwingMapView;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 
 public class ViewManager {

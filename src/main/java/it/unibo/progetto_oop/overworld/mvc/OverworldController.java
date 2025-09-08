@@ -6,7 +6,7 @@ import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.JPanel;
 
-import it.unibo.progetto_oop.overworld.PlayGround.view.SwingMapView;
+import it.unibo.progetto_oop.overworld.playGround.view.SwingMapView;
 import it.unibo.progetto_oop.overworld.ViewManagerObserver.ViewManagerObserver;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.mvc.input_bindings.InputBindings;

@@ -1,7 +1,7 @@
 package it.unibo.progetto_oop.overworld.enemy.state_pattern;
 
 
-import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.playGround.Data.Position;
 import it.unibo.progetto_oop.overworld.enemy.EnemyType;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.player.Player;

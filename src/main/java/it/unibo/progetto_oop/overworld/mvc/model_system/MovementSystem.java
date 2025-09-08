@@ -3,8 +3,8 @@ package it.unibo.progetto_oop.overworld.mvc.model_system;
 import java.util.Objects;
 import java.util.Optional;
 
-import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.overworld.PlayGround.Data.TileType;
+import it.unibo.progetto_oop.overworld.playGround.Data.Position;
+import it.unibo.progetto_oop.overworld.playGround.Data.TileType;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.player.Player;
