@@ -378,8 +378,11 @@ public class CombatView extends JPanel {
      *
      * @param max the maximum health value for both player and enemy
      */
-    public final void setHealthBarMax(final int max) {
+    public final void setPlayerHealthBarMax(final int max) {
         this.playerHealtBar.setMaximum(max);
+    }
+
+    public final void setEnemyHealthBarMax(final int max) {
         this.enemyHealthBar.setMaximum(max);
     }
 

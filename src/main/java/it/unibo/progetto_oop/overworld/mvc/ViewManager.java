@@ -129,8 +129,12 @@ public class ViewManager {
             // frame.setLocationRelativeTo(null);
             // frame.setVisible(true);
         // } else {
-            this.combatController.redrawView();
-            this.combatController.setEncounteredEnemy(encounteredEnemy);
+        this.combatController.setEncounteredEnemy(encounteredEnemy);
+        this.combatController.getModel().setEnemyCurrentHp(encounteredEnemy.getCurrentHealth());
+        System.out.println("Enemy Health => " + encounteredEnemy.getCurrentHealth());
+        this.combatController.getModel().setEnemyMaxHp(encounteredEnemy.getMaxHealth());
+        this.combatController.resetForNewCombat();
+        this.combatController.redrawView();
         // }
         this.cardLayout.show(this.mainCardPanel, COMBAT_CARD);
     }

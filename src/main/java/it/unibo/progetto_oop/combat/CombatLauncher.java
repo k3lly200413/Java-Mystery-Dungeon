@@ -61,10 +61,11 @@ public final class CombatLauncher {
             .setPlayerPower(playerPower)
             .setPlayerPoisonPower(playerPoisonPower)
             .setPlayerLongRangePower(playerLongRangePower)
+            .setPlayerCurrentHealth(player.getCurrentHp())
             .setEnemyPower(enemyPower)
             .setEnemySpeed(enemySpeed)
             .setEnemyName(enemyName)
-            .setMaxHealth(maxHealth)
+            .setPlayerMaxHealth(player.getMaxHp())
             .build();
 
 

@@ -70,14 +70,18 @@ public class GameOverState implements CombatState {
                 userPlayer.increasePlayerMaxPower(increaseAmount);
                 userPlayer.increasePlayerMaxHealth(increaseAmount);
                 userPlayer.increasePlayerMaxStamina(increaseAmount);
-                userPlayer.increasePlayerHealth(increaseAmount);
+                // userPlayer.increasePlayerHealth(increaseAmount);
                 gridNotifier.notifyEnemyRemoved(enemy.getCurrentPosition());
                 gridNotifier.notifyListEnemyRemoved(enemy.getCurrentPosition());
                 combatCollision.setInCombat(false);
-                context.getView().close();
+                // context.getView().close();
                 context.getView().showInfo("You Win! Returning to Overworld...");
                 this.combatCollision.showOverworld();
-
+            } else {
+                combatCollision.setInCombat(false);
+                this.combatCollision.showOverworld();
+                // this.enemy.setHealth(context.getModel().getEnemyHealth());
+                System.out.println("Enemy health after combat => " + enemy.getCurrentHealth());
             }
         });
         enemyActionTimer.setRepeats(false);
