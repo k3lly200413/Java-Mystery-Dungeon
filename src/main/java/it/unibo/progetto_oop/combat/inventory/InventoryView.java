@@ -37,6 +37,16 @@ public class InventoryView extends JPanel {
     private static final int PREFERRED_CELL_HEIGHT = 60;
 
     /**
+     * status label width.
+     */
+    private static final int STATUS_LABEL_W = 100;
+
+    /**
+     * status label height.
+     */
+    private static final int STATUS_LABEL_H = 80;
+
+    /**
      * Floor color (background of the grid).
      */
     private static final Color FLOOR_COLOR = Color.LIGHT_GRAY;
@@ -144,8 +154,9 @@ public class InventoryView extends JPanel {
             BorderFactory.createLineBorder(Color.DARK_GRAY),
             BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
+
         this.bottomStatusLabel.setPreferredSize(
-            new Dimension(100, 80));
+            new Dimension(STATUS_LABEL_W, STATUS_LABEL_H));
         statusAreaPanel.add(this.bottomStatusLabel, BorderLayout.CENTER);
 
         JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -165,12 +176,11 @@ public class InventoryView extends JPanel {
         populateGrid();
 
         // Set preferred size
-        int totalPreferredWidth = PREFERRED_CELL_WIDTH * VIEWPORT_WIDTH_CELLS
-            + 20;
+        int totalPreferredWidth = PREFERRED_CELL_WIDTH * VIEWPORT_WIDTH_CELLS;
         int gridActualHeight = PREFERRED_CELL_HEIGHT * VIEWPORT_HEIGHT_CELLS
             + (VIEWPORT_HEIGHT_CELLS);
         int statusAreaHeight = bottomStatusLabel.getPreferredSize().height
-            + backButton.getPreferredSize().height + 20;
+            + backButton.getPreferredSize().height;
         this.setPreferredSize(
             new Dimension(
                 totalPreferredWidth, gridActualHeight + statusAreaHeight));
