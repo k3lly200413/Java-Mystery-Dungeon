@@ -1,10 +1,9 @@
 package it.unibo.progetto_oop.OverworldEntitiesGeneratorTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.ArrayList;
-import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,7 +50,7 @@ public class OverworldEntitiesGeneratorTest {
         entity.set(3,3, TileType.ITEM);
         entity.set(4,4, TileType.ENEMY);
 
-        player = new Player(100, new Inventory());
+        player = new Player(100, 100, 10, new Inventory());
 
         new OverworldEntitiesGenerator(
             model.getCurrentFloor(),
