@@ -3,7 +3,6 @@ package it.unibo.progetto_oop;
 import java.util.Random;
 import javax.swing.SwingUtilities;
 
-import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.overworld.playGround.OverworldLuncher;
 import it.unibo.progetto_oop.overworld.playGround.data.FloorConfig;
