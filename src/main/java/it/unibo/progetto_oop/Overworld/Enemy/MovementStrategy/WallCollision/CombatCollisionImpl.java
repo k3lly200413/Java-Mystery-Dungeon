@@ -1,7 +1,6 @@
 package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
 
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
 
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.MVC.ViewManager;
@@ -69,10 +68,7 @@ public class CombatCollisionImpl implements CombatCollision {
             // enemy.setState(combat);
             inCombat = true;
 
-        this.viewManagerObserver.onPlayerEnemyContact(enemy);
-        CombatController combatController =
-            CombatLauncher.buildCombat(player, this, gridNotifier, enemy);
-            new ViewManager().showCombat(enemy);
+            this.viewManagerObserver.onPlayerEnemyContact(enemy);
         }
     }
 
