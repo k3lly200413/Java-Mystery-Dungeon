@@ -85,7 +85,7 @@ public class PickupSystem {
                         "Item not found at position: " + itemToRemove))
         );
         return this.items.removeIf(item ->
-         item.getPosition().equals(itemToRemove));
+            item.getPosition().equals(itemToRemove));
         //this.model.getGridNotifier().notifyItemRemoved(itemToRemove);
     }
 

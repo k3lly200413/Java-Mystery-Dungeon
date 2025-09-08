@@ -16,15 +16,49 @@ import javax.swing.SwingConstants;
 import it.unibo.progetto_oop.overworld.mvc.ViewManager;
 
 public class InventoryView extends JPanel {
-     private static final int VIEWPORT_WIDTH_CELLS = 13;
+    /**
+     * Number of cells in the viewport width-wise.
+     */
+    private static final int VIEWPORT_WIDTH_CELLS = 13;
+
+    /**
+     * Number of cells in the viewport height-wise.
+     */
     private static final int VIEWPORT_HEIGHT_CELLS = 13;
+
+    /**
+     * Preferred cell width in pixels.
+     */
     private static final int PREFERRED_CELL_WIDTH = 70;
+
+    /**
+     * Preferred cell height in pixels.
+     */
     private static final int PREFERRED_CELL_HEIGHT = 60;
 
+    /**
+     * Floor color (background of the grid).
+     */
     private static final Color FLOOR_COLOR = Color.LIGHT_GRAY;
+
+    /**
+     * Grid line color.
+     */
     private static final Color GRID_LINE_COLOR = Color.GRAY;
+
+    /**
+     * Color for item slot 1.
+     */
     private static final Color ITEM_SLOT_1_COLOR = Color.BLACK;
+
+    /**
+     * Color for item slot 2.
+     */
     private static final Color ITEM_SLOT_2_COLOR = Color.BLUE;
+
+    /**
+     * Color for item slot 3.
+     */
     private static final Color ITEM_SLOT_3_COLOR = Color.CYAN;
 
     /** Default background color (R component). */
@@ -45,28 +79,55 @@ public class InventoryView extends JPanel {
     * Top and bottom padding in pixels.
     */
     private static final int BORDER_PADDING_VERTICAL = 6;
+
     /**
     * Left and right padding in pixels.
     */
     private static final int BORDER_PADDING_HORIZONTAL = 10;
 
-    private final ViewManager game;
-    private Inventory inventory; 
+    /**
+     * view manager to switch back to overworld.
+     */
+    private final ViewManager viewManager;
 
-    private JPanel gridPanel; 
+    /**
+     * the inventory this view is displaying.
+     */
+    private Inventory inventory;
+
+    /**
+     * Panel containing the grid of item buttons.
+     */
+    private JPanel gridPanel;
+
+    /**
+     * Status label at the bottom.
+     */
     private JLabel bottomStatusLabel;
+
+    /**
+     * Back to game button.
+     */
     private JButton backButton;
 
-    public InventoryView(Inventory initialInventory, ViewManager game) {
+
+    /**
+     * constructor for the inventory view.
+     * @param initialInventory the inventory this view is referring
+     * @param newViewManager the view manager
+     */
+    public InventoryView(final Inventory initialInventory,
+    final ViewManager newViewManager) {
         this.inventory = initialInventory;
-        this.game = game;
+        this.viewManager = newViewManager;
 
         // Layout Panel
         this.setLayout(new BorderLayout(0, 5));
         this.setBackground(FLOOR_COLOR);
 
         // Grid Panel
-        this.gridPanel = new JPanel(new GridLayout(VIEWPORT_HEIGHT_CELLS, VIEWPORT_WIDTH_CELLS, 1, 1));
+        this.gridPanel = new JPanel(
+            new GridLayout(VIEWPORT_HEIGHT_CELLS, VIEWPORT_WIDTH_CELLS, 1, 1));
         this.gridPanel.setBackground(GRID_LINE_COLOR);
         this.add(this.gridPanel, BorderLayout.CENTER);
 
@@ -74,22 +135,25 @@ public class InventoryView extends JPanel {
         JPanel statusAreaPanel = new JPanel(new BorderLayout(0, 5));
         statusAreaPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        this.bottomStatusLabel = new JLabel("<html><i>Click an item...</i></html>", SwingConstants.CENTER);
+        this.bottomStatusLabel = new JLabel(
+            "<html><i>Click an item...</i></html>",
+            SwingConstants.CENTER);
         this.bottomStatusLabel.setOpaque(true);
         this.bottomStatusLabel.setBackground(Color.WHITE);
         this.bottomStatusLabel.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(Color.DARK_GRAY),
             BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
-        this.bottomStatusLabel.setPreferredSize(new Dimension(100, 80)); // Give it some height
+        this.bottomStatusLabel.setPreferredSize(
+            new Dimension(100, 80));
         statusAreaPanel.add(this.bottomStatusLabel, BorderLayout.CENTER);
 
         JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.backButton = new JButton("Back to Game");
         this.backButton.addActionListener(e -> {
-            if (this.game != null) {
+            if (this.viewManager != null) {
                 //SwingUtilities.getWindowAncestor(this).dispose();
-                this.game.showOverworld();
+                this.viewManager.showOverworld();
             }
         });
         backButtonPanel.add(this.backButton);
@@ -101,80 +165,95 @@ public class InventoryView extends JPanel {
         populateGrid();
 
         // Set preferred size
-        int totalPreferredWidth = PREFERRED_CELL_WIDTH * VIEWPORT_WIDTH_CELLS+20;
-        int gridActualHeight = PREFERRED_CELL_HEIGHT * VIEWPORT_HEIGHT_CELLS+(VIEWPORT_HEIGHT_CELLS);
-        int statusAreaHeight = bottomStatusLabel.getPreferredSize().height+backButton.getPreferredSize().height+20;
-        this.setPreferredSize(new Dimension(totalPreferredWidth, gridActualHeight+statusAreaHeight));
+        int totalPreferredWidth = PREFERRED_CELL_WIDTH * VIEWPORT_WIDTH_CELLS
+            + 20;
+        int gridActualHeight = PREFERRED_CELL_HEIGHT * VIEWPORT_HEIGHT_CELLS
+            + (VIEWPORT_HEIGHT_CELLS);
+        int statusAreaHeight = bottomStatusLabel.getPreferredSize().height
+            + backButton.getPreferredSize().height + 20;
+        this.setPreferredSize(
+            new Dimension(
+                totalPreferredWidth, gridActualHeight + statusAreaHeight));
     }
 
     /**
      * Method to update the inventory model this view is looking at.
+     * @param newInventory the new inventory to display
      */
-    public void updateInventoryModel(Inventory newInventory) {
+    public void updateInventoryModel(final Inventory newInventory) {
         this.inventory = newInventory;
     }
 
     /**
-     * Clears and re-populates the grid
+     * Clears and re-populates the grid.
     */
     private void populateGrid() {
         // in case of catastrofic error
         if (this.gridPanel == null || this.inventory == null) {
-            System.err.println("InventoryView: Cannot populate grid, panel or inventory is null.");
+            System.err.println(
+                "InventoryView: Cannot populate grid");
             return;
         }
 
-        this.gridPanel.removeAll(); 
+        this.gridPanel.removeAll();
 
-        java.util.List<Item> items = new ArrayList<>(this.inventory.getFullInventory().keySet());
-        System.out.println("DEBUG populateGrid: Item size => "+items.size());
+        java.util.List<Item> items = new ArrayList<>(
+            this.inventory.getFullInventory().keySet());
+        System.out.println("DEBUG populateGrid: Item size => " + items.size());
 
         // Grid Population Logic
-        int middleY = Math.round((VIEWPORT_HEIGHT_CELLS-1) / 2.0f);
-        int middleX = Math.round((VIEWPORT_WIDTH_CELLS-1) / 2.0f);
-        int quarterX = Math.round((VIEWPORT_WIDTH_CELLS-1) / 4.0f);
-        int threeQuarterX = middleX+(middleX-quarterX);
+        int middleY = Math.round((VIEWPORT_HEIGHT_CELLS - 1) / 2.0f);
+        int middleX = Math.round((VIEWPORT_WIDTH_CELLS - 1) / 2.0f);
+        int quarterX = Math.round((VIEWPORT_WIDTH_CELLS - 1) / 4.0f);
+        int threeQuarterX = middleX + (middleX - quarterX);
 
         JButton cellButton;
         boolean isItemSlot = false;
         Item currentItem = null;
         Color itemColor = null;
 
-        for (int y = 0; y<VIEWPORT_HEIGHT_CELLS; y++) {
-            for (int x = 0; x<VIEWPORT_WIDTH_CELLS; x++) {
+        for (int y = 0; y < VIEWPORT_HEIGHT_CELLS; y++) {
+            for (int x = 0; x < VIEWPORT_WIDTH_CELLS; x++) {
                 isItemSlot = false;
                 currentItem = null;
                 itemColor = null;
                 if (y == middleY) {
-                    if (x == quarterX && items.size()>0) { // I am at 1/4 and there is at least one item
-                        System.out.println("Description => " + items.get(0).getDescription());
-
-                        isItemSlot = true; 
-                        currentItem = items.get(0); // 
+                    // I am at 1/4 and there is at least one item
+                    if (x == quarterX && items.size() > 0) {
+                        System.out.println("Description => "
+                            + items.get(0).getDescription());
+                        isItemSlot = true;
+                        currentItem = items.get(0);
                         itemColor = ITEM_SLOT_1_COLOR;
-                    } else if (x == middleX && items.size()>1) {
-                        isItemSlot = true; 
+                    } else if (x == middleX && items.size() > 1) {
+                        isItemSlot = true;
                         currentItem = items.get(1); // 3/4
                         itemColor = ITEM_SLOT_2_COLOR;
-                    } else if (x == threeQuarterX && items.size()>2) {
-                        isItemSlot = true; 
-                        currentItem = items.get(2); 
+                    } else if (x == threeQuarterX && items.size() > 2) {
+                        isItemSlot = true;
+                        currentItem = items.get(2);
                         itemColor = ITEM_SLOT_3_COLOR;
                     }
                 }
 
                 if (isItemSlot && currentItem != null) { // Create item button
-                    String desc = "<html>"+currentItem.getDescription().replace("\n", "<br>")+"</html>";
-                    System.out.println("New Description = > "+desc);
-                    cellButton = createItemButton(currentItem.getName(), itemColor, desc);
+                    String desc = "<html>"
+                        + currentItem.getDescription()
+                            .replace("\n", "<br>") + "</html>";
+                    System.out.println("New Description = > " + desc);
+                    cellButton = createItemButton(
+                        currentItem.getName(), itemColor, desc);
                 } else {
                     cellButton = new JButton(); // Placeholder button
                     cellButton.setEnabled(false);
                     cellButton.setOpaque(true);
                     cellButton.setBackground(FLOOR_COLOR);
-                    cellButton.setBorder(BorderFactory.createLineBorder(GRID_LINE_COLOR.darker()));
+                    cellButton.setBorder(
+                        BorderFactory.createLineBorder(
+                            GRID_LINE_COLOR.darker()));
                 }
-                cellButton.setPreferredSize(new Dimension(PREFERRED_CELL_WIDTH, PREFERRED_CELL_HEIGHT));
+                cellButton.setPreferredSize(
+                    new Dimension(PREFERRED_CELL_WIDTH, PREFERRED_CELL_HEIGHT));
                 this.gridPanel.add(cellButton);
             }
         }
@@ -224,13 +303,17 @@ public class InventoryView extends JPanel {
     }
 
     /**
-     * Public method to be called when the view needs to reflect the current inventory state.
+     * Public method to be called when the view
+     * needs to reflect the current inventory state.
      */
     public void refreshView() {
         populateGrid(); // Rebuild the grid's content
 
         if (bottomStatusLabel != null) {
-            bottomStatusLabel.setText("<html><i>Click an item in the grid to see its description.</i></html>");
+            bottomStatusLabel.setText(
+                "<html><i>"
+                + "Click an item in the grid to see its description."
+                + "</i></html>");
         }
     }
 

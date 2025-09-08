@@ -97,7 +97,7 @@ public final class OverworldModel {
     /**
      * the player power.
      */
-    private static final int PLAYER_POWER = 10;
+    private static final int PLAYER_POWER = 20;
 
     /**
      * Constructor of the OverworldModel class.
