@@ -43,7 +43,7 @@ public final class OverworldPlayerAdapter implements PossibleUser {
     }
 
     @Override
-    public void increasePlayerPower(final int amount) {
+    public void increasePlayerMaxPower(final int amount) {
         this.adaptedPlayer.increasePower(amount);
     }
 
@@ -53,7 +53,7 @@ public final class OverworldPlayerAdapter implements PossibleUser {
     }
 
     @Override
-    public void increasePlayerMaxPower(final int amount) {
+    public void increasePlayerMaxHealth(final int amount) {
         this.adaptedPlayer.increaseMaxHp(amount);
     }
 
