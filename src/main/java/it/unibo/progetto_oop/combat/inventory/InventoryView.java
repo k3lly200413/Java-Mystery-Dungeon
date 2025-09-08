@@ -6,6 +6,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -141,10 +144,24 @@ public class InventoryView extends JPanel {
         this.gridPanel.setBackground(GRID_LINE_COLOR);
         this.add(this.gridPanel, BorderLayout.CENTER);
 
-        // Status Area Panel and contents
+        // Create status area
+        createStatusArea();
+
+        // Initial population
+        populateGrid();
+
+        // Set preferred size
+        calculateAndSetPreferredSize();
+    }
+
+    /**
+     * Creates and configures the status area at the bottom of the inventory.
+     */
+    private void createStatusArea() {
         JPanel statusAreaPanel = new JPanel(new BorderLayout(0, 5));
         statusAreaPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
+        // Status label
         this.bottomStatusLabel = new JLabel(
             "<html><i>Click an item...</i></html>",
             SwingConstants.CENTER);
@@ -154,124 +171,230 @@ public class InventoryView extends JPanel {
             BorderFactory.createLineBorder(Color.DARK_GRAY),
             BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
-
         this.bottomStatusLabel.setPreferredSize(
             new Dimension(STATUS_LABEL_W, STATUS_LABEL_H));
         statusAreaPanel.add(this.bottomStatusLabel, BorderLayout.CENTER);
 
+        // Back button
+        createBackButton(statusAreaPanel);
+
+        this.add(statusAreaPanel, BorderLayout.SOUTH);
+    }
+
+    /**
+     * Creates and configures the back button.
+     */
+    private void createBackButton(JPanel statusAreaPanel) {
         JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.backButton = new JButton("Back to Game");
         this.backButton.addActionListener(e -> {
             if (this.viewManager != null) {
-                //SwingUtilities.getWindowAncestor(this).dispose();
                 this.viewManager.showOverworld();
             }
         });
         backButtonPanel.add(this.backButton);
         statusAreaPanel.add(backButtonPanel, BorderLayout.SOUTH);
+    }
 
-        this.add(statusAreaPanel, BorderLayout.SOUTH);
-
-        // Initial population
-        populateGrid();
-
-        // Set preferred size
+    /**
+     * Calculates and sets the preferred size for the entire panel.
+     */
+    private void calculateAndSetPreferredSize() {
         int totalPreferredWidth = PREFERRED_CELL_WIDTH * VIEWPORT_WIDTH_CELLS;
         int gridActualHeight = PREFERRED_CELL_HEIGHT * VIEWPORT_HEIGHT_CELLS
-            + (VIEWPORT_HEIGHT_CELLS);
+            + VIEWPORT_HEIGHT_CELLS; // Add space for grid lines
         int statusAreaHeight = bottomStatusLabel.getPreferredSize().height
-            + backButton.getPreferredSize().height;
+            + backButton.getPreferredSize().height + 20; // Extra padding
         this.setPreferredSize(
-            new Dimension(
-                totalPreferredWidth, gridActualHeight + statusAreaHeight));
+            new Dimension(totalPreferredWidth, gridActualHeight + statusAreaHeight));
     }
 
     /**
-     * Method to update the inventory model this view is looking at.
-     * @param newInventory the new inventory to display
+     * Clears and re-populates the grid with improved logic for multiple potions.
      */
-    public void updateInventoryModel(final Inventory newInventory) {
-        this.inventory = newInventory;
-    }
-
-    /**
-     * Clears and re-populates the grid.
-    */
     private void populateGrid() {
-        // in case of catastrofic error
         if (this.gridPanel == null || this.inventory == null) {
-            System.err.println(
-                "InventoryView: Cannot populate grid");
+            System.err.println("InventoryView: Cannot populate grid - null components");
             return;
         }
 
         this.gridPanel.removeAll();
 
-        java.util.List<Item> items = new ArrayList<>(
-            this.inventory.getFullInventory().keySet());
-        System.out.println("DEBUG populateGrid: Item size => " + items.size());
+        // Group potions by type and get sorted list
+        Map<String, PotionInfo> potionTypes = groupPotionsByType();
+        List<PotionInfo> sortedPotions = new ArrayList<>(potionTypes.values());
+        
+        System.out.println("DEBUG populateGrid: Found " + sortedPotions.size() + " potion types");
 
-        // Grid Population Logic
-        int middleY = Math.round((VIEWPORT_HEIGHT_CELLS - 1) / 2.0f);
-        int middleX = Math.round((VIEWPORT_WIDTH_CELLS - 1) / 2.0f);
-        int quarterX = Math.round((VIEWPORT_WIDTH_CELLS - 1) / 4.0f);
+        // Calculate grid positions for potion display area
+        GridPositions positions = calculateGridPositions();
+
+        // Populate grid cells
+        populateGridCells(sortedPotions, positions);
+
+        // Finalize grid updates
+        this.gridPanel.revalidate();
+        this.gridPanel.repaint();
+    }
+
+    /**
+     * Groups potions by type and calculates quantities.
+     */
+    private Map<String, PotionInfo> groupPotionsByType() {
+        Map<String, PotionInfo> potionTypes = new LinkedHashMap<>();
+        
+        for (Map.Entry<Item, Integer> entry : this.inventory.getFullInventory().entrySet()) {
+            Item item = entry.getKey();
+            int quantity = entry.getValue();
+            
+            // Assume all items are potions for now, or add instanceof check
+            String potionType = item.getName();
+            
+            potionTypes.merge(potionType, 
+                new PotionInfo(item, quantity, potionType),
+                (existing, newInfo) -> existing.combineWith(newInfo));
+        }
+        
+        return potionTypes;
+    }
+
+
+    /**
+     * Calculates key positions in the grid for item placement.
+     */
+    private GridPositions calculateGridPositions() {
+        int middleY = (VIEWPORT_HEIGHT_CELLS - 1) / 2;
+        int middleX = (VIEWPORT_WIDTH_CELLS - 1) / 2;
+        int quarterX = (VIEWPORT_WIDTH_CELLS - 1) / 4;
         int threeQuarterX = middleX + (middleX - quarterX);
+        
+        return new GridPositions(middleY, middleX, quarterX, threeQuarterX);
+    }
 
-        JButton cellButton;
-        boolean isItemSlot = false;
-        Item currentItem = null;
-        Color itemColor = null;
-
+    /**
+     * Populates individual grid cells with potions or empty slots.
+     */
+    private void populateGridCells(List<PotionInfo> potions, GridPositions positions) {
         for (int y = 0; y < VIEWPORT_HEIGHT_CELLS; y++) {
             for (int x = 0; x < VIEWPORT_WIDTH_CELLS; x++) {
-                isItemSlot = false;
-                currentItem = null;
-                itemColor = null;
-                if (y == middleY) {
-                    // I am at 1/4 and there is at least one item
-                    if (x == quarterX && items.size() > 0) {
-                        System.out.println("Description => "
-                            + items.get(0).getDescription());
-                        isItemSlot = true;
-                        currentItem = items.get(0);
-                        itemColor = ITEM_SLOT_1_COLOR;
-                    } else if (x == middleX && items.size() > 1) {
-                        isItemSlot = true;
-                        currentItem = items.get(1); // 3/4
-                        itemColor = ITEM_SLOT_2_COLOR;
-                    } else if (x == threeQuarterX && items.size() > 2) {
-                        isItemSlot = true;
-                        currentItem = items.get(2);
-                        itemColor = ITEM_SLOT_3_COLOR;
-                    }
-                }
-
-                if (isItemSlot && currentItem != null) { // Create item button
-                    String desc = "<html>"
-                        + currentItem.getDescription()
-                            .replace("\n", "<br>") + "</html>";
-                    System.out.println("New Description = > " + desc);
-                    cellButton = createItemButton(
-                        currentItem.getName(), itemColor, desc);
-                } else {
-                    cellButton = new JButton(); // Placeholder button
-                    cellButton.setEnabled(false);
-                    cellButton.setOpaque(true);
-                    cellButton.setBackground(FLOOR_COLOR);
-                    cellButton.setBorder(
-                        BorderFactory.createLineBorder(
-                            GRID_LINE_COLOR.darker()));
-                }
+                JButton cellButton = createCellButton(x, y, potions, positions);
                 cellButton.setPreferredSize(
                     new Dimension(PREFERRED_CELL_WIDTH, PREFERRED_CELL_HEIGHT));
                 this.gridPanel.add(cellButton);
             }
         }
-
-        // Finalize
-        this.gridPanel.revalidate(); // recaltulate layout of the panel
-        this.gridPanel.repaint(); // repaint the panel()
     }
+
+    /**
+     * Creates a single cell button based on position and available potions.
+     */
+    private JButton createCellButton(int x, int y, List<PotionInfo> potions, GridPositions positions) {
+        PotionInfo potionAtPosition = getPotionAtPosition(x, y, potions, positions);
+        
+        if (potionAtPosition != null) {
+            return createPotionButton(potionAtPosition);
+        } else {
+            return createEmptyCell();
+        }
+    }
+
+    /**
+     * Determines which potion should be displayed at the given grid position.
+     */
+    private PotionInfo getPotionAtPosition(int x, int y, List<PotionInfo> potions, GridPositions positions) {
+        if (y != positions.middleY) {
+            return null; // Only middle row has potions
+        }
+        
+        if (x == positions.quarterX && potions.size() > 0) {
+            return potions.get(0);
+        } else if (x == positions.middleX && potions.size() > 1) {
+            return potions.get(1);
+        } else if (x == positions.threeQuarterX && potions.size() > 2) {
+            return potions.get(2);
+        }
+        
+        return null;
+    }
+
+    /**
+     * Creates a button for a potion with quantity display.
+     */
+    private JButton createPotionButton(PotionInfo potionInfo) {
+        Color potionColor = getPotionColor(potionInfo.getType());
+        String description = formatPotionDescription(potionInfo);
+        
+        System.out.println("Creating potion button: " + potionInfo.getItem().getName() 
+            + " (x" + potionInfo.getQuantity() + ")");
+        
+        return createItemButton(
+            potionInfo.getItem().getName() + " (x" + potionInfo.getQuantity() + ")",
+            potionColor,
+            description
+        );
+    }
+
+    /**
+     * Creates an empty floor cell.
+     */
+    private JButton createEmptyCell() {
+        JButton cellButton = new JButton();
+        cellButton.setEnabled(false);
+        cellButton.setOpaque(true);
+        cellButton.setBackground(FLOOR_COLOR);
+        cellButton.setBorder(
+            BorderFactory.createLineBorder(GRID_LINE_COLOR.darker()));
+        return cellButton;
+    }
+
+    /**
+     * Gets the display color for a potion type.
+     */
+    private Color getPotionColor(String potionType) {
+        switch (potionType.toLowerCase()) {
+            case "health": return Color.RED;
+            case "mana": return Color.BLUE;
+            case "speed": return Color.YELLOW;
+            case "strength": return Color.ORANGE;
+            default: return ITEM_SLOT_1_COLOR;
+        }
+    }
+
+    /**
+     * Formats the description for a potion including quantity info.
+     */
+    private String formatPotionDescription(PotionInfo potionInfo) {
+        String baseDesc = potionInfo.getItem().getDescription().replace("\n", "<br>");
+        return String.format("<html>%s<br><b>Quantity: %d</b></html>", 
+            baseDesc, potionInfo.getQuantity());
+    }
+
+    // Helper classes
+    private static class GridPositions {
+        final int middleY, middleX, quarterX, threeQuarterX;
+        
+        GridPositions(int middleY, int middleX, int quarterX, int threeQuarterX) {
+            this.middleY = middleY;
+            this.middleX = middleX;
+            this.quarterX = quarterX;
+            this.threeQuarterX = threeQuarterX;
+        }
+    }
+
+    private static class PotionInfo {
+        private final Item item;
+        private int quantity;
+        private final String type;
+        
+        PotionInfo(Item item, int quantity, String type) {
+            this.item = item;
+            this.quantity = quantity;
+            this.type = type;
+        }
+        
+        PotionInfo combineWith(PotionInfo other) {
+            return new PotionInfo(this.item, this.quantity + other.quantity, this.type);
+        }
 
     /**
     * Creates a button for an item with consistent style and behavior.
@@ -326,5 +449,14 @@ public class InventoryView extends JPanel {
                 + "</i></html>");
         }
     }
+
+    /**
+     * Method to update the inventory model this view is looking at.
+     * @param newInventory the new inventory to display
+     */
+    public void updateInventoryModel(final Inventory newInventory) {
+        this.inventory = newInventory;
+    }
+
 
 }
