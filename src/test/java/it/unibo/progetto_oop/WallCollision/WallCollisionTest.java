@@ -1,23 +1,10 @@
 package it.unibo.progetto_oop.WallCollision;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import java.util.Optional;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollisionImpl;
-import it.unibo.progetto_oop.overworld.playGround.data.Position;
-import it.unibo.progetto_oop.overworld.playGround.data.StructureData;
-import it.unibo.progetto_oop.overworld.playGround.data.TileType;
-
 public class WallCollisionTest {
-
+/* 
     private StructureData gridMock;
     private WallCollisionImpl wallCollision;
-/* 
+
     @BeforeEach
     void setup() {
         gridMock = mock(StructureData.class);
