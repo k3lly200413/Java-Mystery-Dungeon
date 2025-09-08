@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.MVC;
+package it.unibo.progetto_oop.overworld.mvc;
 
 import java.util.Objects;
 
@@ -6,10 +6,9 @@ import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.JPanel;
 
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.MVC.InputBindings.InputBindings;
-import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
-import it.unibo.progetto_oop.Overworld.ViewManagerObserver.ViewManagerObserver;
+import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
+import it.unibo.progetto_oop.overworld.mvc.ViewManager;
+import it.unibo.progetto_oop.overworld.view_manager_observer.ViewManagerObserver;
 
 import java.awt.event.ActionEvent;
 

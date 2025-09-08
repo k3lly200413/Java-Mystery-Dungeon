@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.PlayGround.view;
+package it.unibo.progetto_oop.overworld.playground.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -8,9 +8,9 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.TileType;
 
 public final class SwingMapView extends JPanel implements MapView {
 

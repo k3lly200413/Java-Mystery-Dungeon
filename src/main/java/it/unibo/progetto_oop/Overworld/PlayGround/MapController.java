@@ -1,15 +1,15 @@
-package it.unibo.progetto_oop.Overworld.PlayGround;
+package it.unibo.progetto_oop.overworld.playground;
 
 import java.util.List;
 import java.util.Objects;
 import javax.swing.SwingUtilities;
 
-import it.unibo.progetto_oop.Overworld.MVC.OverworldEntitiesGenerator;
-import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.ChangeFloorListener;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
-import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
-import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
+import it.unibo.progetto_oop.overworld.mvc.OverworldEntitiesGenerator;
+import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
+import it.unibo.progetto_oop.overworld.playground.data.ChangeFloorListener;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData;
+import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
+import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
 
 public final class MapController implements ChangeFloorListener {
     private final SwingMapView view;

@@ -2,15 +2,15 @@ package it.unibo.progetto_oop.combat.state_pattern;
 
 import javax.swing.Timer;
 
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
-import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
-import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.Overworld.Player.AdapterPattern.OverworldPlayerAdapter;
-import it.unibo.progetto_oop.Overworld.Player.AdapterPattern.PossibleUser;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.CombatCollision;
+import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
+import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.OverworldPlayerAdapter;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
 public class GameOverState implements CombatState {
 

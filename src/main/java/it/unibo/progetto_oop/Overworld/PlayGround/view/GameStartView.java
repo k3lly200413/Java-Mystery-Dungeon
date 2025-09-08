@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.PlayGround.view;
+package it.unibo.progetto_oop.overworld.playground.view;
 
 import javax.swing.*;
 import java.awt.*;

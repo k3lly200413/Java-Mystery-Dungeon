@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.MVC;
+package it.unibo.progetto_oop.overworld.mvc;
 
 import javax.swing.*;
 
@@ -7,11 +7,11 @@ import java.awt.Dimension;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.PlayGround.view.GameStartView;
-import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
+import it.unibo.progetto_oop.overworld.playground.view.GameStartView;
+import it.unibo.progetto_oop.overworld.playground.view.GameStartView;
+import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
 
 public class ViewManager {
     private static final String START_GAME = "START GAME";

@@ -1,30 +1,21 @@
-package it.unibo.progetto_oop.Overworld.MVC;
+package it.unibo.progetto_oop.overworld.mvc;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollision;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.CombatCollisionImpl;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollision;
-import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision.WallCollisionImpl;
-import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
-import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.EnemySystem;
-import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.MovementSystem;
-import it.unibo.progetto_oop.Overworld.MVC.ModelSystem.PickupSystem;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.ChangeFloorListener;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.EntityGridUpdater;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.ImplArrayListStructureData;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
-import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
-import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
-import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
-import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.Overworld.ViewManagerObserver.ViewManagerObserver;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
+import it.unibo.progetto_oop.overworld.playground.data.ChangeFloorListener;
+import it.unibo.progetto_oop.overworld.playground.data.EntityGridUpdater;
+import it.unibo.progetto_oop.overworld.playground.data.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Dungeon;
+import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
+import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.view_manager_observer.ViewManagerObserver;
 
 /**
  * OverworldModel: orchestratore del mondo di gioco.
