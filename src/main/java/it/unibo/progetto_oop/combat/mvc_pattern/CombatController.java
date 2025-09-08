@@ -113,7 +113,7 @@ public class CombatController {
     /**
      * Static instance of Enemy to be used across states.
      */
-    private final Enemy enemy;
+    private Enemy enemy;
 
     /**
      * Timer for animations.
@@ -148,8 +148,7 @@ public class CombatController {
     public CombatController(
         final CombatModel modelToUse,
         final CombatView viewToUse, final Player player,
-        final CombatCollision combatCollision, final GridNotifier gridNotifier,
-        final Enemy enemy) {
+        final CombatCollision combatCollision, final GridNotifier gridNotifier) {
 
         this.model = modelToUse;
         this.view = viewToUse;
@@ -161,7 +160,6 @@ public class CombatController {
 
         this.combatCollision = combatCollision;
         this.gridNotifier = gridNotifier;
-        this.enemy = enemy;
 
         this.attachListeners();
 
@@ -1131,6 +1129,10 @@ public class CombatController {
         if (this.currentState != null) {
             this.currentState.enterState(this);
         }
+    }
+
+    public final void setEncounteredEnemy(Enemy encounteredEnemy) {
+        this.enemy = encounteredEnemy;
     }
 
     /**

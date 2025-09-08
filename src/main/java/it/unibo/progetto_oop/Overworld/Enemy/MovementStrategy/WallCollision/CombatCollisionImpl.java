@@ -6,6 +6,7 @@ import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.MVC.ViewManager;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.Overworld.ViewManagerObserver.ViewManagerObserver;
 import it.unibo.progetto_oop.combat.CombatLauncher;
 import it.unibo.progetto_oop.combat.draw_helper.DrawHelper;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
@@ -14,6 +15,7 @@ public class CombatCollisionImpl implements CombatCollision{
     private final DrawHelper neighboursCheck;
     private boolean inCombat = false;
     private GridNotifier gridNotifier;
+    private ViewManagerObserver viewManagerObserver;
 
     private static int COMBAT_DISTANCE = 1;
 
@@ -34,11 +36,20 @@ public class CombatCollisionImpl implements CombatCollision{
         enemy.setState(combat);
         inCombat = true;
 
-    CombatController combatController = CombatLauncher.buildCombat(player,this, gridNotifier, enemy);
-        new ViewManager().showCombat(combatController);
+        this.viewManagerObserver.onPlayerEnemyContact(enemy);
+
     }
 
     public void setInCombat(boolean inCombat) {
         this.inCombat = inCombat;
     }
+    
+    public void setViewManagerListener(ViewManagerObserver curranteViewManagerObserver) {
+        this.viewManagerObserver = curranteViewManagerObserver;
+    }
+
+    public void showOverworld() {
+        this.viewManagerObserver.onEnemyDefeat();
+    }
+
 }

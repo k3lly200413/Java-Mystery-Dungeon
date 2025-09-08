@@ -8,6 +8,9 @@ import it.unibo.progetto_oop.Overworld.MVC.ViewManager;
 import it.unibo.progetto_oop.Overworld.PlayGround.OverworldLuncher;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.GameStartView;
+import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.CombatLauncher;
 
 public final class GameLuncher {
     private final FloorConfig config = new FloorConfig.Builder().build();
@@ -18,13 +21,22 @@ public final class GameLuncher {
             // Schermata iniziale
             GameStartView startView = new GameStartView();
             ViewManager viewManager = new ViewManager();
+
             viewManager.start(startView);
 
             startView.setOnStart(() -> {
                 OverworldLuncher session = new OverworldLuncher(config, rand);
 
+                CombatController combatController = 
+                CombatLauncher.buildCombat(
+                    session.getModel().getPlayer(), 
+                    session.getModel().getCombatCollision(),
+                    session.getModel().getGridNotifier()
+                );
                 viewManager.setPlayGroundView(session.getView());
-                new OverworldController(session.getModel(), session.getView(), viewManager);
+                viewManager.setCombatController(combatController);
+                OverworldController overworldController = new OverworldController(session.getModel(), session.getView(), viewManager);
+                session.getModel().setCombatTransitionListener(overworldController);
                 session.start();
                 viewManager.showOverworld();
             });

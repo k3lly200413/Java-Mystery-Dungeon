@@ -20,7 +20,7 @@ public final class CombatLauncher {
      *
      * @return combatController instance
      */
-    public static CombatController buildCombat(Player player, CombatCollision combatCollision, GridNotifier gridNotifier, Enemy enemy) {
+    public static CombatController buildCombat(Player player, CombatCollision combatCollision, GridNotifier gridNotifier) {
         // --- Game Configuration ---
         final int size = 12;
         final int playerPower = 30;
@@ -70,7 +70,7 @@ public final class CombatLauncher {
 
             // 3. Create the Controller, linking the Model and View
             final CombatController controller =
-                new CombatController(model, view, player, combatCollision, gridNotifier, enemy);
+                new CombatController(model, view, player, combatCollision, gridNotifier);
             return controller;
     }
 }
