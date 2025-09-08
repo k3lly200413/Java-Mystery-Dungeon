@@ -19,12 +19,12 @@ public class InventoryView extends JPanel {
     /**
      * Number of cells in the viewport width-wise.
      */
-    private static final int VIEWPORT_WIDTH_CELLS = 13;
+    private static final int VIEWPORT_WIDTH_CELLS = 3;
 
     /**
      * Number of cells in the viewport height-wise.
      */
-    private static final int VIEWPORT_HEIGHT_CELLS = 13;
+    private static final int VIEWPORT_HEIGHT_CELLS = 1;
 
     /**
      * Preferred cell width in pixels.
@@ -198,63 +198,40 @@ public class InventoryView extends JPanel {
      * Clears and re-populates the grid.
     */
     private void populateGrid() {
-        // in case of catastrofic error
         if (this.gridPanel == null || this.inventory == null) {
-            System.err.println(
-                "InventoryView: Cannot populate grid");
+            System.err.println("InventoryView: Cannot populate grid");
             return;
         }
 
         this.gridPanel.removeAll();
 
-        java.util.List<Item> items = new ArrayList<>(
-            this.inventory.getFullInventory().keySet());
+        java.util.List<Item> items = new ArrayList<>(this.inventory.getFullInventory().keySet());
         System.out.println("DEBUG populateGrid: Item size => " + items.size());
 
-        // Grid Population Logic
-        int middleY = Math.round((VIEWPORT_HEIGHT_CELLS - 1) / 2.0f);
-        int middleX = Math.round((VIEWPORT_WIDTH_CELLS - 1) / 2.0f);
-        int quarterX = Math.round((VIEWPORT_WIDTH_CELLS - 1) / 4.0f);
-        int threeQuarterX = middleX + (middleX - quarterX);
+        Color[] slotColors = new Color[] {
+            ITEM_SLOT_1_COLOR, ITEM_SLOT_2_COLOR, ITEM_SLOT_3_COLOR
+        };
 
-        JButton cellButton;
-        boolean isItemSlot = false;
-        Item currentItem = null;
-        Color itemColor = null;
+        int nItems = items.size();
+        int itemIndex = 0;
 
         for (int y = 0; y < VIEWPORT_HEIGHT_CELLS; y++) {
             for (int x = 0; x < VIEWPORT_WIDTH_CELLS; x++) {
-                isItemSlot = false;
-                currentItem = null;
-                itemColor = null;
-                if (y == middleY) {
-                    // I am at 1/4 and there is at least one item
-                    if (x == quarterX && items.size() > 0) {
-                        System.out.println("Description => "
-                            + items.get(0).getDescription());
-                        isItemSlot = true;
-                        currentItem = items.get(0);
-                        itemColor = ITEM_SLOT_1_COLOR;
-                    } else if (x == middleX && items.size() > 1) {
-                        isItemSlot = true;
-                        currentItem = items.get(1); // 3/4
-                        itemColor = ITEM_SLOT_2_COLOR;
-                    } else if (x == threeQuarterX && items.size() > 2) {
-                        isItemSlot = true;
-                        currentItem = items.get(2);
-                        itemColor = ITEM_SLOT_3_COLOR;
-                    }
-                }
+                JButton cellButton;
 
-                if (isItemSlot && currentItem != null) { // Create item button
+                if (itemIndex < nItems) {
+                    Item currentItem = items.get(itemIndex);
                     String desc = "<html>"
-                        + currentItem.getDescription()
-                            .replace("\n", "<br>") + "</html>";
-                    System.out.println("New Description = > " + desc);
+                        + currentItem.getDescription().replace("\n", "<br>")
+                        + "<br><b style='color:blue;'>"
+                        + this.inventory.getItemCount(currentItem) + " in inventory"
+                        + "</b></html>";
+                    Color itemColor = slotColors[itemIndex % slotColors.length];
                     cellButton = createItemButton(
                         currentItem.getName(), itemColor, desc);
+                    itemIndex++;
                 } else {
-                    cellButton = new JButton(); // Placeholder button
+                    cellButton = new JButton(); // cella vuota
                     cellButton.setEnabled(false);
                     cellButton.setOpaque(true);
                     cellButton.setBackground(FLOOR_COLOR);
@@ -262,15 +239,14 @@ public class InventoryView extends JPanel {
                         BorderFactory.createLineBorder(
                             GRID_LINE_COLOR.darker()));
                 }
-                cellButton.setPreferredSize(
-                    new Dimension(PREFERRED_CELL_WIDTH, PREFERRED_CELL_HEIGHT));
+
+                cellButton.setPreferredSize(new Dimension(PREFERRED_CELL_WIDTH, PREFERRED_CELL_HEIGHT));
                 this.gridPanel.add(cellButton);
             }
         }
 
-        // Finalize
-        this.gridPanel.revalidate(); // recaltulate layout of the panel
-        this.gridPanel.repaint(); // repaint the panel()
+        this.gridPanel.revalidate();
+        this.gridPanel.repaint();
     }
 
     /**
