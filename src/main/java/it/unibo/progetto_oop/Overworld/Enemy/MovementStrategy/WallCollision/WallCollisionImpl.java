@@ -37,34 +37,55 @@ public final class WallCollisionImpl implements WallCollision {
             && p.y() < baseGrid.height();
     }
 
-    // Passo valido per tutti
+    /**
+     * Check if a position can be entered by the player.
+     * @param to the position to check
+     * @return true if the position can be entered, false otherwise
+     */
     @Override
     public boolean canEnter(final Position to) {
-        if (!inBounds(to))
+        if (!inBounds(to)) {
             return false;
+        }
         final TileType t = baseGrid.get(to.x(), to.y());
         final TileType eg = entityGrid.get(to.x(), to.y());
         return (t != TileType.WALL) && (eg != TileType.ENEMY);
     }
 
-    // Passo valido per i nemici
+    /**
+     * Check if an enemy can enter a specific position.
+     * @param to the position to check
+     * @return true if the enemy can enter the position, false otherwise
+     */
     @Override
     public boolean canEnemyEnter(final Position to) {
-        if (!canEnter(to))
+        if (!canEnter(to)) {
             return false;
+        }
         final TileType t = baseGrid.get(to.x(), to.y());
         final TileType eg = entityGrid.get(to.x(), to.y());
-        return (eg == TileType.NONE || eg == TileType.PLAYER) && (t != TileType.STAIRS);
+        return (eg == TileType.NONE || eg == TileType.PLAYER)
+        && (t != TileType.STAIRS);
     }
 
+    /**
+     * Finds the closest wall in the specified direction from a given position.
+     * @param from the starting position
+     * @param dx the x direction (-1, 0, 1)
+     * @param dy the y direction (-1, 0, 1)
+     * @return an Optional containing the position
+     * of the closest wall if found, otherwise an empty
+     */
     @Override
-    public Optional<Position> closestWall(Position from, int dx, int dy) {
+    public Optional<Position> closestWall(final Position from,
+    final int dx, final int dy) {
         int maxSteps;
         ToIntFunction<Position> axisGetter;
         int startX;
         int startY;
 
-        if (dx!=0){ // if i move orizontally i'll be interested with the width
+        // if i move orizontally i'll be interested with the width
+        if (dx != 0) {
             maxSteps = baseGrid.width();
             axisGetter = Position :: x;
 
@@ -81,7 +102,8 @@ public final class WallCollisionImpl implements WallCollision {
 
         // test right or down
         return IntStream.rangeClosed(0, maxSteps + 1)
-                .mapToObj(step -> new Position(startX + step * dx, startY+ step * dy))
+                .mapToObj(step ->
+                    new Position(startX + step * dx, startY + step * dy))
                 .filter(pos -> inBounds(pos)) // only in bounds positions
                 // i'm filtering all tipes of "obstacles"
                 .filter(pos -> baseGrid.get(pos.x(), pos.y()) == TileType.WALL
@@ -89,7 +111,7 @@ public final class WallCollisionImpl implements WallCollision {
                     || baseGrid.get(pos.x(), pos.y()) == TileType.TUNNEL
                     || baseGrid.get(pos.x(), pos.y()) == TileType.STAIRS)
                 .min(Comparator.comparingInt(wallPos ->
-                        calculateDistanceOnAxis(from, wallPos, axisGetter) // i want the closest
+                        calculateDistanceOnAxis(from, wallPos, axisGetter)
                 ));
     }
 
@@ -97,10 +119,13 @@ public final class WallCollisionImpl implements WallCollision {
     * Calculates the distance between two positions on a specific axis.
     * @param p1 the first position
     * @param p2 the second position
-    * @param getCoordinate a function to extract the coordinate from a position (e.g., Position::getX or Position::getY)
+    * @param getCoordinate a function to extract the coordinate
+    * from a position (e.g., Position::getX or Position::getY)
     * @return the distance between the two positions on the specified axis
     */
-    private int calculateDistanceOnAxis(Position p1, Position p2, ToIntFunction<Position> getCoordinate) {
-        return Math.abs(getCoordinate.applyAsInt(p1) - getCoordinate.applyAsInt(p2));
+    private int calculateDistanceOnAxis(final Position p1, final Position p2,
+    final ToIntFunction<Position> getCoordinate) {
+        return Math.abs(
+            getCoordinate.applyAsInt(p1) - getCoordinate.applyAsInt(p2));
     }
 }

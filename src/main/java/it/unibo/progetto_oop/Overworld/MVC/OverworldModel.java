@@ -210,15 +210,36 @@ public final class OverworldModel {
         entityGrid.set(p.x(), p.y(), t);
     }
 
-    public void setBaseGridView(StructureData base) {
+    /**
+     * Set the base grid view.
+     * @param base the base grid view
+     */
+    public void setBaseGridView(final StructureData base) {
         this.baseGrid = base;
     }
 
-    public void setEntityGridView(StructureData entity) {
+    /**
+     * Set the entity grid view.
+     * @param entity the entity grid view
+     */
+    public void setEntityGridView(final StructureData entity) {
         this.entityGrid = entity;
     }
-    
+
+    /**
+     * Set the grid notifier.
+     * @param newGridNotifier
+     */
+    public void setGridNotifier(final GridNotifier newGridNotifier) {
+        this.gridNotifier = newGridNotifier;
+    }
+
     //---------Getters----------
+
+    /**
+     * Get the current floor.
+     * @return the current floor
+     */
     public Floor getCurrentFloor() {
     return this.dungeon.getCurrentFloor();
     }
@@ -238,6 +259,11 @@ public final class OverworldModel {
     public Player getPlayer() {
         return this.player;
     }
+
+    /**
+     * get the items on the map.
+     * @return the list of items in the overworld
+     */
     public List<Item> getItem() {
         return this.pickupSystem.getItem();
     }

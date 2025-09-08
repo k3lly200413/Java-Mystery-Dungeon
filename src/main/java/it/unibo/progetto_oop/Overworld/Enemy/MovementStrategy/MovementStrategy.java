@@ -7,11 +7,12 @@ import it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.MovementUtil.MoveD
 
 public interface MovementStrategy {
     /**
-     * Move the enemy
-     * @param enemy the enemy to move
+     * Move the enemy.
+     * @param context the enemy to move
      * @param player the player
      * @param currDirection the current direction of movement
      * @return the new direction of movement
      */
-    MoveDirection executeMove(Enemy context, Player player, MoveDirection currDirection); 
+    MoveDirection executeMove(Enemy context, Player player,
+        MoveDirection currDirection);
 }
