@@ -28,11 +28,10 @@ public final class GameLuncher {
                 OverworldLuncher session = new OverworldLuncher(config, rand);
 
                 CombatController combatController = 
-                CombatLauncher.buildCombat(
+                new CombatLauncher().buildCombat(
                     session.getModel().getPlayer(), 
                     session.getModel().getCombatCollision(),
-                    session.getModel().getGridNotifier(),
-                    null
+                    session.getModel().getGridNotifier()
                 );
                 viewManager.setPlayGroundView(session.getView());
                 viewManager.setCombatController(combatController);
