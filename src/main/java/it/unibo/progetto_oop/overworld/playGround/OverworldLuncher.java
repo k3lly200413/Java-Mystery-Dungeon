@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld.playGround;
+package it.unibo.progetto_oop.overworld.playground;
 
 import java.util.List;
 import java.util.Random;

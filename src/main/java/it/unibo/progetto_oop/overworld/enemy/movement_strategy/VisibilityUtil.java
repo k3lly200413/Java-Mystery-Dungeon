@@ -2,7 +2,7 @@ package it.unibo.progetto_oop.overworld.enemy.movement_strategy;
 
 import it.unibo.progetto_oop.combat.draw_helper.DrawHelper;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollision;
-import it.unibo.progetto_oop.overworld.playGround.data.Position;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 import java.util.ArrayList;
 import java.util.List;

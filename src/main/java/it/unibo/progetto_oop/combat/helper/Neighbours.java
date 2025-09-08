@@ -1,6 +1,6 @@
 package it.unibo.progetto_oop.combat.helper;
 
-import it.unibo.progetto_oop.overworld.playGround.data.Position;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 public class Neighbours {
 

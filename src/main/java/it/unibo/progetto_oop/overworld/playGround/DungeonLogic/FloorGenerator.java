@@ -1,16 +1,16 @@
-package it.unibo.progetto_oop.overworld.playGround.DungeonLogic;
+package it.unibo.progetto_oop.overworld.playground.DungeonLogic;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.RandomPlacementStrategy;
-import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.RoomPlacementStrategy;
-import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.TunnelPlacementStrategy;
-import it.unibo.progetto_oop.overworld.playGround.data.FloorConfig;
-import it.unibo.progetto_oop.overworld.playGround.data.StructureData;
-import it.unibo.progetto_oop.overworld.playGround.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.PlacementStrategy.RandomPlacementStrategy;
+import it.unibo.progetto_oop.overworld.playground.PlacementStrategy.RoomPlacementStrategy;
+import it.unibo.progetto_oop.overworld.playground.PlacementStrategy.TunnelPlacementStrategy;
+import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.TileType;
 
 public final class FloorGenerator {
     /**

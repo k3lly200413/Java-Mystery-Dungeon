@@ -31,7 +31,7 @@ import javax.swing.border.BevelBorder;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.helper.Neighbours;
-import it.unibo.progetto_oop.overworld.playGround.data.Position;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 public class CombatView extends JPanel {
     /**

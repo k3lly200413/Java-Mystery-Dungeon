@@ -2,8 +2,8 @@ package it.unibo.progetto_oop.overworld.combat_collision;
 
 import it.unibo.progetto_oop.overworld.ViewManagerObserver;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
-import it.unibo.progetto_oop.overworld.playGround.data.Position;
 import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 public interface CombatCollision {
     /**

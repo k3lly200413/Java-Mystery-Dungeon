@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.playGround;
+package it.unibo.progetto_oop.playground;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,8 +9,8 @@ import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.overworld.PlayGround.DungeonLogic.Room;
+import it.unibo.progetto_oop.overworld.playground.DungeonLogic.Room;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 public class RoomTest {
 
