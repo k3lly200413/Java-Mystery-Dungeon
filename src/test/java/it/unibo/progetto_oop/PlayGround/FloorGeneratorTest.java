@@ -1,11 +1,16 @@
 package it.unibo.progetto_oop.playGround;
+package it.unibo.progetto_oop.playGround;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.progetto_oop.overworld.playGround.data.*;
+import it.unibo.progetto_oop.overworld.playGround.data.FloorConfig;
+import it.unibo.progetto_oop.overworld.playGround.data.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.playGround.data.Position;
+import it.unibo.progetto_oop.overworld.playGround.data.StructureData;
+import it.unibo.progetto_oop.overworld.playGround.data.TileType;
 import it.unibo.progetto_oop.overworld.playGround.dungeonLogic.*;
 import it.unibo.progetto_oop.overworld.playGround.placementStrategy.*;
 
