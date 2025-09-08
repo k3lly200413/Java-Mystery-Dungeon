@@ -88,7 +88,7 @@ public class Player {
 
     public void increaseMaxHp(final int amount) {
         if (amount >= 0) {
-            this.setMaxHp(amount);
+            this.setMaxHp(amount + this.maxHP);
         } else {
             System.out.println("Nothing changed because the new amount is less than zero");
         }
@@ -96,7 +96,7 @@ public class Player {
 
     public void increaseStamina(final int amount) {
         if (amount >= 0) {
-            this.setStamina(amount);
+            this.setStamina(amount + this.stamina);
         } else {
             System.out.println("Nothing changed because the new amount is less than zero");
         }
@@ -104,7 +104,7 @@ public class Player {
 
     public void increasePower(final int amount) {
         if (amount >= 0) {
-            this.power += amount;
+            this.setPower(amount + this.power);
         } else {
             System.out.println("Nothing changed because the new amount is less than zero");
         }
