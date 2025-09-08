@@ -51,7 +51,7 @@ public class OverworldEntitiesGeneratorTest {
         entity.set(3,3, TileType.ITEM);
         entity.set(4,4, TileType.ENEMY);
 
-        player = new Player(100, new Inventory());
+//         player = new Player(100, new Inventory());
 
         new OverworldEntitiesGenerator(
             model.getCurrentFloor(),

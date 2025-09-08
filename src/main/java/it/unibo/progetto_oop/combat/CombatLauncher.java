@@ -29,7 +29,7 @@ public final class CombatLauncher {
         final int size = 12;
         final int playerPower = player.getPower();
         final int playerPoisonPower = 2;
-        final int enemyPower = 30;
+        final int enemyPower = 10;
         final int enemySpeed = 3;
         final String enemyName = "Dragon";
         final int playerMaxStamina = 100;
@@ -61,10 +61,11 @@ public final class CombatLauncher {
             .setPlayerPower(playerPower)
             .setPlayerPoisonPower(playerPoisonPower)
             .setPlayerLongRangePower(playerLongRangePower)
+            .setPlayerCurrentHealth(player.getCurrentHp())
             .setEnemyPower(enemyPower)
             .setEnemySpeed(enemySpeed)
             .setEnemyName(enemyName)
-            .setMaxHealth(maxHealth)
+            .setPlayerMaxHealth(player.getMaxHp())
             .build();
 
 
@@ -81,9 +82,4 @@ public final class CombatLauncher {
                 combatCollision, gridNotifier);
             return this.combatController;
     }
-
-    public final void setEncounteredEnemy(Enemy encounteredEnemey) {
-        this.combatController.setEncounteredEnemy(encounteredEnemey);
-    }
-
 }
