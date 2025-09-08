@@ -37,7 +37,7 @@ public final class WallCollisionImpl implements WallCollision {
             && p.y() < baseGrid.height();
     }
 
-    // Passo valido per tutti
+    // Valid for anyone
     @Override
     public boolean canEnter(final Position to) {
         if (!inBounds(to))
@@ -47,7 +47,7 @@ public final class WallCollisionImpl implements WallCollision {
         return (t != TileType.WALL) && (eg != TileType.ENEMY);
     }
 
-    // Passo valido per i nemici
+    // Valid for enemies
     @Override
     public boolean canEnemyEnter(final Position to) {
         if (!canEnter(to))
