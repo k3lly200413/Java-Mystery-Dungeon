@@ -71,7 +71,7 @@ public class FollowMovementStrategy implements MovementStrategy {
             if (this.combatTransitionChecker.
             checkCombatCollision(playerPos, targetPos)) {
                 this.combatTransitionChecker.
-                    initiateCombatTransition(context, player);
+                    showCombat(context, player);
             }
 
             // not close enough -> move closer towards the player

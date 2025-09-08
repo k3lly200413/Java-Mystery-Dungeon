@@ -16,11 +16,11 @@ public interface CombatCollision {
 
 
     /**
-     * initiate the combat transition between the player and the enemy.
+     * transition to the combat view between the player and the enemy.
      * @param enemy the enemy that will enter combat
      * @param player the player that will enter combat
      */
-    void initiateCombatTransition(Enemy enemy, Player player);
+    void showCombat(Enemy enemy, Player player);
 
     /**
      * set the inCombat flag.

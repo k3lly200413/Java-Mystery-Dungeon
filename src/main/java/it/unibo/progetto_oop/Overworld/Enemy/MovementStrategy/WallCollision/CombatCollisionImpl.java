@@ -45,12 +45,17 @@ public class CombatCollisionImpl implements CombatCollision {
     }
 
     @Override
-    public void initiateCombatTransition(final Enemy enemy,
+    public void showCombat(final Enemy enemy,
     final Player player) {
         if (!inCombat) {
             inCombat = true;
             this.viewManagerObserver.onPlayerEnemyContact(enemy);
         }
+    }
+
+    @Override
+    public void showOverworld() {
+        this.viewManagerObserver.onEnemyDefeat();
     }
 
     @Override
@@ -62,10 +67,4 @@ public class CombatCollisionImpl implements CombatCollision {
     public void setViewManagerListener(final ViewManagerObserver currentViewManagerObserver) {
         this.viewManagerObserver = currentViewManagerObserver;
     }
-
-    @Override
-    public void showOverworld() {
-        this.viewManagerObserver.onEnemyDefeat();
-    }
-
 }
