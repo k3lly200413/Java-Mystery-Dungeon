@@ -7,7 +7,6 @@ import javax.swing.SwingUtilities;
 import it.unibo.progetto_oop.overworld.mvc.OverworldEntitiesGenerator;
 import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.playGround.data.ChangeFloorListener;
-import it.unibo.progetto_oop.overworld.playGround.data.Position;
 import it.unibo.progetto_oop.overworld.playGround.data.StructureData;
 import it.unibo.progetto_oop.overworld.playGround.dungeonLogic.Floor;
 import it.unibo.progetto_oop.overworld.playGround.view.SwingMapView;
