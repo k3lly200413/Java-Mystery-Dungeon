@@ -27,6 +27,7 @@ public final class MapController implements ChangeFloorListener {
     }
 
     public void next() {
+        
         model.nextFloor();
     }
 
@@ -43,6 +44,8 @@ public final class MapController implements ChangeFloorListener {
     @Override
     public void onFloorChange(final StructureData baseGrid) {
         view.setEntityGrid(model.getEntityGridView());
+        view.setCameraTarget(model.getPlayer().getPosition());
+        view.setZoom(9);
         SwingUtilities.invokeLater(() -> view.render(baseGrid));
     }
 }

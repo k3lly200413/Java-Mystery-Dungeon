@@ -40,6 +40,7 @@ public class OverworldController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.movePlayer(dx, dy);
+                view.setCameraTarget(model.getPlayer().getPosition());
                 view.repaint();
             }
         });
@@ -50,7 +51,8 @@ public class OverworldController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.movePlayer(dx, dy);  
+                model.movePlayer(dx, dy);
+                view.setCameraTarget(model.getPlayer().getPosition());
                 view.repaint();
             }
         });
@@ -62,6 +64,7 @@ public class OverworldController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.movePlayer(dx, dy);
+                view.setCameraTarget(model.getPlayer().getPosition());
                 view.repaint();
             }
         });
@@ -73,6 +76,7 @@ public class OverworldController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.movePlayer(dx, dy);
+                view.setCameraTarget(model.getPlayer().getPosition());
                 view.repaint();
             }
         });

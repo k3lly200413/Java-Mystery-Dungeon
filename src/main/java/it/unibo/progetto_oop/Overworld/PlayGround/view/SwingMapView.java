@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 
@@ -40,6 +41,17 @@ public final class SwingMapView extends JPanel implements MapView {
         repaint();
     }
 
+    public void setCameraTarget(final Position p) {
+        panel.setCameraTarget(p);
+        repaint();
+    }
+
+    public void setZoom(double z) {
+        panel.setZoom(z);
+        revalidate();
+        repaint();
+    }
+
     /* ============ Canvas ============ */
     private static final class MapPanel extends JPanel {
         private StructureData grid;        // base
@@ -47,6 +59,8 @@ public final class SwingMapView extends JPanel implements MapView {
 
         // dimensione cella base
         private final int initialCell;
+        private double zoom = 1.0;
+        private Position camTarget;
 
         // Sprite 
         private BufferedImage floorImg;
@@ -74,6 +88,14 @@ public final class SwingMapView extends JPanel implements MapView {
             this.entityGrid = eg;
         }
 
+        void setCameraTarget(final Position p) {
+            this.camTarget = p;
+        }
+
+        void setZoom(double z) {
+            this.zoom = z;
+        }
+
         @Override
         public Dimension getPreferredSize() {
             int w = (grid == null ? 20 : grid.width());
@@ -84,61 +106,63 @@ public final class SwingMapView extends JPanel implements MapView {
         @Override
         protected void paintComponent(final Graphics g) {
             super.paintComponent(g);
-            if (grid == null) return;
+            if (grid == null)
+                return;
 
             final int cols = grid.width();
             final int rows = grid.height();
 
             // cell size dinamica
-            final int cell = Math.max(1, Math.min(getWidth() / cols, getHeight() / rows));
+            final int baseCell = Math.max(1, Math.min(getWidth() / cols, getHeight() / rows));
+            final int cell = Math.max(1, (int) Math.round(baseCell * zoom));
 
-            // centra la mappa
+            // centra mappa su player
             final int mapW = cell * cols;
             final int mapH = cell * rows;
-            final int offX = (getWidth()  - mapW) / 2;
-            final int offY = (getHeight() - mapH) / 2;
+            int OffX = (int) Math.round(getWidth() / 2.0 - camTarget.x() * cell);
+            int OffY = (int) Math.round(getHeight() / 2.0 - camTarget.y() * cell);
+            final int offX = (mapW > getWidth())
+                    ? clamp(OffX, getWidth() - mapW, 0)
+                    : (getWidth() - mapW) / 2;
+            final int offY = (mapH > getHeight())
+                    ? clamp(OffY, getHeight() - mapH, 0)
+                    : (getHeight() - mapH) / 2;
 
             // Disegna TERRENO
-            for (int y = 0; y < rows; y++) {
-                for (int x = 0; x < cols; x++) {
-                    final TileType t = grid.get(x, y);
-                    final int px = offX + x * cell;
-                    final int py = offY + y * cell;
-
-                    final BufferedImage baseSprite = spriteFor(t);
-                    if (baseSprite != null) {
-                        g.drawImage(baseSprite, px, py, cell, cell, null);
-                    } else {
-                        g.setColor(colorFor(t));
-                        g.fillRect(px, py, cell, cell);
-                    }
-                }
-            }
+            drawCells(g, grid, cell, rows, cols, offX, offY);
 
             // Disegna ENTITÀ sopra
-            if (entityGrid != null) {
-                for (int y = 0; y < rows; y++) {
-                    for (int x = 0; x < cols; x++) {
-                        final TileType e = entityGrid.get(x, y);
-                        if (e == TileType.NONE) continue;
+            drawCells(g, entityGrid, cell, rows, cols, offX, offY);
+        }
 
-                        final int px = offX + x * cell;
-                        final int py = offY + y * cell;
+        private void drawCells(Graphics g, StructureData TypeGrid, int cellSize, int rows, int cols, int offX, int offY) {
+            if (TypeGrid == null)
+                return;
+            for (int y = 0; y < rows; y++) {
+                for (int x = 0; x < cols; x++) {
+                    final TileType e = TypeGrid.get(x, y);
+                    if (e != TileType.NONE) {
+                        final int px = offX + x * cellSize;
+                        final int py = offY + y * cellSize;
 
                         final BufferedImage entSprite = spriteFor(e);
                         if (entSprite != null) {
-                            g.drawImage(entSprite, px, py, cell, cell, null);
+                            g.drawImage(entSprite, px, py, cellSize, cellSize, null);
                         } else {
                             g.setColor(colorFor(e));
-                            g.fillRect(px, py, cell, cell);
+                            g.fillRect(px, py, cellSize, cellSize);
                         }
 
                         // bordo celle
                         g.setColor(new Color(0, 0, 0, 40));
-                        g.drawRect(px, py, cell, cell);
+                        g.drawRect(px, py, cellSize, cellSize);
                     }
                 }
             }
+        }
+        
+        private static int clamp(int v, int min, int max) {
+            return Math.max(min, Math.min(max, v));
         }
 
         private static BufferedImage loadSprite(final String path) {

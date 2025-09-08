@@ -40,8 +40,6 @@ public final class OverworldModel {
     private final Player player;
     private boolean inCombat;
 
-    //private Dungeon dungeon;
-
     private final PickupSystem pickupSystem;
     private final EnemySystem enemySystem;
     private final MovementSystem movementSystem;
