@@ -7,6 +7,7 @@ import java.awt.Dimension;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
+import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.GameStartView;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
@@ -41,7 +42,6 @@ public class ViewManager {
         // Setup il CardLayout e il panel principale
         this.cardLayout = new CardLayout();
         this.mainCardPanel = new JPanel(cardLayout);
-
         
         // prima card
         this.mainCardPanel.add(this.startView, START_GAME);
@@ -70,6 +70,12 @@ public class ViewManager {
     }
 
     
+    public void setCombatController(CombatController curranteCombatController) {
+        this.combatController = curranteCombatController;
+        this.mainCardPanel.add(combatController.getView(), COMBAT_CARD);
+    }
+
+
     public void showInventory(Inventory inventory){
         if (this.invView == null) {  // prima volta
             this.setInventoryView(new InventoryView(inventory, this));
@@ -80,7 +86,8 @@ public class ViewManager {
         this.cardLayout.show(this.mainCardPanel, INVENTORY_CARD);
         
     }
-    /* 
+
+    /*
     public void showInventory(Inventory inventory) {
         JFrame frame = new JFrame("Inventario");
 
@@ -103,22 +110,18 @@ public class ViewManager {
         }
     } */
 
-    public void showCombat(CombatController combatController) {
+    public void showCombat(Enemy encounteredEnemy) {
         JFrame frame = new JFrame("Combattimento");
-        if (this.combatView == null) {
-            this.combatController = combatController;
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.setSize(600, 400);
-            frame.add(this.combatController.getView());
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        } else {
+        // if (this.combatView == null) {
+            // frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            // frame.setSize(600, 400);
+            // frame.add(this.combatController.getView());
+            // frame.setLocationRelativeTo(null);
+            // frame.setVisible(true);
+        // } else {
             this.combatController.redrawView();
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.setSize(600, 400);
-            frame.add(this.combatController.getView());
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        }
+            this.combatController.setEncounteredEnemy(encounteredEnemy);
+        // }
+        this.cardLayout.show(this.mainCardPanel, COMBAT_CARD);
     }
 }

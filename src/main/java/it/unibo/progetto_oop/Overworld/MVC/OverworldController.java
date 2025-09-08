@@ -6,12 +6,14 @@ import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.JPanel;
 
+import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.MVC.InputBindings.InputBindings;
 import it.unibo.progetto_oop.Overworld.PlayGround.view.SwingMapView;
+import it.unibo.progetto_oop.Overworld.ViewManagerObserver.ViewManagerObserver;
 
 import java.awt.event.ActionEvent;
 
-public class OverworldController {
+public class OverworldController implements ViewManagerObserver {
     /**
      * the model instance.
      */
@@ -112,5 +114,15 @@ public class OverworldController {
             public void actionPerformed(final ActionEvent e) {
             }
         });
+    }
+
+    @Override
+    public void onPlayerEnemyContact(Enemy encounteredEnemy) {
+        this.viewManager.showCombat(encounteredEnemy);
+    }
+
+    @Override
+    public void onEnemyDefeat() {
+        this.viewManager.showOverworld();
     }
 }

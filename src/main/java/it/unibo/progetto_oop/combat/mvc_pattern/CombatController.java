@@ -113,7 +113,7 @@ public class CombatController {
     /**
      * Static instance of Enemy to be used across states.
      */
-    private final Enemy enemy;
+    private Enemy enemy;
 
     /**
      * Timer for animations.
@@ -1136,6 +1136,10 @@ public class CombatController {
         if (this.currentState != null) {
             this.currentState.enterState(this);
         }
+    }
+
+    public final void setEncounteredEnemy(Enemy encounteredEnemy) {
+        this.enemy = encounteredEnemy;
     }
 
     /**

@@ -3,6 +3,7 @@ package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.Overworld.ViewManagerObserver.ViewManagerObserver;
 
 public interface CombatCollision {
     /**
@@ -26,5 +27,9 @@ public interface CombatCollision {
      * @param inCombat true if the enemy is in combat, false otherwise
     */
     void setInCombat(boolean inCombat);
+
+    public void setViewManagerListener(ViewManagerObserver curranteViewManagerObserver);
+
+    public void showOverworld();
 
 }

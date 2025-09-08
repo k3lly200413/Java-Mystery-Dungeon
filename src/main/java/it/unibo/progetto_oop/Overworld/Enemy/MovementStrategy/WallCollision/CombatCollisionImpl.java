@@ -1,13 +1,18 @@
 package it.unibo.progetto_oop.Overworld.Enemy.MovementStrategy.WallCollision;
 
 import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
+import it.unibo.progetto_oop.Overworld.Enemy.StatePattern.CombatTransitionState;
+
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.MVC.ViewManager;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.Overworld.ViewManagerObserver.ViewManagerObserver;
 import it.unibo.progetto_oop.combat.CombatLauncher;
-import it.unibo.progetto_oop.combat.draw_helper.DrawHelper;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+
+import it.unibo.progetto_oop.combat.draw_helper.DrawHelper;
+
 
 public class CombatCollisionImpl implements CombatCollision {
     /**
@@ -24,19 +29,16 @@ public class CombatCollisionImpl implements CombatCollision {
      * Grid notifier to notify the grid of changes.
      */
     private GridNotifier gridNotifier;
+    private ViewManagerObserver viewManagerObserver;
 
     /**
      * The distance within which combat is initiated.
      */
     private static final int COMBAT_DISTANCE = 1;
 
-    /**
-     * Constructor for CombatCollisionImpl.
-     * @param newGridNotifier the grid notifier
-     */
-    public CombatCollisionImpl(final GridNotifier newGridNotifier) {
+    public CombatCollisionImpl(GridNotifier gridNotifier) {
         this.neighboursCheck = new DrawHelper();
-        this.gridNotifier = newGridNotifier;
+        this.gridNotifier = gridNotifier;
     }
 
     /**
@@ -63,6 +65,7 @@ public class CombatCollisionImpl implements CombatCollision {
             // enemy.setState(combat);
             inCombat = true;
 
+        this.viewManagerObserver.onPlayerEnemyContact(enemy);
         CombatController combatController =
             CombatLauncher.buildCombat(player, this, gridNotifier, enemy);
             new ViewManager().showCombat(combatController);
@@ -76,4 +79,13 @@ public class CombatCollisionImpl implements CombatCollision {
     public void setInCombat(final boolean inCombatValue) {
         this.inCombat = inCombatValue;
     }
+    
+    public void setViewManagerListener(ViewManagerObserver curranteViewManagerObserver) {
+        this.viewManagerObserver = curranteViewManagerObserver;
+    }
+
+    public void showOverworld() {
+        this.viewManagerObserver.onEnemyDefeat();
+    }
+
 }

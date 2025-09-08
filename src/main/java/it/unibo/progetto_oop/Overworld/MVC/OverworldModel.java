@@ -22,6 +22,7 @@ import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Floor;
 import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.Overworld.ViewManagerObserver.ViewManagerObserver;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 
@@ -113,7 +114,7 @@ public final class OverworldModel {
         this.enemySystem  = new EnemySystem(null, this.player, this);
         this.movementSystem = new MovementSystem(this.player, this);
 
-        this.combatCollision = new CombatCollisionImpl(this.gridNotifier);
+        this.combatCollision = new CombatCollisionImpl();
 
         setSpawnObjects(enemies, items);
     }
@@ -385,6 +386,10 @@ public final class OverworldModel {
      */
     public void setCombatTransitionFlag() {
         this.movementSystem.setCombatTransitionFlag();
+    }
+
+    public void setCombatTransitionListener(ViewManagerObserver curranteViewManagerObserver) {
+        this.combatCollision.setViewManagerListener(curranteViewManagerObserver);
     }
 
     //---------Movimento---------
