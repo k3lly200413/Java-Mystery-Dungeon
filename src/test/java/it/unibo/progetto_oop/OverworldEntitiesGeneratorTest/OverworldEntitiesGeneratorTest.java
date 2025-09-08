@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.OverworldEntitiesGeneratorTest;
+package it.unibo.progetto_oop.overworldEntitiesGeneratorTest;
 
 import java.util.ArrayList;
 
