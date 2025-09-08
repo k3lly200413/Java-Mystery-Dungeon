@@ -1,9 +1,9 @@
 package it.unibo.progetto_oop.overworld.combat_collision;
 
 import it.unibo.progetto_oop.combat.draw_helper.DrawHelper;
-import it.unibo.progetto_oop.overworld.playGround.Data.Position;
-import it.unibo.progetto_oop.overworld.ViewManagerObserver.ViewManagerObserver;
+import it.unibo.progetto_oop.overworld.ViewManagerObserver;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.playGround.data.Position;
 import it.unibo.progetto_oop.overworld.player.Player;
 
 

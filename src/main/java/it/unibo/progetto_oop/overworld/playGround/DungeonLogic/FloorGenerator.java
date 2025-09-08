@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-import it.unibo.progetto_oop.overworld.playGround.Data.FloorConfig;
-import it.unibo.progetto_oop.overworld.playGround.Data.StructureData;
-import it.unibo.progetto_oop.overworld.playGround.Data.TileType;
 import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.RandomPlacementStrategy;
 import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.RoomPlacementStrategy;
 import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.TunnelPlacementStrategy;
+import it.unibo.progetto_oop.overworld.playGround.data.FloorConfig;
+import it.unibo.progetto_oop.overworld.playGround.data.StructureData;
+import it.unibo.progetto_oop.overworld.playGround.data.TileType;
 
 public final class FloorGenerator {
     /**

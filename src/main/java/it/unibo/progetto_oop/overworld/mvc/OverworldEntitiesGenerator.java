@@ -6,12 +6,12 @@ import java.util.Random;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_factory.ItemFactory;
-import it.unibo.progetto_oop.overworld.playGround.Data.Position;
-import it.unibo.progetto_oop.overworld.playGround.Data.StructureData;
-import it.unibo.progetto_oop.overworld.playGround.Data.TileType;
 import it.unibo.progetto_oop.overworld.playGround.DungeonLogic.Floor;
 import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.ImplRandomPlacement;
 import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.RandomPlacementStrategy;
+import it.unibo.progetto_oop.overworld.playGround.data.Position;
+import it.unibo.progetto_oop.overworld.playGround.data.StructureData;
+import it.unibo.progetto_oop.overworld.playGround.data.TileType;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_pattern.EnemyFactory;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_pattern.EnemyFactoryImpl;

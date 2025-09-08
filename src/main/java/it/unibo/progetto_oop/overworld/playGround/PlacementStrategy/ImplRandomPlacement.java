@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import it.unibo.progetto_oop.overworld.playGround.Data.Position;
-import it.unibo.progetto_oop.overworld.playGround.Data.StructureData;
-import it.unibo.progetto_oop.overworld.playGround.Data.TileType;
+import it.unibo.progetto_oop.overworld.playGround.data.Position;
+import it.unibo.progetto_oop.overworld.playGround.data.StructureData;
+import it.unibo.progetto_oop.overworld.playGround.data.TileType;
 
 public final class ImplRandomPlacement implements RandomPlacementStrategy {
 

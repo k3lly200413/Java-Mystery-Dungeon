@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld.playGround.Data;
+package it.unibo.progetto_oop.overworld.playGround.data;
 
 public interface GridUpdater {
     void onPlayerMove(Position from, Position to);

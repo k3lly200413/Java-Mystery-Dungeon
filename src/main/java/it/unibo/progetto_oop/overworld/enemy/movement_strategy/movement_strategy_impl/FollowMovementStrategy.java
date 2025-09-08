@@ -1,12 +1,12 @@
 package it.unibo.progetto_oop.overworld.enemy.movement_strategy.movement_strategy_impl;
 
-import it.unibo.progetto_oop.overworld.playGround.Data.Position;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementStrategy;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.VisibilityUtil;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementUtil.MoveDirection;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollision;
+import it.unibo.progetto_oop.overworld.playGround.data.Position;
 import it.unibo.progetto_oop.overworld.player.Player;
 
 public class FollowMovementStrategy implements MovementStrategy {

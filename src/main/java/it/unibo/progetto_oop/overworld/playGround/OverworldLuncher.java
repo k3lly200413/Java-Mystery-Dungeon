@@ -6,7 +6,6 @@ import java.util.Random;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
-import it.unibo.progetto_oop.overworld.playGround.Data.FloorConfig;
 import it.unibo.progetto_oop.overworld.playGround.DungeonLogic.Dungeon;
 import it.unibo.progetto_oop.overworld.playGround.DungeonLogic.FloorGenerator;
 import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.ImplRandomPlacement;
@@ -15,11 +14,7 @@ import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.ImplTunnelPl
 import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.RandomPlacementStrategy;
 import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.RoomPlacementStrategy;
 import it.unibo.progetto_oop.overworld.playGround.PlacementStrategy.TunnelPlacementStrategy;
-import it.unibo.progetto_oop.overworld.playGround.view.SwingMapView;
-
-public final class OverworldLuncher {
-    private final OverworldModel model;
-    private final SwingMapView view;
+import it.unibo.progetto_oop.overworld.playGround.data.FloorConfig;
     private final MapController mapController;
 
     public OverworldLuncher(FloorConfig config, Random rand) {

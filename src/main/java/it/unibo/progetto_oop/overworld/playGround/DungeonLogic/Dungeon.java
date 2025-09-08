@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import it.unibo.progetto_oop.overworld.playGround.Data.FloorConfig;
+import it.unibo.progetto_oop.overworld.playGround.data.FloorConfig;
 
 public class Dungeon {
     /**
