@@ -11,9 +11,7 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 
 public final class CombatLauncher {
 
-    private CombatLauncher() {
-        throw new UnsupportedOperationException("Utility class");
-    }
+    private CombatController combatController;
 
     /**
      * Main method to launch the combat application.
@@ -24,9 +22,9 @@ public final class CombatLauncher {
      * @param enemy the enemy instance
      * @return combatController instance
      */
-    public static CombatController buildCombat(final Player player,
+    public final CombatController buildCombat(final Player player,
     final CombatCollision combatCollision,
-    final GridNotifier gridNotifier, final Enemy enemy) {
+    final GridNotifier gridNotifier) {
         // --- Game Configuration ---
         final int size = 12;
         final int playerPower = player.getPower();
@@ -78,9 +76,14 @@ public final class CombatLauncher {
             view.init();
 
             // 3. Create the Controller, linking the Model and View
-            final CombatController controller =
+            this.combatController =
                 new CombatController(model, view, player,
-                combatCollision, gridNotifier, enemy);
-            return controller;
+                combatCollision, gridNotifier);
+            return this.combatController;
     }
+
+    public final void setEncounteredEnemy(Enemy encounteredEnemey) {
+        this.combatController.setEncounteredEnemy(encounteredEnemey);
+    }
+
 }

@@ -153,8 +153,7 @@ public class CombatController {
         final CombatModel modelToUse,
         final CombatView viewToUse, final Player newPlayer,
         final CombatCollision newCombatCollision,
-        final GridNotifier newGridNotifier,
-        final Enemy newEnemy) {
+        final GridNotifier newGridNotifier) {
 
         this.model = modelToUse;
         this.view = viewToUse;
@@ -166,7 +165,6 @@ public class CombatController {
 
         this.combatCollision = newCombatCollision;
         this.gridNotifier = newGridNotifier;
-        this.enemy = newEnemy;
 
         this.attachListeners();
 
@@ -179,7 +177,6 @@ public class CombatController {
         this.attackBuffItem = itemFactory.createItem("Attack Buff", null);
         this.curePoisonItem = itemFactory.createItem("Antidote", null);
         this.healingItem = itemFactory.createItem("Health Potion", null);
-        //this.checkIfPlayerHasItemsAndActivateButtons();
     }
 
     /**
