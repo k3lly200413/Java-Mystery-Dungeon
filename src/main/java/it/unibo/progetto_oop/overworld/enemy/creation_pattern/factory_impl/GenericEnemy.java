@@ -135,6 +135,17 @@ public class GenericEnemy implements Enemy {
         this.gridNotifier = newGridNotifier;
     }
 
+    @Override
+    public void setHealth(int health) {
+        if (health < 0) {
+            health = 0;
+        } else if (health > this.maxHealth) {
+            this.currentHealth = this.maxHealth;
+        } else {
+            this.currentHealth = health;
+        }
+    }
+
 
     // ----methods---- //
 

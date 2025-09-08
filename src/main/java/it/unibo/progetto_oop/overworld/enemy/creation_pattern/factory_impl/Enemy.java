@@ -60,6 +60,12 @@ public interface Enemy {
     void setState(GenericEnemyState newState);
 
     /**
+     * Set the current health of the enemy.
+     * @param health the new current health of the enemy
+     */
+    void setHealth(int health);
+
+    /**
      * Method to notify the enemy that the player has moved.
      * @param player The player that has moved.
      */
