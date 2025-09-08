@@ -264,11 +264,11 @@ public class CombatController {
         this.view.showBagButtons();
         if (!this.player.getInventory().canUseItem(this.attackBuffItem)) {
             this.view.setCustomButtonDisabled(this.view.getAttackBuffButton());
-
-        } if (!this.player.getInventory().canUseItem(this.curePoisonItem)) {
+        }
+        if (!this.player.getInventory().canUseItem(this.curePoisonItem)) {
             this.view.setCustomButtonDisabled(this.view.getCurePoisonButton());
-
-        } if (!this.player.getInventory().canUseItem(this.healingItem)) {
+        }
+        if (!this.player.getInventory().canUseItem(this.healingItem)) {
             this.view.setCustomButtonDisabled(this.view.getHealingButton());
 
         }
@@ -1000,7 +1000,8 @@ public class CombatController {
             final String winner =
                 model.getPlayerHealth() <= 0 ? "Enemy" : "Player";
             view.showInfo("Game Over! " + winner + " wins!");
-            this.setState(new GameOverState(combatCollision, gridNotifier,enemy,player));
+            this.setState(new GameOverState(
+                combatCollision, gridNotifier, enemy, player));
             return true;
         }
         return false;
@@ -1028,7 +1029,7 @@ public class CombatController {
 
         if (isCharging) {
             // animating State
-            this.setState(new AnimatingState(new EnemyTurnState()));
+            this.setState(new AnimatingState());
             this.animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
                 position[0]--;
                 final RedrawContext defaultRedraw = new RedrawContext.Builder()
@@ -1226,7 +1227,7 @@ public class CombatController {
         model.setPoisonAnimation(true);
         animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 // perché così potevo vedere da tablet che laggava ahahahahaha
                 if (conto[0] == 1) {
                     // fine del timer resetto tutto
