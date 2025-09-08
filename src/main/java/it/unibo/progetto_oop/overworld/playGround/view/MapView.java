@@ -1,6 +1,6 @@
 package it.unibo.progetto_oop.overworld.playGround.view;
 
-import it.unibo.progetto_oop.overworld.PlayGround.Data.StructureData;
+import it.unibo.progetto_oop.overworld.playGround.Data.StructureData;
 
 public interface MapView {
     /**

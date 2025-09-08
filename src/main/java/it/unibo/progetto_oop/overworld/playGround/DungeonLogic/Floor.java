@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import it.unibo.progetto_oop.overworld.PlayGround.Data.FloorConfig;
-import it.unibo.progetto_oop.overworld.PlayGround.Data.ImplArrayListStructureData;
-import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.overworld.PlayGround.Data.StructureData;
-import it.unibo.progetto_oop.overworld.PlayGround.Data.TileType;
+import it.unibo.progetto_oop.overworld.playGround.Data.FloorConfig;
+import it.unibo.progetto_oop.overworld.playGround.Data.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.playGround.Data.Position;
+import it.unibo.progetto_oop.overworld.playGround.Data.StructureData;
+import it.unibo.progetto_oop.overworld.playGround.Data.TileType;
 
 public final class Floor{
     private final StructureData grid;
