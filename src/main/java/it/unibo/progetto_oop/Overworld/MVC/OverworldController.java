@@ -116,7 +116,7 @@ public class OverworldController implements ViewManagerObserver {
         });
     }
 
-    @Override
+     @Override
     public void onPlayerEnemyContact(Enemy encounteredEnemy) {
         this.viewManager.showCombat(encounteredEnemy);
     }
@@ -126,3 +126,4 @@ public class OverworldController implements ViewManagerObserver {
         this.viewManager.showOverworld();
     }
 }
+        

@@ -70,8 +70,8 @@ public class ViewManager {
     }
 
     
-    public void setCombatController(CombatController curranteCombatController) {
-        this.combatController = curranteCombatController;
+    public void setCombatController(CombatController currentCombatController) {
+        this.combatController = currentCombatController;
         this.mainCardPanel.add(combatController.getView(), COMBAT_CARD);
     }
 

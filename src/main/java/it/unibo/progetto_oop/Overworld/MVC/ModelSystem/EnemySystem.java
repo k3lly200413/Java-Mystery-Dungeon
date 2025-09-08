@@ -75,7 +75,7 @@ public class EnemySystem {
         this.encounteredEnemy = newEncounteredEnemy;
         if (this.model.isCombatTransitionPending()) {
             this.model.getCombatCollision().
-                initiateCombatTransition(newEncounteredEnemy, this.player);
+                showCombat(newEncounteredEnemy, this.player);
         }
     }
 
