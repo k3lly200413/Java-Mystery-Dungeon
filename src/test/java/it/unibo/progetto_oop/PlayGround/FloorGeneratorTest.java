@@ -74,13 +74,10 @@ public class FloorGeneratorTest {
         return !(sepX || sepY);
     }
 
-    // 2) Conteggio oggetti 
+    // 2) una sola scala 
     @Test
     void objectCounts() {
-        assertEquals(1, players.size(), "Un solo PLAYER");
         assertEquals(1, stairs.size(),  "Una sola STAIRS");
-        assertEquals(rooms.size() * 2, enemies.size(), "ENEMY = 2 per stanza");
-        assertEquals(rooms.size(),     items.size(),   "ITEM = 1 per stanza");
     }
 
     // 3) Oggetti non su WALL

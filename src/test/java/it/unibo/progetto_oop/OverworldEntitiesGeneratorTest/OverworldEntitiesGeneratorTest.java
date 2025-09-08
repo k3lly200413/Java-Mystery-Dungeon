@@ -3,7 +3,7 @@ package it.unibo.progetto_oop.OverworldEntitiesGeneratorTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,10 +12,16 @@ import it.unibo.progetto_oop.Overworld.Enemy.CreationPattern.FactoryImpl.Enemy;
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldEntitiesGenerator;
 import it.unibo.progetto_oop.Overworld.MVC.OverworldModel;
+import it.unibo.progetto_oop.Overworld.PlayGround.Data.FloorConfig;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.ImplArrayListStructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.StructureData;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.TileType;
+import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.Dungeon;
+import it.unibo.progetto_oop.Overworld.PlayGround.DungeonLogic.FloorGenerator;
+import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.ImplRandomPlacement;
+import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.ImplRoomPlacement;
+import it.unibo.progetto_oop.Overworld.PlayGround.PlacementStrategy.ImplTunnelPlacement;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
@@ -28,9 +34,24 @@ public class OverworldEntitiesGeneratorTest {
     private final ArrayList<Enemy> enemies = new ArrayList<>();
     private final ArrayList<Item> items = new ArrayList<>();
 
+    private Dungeon newDungeon(int maxFloors) {
+        FloorConfig conf = new FloorConfig.Builder()
+                .size(20, 15)
+                .rooms(3)
+                .roomSize(3, 8, 3, 8)
+                .floors(maxFloors)
+                .tileSize(14)
+                .build();
+
+        FloorGenerator gen = new FloorGenerator(new ImplRoomPlacement(), new ImplTunnelPlacement(), new ImplRandomPlacement(), new Random());
+        return new Dungeon(gen, conf);
+    }
+
     @BeforeEach
     void setup() {
         model = new OverworldModel(enemies, items);
+        Dungeon d = newDungeon(3);
+        this.model.bindDungeon(d);
 
         base = new ImplArrayListStructureData(5, 5);
         entity = new ImplArrayListStructureData(5, 5);
@@ -51,7 +72,7 @@ public class OverworldEntitiesGeneratorTest {
         entity.set(3,3, TileType.ITEM);
         entity.set(4,4, TileType.ENEMY);
 
-        player = new Player(100, new Inventory());
+        player = new Player(100, 100, 10, new Inventory());
 
         new OverworldEntitiesGenerator(
             model.getCurrentFloor(),
