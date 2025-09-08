@@ -1,13 +1,13 @@
-package it.unibo.progetto_oop.Overworld.mvc.ModelSystem;
+package it.unibo.progetto_oop.Overworld.mvc.model_system;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.Overworld.mvc.OverworldModel;
+import it.unibo.progetto_oop.Overworld.player.Player;
 
 public class EnemySystem {
     /**

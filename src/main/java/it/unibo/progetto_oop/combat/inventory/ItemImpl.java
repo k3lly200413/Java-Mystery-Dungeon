@@ -2,7 +2,7 @@ package it.unibo.progetto_oop.combat.inventory;
 import java.util.Objects;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.Player.AdapterPattern.PossibleUser;
+import it.unibo.progetto_oop.Overworld.player.adapter_pattern.PossibleUser;
 
 /**
  * @author Laura Bertozzi

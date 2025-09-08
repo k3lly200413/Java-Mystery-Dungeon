@@ -1,6 +1,6 @@
 package it.unibo.progetto_oop.combat.inventory;
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.Player.AdapterPattern.PossibleUser;
+import it.unibo.progetto_oop.Overworld.player.adapter_pattern.PossibleUser;
 import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
 
 public interface Item {

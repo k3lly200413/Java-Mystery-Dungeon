@@ -2,9 +2,9 @@ package it.unibo.progetto_oop.Overworld.enemy.state_pattern;
 
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.Player.Player;
 import it.unibo.progetto_oop.Overworld.enemy.EnemyType;
 import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.Overworld.player.Player;
 
 public class SleeperState implements GenericEnemyState {
 

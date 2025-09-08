@@ -1,6 +1,6 @@
-package it.unibo.progetto_oop.Overworld.Player.AdapterPattern;
+package it.unibo.progetto_oop.Overworld.player.adapter_pattern;
 
-import it.unibo.progetto_oop.Overworld.Player.Player;
+import it.unibo.progetto_oop.Overworld.player.Player;
 
 /**
  * OverworldPlayerAdapter - used to break the dependency between

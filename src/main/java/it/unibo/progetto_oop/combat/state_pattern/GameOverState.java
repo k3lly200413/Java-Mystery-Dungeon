@@ -3,11 +3,11 @@ package it.unibo.progetto_oop.combat.state_pattern;
 import javax.swing.Timer;
 
 import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
-import it.unibo.progetto_oop.Overworld.Player.Player;
-import it.unibo.progetto_oop.Overworld.Player.AdapterPattern.OverworldPlayerAdapter;
-import it.unibo.progetto_oop.Overworld.Player.AdapterPattern.PossibleUser;
 import it.unibo.progetto_oop.Overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.Overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.Overworld.player.Player;
+import it.unibo.progetto_oop.Overworld.player.adapter_pattern.OverworldPlayerAdapter;
+import it.unibo.progetto_oop.Overworld.player.adapter_pattern.PossibleUser;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;

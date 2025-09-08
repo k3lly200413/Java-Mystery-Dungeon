@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.Player.AdapterPattern.PossibleUser;
+import it.unibo.progetto_oop.Overworld.player.adapter_pattern.PossibleUser;
 import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
 
 

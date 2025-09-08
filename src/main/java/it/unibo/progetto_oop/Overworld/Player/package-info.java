@@ -1,4 +1,4 @@
 /**
  * This package contains all the classes related to the player character.
  */
-package it.unibo.progetto_oop.Overworld.Player;
+package it.unibo.progetto_oop.Overworld.player;

@@ -1,8 +1,8 @@
-package it.unibo.progetto_oop.Overworld.Player;
+package it.unibo.progetto_oop.Overworld.player;
 
 import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
-import it.unibo.progetto_oop.Overworld.Player.AdapterPattern.OverworldPlayerAdapter;
-import it.unibo.progetto_oop.Overworld.Player.AdapterPattern.PossibleUser;
+import it.unibo.progetto_oop.Overworld.player.adapter_pattern.OverworldPlayerAdapter;
+import it.unibo.progetto_oop.Overworld.player.adapter_pattern.PossibleUser;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
