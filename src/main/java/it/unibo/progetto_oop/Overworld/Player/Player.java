@@ -20,6 +20,16 @@ public class Player {
     private int maxHP;
 
     /**
+     * the player stamina value;
+     */
+    private int stamina;
+
+    /**
+     * the player power value.
+     */
+    private int power;
+
+    /**
      * the player's position.
      */
     private Position position;
@@ -34,10 +44,12 @@ public class Player {
      * @param maxHp
      * @param newInventory
      */
-    public Player(final int maxHp, final Inventory newInventory) {
+    public Player(final int maxHp, final int newStamina, final int newPower, final Inventory newInventory) {
         this.maxHP = maxHp;
         this.currentHP = this.maxHP;
         this.inventory = newInventory;
+        this.stamina = newStamina;
+        this.power = newPower;
     }
 
     /**
@@ -74,13 +86,39 @@ public class Player {
         this.inventory.addItem(item);
     }
 
-    /**
-     * Heal the player by a specified amount of health.
-     *
-     * @param hp amount of health to heal
-     */
-    public void heal(final int hp) {
-        this.setHp(hp);
+    public void increaseMaxHp(final int amount) {
+        if (amount >= 0) {
+            this.setMaxHp(amount + this.maxHP);
+        } else {
+            System.out.println("Nothing changed because the new amount is less than zero");
+        }
+    }
+
+    public void increaseStamina(final int amount) {
+        if (amount >= 0) {
+            this.setStamina(amount + this.stamina);
+        } else {
+            System.out.println("Nothing changed because the new amount is less than zero");
+        }
+    }
+
+    public void increasePower(final int amount) {
+        if (amount >= 0) {
+            this.setPower(amount + this.power);
+        } else {
+            System.out.println("Nothing changed because the new amount is less than zero");
+        }
+    }
+
+    public void heal(final int amount) {
+        if (amount >= 0) {
+            if (this.currentHP != this.maxHP && this.currentHP != 0) {
+                // if currentHP + amount > maxHP, set it to maxHP
+                this.setHp(Math.min(this.maxHP, this.currentHP + amount));
+            }
+        } else {
+            System.out.println("Nothing changed");
+        }
     }
 
     //---- SETTERS ----
@@ -91,13 +129,23 @@ public class Player {
      * @param amount amount to increase the player's health points
      */
     public void setHp(final int amount) {
-        if (this.currentHP != this.maxHP && this.currentHP != 0) {
-            // if currentHP + amount > maxHP, set it to maxHP
-            this.currentHP = Math.min(this.maxHP, this.currentHP + amount);
-        } else {
-            System.out.println("Nothing changed because either Max health or no health");
-        }
+        this.currentHP = amount;
     }
+
+    public void setMaxHp(final int amount) {
+        this.maxHP = amount;
+    }
+
+    public void setPower(final int amount) {
+        this.power = amount;
+    }
+
+    public void setStamina(final int amount) {
+        this.stamina = amount;
+    }
+
+
+    
 
     /**
      * Set the player's position.
@@ -134,6 +182,24 @@ public class Player {
      */
     public int getMaxHp() {
         return this.maxHP;
+    }
+
+    /**
+     * Get the staminaof the player.
+     *
+     * @return the stamina of the player
+     */
+    public int getStamina() {
+        return this.stamina;
+    }
+
+    /**
+     * Get the power of the player.
+     *
+     * @return the power of the player
+     */
+    public int getPower() {
+        return this.power;
     }
 
     /**
