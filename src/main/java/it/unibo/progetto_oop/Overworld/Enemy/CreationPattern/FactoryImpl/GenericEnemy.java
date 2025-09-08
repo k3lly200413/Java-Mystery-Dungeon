@@ -8,68 +8,102 @@ import it.unibo.progetto_oop.Overworld.GridNotifier.GridNotifier;
 
 
 public class GenericEnemy implements Enemy {
+    /**
+     * maxHealth of the enemy.
+     */
     private int maxHealth;
+
+    /**
+     * power of the enemy.
+     */
     private final int power;
+
+    /**
+     * initial position of the enemy.
+     */
     private Position initialPosition;
+
+    /**
+     * current position of the enemy.
+     */
     private Position currentPosition;
+
+    /**
+     * current health of the enemy.
+     */
     private int currentHealth;
+
+    /**
+     * current state of the enemy.
+     */
     private GenericEnemyState currentState;
 
+    /**
+     * grid notifier to notify the grid of changes.
+     */
     private GridNotifier gridNotifier;
 
-
-    public GenericEnemy(int maxHealth, int currentHealth, int power, Position initialPosition,  GridNotifier gridNotifier) {
-        this.maxHealth = maxHealth;
-        this.power = power;
-        this.initialPosition = initialPosition;
-        this.currentHealth = currentHealth;
+    /**
+     * Constructor of the BossEnemy class.
+     * @param newMaxHealth max health
+     * @param newCurrentHealth current health
+     * @param newPower power
+     * @param newInitialPosition initial position
+     * @param newGridNotifier grid notifier
+     */
+    public GenericEnemy(final int newMaxHealth, final int newCurrentHealth,
+    final int newPower, final Position newInitialPosition,
+    final GridNotifier newGridNotifier) {
+        this.maxHealth = newMaxHealth;
+        this.power = newPower;
+        this.initialPosition = newInitialPosition;
+        this.currentHealth = newCurrentHealth;
         this.currentPosition = this.initialPosition;
-        this.gridNotifier = gridNotifier;
+        this.gridNotifier = newGridNotifier;
     }
 
-    
-    // getters
+    //----getters----//
     @Override
-    public int getCurrentHealth() {
+    public final int getCurrentHealth() {
         return this.currentHealth;
     }
 
     @Override
-    public int getMaxHealth() {
+    public final int getMaxHealth() {
         return this.maxHealth;
     }
 
     @Override
-    public int getPower() {
+    public final int getPower() {
         return this.power;
     }
 
     @Override
-    public Position getCurrentPosition() {
+    public final Position getCurrentPosition() {
         return this.currentPosition;
     }
 
     @Override
-    public EnemyType getState() {
+    public final EnemyType getState() {
         return this.currentState.getType();
     }
 
 
     @Override
-    public GridNotifier getGridNotifier() {
+    public final GridNotifier getGridNotifier() {
         return this.gridNotifier;
     }
 
 
-    // setters 
+    // ----setters---- //
 
     @Override
-    public void setPosition(Position newPosition) {
+    public final void setPosition(final Position newPosition) {
         this.currentPosition = newPosition;
     }
 
     @Override
-    public void setState(GenericEnemyState newState) {
+    public final void setState(final GenericEnemyState newState) {
         if (newState == null || newState == this.currentState) {
             return;
         }
@@ -84,27 +118,22 @@ public class GenericEnemy implements Enemy {
     }
 
     @Override
-    public void setGridNotifier(GridNotifier gridNotifier) {
-        this.gridNotifier = gridNotifier;
+    public final void setGridNotifier(final GridNotifier newGridNotifier) {
+        this.gridNotifier = newGridNotifier;
     }
 
 
-    // methods
+    // ----methods---- //
 
     @Override
-    public void takeTurn(Player player) {
+    public final void takeTurn(final Player player) {
         this.currentState.update(this, player);
     }
 
     @Override
-    public void playerMoved(Player player) {
-        if (this.currentState != null){
+    public final void playerMoved(final Player player) {
+        if (this.currentState != null) {
             this.currentState.onPlayerMoved(this, player);
         }
-    } 
-
-    @Override
-    public boolean isBoss() {
-        return false;
     }
 }

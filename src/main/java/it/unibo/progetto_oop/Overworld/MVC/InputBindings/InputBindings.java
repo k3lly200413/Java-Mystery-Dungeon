@@ -7,42 +7,53 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 public class InputBindings {
+    /**
+     * The panel to which the input bindings will be added.
+     */
     private final JComponent panel;
 
-    public InputBindings(JComponent component) {
+    /**
+     * Constructor of the InputBindings class.
+     * @param component the panel to which the input bindings will be added
+     */
+    public InputBindings(final JComponent component) {
         this.panel = component;
     }
 
+    /**
+     * Set the input bindings for the panel.
+     */
     public void setBindings() {
-        InputMap inputMap = panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap inputMap = panel.
+            getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 
-        // keys
-        final String MOVE_UP = "moveUp";
-        final String MOVE_DOWN = "moveDown";
-        final String MOVE_LEFT = "moveLeft";
-        final String MOVE_RIGHT = "moveRight";
-        final String ESCAPE = "escape";
-        final String ENTER = "Enter";
-        final String SPACE = "Space";
+        // ----keys---- //
+
+        final String moveUp = "moveUp";
+        final String moveDown = "moveDown";
+        final String moveLeft = "moveLeft";
+        final String moveRight = "moveRight";
+        final String escape = "escape";
+        final String enter = "Enter";
+        final String space = "Space";
 
         // Fill the input map with key bindings
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), MOVE_UP);
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), MOVE_UP);
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), moveUp);
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), moveUp);
 
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), MOVE_DOWN);
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), MOVE_DOWN);
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), moveDown);
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), moveDown);
 
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), MOVE_LEFT);
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), MOVE_LEFT);
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), moveLeft);
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), moveLeft);
 
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), MOVE_RIGHT);
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0), MOVE_RIGHT);
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), moveRight);
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0), moveRight);
 
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), ESCAPE);
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), escape);
 
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), ENTER);
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), enter);
 
-        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), SPACE);
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), space);
     }
-        
 }

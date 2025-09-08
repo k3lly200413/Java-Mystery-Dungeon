@@ -7,72 +7,69 @@ import it.unibo.progetto_oop.Overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 public interface Enemy {
-    /** 
+    /**
      * @return the current health of the enemy
      */
-    public int getCurrentHealth();
-    
+    int getCurrentHealth();
+
     /**
      * @return the maximum health of the enemy
      */
-    public int getMaxHealth();
+    int getMaxHealth();
 
     /**
      * @return the power of the enemy
      */
-    public int getPower();
+    int getPower();
 
-    /** 
+    /**
      * @return the type(state) of the enemy
      */
-    public EnemyType getState();
+    EnemyType getState();
 
     /**
-     * 
      * @return the enemy's gridNotifier
      */
-    public GridNotifier getGridNotifier();
+    GridNotifier getGridNotifier();
 
     /**
-     * 
      * @param gridNotifier the enemy's gridNotifier
      */
-    public void setGridNotifier(GridNotifier gridNotifier);
-    
+    void setGridNotifier(GridNotifier gridNotifier);
+
     /**
-     * 
      * Updates the enemy's state based on the player's position.
      * @param player The player that the enemy is interacting with.
      */
-    public void takeTurn(Player player);
-    
+    void takeTurn(Player player);
+
     /**
      * @param newPosition the new position of the enemy
      */
-    public void setPosition(Position newPosition);
+    void setPosition(Position newPosition);
 
     /**
      * @return the currents position of the enemy
      */
-    public Position getCurrentPosition();
-    
+    Position getCurrentPosition();
+
     /**
      * Set the state of the enemy to a new state.
      * @param newState the new state to set the enemy to
      */
-    public void setState(GenericEnemyState newState);
+    void setState(GenericEnemyState newState);
 
     /**
-     * @param player The player that has moved. 
-     * @param model The current model of the overworld.
-     * 
-     *  Based on the type of enemy, it will act differently when the player moves.
+     * Method to notify the enemy that the player has moved.
+     * @param player The player that has moved.
      */
-    public void playerMoved(Player player);
+    void playerMoved(Player player);
 
     /**
      * method to know if the enemy is a boss.
      * @return if the enemy is a boss or not
      */
-    public boolean isBoss();
+    default boolean isBoss() {
+        return false;
+    }
 }

@@ -1,9 +1,10 @@
-package it.unibo.progetto_oop.Overworld.AdapterPattern;
+package it.unibo.progetto_oop.Overworld.Player.AdapterPattern;
 
 import it.unibo.progetto_oop.Overworld.Player.Player;
 
 /**
- * OverworldPlayerAdapter - used to break the dependency between potions and CombatModel
+ * OverworldPlayerAdapter - used to break the dependency between
+ * potions and CombatModel.
  * PossibleUser could be also an enemy
  * thanks to this class potions could be used also outside combat
  * --> in the overworld

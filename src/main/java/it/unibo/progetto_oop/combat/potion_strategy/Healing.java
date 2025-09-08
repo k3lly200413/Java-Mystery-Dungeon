@@ -1,6 +1,6 @@
 package it.unibo.progetto_oop.combat.potion_strategy;
 
-import it.unibo.progetto_oop.Overworld.AdapterPattern.PossibleUser;
+import it.unibo.progetto_oop.Overworld.Player.AdapterPattern.PossibleUser;
 
 public class Healing implements PotionStrategy {
     /** The amount of health to restore. */

@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.Overworld.AdapterPattern;
+package it.unibo.progetto_oop.Overworld.Player.AdapterPattern;
 
 public interface PossibleUser {
     /**
@@ -23,11 +23,20 @@ public interface PossibleUser {
      * Increase the player's power by the given amount.
      * @param amount the amount to increase the player's power
      */
-    public void increasePlayerMaxPower(int amount);
+    void increasePlayerMaxPower(int amount);
 
-    public void increasePlayerMaxStamina(final int amount);
 
-    public void increasePlayerMaxHealth(final int amount);
+    /**
+     * Increase the player's stamina by the given amount.
+     * @param amount the amount to increase the player's stamina
+     */
+    void increasePlayerMaxStamina(int amount);
+
+    /**
+     * Increase the player's max health by the given amount.
+     * @param amount the amount to increase the player's max health
+     */
+    void increasePlayerMaxHealth(int amount);
 
     /**
      * Set the player's poisoned status.

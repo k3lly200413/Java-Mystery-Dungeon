@@ -40,13 +40,13 @@ public class PickupSystem {
         this.items = newItems;
     }
 
-    //---- GETTERS ----
+    // ---- GETTERS ---- //
 
     /**
      * get the items on the map.
      * @return the list of items in the overworld
      */
-    public List<Item> getItem(){
+    public List<Item> getItem() {
         return this.items;
     }
 
@@ -59,14 +59,14 @@ public class PickupSystem {
         return this.player.getInventory();
     }
 
-    // setters
+    // ---- SETTERS ---- //
 
     /**
-     * set the items on the current floor
-     * @param items the items to set
+     * set the items on the current floor.
+     * @param newItems the items to set
      */
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setItems(final List<Item> newItems) {
+        this.items = newItems;
     }
 
     // methods
@@ -74,34 +74,40 @@ public class PickupSystem {
     /**
      * Remove an item from the overworld and add it to the player's inventory.
      * @param itemToRemove the item to remove
+     * @return true if the item was removed, false otherwise
      */
-    public boolean removeItemAt(Position itemToRemove){
+    public boolean removeItemAt(final Position itemToRemove) {
         this.player.getInventory().addItem(
             this.items.stream()
                       .filter(item -> item.getPosition().equals(itemToRemove))
                       .findFirst()
-                      .orElseThrow(() -> new IllegalArgumentException("Item not found at position: " + itemToRemove))
+                      .orElseThrow(() -> new IllegalArgumentException(
+                        "Item not found at position: " + itemToRemove))
         );
-        return this.items.removeIf(item -> item.getPosition().equals(itemToRemove));
+        return this.items.removeIf(item ->
+         item.getPosition().equals(itemToRemove));
         //this.model.getGridNotifier().notifyItemRemoved(itemToRemove);
     }
 
     /**
-     * Check if an item is found at the player's position
-     * @return an Optional containing the item if found, otherwise an empty Optional
+     * Check if an item is found at the player's position.
+     * @return an Optional containing the item
+     * if found,
+     * otherwise an empty Optional
      */
-    private Optional<Item> ItemFoundAtPlayerPosition(){
+    private Optional<Item> itemFoundAtPlayerPosition() {
         return this.items.stream().filter(
             item -> item.getPosition().equals(this.player.getPosition())
             ).findFirst();
     }
 
     /**
-     * Check if an item is found at the player's position and add it to the inventory
+     * Check if an item is found at the player's position
+     * and add it to the inventory.
      * If an item is found, remove it from the overworld items list
      */
-    public void checkAndAddItem(){
-        Optional<Item> itemOpt = this.ItemFoundAtPlayerPosition();
+    public void checkAndAddItem() {
+        Optional<Item> itemOpt = this.itemFoundAtPlayerPosition();
 
         itemOpt.ifPresent(item -> {
             System.out.println("Item found, picking it up " + item.getName());
