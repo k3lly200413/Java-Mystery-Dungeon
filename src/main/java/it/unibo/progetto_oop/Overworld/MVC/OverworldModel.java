@@ -14,6 +14,15 @@ import it.unibo.progetto_oop.overworld.playground.data.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Dungeon;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.CombatCollision;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.CombatCollisionImpl;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollision;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollisionImpl;
+import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
+import it.unibo.progetto_oop.overworld.mvc.model_system.EnemySystem;
+import it.unibo.progetto_oop.overworld.mvc.model_system.MovementSystem;
+import it.unibo.progetto_oop.overworld.mvc.model_system.PickupSystem;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.view_manager_observer.ViewManagerObserver;
 

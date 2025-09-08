@@ -9,6 +9,7 @@ import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.playground.view.GameStartView;
 import it.unibo.progetto_oop.overworld.playground.view.GameStartView;
 import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;

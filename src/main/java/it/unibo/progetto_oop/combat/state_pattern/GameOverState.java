@@ -75,7 +75,7 @@ public class GameOverState implements CombatState {
                 gridNotifier.notifyListEnemyRemoved(enemy.getCurrentPosition());
                 combatCollision.setInCombat(false);
                 // context.getView().close();
-                context.getView().showInfo("You Win! Returning to Overworld...");
+                context.getView().showInfo("You Win! Returning to overworld...");
                 this.combatCollision.showOverworld();
             } else {
                 combatCollision.setInCombat(false);

@@ -3,8 +3,8 @@ package it.unibo.progetto_oop.overworld.player;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
-import it.unibo.progetto_oop.overworld.player.AdapterPattern.OverworldPlayerAdapter;
-import it.unibo.progetto_oop.overworld.player.AdapterPattern.PossibleUser;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.OverworldPlayerAdapter;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 // The Player class - Observer-free version
