@@ -67,9 +67,9 @@ public class GameOverState implements CombatState {
                     // context.setState(new PlayerTurnState());
                 });
             } else if (context.getModel().getEnemyHealth() <= 0) {
-                userPlayer.increasePlayerPower(increaseAmount);
-                //userPlayer.increasePlayerMaxHealth(increaseAmount);
-                //userPlayer.increasePlayerMaxStamina(increaseAmount);
+                userPlayer.increasePlayerMaxPower(increaseAmount);
+                userPlayer.increasePlayerMaxHealth(increaseAmount);
+                userPlayer.increasePlayerMaxStamina(increaseAmount);
                 userPlayer.increasePlayerHealth(increaseAmount);
                 gridNotifier.notifyEnemyRemoved(enemy.getCurrentPosition());
                 gridNotifier.notifyListEnemyRemoved(enemy.getCurrentPosition());

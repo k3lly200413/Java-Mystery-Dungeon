@@ -184,6 +184,7 @@ public final void increasePlayerHealth(final int amount) {
  *
  * @param amount the health points to add
  */
+@Override
 public final void increasePlayerMaxHealth(final int amount) {
     this.maxHealth = this.maxHealth + amount;
 }
@@ -194,7 +195,7 @@ public final void increasePlayerMaxHealth(final int amount) {
  * @param power the power points to add
  */
 @Override
-public final void increasePlayerPower(final int power) {
+public final void increasePlayerMaxPower(final int power) {
     this.playerPower += power;
 }
 
@@ -229,6 +230,7 @@ public final void decreasePlayerHealth(final int amount) {
  *
  * @param amount the stamina points to add
  */
+@Override
 public final void increasePlayerMaxStamina(final int amount) {
     this.playerStaminaMax += amount;
 }

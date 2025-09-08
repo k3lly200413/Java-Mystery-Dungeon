@@ -1,7 +1,6 @@
 package it.unibo.progetto_oop.combat.mvc_pattern;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -1225,56 +1224,56 @@ public class CombatController {
         // array perché così posso dichiararlo
         // final usarlo nel Timer se no sarebbe stato più scomodo
         model.setPoisonAnimation(true);
-        animationTimer = new Timer(INFO_NEXT_DRAW_DELAY, new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                // perché così potevo vedere da tablet che laggava ahahahahaha
-                if (conto[0] == 1) {
-                    // fine del timer resetto tutto
-                    conto[0] = 0;
-                    stopAnimationTimer();
-                    redrawView();
-                    model.setPoisonAnimation(false);
-                    // this.currentState.handleAnimationComplete(this);
-                    // chiamo la funzione che tratta la fine delle animazioni
-                    final int remaining = model.applyAttackHealth(
+        animationTimer = new Timer(INFO_NEXT_DRAW_DELAY,
+        (final ActionEvent e) -> {
+            // perché così potevo vedere da tablet che laggava ahahahahaha
+            if (conto[0] == 1) {
+                // fine del timer resetto tutto
+                conto[0] = 0;
+                stopAnimationTimer();
+                redrawView();
+                model.setPoisonAnimation(false);
+                // this.currentState.handleAnimationComplete(this);
+                // chiamo la funzione che tratta la fine delle animazioni
+                final int remaining = model.applyAttackHealth(
                         CombatController.this.model.isPlayerTurn(),
                         CombatController.this.model.getPlayerPoisonPower());
-                    if (CombatController.this.model.isPlayerTurn()) {
-                        CombatController.this.model.setPlayerTurn(false);
-                        view.updateEnemyHealth(remaining);
-                        CombatController.this.setState(new EnemyTurnState());
-                    } else {
-                        CombatController.this.model.setPlayerTurn(true);
-                        view.updatePlayerHealth(remaining);
-                        CombatController.this.setState(new PlayerTurnState());
-                    }
-                    //this.currentState.stateChange(this);
+                if (CombatController.this.model.isPlayerTurn()) {
+                    CombatController.this.model.setPlayerTurn(false);
+                    view.updateEnemyHealth(remaining);
+                    CombatController.this.setState(new EnemyTurnState());
                 } else {
-                    // ridisegno tutto con il veleno che sale
-                    final RedrawContext defaultRedraw =
-                    new RedrawContext.Builder()
-                    .player(CombatController.this.model.getPlayerPosition())
-                    .enemy(CombatController.this.model.getEnemyPosition())
-                    .flame(CombatController.this.model.getAttackPosition())
-                    .drawPlayer(true).drawEnemy(true)
-                    .playerRange(1).enemyRange(1)
-                    .drawPoisonDamage(true).poisonYCoord(conto[0])
-                    .setIsGameOver(CombatController.this.model.isGameOver())
-                    .whoIsPoisoned(CombatController.this.model.isPlayerTurn()
-                    ? CombatController.this.model.getEnemyPosition()
-                    : CombatController.this.model.getPlayerPosition()).build();
-                    CombatController.this.view.redrawGrid(defaultRedraw);
-                    /* this.redrawView(this.model.getPlayerPosition(),
-                    this.model.getEnemyPosition(),
-                    this.model.getAttackPosition(), 0, true, true,
-                    false, false, 1, 1,
-                    this.model.isGameOver(), this.model.getWhoDied(),
-                    false, new ArrayList<>(), true,
-                    conto[0], false, 0);*/
-                    // faccio salire il veleno
-                    conto[0]--;
+                    CombatController.this.model.setPlayerTurn(true);
+                    view.updatePlayerHealth(remaining);
+                    CombatController.this.setState(new PlayerTurnState());
                 }
+                //this.currentState.stateChange(this);
+            } else {
+                // ridisegno tutto con il veleno che sale
+                final RedrawContext defaultRedraw =
+                    new RedrawContext.Builder()
+                        .player(CombatController.this.model.getPlayerPosition())
+                        .enemy(CombatController.this.model.getEnemyPosition())
+                        .flame(CombatController.this.model.getAttackPosition())
+                        .drawPlayer(true).drawEnemy(true)
+                        .playerRange(1).enemyRange(1)
+                        .drawPoisonDamage(true).poisonYCoord(conto[0])
+                        .setIsGameOver(CombatController.this.model.isGameOver())
+                        .whoIsPoisoned(
+                            CombatController.this.model.isPlayerTurn()
+                                ? CombatController.this.model.getEnemyPosition()
+                                : CombatController.this.model
+                                .getPlayerPosition()).build();
+                CombatController.this.view.redrawGrid(defaultRedraw);
+                /* this.redrawView(this.model.getPlayerPosition(),
+                this.model.getEnemyPosition(),
+                this.model.getAttackPosition(), 0, true, true,
+                false, false, 1, 1,
+                this.model.isGameOver(), this.model.getWhoDied(),
+                false, new ArrayList<>(), true,
+                conto[0], false, 0);*/
+                // faccio salire il veleno
+                conto[0]--;
             }
         });
         animationTimer.start(); // faccio partire il timer
