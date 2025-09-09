@@ -87,52 +87,6 @@ public class Player {
         this.inventory.addItem(item);
     }
 
-    /**
-     * increase the player's max hp value.
-     * @param amount the amount to increase
-     */
-    public void increaseMaxHp(final int amount) {
-        if (amount < 0) {
-        throw new IllegalArgumentException("Amount must not be negative");
-        }
-        this.setMaxHp(amount + this.maxHP);
-    }
-
-    /**
-     * increase the player's stamina.
-     * @param amount the amount to increase.
-     */
-    public void increaseStamina(final int amount) {
-        if (amount < 0) {
-        throw new IllegalArgumentException("Amount must not be negative");
-        }
-        this.setStamina(amount + this.stamina);
-    }
-
-    /**
-     * Increase the player power.
-     * @param amount the amount to increase.
-     */
-    public void increasePower(final int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("Amount must not be negative");
-        }
-        this.setPower(this.power + amount);
-    }
-
-    /**
-     * increase the player current hp.
-     * @param amount the amount to increase
-     */
-    public void heal(final int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("Amount must not be negative");
-        }
-        if (this.currentHP != this.maxHP && this.currentHP != 0) {
-                // if currentHP + amount > maxHP, set it to maxHP
-                this.setHp(Math.min(this.maxHP, this.currentHP + amount));
-            }
-    }
 
     //---- SETTERS ----
 
