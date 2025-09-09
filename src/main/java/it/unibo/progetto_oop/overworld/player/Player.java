@@ -55,6 +55,7 @@ public class Player {
         this.currentHP = this.maxHP;
         this.inventory = newInventory;
         this.stamina = newStamina;
+        this.maxStamina = newStamina;
         this.power = newPower;
     }
 
