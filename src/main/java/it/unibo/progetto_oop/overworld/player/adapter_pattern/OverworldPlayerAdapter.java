@@ -40,25 +40,46 @@ public final class OverworldPlayerAdapter implements PossibleUser {
 
     @Override
     public void increasePlayerHealth(final int amount) {
-        this.adaptedPlayer.heal(amount);
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount must not be negative");
+        }
+        if (this.adaptedPlayer.getCurrentHp() != 
+        this.adaptedPlayer.getMaxHp() 
+        && this.adaptedPlayer.getCurrentHp() != 0) {
+                // if currentHP + amount > maxHP, set it to maxHP
+                this.adaptedPlayer.setHp(
+                    Math.min(
+                        this.adaptedPlayer.getMaxHp(), 
+                        this.adaptedPlayer.getCurrentHp() + amount));
+            }
     }
 
     @Override
     public void increasePlayerMaxPower(final int amount) {
-        this.adaptedPlayer.increasePower(amount);
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount must not be negative");
+        }
+        this.adaptedPlayer.setPower(this.adaptedPlayer.getPower() + amount);
     }
 
     @Override
     public void increasePlayerMaxStamina(final int amount) {
-        this.adaptedPlayer.increaseStamina(amount);
+        if (amount < 0) {
+        throw new IllegalArgumentException("Amount must not be negative");
+        }
+        this.adaptedPlayer.setMaxStamina(amount + this.adaptedPlayer.getMaxStamina());
     }
 
     @Override
     public void increasePlayerMaxHealth(final int amount) {
-        this.adaptedPlayer.increaseMaxHp(amount);
+        if (amount < 0) {
+        throw new IllegalArgumentException("Amount must not be negative");
+        }
+        this.adaptedPlayer.setMaxHp(amount + this.adaptedPlayer.getMaxHp());
     }
 
     @Override
     public void setPlayerPoisoned(final boolean poisoned) {
+        throw new UnsupportedOperationException("Overworld player cannot be poisoned here");
     }
 }

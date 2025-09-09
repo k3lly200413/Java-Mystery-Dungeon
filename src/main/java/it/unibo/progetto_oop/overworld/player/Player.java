@@ -19,6 +19,8 @@ public class Player {
      */
     private int maxHP;
 
+    private int maxStamina;
+
     /**
      * the player stamina value.
      */
@@ -127,6 +129,14 @@ public class Player {
     }
 
     /**
+     * Set the player's max stamina.
+     * @param amount the new max stamina value
+     */
+    public void setMaxStamina(final int amount) {
+        this.maxStamina = amount;
+    }
+
+    /**
      * Set the player's position.
      *
      * @param newPos the new position of the player
@@ -170,6 +180,14 @@ public class Player {
      */
     public int getStamina() {
         return this.stamina;
+    }
+
+    /**
+     * Get the max stamina of the player.
+     * @return the max stamina of the player
+     */
+    public int getMaxStamina() {
+        return this.maxStamina;
     }
 
     /**
