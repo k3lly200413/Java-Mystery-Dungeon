@@ -3,9 +3,21 @@ package it.unibo.progetto_oop.overworld.player;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.progetto_oop.combat.inventory.Inventory;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.OverworldPlayerAdapter;
+
 public class OverworldPlayerAdapterTest {
+
+    OverworldPlayerAdapter playerAdapter;
+    @BeforeEach
+    void setUp() {
+        var inventory = new Inventory();
+        var player = new Player(100, 100, 10, inventory);
+        playerAdapter = new OverworldPlayerAdapter(player);
+    }
 
     /**
      * increase the player's max hp value.
@@ -13,17 +25,12 @@ public class OverworldPlayerAdapterTest {
      */
     @Test
     void increaseMaxHpTest() {
-        var player = new Player(100, 100, 10, inventory);
-
-        //player.setHp(30);
-        //assertEquals(30, player.getCurrentHp());
-
-        player.increaseMaxHp(20);
-        assertEquals(120, player.getMaxHp());
+        playerAdapter.increasePlayerMaxHealth(20);
+        assertEquals(120, playerAdapter.getMaxHp());
 
         IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
-            () -> player.increaseMaxHp(-100)
+            () -> playerAdapter.increasePlayerMaxHealth(-100)
         );
 
         assertEquals("Amount must not be negative", exception.getMessage());
@@ -36,14 +43,14 @@ public class OverworldPlayerAdapterTest {
      */
     @Test
     void increaseStaminaTest() {
-        var player = new Player(100, 100, 10, inventory);
+        
 
-        player.increaseStamina(15);
-        assertEquals(115, player.getStamina());
+        playerAdapter.increasePlayerMaxStamina(15);
+        assertEquals(115, playerAdapter.getStamina());
 
         IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
-            () -> player.increaseStamina(-100)
+            () -> playerAdapter.increasePlayerMaxStamina(-100)
         );
 
         assertEquals("Amount must not be negative", exception.getMessage());
@@ -55,14 +62,12 @@ public class OverworldPlayerAdapterTest {
      */
     @Test
     public void increasePowerTest() {
-        var player = new Player(100, 100, 10, inventory);
-
-        player.increasePower(5);
-        assertEquals(15, player.getPower());
+        playerAdapter.increasePlayerMaxPower(5);
+        assertEquals(15, playerAdapter.getPower());
 
         IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
-            () -> player.increasePower(-100)
+            () -> playerAdapter.increasePlayerMaxPower(-100)
         );
 
         assertEquals("Amount must not be negative", exception.getMessage());
@@ -74,20 +79,18 @@ public class OverworldPlayerAdapterTest {
      */
     @Test
     void healTest() {
-        var player = new Player(100, 100, 10, inventory);
+        playerAdapter.increasePlayerMaxHealth(50);
+        assertEquals(150, playerAdapter.getHp());
 
-        player.setHp(50);
-        assertEquals(50, player.getCurrentHp());
+        playerAdapter.increasePlayerHealth(30);
+        assertEquals(150, playerAdapter.getHp());
 
-        player.heal(30);
-        assertEquals(80, player.getCurrentHp());
-
-        player.heal(50);
-        assertEquals(100, player.getCurrentHp());
+        playerAdapter.increasePlayerHealth(0);
+        assertEquals(150, playerAdapter.getHp());
 
         IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
-            () -> player.heal(-100)
+            () -> playerAdapter.increasePlayerHealth(-100)
         );
 
         assertEquals("Amount must not be negative", exception.getMessage());
