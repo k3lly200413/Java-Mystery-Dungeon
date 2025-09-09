@@ -1,4 +1,10 @@
+
 package it.unibo.progetto_oop.combat.potion_factory;
+
+/**
+ * Factory per la creazione di oggetti Item.
+ * @author Laura Bertozzi
+ */
 
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_strategy.AttackBuff;
@@ -11,7 +17,8 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
  */
 public class ItemFactory {
     /**
-     * create an item.
+     * Create an item.
+     *
      * @param itemId the id of the item
      * @param position the position of the item
      * @return the created item

@@ -1,6 +1,6 @@
 package it.unibo.progetto_oop.combat.potion_strategy;
 
-import it.unibo.progetto_oop.combat.inventory.ItemImpl;
+import it.unibo.progetto_oop.combat.inventory.AbstractItemImpl;
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
@@ -8,7 +8,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
  * Class representing a potion item that can apply
  * various effects using different strategies.
  */
-public class Potion extends ItemImpl {
+public class Potion extends AbstractItemImpl {
 
     /** The strategy for applying potion effects. */
     private final PotionStrategy strategy;

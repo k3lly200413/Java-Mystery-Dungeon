@@ -13,6 +13,9 @@ import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
 
 import java.awt.event.ActionEvent;
 
+/**
+ * Controller principale dell'overworld.
+ */
 public class OverworldController implements ViewManagerObserver {
     /**
      * the model instance.
@@ -31,6 +34,7 @@ public class OverworldController implements ViewManagerObserver {
 
     /**
      * Constructor for the OverworldController.
+     *
      * @param newModel the model instance
      * @param newView the view instance
      * @param newViewManager the view manager instance

@@ -1,3 +1,8 @@
+
+/**
+ * Represents the player in the overworld,
+ * manages stats, position, and inventory.
+ */
 package it.unibo.progetto_oop.overworld.player;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
@@ -45,11 +50,12 @@ public class Player {
     private Inventory inventory;
 
     /**
-     * constructor for player class.
+     * Constructor for player class.
+     *
      * @param maxHp the player's max hp value
-     * @param newInventory the player's inventory
      * @param newStamina the players' stamina value
      * @param newPower the player's power value
+     * @param newInventory the player's inventory
      */
     public Player(final int maxHp, final int newStamina, final int newPower,
     final Inventory newInventory) {
@@ -63,6 +69,7 @@ public class Player {
 
     /**
      * Use an item from the player's inventory.
+     *
      * @param item The item to be used.
      */
     public void useItem(final Item item) {
@@ -130,6 +137,7 @@ public class Player {
 
     /**
      * Set the player's max stamina.
+     *
      * @param amount the new max stamina value
      */
     public void setMaxStamina(final int amount) {
@@ -147,6 +155,7 @@ public class Player {
 
     /**
      * Set the player's inventory.
+     *
      * @param newInventory the player's inventory
      */
     public void setInventory(final Inventory newInventory) {
@@ -174,7 +183,7 @@ public class Player {
     }
 
     /**
-     * Get the staminaof the player.
+     * Get the stamina of the player.
      *
      * @return the stamina of the player
      */
@@ -184,6 +193,7 @@ public class Player {
 
     /**
      * Get the max stamina of the player.
+     *
      * @return the max stamina of the player
      */
     public int getMaxStamina() {
@@ -201,6 +211,7 @@ public class Player {
 
     /**
      * Get the player position.
+     *
      * @return the position of the player
      */
     public Position getPosition() {
@@ -208,7 +219,8 @@ public class Player {
     }
 
     /**
-     * get the player's inventory.
+     * Get the player's inventory.
+     *
      * @return the player's inventory
      */
     public Inventory getInventory() {

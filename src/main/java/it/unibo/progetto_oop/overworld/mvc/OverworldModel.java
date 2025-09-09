@@ -35,90 +35,57 @@ import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
  */
 public final class OverworldModel {
 
-    /**
-     * The dungeon instance.
-     */
+    /** Player max hp. */
+    private static final int PLAYER_MAX_HP = 100;
+
+    /** Player stamina. */
+    private static final int PLAYER_STAMINA = 100;
+
+    /** Player power. */
+    private static final int PLAYER_POWER = 99;
+
+    /** The dungeon instance. */
     private Dungeon dungeon;
 
-    /**
-     * The player instance.
-     */
+    /** The player instance. */
     private final Player player;
 
-    /**
-     * true if the player is in combat.
-     */
+    /** True if the player is in combat. */
     private boolean inCombat;
 
-    /**
-     * pickupSystem instance.
-     */
+    /** PickupSystem instance. */
     private final PickupSystem pickupSystem;
 
-    /**
-     * enemySystem instance.
-     */
+    /** EnemySystem instance. */
     private final EnemySystem enemySystem;
 
-    /**
-     * movementSystem instance.
-     */
+    /** MovementSystem instance. */
     private final MovementSystem movementSystem;
 
-    /**
-     * current floor's grid (read-only).
-     */
+    /** Current floor's grid (read-only). */
     private StructureData baseGrid;   // playground: WALL/ROOM/TUNNEL/STAIRS
 
-    /**
-     * current floor's entity grid.
-     */
+    /** Current floor's entity grid. */
     private StructureData entityGrid; // entities: PLAYER/ENEMY/ITEM/NONE
 
-    /**
-     * the grid notifier.
-     * to update the grid
-     * incapsulates GridUpdater
-     */
+    /** The grid notifier. To update the grid. Incapsulates GridUpdater. */
     private GridNotifier gridNotifier;
 
-    /**
-     * the change floor listener.
-     */
+    /** The change floor listener. */
     private ChangeFloorListener changeFloorListener;
 
-    /**
-     * the wall collision instance.
-     */
+    /** The wall collision instance. */
     private WallCollision wallCollision;
 
-    /**
-     * the floor initializer function.
-     */
+    /** The floor initializer function. */
     private Consumer<Floor> floorInitializer = f -> { };
 
-    /**
-     * the combat collision instance.
-     */
+    /** The combat collision instance. */
     private final CombatCollision combatCollision;
 
     /**
-     * player max hp.
-     */
-    private static final int PLAYER_MAX_HP = 100;
-
-    /**
-     * player stamina.
-    */
-    private static final int PLAYER_STAMINA = 100;
-
-    /**
-     * the player power.
-     */
-    private static final int PLAYER_POWER = 99;
-
-    /**
      * Constructor of the OverworldModel class.
+     *
      * @param enemies the enemies on the current floor
      * @param items the items on the current floor
      */
@@ -140,6 +107,7 @@ public final class OverworldModel {
     // Collega il dungeon e seleziona il primo Floor
     /**
      * Bind the dungeon to the model.
+     *
      * @param newDungeon the dungeon to bind
      */
     public void bindDungeon(final Dungeon newDungeon) {
@@ -149,6 +117,7 @@ public final class OverworldModel {
     // Imposta quale floor è quello attivo
     /**
      * Sets the active floor.
+     *
      * @param floor current floor
      */
     public void bindCurrentFloor(final Floor floor) {
@@ -183,6 +152,7 @@ public final class OverworldModel {
 
     /**
      * Go to the next floor.
+     *
      * @return true if the floor changed, false otherwise
      */
     public boolean nextFloor() {
@@ -200,6 +170,7 @@ public final class OverworldModel {
 
     /**
      * Set the enemies and items on the current floor.
+     *
      * @param enemies the enemies on the current floor
      * @param items the items on the current floor
      */
@@ -211,6 +182,7 @@ public final class OverworldModel {
 
     /**
      * Set the floor initializer.
+     *
      * @param init the floor initializer
      */
     public void setFloorInitializer(final Consumer<Floor> init) {
@@ -219,6 +191,7 @@ public final class OverworldModel {
 
     /**
      * Set the change floor listener.
+     *
      * @param l the change floor listener
      */
     public void setChangeFloorListener(final ChangeFloorListener l) {
@@ -227,6 +200,7 @@ public final class OverworldModel {
 
     /**
      * Set the entity at a given position.
+     *
      * @param p the position to set
      * @param t the tile type to set
      */
@@ -236,6 +210,7 @@ public final class OverworldModel {
 
     /**
      * Set the base grid view.
+     *
      * @param base the base grid view
      */
     public void setBaseGridView(final StructureData base) {
@@ -244,6 +219,7 @@ public final class OverworldModel {
 
     /**
      * Set the entity grid view.
+     *
      * @param entity the entity grid view
      */
     public void setEntityGridView(final StructureData entity) {
@@ -252,7 +228,8 @@ public final class OverworldModel {
 
     /**
      * Set the grid notifier.
-     * @param newGridNotifier
+     *
+     * @param newGridNotifier the grid notifier to set
      */
     public void setGridNotifier(final GridNotifier newGridNotifier) {
         this.gridNotifier = newGridNotifier;
@@ -262,6 +239,7 @@ public final class OverworldModel {
 
     /**
      * Get the current floor.
+     *
      * @return the current floor
      */
     public Floor getCurrentFloor() {
@@ -270,6 +248,7 @@ public final class OverworldModel {
 
     /**
      * Get the grid notifier.
+     *
      * @return the grid notifier
      */
     public GridNotifier getGridNotifier() {
@@ -278,6 +257,7 @@ public final class OverworldModel {
 
     /**
      * Get the player.
+     *
      * @return the player
      */
     public Player getPlayer() {
@@ -285,7 +265,8 @@ public final class OverworldModel {
     }
 
     /**
-     * get the items on the map.
+     * Get the items on the map.
+     *
      * @return the list of items in the overworld
      */
     public List<Item> getItem() {
@@ -294,6 +275,7 @@ public final class OverworldModel {
 
     /**
      * Get the inventory instance.
+     *
      * @return the inventory instance
      */
     public Inventory getInventoryInstance() {
@@ -302,6 +284,7 @@ public final class OverworldModel {
 
     /**
      * Get the enemy system.
+     *
      * @return the enemy system
      */
     public List<Enemy> getEnemies() {
@@ -310,6 +293,7 @@ public final class OverworldModel {
 
     /**
      * Get the encountered enemy.
+     *
      * @return the encountered enemy
      */
     public Enemy getEncounteredEnemy() {
@@ -318,6 +302,7 @@ public final class OverworldModel {
 
     /**
      * Check if the player is in combat.
+     *
      * @return true if the player is in combat, false otherwise
      */
     public boolean isInCombat() {
@@ -326,6 +311,7 @@ public final class OverworldModel {
 
     /**
      * Check if a combat transition is pending.
+     *
      * @return true if a combat transition is pending, false otherwise
      */
     public boolean isCombatTransitionPending() {
@@ -334,6 +320,7 @@ public final class OverworldModel {
 
     /**
      * Get the wall collision instance.
+     *
      * @return the wall collision instance
      */
     public WallCollision getWallCollision() {
@@ -342,6 +329,7 @@ public final class OverworldModel {
 
     /**
      * Get the combat collision instance.
+     *
      * @return the combat collision instance
      */
     public CombatCollision getCombatCollision() {
@@ -350,6 +338,7 @@ public final class OverworldModel {
 
     /**
      * Get the base grid view.
+     *
      * @return the base grid view
      */
     public StructureData getBaseGridView() {
@@ -358,6 +347,7 @@ public final class OverworldModel {
 
     /**
      * Get the entity grid view.
+     *
      * @return the entity grid view
      */
     public StructureData getEntityGridView() {
@@ -366,6 +356,7 @@ public final class OverworldModel {
 
     /**
      * Get the entity at a given position.
+     *
      * @param p the position to check
      * @return the entity at the given position
      */
@@ -377,6 +368,7 @@ public final class OverworldModel {
 
     /**
      * Set the encountered enemy.
+     *
      * @param e the encountered enemy
      */
     public void setEncounteredEnemy(final Enemy e) {
@@ -413,6 +405,7 @@ public final class OverworldModel {
 
     /**
      * Set the combat transition listener.
+     *
      * @param curranteViewManagerObserver the view manager observer
      */
     public void setCombatTransitionListener(
@@ -438,14 +431,14 @@ public final class OverworldModel {
     }
 
     /**
-     * Move the player to the up.
+     * Move the player up.
      */
     public void moveUp() {
         this.movementSystem.move(0, -1, pickupSystem, enemySystem);
     }
 
     /**
-     * Move the player to the down.
+     * Move the player down.
      */
     public void moveDown() {
         this.movementSystem.move(0, 1, pickupSystem, enemySystem);

@@ -1,3 +1,7 @@
+
+/**
+ * View grafica dell'inventario.
+ */
 package it.unibo.progetto_oop.combat.inventory;
 
 import java.awt.BorderLayout;
@@ -128,7 +132,8 @@ public class InventoryView extends JPanel {
 
 
     /**
-     * constructor for the inventory view.
+     * Constructor for the inventory view.
+     *
      * @param initialInventory the inventory this view is referring
      * @param newViewManager the view manager
      */
@@ -148,7 +153,7 @@ public class InventoryView extends JPanel {
         this.add(this.gridPanel, BorderLayout.CENTER);
 
         // Status Area Panel and contents
-        final JPanel statusAreaPanel = createStatusAreaPanel();
+    final JPanel statusAreaPanel = createStatusAreaPanel();
         this.add(statusAreaPanel, BorderLayout.SOUTH);
 
         // Initial population
@@ -248,7 +253,7 @@ public class InventoryView extends JPanel {
             this.inventory.getFullInventory().keySet());
 
         final Color[] slotColors = new Color[] {
-            ITEM_SLOT_1_COLOR, ITEM_SLOT_2_COLOR, ITEM_SLOT_3_COLOR
+            ITEM_SLOT_1_COLOR, ITEM_SLOT_2_COLOR, ITEM_SLOT_3_COLOR,
         };
 
         final int nItems = items.size();
@@ -268,8 +273,9 @@ public class InventoryView extends JPanel {
                         + "</b></html>";
                     final Color itemColor =
                         slotColors[itemIndex % slotColors.length];
-                    cellButton = createItemButton(
-                        currentItem.getName(), itemColor, desc);
+                    cellButton =
+                        createItemButton(
+                            currentItem.getName(), itemColor, desc);
                     itemIndex++;
                 } else {
                     cellButton = new JButton(); // cella vuota
@@ -292,13 +298,14 @@ public class InventoryView extends JPanel {
     }
 
     /**
-    * Creates a button for an item with consistent style and behavior.
-    * @param text Button text (item name)
-    * @param color Color to highlight the slot (border)
-    * @param htmlDescriptionActionCommand HTML description
-    * to display/use as an action command
-    * @return configured JButton
-    */
+     * Creates a button for an item with consistent style and behavior.
+     *
+     * @param text Button text (item name)
+     * @param color Color to highlight the slot (border)
+     * @param htmlDescriptionActionCommand HTML description to
+     * display/use as an action command
+     * @return configured JButton
+     */
     private JButton createItemButton(final String text, final Color color,
             final String htmlDescriptionActionCommand) {
 

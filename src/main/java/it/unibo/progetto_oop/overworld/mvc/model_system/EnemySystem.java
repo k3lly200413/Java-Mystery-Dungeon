@@ -9,6 +9,9 @@ import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
+/**
+ * Gestisce la logica degli enemy nel sistema.
+ */
 public class EnemySystem {
     /**
      * the player instance.
@@ -33,6 +36,7 @@ public class EnemySystem {
 
     /**
      * Constructor for the EnemySystem.
+     *
      * @param newEnemies the list of enemies present in the map
      * @param newPlayer the player instance
      * @param newModel the model instance
@@ -69,6 +73,7 @@ public class EnemySystem {
 
     /**
      * Set the encountered enemy.
+     *
      * @param newEncounteredEnemy the encountered enemy
      */
     public void setEncounteredEnemy(final Enemy newEncounteredEnemy) {
@@ -81,6 +86,7 @@ public class EnemySystem {
 
     /**
      * Set the enemies on the current floor.
+     *
      * @param newEnemies the enemies to set
      */
     public void setEnemies(final List<Enemy> newEnemies) {
@@ -92,9 +98,10 @@ public class EnemySystem {
 
     /**
      * Check if the player has encountered an enemy at the current position.
+     *
      * @param tempPosition the position to check for enemy encounter
-     * @return an Optional containing the enemy if found,
-     * otherwise an empty Optional
+     * @return an Optional containing the enemy
+     * if found,otherwise an empty Optional
      */
     public Optional<Enemy> checkEnemyHit(final Position tempPosition) {
         return this.enemies.stream().filter(enemy ->
@@ -104,10 +111,10 @@ public class EnemySystem {
     }
 
     /**
-     * Remove an enemy from the list of enemies and
-     * add it to the list of beaten enemies.
-     * @param enemyToRemove
-     * @return true if the enemy was removed, false otherwise
+     * Remove an enemy from la lista e lo aggiunge ai battuti.
+     *
+     * @param enemyToRemove la posizione dell'enemy da rimuovere
+     * @return true se l'enemy è stato rimosso, false altrimenti
      */
     public boolean removeEnemyAt(final Position enemyToRemove) {
         return this.enemies.removeIf(enemy ->
@@ -116,6 +123,7 @@ public class EnemySystem {
 
     /**
      * Trigger the enemy turns, allowing them to take actions.
+     *
      * This method should be called after the player has moved
      */
     public void triggerEnemyTurns() {

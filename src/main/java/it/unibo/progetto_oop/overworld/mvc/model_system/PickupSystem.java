@@ -9,6 +9,9 @@ import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
+/**
+ * Gestisce la logica di raccolta degli oggetti.
+ */
 public class PickupSystem {
     /**
      * the items on the map.
@@ -21,7 +24,8 @@ public class PickupSystem {
     private final Player player;
 
     /**
-     * contructor.
+     * Constructor.
+     *
      * @param newItems the items on the map
      * @param newPlayer the player
      */
@@ -35,7 +39,8 @@ public class PickupSystem {
     // ---- GETTERS ---- //
 
     /**
-     * get the items on the map.
+     * Get the items on the map.
+     *
      * @return the list of items in the overworld
      */
     public List<Item> getItem() {
@@ -43,7 +48,8 @@ public class PickupSystem {
     }
 
     /**
-     * get the player's inventory.
+     * Get the player's inventory.
+     *
      * @return the player's inventory
      */
 
@@ -54,7 +60,8 @@ public class PickupSystem {
     // ---- SETTERS ---- //
 
     /**
-     * set the items on the current floor.
+     * Set the items on the current floor.
+     *
      * @param newItems the items to set
      */
     public void setItems(final List<Item> newItems) {
@@ -65,6 +72,7 @@ public class PickupSystem {
 
     /**
      * Remove an item from the overworld and add it to the player's inventory.
+     *
      * @param itemToRemove the item to remove
      * @return true if the item was removed, false otherwise
      */
@@ -83,9 +91,9 @@ public class PickupSystem {
 
     /**
      * Check if an item is found at the player's position.
-     * @return an Optional containing the item
-     * if found,
-     * otherwise an empty Optional
+     *
+     * @return an Optional containing the
+     * item if found, otherwise an empty Optional
      */
     private Optional<Item> itemFoundAtPlayerPosition() {
         return this.items.stream().filter(

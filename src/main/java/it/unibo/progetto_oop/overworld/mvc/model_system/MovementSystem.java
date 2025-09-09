@@ -9,6 +9,9 @@ import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
 
+/**
+ * Gestisce la logica di movimento del player.
+ */
 public class MovementSystem {
     /**
      * the player instance.
@@ -29,6 +32,7 @@ public class MovementSystem {
 
     /**
      * Constructor for the MovementSystem.
+     *
      * @param newPlayer the player instance
      * @param newModel the model instance
      */
@@ -72,6 +76,7 @@ public class MovementSystem {
     /**
      * Move the player checking if it encounters items, enemies or walls.
      * If it encounters an enemy transition to combat
+     *
      * @param directionX direction of movement on axis x
      * @param directionY direction of movement on axis y
      * @param pickupSystem class that handles picking up objects

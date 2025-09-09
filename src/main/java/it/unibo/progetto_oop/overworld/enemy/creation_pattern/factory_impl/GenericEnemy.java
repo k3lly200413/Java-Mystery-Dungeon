@@ -7,7 +7,9 @@ import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
-
+/**
+ * Generic implementation of the Enemy interface.
+ */
 public class GenericEnemy implements Enemy {
     /**
      * maxHealth of the enemy.
@@ -40,7 +42,8 @@ public class GenericEnemy implements Enemy {
     private GridNotifier gridNotifier;
 
     /**
-     * Constructor of the BossEnemy class.
+     * Constructor of the GenericEnemy class.
+     *
      * @param newMaxHealth max health
      * @param newCurrentHealth current health
      * @param newPower power
@@ -48,8 +51,8 @@ public class GenericEnemy implements Enemy {
      * @param newGridNotifier grid notifier
      */
     public GenericEnemy(final int newMaxHealth, final int newCurrentHealth,
-    final int newPower, final Position newInitialPosition,
-    final GridNotifier newGridNotifier) {
+            final int newPower, final Position newInitialPosition,
+            final GridNotifier newGridNotifier) {
         if (newMaxHealth <= 0) {
             throw new IllegalArgumentException("hp must be > 0");
         }

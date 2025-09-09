@@ -3,10 +3,13 @@ package it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
-
+/**
+ * Boss enemy implementation, extends GenericEnemy.
+ */
 public class BossEnemy extends GenericEnemy {
     /**
      * Constructor of the BossEnemy class.
+     *
      * @param newMaxHealth max health
      * @param newCurrentHealth current health
      * @param newPower power
@@ -14,10 +17,10 @@ public class BossEnemy extends GenericEnemy {
      * @param newGridNotifier grid notifier
      */
     public BossEnemy(final int newMaxHealth, final int newCurrentHealth,
-    final int newPower, final Position newInitialPosition,
-    final GridNotifier newGridNotifier) {
+            final int newPower, final Position newInitialPosition,
+            final GridNotifier newGridNotifier) {
         super(newMaxHealth, newCurrentHealth, newPower,
-        newInitialPosition, newGridNotifier);
+                newInitialPosition, newGridNotifier);
     }
 
     @Override

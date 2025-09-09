@@ -10,21 +10,22 @@ import it.unibo.progetto_oop.overworld.player.Player;
  * --> in the overworld
  */
 
+
 public final class OverworldPlayerAdapter implements PossibleUser {
 
     /**
-     * the player to adapt.
+     * Error message constant.
+     */
+    private static final String ERROR_MSG = "Player to adapt is null";
+
+    /**
+     * The player to adapt.
      */
     private final Player adaptedPlayer;
 
     /**
-     * error message constant.
-     */
-    private static final String ERROR_MSG =
-        "Player to adapt is null";
-
-    /**
-     * constructor.
+     * Constructor.
+     *
      * @param playerToAdapt the player to adapt
      */
     public OverworldPlayerAdapter(final Player playerToAdapt) {
