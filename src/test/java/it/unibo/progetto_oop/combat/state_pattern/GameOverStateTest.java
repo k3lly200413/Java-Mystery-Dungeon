@@ -1,9 +1,15 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
-import static org.mockito.Mockito.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
@@ -12,8 +18,8 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
-import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 class GameOverStateTest {
 
@@ -51,7 +57,7 @@ class GameOverStateTest {
         when(model.getWhoDied()).thenReturn(null);
 
         when(enemy.getCurrentPosition()).thenReturn(ENEMY_POS);
-        when(enemy.getCurrentHealth()).thenReturn(42);
+        when(enemy.getCurrentHp()).thenReturn(42);
     }
 
     @Test
@@ -96,7 +102,7 @@ class GameOverStateTest {
         verify(combatCollision).setInCombat(false);
         verify(combatCollision).showOverworld();
         verify(view).showInfo("You Win! Returning to Overworld...");
-        verify(enemy, never()).setHealth(anyInt());
+        verify(enemy, never()).setHp(anyInt());
     }
 
     @Test
@@ -111,7 +117,7 @@ class GameOverStateTest {
 
         verify(combatCollision).setInCombat(false);
         verify(combatCollision).showOverworld();
-        verify(enemy).setHealth(25);
+        verify(enemy).setHp(25);
         verify(view, never()).showGameOver(any());
         verify(view, never()).showInfo("You Win! Returning to Overworld...");
     }
