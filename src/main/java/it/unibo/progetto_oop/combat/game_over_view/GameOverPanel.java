@@ -35,7 +35,6 @@ public class GameOverPanel extends JPanel {
     private final Image backgroundImage;
 
     public GameOverPanel(final Runnable onRestart) {
-        // Carica immagine di sfondo (mettila in resources, es: /spritesOverWorld/gameOverBackground.png)
         var url = getClass().getResource("/spritesOverWorld/gameOverBackground.png");
         backgroundImage = new ImageIcon(url).getImage();
 
