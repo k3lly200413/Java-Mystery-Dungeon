@@ -73,13 +73,15 @@ public class GameOverState implements CombatState {
                 gridNotifier.notifyListEnemyRemoved(enemy.getCurrentPosition());
                 combatCollision.setInCombat(false);
                 // context.getView().close();
-                context.getView().showInfo("You Win! Returning to Overworld...");
+                context.getView().showInfo(
+                    "You Win! Returning to Overworld...");
                 this.combatCollision.showOverworld();
             } else {
                 combatCollision.setInCombat(false);
                 this.combatCollision.showOverworld();
                 this.enemy.setHp(context.getModel().getEnemyHealth());
-                System.out.println("Enemy health after combat => " + enemy.getCurrentHp());
+                System.out.println(
+                    "Enemy health after combat => " + enemy.getCurrentHp());
             }
         });
         enemyActionTimer.setRepeats(false);

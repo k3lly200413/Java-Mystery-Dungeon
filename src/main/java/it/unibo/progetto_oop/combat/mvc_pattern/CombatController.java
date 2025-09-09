@@ -131,6 +131,7 @@ public class CombatController {
      */
     private CombatState currentState;
 
+    /** State representing the enemy's turn. */
     private CombatState enemyState;
 
     /** Combat collision handler. */
@@ -150,7 +151,6 @@ public class CombatController {
      * @param newPlayer  Player instance to manage inventory and stats
      * @param newCombatCollision Collision handler for combat state
      * @param newGridNotifier Grid notifier for managing grid updates
-     * @param newEnemy Enemy instance representing the current combat opponent
      */
     public CombatController(
         final CombatModel modelToUse,
@@ -244,7 +244,8 @@ public class CombatController {
         }
         enemyActionTimer = null;
         combatCollision.setInCombat(false);
-        this.setState(new GameOverState(combatCollision, gridNotifier, enemy, player));
+        this.setState(new GameOverState(
+            combatCollision, gridNotifier, enemy, player));
         // this.view.close();
     }
 
@@ -264,9 +265,6 @@ public class CombatController {
         this.setState(new ItemSelectionState());
         this.view.showBagButtons();
         this.view.setBagButtonsEnabled();
-        System.out.println(this.player.getInventory().getItemCount(attackBuffItem));
-        System.out.println(this.player.getInventory().getItemCount(curePoisonItem));
-        System.out.println(this.player.getInventory().getItemCount(healingItem));
         if (!this.player.getInventory().canUseItem(attackBuffItem)) {
             this.view.setCustomButtonDisabled(this.view.getAttackBuffButton());
         }
@@ -447,7 +445,7 @@ public class CombatController {
 
         model.setAttackPosition(new Position(
             attacker.x() + direction, attacker.y())); // Start flame at player
-        if (!this.checkGameOver()){
+        if (!this.checkGameOver()) {
             final RedrawContext redrawContext = new RedrawContext.Builder()
             .player(this.model.getPlayerPosition())
             .enemy(this.model.getEnemyPosition())
@@ -461,14 +459,6 @@ public class CombatController {
             .setIsGameOver(this.model.isGameOver())
             .build();
             this.view.redrawGrid(redrawContext);
-            /*this.redrawView(
-                this.model.getPlayerPosition(), this.model.getEnemyPosition(),
-                this.model.getAttackPosition(), 0, true, true, !isPoison, isPoison,
-                1, 1, this.model.isGameOver(), (model.isPlayerTurn()
-                ? model.getEnemyPosition()
-                : model.getPlayerPosition()), false, new ArrayList<>(),
-                false, 0, false, 0
-            );*/
         }
 
         animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
@@ -1144,7 +1134,14 @@ public class CombatController {
         }
     }
 
-    public final void setEncounteredEnemy(Enemy encounteredEnemy) {
+    /**
+     * Sets the encountered enemy for the combat.
+     * This method updates the model with the new enemy
+     * and adjusts the enemy state accordingly.
+     *
+     * @param encounteredEnemy the enemy to set
+     */
+    public final void setEncounteredEnemy(final Enemy encounteredEnemy) {
         this.enemy = encounteredEnemy;
         this.model.setEnemyState(this.enemy.isBoss());
         this.enemyState = this.model.getEnemyState();
@@ -1297,6 +1294,11 @@ public class CombatController {
 
     }
 
+    /**
+     * Resets the combat for a new encounter.
+     * This method resets the model and view to their initial states
+     * for a new combat encounter.
+     */
     public final void resetForNewCombat() {
         this.model.setPlayerMaxHp(this.player.getMaxHp());
         // this.model.setPlayerCurrentHp(this.player.getCurrentHp());
@@ -1313,11 +1315,15 @@ public class CombatController {
         this.view.updatePlayerStamina(this.player.getStamina());
     }
 
+    /**
+     * Restarts the game by resetting the model and view.
+     */
     public void restartGame() {
     // Chiudi la finestra corrente
     javax.swing.SwingUtilities.invokeLater(() -> {
         // Distrugge la finestra esistente
-        java.awt.Window window = javax.swing.FocusManager.getCurrentManager().getActiveWindow();
+        java.awt.Window window = javax.swing.FocusManager.
+        getCurrentManager().getActiveWindow();
         if (window != null) {
             window.dispose();
         }

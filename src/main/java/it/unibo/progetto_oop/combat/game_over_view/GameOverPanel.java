@@ -22,26 +22,65 @@ import javax.swing.border.EmptyBorder;
  */
 public class GameOverPanel extends JPanel {
 
+    /** Color of the title text. */
     private static final Color TITLE_COLOR = Color.RED;
-    private static final Color SUBTITLE_COLOR = Color.WHITE; // meglio bianco per contrasto
+
+    /** Color of the subtitle text. */
+    private static final Color SUBTITLE_COLOR = Color.WHITE;
+
+    /** Font sizes and dimensions. */
     private static final float TITLE_FONT_SIZE = 64f;
+
+    /** Font size for the subtitle text. */
     private static final float SUBTITLE_FONT_SIZE = 28f;
+
+    /** Font size for the button text. */
     private static final int BUTTON_FONT_SIZE = 28;
+
+    /** Button dimensions and spacing. */
     private static final int BUTTON_WIDTH = 360;
+
+    /** Button height. */
     private static final int BUTTON_HEIGHT = 56;
+
+    /** Vertical spacing between components. */
     private static final int VERTICAL_SPACING = 12;
+
+    /** Extra vertical spacing for components. */
     private static final int EXTRA_VERTICAL_SPACING = 24;
 
+    /** Button for restarting the game. */
     private final JButton restartButton;
+
+    /** Background image for the game over panel. */
     private final Image backgroundImage;
 
+    /** RGB components for the button background color. */
+    private final int red = 63;
+
+    /** RGB components for the button background color. */
+    private final int green = 46;
+
+    /** RGB components for the button background color. */
+    private final int blue = 30;
+
+    /** GridBagConstraints gridx value for layout. */
+    private final int gbcGridy = 3;
+
+    /**
+     * Constructs a GameOverPanel with a background image and a restart button.
+     *
+     * @param onRestart a Runnable to execute when the restart button is clicked
+     */
     public GameOverPanel(final Runnable onRestart) {
-        var url = getClass().getResource("/spritesOverWorld/gameOverBackground.png");
+        var url = getClass().getResource(
+            "/spritesOverWorld/gameOverBackground.png");
         backgroundImage = new ImageIcon(url).getImage();
 
         setOpaque(false); // importante: non dipingere background piatto
         setLayout(new GridBagLayout());
-        setBorder(new EmptyBorder(EXTRA_VERTICAL_SPACING, EXTRA_VERTICAL_SPACING,
+        setBorder(new EmptyBorder(
+            EXTRA_VERTICAL_SPACING, EXTRA_VERTICAL_SPACING,
                 EXTRA_VERTICAL_SPACING, EXTRA_VERTICAL_SPACING));
 
         final GridBagConstraints gbc = new GridBagConstraints();
@@ -61,7 +100,8 @@ public class GameOverPanel extends JPanel {
         gbc.gridy = 1;
         final JLabel subtitle = new JLabel("You're dead");
         subtitle.setForeground(SUBTITLE_COLOR);
-        subtitle.setFont(subtitle.getFont().deriveFont(Font.PLAIN, SUBTITLE_FONT_SIZE));
+        subtitle.setFont(subtitle.getFont().deriveFont(
+            Font.PLAIN, SUBTITLE_FONT_SIZE));
         add(subtitle, gbc);
 
         // Spazio
@@ -71,14 +111,17 @@ public class GameOverPanel extends JPanel {
         add(Box.createVerticalStrut(VERTICAL_SPACING), gbc);
 
         // Bottone Restart
-        gbc.gridy = 3;
+        gbc.gridy = gbcGridy;
         restartButton = new JButton("Restart");
         restartButton.setFocusPainted(false);
-        restartButton.setFont(new Font("SansSerif", Font.BOLD, BUTTON_FONT_SIZE));
+        restartButton.setFont(
+            new Font("SansSerif", Font.BOLD, BUTTON_FONT_SIZE));
         restartButton.setForeground(Color.WHITE);
-        restartButton.setBackground(new Color(63, 46, 30));
-        restartButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3, true));
-        restartButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        restartButton.setBackground(new Color(red, green, blue));
+        restartButton.setBorder(
+            BorderFactory.createLineBorder(Color.WHITE, gbcGridy, true));
+        restartButton.setPreferredSize(
+            new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         restartButton.addActionListener(e -> {
             if (onRestart != null) {
                 onRestart.run();
@@ -87,8 +130,13 @@ public class GameOverPanel extends JPanel {
         add(restartButton, gbc);
     }
 
+    /**
+     * Paints the component with the background image.
+     *
+     * @param g the Graphics context in which to paint
+     */
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         // Disegna immagine di sfondo scalata a tutto il pannello
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
