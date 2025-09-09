@@ -82,7 +82,7 @@ public final class OverworldModel {
     /**
      * the combat collision instance.
      */
-    private CombatCollision combatCollision;
+    final private CombatCollision combatCollision;
 
     /**
      * player max hp.
@@ -97,7 +97,7 @@ public final class OverworldModel {
     /**
      * the player power.
      */
-    private static final int PLAYER_POWER = 99;
+    private static final int PLAYER_POWER = 10;
 
     /**
      * Constructor of the OverworldModel class.

@@ -65,4 +65,9 @@ public class CombatCollisionImpl implements CombatCollision {
     final ViewManagerObserver currentViewManagerObserver) {
         this.viewManagerObserver = currentViewManagerObserver;
     }
+
+    @Override
+    public final void showGameOver() {
+        this.viewManagerObserver.onPlayerDefeat();
+    }
 }

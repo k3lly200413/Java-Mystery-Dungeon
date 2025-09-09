@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop.overworld.mvc;
 
+import java.awt.event.ActionEvent;
 import java.util.Objects;
 
 import javax.swing.AbstractAction;
@@ -10,8 +11,6 @@ import it.unibo.progetto_oop.overworld.ViewManagerObserver;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.mvc.input_bindings.InputBindings;
 import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
-
-import java.awt.event.ActionEvent;
 
 public class OverworldController implements ViewManagerObserver {
     /**
@@ -124,5 +123,10 @@ public class OverworldController implements ViewManagerObserver {
     @Override
     public final void onEnemyDefeat() {
         this.viewManager.showOverworld();
+    }
+
+    @Override
+    public void onPlayerDefeat() {
+        this.viewManager.showGameOver();
     }
 }
