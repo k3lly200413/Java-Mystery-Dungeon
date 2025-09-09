@@ -65,7 +65,7 @@ public final class CombatLauncher {
             .setEnemyPower(enemyPower)
             .setEnemySpeed(enemySpeed)
             .setEnemyName(enemyName)
-            .setPlayerMaxHealth(player.getMaxHp())
+            .setPlayerMaxHealth(maxHealth)
             .build();
 
 
