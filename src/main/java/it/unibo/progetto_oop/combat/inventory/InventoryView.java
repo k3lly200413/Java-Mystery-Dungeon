@@ -19,12 +19,12 @@ public class InventoryView extends JPanel {
     /**
      * Number of cells in the viewport width-wise.
      */
-    private static final int VIEWPORT_WIDTH_CELLS = 13;
+    private static final int VIEWPORT_WIDTH_CELLS = 3;
 
     /**
      * Number of cells in the viewport height-wise.
      */
-    private static final int VIEWPORT_HEIGHT_CELLS = 13;
+    private static final int VIEWPORT_HEIGHT_CELLS = 1;
 
     /**
      * Preferred cell width in pixels.
@@ -95,6 +95,12 @@ public class InventoryView extends JPanel {
     */
     private static final int BORDER_PADDING_HORIZONTAL = 10;
 
+
+    /**
+     * Status Area padding
+     */
+    private static final int STATUS_PADDING = 5;
+
     /**
      * view manager to switch back to overworld.
      */
@@ -132,7 +138,7 @@ public class InventoryView extends JPanel {
         this.viewManager = newViewManager;
 
         // Layout Panel
-        this.setLayout(new BorderLayout(0, 5));
+        this.setLayout(new BorderLayout(0, STATUS_PADDING));
         this.setBackground(FLOOR_COLOR);
 
         // Grid Panel
@@ -142,48 +148,69 @@ public class InventoryView extends JPanel {
         this.add(this.gridPanel, BorderLayout.CENTER);
 
         // Status Area Panel and contents
-        JPanel statusAreaPanel = new JPanel(new BorderLayout(0, 5));
-        statusAreaPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-        this.bottomStatusLabel = new JLabel(
-            "<html><i>Click an item...</i></html>",
-            SwingConstants.CENTER);
-        this.bottomStatusLabel.setOpaque(true);
-        this.bottomStatusLabel.setBackground(Color.WHITE);
-        this.bottomStatusLabel.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(Color.DARK_GRAY),
-            BorderFactory.createEmptyBorder(5, 10, 5, 10)
-        ));
-
-        this.bottomStatusLabel.setPreferredSize(
-            new Dimension(STATUS_LABEL_W, STATUS_LABEL_H));
-        statusAreaPanel.add(this.bottomStatusLabel, BorderLayout.CENTER);
-
-        JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        this.backButton = new JButton("Back to Game");
-        this.backButton.addActionListener(e -> {
-            if (this.viewManager != null) {
-                //SwingUtilities.getWindowAncestor(this).dispose();
-                this.viewManager.showOverworld();
-            }
-        });
-        backButtonPanel.add(this.backButton);
-        statusAreaPanel.add(backButtonPanel, BorderLayout.SOUTH);
-
+        JPanel statusAreaPanel = createStatusAreaPanel();
         this.add(statusAreaPanel, BorderLayout.SOUTH);
 
         // Initial population
         populateGrid();
 
         // Set preferred size
+        this.setPreferredSize(calculatePreferredSize());
+    }
+
+    private JButton createBackButton() {
+        JButton button = new JButton("Back to Game");
+        button.addActionListener(e -> {
+            if (this.viewManager != null) {
+                //SwingUtilities.getWindowAncestor(this).dispose();
+                this.viewManager.showOverworld();
+            }
+        });
+
+        return button;
+    }
+
+    private JLabel createStatusLabel() {
+        JLabel label = new JLabel(
+            "<html><i>Click an item...</i></html>",
+            SwingConstants.CENTER);
+        this.bottomStatusLabel.setOpaque(true);
+        this.bottomStatusLabel.setBackground(Color.WHITE);
+        this.bottomStatusLabel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(Color.DARK_GRAY),
+            BorderFactory.createEmptyBorder(STATUS_PADDING, STATUS_PADDING * 2, STATUS_PADDING, STATUS_PADDING * 2)
+        ));
+
+        label.setPreferredSize(
+            new Dimension(STATUS_LABEL_W, STATUS_LABEL_H));
+
+        return label;
+    }
+
+    private JPanel createStatusAreaPanel() {
+        JPanel statusAreaPanel = new JPanel(new BorderLayout(0, STATUS_PADDING));
+        statusAreaPanel.setBorder(BorderFactory.createEmptyBorder(STATUS_PADDING, STATUS_PADDING, STATUS_PADDING, STATUS_PADDING));
+        
+        this.bottomStatusLabel = createStatusLabel();
+        statusAreaPanel.add(this.bottomStatusLabel, BorderLayout.CENTER);
+
+        JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        this.backButton = createBackButton();
+        backButtonPanel.add(this.backButton);
+        statusAreaPanel.add(backButtonPanel, BorderLayout.SOUTH);
+
+        return statusAreaPanel;
+    }
+
+    private Dimension calculatePreferredSize() {
         int totalPreferredWidth = PREFERRED_CELL_WIDTH * VIEWPORT_WIDTH_CELLS;
         int gridActualHeight = PREFERRED_CELL_HEIGHT * VIEWPORT_HEIGHT_CELLS
-            + (VIEWPORT_HEIGHT_CELLS);
+            + VIEWPORT_HEIGHT_CELLS;
         int statusAreaHeight = bottomStatusLabel.getPreferredSize().height
             + backButton.getPreferredSize().height;
-        this.setPreferredSize(
-            new Dimension(
-                totalPreferredWidth, gridActualHeight + statusAreaHeight));
+        
+        return new Dimension(
+                totalPreferredWidth, gridActualHeight + statusAreaHeight);
     }
 
     /**
@@ -198,63 +225,39 @@ public class InventoryView extends JPanel {
      * Clears and re-populates the grid.
     */
     private void populateGrid() {
-        // in case of catastrofic error
         if (this.gridPanel == null || this.inventory == null) {
-            System.err.println(
-                "InventoryView: Cannot populate grid");
+            System.err.println("InventoryView: Cannot populate grid");
             return;
         }
 
         this.gridPanel.removeAll();
 
-        java.util.List<Item> items = new ArrayList<>(
-            this.inventory.getFullInventory().keySet());
-        System.out.println("DEBUG populateGrid: Item size => " + items.size());
+        java.util.List<Item> items = new ArrayList<>(this.inventory.getFullInventory().keySet());
 
-        // Grid Population Logic
-        int middleY = Math.round((VIEWPORT_HEIGHT_CELLS - 1) / 2.0f);
-        int middleX = Math.round((VIEWPORT_WIDTH_CELLS - 1) / 2.0f);
-        int quarterX = Math.round((VIEWPORT_WIDTH_CELLS - 1) / 4.0f);
-        int threeQuarterX = middleX + (middleX - quarterX);
+        Color[] slotColors = new Color[] {
+            ITEM_SLOT_1_COLOR, ITEM_SLOT_2_COLOR, ITEM_SLOT_3_COLOR
+        };
 
-        JButton cellButton;
-        boolean isItemSlot = false;
-        Item currentItem = null;
-        Color itemColor = null;
+        int nItems = items.size();
+        int itemIndex = 0;
 
         for (int y = 0; y < VIEWPORT_HEIGHT_CELLS; y++) {
             for (int x = 0; x < VIEWPORT_WIDTH_CELLS; x++) {
-                isItemSlot = false;
-                currentItem = null;
-                itemColor = null;
-                if (y == middleY) {
-                    // I am at 1/4 and there is at least one item
-                    if (x == quarterX && items.size() > 0) {
-                        System.out.println("Description => "
-                            + items.get(0).getDescription());
-                        isItemSlot = true;
-                        currentItem = items.get(0);
-                        itemColor = ITEM_SLOT_1_COLOR;
-                    } else if (x == middleX && items.size() > 1) {
-                        isItemSlot = true;
-                        currentItem = items.get(1); // 3/4
-                        itemColor = ITEM_SLOT_2_COLOR;
-                    } else if (x == threeQuarterX && items.size() > 2) {
-                        isItemSlot = true;
-                        currentItem = items.get(2);
-                        itemColor = ITEM_SLOT_3_COLOR;
-                    }
-                }
+                JButton cellButton;
 
-                if (isItemSlot && currentItem != null) { // Create item button
+                if (itemIndex < nItems) {
+                    Item currentItem = items.get(itemIndex);
                     String desc = "<html>"
-                        + currentItem.getDescription()
-                            .replace("\n", "<br>") + "</html>";
-                    System.out.println("New Description = > " + desc);
+                        + currentItem.getDescription().replace("\n", "<br>")
+                        + "<br><b style='color:blue;'>"
+                        + this.inventory.getItemCount(currentItem) + " in inventory"
+                        + "</b></html>";
+                    Color itemColor = slotColors[itemIndex % slotColors.length];
                     cellButton = createItemButton(
                         currentItem.getName(), itemColor, desc);
+                    itemIndex++;
                 } else {
-                    cellButton = new JButton(); // Placeholder button
+                    cellButton = new JButton(); // cella vuota
                     cellButton.setEnabled(false);
                     cellButton.setOpaque(true);
                     cellButton.setBackground(FLOOR_COLOR);
@@ -262,15 +265,14 @@ public class InventoryView extends JPanel {
                         BorderFactory.createLineBorder(
                             GRID_LINE_COLOR.darker()));
                 }
-                cellButton.setPreferredSize(
-                    new Dimension(PREFERRED_CELL_WIDTH, PREFERRED_CELL_HEIGHT));
+
+                cellButton.setPreferredSize(new Dimension(PREFERRED_CELL_WIDTH, PREFERRED_CELL_HEIGHT));
                 this.gridPanel.add(cellButton);
             }
         }
 
-        // Finalize
-        this.gridPanel.revalidate(); // recaltulate layout of the panel
-        this.gridPanel.repaint(); // repaint the panel()
+        this.gridPanel.revalidate();
+        this.gridPanel.repaint();
     }
 
     /**
