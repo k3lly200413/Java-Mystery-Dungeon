@@ -95,6 +95,12 @@ public class InventoryView extends JPanel {
     */
     private static final int BORDER_PADDING_HORIZONTAL = 10;
 
+
+    /**
+     * Status Area padding
+     */
+    private static final int STATUS_PADDING = 5;
+
     /**
      * view manager to switch back to overworld.
      */
@@ -132,7 +138,7 @@ public class InventoryView extends JPanel {
         this.viewManager = newViewManager;
 
         // Layout Panel
-        this.setLayout(new BorderLayout(0, 5));
+        this.setLayout(new BorderLayout(0, STATUS_PADDING));
         this.setBackground(FLOOR_COLOR);
 
         // Grid Panel
@@ -142,24 +148,17 @@ public class InventoryView extends JPanel {
         this.add(this.gridPanel, BorderLayout.CENTER);
 
         // Status Area Panel and contents
-        JPanel statusAreaPanel = new JPanel(new BorderLayout(0, 5));
-        statusAreaPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        JPanel statusAreaPanel = createStatusAreaPanel()
+        this.add(statusAreaPanel, BorderLayout.SOUTH);
 
-        this.bottomStatusLabel = new JLabel(
-            "<html><i>Click an item...</i></html>",
-            SwingConstants.CENTER);
-        this.bottomStatusLabel.setOpaque(true);
-        this.bottomStatusLabel.setBackground(Color.WHITE);
-        this.bottomStatusLabel.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(Color.DARK_GRAY),
-            BorderFactory.createEmptyBorder(5, 10, 5, 10)
-        ));
+        // Initial population
+        populateGrid();
 
-        this.bottomStatusLabel.setPreferredSize(
-            new Dimension(STATUS_LABEL_W, STATUS_LABEL_H));
-        statusAreaPanel.add(this.bottomStatusLabel, BorderLayout.CENTER);
+        // Set preferred size
+        this.setPreferredSize(calculatePreferredSize());
+    }
 
-        JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    private JButton createBackButton() {
         this.backButton = new JButton("Back to Game");
         this.backButton.addActionListener(e -> {
             if (this.viewManager != null) {
@@ -167,22 +166,50 @@ public class InventoryView extends JPanel {
                 this.viewManager.showOverworld();
             }
         });
+
+        return button
+    }
+
+    private JLabel createStatusLabel() {
+        JLabel label = new JLabel(
+            "<html><i>Click an item...</i></html>",
+            SwingConstants.CENTER);
+        this.bottomStatusLabel.setOpaque(true);
+        this.bottomStatusLabel.setBackground(Color.WHITE);
+        this.bottomStatusLabel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(Color.DARK_GRAY),
+            BorderFactory.createEmptyBorder(STATUS_PADDING, STATUS_PADDING * 2, STATUS_PADDING, STATUS_PADDING * 2)
+        ));
+
+        label.setPreferredSize(
+            new Dimension(STATUS_LABEL_W, STATUS_LABEL_H));
+
+        return label;
+    }
+
+    private JPanel createStatusareaPanel() {
+        JPanel statusAreaPanel = new JPanel(new BorderLayout(0, STATUS_PADDING));
+        statusAreaPanel.setBorder(BorderFactory.createEmptyBorder(STATUS_PADDING, STATUS_PADDING, STATUS_PADDING, STATUS_PADDING));
+        
+        this.bottomStatusLabel = createStatusLabel();
+        statusAreaPanel.add(this.bottomStatusLabel, BorderLayout.CENTER);
+
+        JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        this.backButton = createBackButton();
         backButtonPanel.add(this.backButton);
         statusAreaPanel.add(backButtonPanel, BorderLayout.SOUTH);
 
-        this.add(statusAreaPanel, BorderLayout.SOUTH);
+        return statusAreaPanel;
+    }
 
-        // Initial population
-        populateGrid();
-
-        // Set preferred size
+    private Dimension calculatePreferredSize() {
         int totalPreferredWidth = PREFERRED_CELL_WIDTH * VIEWPORT_WIDTH_CELLS;
         int gridActualHeight = PREFERRED_CELL_HEIGHT * VIEWPORT_HEIGHT_CELLS
-            + (VIEWPORT_HEIGHT_CELLS);
+            + VIEWPORT_HEIGHT_CELLS;
         int statusAreaHeight = bottomStatusLabel.getPreferredSize().height
             + backButton.getPreferredSize().height;
-        this.setPreferredSize(
-            new Dimension(
+        
+        return new Dimension(
                 totalPreferredWidth, gridActualHeight + statusAreaHeight));
     }
 
@@ -206,7 +233,6 @@ public class InventoryView extends JPanel {
         this.gridPanel.removeAll();
 
         java.util.List<Item> items = new ArrayList<>(this.inventory.getFullInventory().keySet());
-        System.out.println("DEBUG populateGrid: Item size => " + items.size());
 
         Color[] slotColors = new Color[] {
             ITEM_SLOT_1_COLOR, ITEM_SLOT_2_COLOR, ITEM_SLOT_3_COLOR
