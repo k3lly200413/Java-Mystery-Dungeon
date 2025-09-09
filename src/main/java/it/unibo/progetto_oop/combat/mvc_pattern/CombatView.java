@@ -572,6 +572,10 @@ public class CombatView extends JPanel {
         this.setPanelEnabled(this.attackButtonPanel, true);
     }
 
+    public final void setBagButtonsEnabled() {
+        this.setPanelEnabled(this.bagButtonPanel, true);
+    }
+
     /**
      * Disables all buttons in the combat view, preventing user interaction.
      */
