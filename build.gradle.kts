@@ -46,6 +46,10 @@ dependencies {
     testImplementation("org.mockito:mockito-core:5.19.0")
     
     testImplementation("org.easytesting:fest-swing:1.2")
+
+    testImplementation 'org.mockito:mockito-core:5.12.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.12.0'
+
 }
 
 application {
