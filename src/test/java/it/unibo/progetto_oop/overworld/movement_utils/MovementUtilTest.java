@@ -55,7 +55,7 @@ class MovementUtilTest {
         when(wallCollisionMock.closestWall(enemy, 0, 1))
                 .thenReturn(Optional.of(wall));
 
-        MovementUtil.MoveDirection dir =
+        final MovementUtil.MoveDirection dir =
             movementUtil.getInitialGeneralMoveDirection(enemy, true);
 
         assertEquals(MovementUtil.MoveDirection.UP, dir);
@@ -70,7 +70,7 @@ class MovementUtilTest {
         when(wallCollisionMock.closestWall(enemy, 1, 0))
                 .thenReturn(Optional.of(wall));
 
-        MovementUtil.MoveDirection dir =
+        final MovementUtil.MoveDirection dir =
             movementUtil.getInitialGeneralMoveDirection(enemy, false);
 
         assertEquals(MovementUtil.MoveDirection.LEFT, dir);
@@ -85,7 +85,7 @@ class MovementUtilTest {
         when(wallCollisionMock.closestWall(enemy, 1, 0))
                 .thenReturn(Optional.of(wall));
 
-        MovementUtil.MoveDirection dir =
+        final MovementUtil.MoveDirection dir =
             movementUtil.getInitialGeneralMoveDirection(enemy, false);
 
         assertEquals(MovementUtil.MoveDirection.RIGHT, dir);
@@ -99,7 +99,7 @@ class MovementUtilTest {
         when(wallCollisionMock.closestWall(enemy, 0, 1))
                 .thenReturn(Optional.of(wall));
 
-        MovementUtil.MoveDirection dir =
+        final MovementUtil.MoveDirection dir =
             movementUtil.getInitialGeneralMoveDirection(enemy, true);
 
         assertEquals(MovementUtil.MoveDirection.NONE, dir);
@@ -112,7 +112,7 @@ class MovementUtilTest {
         when(wallCollisionMock.closestWall(enemy, 0, 1))
                 .thenReturn(Optional.empty());
 
-        MovementUtil.MoveDirection dir =
+        final MovementUtil.MoveDirection dir =
             movementUtil.getInitialGeneralMoveDirection(enemy, true);
 
         assertEquals(MovementUtil.MoveDirection.NONE, dir);

@@ -43,8 +43,8 @@ class EnemyFactoryImplTest {
 
     @BeforeEach
     void setUp() {
-        WallCollision wallCollision = mock(WallCollision.class);
-        CombatCollision combatCollision = mock(CombatCollision.class);
+        final WallCollision wallCollision = mock(WallCollision.class);
+        final CombatCollision combatCollision = mock(CombatCollision.class);
         gridNotifier = mock(GridNotifier.class);
         position = mock(Position.class);
         factory = new EnemyFactoryImpl(wallCollision, combatCollision);

@@ -43,8 +43,8 @@ class OverworldPlayerAdapterTest {
 
     @BeforeEach
     void setUp() {
-        var inventory = new Inventory();
-        var player = new Player(MAX_HP, MAX_STAMINA, POWER, inventory);
+        final var inventory = new Inventory();
+        final var player = new Player(MAX_HP, MAX_STAMINA, POWER, inventory);
         playerAdapter = new OverworldPlayerAdapter(player);
     }
 
@@ -53,7 +53,7 @@ class OverworldPlayerAdapterTest {
         playerAdapter.increasePlayerMaxHealth(AMOUNT_1);
         assertEquals(AMOUNT_1 + MAX_HP, playerAdapter.getMaxHp());
 
-        IllegalArgumentException exception = assertThrows(
+        final IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
             () -> playerAdapter.increasePlayerMaxHealth(AMOUNT_2)
         );
@@ -67,7 +67,7 @@ class OverworldPlayerAdapterTest {
         playerAdapter.increasePlayerMaxStamina(AMOUNT_1);
         assertEquals(MAX_STAMINA + AMOUNT_1, playerAdapter.getMaxStamina());
 
-        IllegalArgumentException exception = assertThrows(
+        final IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
             () -> playerAdapter.increasePlayerMaxStamina(AMOUNT_2)
         );
@@ -81,7 +81,7 @@ class OverworldPlayerAdapterTest {
         playerAdapter.increasePlayerMaxPower(AMOUNT_1);
         assertEquals(POWER + AMOUNT_1, playerAdapter.getPower());
 
-        IllegalArgumentException exception = assertThrows(
+        final IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
             () -> playerAdapter.increasePlayerMaxPower(AMOUNT_2)
         );
@@ -97,7 +97,7 @@ class OverworldPlayerAdapterTest {
         playerAdapter.increasePlayerHealth(AMOUNT_1);
         assertEquals(MAX_HP + AMOUNT_1, playerAdapter.getHp());
 
-        IllegalArgumentException exception = assertThrows(
+        final IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
             () -> playerAdapter.increasePlayerHealth(AMOUNT_2)
         );
