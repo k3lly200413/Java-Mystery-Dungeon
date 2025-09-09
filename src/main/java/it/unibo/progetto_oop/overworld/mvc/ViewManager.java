@@ -35,6 +35,10 @@ public class ViewManager {
      * combat card identifier.
      */
     public static final String COMBAT_CARD = "COMBAT";
+
+    /**
+     * game over card identifier.
+     */
     private static final String GAME_OVER = "GAME OVER";
 
     /**
@@ -64,6 +68,7 @@ public class ViewManager {
 
     private CombatController combatController;
 
+    /** Game over panel. */
     private GameOverPanel gameOverPanel;
 
     /**
