@@ -49,11 +49,13 @@ public class CombatModel implements PossibleUser {
     /** The current health points of the player. */
     private int playerHealth;
 
+    /** The maximum health points of the player. */
     private int playerMaxHealth;
 
     /** The current health points of the enemy. */
     private int enemyHealth;
 
+    /** The maximum health points of the enemy. */
     private int enemyMaxHealth;
 
     /** The maximum health points allowed for both player and enemy. */
@@ -125,6 +127,7 @@ public class CombatModel implements PossibleUser {
     /** Whether the poison animation is active. */
     private boolean poisonAnimation;
 
+    /** The current state of the enemy (boss or regular). */
     private CombatState enemyState;
 
     /**
@@ -185,7 +188,8 @@ public final void resetPositions() {
  */
 @Override
 public final void increasePlayerHealth(final int amount) {
-    this.playerHealth = Math.min(this.playerMaxHealth, this.playerHealth + amount);
+    this.playerHealth = Math.min(
+        this.playerMaxHealth, this.playerHealth + amount);
 }
 
 /**
@@ -651,10 +655,16 @@ public final boolean isGameOver() {
         }
     }
 
+    /** Sets the enemy's maximum health.
+     * @param newHpToSet the new maximum health value
+    */
     public final void setEnemyMaxHp(final int newHpToSet) {
         this.enemyMaxHealth = newHpToSet;
     }
 
+    /** Sets the enemy's current health.
+     * @param newCurrentHp the new current health value
+     */
     public final void setEnemyCurrentHp(final int newCurrentHp) {
         this.enemyHealth = newCurrentHp;
     }
@@ -678,10 +688,16 @@ public final boolean isGameOver() {
         this.isPlayerPoison = isPoisoned;
     }
 
+    /** Sets the player's maximum health.
+     * @param newMaxHp the new maximum health value
+    */
     public final void setPlayerMaxHp(final int newMaxHp) {
         this.playerMaxHealth = newMaxHp;
     }
 
+    /** Sets the player's current health.
+     * @param newCurrentHealth the new current health value
+    */
     public final void setPlayerCurrentHp(final int newCurrentHealth) {
         this.playerHealth = newCurrentHealth;
     }
@@ -724,9 +740,13 @@ public final boolean isGameOver() {
         this.currentBossState = newCurrentBossState;
     }
 
+    /**
+     * Sets the enemy's combat state based on whether it is a boss.
+     *
+     * @param isBoss true if the enemy is a boss, false otherwise
+     */
     public void setEnemyState(final boolean isBoss) {
         this.enemyState = isBoss ? new BossTurnState() : new EnemyTurnState();
-        System.out.println(this.enemyState.getClass().getSimpleName().toString());
     }
 
     @Override
@@ -744,18 +764,39 @@ public final boolean isGameOver() {
         return this.getMaxHealth();
     }
 
+    /**
+     * Gets the maximum stamina of the entity.
+     *
+     * @return max stamina
+     */
+    @Override
     public int getMaxStamina() {
         return this.playerStaminaMax;
     }
 
+    /**
+     * Gets the maximum health of the player.
+     *
+     * @return max health
+     */
     public int getPlayerMaxHealth() {
         return this.playerMaxHealth;
     }
 
+    /**
+     * Gets the maximum health of the enemy.
+     *
+     * @return max health
+     */
     public int getEnemyMaxHealth() {
         return this.enemyMaxHealth;
     }
 
+    /**
+     * Gets the current state of the enemy.
+     *
+     * @return the enemy's current state
+     */
     public CombatState getEnemyState() {
         return this.enemyState;
     }
@@ -780,19 +821,39 @@ public final boolean isGameOver() {
     }
 }
 
-    public void setPlayerPower(int power) {
+    /**
+     * Sets the player's power.
+     *
+     * @param power the new power value
+     */
+    public void setPlayerPower(final int power) {
         this.playerPower = power;
     }
 
-    public void setPlayerStamina(int stamina) {
+    /**
+     * Sets the player's stamina.
+     *
+     * @param stamina the new stamina value
+     */
+    public void setPlayerStamina(final int stamina) {
         this.playerStamina = stamina;
     }
 
+    /**
+     * Gets the player's power.
+     *
+     * @return the player's power
+     */
     @Override
     public int getPower() {
         return this.getPlayerPower();
     }
 
+    /**
+     * Gets the player's stamina.
+     *
+     * @return the player's stamina
+     */
     @Override
     public int getStamina() {
         return this.getPlayerStamina();
