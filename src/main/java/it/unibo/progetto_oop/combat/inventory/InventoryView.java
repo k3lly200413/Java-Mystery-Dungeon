@@ -174,9 +174,9 @@ public class InventoryView extends JPanel {
         JLabel label = new JLabel(
             "<html><i>Click an item...</i></html>",
             SwingConstants.CENTER);
-        this.bottomStatusLabel.setOpaque(true);
-        this.bottomStatusLabel.setBackground(Color.WHITE);
-        this.bottomStatusLabel.setBorder(BorderFactory.createCompoundBorder(
+        label.setOpaque(true);
+        label.setBackground(Color.WHITE);
+        label.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(Color.DARK_GRAY),
             BorderFactory.createEmptyBorder(STATUS_PADDING, STATUS_PADDING * 2, STATUS_PADDING, STATUS_PADDING * 2)
         ));
