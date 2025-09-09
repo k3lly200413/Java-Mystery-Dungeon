@@ -724,8 +724,9 @@ public final boolean isGameOver() {
         this.currentBossState = newCurrentBossState;
     }
 
-    public void setEnemyState(final boolean newEnemyState) {
-        this.enemyState = newEnemyState ? new EnemyTurnState() : new BossTurnState();
+    public void setEnemyState(final boolean isBoss) {
+        this.enemyState = isBoss ? new BossTurnState() : new EnemyTurnState();
+        System.out.println(this.enemyState.getClass().getSimpleName().toString());
     }
 
     @Override
@@ -785,6 +786,16 @@ public final boolean isGameOver() {
 
     public void setPlayerStamina(int stamina) {
         this.playerStamina = stamina;
+    }
+
+    @Override
+    public int getPower() {
+        return this.getPlayerPower();
+    }
+
+    @Override
+    public int getStamina() {
+        return this.getPlayerStamina();
     }
 
 }
