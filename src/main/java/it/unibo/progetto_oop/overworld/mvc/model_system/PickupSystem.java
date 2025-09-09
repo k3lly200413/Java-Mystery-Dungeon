@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
-import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
@@ -22,19 +21,12 @@ public class PickupSystem {
     private final Player player;
 
     /**
-     * the Overworld model.
-     */
-    private final OverworldModel model;
-
-    /**
      * contructor.
      * @param newItems the items on the map
      * @param newPlayer the player
-     * @param newModel the Overworld model
      */
     public PickupSystem(final List<Item> newItems,
-                        final Player newPlayer, final OverworldModel newModel) {
-        this.model = Objects.requireNonNull(newModel, "Model cannot be null");
+                        final Player newPlayer) {
         this.player = Objects.requireNonNull(
             newPlayer, "Player cannot be null");
         this.items = newItems;
@@ -107,7 +99,7 @@ public class PickupSystem {
      * If an item is found, remove it from the overworld items list
      */
     public void checkAndAddItem() {
-        Optional<Item> itemOpt = this.itemFoundAtPlayerPosition();
+        final Optional<Item> itemOpt = this.itemFoundAtPlayerPosition();
 
         itemOpt.ifPresent(item -> {
             System.out.println("Item found, picking it up " + item.getName());

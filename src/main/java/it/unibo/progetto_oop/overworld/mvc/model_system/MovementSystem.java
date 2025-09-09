@@ -25,7 +25,7 @@ public class MovementSystem {
     /**
      * if true a combat transition is pending.
      */
-    private boolean combatTransitionPending = false;
+    private boolean combatTransitionPending;
 
     /**
      * Constructor for the MovementSystem.
@@ -37,6 +37,7 @@ public class MovementSystem {
         this.model = Objects.requireNonNull(newModel, "Model cannot be null");
         this.player = Objects.requireNonNull(newPlayer,
             "Player cannot be null");
+        this.combatTransitionPending = false;
     }
 
     // ---- GETTERS ---- //
@@ -78,8 +79,8 @@ public class MovementSystem {
      */
     public void move(final int directionX, final int directionY,
     final PickupSystem pickupSystem, final EnemySystem enemySystem) {
-        Position currentPos = player.getPosition();
-        Position tempPosition = new Position(currentPos.x() + directionX,
+        final Position currentPos = player.getPosition();
+        final Position tempPosition = new Position(currentPos.x() + directionX,
             currentPos.y() + directionY);
 
         // reset flag and encountered enemy
@@ -108,7 +109,8 @@ public class MovementSystem {
         pickupSystem.checkAndAddItem();
 
         // Check Enemies
-        Optional<Enemy> enemyOpt = enemySystem.checkEnemyHit(tempPosition);
+        final Optional<Enemy> enemyOpt =
+            enemySystem.checkEnemyHit(tempPosition);
         if (enemyOpt.isPresent()) {
             this.setCombatTransitionFlag();
             enemySystem.setEncounteredEnemy(enemyOpt.get());

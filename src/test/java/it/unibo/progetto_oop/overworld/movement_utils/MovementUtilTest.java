@@ -33,9 +33,9 @@ class MovementUtilTest {
 
     @Test
     void testVerticalMovementEnemyAboveWall() {
-        Position enemy = new Position(0, 1);
+        final Position enemy = new Position(0, 1);
         // muro sopra (y più piccolo)
-        Position wall = new Position(0, 0);
+        final Position wall = new Position(0, 0);
 
         when(wallCollisionMock.closestWall(enemy, 0, 1))
                 .thenReturn(Optional.of(wall));
@@ -48,9 +48,9 @@ class MovementUtilTest {
 
     @Test
     void testVerticalMovementEnemyBelowWall() {
-        Position enemy = new Position(0, 0);
+        final Position enemy = new Position(0, 0);
         // muro sotto (y più grande)
-        Position wall = new Position(0, 2);
+        final Position wall = new Position(0, 2);
 
         when(wallCollisionMock.closestWall(enemy, 0, 1))
                 .thenReturn(Optional.of(wall));
@@ -63,9 +63,9 @@ class MovementUtilTest {
 
     @Test
     void testHorizontalMovementEnemyLeftOfWall() {
-        Position enemy = new Position(0, 0);
+        final Position enemy = new Position(0, 0);
         // muro a destra (x più grande)
-        Position wall = new Position(2, 0);
+        final Position wall = new Position(2, 0);
 
         when(wallCollisionMock.closestWall(enemy, 1, 0))
                 .thenReturn(Optional.of(wall));
@@ -78,8 +78,9 @@ class MovementUtilTest {
 
     @Test
     void testHorizontalMovementEnemyRightOfWall() {
-        Position enemy = new Position(2, 0);
-        Position wall = new Position(0, 0); // muro a sinistra (x più piccolo)
+        final Position enemy = new Position(2, 0);
+        final Position wall = new Position(0, 0);
+        // muro a sinistra (x più piccolo)
 
         when(wallCollisionMock.closestWall(enemy, 1, 0))
                 .thenReturn(Optional.of(wall));
@@ -92,8 +93,8 @@ class MovementUtilTest {
 
     @Test
     void testEnemyAndWallOnSameCoordinate() {
-        Position enemy = new Position(1, 1);
-        Position wall = new Position(1, 1); // stessa posizione
+        final Position enemy = new Position(1, 1);
+        final Position wall = new Position(1, 1); // stessa posizione
 
         when(wallCollisionMock.closestWall(enemy, 0, 1))
                 .thenReturn(Optional.of(wall));
@@ -106,7 +107,7 @@ class MovementUtilTest {
 
     @Test
     void testNoWallFound() {
-        Position enemy = new Position(1, 1);
+        final Position enemy = new Position(1, 1);
 
         when(wallCollisionMock.closestWall(enemy, 0, 1))
                 .thenReturn(Optional.empty());

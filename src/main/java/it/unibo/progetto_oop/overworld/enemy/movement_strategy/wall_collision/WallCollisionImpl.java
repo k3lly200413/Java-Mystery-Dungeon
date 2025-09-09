@@ -99,10 +99,10 @@ public final class WallCollisionImpl implements WallCollision {
     @Override
     public Optional<Position> closestWall(final Position from,
     final int dx, final int dy) {
-        int maxSteps;
+        final int maxSteps;
         ToIntFunction<Position> axisGetter;
-        int startX;
-        int startY;
+        final int startX;
+        final int startY;
 
         // if i move orizontally i'll be interested with the width
         if (dx != 0) {
@@ -124,7 +124,7 @@ public final class WallCollisionImpl implements WallCollision {
         return IntStream.rangeClosed(0, maxSteps + 1)
                 .mapToObj(step ->
                     new Position(startX + step * dx, startY + step * dy))
-                .filter(pos -> inBounds(pos)) // only in bounds positions
+                .filter(this::inBounds) // only in bounds positions
                 // i'm filtering all tipes of "obstacles"
                 .filter(pos -> baseGrid.get(pos.x(), pos.y()) == TileType.WALL
                     || baseGrid.get(pos.x(), pos.y()) == TileType.ITEM

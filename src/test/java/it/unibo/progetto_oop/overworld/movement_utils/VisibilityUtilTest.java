@@ -39,11 +39,11 @@ class VisibilityUtilTest {
 
     @Test
     void testInLosPlayerIsNeighbourAndVisible() {
-        Position enemy = mock(Position.class);
-        Position player = mock(Position.class);
-        int neighbourDistance = 1;
+        final Position enemy = mock(Position.class);
+        final Position player = mock(Position.class);
+        final int neighbourDistance = 1;
 
-        var visibility = new VisibilityUtil(wallCollision);
+        final var visibility = new VisibilityUtil(wallCollision);
         // Mock WallCollision.canEnemyEnter to return true
         when(wallCollision.canEnemyEnter(any(Position.class))).thenReturn(true);
         // Should return true
@@ -52,11 +52,11 @@ class VisibilityUtilTest {
 
     @Test
     void testInLosPlayerNotNeighbour() {
-        Position enemy = new Position(0, 0);
-        Position player = new Position(COORDINATE, COORDINATE);
-        int neighbourDistance = 1;
+        final Position enemy = new Position(0, 0);
+        final Position player = new Position(COORDINATE, COORDINATE);
+        final int neighbourDistance = 1;
 
-        var visibility = new VisibilityUtil(wallCollision);
+        final var visibility = new VisibilityUtil(wallCollision);
 
         // Mock WallCollision.canEnemyEnter to return false
         when(wallCollision.
@@ -67,9 +67,9 @@ class VisibilityUtilTest {
 
     @Test
     void testFirstMove() {
-        Position enemy = new Position(1, 1);
-        Position player = new Position(2, 1);
-        Position result = visibilityUtil.firstMove(enemy, player);
+        final Position enemy = new Position(1, 1);
+        final Position player = new Position(2, 1);
+        final Position result = visibilityUtil.firstMove(enemy, player);
         assertEquals(2, result.x());
         assertEquals(1, result.y());
     }

@@ -20,29 +20,19 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 public class EnemyFactoryImpl implements EnemyFactory {
     /**
-     * wall checker to check for walls.
-     */
-    private WallCollision wallChecker;
-
-    /**
-     * combat transition checker to check for combat transitions.
-     */
-    private CombatCollision combatTransitionChecker;
-
-    /**
      * movement utility class to help with movement.
      */
-    private MovementUtil movementUtil;
+    private final MovementUtil movementUtil;
 
     /**
      * patrol movement strategy.
      */
-    private MovementStrategy patrolMovementStrategy;
+    private final MovementStrategy patrolMovementStrategy;
 
     /**
      * follow movement strategy.
      */
-    private MovementStrategy followMovementStrategy;
+    private final MovementStrategy followMovementStrategy;
 
     /**
      * Constructor of the EnemyFactoryImpl class.
@@ -52,9 +42,9 @@ public class EnemyFactoryImpl implements EnemyFactory {
      */
     public EnemyFactoryImpl(final WallCollision newWallChecker,
     final CombatCollision newCombatTransitionChecker) {
-        this.wallChecker = Objects.requireNonNull(
+        final WallCollision wallChecker = Objects.requireNonNull(
             newWallChecker, "WallChecker cannot be null");
-        this.combatTransitionChecker = Objects.requireNonNull(
+        final CombatCollision combatTransitionChecker = Objects.requireNonNull(
             newCombatTransitionChecker,
             "CombatTransitionChecker cannot be null");
 
@@ -87,7 +77,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     final Position spawnPosition,
     final boolean isVertical,
     final GridNotifier gridNotifier) {
-        Enemy enemy =
+        final Enemy enemy =
             new GenericEnemy(hp, hp, power, spawnPosition, gridNotifier);
 
         enemy.setState(
@@ -101,7 +91,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     final Position spawnPosition,
     final boolean isVertical,
     final GridNotifier gridNotifier) {
-        Enemy enemy =
+        final Enemy enemy =
             new GenericEnemy(hp, hp, power, spawnPosition, gridNotifier);
 
         enemy.setState(new SleeperState());
@@ -113,7 +103,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     final Position spawnPosition,
     final boolean isVertical,
     final GridNotifier gridNotifier) {
-        Enemy enemy =
+        final Enemy enemy =
             new BossEnemy(hp, hp, power, spawnPosition, gridNotifier);
 
         enemy.setState(new SleeperState());

@@ -71,7 +71,7 @@ class PickupSystemTest {
 
     @Test
     void testSetItems() {
-        Item item3 = mock(Item.class);
+        final Item item3 = mock(Item.class);
         pickupSystem.setItems(new ArrayList<>(List.of(item3)));
         assertEquals(1, pickupSystem.getItem().size());
         assertTrue(pickupSystem.getItem().contains(item3));
@@ -84,8 +84,8 @@ class PickupSystemTest {
 
     @Test
     void testRemoveItemAt() {
-        Position position3 = new Position(1, 1);
-        Item item3 = new Potion(
+        final Position position3 = new Position(1, 1);
+        final Item item3 = new Potion(
             "name", "desc", position3, null);
         pickupSystem = new PickupSystem(
             new ArrayList<>(List.of(item3)), player, model);
@@ -98,8 +98,8 @@ class PickupSystemTest {
 
     @Test
     void testCheckAndAddItem() {
-        Position position3 = new Position(1, 1);
-        Item item3 = new Potion(
+        final Position position3 = new Position(1, 1);
+        final Item item3 = new Potion(
             "name", "desc", position3, null);
         pickupSystem = new PickupSystem(
             new ArrayList<>(List.of(item3)), player, model);

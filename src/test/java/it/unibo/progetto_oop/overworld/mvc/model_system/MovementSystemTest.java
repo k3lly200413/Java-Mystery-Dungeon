@@ -96,7 +96,8 @@ class MovementSystemTest {
         when(model.getWallCollision()
             .canEnter(any(Position.class))).thenReturn(false);
         movementSystem.move(1, 0, pickupSystem, enemySystem);
-        var result = model.getWallCollision().canEnter(any(Position.class));
+        final var result =
+            model.getWallCollision().canEnter(any(Position.class));
         assertEquals(false, result);
     }
 
@@ -127,7 +128,7 @@ class MovementSystemTest {
             .get(anyInt(), anyInt())).thenReturn(TileType.ROOM);
         when(model.getGridNotifier()).thenReturn(gridNotifier);
 
-        Enemy enemy = mock(Enemy.class);
+        final Enemy enemy = mock(Enemy.class);
         when(enemySystem.checkEnemyHit(
             any(Position.class))).thenReturn(Optional.of(enemy));
 

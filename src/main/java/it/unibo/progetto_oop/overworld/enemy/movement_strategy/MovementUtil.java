@@ -13,7 +13,7 @@ public class MovementUtil {
     /**
      * checker for wall collisions.
      */
-    private WallCollision checker;
+    private final WallCollision checker;
 
     public enum MoveDirection {
         /**
@@ -85,8 +85,8 @@ public class MovementUtil {
     public MoveDirection getInitialGeneralMoveDirection(
     final Position enemyPosition, final boolean doesEnemyGoVertically) {
         ToIntFunction<Position> getCoordinate;
-        MoveDirection directionIfEnemyIsFurther;
-        MoveDirection directionIfEnemyIsCloser;
+        final MoveDirection directionIfEnemyIsFurther;
+        final MoveDirection directionIfEnemyIsCloser;
 
         if (doesEnemyGoVertically) {
             getCoordinate = Position::y;
