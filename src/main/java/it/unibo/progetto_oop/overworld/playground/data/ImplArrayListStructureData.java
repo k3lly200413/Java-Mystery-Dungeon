@@ -34,22 +34,23 @@ public final class ImplArrayListStructureData implements StructureData {
         return h;
     }
 
-    @Override public boolean inBounds(int x, int y) {
+    @Override
+    public boolean inBounds(int x, int y) {
         return x >= 0 && x < w && y >= 0 && y < h;
     }
 
-    @Override public TileType get(int x, int y) {
+    @Override
+    public TileType get(int x, int y) {
         return grid.get(y).get(x);
     }
 
-    @Override public void set(int x, int y, TileType t) {
+    @Override
+    public void set(int x, int y, TileType t) {
         grid.get(y).set(x, t);
     }
 
     @Override
     public void fill(TileType t) {
-        grid.forEach(row ->
-            IntStream.range(0, w).forEach(i -> row.set(i, t))
-        );
+        grid.forEach(row -> IntStream.range(0, w).forEach(i -> row.set(i, t)));
     }
 }
