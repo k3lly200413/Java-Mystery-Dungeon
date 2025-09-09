@@ -2,7 +2,6 @@ package it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl;
 
 import java.util.Objects;
 
-import it.unibo.progetto_oop.overworld.enemy.EnemyType;
 import it.unibo.progetto_oop.overworld.enemy.state_pattern.GenericEnemyState;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.player.Player;
@@ -77,12 +76,12 @@ public class GenericEnemy implements Enemy {
 
     //----getters----//
     @Override
-    public final int getCurrentHealth() {
+    public final int getCurrentHp() {
         return this.currentHealth;
     }
 
     @Override
-    public final int getMaxHealth() {
+    public final int getMaxHp() {
         return this.maxHealth;
     }
 
@@ -97,8 +96,8 @@ public class GenericEnemy implements Enemy {
     }
 
     @Override
-    public final EnemyType getState() {
-        return this.currentState.getType();
+    public final GenericEnemyState getState() {
+        return this.currentState;
     }
 
 
@@ -136,7 +135,7 @@ public class GenericEnemy implements Enemy {
     }
 
     @Override
-    public void setHealth(int health) {
+    public void setHp(int health) {
         if (health < 0) {
             health = 0;
         } else if (health > this.maxHealth) {

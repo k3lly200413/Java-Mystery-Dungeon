@@ -44,10 +44,12 @@ public class PatrollerState implements GenericEnemyState {
 
     @Override
     public final void enterState(final Enemy context) {
-        System.out.println("Entering Patrol State");
+        System.out.println("Entering " + this.getDescription());
+
         currentDirection = movementUtil
             .getInitialGeneralMoveDirection(
                 context.getCurrentPosition(), this.isVertical);
+
         if (this.currentDirection == MoveDirection.NONE) {
             this.currentDirection = this.isVertical
                 ? MoveDirection.DOWN : MoveDirection.UP;
@@ -56,7 +58,6 @@ public class PatrollerState implements GenericEnemyState {
 
     @Override
     public final void exitState(final Enemy context) {
-        System.out.println("Exiting Patrol State");
     }
 
     @Override
@@ -72,6 +73,11 @@ public class PatrollerState implements GenericEnemyState {
     @Override
     public final EnemyType getType() {
         return EnemyType.PATROLLER;
+    }
+
+    @Override
+    public String getDescription() {    
+        return "Patroller State";
     }
 
 }

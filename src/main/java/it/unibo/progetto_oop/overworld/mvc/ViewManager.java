@@ -130,9 +130,9 @@ public class ViewManager {
             // frame.setVisible(true);
         // } else {
         this.combatController.setEncounteredEnemy(encounteredEnemy);
-        this.combatController.getModel().setEnemyCurrentHp(encounteredEnemy.getCurrentHealth());
-        System.out.println("Enemy Health => " + encounteredEnemy.getCurrentHealth());
-        this.combatController.getModel().setEnemyMaxHp(encounteredEnemy.getMaxHealth());
+        this.combatController.getModel().setEnemyCurrentHp(encounteredEnemy.getCurrentHp());
+        System.out.println("Enemy Health => " + encounteredEnemy.getCurrentHp());
+        this.combatController.getModel().setEnemyMaxHp(encounteredEnemy.getMaxHp());
         this.combatController.resetForNewCombat();
         this.combatController.redrawView();
         // }

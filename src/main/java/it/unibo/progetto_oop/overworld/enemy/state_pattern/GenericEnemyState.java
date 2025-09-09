@@ -10,14 +10,18 @@ public interface GenericEnemyState {
      *
      * @param context the enemy that is entering the state
      */
-    void enterState(Enemy context);
+    default void enterState(Enemy context) {
+        System.out.println("Entering " + this.getDescription());
+    }
 
     /**
      * Exit the state of the enemy.
      *
      * @param context the enemy that is exiting the state
      */
-    void exitState(Enemy context);
+    default void exitState(Enemy context) {
+        System.out.println("Exiting " + this.getDescription());
+    }
 
     /**
      * Update the state of the enemy based on the player's position.
@@ -40,5 +44,11 @@ public interface GenericEnemyState {
      * @return the type of the enemy state
      */
     EnemyType getType();
+
+    /**
+     * Get a description of the enemy state.
+     * @return a string describing the enemy state
+     */
+    String getDescription();
 }
 

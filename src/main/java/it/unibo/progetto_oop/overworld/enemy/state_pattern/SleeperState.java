@@ -10,12 +10,10 @@ public class SleeperState implements GenericEnemyState {
 
     @Override
     public final void enterState(final Enemy context) {
-        System.out.println("Entered Sleeper State");
     }
 
     @Override
     public final void exitState(final Enemy context) {
-        System.out.println("Exiting Sleeper State");
     }
 
     @Override
@@ -33,4 +31,10 @@ public class SleeperState implements GenericEnemyState {
     public final EnemyType getType() {
         return EnemyType.SLEEPER;
     }
+
+    @Override
+    public String getDescription() {
+        return "Sleeper State";
+    }
+
 }

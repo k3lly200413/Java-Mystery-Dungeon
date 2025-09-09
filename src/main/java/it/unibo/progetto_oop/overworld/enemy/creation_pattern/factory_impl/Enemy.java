@@ -1,6 +1,5 @@
 package it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl;
 
-import it.unibo.progetto_oop.overworld.enemy.EnemyType;
 import it.unibo.progetto_oop.overworld.enemy.state_pattern.GenericEnemyState;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.player.Player;
@@ -10,12 +9,12 @@ public interface Enemy {
     /**
      * @return the current health of the enemy
      */
-    int getCurrentHealth();
+    int getCurrentHp();
 
     /**
      * @return the maximum health of the enemy
      */
-    int getMaxHealth();
+    int getMaxHp();
 
     /**
      * @return the power of the enemy
@@ -25,7 +24,7 @@ public interface Enemy {
     /**
      * @return the type(state) of the enemy
      */
-    EnemyType getState();
+    GenericEnemyState getState();
 
     /**
      * @return the enemy's gridNotifier
@@ -63,7 +62,7 @@ public interface Enemy {
      * Set the current health of the enemy.
      * @param health the new current health of the enemy
      */
-    void setHealth(int health);
+    void setHp(int health);
 
     /**
      * Method to notify the enemy that the player has moved.

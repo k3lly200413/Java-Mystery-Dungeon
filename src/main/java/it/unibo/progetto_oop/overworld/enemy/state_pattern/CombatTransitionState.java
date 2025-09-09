@@ -20,12 +20,10 @@ public class CombatTransitionState implements GenericEnemyState {
 
     @Override
     public final void enterState(final Enemy context) {
-        System.out.println("Entering CombatTransition");
     }
 
     @Override
     public final void exitState(final Enemy context) {
-        System.out.println("Exiting CombatTransition");
     }
 
     @Override
@@ -37,6 +35,11 @@ public class CombatTransitionState implements GenericEnemyState {
     @Override
     public final EnemyType getType() {
         return this.enemyType;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Combat Transition State";
     }
 
 }

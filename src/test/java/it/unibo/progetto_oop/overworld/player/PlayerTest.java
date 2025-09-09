@@ -1,7 +1,6 @@
 package it.unibo.progetto_oop.overworld.player;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-ù
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
