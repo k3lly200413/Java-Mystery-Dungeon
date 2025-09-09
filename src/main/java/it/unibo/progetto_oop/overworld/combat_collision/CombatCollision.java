@@ -49,4 +49,9 @@ public interface CombatCollision {
      */
     void showOverworld();
 
+    /**
+     * show the game over view.
+     */
+    void showGameOver();
+
 }

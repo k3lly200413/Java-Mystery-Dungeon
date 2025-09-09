@@ -84,6 +84,24 @@ public final class OverworldModel {
     private final CombatCollision combatCollision;
 
     /**
+<<<<<<< HEAD
+=======
+     * player max hp.
+     */
+    private static final int PLAYER_MAX_HP = 100;
+
+    /**
+     * player stamina.
+    */
+    private static final int PLAYER_STAMINA = 100;
+
+    /**
+     * the player power.
+     */
+    private static final int PLAYER_POWER = 10;
+
+    /**
+>>>>>>> 93e220aa6b9a4aff8ddfc012059286d6e13fca4c
      * Constructor of the OverworldModel class.
      *
      * @param enemies the enemies on the current floor

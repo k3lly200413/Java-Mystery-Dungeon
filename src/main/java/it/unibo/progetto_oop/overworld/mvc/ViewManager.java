@@ -1,10 +1,12 @@
 package it.unibo.progetto_oop.overworld.mvc;
 
-import javax.swing.*;
-
 import java.awt.CardLayout;
 import java.awt.Dimension;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
@@ -33,7 +35,11 @@ public class ViewManager {
      * combat card identifier.
      */
     public static final String COMBAT_CARD = "COMBAT";
-    //private static final String GAME_OVER = "GAME OVER";
+
+    /**
+     * game over card identifier.
+     */
+    private static final String GAME_OVER = "GAME OVER";
 
     /**
      * the frame of the game.
@@ -62,6 +68,8 @@ public class ViewManager {
 
     private CombatController combatController;
 
+    /** Game over panel. */
+    private GameOverPanel gameOverPanel;
 
     /**
      * Method to start the view manager with the initial start view.
@@ -143,5 +151,14 @@ public class ViewManager {
         this.combatController.redrawView();
         // }
         this.cardLayout.show(this.mainCardPanel, COMBAT_CARD);
+    }
+
+    public void setGameOverPanel(final GameOverPanel newGameOverPanel) {
+        this.gameOverPanel = newGameOverPanel;
+        this.mainCardPanel.add(this.gameOverPanel, GAME_OVER);
+    }
+
+    public void showGameOver() {
+        this.cardLayout.show(this.mainCardPanel, GAME_OVER);
     }
 }
