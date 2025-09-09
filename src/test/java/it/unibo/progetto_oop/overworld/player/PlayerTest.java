@@ -26,6 +26,21 @@ public class PlayerTest {
      */
     private Item antidote;
 
+    /**
+     * costant max hp.
+     */
+    private static final int MAX_HP = 100;
+
+    /**
+     * costant max stamina.
+     */
+    private static final int MAX_STAMINA = 100;
+
+    /**
+     * costant power.
+     */
+    private static final int POWER = 10;
+
 
 
     /**
@@ -51,12 +66,13 @@ public class PlayerTest {
         assertEquals(1, inventory.getCurrentSize());
 
         // Create a player with the inventory
-        var player = new Player(100, 100, 10, inventory);
+        var player = new Player(MAX_HP, MAX_STAMINA, POWER, inventory);
 
         // Use the item
         player.useItem(health);
 
-        // Verify that the inventory's useItem method was called with the correct item
+        // Verify that the inventory's useItem
+        // method was called with the correct item
         assertEquals(0, inventory.getCurrentSize());
     }
 
@@ -68,7 +84,7 @@ public class PlayerTest {
         assertEquals(1, inventory.getCurrentSize());
 
         // Create a player with the inventory
-        var player = new Player(100, 100, 10, inventory);
+        var player = new Player(MAX_HP, MAX_STAMINA, POWER, inventory);
 
         // Add the item via player method
         player.addItem(health);

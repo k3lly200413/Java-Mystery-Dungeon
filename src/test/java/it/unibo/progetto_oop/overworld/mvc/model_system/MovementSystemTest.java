@@ -10,21 +10,67 @@ import it.unibo.progetto_oop.overworld.playground.data.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
 
 class MovementSystemTest {
+    /**
+     * mock player.
+     */
     private Player player;
+
+    /**
+     * mock model.
+     */
     private OverworldModel model;
+
+    /**
+     * mock pickup system.
+     */
     private PickupSystem pickupSystem;
+
+    /**
+     * mock enemy system.
+     */
     private EnemySystem enemySystem;
+
+    /**
+     * system under test.
+     */
     private MovementSystem movementSystem;
+
+    /**
+     * mock position.
+     */
     private Position position;
+
+    /**
+     * temporary position.
+     */
     private Position tempPosition;
 
+    /**
+     * mock wall collision.
+     */
     private WallCollision wallCollision;
+
+    /**
+     * mock structure data.
+     */
     private StructureData structureData;
+
+    /**
+     * mock grid notifier.
+     */
     private GridNotifier gridNotifier;
 
     @BeforeEach
@@ -47,7 +93,8 @@ class MovementSystemTest {
         when(player.getPosition()).thenReturn(position);
         when(model.getWallCollision()).thenReturn(wallCollision);
 
-        when(model.getWallCollision().canEnter(any(Position.class))).thenReturn(false);
+        when(model.getWallCollision()
+            .canEnter(any(Position.class))).thenReturn(false);
         movementSystem.move(1, 0, pickupSystem, enemySystem);
         var result = model.getWallCollision().canEnter(any(Position.class));
         assertEquals(false, result);
@@ -57,10 +104,12 @@ class MovementSystemTest {
     void testMoveStairs() {
         when(player.getPosition()).thenReturn(position);
         when(model.getWallCollision()).thenReturn(wallCollision);
-        when(model.getWallCollision().canEnter(any(Position.class))).thenReturn(true);
+        when(model.getWallCollision()
+            .canEnter(any(Position.class))).thenReturn(true);
         when(model.getBaseGridView()).thenReturn(structureData);
 
-        when(model.getBaseGridView().get(anyInt(), anyInt())).thenReturn(TileType.STAIRS);
+        when(model.getBaseGridView()
+            .get(anyInt(), anyInt())).thenReturn(TileType.STAIRS);
         when(model.getGridNotifier()).thenReturn(gridNotifier);
 
         movementSystem.move(1, 0, pickupSystem, enemySystem);
@@ -71,30 +120,36 @@ class MovementSystemTest {
     void testMoveEnemyEncounter() {
         when(player.getPosition()).thenReturn(position);
         when(model.getWallCollision()).thenReturn(wallCollision);
-        when(model.getWallCollision().canEnter(any(Position.class))).thenReturn(true);
+        when(model.getWallCollision()
+            .canEnter(any(Position.class))).thenReturn(true);
         when(model.getBaseGridView()).thenReturn(structureData);
-        when(model.getBaseGridView().get(anyInt(), anyInt())).thenReturn(TileType.ROOM);
+        when(model.getBaseGridView()
+            .get(anyInt(), anyInt())).thenReturn(TileType.ROOM);
         when(model.getGridNotifier()).thenReturn(gridNotifier);
 
         Enemy enemy = mock(Enemy.class);
-        when(enemySystem.checkEnemyHit(any(Position.class))).thenReturn(Optional.of(enemy));
+        when(enemySystem.checkEnemyHit(
+            any(Position.class))).thenReturn(Optional.of(enemy));
 
         movementSystem.move(1, 0, pickupSystem, enemySystem);
         verify(enemySystem).setEncounteredEnemy(enemy);
         assertTrue(movementSystem.isCombatTransitionPending());
-    } 
+    }
 
     @Test
     void testMoveNoEnemy() {
         when(player.getPosition()).thenReturn(position);
         when(model.getWallCollision()).thenReturn(wallCollision);
-        when(model.getWallCollision().canEnter(any(Position.class))).thenReturn(true);
+        when(model.getWallCollision()
+            .canEnter(any(Position.class))).thenReturn(true);
         when(model.getBaseGridView()).thenReturn(structureData);
-        when(model.getBaseGridView().get(anyInt(), anyInt())).thenReturn(TileType.ROOM);
+        when(model.getBaseGridView()
+            .get(anyInt(), anyInt())).thenReturn(TileType.ROOM);
         when(model.getGridNotifier()).thenReturn(gridNotifier);
-        when(enemySystem.checkEnemyHit(any(Position.class))).thenReturn(Optional.empty());
+        when(enemySystem.checkEnemyHit(
+            any(Position.class))).thenReturn(Optional.empty());
         movementSystem.move(1, 0, pickupSystem, enemySystem);
-        
+
         verify(enemySystem).triggerEnemyTurns();
         verify(player).setPosition(tempPosition);
     }
