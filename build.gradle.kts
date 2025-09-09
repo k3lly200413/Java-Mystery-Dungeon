@@ -15,6 +15,7 @@ plugins {
     id("org.danilopianini.gradle-java-qa") version "1.125.0"
 }
 
+
 repositories { // Where to search for dependencies
     mavenCentral()
 }
@@ -50,7 +51,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("it.unibo.progetto_oop.Overworld.Main") // DA CAMBIARE
+    mainClass.set("it.unibo.progetto_oop.Main") // DA CAMBIARE
 }
 
 tasks.test {
