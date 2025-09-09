@@ -4,6 +4,10 @@ import it.unibo.progetto_oop.combat.inventory.ItemImpl;
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
+/**
+ * Class representing a potion item that can apply
+ * various effects using different strategies.
+ */
 public class Potion extends ItemImpl {
 
     /** The strategy for applying potion effects. */

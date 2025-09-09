@@ -406,7 +406,7 @@ public class CombatView extends JPanel {
 
     /**
      * Sets the maximum value for the enemy health bar.
-     * 
+     *
      * @param max maximum health value for the enemy
      */
     public final void setEnemyHealthBarMax(final int max) {
@@ -437,7 +437,7 @@ public class CombatView extends JPanel {
 
     /**
      * Sets the maximum value for the player's stamina bar.
-     * 
+     *
      * @param max maximum stamina value for the player
      */
     public final void setPlayerMaxStaminaBar(final int max) {

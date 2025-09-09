@@ -12,6 +12,11 @@ import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.OverworldPlayerAdapter;
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
+/**
+ * This class represents the Game Over state in a combat scenario.
+ * It implements the CombatState interface and defines the behavior
+ * when the game is over, either due to the player's defeat or victory.
+ */
 public class GameOverState implements CombatState {
 
     /** Combat collision instance. */
@@ -33,13 +38,12 @@ public class GameOverState implements CombatState {
     private final int timerDuration = 700;
 
     /**
+     * @param newCombatCollision    Instance of the CombatCollision
+     * @param newGridNotifier        Instance of the GridNotifier
+     * @param newEnemy               Instance of the Enemy
+     * @param player                 Instance of the Player
      *
-     * @param newCombatCollision
-     * @param newGridNotifier
-     * @param newEnemy
-     * @param player
-     *
-     * Constructor of the GameOverState class.
+     *                               Constructor of the GameOverState class.
      */
     public GameOverState(final CombatCollision newCombatCollision,
     final GridNotifier newGridNotifier,
@@ -51,14 +55,13 @@ public class GameOverState implements CombatState {
     }
 
     /**
-     *
      * @param context Istance of the controller
      *
      *                This method is called when entering a combat state.
      */
     @Override
     public void enterState(final CombatController context) {
-        Timer enemyActionTimer = new Timer(timerDuration, e -> {
+        final Timer enemyActionTimer = new Timer(timerDuration, e -> {
             if (context.getModel().getPlayerHealth() <= 0) {
                 context.getView().showGameOver(() -> {
                     System.out.println("Restarting game...");
@@ -99,11 +102,9 @@ public class GameOverState implements CombatState {
                 .whoDied(context.getModel().getWhoDied())
                 .build();
         context.getView().redrawGrid(defaultRedraw);
-
     }
 
     /**
-     *
      * @param context Istance of the controller
      *
      *                This method is called when exiting a combat state.
@@ -114,7 +115,6 @@ public class GameOverState implements CombatState {
     }
 
     /**
-     *
      * @param context Istance of the controller
      *
      *                This method is called when an animation is complete during
@@ -128,25 +128,21 @@ public class GameOverState implements CombatState {
     @Override
     public void handleAttackBuffInput(final CombatController context) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
     public void handleBackInput(final CombatController context) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
     public void handleBagInput(final CombatController context) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
     public void handleCurePoisonInput(final CombatController context) {
         // TODO Auto-generated method stub
-
     }
 
     @Override

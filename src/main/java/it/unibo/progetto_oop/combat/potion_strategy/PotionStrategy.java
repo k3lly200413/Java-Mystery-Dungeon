@@ -2,6 +2,9 @@ package it.unibo.progetto_oop.combat.potion_strategy;
 
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
+/**
+ * Functional interface representing a strategy for applying potion effects.
+ */
 @FunctionalInterface
 public interface PotionStrategy {
     /**

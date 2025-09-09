@@ -73,7 +73,7 @@ public class GameOverPanel extends JPanel {
      * @param onRestart a Runnable to execute when the restart button is clicked
      */
     public GameOverPanel(final Runnable onRestart) {
-        var url = getClass().getResource(
+        final var url = getClass().getResource(
             "/spritesOverWorld/gameOverBackground.png");
         backgroundImage = new ImageIcon(url).getImage();
 
