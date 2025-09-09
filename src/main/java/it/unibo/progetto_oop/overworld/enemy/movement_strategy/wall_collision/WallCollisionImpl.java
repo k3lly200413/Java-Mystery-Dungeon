@@ -76,7 +76,7 @@ public final class WallCollisionImpl implements WallCollision {
      */
     @Override
     public boolean canEnemyEnter(final Position to) {
-        if (!canEnter(to)) { 
+        if (!canEnter(to)) {
             return false;
         }
         // already not a wall and not occupied by an enemy

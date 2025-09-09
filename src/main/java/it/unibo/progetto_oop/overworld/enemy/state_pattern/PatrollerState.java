@@ -76,7 +76,7 @@ public class PatrollerState implements GenericEnemyState {
     }
 
     @Override
-    public String getDescription() {    
+    public final String getDescription() {
         return "Patroller State";
     }
 

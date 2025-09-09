@@ -33,7 +33,7 @@ public class SleeperState implements GenericEnemyState {
     }
 
     @Override
-    public String getDescription() {
+    public final String getDescription() {
         return "Sleeper State";
     }
 

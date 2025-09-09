@@ -38,7 +38,7 @@ public class CombatTransitionState implements GenericEnemyState {
     }
 
     @Override
-    public String getDescription() {
+    public final String getDescription() {
         return "Combat Transition State";
     }
 

@@ -97,7 +97,7 @@ public class InventoryView extends JPanel {
 
 
     /**
-     * Status Area padding
+     * Status Area padding.
      */
     private static final int STATUS_PADDING = 5;
 
@@ -178,7 +178,11 @@ public class InventoryView extends JPanel {
         label.setBackground(Color.WHITE);
         label.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(Color.DARK_GRAY),
-            BorderFactory.createEmptyBorder(STATUS_PADDING, STATUS_PADDING * 2, STATUS_PADDING, STATUS_PADDING * 2)
+            BorderFactory.createEmptyBorder(
+                STATUS_PADDING,
+                STATUS_PADDING * 2,
+                STATUS_PADDING,
+                STATUS_PADDING * 2)
         ));
 
         label.setPreferredSize(
@@ -188,9 +192,15 @@ public class InventoryView extends JPanel {
     }
 
     private JPanel createStatusAreaPanel() {
-        JPanel statusAreaPanel = new JPanel(new BorderLayout(0, STATUS_PADDING));
-        statusAreaPanel.setBorder(BorderFactory.createEmptyBorder(STATUS_PADDING, STATUS_PADDING, STATUS_PADDING, STATUS_PADDING));
-        
+        JPanel statusAreaPanel = new JPanel(
+            new BorderLayout(0, STATUS_PADDING));
+        statusAreaPanel.setBorder(
+            BorderFactory.createEmptyBorder(
+                STATUS_PADDING,
+                STATUS_PADDING,
+                STATUS_PADDING,
+                STATUS_PADDING));
+
         this.bottomStatusLabel = createStatusLabel();
         statusAreaPanel.add(this.bottomStatusLabel, BorderLayout.CENTER);
 
@@ -208,7 +218,7 @@ public class InventoryView extends JPanel {
             + VIEWPORT_HEIGHT_CELLS;
         int statusAreaHeight = bottomStatusLabel.getPreferredSize().height
             + backButton.getPreferredSize().height;
-        
+
         return new Dimension(
                 totalPreferredWidth, gridActualHeight + statusAreaHeight);
     }
@@ -232,7 +242,8 @@ public class InventoryView extends JPanel {
 
         this.gridPanel.removeAll();
 
-        java.util.List<Item> items = new ArrayList<>(this.inventory.getFullInventory().keySet());
+        java.util.List<Item> items = new ArrayList<>(
+            this.inventory.getFullInventory().keySet());
 
         Color[] slotColors = new Color[] {
             ITEM_SLOT_1_COLOR, ITEM_SLOT_2_COLOR, ITEM_SLOT_3_COLOR
@@ -250,7 +261,8 @@ public class InventoryView extends JPanel {
                     String desc = "<html>"
                         + currentItem.getDescription().replace("\n", "<br>")
                         + "<br><b style='color:blue;'>"
-                        + this.inventory.getItemCount(currentItem) + " in inventory"
+                        + this.inventory.getItemCount(currentItem)
+                        + " in inventory"
                         + "</b></html>";
                     Color itemColor = slotColors[itemIndex % slotColors.length];
                     cellButton = createItemButton(
@@ -266,7 +278,8 @@ public class InventoryView extends JPanel {
                             GRID_LINE_COLOR.darker()));
                 }
 
-                cellButton.setPreferredSize(new Dimension(PREFERRED_CELL_WIDTH, PREFERRED_CELL_HEIGHT));
+                cellButton.setPreferredSize(
+                    new Dimension(PREFERRED_CELL_WIDTH, PREFERRED_CELL_HEIGHT));
                 this.gridPanel.add(cellButton);
             }
         }

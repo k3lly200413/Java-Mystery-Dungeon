@@ -135,9 +135,9 @@ public class GenericEnemy implements Enemy {
     }
 
     @Override
-    public void setHp(int health) {
+    public final void setHp(final int health) {
         if (health < 0) {
-            health = 0;
+            this.currentHealth = 0;
         } else if (health > this.maxHealth) {
             this.currentHealth = this.maxHealth;
         } else {
