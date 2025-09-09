@@ -21,11 +21,11 @@ import it.unibo.progetto_oop.combat.state_pattern.GameOverState;
 import it.unibo.progetto_oop.combat.state_pattern.InfoDisplayState;
 import it.unibo.progetto_oop.combat.state_pattern.ItemSelectionState;
 import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
-import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 
 /**.
@@ -159,7 +159,8 @@ public class CombatController {
         this.view = viewToUse;
         this.neighbours = new Neighbours();
 
-        this.view.setHealthBarMax(model.getMaxHealth());
+        this.view.setPlayerHealthBarMax(model.getPlayerMaxHealth());
+        this.view.setEnemyHealthBarMax(this.model.getEnemyMaxHealth());
         this.view.updatePlayerHealth(model.getPlayerHealth());
         this.view.updateEnemyHealth(model.getEnemyHealth());
 
@@ -240,7 +241,8 @@ public class CombatController {
         }
         enemyActionTimer = null;
         combatCollision.setInCombat(false);
-        this.view.close();
+        this.setState(new GameOverState(combatCollision, gridNotifier, enemy, player));
+        // this.view.close();
     }
 
     private void handleAttackMenu() {
@@ -266,7 +268,6 @@ public class CombatController {
         }
         if (!this.player.getInventory().canUseItem(this.healingItem)) {
             this.view.setCustomButtonDisabled(this.view.getHealingButton());
-
         }
         view.clearInfo();
     }
@@ -1108,6 +1109,7 @@ public class CombatController {
             this.view.updatePlayerHealth(this.model.getPlayerHealth());
             currentState.handleBackInput(this);
             this.player.getInventory().decreaseItemCount(healingItem);
+            this.redrawView();
         }
     }
 
@@ -1282,8 +1284,21 @@ public class CombatController {
         });
         animationTimer.start(); // faccio partire il timer
         //(finisce tutte le prossime chiamate poi fa partire
-        //il timer non è coe un for (lo so è strano))
+        //il timer non è coe un for (lo so è strano))f
 
+    }
+
+    public final void resetForNewCombat() {
+        this.model.setPlayerMaxHp(this.player.getMaxHp());
+        // this.model.setPlayerCurrentHp(this.player.getCurrentHp());
+        this.view.setPlayerHealthBarMax(model.getPlayerMaxHealth());
+        System.out.println("Max Helth => " + this.model.getPlayerMaxHealth());
+        this.view.setEnemyHealthBarMax(this.model.getEnemyMaxHealth());
+        this.view.updateEnemyHealth(this.model.getEnemyHealth());
+        this.model.resetPositions();
+        this.setState(new PlayerTurnState());
+        this.view.updatePlayerHealth(this.model.getPlayerHealth());
+        this.view.updateEnemyHealth(this.model.getEnemyHealth());
     }
 
 }

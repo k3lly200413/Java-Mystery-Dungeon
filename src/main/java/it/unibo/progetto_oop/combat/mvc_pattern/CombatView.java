@@ -31,7 +31,7 @@ import javax.swing.border.BevelBorder;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.helper.Neighbours;
-import it.unibo.progetto_oop.overworld.PlayGround.Data.Position;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 public class CombatView extends JPanel {
     /**
@@ -378,8 +378,11 @@ public class CombatView extends JPanel {
      *
      * @param max the maximum health value for both player and enemy
      */
-    public final void setHealthBarMax(final int max) {
+    public final void setPlayerHealthBarMax(final int max) {
         this.playerHealtBar.setMaximum(max);
+    }
+
+    public final void setEnemyHealthBarMax(final int max) {
         this.enemyHealthBar.setMaximum(max);
     }
 

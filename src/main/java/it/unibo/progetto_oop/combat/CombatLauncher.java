@@ -32,7 +32,7 @@ public final class CombatLauncher {
         final int enemyPower = 30;
         final int enemySpeed = 3;
         final String enemyName = "Dragon";
-        final int playerMaxStamina = 100;
+        final int playerMaxStamina = player.getStamina();
         final int playerLongRangePower = 5;
 
         final int viewWidthFactor = 20;
@@ -61,10 +61,11 @@ public final class CombatLauncher {
             .setPlayerPower(playerPower)
             .setPlayerPoisonPower(playerPoisonPower)
             .setPlayerLongRangePower(playerLongRangePower)
+            .setPlayerCurrentHealth(player.getCurrentHp())
             .setEnemyPower(enemyPower)
             .setEnemySpeed(enemySpeed)
             .setEnemyName(enemyName)
-            .setMaxHealth(maxHealth)
+            .setPlayerMaxHealth(maxHealth)
             .build();
 
 
