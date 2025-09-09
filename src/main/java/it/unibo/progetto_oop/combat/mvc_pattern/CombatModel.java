@@ -163,8 +163,6 @@ public class CombatModel implements PossibleUser {
         this.deathRayPath = new ArrayList<>();
         this.deathRayPath.add(enemyPosition);
 
-        this.enemyState = builder.getEnemyState();
-
     }
 
 /**
