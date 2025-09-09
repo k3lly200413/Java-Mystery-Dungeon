@@ -3,6 +3,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
+import it.unibo.progetto_oop.combat.state_pattern.BossTurnState;
+import it.unibo.progetto_oop.combat.state_pattern.CombatState;
+import it.unibo.progetto_oop.combat.state_pattern.EnemyTurnState;
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
@@ -122,6 +125,8 @@ public class CombatModel implements PossibleUser {
     /** Whether the poison animation is active. */
     private boolean poisonAnimation;
 
+    private CombatState enemyState;
+
     /**
      * Constructs a CombatModel with specified parameters.
      *
@@ -157,6 +162,8 @@ public class CombatModel implements PossibleUser {
 
         this.deathRayPath = new ArrayList<>();
         this.deathRayPath.add(enemyPosition);
+
+        this.enemyState = builder.getEnemyState();
 
     }
 
@@ -719,6 +726,10 @@ public final boolean isGameOver() {
         this.currentBossState = newCurrentBossState;
     }
 
+    public void setEnemyState(final boolean newEnemyState) {
+        this.enemyState = newEnemyState ? new EnemyTurnState() : new BossTurnState();
+    }
+
     @Override
     public final int getHp() {
         return this.getPlayerHealth();
@@ -740,6 +751,10 @@ public final boolean isGameOver() {
 
     public int getEnemyMaxHealth() {
         return this.enemyMaxHealth;
+    }
+
+    public CombatState getEnemyState() {
+        return this.enemyState;
     }
 
     /**

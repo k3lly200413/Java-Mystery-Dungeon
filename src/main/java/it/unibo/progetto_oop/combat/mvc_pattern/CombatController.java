@@ -131,6 +131,8 @@ public class CombatController {
      */
     private CombatState currentState;
 
+    private CombatState enemyState;
+
     /** Combat collision handler. */
     private final CombatCollision combatCollision;
 
@@ -909,7 +911,7 @@ public class CombatController {
 
                 if (this.model.isPlayerTurn() && !this.checkGameOver()) {
                     view.updateEnemyHealth(remaining);
-                    this.setState(new EnemyTurnState());
+                    this.setState(this.enemyState);
                 } else {
                     view.updatePlayerHealth(remaining);
                     this.setState(new PlayerTurnState());
@@ -1144,6 +1146,8 @@ public class CombatController {
 
     public final void setEncounteredEnemy(Enemy encounteredEnemy) {
         this.enemy = encounteredEnemy;
+        this.model.setEnemyState(this.enemy.isBoss());
+        this.enemyState = this.model.getEnemyState();
     }
 
     /**
@@ -1252,7 +1256,7 @@ public class CombatController {
                 if (this.model.isPlayerTurn() && !this.checkGameOver()) {
                     this.model.setPlayerTurn(false);
                     view.updateEnemyHealth(remaining);
-                    CombatController.this.setState(new EnemyTurnState());
+                    CombatController.this.setState(this.enemyState);
                 } else {
                     CombatController.this.model.setPlayerTurn(true);
                     view.updatePlayerHealth(remaining);
