@@ -45,14 +45,20 @@ public class OverworldEntitiesGenerator {
         }
         player.setPosition(playerPos);
 
-        // 2) ENEMY
-        placer.placeObject(base, entity, TileType.ENEMY, model.getCurrentFloor().rooms().size(),
-                rand, playerPos, MIN_DIST_FROM_PLAYER);
+        if (model.getCurrentFloor().rooms().size() == 1) {
+            //boss
+            
+        }
+        else {
+            // 2) ENEMY
+            placer.placeObject(base, entity, TileType.ENEMY, model.getCurrentFloor().rooms().size(),
+                    rand, playerPos, MIN_DIST_FROM_PLAYER);
 
-        // 3) ITEM
-        placer.placeObject(base, entity, TileType.ITEM, model.getCurrentFloor().rooms().size(),
+            // 3) ITEM
+            placer.placeObject(base, entity, TileType.ITEM, model.getCurrentFloor().rooms().size(),
                 rand, null, MIN_DIST_FROM_PLAYER);
-
+        }
+        
         // entities generation
         generateEnemiesFromEntityGrid(model, gridNotifier);
         generateItemsFromEntityGrid(model);
