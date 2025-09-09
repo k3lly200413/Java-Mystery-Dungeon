@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,7 +26,7 @@ public class GameOverPanel extends JPanel {
     private static final Color SUBTITLE_COLOR = Color.WHITE; // meglio bianco per contrasto
     private static final float TITLE_FONT_SIZE = 64f;
     private static final float SUBTITLE_FONT_SIZE = 28f;
-    private static final float BUTTON_FONT_SIZE = 22f;
+    private static final int BUTTON_FONT_SIZE = 28;
     private static final int BUTTON_WIDTH = 360;
     private static final int BUTTON_HEIGHT = 56;
     private static final int VERTICAL_SPACING = 12;
@@ -35,7 +36,6 @@ public class GameOverPanel extends JPanel {
     private final Image backgroundImage;
 
     public GameOverPanel(final Runnable onRestart) {
-        // Carica immagine di sfondo (mettila in resources, es: /spritesOverWorld/gameOverBackground.png)
         var url = getClass().getResource("/spritesOverWorld/gameOverBackground.png");
         backgroundImage = new ImageIcon(url).getImage();
 
@@ -52,7 +52,7 @@ public class GameOverPanel extends JPanel {
         gbc.fill = GridBagConstraints.NONE;
 
         // Titolo
-        final JLabel title = new JLabel("GAME OVER");
+        final JLabel title = new JLabel("GAME  OVER");
         title.setForeground(TITLE_COLOR);
         title.setFont(title.getFont().deriveFont(Font.BOLD, TITLE_FONT_SIZE));
         add(title, gbc);
@@ -74,7 +74,10 @@ public class GameOverPanel extends JPanel {
         gbc.gridy = 3;
         restartButton = new JButton("Restart");
         restartButton.setFocusPainted(false);
-        restartButton.setFont(restartButton.getFont().deriveFont(Font.BOLD, BUTTON_FONT_SIZE));
+        restartButton.setFont(new Font("SansSerif", Font.BOLD, BUTTON_FONT_SIZE));
+        restartButton.setForeground(Color.WHITE);
+        restartButton.setBackground(new Color(63, 46, 30));
+        restartButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3, true));
         restartButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         restartButton.addActionListener(e -> {
             if (onRestart != null) {

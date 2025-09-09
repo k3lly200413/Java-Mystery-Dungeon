@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import it.unibo.progetto_oop.GameLuncher;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.command_pattern.GameButton;
 import it.unibo.progetto_oop.combat.command_pattern.LongRangeButton;
@@ -1308,5 +1309,20 @@ public class CombatController {
         this.view.updatePlayerHealth(this.model.getPlayerHealth());
         this.view.updateEnemyHealth(this.model.getEnemyHealth());
     }
+
+    public void restartGame() {
+    // Chiudi la finestra corrente
+    javax.swing.SwingUtilities.invokeLater(() -> {
+        // Distrugge la finestra esistente
+        java.awt.Window window = javax.swing.FocusManager.getCurrentManager().getActiveWindow();
+        if (window != null) {
+            window.dispose();
+        }
+
+        // Ricrea il gioco da capo
+        GameLuncher app = new GameLuncher();
+        app.start();
+    });
+}
 
 }

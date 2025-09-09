@@ -61,10 +61,8 @@ public class GameOverState implements CombatState {
         Timer enemyActionTimer = new Timer(timerDuration, e -> {
             if (context.getModel().getPlayerHealth() <= 0) {
                 context.getView().showGameOver(() -> {
-                    // 'TODO': qui in futuro resetta
-                    // il Model e cambia stato, es:
-                    // context.restartMatch();
-                    // context.setState(new PlayerTurnState());
+                    System.out.println("Restarting game...");
+                    context.restartGame();
                 });
             } else if (context.getModel().getEnemyHealth() <= 0) {
                 userPlayer.increasePlayerMaxPower(increaseAmount);

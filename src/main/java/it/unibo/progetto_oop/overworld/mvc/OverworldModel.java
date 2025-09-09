@@ -92,7 +92,7 @@ public final class OverworldModel {
     /**
      * player stamina.
     */
-    private static final int PLAYER_STAMINA = 10;
+    private static final int PLAYER_STAMINA = 100;
 
     /**
      * the player power.
