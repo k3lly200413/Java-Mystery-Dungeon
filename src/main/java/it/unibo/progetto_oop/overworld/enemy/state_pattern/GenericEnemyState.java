@@ -10,19 +10,14 @@ public interface GenericEnemyState {
      *
      * @param context the enemy that is entering the state
      */
-    default void enterState(Enemy context) {
-        System.out.println("Entering " + this.getDescription());
-    }
+    void enterState(Enemy context);
 
     /**
      * Exit the state of the enemy.
      *
      * @param context the enemy that is exiting the state
      */
-    default void exitState(Enemy context) {
-        System.out.println("Exiting " + this.getDescription());
-    }
-
+    void exitState(Enemy context);
     /**
      * Update the state of the enemy based on the player's position.
      * this method will be called every turn of the enemy

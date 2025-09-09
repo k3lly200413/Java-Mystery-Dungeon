@@ -62,7 +62,7 @@ public abstract class ItemImpl implements Item {
         if (!(o instanceof ItemImpl)) {
             return false;
         }
-        ItemImpl other = (ItemImpl) o;
+        final ItemImpl other = (ItemImpl) o;
         return Objects.equals(name, other.name)
         && Objects.equals(description, other.description);
     }

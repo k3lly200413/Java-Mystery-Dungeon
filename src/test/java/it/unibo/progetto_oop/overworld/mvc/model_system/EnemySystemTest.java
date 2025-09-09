@@ -49,11 +49,6 @@ class EnemySystemTest {
     private Position position;
 
     /**
-     * actual position.
-     */
-    private Position position1;
-
-    /**
      * system under test.
      */
     private EnemySystem enemySystem;
@@ -82,7 +77,7 @@ class EnemySystemTest {
 
     @Test
     void testGetEnemies() {
-        List<Enemy> enemies = enemySystem.getEnemies();
+        final List<Enemy> enemies = enemySystem.getEnemies();
         assertEquals(2, enemies.size());
         assertTrue(enemies.contains(enemy1));
         assertTrue(enemies.contains(enemy2));
@@ -99,7 +94,7 @@ class EnemySystemTest {
 
     @Test
     void testSetEnemies() {
-        Enemy enemy3 = mock(Enemy.class);
+        final Enemy enemy3 = mock(Enemy.class);
         enemySystem.setEnemies(Arrays.asList(enemy3));
         assertEquals(1, enemySystem.getEnemies().size());
         assertTrue(enemySystem.getEnemies().contains(enemy3));
@@ -111,7 +106,7 @@ class EnemySystemTest {
         when(model.getCombatCollision()).thenReturn(combatCollision);
         when(model.getCombatCollision()
                 .checkCombatCollision(position, position)).thenReturn(true);
-        Optional<Enemy> result = enemySystem.checkEnemyHit(position);
+        final Optional<Enemy> result = enemySystem.checkEnemyHit(position);
         assertTrue(result.isPresent());
         assertEquals(enemy1, result.get());
     }
@@ -122,24 +117,24 @@ class EnemySystemTest {
         when(model.getCombatCollision()).thenReturn(combatCollision);
         when(model.getCombatCollision()
             .checkCombatCollision(position, position)).thenReturn(false);
-        Optional<Enemy> result = enemySystem.checkEnemyHit(position);
+        final Optional<Enemy> result = enemySystem.checkEnemyHit(position);
         assertFalse(result.isPresent());
     }
 
     @Test
     void testRemoveEnemyAt() {
-        position1 = new Position(1, 1);
+        final Position position3 = new Position(1, 1);
         enemy1 = new GenericEnemy(
             ENEMY_HEALTH,
             ENEMY_HEALTH,
             ENEMY_HEALTH,
-            position1,
+            position3,
             mock(GridNotifier.class));
         enemySystem =
             new EnemySystem(
                 new ArrayList<>(Arrays.asList(enemy1)), player, model);
 
-        boolean removed = enemySystem.removeEnemyAt(position1);
+        final boolean removed = enemySystem.removeEnemyAt(position3);
         assertTrue(removed);
         assertEquals(0, enemySystem.getEnemies().size());
     }

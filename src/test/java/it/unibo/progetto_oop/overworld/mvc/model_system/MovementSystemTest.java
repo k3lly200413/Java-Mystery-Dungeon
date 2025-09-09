@@ -11,7 +11,7 @@ import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -96,8 +96,9 @@ class MovementSystemTest {
         when(model.getWallCollision()
             .canEnter(any(Position.class))).thenReturn(false);
         movementSystem.move(1, 0, pickupSystem, enemySystem);
-        var result = model.getWallCollision().canEnter(any(Position.class));
-        assertEquals(false, result);
+        final var result =
+            model.getWallCollision().canEnter(any(Position.class));
+        assertFalse(result);
     }
 
     @Test
@@ -127,7 +128,7 @@ class MovementSystemTest {
             .get(anyInt(), anyInt())).thenReturn(TileType.ROOM);
         when(model.getGridNotifier()).thenReturn(gridNotifier);
 
-        Enemy enemy = mock(Enemy.class);
+        final Enemy enemy = mock(Enemy.class);
         when(enemySystem.checkEnemyHit(
             any(Position.class))).thenReturn(Optional.of(enemy));
 

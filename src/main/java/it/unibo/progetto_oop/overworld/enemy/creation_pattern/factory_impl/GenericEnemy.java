@@ -12,17 +12,12 @@ public class GenericEnemy implements Enemy {
     /**
      * maxHealth of the enemy.
      */
-    private int maxHealth;
+    private final int maxHealth;
 
     /**
      * power of the enemy.
      */
     private final int power;
-
-    /**
-     * initial position of the enemy.
-     */
-    private Position initialPosition;
 
     /**
      * current position of the enemy.
@@ -68,9 +63,8 @@ public class GenericEnemy implements Enemy {
 
         this.maxHealth = newMaxHealth;
         this.power = newPower;
-        this.initialPosition = newInitialPosition;
         this.currentHealth = newCurrentHealth;
-        this.currentPosition = this.initialPosition;
+        this.currentPosition = newInitialPosition;
         this.gridNotifier = newGridNotifier;
     }
 
@@ -116,7 +110,7 @@ public class GenericEnemy implements Enemy {
 
     @Override
     public final void setState(final GenericEnemyState newState) {
-        if (newState == null || newState == this.currentState) {
+        if (newState == null || newState.equals(this.currentState)) {
             return;
         }
 
@@ -135,9 +129,9 @@ public class GenericEnemy implements Enemy {
     }
 
     @Override
-    public void setHp(int health) {
+    public final void setHp(final int health) {
         if (health < 0) {
-            health = 0;
+            this.currentHealth = 0;
         } else if (health > this.maxHealth) {
             this.currentHealth = this.maxHealth;
         } else {

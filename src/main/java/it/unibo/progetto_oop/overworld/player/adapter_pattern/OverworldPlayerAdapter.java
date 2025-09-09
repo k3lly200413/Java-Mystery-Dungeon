@@ -18,6 +18,12 @@ public final class OverworldPlayerAdapter implements PossibleUser {
     private final Player adaptedPlayer;
 
     /**
+     * error message constant.
+     */
+    private static final String ERROR_MSG =
+        "Player to adapt is null";
+
+    /**
      * constructor.
      * @param playerToAdapt the player to adapt
      */
@@ -56,15 +62,15 @@ public final class OverworldPlayerAdapter implements PossibleUser {
     @Override
     public void increasePlayerHealth(final int amount) {
         if (amount < 0) {
-            throw new IllegalArgumentException("Amount must not be negative");
+            throw new IllegalArgumentException(ERROR_MSG);
         }
-        if (this.adaptedPlayer.getCurrentHp() != 
-        this.adaptedPlayer.getMaxHp() 
+        if (this.adaptedPlayer.getCurrentHp()
+        != this.adaptedPlayer.getMaxHp()
         && this.adaptedPlayer.getCurrentHp() != 0) {
                 // if currentHP + amount > maxHP, set it to maxHP
                 this.adaptedPlayer.setHp(
                     Math.min(
-                        this.adaptedPlayer.getMaxHp(), 
+                        this.adaptedPlayer.getMaxHp(),
                         this.adaptedPlayer.getCurrentHp() + amount));
             }
     }
@@ -72,7 +78,7 @@ public final class OverworldPlayerAdapter implements PossibleUser {
     @Override
     public void increasePlayerMaxPower(final int amount) {
         if (amount < 0) {
-            throw new IllegalArgumentException("Amount must not be negative");
+            throw new IllegalArgumentException(ERROR_MSG);
         }
         this.adaptedPlayer.setPower(this.adaptedPlayer.getPower() + amount);
     }
@@ -80,21 +86,23 @@ public final class OverworldPlayerAdapter implements PossibleUser {
     @Override
     public void increasePlayerMaxStamina(final int amount) {
         if (amount < 0) {
-        throw new IllegalArgumentException("Amount must not be negative");
+        throw new IllegalArgumentException(ERROR_MSG);
         }
-        this.adaptedPlayer.setMaxStamina(amount + this.adaptedPlayer.getMaxStamina());
+        this.adaptedPlayer.setMaxStamina(amount
+            + this.adaptedPlayer.getMaxStamina());
     }
 
     @Override
     public void increasePlayerMaxHealth(final int amount) {
         if (amount < 0) {
-        throw new IllegalArgumentException("Amount must not be negative");
+        throw new IllegalArgumentException(ERROR_MSG);
         }
         this.adaptedPlayer.setMaxHp(amount + this.adaptedPlayer.getMaxHp());
     }
 
     @Override
     public void setPlayerPoisoned(final boolean poisoned) {
-        throw new UnsupportedOperationException("Overworld player cannot be poisoned here");
+        throw new UnsupportedOperationException(
+            "Overworld player cannot be poisoned here");
     }
 }

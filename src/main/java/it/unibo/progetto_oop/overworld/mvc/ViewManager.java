@@ -16,16 +16,45 @@ import it.unibo.progetto_oop.overworld.playground.view.GameStartView;
 import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
 
 public class ViewManager {
+    /**
+     * start game card identifier.
+     */
     private static final String START_GAME = "START GAME";
+
+    /**
+     * inventory card identifier.
+     */
     public static final String INVENTORY_CARD = "INVENTORY";
+
+    /**
+     * overworld card identifier.
+     */
     public static final String OVERWORLD_CARD = "OVERWORLD";
+
+    /**
+     * combat card identifier.
+     */
     public static final String COMBAT_CARD = "COMBAT";
     private static final String GAME_OVER = "GAME OVER";
 
+    /**
+     * the frame of the game.
+     */
     private JFrame frame;
+
+    /**
+     * the card layout to switch between views.
+     */
     private CardLayout cardLayout;
+
+    /**
+     * the main panel that holds the different views.
+     */
     private JPanel mainCardPanel;
     
+    /**
+     * inventory view.
+     */
     private InventoryView invView;
     private CombatView combatView;
     private SwingMapView playGroundView;
@@ -99,29 +128,6 @@ public class ViewManager {
         }
         this.cardLayout.show(this.mainCardPanel, INVENTORY_CARD);
     }
-
-    /*
-    public void showInventory(Inventory inventory) {
-        JFrame frame = new JFrame("Inventario");
-
-        if (this.invView == null) {
-            this.invView = new InventoryView(inventory, this);
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.setSize(600, 400);
-            frame.add(this.invView);
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-
-        } else {
-            this.invView.updateInventoryModel(inventory); 
-            this.invView.refreshView(); 
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.setSize(600, 400);
-            frame.add(this.invView);
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        }
-    } */
 
     public void showCombat(Enemy encounteredEnemy) {
         JFrame frame = new JFrame("Combattimento");

@@ -82,7 +82,7 @@ public class FollowerState implements GenericEnemyState {
     }
 
     @Override
-    public String getDescription() {
+    public final String getDescription() {
         return "Follower State";
     }
 

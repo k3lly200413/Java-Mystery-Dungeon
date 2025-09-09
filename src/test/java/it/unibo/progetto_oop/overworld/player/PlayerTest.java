@@ -10,7 +10,7 @@ import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_factory.ItemFactory;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
-public class PlayerTest {
+class PlayerTest {
     /**
      * the inventory mock.
      */
@@ -52,7 +52,7 @@ public class PlayerTest {
         inventory = new Inventory();
 
         // Create some items
-        var potionFactory = new ItemFactory();
+        final var potionFactory = new ItemFactory();
         health = potionFactory.createItem("Health Potion", new Position(0, 0));
         antidote = potionFactory.createItem("Antidote",
          new Position(1, 0));
@@ -66,7 +66,7 @@ public class PlayerTest {
         assertEquals(1, inventory.getCurrentSize());
 
         // Create a player with the inventory
-        var player = new Player(MAX_HP, MAX_STAMINA, POWER, inventory);
+        final var player = new Player(MAX_HP, MAX_STAMINA, POWER, inventory);
 
         // Use the item
         player.useItem(health);
@@ -84,7 +84,7 @@ public class PlayerTest {
         assertEquals(1, inventory.getCurrentSize());
 
         // Create a player with the inventory
-        var player = new Player(MAX_HP, MAX_STAMINA, POWER, inventory);
+        final var player = new Player(MAX_HP, MAX_STAMINA, POWER, inventory);
 
         // Add the item via player method
         player.addItem(health);

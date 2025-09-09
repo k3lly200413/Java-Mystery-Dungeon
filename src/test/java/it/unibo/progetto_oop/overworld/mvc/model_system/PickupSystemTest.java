@@ -3,7 +3,6 @@ package it.unibo.progetto_oop.overworld.mvc.model_system;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_strategy.Potion;
-import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,11 +34,6 @@ class PickupSystemTest {
     private Player player;
 
     /**
-     * mock model.
-     */
-    private OverworldModel model;
-
-    /**
      * mock inventory.
      */
     private Inventory inventory;
@@ -54,16 +48,15 @@ class PickupSystemTest {
         item1 = mock(Item.class);
         item2 = mock(Item.class);
         player = mock(Player.class);
-        model = mock(OverworldModel.class);
         inventory = mock(Inventory.class);
         when(player.getInventory()).thenReturn(inventory);
         pickupSystem = new PickupSystem(
-            new ArrayList<>(List.of(item1, item2)), player, model);
+            new ArrayList<>(List.of(item1, item2)), player);
     }
 
     @Test
     void testGetItem() {
-        List<Item> items = pickupSystem.getItem();
+        final List<Item> items = pickupSystem.getItem();
         assertEquals(2, items.size());
         assertTrue(items.contains(item1));
         assertTrue(items.contains(item2));
@@ -71,7 +64,7 @@ class PickupSystemTest {
 
     @Test
     void testSetItems() {
-        Item item3 = mock(Item.class);
+        final Item item3 = mock(Item.class);
         pickupSystem.setItems(new ArrayList<>(List.of(item3)));
         assertEquals(1, pickupSystem.getItem().size());
         assertTrue(pickupSystem.getItem().contains(item3));
@@ -84,13 +77,13 @@ class PickupSystemTest {
 
     @Test
     void testRemoveItemAt() {
-        Position position3 = new Position(1, 1);
-        Item item3 = new Potion(
+        final Position position3 = new Position(1, 1);
+        final Item item3 = new Potion(
             "name", "desc", position3, null);
         pickupSystem = new PickupSystem(
-            new ArrayList<>(List.of(item3)), player, model);
+            new ArrayList<>(List.of(item3)), player);
 
-        boolean removed = pickupSystem.removeItemAt(position3);
+        final boolean removed = pickupSystem.removeItemAt(position3);
         assertTrue(removed);
         assertEquals(0, pickupSystem.getItem().size());
         verify(inventory).addItem(item3);
@@ -98,11 +91,11 @@ class PickupSystemTest {
 
     @Test
     void testCheckAndAddItem() {
-        Position position3 = new Position(1, 1);
-        Item item3 = new Potion(
+        final Position position3 = new Position(1, 1);
+        final Item item3 = new Potion(
             "name", "desc", position3, null);
         pickupSystem = new PickupSystem(
-            new ArrayList<>(List.of(item3)), player, model);
+            new ArrayList<>(List.of(item3)), player);
 
         when(player.getPosition()).thenReturn(position3);
 

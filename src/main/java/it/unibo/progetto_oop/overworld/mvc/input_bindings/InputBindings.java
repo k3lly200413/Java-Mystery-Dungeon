@@ -24,7 +24,7 @@ public class InputBindings {
      * Set the input bindings for the panel.
      */
     public void setBindings() {
-        InputMap inputMap = panel.
+        final InputMap inputMap = panel.
             getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 
         // ----keys---- //

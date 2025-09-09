@@ -13,7 +13,7 @@ public class MovementUtil {
     /**
      * checker for wall collisions.
      */
-    private WallCollision checker;
+    private final WallCollision checker;
 
     public enum MoveDirection {
         /**
@@ -84,9 +84,9 @@ public class MovementUtil {
      */
     public MoveDirection getInitialGeneralMoveDirection(
     final Position enemyPosition, final boolean doesEnemyGoVertically) {
-        ToIntFunction<Position> getCoordinate;
-        MoveDirection directionIfEnemyIsFurther;
-        MoveDirection directionIfEnemyIsCloser;
+        final ToIntFunction<Position> getCoordinate;
+        final MoveDirection directionIfEnemyIsFurther;
+        final MoveDirection directionIfEnemyIsCloser;
 
         if (doesEnemyGoVertically) {
             getCoordinate = Position::y;
@@ -100,14 +100,14 @@ public class MovementUtil {
             directionIfEnemyIsCloser = MoveDirection.LEFT;
         }
 
-        Optional<Position> closestWallOpt =
+        final Optional<Position> closestWallOpt =
             findClosestWallOnAxis(enemyPosition, doesEnemyGoVertically);
 
         if (closestWallOpt.isPresent()) {
-            Position closestWall = closestWallOpt.get();
+            final Position closestWall = closestWallOpt.get();
 
-            int enemyCoord = getCoordinate.applyAsInt(enemyPosition);
-            int wallCoord = getCoordinate.applyAsInt(closestWall);
+            final int enemyCoord = getCoordinate.applyAsInt(enemyPosition);
+            final int wallCoord = getCoordinate.applyAsInt(closestWall);
 
             if (enemyCoord > wallCoord) {
                 return directionIfEnemyIsFurther; // RIGHT or DOWN

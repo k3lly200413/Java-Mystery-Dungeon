@@ -19,6 +19,9 @@ public class Player {
      */
     private int maxHP;
 
+    /**
+     * the player max stamina value.
+     */
     private int maxStamina;
 
     /**
@@ -26,7 +29,6 @@ public class Player {
      */
     private int stamina;
 
-    
     /**
      * the player power value.
      */
@@ -66,17 +68,14 @@ public class Player {
     public void useItem(final Item item) {
         // check wether the item is in the inventory
         if (this.inventory.hasItem(item)) {
-            PotionStrategy strategy = item.getStrategy(); // the kind of potion
+            final PotionStrategy strategy =
+                item.getStrategy(); // the kind of potion
             if (strategy != null) {
-                System.out.println("Using potion " + item.getDescription());
-                PossibleUser adaptedPlayer = new OverworldPlayerAdapter(this);
+                final PossibleUser adaptedPlayer =
+                    new OverworldPlayerAdapter(this);
                 item.use(adaptedPlayer);
                 this.inventory.decreaseItemCount(item);
-            } else {
-                System.out.println("Strategy is null");
             }
-        } else {
-            System.out.println("Object not in inventory, input ignored");
         }
     }
 

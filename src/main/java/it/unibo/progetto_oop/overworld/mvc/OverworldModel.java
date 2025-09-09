@@ -65,24 +65,42 @@ public final class OverworldModel {
      */
     private final MovementSystem movementSystem;
 
-    // current floor's grid (read-only)
+    /**
+     * current floor's grid (read-only).
+     */
     private StructureData baseGrid;   // playground: WALL/ROOM/TUNNEL/STAIRS
+
+    /**
+     * current floor's entity grid.
+     */
     private StructureData entityGrid; // entities: PLAYER/ENEMY/ITEM/NONE
 
-    // to access the grid
-    private GridNotifier gridNotifier; // incapsulates GridUpdater
+    /**
+     * the grid notifier.
+     * to update the grid
+     * incapsulates GridUpdater
+     */
+    private GridNotifier gridNotifier;
+
+    /**
+     * the change floor listener.
+     */
     private ChangeFloorListener changeFloorListener;
 
     /**
      * the wall collision instance.
      */
     private WallCollision wallCollision;
-    private Consumer<Floor> floorInitializer = f -> {};
+
+    /**
+     * the floor initializer function.
+     */
+    private Consumer<Floor> floorInitializer = f -> { };
 
     /**
      * the combat collision instance.
      */
-    final private CombatCollision combatCollision;
+    private final CombatCollision combatCollision;
 
     /**
      * player max hp.
@@ -110,7 +128,7 @@ public final class OverworldModel {
         this.inCombat = false;
         this.gridNotifier = new GridNotifier(null);
 
-        this.pickupSystem = new PickupSystem(items, this.player, this);
+        this.pickupSystem = new PickupSystem(items, this.player);
         this.enemySystem  = new EnemySystem(enemies, this.player, this);
         this.movementSystem = new MovementSystem(this.player, this);
 
@@ -142,17 +160,22 @@ public final class OverworldModel {
                 this.gridNotifier.setListEnemyUpdater(null);
                 this.gridNotifier.setListItemUpdater(null);
             }
-        }
-        else {
+        } else {
             this.baseGrid = floor.grid(); // il Floor ha solo il terreno
-            entityGrid = new ImplArrayListStructureData(baseGrid.width(), baseGrid.height());
+            entityGrid =
+                new ImplArrayListStructureData(
+                    baseGrid.width(), baseGrid.height());
             entityGrid.fill(TileType.NONE);
             if (this.gridNotifier == null) {
                 this.gridNotifier = new GridNotifier(null);
             }
-            this.gridNotifier.setGridUpdater(new EntityGridUpdater(this.entityGrid));
-            this.gridNotifier.setListEnemyUpdater(pos -> this.enemySystem.removeEnemyAt(pos));
-            this.gridNotifier.setListItemUpdater(pos -> this.pickupSystem.removeItemAt(pos));
+            this.gridNotifier
+                .setGridUpdater(new EntityGridUpdater(this.entityGrid));
+            this.gridNotifier
+                .setListEnemyUpdater(
+                        this.enemySystem::removeEnemyAt);
+            this.gridNotifier
+                .setListItemUpdater(this.pickupSystem::removeItemAt);
 
         }
         this.wallCollision = new WallCollisionImpl(baseGrid, entityGrid);
@@ -388,8 +411,14 @@ public final class OverworldModel {
         this.movementSystem.setCombatTransitionFlag();
     }
 
-    public void setCombatTransitionListener(ViewManagerObserver curranteViewManagerObserver) {
-        this.combatCollision.setViewManagerListener(curranteViewManagerObserver);
+    /**
+     * Set the combat transition listener.
+     * @param curranteViewManagerObserver the view manager observer
+     */
+    public void setCombatTransitionListener(
+    final ViewManagerObserver curranteViewManagerObserver) {
+        this.combatCollision
+            .setViewManagerListener(curranteViewManagerObserver);
     }
 
     //---------Movimento---------
