@@ -7,6 +7,12 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.overworld.player.Player;
 
+/**
+ * Class representing the Enemy Turn State in the combat state pattern.
+ * In this state, the enemy (or boss) takes its turn to perform actions
+ * against the player.
+ */
+
 public class EnemyTurnState implements CombatState {
 
     /** Delay in milliseconds before enemy action. */
@@ -14,7 +20,6 @@ public class EnemyTurnState implements CombatState {
 
     /**
      * Handles the transition logic when entering the enemy turn state.
-     *
      * If the boss is active and still within its attack sequence,
      * it performs a delayed super attack. Otherwise, it checks if the boss
      * has completed its sequence and returns control to the player,

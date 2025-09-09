@@ -6,6 +6,7 @@ import it.unibo.progetto_oop.overworld.player.Player;
 /**
  * Boss' Turn State during combat.
  */
+
 public class BossTurnState implements CombatState {
 
     /** Health percentage threshold to switch the boss state to ENRAGED. */
