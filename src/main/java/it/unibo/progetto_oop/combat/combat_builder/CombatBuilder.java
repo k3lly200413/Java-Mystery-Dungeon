@@ -38,174 +38,256 @@ public class CombatBuilder {
     /** The name of the enemy. */
     private String enemyName;
 
-    /** The maximum health points allowed for both player and enemy. */
+    /** The maximum health points allowed for the player. */
     private int playerMaxHealth;
 
     /** The maximum health points allowed for the enemy. */
     private int enemyMaxHealth;
 
-    /** @return the configured size of the combat area */
+    /**
+     * Returns the configured size of the combat area.
+     *
+     * @return the size of the combat area
+     */
     public int getSize() {
-        return size;
-    }
-
-    /** @return the maximum stamina of the player */
-    public int getStaminaMax() {
-        return staminaMax;
-    }
-
-    /** @return the base attack power of the player */
-    public int getPlayerPower() {
-        return playerPower;
-    }
-
-    /** @return the poison attack power of the player */
-    public int getPlayerPoisonPower() {
-        return playerPoisonPower;
-    }
-
-    /** @return the long-range attack power of the player */
-    public int getPlayerLongRangePower() {
-        return playerLongRangePower;
-    }
-
-    /** @return the current health points of the player */
-    public int getPlayerCurrentHp() {
-        return playerHealth;
-    }
-
-    /** @return the current health points of the enemy */
-    public int getEnemyCurrentHp() {
-        return enemyHealth;
-    }
-
-    /** @return the attack power of the enemy */
-    public int getEnemyPower() {
-        return enemyPower;
-    }
-
-    /** @return the speed of the enemy */
-    public int getEnemySpeed() {
-        return enemySpeed;
-    }
-
-    /** @return the name of the enemy */
-    public String getEnemyName() {
-        return enemyName;
+        return this.size;
     }
 
     /**
-    * Builds a new {@link CombatModel} using the configured parameters.
-    *
-    * @return a new instance of CombatModel
-    */
+     * Returns the maximum stamina of the player.
+     *
+     * @return the maximum stamina
+     */
+    public int getStaminaMax() {
+        return this.staminaMax;
+    }
+
+    /**
+     * Returns the base attack power of the player.
+     *
+     * @return the player's base power
+     */
+    public int getPlayerPower() {
+        return this.playerPower;
+    }
+
+    /**
+     * Returns the poison attack power of the player.
+     *
+     * @return the player's poison power
+     */
+    public int getPlayerPoisonPower() {
+        return this.playerPoisonPower;
+    }
+
+    /**
+     * Returns the long-range attack power of the player.
+     *
+     * @return the player's long-range power
+     */
+    public int getPlayerLongRangePower() {
+        return this.playerLongRangePower;
+    }
+
+    /**
+     * Returns the current health points of the player.
+     *
+     * @return the player's current HP
+     */
+    public int getPlayerCurrentHp() {
+        return this.playerHealth;
+    }
+
+    /**
+     * Returns the current health points of the enemy.
+     *
+     * @return the enemy's current HP
+     */
+    public int getEnemyCurrentHp() {
+        return this.enemyHealth;
+    }
+
+    /**
+     * Returns the attack power of the enemy.
+     *
+     * @return the enemy's power
+     */
+    public int getEnemyPower() {
+        return this.enemyPower;
+    }
+
+    /**
+     * Returns the speed of the enemy.
+     *
+     * @return the enemy's speed
+     */
+    public int getEnemySpeed() {
+        return this.enemySpeed;
+    }
+
+    /**
+     * Returns the name of the enemy.
+     *
+     * @return the enemy's name
+     */
+    public String getEnemyName() {
+        return this.enemyName;
+    }
+
+    /**
+     * Builds a new {@link CombatModel} using the configured parameters.
+     *
+     * @return a new instance of {@link CombatModel}
+     */
     public CombatModel build() {
         return new CombatModel(this);
     }
 
-    /** @param newSize the size of the combat area
-    *   @return the size of the combat area
-    */
+    /**
+     * Sets the size of the combat area.
+     *
+     * @param newSize the size to set
+     * @return this builder for chaining
+     */
     public CombatBuilder setSize(final int newSize) {
         this.size = newSize;
         return this;
     }
 
-    /** @param newStaminaMax the maximum stamina of the player
-    *  @return the maximum stamina of the player
-    */
+    /**
+     * Sets the maximum stamina of the player.
+     *
+     * @param newStaminaMax the maximum stamina to set
+     * @return this builder for chaining
+     */
     public CombatBuilder setStaminaMax(final int newStaminaMax) {
         this.staminaMax = newStaminaMax;
         return this;
     }
 
-    /** @param newPlayerPower the base attack power of the player
-    *  @return the base attack power of the player
-    */
+    /**
+     * Sets the base attack power of the player.
+     *
+     * @param newPlayerPower the base power to set
+     * @return this builder for chaining
+     */
     public CombatBuilder setPlayerPower(final int newPlayerPower) {
         this.playerPower = newPlayerPower;
         return this;
     }
 
-    /** @param newPlayerPoisonPower the poison attack power of the player
-    *  @return the poison attack power of the player
-    */
+    /**
+     * Sets the poison attack power of the player.
+     *
+     * @param newPlayerPoisonPower the poison power to set
+     * @return this builder for chaining
+     */
     public CombatBuilder setPlayerPoisonPower(final int newPlayerPoisonPower) {
         this.playerPoisonPower = newPlayerPoisonPower;
         return this;
     }
 
-    /** @param newPlayerLongRangePower the long-range attack power of the player
-    *  @return the long-range attack power of the player
-    */
+    /**
+     * Sets the long-range attack power of the player.
+     *
+     * @param newPlayerLongRangePower the long-range power to set
+     * @return this builder for chaining
+     */
     public CombatBuilder setPlayerLongRangePower(
         final int newPlayerLongRangePower) {
         this.playerLongRangePower = newPlayerLongRangePower;
         return this;
     }
 
-    /** @param currentHealth the current health points of the player
-    *  @return the current health points of the player
-    */
-    public CombatBuilder setPlayerCurrentHealth(
-        final int currentHealth) {
+    /**
+     * Sets the current health points of the player.
+     *
+     * @param currentHealth the current HP to set
+     * @return this builder for chaining
+     */
+    public CombatBuilder setPlayerCurrentHealth(final int currentHealth) {
         this.playerHealth = currentHealth;
         return this;
     }
 
-    /** @param currentHealth the current health points of the enemy
-    *  @return the current health points of the enemy
-    */
-    public CombatBuilder setEnemyCurrentHealth(
-        final int currentHealth) {
-            this.enemyHealth = currentHealth;
-            return this;
-        }
+    /**
+     * Sets the current health points of the enemy.
+     *
+     * @param currentHealth the current HP to set
+     * @return this builder for chaining
+     */
+    public CombatBuilder setEnemyCurrentHealth(final int currentHealth) {
+        this.enemyHealth = currentHealth;
+        return this;
+    }
 
-    /** @param newEnemyPower the attack power of the enemy
-    *  @return the attack power of the enemy
-    */
+    /**
+     * Sets the attack power of the enemy.
+     *
+     * @param newEnemyPower the power to set
+     * @return this builder for chaining
+     */
     public CombatBuilder setEnemyPower(final int newEnemyPower) {
         this.enemyPower = newEnemyPower;
         return this;
     }
 
-    /** @param newEnemySpeed the speed of the enemy
-    *   @return the speed of the enemy
-    */
+    /**
+     * Sets the speed of the enemy.
+     *
+     * @param newEnemySpeed the speed to set
+     * @return this builder for chaining
+     */
     public CombatBuilder setEnemySpeed(final int newEnemySpeed) {
         this.enemySpeed = newEnemySpeed;
         return this;
     }
 
-    /** @param newEnemyName the name of the enemy
-    *  @return the name of the enemy
-    */
+    /**
+     * Sets the name of the enemy.
+     *
+     * @param newEnemyName the name to set
+     * @return this builder for chaining
+     */
     public CombatBuilder setEnemyName(final String newEnemyName) {
         this.enemyName = newEnemyName;
         return this;
     }
 
-    /** @return the maximum health points */
+    /**
+     * Returns the maximum health points of the player.
+     *
+     * @return the player's maximum HP
+     */
     public int getPlayerMaxHealth() {
-        return playerMaxHealth;
+        return this.playerMaxHealth;
     }
 
-    /** @return the maximum health points of the enemy */
+    /**
+     * Returns the maximum health points of the enemy.
+     *
+     * @return the enemy's maximum HP
+     */
     public int getEnemyMaxHealth() {
-        return enemyMaxHealth;
+        return this.enemyMaxHealth;
     }
 
-    /** @param newMaxHealth the maximum health points to set
-     *  @return the maximum health points
+    /**
+     * Sets the maximum health points of the player.
+     *
+     * @param newMaxHealth the maximum HP to set
+     * @return this builder for chaining
      */
     public CombatBuilder setPlayerMaxHealth(final int newMaxHealth) {
         this.playerMaxHealth = newMaxHealth;
         return this;
     }
 
-    /** @param newMaxHealth the maximum health points of the enemy to set
-     *  @return the maximum health points of the enemy
+    /**
+     * Sets the maximum health points of the enemy.
+     *
+     * @param newMaxHealth the maximum HP to set
+     * @return this builder for chaining
      */
     public CombatBuilder setEnemyMaxHealth(final int newMaxHealth) {
         this.enemyMaxHealth = newMaxHealth;
