@@ -1,4 +1,5 @@
 package it.unibo.progetto_oop.combat.mvc_pattern;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -8,7 +9,6 @@ import it.unibo.progetto_oop.combat.state_pattern.CombatState;
 import it.unibo.progetto_oop.combat.state_pattern.EnemyTurnState;
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-
 
 /**
  * The CombatModel class represents the model component
@@ -22,15 +22,19 @@ public class CombatModel implements PossibleUser {
     /** Offset applied to the player's initial X coordinate. */
     private static final int PLAYER_X_OFFSET = 2;
 
-    /** Divisor used to calculate the initial X
-     *  positions of player and enemy. */
+    /**
+     * Divisor used to calculate the initial X
+     *  positions of player and enemy.
+     */
     private static final int DIVISOR = 3;
 
     /** Offset applied to the enemy's initial X coordinate. */
     private static final int ENEMY_OFFSET = 1;
 
-    /** Divisor used to calculate the initial Y
-     *  position (half of the board size). */
+    /**
+     * Divisor used to calculate the initial Y
+     * position (half of the board size).
+     */
     private static final int HALF_DIVISOR = 2;
 
     /** The size of the game board or arena. */
@@ -174,7 +178,7 @@ public class CombatModel implements PossibleUser {
  */
 public final void resetPositions() {
     this.playerPosition = new Position((this.size / DIVISOR) - PLAYER_X_OFFSET,
-    (this.size / HALF_DIVISOR));
+    this.size / HALF_DIVISOR);
     this.enemyPosition = new Position(
     this.size - (this.size / DIVISOR) + ENEMY_OFFSET,
     this.size / HALF_DIVISOR);
@@ -277,7 +281,7 @@ public final void decreasePlayerStamina(final int amount) {
  */
 public final void increasePlayerStamina(final int amount) {
     this.playerStamina = Math.min(this.playerStaminaMax,
-        (this.playerStamina + amount));
+        this.playerStamina + amount);
 }
 
 /**
@@ -647,7 +651,7 @@ public final boolean isGameOver() {
      * if it was not already poisoned and the new value is true.
      *
      * @param newEnemyPoisoned true if the enemy should be poisoned,
-     * false otherwise
+     *                         false otherwise
      */
     public final void setEnemyPoisoned(final boolean newEnemyPoisoned) {
         if (!this.enemyPoisoned && newEnemyPoisoned) {
@@ -655,14 +659,18 @@ public final boolean isGameOver() {
         }
     }
 
-    /** Sets the enemy's maximum health.
+    /**
+     * Sets the enemy's maximum health.
+     *
      * @param newHpToSet the new maximum health value
-    */
+     */
     public final void setEnemyMaxHp(final int newHpToSet) {
         this.enemyMaxHealth = newHpToSet;
     }
 
-    /** Sets the enemy's current health.
+    /**
+     * Sets the enemy's current health.
+     *
      * @param newCurrentHp the new current health value
      */
     public final void setEnemyCurrentHp(final int newCurrentHp) {
@@ -688,16 +696,20 @@ public final boolean isGameOver() {
         this.isPlayerPoison = isPoisoned;
     }
 
-    /** Sets the player's maximum health.
+    /**
+     * Sets the player's maximum health.
+     *
      * @param newMaxHp the new maximum health value
-    */
+     */
     public final void setPlayerMaxHp(final int newMaxHp) {
         this.playerMaxHealth = newMaxHp;
     }
 
-    /** Sets the player's current health.
+    /**
+     * Sets the player's current health.
+     *
      * @param newCurrentHealth the new current health value
-    */
+     */
     public final void setPlayerCurrentHp(final int newCurrentHealth) {
         this.playerHealth = newCurrentHealth;
     }
@@ -706,7 +718,7 @@ public final boolean isGameOver() {
      * Sets the state of the poison animation.
      *
      * @param newState true if the poison animation should be active,
-     * false otherwise
+     *                      false otherwise
      */
     public final void setPoisonAnimation(final boolean newState) {
         this.poisonAnimation = newState;
@@ -806,7 +818,7 @@ public final boolean isGameOver() {
      * depending on the attacker.
      *
      * @param isPlayerAttacker true if the player is attacking,
-     * false if the enemy is attacking
+     *                         false if the enemy is attacking
      * @param damage the amount of damage to apply
      * @return the remaining health of the attacked entity
      */

@@ -28,8 +28,8 @@ import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
-/** 
- * Controller class in Model View Controller Pattern
+/**
+ * Controller class in Model View Controller Pattern.
  *
  * @author Kelly.applebee@studio.unibo.it
  * @author matteo.monari6@studio.unibo.it
