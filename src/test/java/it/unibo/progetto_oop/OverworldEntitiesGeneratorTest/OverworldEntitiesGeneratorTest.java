@@ -12,21 +12,21 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
-import it.unibo.progetto_oop.overworld.playGround.data.FloorConfig;
-import it.unibo.progetto_oop.overworld.playGround.data.ImplArrayListStructureData;
-import it.unibo.progetto_oop.overworld.playGround.data.Position;
-import it.unibo.progetto_oop.overworld.playGround.data.StructureData;
-import it.unibo.progetto_oop.overworld.playGround.data.TileType;
-import it.unibo.progetto_oop.overworld.playGround.dungeonLogic.Dungeon;
-import it.unibo.progetto_oop.overworld.playGround.dungeonLogic.FloorGenerator;
-import it.unibo.progetto_oop.overworld.playGround.placementStrategy.ImplRandomPlacement;
-import it.unibo.progetto_oop.overworld.playGround.placementStrategy.ImplRoomPlacement;
-import it.unibo.progetto_oop.overworld.playGround.placementStrategy.ImplTunnelPlacement;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.mvc.OverworldEntitiesGenerator;
 import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
+import it.unibo.progetto_oop.overworld.playground.data.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Dungeon;
+import it.unibo.progetto_oop.overworld.playground.dungeon_logic.FloorGenerator;
+import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRandomPlacement;
+import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRoomPlacement;
+import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplTunnelPlacement;
 
 public class OverworldEntitiesGeneratorTest {
 

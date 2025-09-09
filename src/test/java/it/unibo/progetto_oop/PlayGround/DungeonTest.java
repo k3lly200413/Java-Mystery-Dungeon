@@ -11,13 +11,13 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.progetto_oop.overworld.playGround.data.FloorConfig;
-import it.unibo.progetto_oop.overworld.playGround.dungeonLogic.Dungeon;
-import it.unibo.progetto_oop.overworld.playGround.dungeonLogic.Floor;
-import it.unibo.progetto_oop.overworld.playGround.dungeonLogic.FloorGenerator;
-import it.unibo.progetto_oop.overworld.playGround.placementStrategy.ImplRandomPlacement;
-import it.unibo.progetto_oop.overworld.playGround.placementStrategy.ImplRoomPlacement;
-import it.unibo.progetto_oop.overworld.playGround.placementStrategy.ImplTunnelPlacement;
+import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
+import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Dungeon;
+import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
+import it.unibo.progetto_oop.overworld.playground.dungeon_logic.FloorGenerator;
+import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRandomPlacement;
+import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRoomPlacement;
+import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplTunnelPlacement;
 
 /**
  * Test basilari su Dungeon: creazione, avanzamento piano, limiti.
