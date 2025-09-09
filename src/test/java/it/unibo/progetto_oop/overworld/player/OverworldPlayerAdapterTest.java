@@ -46,7 +46,7 @@ public class OverworldPlayerAdapterTest {
         
 
         playerAdapter.increasePlayerMaxStamina(15);
-        assertEquals(115, playerAdapter.getStamina());
+        assertEquals(115, playerAdapter.getMaxStamina());
 
         IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
@@ -80,12 +80,12 @@ public class OverworldPlayerAdapterTest {
     @Test
     void healTest() {
         playerAdapter.increasePlayerMaxHealth(50);
-        assertEquals(150, playerAdapter.getHp());
+        assertEquals(150, playerAdapter.getMaxHp());
 
         playerAdapter.increasePlayerHealth(30);
-        assertEquals(150, playerAdapter.getHp());
+        assertEquals(130, playerAdapter.getHp());
 
-        playerAdapter.increasePlayerHealth(0);
+        playerAdapter.increasePlayerHealth(50);
         assertEquals(150, playerAdapter.getHp());
 
         IllegalArgumentException exception = assertThrows(

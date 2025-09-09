@@ -787,4 +787,16 @@ public final boolean isGameOver() {
         this.playerStamina = stamina;
     }
 
+    @Override
+    public int getPower() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPower'");
+    }
+
+    @Override
+    public int getStamina() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getStamina'");
+    }
+
 }
