@@ -408,6 +408,10 @@ public class CombatView extends JPanel {
             "Stamina: " + value + "/" + playerStaminaBar.getMaximum());
     }
 
+    public final void setPlayerMaxStaminaBar(final int max) {
+        this.playerStaminaBar.setMaximum(max);
+    }
+
     /**
      * Updates the enemy's health bar with the current value.
      *
@@ -870,10 +874,11 @@ public class CombatView extends JPanel {
         if (frame == null) {
             return;
         }
-        final GameOverPanel panel =
-            new GameOverPanel(() -> {
-                // TODO add reset logic
-            });
+        final GameOverPanel panel = new GameOverPanel(() -> {
+            if (onRestart != null) {
+                onRestart.run();   // <-- esegue davvero il restart
+            }
+        });
         frame.setContentPane(panel);
         frame.revalidate();
         frame.repaint();

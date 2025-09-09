@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import it.unibo.progetto_oop.GameLuncher;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.command_pattern.GameButton;
 import it.unibo.progetto_oop.combat.command_pattern.LongRangeButton;
@@ -129,6 +130,8 @@ public class CombatController {
      * This is used to manage the state of the combat.
      */
     private CombatState currentState;
+
+    private CombatState enemyState;
 
     /** Combat collision handler. */
     private final CombatCollision combatCollision;
@@ -908,7 +911,7 @@ public class CombatController {
 
                 if (this.model.isPlayerTurn() && !this.checkGameOver()) {
                     view.updateEnemyHealth(remaining);
-                    this.setState(new EnemyTurnState());
+                    this.setState(this.enemyState);
                 } else {
                     view.updatePlayerHealth(remaining);
                     this.setState(new PlayerTurnState());
@@ -1143,6 +1146,8 @@ public class CombatController {
 
     public final void setEncounteredEnemy(Enemy encounteredEnemy) {
         this.enemy = encounteredEnemy;
+        this.model.setEnemyState(this.enemy.isBoss());
+        this.enemyState = this.model.getEnemyState();
     }
 
     /**
@@ -1251,7 +1256,7 @@ public class CombatController {
                 if (this.model.isPlayerTurn() && !this.checkGameOver()) {
                     this.model.setPlayerTurn(false);
                     view.updateEnemyHealth(remaining);
-                    CombatController.this.setState(new EnemyTurnState());
+                    CombatController.this.setState(this.enemyState);
                 } else {
                     CombatController.this.model.setPlayerTurn(true);
                     view.updatePlayerHealth(remaining);
@@ -1296,13 +1301,30 @@ public class CombatController {
         this.model.setPlayerMaxHp(this.player.getMaxHp());
         // this.model.setPlayerCurrentHp(this.player.getCurrentHp());
         this.view.setPlayerHealthBarMax(model.getPlayerMaxHealth());
-        System.out.println("Max Helth => " + this.model.getPlayerMaxHealth());
         this.view.setEnemyHealthBarMax(this.model.getEnemyMaxHealth());
         this.view.updateEnemyHealth(this.model.getEnemyHealth());
         this.model.resetPositions();
         this.setState(new PlayerTurnState());
         this.view.updatePlayerHealth(this.model.getPlayerHealth());
         this.view.updateEnemyHealth(this.model.getEnemyHealth());
+        this.model.setPlayerPower(this.player.getPower());
+        this.model.setPlayerStamina(this.player.getStamina());
+        this.view.setPlayerMaxStaminaBar(this.player.getMaxStamina());
     }
+
+    public void restartGame() {
+    // Chiudi la finestra corrente
+    javax.swing.SwingUtilities.invokeLater(() -> {
+        // Distrugge la finestra esistente
+        java.awt.Window window = javax.swing.FocusManager.getCurrentManager().getActiveWindow();
+        if (window != null) {
+            window.dispose();
+        }
+
+        // Ricrea il gioco da capo
+        GameLuncher app = new GameLuncher();
+        app.start();
+    });
+}
 
 }
