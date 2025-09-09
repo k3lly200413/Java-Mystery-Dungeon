@@ -11,7 +11,13 @@ public interface PossibleUser {
      * Get the max HP of the player.
      * @return the max HP of the player
      */
-    int getMaxHP();
+    int getMaxHp();
+
+    int getPower();
+
+    int getStamina();
+
+    int getMaxStamina();
 
     /**
      * Increase the player's actual health by the given amount.

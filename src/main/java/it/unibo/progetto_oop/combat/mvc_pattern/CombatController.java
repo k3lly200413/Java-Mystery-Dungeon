@@ -1310,6 +1310,7 @@ public class CombatController {
         this.model.setPlayerPower(this.player.getPower());
         this.model.setPlayerStamina(this.player.getStamina());
         this.view.setPlayerMaxStaminaBar(this.player.getMaxStamina());
+        this.view.updatePlayerStamina(this.player.getStamina());
     }
 
     public void restartGame() {
