@@ -739,7 +739,7 @@ public final boolean isGameOver() {
      * @return max HP
      */
     @Override
-    public int getMaxHP() {
+    public int getMaxHp() {
         return this.getMaxHealth();
     }
 

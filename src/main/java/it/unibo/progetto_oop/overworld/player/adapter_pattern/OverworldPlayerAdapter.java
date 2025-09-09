@@ -34,8 +34,23 @@ public final class OverworldPlayerAdapter implements PossibleUser {
     }
 
     @Override
-    public int getMaxHP() {
+    public int getMaxHp() {
         return this.adaptedPlayer.getMaxHp();
+    }
+
+    @Override
+    public int getPower() {
+        return this.adaptedPlayer.getPower();
+    }
+
+    @Override
+    public int getStamina() {
+        return this.adaptedPlayer.getStamina();
+    }
+
+    @Override
+    public int getMaxStamina() {
+        return this.adaptedPlayer.getMaxStamina();
     }
 
     @Override
