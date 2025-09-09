@@ -25,6 +25,7 @@ public class OverworldEntitiesGenerator {
     private final ItemFactory itemFactory = new ItemFactory();
     private final Random rand = new Random();
 
+    private boolean isBoss = false;
     private static final int ENEMY_HP = 100;
     private static final int ENEMY_POWER = 20;
     private static final int MIN_DIST_FROM_PLAYER = 2;
@@ -45,13 +46,19 @@ public class OverworldEntitiesGenerator {
         }
         player.setPosition(playerPos);
 
-        // 2) ENEMY
-        placer.placeObject(base, entity, TileType.ENEMY, model.getCurrentFloor().rooms().size(),
-                rand, playerPos, MIN_DIST_FROM_PLAYER);
-
-        // 3) ITEM
-        placer.placeObject(base, entity, TileType.ITEM, model.getCurrentFloor().rooms().size(),
+        if (model.getCurrentFloor().rooms().size() == 1) {
+            //boss
+            this.isBoss = true;
+            placer.placeObject(base, entity, TileType.BOSS, 1, rand, playerPos, MIN_DIST_FROM_PLAYER);
+        }
+        else {   
+            // 2) ENEMY
+            placer.placeObject(base, entity, TileType.ENEMY, model.getCurrentFloor().rooms().size(),
+                    rand, playerPos, MIN_DIST_FROM_PLAYER);
+            // 3) ITEM
+            placer.placeObject(base, entity, TileType.ITEM, model.getCurrentFloor().rooms().size(),
                 rand, null, MIN_DIST_FROM_PLAYER);
+        }
 
         // entities generation
         generateEnemiesFromEntityGrid(model, gridNotifier);
@@ -69,15 +76,21 @@ public class OverworldEntitiesGenerator {
 
     private void generateEnemiesFromEntityGrid(final OverworldModel model, final GridNotifier gridNotifier) {
         final EnemyFactory factory = new EnemyFactoryImpl(model.getWallCollision(), model.getCombatCollision());
-        for (Position pos : getPositionsOfType(
-                TileType.ENEMY, model.getEntityGridView())) {
-            int roll = rand.nextInt(3);
-            Enemy enemy = switch (roll) {
-                case 0 -> factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, pos, true, gridNotifier);
-                case 1 -> factory.createSleeperEnemy(ENEMY_HP, ENEMY_POWER, pos, true, gridNotifier);
-                default -> factory.createPatrollerEnemy(ENEMY_HP, ENEMY_POWER, pos, false, gridNotifier);
-            };
+        if (this.isBoss) {
+            Position pos = getPositionsOfType(TileType.BOSS, model.getEntityGridView()).get(0);
+            Enemy enemy = factory.createBossEnemy(ENEMY_HP * 3, ENEMY_POWER * 2, pos, true, gridNotifier);
             enemyList.add(enemy);
+        } else {
+            for (Position pos : getPositionsOfType(
+                    TileType.ENEMY, model.getEntityGridView())) {
+                int roll = rand.nextInt(3);
+                Enemy enemy = switch (roll) {
+                    case 0 -> factory.createFollowerEnemy(ENEMY_HP, ENEMY_POWER, pos, true, gridNotifier);
+                    case 1 -> factory.createSleeperEnemy(ENEMY_HP, ENEMY_POWER, pos, true, gridNotifier);
+                    default -> factory.createPatrollerEnemy(ENEMY_HP, ENEMY_POWER, pos, false, gridNotifier);
+                };
+                enemyList.add(enemy);
+            }
         }
     }
 
