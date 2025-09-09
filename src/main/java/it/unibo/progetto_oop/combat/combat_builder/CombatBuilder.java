@@ -23,8 +23,10 @@ public class CombatBuilder {
     /** The long-range attack power of the player. */
     private int playerLongRangePower;
 
+    /** The current health points of the player. */
     private int playerHealth;
 
+    /** The current health points of the enemy. */
     private int enemyHealth;
 
     /** The attack power of the enemy. */
@@ -39,6 +41,7 @@ public class CombatBuilder {
     /** The maximum health points allowed for both player and enemy. */
     private int playerMaxHealth;
 
+    /** The maximum health points allowed for the enemy. */
     private int enemyMaxHealth;
 
     /** @return the configured size of the combat area */
@@ -66,10 +69,12 @@ public class CombatBuilder {
         return playerLongRangePower;
     }
 
+    /** @return the current health points of the player */
     public int getPlayerCurrentHp() {
         return playerHealth;
     }
 
+    /** @return the current health points of the enemy */
     public int getEnemyCurrentHp() {
         return enemyHealth;
     }
@@ -139,12 +144,18 @@ public class CombatBuilder {
         return this;
     }
 
+    /** @param currentHealth the current health points of the player
+    *  @return the current health points of the player
+    */
     public CombatBuilder setPlayerCurrentHealth(
         final int currentHealth) {
         this.playerHealth = currentHealth;
         return this;
     }
 
+    /** @param currentHealth the current health points of the enemy
+    *  @return the current health points of the enemy
+    */
     public CombatBuilder setEnemyCurrentHealth(
         final int currentHealth) {
             this.enemyHealth = currentHealth;
@@ -180,6 +191,7 @@ public class CombatBuilder {
         return playerMaxHealth;
     }
 
+    /** @return the maximum health points of the enemy */
     public int getEnemyMaxHealth() {
         return enemyMaxHealth;
     }
@@ -192,6 +204,9 @@ public class CombatBuilder {
         return this;
     }
 
+    /** @param newMaxHealth the maximum health points of the enemy to set
+     *  @return the maximum health points of the enemy
+     */
     public CombatBuilder setEnemyMaxHealth(final int newMaxHealth) {
         this.enemyMaxHealth = newMaxHealth;
         return this;

@@ -15,6 +15,7 @@ import it.unibo.progetto_oop.overworld.player.Player;
  */
 public final class CombatLauncher {
 
+    /** Combat controller instance. */
     private CombatController combatController;
 
     /**
@@ -85,7 +86,7 @@ public final class CombatLauncher {
 
     /**
      * Sets the encountered enemy in the combat controller.
-     * @param encounteredEnemey the enemy encountered by the player
+     * @param encounteredEnemy the enemy encountered by the player
      */
     public void setEncounteredEnemy(final Enemy encounteredEnemy) {
         this.combatController.setEncounteredEnemy(encounteredEnemy);
