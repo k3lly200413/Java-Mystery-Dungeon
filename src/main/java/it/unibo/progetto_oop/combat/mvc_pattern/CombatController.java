@@ -28,8 +28,7 @@ import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
-
-/**.
+/** 
  * Controller class in Model View Controller Pattern
  *
  * @author Kelly.applebee@studio.unibo.it
@@ -72,7 +71,6 @@ public class CombatController {
      * Static instance of AttackBuff item to be used across states.
      */
     private final Item attackBuffItem;
-
 
     /**
      * Static instance of HealingItem item to be used across states.
@@ -716,8 +714,6 @@ public class CombatController {
                     currentTargetPos[0] = nextTargetPos;
                     state[0] = 2;
                 }
-            /*
-            Da cambiare */
                 default -> {
                     if (currentAttackerPos[0].x() == attackerStartPos.x()) {
                         this.stopAnimationTimer();
@@ -805,7 +801,7 @@ public class CombatController {
 
         final int size = (model.getSize() / 2) - 2; // Target size for zoom
 
-        final int targetX = (model.getSize() / 2);
+        final int targetX = model.getSize() / 2;
 
         this.animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
             final Position currentEnemyPosition = model.getEnemyPosition();
@@ -1322,14 +1318,14 @@ public class CombatController {
     // Chiudi la finestra corrente
     javax.swing.SwingUtilities.invokeLater(() -> {
         // Distrugge la finestra esistente
-        java.awt.Window window = javax.swing.FocusManager.
+        final java.awt.Window window = javax.swing.FocusManager.
         getCurrentManager().getActiveWindow();
         if (window != null) {
             window.dispose();
         }
 
         // Ricrea il gioco da capo
-        GameLuncher app = new GameLuncher();
+        final GameLuncher app = new GameLuncher();
         app.start();
     });
 }

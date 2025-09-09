@@ -86,6 +86,7 @@ public final class CombatLauncher {
 
     /**
      * Sets the encountered enemy in the combat controller.
+     * 
      * @param encounteredEnemy the enemy encountered by the player
      */
     public void setEncounteredEnemy(final Enemy encounteredEnemy) {
