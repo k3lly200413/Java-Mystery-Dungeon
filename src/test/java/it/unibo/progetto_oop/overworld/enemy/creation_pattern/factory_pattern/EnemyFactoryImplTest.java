@@ -7,18 +7,49 @@ import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.BossE
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollision;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 class EnemyFactoryImplTest {
+    /**
+     * mocked wall collision.
+     */
     private WallCollision wallCollision;
+
+    /**
+     * mocked combat collision.
+     */
     private CombatCollision combatCollision;
+
+    /**
+     * mocked grid notifier.
+     */
     private GridNotifier gridNotifier;
+
+    /**
+     * mocked position.
+     */
     private Position position;
+
+    /**
+     * Class under test.
+     */
     private EnemyFactoryImpl factory;
+
+    /**
+     * health costant for enemy creation tests.
+     */
+    private static final int HEALTH = 10;
+
+    /**
+     * power costant for enemy creation tests.
+     */
+    private static final int POWER = 5;
 
     @BeforeEach
     void setUp() {
@@ -31,28 +62,32 @@ class EnemyFactoryImplTest {
 
     @Test
     void testCreatePatrollerEnemy() {
-        Enemy enemy = factory.createPatrollerEnemy(10, 5, position, true, gridNotifier);
+        Enemy enemy = factory.
+            createPatrollerEnemy(HEALTH, POWER, position, true, gridNotifier);
         assertTrue(enemy instanceof GenericEnemy);
         assertEquals(enemy.getState().getDescription(), "Patroller State");
     }
 
     @Test
     void testCreateFollowerEnemy() {
-        Enemy enemy = factory.createFollowerEnemy(10, 5, position, false, gridNotifier);
+        Enemy enemy = factory.
+            createFollowerEnemy(HEALTH, POWER, position, false, gridNotifier);
         assertTrue(enemy instanceof GenericEnemy);
         assertEquals(enemy.getState().getDescription(), "Follower State");
     }
 
     @Test
     void testCreateSleeperEnemy() {
-        Enemy enemy = factory.createSleeperEnemy(10, 5, position, true, gridNotifier);
+        Enemy enemy = factory.
+            createSleeperEnemy(HEALTH, POWER, position, true, gridNotifier);
         assertTrue(enemy instanceof GenericEnemy);
         assertEquals(enemy.getState().getDescription(), "Sleeper State");
     }
 
     @Test
     void testCreateBossEnemy() {
-        Enemy enemy = factory.createBossEnemy(100, 20, position, false, gridNotifier);
+        Enemy enemy = factory.
+        createBossEnemy(HEALTH, POWER, position, false, gridNotifier);
         assertTrue(enemy instanceof BossEnemy);
         assertEquals(enemy.getState().getDescription(), "Sleeper State");
     }

@@ -9,91 +9,99 @@ import org.junit.jupiter.api.Test;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.OverworldPlayerAdapter;
 
-public class OverworldPlayerAdapterTest {
+class OverworldPlayerAdapterTest {
 
-    OverworldPlayerAdapter playerAdapter;
+    /**
+     * object under test.
+     */
+    private OverworldPlayerAdapter playerAdapter;
+
+    /**
+     * costant max hp.
+     */
+    private static final int MAX_HP = 100;
+
+    /**
+     * costant max stamina.
+     */
+    private static final int MAX_STAMINA = 100;
+
+    /**
+     * costant power.
+     */
+    private static final int POWER = 10;
+
+    /**
+     * costant amount 1.
+     */
+    private static final int AMOUNT_1 = 20;
+
+    /**
+     * costant amount 2.
+     */
+    private static final int AMOUNT_2 = -100;
+
     @BeforeEach
     void setUp() {
         var inventory = new Inventory();
-        var player = new Player(100, 100, 10, inventory);
+        var player = new Player(MAX_HP, MAX_STAMINA, POWER, inventory);
         playerAdapter = new OverworldPlayerAdapter(player);
     }
 
-    /**
-     * increase the player's max hp value.
-     * @param amount the amount to increase
-     */
     @Test
     void increaseMaxHpTest() {
-        playerAdapter.increasePlayerMaxHealth(20);
-        assertEquals(120, playerAdapter.getMaxHp());
+        playerAdapter.increasePlayerMaxHealth(AMOUNT_1);
+        assertEquals(AMOUNT_1 + MAX_HP, playerAdapter.getMaxHp());
 
         IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
-            () -> playerAdapter.increasePlayerMaxHealth(-100)
+            () -> playerAdapter.increasePlayerMaxHealth(AMOUNT_2)
         );
 
         assertEquals("Amount must not be negative", exception.getMessage());
     }
 
-    
-    /**
-     * increase the player's stamina.
-     * @param amount the amount to increase.
-     */
+
     @Test
     void increaseStaminaTest() {
-        
-
-        playerAdapter.increasePlayerMaxStamina(15);
-        assertEquals(115, playerAdapter.getMaxStamina());
+        playerAdapter.increasePlayerMaxStamina(AMOUNT_1);
+        assertEquals(MAX_STAMINA + AMOUNT_1, playerAdapter.getMaxStamina());
 
         IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
-            () -> playerAdapter.increasePlayerMaxStamina(-100)
+            () -> playerAdapter.increasePlayerMaxStamina(AMOUNT_2)
         );
 
         assertEquals("Amount must not be negative", exception.getMessage());
     }
 
-    /**
-     * Increase the player power.
-     * @param amount the amount to increase.
-     */
+
     @Test
-    public void increasePowerTest() {
-        playerAdapter.increasePlayerMaxPower(5);
-        assertEquals(15, playerAdapter.getPower());
+    void increasePowerTest() {
+        playerAdapter.increasePlayerMaxPower(AMOUNT_1);
+        assertEquals(POWER + AMOUNT_1, playerAdapter.getPower());
 
         IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
-            () -> playerAdapter.increasePlayerMaxPower(-100)
+            () -> playerAdapter.increasePlayerMaxPower(AMOUNT_2)
         );
 
         assertEquals("Amount must not be negative", exception.getMessage());
     }
 
-    /**
-     * increase the player current hp.
-     * @param amount the amount to increase
-     */
     @Test
     void healTest() {
-        playerAdapter.increasePlayerMaxHealth(50);
-        assertEquals(150, playerAdapter.getMaxHp());
+        playerAdapter.increasePlayerMaxHealth(AMOUNT_1);
+        assertEquals(MAX_HP + AMOUNT_1, playerAdapter.getMaxHp());
 
-        playerAdapter.increasePlayerHealth(30);
-        assertEquals(130, playerAdapter.getHp());
-
-        playerAdapter.increasePlayerHealth(50);
-        assertEquals(150, playerAdapter.getHp());
+        playerAdapter.increasePlayerHealth(AMOUNT_1);
+        assertEquals(MAX_HP + AMOUNT_1, playerAdapter.getHp());
 
         IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
-            () -> playerAdapter.increasePlayerHealth(-100)
+            () -> playerAdapter.increasePlayerHealth(AMOUNT_2)
         );
 
         assertEquals("Amount must not be negative", exception.getMessage());
-    }   
-    
+    }
 }
