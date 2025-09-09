@@ -56,6 +56,15 @@ class GameOverStateTest {
     /** Test enemy remaining HP used in sync test. */
     private static final int ENEMY_HP_SYNC = 25;
 
+    /** Enemy position used in tests. */
+    private static final Position ENEMY_POS = new Position(ENEMY_X, ROW_Y);
+
+    /** Player position used in tests. */
+    private static final Position PLAYER_POS = new Position(PLAYER_X, ROW_Y);
+
+    /** Attack position used in tests. */
+    private static final Position ATTACK_POS = new Position(ATTACK_X, ROW_Y);
+
     /** The combat collision manager. */
     private CombatCollision combatCollision;
 
@@ -76,15 +85,6 @@ class GameOverStateTest {
 
     /** The combat view for rendering the combat UI. */
     private CombatView view;
-
-    /** Enemy position used in tests. */
-    private static final Position ENEMY_POS = new Position(ENEMY_X, ROW_Y);
-
-    /** Player position used in tests. */
-    private static final Position PLAYER_POS = new Position(PLAYER_X, ROW_Y);
-
-    /** Attack position used in tests. */
-    private static final Position ATTACK_POS = new Position(ATTACK_X, ROW_Y);
 
     @BeforeEach
     void setUp() {
@@ -116,7 +116,7 @@ class GameOverStateTest {
         when(this.model.getPlayerHealth()).thenReturn(PLAYER_HP_POSITIVE);
         when(this.model.getEnemyHealth()).thenReturn(ENEMY_HP_POSITIVE);
 
-        GameOverState state = new GameOverState(
+        final GameOverState state = new GameOverState(
             this.combatCollision, this.gridNotifier, this.enemy, this.player
         );
         state.enterState(this.controller);
@@ -130,7 +130,7 @@ class GameOverStateTest {
         when(this.model.getPlayerHealth()).thenReturn(0);
         when(this.model.getEnemyHealth()).thenReturn(ENEMY_HP_POSITIVE);
 
-        GameOverState state = new GameOverState(
+        final GameOverState state = new GameOverState(
             this.combatCollision, this.gridNotifier, this.enemy, this.player
         );
         state.enterState(this.controller);
@@ -147,7 +147,7 @@ class GameOverStateTest {
         when(this.model.getPlayerHealth()).thenReturn(PLAYER_HP_POSITIVE);
         when(this.model.getEnemyHealth()).thenReturn(0);
 
-        GameOverState state = new GameOverState(
+        final GameOverState state = new GameOverState(
             this.combatCollision, this.gridNotifier, this.enemy, this.player
         );
         state.enterState(this.controller);
@@ -167,7 +167,7 @@ class GameOverStateTest {
         when(this.model.getPlayerHealth()).thenReturn(PLAYER_HP_POSITIVE);
         when(this.model.getEnemyHealth()).thenReturn(ENEMY_HP_SYNC);
 
-        GameOverState state = new GameOverState(
+        final GameOverState state = new GameOverState(
             this.combatCollision, this.gridNotifier, this.enemy, this.player
         );
         state.enterState(this.controller);
