@@ -1,5 +1,4 @@
 package it.unibo.progetto_oop.playGround;
-package it.unibo.progetto_oop.playGround;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;

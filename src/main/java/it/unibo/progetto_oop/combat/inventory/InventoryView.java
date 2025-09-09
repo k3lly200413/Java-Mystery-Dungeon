@@ -148,7 +148,7 @@ public class InventoryView extends JPanel {
         this.add(this.gridPanel, BorderLayout.CENTER);
 
         // Status Area Panel and contents
-        JPanel statusAreaPanel = createStatusAreaPanel()
+        JPanel statusAreaPanel = createStatusAreaPanel();
         this.add(statusAreaPanel, BorderLayout.SOUTH);
 
         // Initial population
@@ -159,15 +159,15 @@ public class InventoryView extends JPanel {
     }
 
     private JButton createBackButton() {
-        this.backButton = new JButton("Back to Game");
-        this.backButton.addActionListener(e -> {
+        JButton button = new JButton("Back to Game");
+        button.addActionListener(e -> {
             if (this.viewManager != null) {
                 //SwingUtilities.getWindowAncestor(this).dispose();
                 this.viewManager.showOverworld();
             }
         });
 
-        return button
+        return button;
     }
 
     private JLabel createStatusLabel() {
@@ -187,7 +187,7 @@ public class InventoryView extends JPanel {
         return label;
     }
 
-    private JPanel createStatusareaPanel() {
+    private JPanel createStatusAreaPanel() {
         JPanel statusAreaPanel = new JPanel(new BorderLayout(0, STATUS_PADDING));
         statusAreaPanel.setBorder(BorderFactory.createEmptyBorder(STATUS_PADDING, STATUS_PADDING, STATUS_PADDING, STATUS_PADDING));
         
@@ -210,7 +210,7 @@ public class InventoryView extends JPanel {
             + backButton.getPreferredSize().height;
         
         return new Dimension(
-                totalPreferredWidth, gridActualHeight + statusAreaHeight));
+                totalPreferredWidth, gridActualHeight + statusAreaHeight);
     }
 
     /**
