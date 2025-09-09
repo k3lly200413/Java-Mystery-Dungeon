@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.WallCollision;
+package it.unibo.progetto_oop.overworld.wall_collision;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
