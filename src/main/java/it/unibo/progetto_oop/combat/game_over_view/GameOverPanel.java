@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -73,7 +74,10 @@ public class GameOverPanel extends JPanel {
         gbc.gridy = 3;
         restartButton = new JButton("Restart");
         restartButton.setFocusPainted(false);
-        restartButton.setFont(restartButton.getFont().deriveFont(Font.BOLD, BUTTON_FONT_SIZE));
+        restartButton.setFont(new Font("SansSerif", Font.BOLD, 28));
+        restartButton.setForeground(Color.WHITE);
+        restartButton.setBackground(new Color(63, 46, 30));
+        restartButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3, true));
         restartButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         restartButton.addActionListener(e -> {
             if (onRestart != null) {
