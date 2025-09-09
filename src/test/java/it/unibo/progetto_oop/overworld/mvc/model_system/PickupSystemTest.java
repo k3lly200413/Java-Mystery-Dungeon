@@ -3,7 +3,6 @@ package it.unibo.progetto_oop.overworld.mvc.model_system;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_strategy.Potion;
-import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,11 +34,6 @@ class PickupSystemTest {
     private Player player;
 
     /**
-     * mock model.
-     */
-    private OverworldModel model;
-
-    /**
      * mock inventory.
      */
     private Inventory inventory;
@@ -54,11 +48,10 @@ class PickupSystemTest {
         item1 = mock(Item.class);
         item2 = mock(Item.class);
         player = mock(Player.class);
-        model = mock(OverworldModel.class);
         inventory = mock(Inventory.class);
         when(player.getInventory()).thenReturn(inventory);
         pickupSystem = new PickupSystem(
-            new ArrayList<>(List.of(item1, item2)), player, model);
+            new ArrayList<>(List.of(item1, item2)), player);
     }
 
     @Test
@@ -88,7 +81,7 @@ class PickupSystemTest {
         final Item item3 = new Potion(
             "name", "desc", position3, null);
         pickupSystem = new PickupSystem(
-            new ArrayList<>(List.of(item3)), player, model);
+            new ArrayList<>(List.of(item3)), player);
 
         boolean removed = pickupSystem.removeItemAt(position3);
         assertTrue(removed);
@@ -102,7 +95,7 @@ class PickupSystemTest {
         final Item item3 = new Potion(
             "name", "desc", position3, null);
         pickupSystem = new PickupSystem(
-            new ArrayList<>(List.of(item3)), player, model);
+            new ArrayList<>(List.of(item3)), player);
 
         when(player.getPosition()).thenReturn(position3);
 

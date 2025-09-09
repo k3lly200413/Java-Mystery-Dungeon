@@ -102,7 +102,6 @@ public class PickupSystem {
         final Optional<Item> itemOpt = this.itemFoundAtPlayerPosition();
 
         itemOpt.ifPresent(item -> {
-            System.out.println("Item found, picking it up " + item.getName());
             this.removeItemAt(item.getPosition());
             this.player.getInventory().printInventory();
         });

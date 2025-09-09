@@ -1,6 +1,9 @@
 package it.unibo.progetto_oop.combat.inventory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,33 +54,33 @@ class InventoryTest {
 
         // Add second item
         final boolean added2 = inventory.addItem(attack);
-        assertEquals(true, added2);
+        assertTrue(added2);
         assertEquals(2, inventory.getCurrentSize());
 
         // Try to add third different item - should fail due to capacity
         final boolean added3 = inventory.addItem(antidote);
-        assertEquals(false, added3);
+        assertFalse(added3);
         assertEquals(2, inventory.getCurrentSize());
 
         // Add another of the first item - should succeed
         final boolean added4 = inventory.addItem(health);
-        assertEquals(true, added4);
+        assertTrue(added4);
         assertEquals(2, inventory.getCurrentSize());
         // size remains 2 since it's the same item
 
         // Decrease count of first item
         final boolean decreased1 = inventory.decreaseItemCount(health);
-        assertEquals(true, decreased1);
+        assertTrue(decreased1);
         assertEquals(2, inventory.getCurrentSize()); // size remains 2
 
         // Decrease count of first item again - should remove it completely
         final boolean decreased2 = inventory.decreaseItemCount(health);
-        assertEquals(true, decreased2);
+        assertTrue(decreased2);
         assertEquals(1, inventory.getCurrentSize()); // size decreases to 1
 
         // Now we can add the third item since there's space
         final boolean added5 = inventory.addItem(antidote);
-        assertEquals(true, added5);
+        assertTrue(added5);
         assertEquals(2, inventory.getCurrentSize());
     }
 
@@ -105,13 +108,13 @@ class InventoryTest {
         assertEquals(1, inventory.getCurrentSize());
 
         // can use it
-        assertEquals(true, inventory.canUseItem(health));
+        assertTrue(inventory.canUseItem(health));
 
         // use it
         inventory.decreaseItemCount(health);
         assertEquals(0, inventory.getCurrentSize());
 
         // cannot use it anymore
-        assertEquals(false, inventory.canUseItem(health));
+        assertFalse(inventory.canUseItem(health));
     }
 }

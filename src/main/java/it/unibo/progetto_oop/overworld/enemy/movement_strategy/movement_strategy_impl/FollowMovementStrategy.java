@@ -57,7 +57,7 @@ public class FollowMovementStrategy implements MovementStrategy {
         final Position targetPos = this.visibilityUtil.firstMove(
             context.getCurrentPosition(), player.getPosition());
 
-        Position playerPos = player.getPosition();
+        final Position playerPos = player.getPosition();
 
         // if the player is in the enemy's line of sight,
         // move towards the player

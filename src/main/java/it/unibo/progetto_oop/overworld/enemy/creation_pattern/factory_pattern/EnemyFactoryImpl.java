@@ -62,7 +62,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     final GridNotifier gridNotifier) {
 
         // create generic enemy
-        Enemy enemy =
+        final Enemy enemy =
             new GenericEnemy(hp, hp, power, spawnPosition, gridNotifier);
 
         // set the correct state

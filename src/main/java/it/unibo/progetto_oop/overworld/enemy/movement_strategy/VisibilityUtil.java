@@ -43,12 +43,9 @@ public class VisibilityUtil {
     public boolean inLos(final Position enemy,
     final Position player,
     final int neighbourDistance) {
-        if (this.neighboursChecker
+        return this.neighboursChecker
         .neighbours(enemy, player, neighbourDistance)
-        && this.hasLineOfSight(enemy, player)) {
-            return true;
-        }
-        return false;
+        && this.hasLineOfSight(enemy, player);
     }
 
     /**

@@ -24,7 +24,6 @@ public class SleeperState implements GenericEnemyState {
 
     @Override
     public final void onPlayerMoved(final Enemy context, final Player player) {
-        System.out.println("In Sleeper State so no action taken");
     }
 
     @Override

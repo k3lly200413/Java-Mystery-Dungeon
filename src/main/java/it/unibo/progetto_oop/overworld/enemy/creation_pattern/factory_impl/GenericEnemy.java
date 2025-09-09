@@ -110,7 +110,7 @@ public class GenericEnemy implements Enemy {
 
     @Override
     public final void setState(final GenericEnemyState newState) {
-        if (newState == null || newState == this.currentState) {
+        if (newState == null || newState.equals(this.currentState)) {
             return;
         }
 

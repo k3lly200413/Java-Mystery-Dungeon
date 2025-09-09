@@ -16,7 +16,7 @@ public class CombatCollisionImpl implements CombatCollision {
     /**
      * Flag to indicate if the enemy is currently in combat.
      */
-    private boolean inCombat = false;
+    private boolean inCombat;
 
     /**
      * Observer to manage the view transition.
@@ -33,6 +33,7 @@ public class CombatCollisionImpl implements CombatCollision {
      */
     public CombatCollisionImpl() {
         this.neighboursCheck = new DrawHelper();
+        this.inCombat = false;
     }
 
     @Override

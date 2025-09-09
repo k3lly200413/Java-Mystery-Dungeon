@@ -89,7 +89,6 @@ public class MovementSystem {
 
         // Check Walls
         if (!this.model.getWallCollision().canEnter(tempPosition)) {
-            System.out.println("Wall hit");
             return;
         }
 
@@ -100,7 +99,6 @@ public class MovementSystem {
             get(tempPosition.x(), tempPosition.y()) == TileType.STAIRS) {
             model.getGridNotifier().notifyPlayerMoved(currentPos, tempPosition);
             model.nextFloor();
-            System.out.println("floor changed");
             return; // no pickup/enemy turn on old floor
         }
         model.getGridNotifier().notifyPlayerMoved(currentPos, tempPosition);
@@ -114,7 +112,6 @@ public class MovementSystem {
         if (enemyOpt.isPresent()) {
             this.setCombatTransitionFlag();
             enemySystem.setEncounteredEnemy(enemyOpt.get());
-            System.out.println("Enemy encounter flagged at " + tempPosition);
             return;
         }
 

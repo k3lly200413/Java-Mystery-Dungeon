@@ -114,7 +114,7 @@ public class InventoryView extends JPanel {
     /**
      * Panel containing the grid of item buttons.
      */
-    private JPanel gridPanel;
+    private final JPanel gridPanel;
 
     /**
      * Status label at the bottom.
@@ -148,7 +148,7 @@ public class InventoryView extends JPanel {
         this.add(this.gridPanel, BorderLayout.CENTER);
 
         // Status Area Panel and contents
-        JPanel statusAreaPanel = createStatusAreaPanel();
+        final JPanel statusAreaPanel = createStatusAreaPanel();
         this.add(statusAreaPanel, BorderLayout.SOUTH);
 
         // Initial population
@@ -239,16 +239,15 @@ public class InventoryView extends JPanel {
     */
     private void populateGrid() {
         if (this.gridPanel == null || this.inventory == null) {
-            System.err.println("InventoryView: Cannot populate grid");
             return;
         }
 
         this.gridPanel.removeAll();
 
-        java.util.List<Item> items = new ArrayList<>(
+        final java.util.List<Item> items = new ArrayList<>(
             this.inventory.getFullInventory().keySet());
 
-        Color[] slotColors = new Color[] {
+        final Color[] slotColors = new Color[] {
             ITEM_SLOT_1_COLOR, ITEM_SLOT_2_COLOR, ITEM_SLOT_3_COLOR
         };
 
@@ -257,17 +256,18 @@ public class InventoryView extends JPanel {
 
         for (int y = 0; y < VIEWPORT_HEIGHT_CELLS; y++) {
             for (int x = 0; x < VIEWPORT_WIDTH_CELLS; x++) {
-                JButton cellButton;
+                final JButton cellButton;
 
                 if (itemIndex < nItems) {
-                    Item currentItem = items.get(itemIndex);
-                    String desc = "<html>"
+                    final Item currentItem = items.get(itemIndex);
+                    final String desc = "<html>"
                         + currentItem.getDescription().replace("\n", "<br>")
                         + "<br><b style='color:blue;'>"
                         + this.inventory.getItemCount(currentItem)
                         + " in inventory"
                         + "</b></html>";
-                    Color itemColor = slotColors[itemIndex % slotColors.length];
+                    final Color itemColor =
+                        slotColors[itemIndex % slotColors.length];
                     cellButton = createItemButton(
                         currentItem.getName(), itemColor, desc);
                     itemIndex++;

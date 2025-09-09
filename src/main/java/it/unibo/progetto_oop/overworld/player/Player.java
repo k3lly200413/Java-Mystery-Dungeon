@@ -71,16 +71,11 @@ public class Player {
             final PotionStrategy strategy =
                 item.getStrategy(); // the kind of potion
             if (strategy != null) {
-                System.out.println("Using potion " + item.getDescription());
                 final PossibleUser adaptedPlayer =
                     new OverworldPlayerAdapter(this);
                 item.use(adaptedPlayer);
                 this.inventory.decreaseItemCount(item);
-            } else {
-                System.out.println("Strategy is null");
             }
-        } else {
-            System.out.println("Object not in inventory, input ignored");
         }
     }
 

@@ -31,8 +31,6 @@ public class ItemFactory {
                 "Buffs Attack for rest of encounter\nBuff Amount: +10",
                 position, new AttackBuff());
         }
-        System.err.println(
-            "Warning: Unknown item identifier in factory: " + itemId);
         return null;
     }
 }

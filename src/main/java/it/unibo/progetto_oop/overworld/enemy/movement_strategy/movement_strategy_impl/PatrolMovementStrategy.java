@@ -59,10 +59,10 @@ public class PatrolMovementStrategy implements MovementStrategy {
                 targetPos = new Position(currentPos.x() + 1, currentPos.y());
                 break;
             case NONE:
-                System.out.println("No direction given ");
                 break;
             default:
-                break;
+                throw new IllegalStateException(
+                    "Unexpected value: " + moveDirection);
         }
 
         // Check if the target position is not the

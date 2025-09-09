@@ -44,8 +44,6 @@ public class PatrollerState implements GenericEnemyState {
 
     @Override
     public final void enterState(final Enemy context) {
-        System.out.println("Entering " + this.getDescription());
-
         currentDirection = movementUtil
             .getInitialGeneralMoveDirection(
                 context.getCurrentPosition(), this.isVertical);
