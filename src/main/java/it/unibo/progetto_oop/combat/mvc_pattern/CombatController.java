@@ -159,7 +159,8 @@ public class CombatController {
         this.view = viewToUse;
         this.neighbours = new Neighbours();
 
-        this.view.setHealthBarMax(model.getMaxHealth());
+        this.view.setPlayerHealthBarMax(model.getPlayerMaxHealth());
+        this.view.setEnemyHealthBarMax(this.model.getEnemyMaxHealth());
         this.view.updatePlayerHealth(model.getPlayerHealth());
         this.view.updateEnemyHealth(model.getEnemyHealth());
 
@@ -240,7 +241,8 @@ public class CombatController {
         }
         enemyActionTimer = null;
         combatCollision.setInCombat(false);
-        this.view.close();
+        this.setState(new GameOverState(combatCollision, gridNotifier, enemy, player));
+        // this.view.close();
     }
 
     private void handleAttackMenu() {
@@ -1282,8 +1284,20 @@ public class CombatController {
         });
         animationTimer.start(); // faccio partire il timer
         //(finisce tutte le prossime chiamate poi fa partire
-        //il timer non è coe un for (lo so è strano))
+        //il timer non è coe un for (lo so è strano))f
 
+    }
+
+    public final void resetForNewCombat() {
+        this.model.setPlayerMaxHp(this.player.getMaxHp());
+        // this.model.setPlayerCurrentHp(this.player.getCurrentHp());
+        this.view.setPlayerHealthBarMax(model.getPlayerMaxHealth());
+        this.view.setEnemyHealthBarMax(this.model.getEnemyMaxHealth());
+        this.view.updateEnemyHealth(this.model.getEnemyHealth());
+        this.model.resetPositions();
+        this.setState(new PlayerTurnState());
+        this.view.updatePlayerHealth(this.model.getPlayerHealth());
+        this.view.updateEnemyHealth(this.model.getEnemyHealth());
     }
 
 }

@@ -46,8 +46,12 @@ public class CombatModel implements PossibleUser {
     /** The current health points of the player. */
     private int playerHealth;
 
+    private int playerMaxHealth;
+
     /** The current health points of the enemy. */
     private int enemyHealth;
+
+    private int enemyMaxHealth;
 
     /** The maximum health points allowed for both player and enemy. */
     private int maxHealth;
@@ -126,7 +130,8 @@ public class CombatModel implements PossibleUser {
      */
     public CombatModel(final CombatBuilder builder) {
 
-        this.maxHealth = builder.getMaxHealth();
+        this.playerMaxHealth = builder.getPlayerMaxHealth();
+        this.enemyMaxHealth = builder.getEnemyMaxHealth();
         this.size = builder.getSize();
         this.playerStaminaMax = builder.getStaminaMax();
         this.playerPower = builder.getPlayerPower();
@@ -135,12 +140,12 @@ public class CombatModel implements PossibleUser {
         this.enemySpeed = builder.getEnemySpeed();
         this.enemyName = builder.getEnemyName();
         this.basicPlayerPower = this.playerPower;
+        this.playerHealth = builder.getPlayerCurrentHp();
+        this.enemyHealth = builder.getEnemyCurrentHp();
 
         resetPositions();
         this.attackPosition = this.playerPosition;
 
-        this.playerHealth = maxHealth;
-        this.enemyHealth = maxHealth;
         this.playerStamina = builder.getStaminaMax();
         this.enemyPoisonPower = builder.getPlayerPoisonPower();
         this.playerLongRangePower = builder.getPlayerLongRangePower();
@@ -636,9 +641,17 @@ public final boolean isGameOver() {
      * false otherwise
      */
     public final void setEnemyPoisoned(final boolean newEnemyPoisoned) {
-            if (!this.enemyPoisoned && newEnemyPoisoned) {
-                this.enemyPoisoned = true;
-            }
+        if (!this.enemyPoisoned && newEnemyPoisoned) {
+            this.enemyPoisoned = true;
+        }
+    }
+
+    public final void setEnemyMaxHp(final int newHpToSet) {
+        this.enemyMaxHealth = newHpToSet;
+    }
+
+    public final void setEnemyCurrentHp(final int newCurrentHp) {
+        this.enemyHealth = newCurrentHp;
     }
 
     /**
@@ -658,6 +671,14 @@ public final boolean isGameOver() {
     @Override
     public final void setPlayerPoisoned(final boolean isPoisoned) {
         this.isPlayerPoison = isPoisoned;
+    }
+
+    public final void setPlayerMaxHp(final int newMaxHp) {
+        this.playerMaxHealth = newMaxHp;
+    }
+
+    public final void setPlayerCurrentHp(final int newCurrentHealth) {
+        this.playerHealth = newCurrentHealth;
     }
 
     /**
@@ -711,6 +732,14 @@ public final boolean isGameOver() {
     @Override
     public int getMaxHP() {
         return this.getMaxHealth();
+    }
+
+    public int getPlayerMaxHealth() {
+        return this.playerMaxHealth;
+    }
+
+    public int getEnemyMaxHealth() {
+        return this.enemyMaxHealth;
     }
 
     /**
