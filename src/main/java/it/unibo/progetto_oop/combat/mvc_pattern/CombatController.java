@@ -1249,30 +1249,30 @@ public class CombatController {
                 if (this.model.isPlayerTurn() && !this.checkGameOver()) {
                     this.model.setPlayerTurn(false);
                     view.updateEnemyHealth(remaining);
-                    CombatController.this.setState(this.enemyState);
+                    this.setState(this.enemyState);
                 } else {
-                    CombatController.this.model.setPlayerTurn(true);
+                    this.model.setPlayerTurn(true);
                     view.updatePlayerHealth(remaining);
-                    CombatController.this.setState(new PlayerTurnState());
+                    this.setState(new PlayerTurnState());
                 }
                 //this.currentState.stateChange(this);
             } else {
                 // ridisegno tutto con il veleno che sale
                 final RedrawContext defaultRedraw =
                     new RedrawContext.Builder()
-                        .player(CombatController.this.model.getPlayerPosition())
-                        .enemy(CombatController.this.model.getEnemyPosition())
-                        .flame(CombatController.this.model.getAttackPosition())
+                        .player(this.model.getPlayerPosition())
+                        .enemy(this.model.getEnemyPosition())
+                        .flame(this.model.getAttackPosition())
                         .drawPlayer(true).drawEnemy(true)
                         .playerRange(1).enemyRange(1)
                         .drawPoisonDamage(true).poisonYCoord(conto[0])
-                        .setIsGameOver(CombatController.this.model.isGameOver())
+                        .setIsGameOver(this.model.isGameOver())
                         .whoIsPoisoned(
-                            CombatController.this.model.isPlayerTurn()
-                                ? CombatController.this.model.getEnemyPosition()
-                                : CombatController.this.model
+                            this.model.isPlayerTurn()
+                                ? this.model.getEnemyPosition()
+                                : this.model
                                 .getPlayerPosition()).build();
-                CombatController.this.view.redrawGrid(defaultRedraw);
+                this.view.redrawGrid(defaultRedraw);
                 /* this.redrawView(this.model.getPlayerPosition(),
                 this.model.getEnemyPosition(),
                 this.model.getAttackPosition(), 0, true, true,
