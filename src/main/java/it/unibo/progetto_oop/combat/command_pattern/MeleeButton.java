@@ -1,10 +1,8 @@
 
 package it.unibo.progetto_oop.combat.command_pattern;
 
-
 import java.util.LinkedList;
 import java.util.List;
-
 import it.unibo.progetto_oop.combat.helper.Neighbours;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 

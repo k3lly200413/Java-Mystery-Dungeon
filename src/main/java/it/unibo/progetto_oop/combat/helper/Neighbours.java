@@ -2,6 +2,9 @@ package it.unibo.progetto_oop.combat.helper;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
+/**
+ * Helper class to determine if two positions are neighbors.
+ */
 public class Neighbours {
 
     /**
@@ -50,14 +53,14 @@ public class Neighbours {
         final Position positionToCheck,
         final int distanceBuffer) {
         return
-        (Math.abs(deathPosition.x() - positionToCheck.x()) == distanceBuffer
-        && Math.abs(deathPosition.y() - positionToCheck.y()) == distanceBuffer)
-        || (Math.abs(deathPosition.x() - positionToCheck.x()) == distanceBuffer
-        && deathPosition.y() == positionToCheck.y())
-        || (deathPosition.x() == positionToCheck.x()
-        && Math.abs(deathPosition.y() - positionToCheck.y()) == distanceBuffer)
-        || (deathPosition.x() == positionToCheck.x()
-        && positionToCheck.y() == deathPosition.y());
+        Math.abs(deathPosition.x() - positionToCheck.x()) == distanceBuffer
+        && Math.abs(deathPosition.y() - positionToCheck.y()) == distanceBuffer
+        || Math.abs(deathPosition.x() - positionToCheck.x()) == distanceBuffer
+        && deathPosition.y() == positionToCheck.y()
+        || deathPosition.x() == positionToCheck.x()
+        && Math.abs(deathPosition.y() - positionToCheck.y()) == distanceBuffer
+        || deathPosition.x() == positionToCheck.x()
+        && positionToCheck.y() == deathPosition.y();
     }
 
 }
