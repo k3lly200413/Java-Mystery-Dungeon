@@ -67,6 +67,7 @@ public final class SwingMapView extends JPanel implements MapView {
         private BufferedImage playerImg;
         private BufferedImage enemyImg;
         private BufferedImage itemImg;
+        private BufferedImage bossImg;
 
         MapPanel(final int cellSize) {
             this.initialCell = cellSize;
@@ -76,7 +77,8 @@ public final class SwingMapView extends JPanel implements MapView {
             this.stairsImg = loadSprite("/spritesOverworld/stairs.png");
             this.playerImg = loadSprite("/spritesOverworld/link.png");
             this.enemyImg  = loadSprite("/spritesOverworld/gengar.png");
-            this.itemImg   = loadSprite("/spritesOverworld/potion.png");
+            this.itemImg = loadSprite("/spritesOverworld/potion.png");
+            this.bossImg = loadSprite("/spritesOverworld/boss.png");
         }
 
         void setGrid(final StructureData g) {
@@ -181,7 +183,8 @@ public final class SwingMapView extends JPanel implements MapView {
 
                 // Entità
                 case PLAYER -> playerImg;
-                case ENEMY  -> enemyImg;
+                case ENEMY -> enemyImg;
+                case BOSS -> bossImg;
                 case ITEM   -> itemImg;
 
                 case NONE   -> null;
@@ -197,6 +200,7 @@ public final class SwingMapView extends JPanel implements MapView {
                 case STAIRS -> new Color(0, 170, 255);
                 case PLAYER -> new Color(80, 200, 120);
                 case ENEMY  -> new Color(200, 50, 50);
+                case BOSS   -> new Color(255, 0, 0);
                 case ITEM   -> new Color(160, 120, 255);
                 case NONE   -> new Color(0, 0, 0, 0); // trasparente
                 default     -> Color.MAGENTA;

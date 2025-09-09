@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.MovementUtils;
+package it.unibo.progetto_oop.overworld.movement_utils;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

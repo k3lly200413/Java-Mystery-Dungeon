@@ -76,13 +76,16 @@ public final class WallCollisionImpl implements WallCollision {
      */
     @Override
     public boolean canEnemyEnter(final Position to) {
-        if (!canEnter(to)) {
+        if (!canEnter(to)) { 
             return false;
         }
+        // already not a wall and not occupied by an enemy
+
         final TileType t = baseGrid.get(to.x(), to.y());
         final TileType eg = entityGrid.get(to.x(), to.y());
-        return (eg == TileType.NONE || eg == TileType.PLAYER)
-        && (t != TileType.STAIRS);
+
+        // also not an entity and not stairs
+        return (eg == TileType.NONE) && (t != TileType.STAIRS);
     }
 
     /**
@@ -124,7 +127,7 @@ public final class WallCollisionImpl implements WallCollision {
                 .filter(pos -> inBounds(pos)) // only in bounds positions
                 // i'm filtering all tipes of "obstacles"
                 .filter(pos -> baseGrid.get(pos.x(), pos.y()) == TileType.WALL
-                    || entityGrid.get(pos.x(), pos.y()) == TileType.ITEM
+                    || baseGrid.get(pos.x(), pos.y()) == TileType.ITEM
                     || baseGrid.get(pos.x(), pos.y()) == TileType.TUNNEL
                     || baseGrid.get(pos.x(), pos.y()) == TileType.STAIRS)
                 .min(Comparator.comparingInt(wallPos ->

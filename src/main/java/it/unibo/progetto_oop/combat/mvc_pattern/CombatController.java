@@ -261,13 +261,17 @@ public class CombatController {
     private void handleBagMenu() {
         this.setState(new ItemSelectionState());
         this.view.showBagButtons();
-        if (!this.player.getInventory().canUseItem(this.attackBuffItem)) {
+        this.view.setBagButtonsEnabled();
+        System.out.println(this.player.getInventory().getItemCount(attackBuffItem));
+        System.out.println(this.player.getInventory().getItemCount(curePoisonItem));
+        System.out.println(this.player.getInventory().getItemCount(healingItem));
+        if (!this.player.getInventory().canUseItem(attackBuffItem)) {
             this.view.setCustomButtonDisabled(this.view.getAttackBuffButton());
         }
-        if (!this.player.getInventory().canUseItem(this.curePoisonItem)) {
+        if (!this.player.getInventory().canUseItem(curePoisonItem)) {
             this.view.setCustomButtonDisabled(this.view.getCurePoisonButton());
         }
-        if (!this.player.getInventory().canUseItem(this.healingItem)) {
+        if (!this.player.getInventory().canUseItem(healingItem)) {
             this.view.setCustomButtonDisabled(this.view.getHealingButton());
         }
         view.clearInfo();
