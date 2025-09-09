@@ -180,7 +180,7 @@ public final void resetPositions() {
  */
 @Override
 public final void increasePlayerHealth(final int amount) {
-    this.playerHealth = Math.min(maxHealth, this.playerHealth + amount);
+    this.playerHealth = Math.min(this.playerMaxHealth, this.playerHealth + amount);
 }
 
 /**
@@ -191,7 +191,7 @@ public final void increasePlayerHealth(final int amount) {
  */
 @Override
 public final void increasePlayerMaxHealth(final int amount) {
-    this.maxHealth = this.maxHealth + amount;
+    this.playerMaxHealth = this.playerMaxHealth + amount;
 }
 
 /**
