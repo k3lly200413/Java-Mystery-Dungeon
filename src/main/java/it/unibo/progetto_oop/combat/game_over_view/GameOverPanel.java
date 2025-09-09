@@ -52,7 +52,7 @@ public class GameOverPanel extends JPanel {
         gbc.fill = GridBagConstraints.NONE;
 
         // Titolo
-        final JLabel title = new JLabel("GAME OVER");
+        final JLabel title = new JLabel("GAME  OVER");
         title.setForeground(TITLE_COLOR);
         title.setFont(title.getFont().deriveFont(Font.BOLD, TITLE_FONT_SIZE));
         add(title, gbc);
