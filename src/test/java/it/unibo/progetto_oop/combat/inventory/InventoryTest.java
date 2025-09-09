@@ -83,5 +83,21 @@ public class InventoryTest {
         inventory.decreaseItemCount(health);
         assertEquals(1, inventory.getCurrentSize());
     }
+
+    @Test 
+    void canUseItemTest() {
+        inventory.addItem(health); // add 1 health potion
+        assertEquals(1, inventory.getCurrentSize());
+
+        // can use it
+        assertEquals(true, inventory.canUseItem(health));
+
+        // use it
+        inventory.decreaseItemCount(health);
+        assertEquals(0, inventory.getCurrentSize());
+
+        // cannot use it anymore
+        assertEquals(false, inventory.canUseItem(health));
+    }
     
 }
