@@ -6,6 +6,7 @@ public enum TileType {
     TUNNEL,
     PLAYER,
     ENEMY,
+    BOSS,
     ITEM,
     STAIRS,
     NONE; // Overworld grid without entities

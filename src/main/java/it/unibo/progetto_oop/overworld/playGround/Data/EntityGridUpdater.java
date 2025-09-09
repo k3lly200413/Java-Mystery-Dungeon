@@ -17,10 +17,11 @@ public final class EntityGridUpdater implements GridUpdater {
 
     @Override
     public void onEnemyMove(final Position from, final Position to) {
-        if (entity.get(from.x(), from.y()) == TileType.ENEMY) {
+        TileType tmp = entity.get(from.x(), from.y());
+        if (tmp == TileType.ENEMY || tmp == TileType.BOSS) {
             entity.set(from.x(), from.y(), TileType.NONE);
         }
-        entity.set(to.x(), to.y(), TileType.ENEMY);
+        entity.set(to.x(), to.y(), tmp);
     }
 
     @Override
