@@ -866,10 +866,11 @@ public class CombatView extends JPanel {
         if (frame == null) {
             return;
         }
-        final GameOverPanel panel =
-            new GameOverPanel(() -> {
-                // TODO add reset logic
-            });
+        final GameOverPanel panel = new GameOverPanel(() -> {
+            if (onRestart != null) {
+                onRestart.run();   // <-- esegue davvero il restart
+            }
+        });
         frame.setContentPane(panel);
         frame.revalidate();
         frame.repaint();
