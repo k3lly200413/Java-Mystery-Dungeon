@@ -1,6 +1,7 @@
 package it.unibo.progetto_oop.combat.mvc_pattern;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
@@ -36,6 +37,9 @@ public class CombatModel implements PossibleUser {
      * position (half of the board size).
      */
     private static final int HALF_DIVISOR = 2;
+
+    /** The maximum number of hits the boss can perform in one sequence. */
+    private static final int MAX_BOSS_HIT = 3;
 
     /** The size of the game board or arena. */
     private final int size;
@@ -116,14 +120,11 @@ public class CombatModel implements PossibleUser {
     /** Counter tracking the number of boss attacks. */
     private int bossAttackCounter;
 
-    /** The maximum number of hits the boss can perform in one sequence. */
-    private final int maxBossHit = 3;
-
     /** The current state of the boss (e.g., NORMAL, ENRAGED). */
     private String currentBossState = "NORMAL";
 
     /** The path of the boss's death ray attack. */
-    private ArrayList<Position> deathRayPath = new ArrayList<>();
+    private final List<Position> deathRayPath = new ArrayList<>();
 
     /** Counter tracking the number of turns taken by the boss. */
     private int bossTurnCounter;
@@ -167,7 +168,6 @@ public class CombatModel implements PossibleUser {
         this.isPlayerPoison = false;
         this.isBossTurn = false;
 
-        this.deathRayPath = new ArrayList<>();
         this.deathRayPath.add(enemyPosition);
 
     }
@@ -579,7 +579,7 @@ public final boolean isGameOver() {
      * @return the maximum boss hit count
      */
     public final int getMaxBossHit() {
-        return this.maxBossHit;
+        return MAX_BOSS_HIT;
     }
 
     /**
@@ -596,7 +596,7 @@ public final boolean isGameOver() {
      *
      * @return the death ray path as a list of positions
      */
-    public final ArrayList<Position> getDeathRayPath() {
+    public final List<Position> getDeathRayPath() {
         return this.deathRayPath;
     }
 
