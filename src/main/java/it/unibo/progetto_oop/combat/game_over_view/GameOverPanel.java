@@ -26,7 +26,7 @@ public class GameOverPanel extends JPanel {
     private static final Color SUBTITLE_COLOR = Color.WHITE; // meglio bianco per contrasto
     private static final float TITLE_FONT_SIZE = 64f;
     private static final float SUBTITLE_FONT_SIZE = 28f;
-    private static final float BUTTON_FONT_SIZE = 22f;
+    private static final int BUTTON_FONT_SIZE = 28;
     private static final int BUTTON_WIDTH = 360;
     private static final int BUTTON_HEIGHT = 56;
     private static final int VERTICAL_SPACING = 12;
@@ -74,7 +74,7 @@ public class GameOverPanel extends JPanel {
         gbc.gridy = 3;
         restartButton = new JButton("Restart");
         restartButton.setFocusPainted(false);
-        restartButton.setFont(new Font("SansSerif", Font.BOLD, 28));
+        restartButton.setFont(new Font("SansSerif", Font.BOLD, BUTTON_FONT_SIZE));
         restartButton.setForeground(Color.WHITE);
         restartButton.setBackground(new Color(63, 46, 30));
         restartButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3, true));
