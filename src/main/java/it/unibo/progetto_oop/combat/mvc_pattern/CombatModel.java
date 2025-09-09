@@ -163,8 +163,6 @@ public class CombatModel implements PossibleUser {
         this.deathRayPath = new ArrayList<>();
         this.deathRayPath.add(enemyPosition);
 
-        this.enemyState = builder.getEnemyState();
-
     }
 
 /**
@@ -745,6 +743,10 @@ public final boolean isGameOver() {
         return this.getMaxHealth();
     }
 
+    public int getMaxStamina() {
+        return this.playerStaminaMax;
+    }
+
     public int getPlayerMaxHealth() {
         return this.playerMaxHealth;
     }
@@ -776,5 +778,13 @@ public final boolean isGameOver() {
         return getPlayerHealth();
     }
 }
+
+    public void setPlayerPower(int power) {
+        this.playerPower = power;
+    }
+
+    public void setPlayerStamina(int stamina) {
+        this.playerStamina = stamina;
+    }
 
 }

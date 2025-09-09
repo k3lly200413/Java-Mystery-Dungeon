@@ -9,6 +9,10 @@ import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.player.Player;
 
+/**
+ * Launcher class for the combat application.
+ * Initializes the MVC components and starts the combat
+ */
 public final class CombatLauncher {
 
     private CombatController combatController;
@@ -19,17 +23,16 @@ public final class CombatLauncher {
      * @param player the player instance
      * @param combatCollision the combat collision instance
      * @param gridNotifier the grid notifier instance
-     * @param enemy the enemy instance
      * @return combatController instance
      */
-    public final CombatController buildCombat(final Player player,
+    public CombatController buildCombat(final Player player,
     final CombatCollision combatCollision,
     final GridNotifier gridNotifier) {
         // --- Game Configuration ---
         final int size = 12;
         final int playerPower = player.getPower();
         final int playerPoisonPower = 2;
-        final int enemyPower = 100;
+        final int enemyPower = 10;
         final int enemySpeed = 3;
         final String enemyName = "Dragon";
         final int playerMaxStamina = player.getStamina();
@@ -54,37 +57,38 @@ public final class CombatLauncher {
         // --- Application Startup ---
         // Ensure UI creation happens on the Event
         // Dispatch Thread (EDT) for safety.
-            // 1. Create the Model with our configuration
-            final CombatModel model = new CombatBuilder()
-            .setSize(size)
-            .setStaminaMax(playerMaxStamina)
-            .setPlayerPower(playerPower)
-            .setPlayerPoisonPower(playerPoisonPower)
-            .setPlayerLongRangePower(playerLongRangePower)
-            .setPlayerCurrentHealth(player.getCurrentHp())
-            .setEnemyPower(enemyPower)
-            .setEnemySpeed(enemySpeed)
-            .setEnemyName(enemyName)
-            .setPlayerMaxHealth(maxHealth)
-            .build();
-
-
-            // 2. Create the View
-            final CombatView view = new CombatView(model.getSize(),
-            viewWidthFactor * model.getSize() / sizeDivisor,
-            viewHeightFactor * model.getSize() / sizeDivisor,
-            buttonWidth, buttonHeight, windowWidth, windowHeight);
-            view.init();
-
-            // 3. Create the Controller, linking the Model and View
-            this.combatController =
-                new CombatController(model, view, player,
-                combatCollision, gridNotifier);
-            return this.combatController;
+        // 1. Create the Model with our configuration
+        final CombatModel model = new CombatBuilder()
+        .setSize(size)
+        .setStaminaMax(playerMaxStamina)
+        .setPlayerPower(playerPower)
+        .setPlayerPoisonPower(playerPoisonPower)
+        .setPlayerLongRangePower(playerLongRangePower)
+        .setPlayerCurrentHealth(player.getCurrentHp())
+        .setEnemyPower(enemyPower)
+        .setEnemySpeed(enemySpeed)
+        .setEnemyName(enemyName)
+        .setPlayerMaxHealth(maxHealth)
+        .build();
+        // 2. Create the View
+        final CombatView view = new CombatView(model.getSize(),
+        viewWidthFactor * model.getSize() / sizeDivisor,
+        viewHeightFactor * model.getSize() / sizeDivisor,
+        buttonWidth, buttonHeight, windowWidth, windowHeight);
+        view.init();
+        // 3. Create the Controller, linking the Model and View
+        this.combatController =
+            new CombatController(model, view, player,
+            combatCollision, gridNotifier);
+        return this.combatController;
     }
 
-    public final void setEncounteredEnemy(Enemy encounteredEnemey) {
-        this.combatController.setEncounteredEnemy(encounteredEnemey);
+    /**
+     * Sets the encountered enemy in the combat controller.
+     * @param encounteredEnemey the enemy encountered by the player
+     */
+    public void setEncounteredEnemy(final Enemy encounteredEnemy) {
+        this.combatController.setEncounteredEnemy(encounteredEnemy);
     }
 
 }

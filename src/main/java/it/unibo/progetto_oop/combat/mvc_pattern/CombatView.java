@@ -408,6 +408,10 @@ public class CombatView extends JPanel {
             "Stamina: " + value + "/" + playerStaminaBar.getMaximum());
     }
 
+    public final void setPlayerMaxStaminaBar(final int max) {
+        this.playerStaminaBar.setMaximum(max);
+    }
+
     /**
      * Updates the enemy's health bar with the current value.
      *

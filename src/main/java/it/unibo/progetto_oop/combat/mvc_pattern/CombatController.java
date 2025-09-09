@@ -1301,13 +1301,15 @@ public class CombatController {
         this.model.setPlayerMaxHp(this.player.getMaxHp());
         // this.model.setPlayerCurrentHp(this.player.getCurrentHp());
         this.view.setPlayerHealthBarMax(model.getPlayerMaxHealth());
-        System.out.println("Max Helth => " + this.model.getPlayerMaxHealth());
         this.view.setEnemyHealthBarMax(this.model.getEnemyMaxHealth());
         this.view.updateEnemyHealth(this.model.getEnemyHealth());
         this.model.resetPositions();
         this.setState(new PlayerTurnState());
         this.view.updatePlayerHealth(this.model.getPlayerHealth());
         this.view.updateEnemyHealth(this.model.getEnemyHealth());
+        this.model.setPlayerPower(this.player.getPower());
+        this.model.setPlayerStamina(this.player.getStamina());
+        this.view.setPlayerMaxStaminaBar(this.player.getMaxStamina());
     }
 
     public void restartGame() {
