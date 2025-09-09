@@ -100,7 +100,7 @@ public final class OverworldModel {
     /**
      * the combat collision instance.
      */
-    private CombatCollision combatCollision;
+    private final CombatCollision combatCollision;
 
     /**
      * player max hp.
@@ -128,7 +128,7 @@ public final class OverworldModel {
         this.inCombat = false;
         this.gridNotifier = new GridNotifier(null);
 
-        this.pickupSystem = new PickupSystem(items, this.player, this);
+        this.pickupSystem = new PickupSystem(items, this.player);
         this.enemySystem  = new EnemySystem(enemies, this.player, this);
         this.movementSystem = new MovementSystem(this.player, this);
 
@@ -173,9 +173,9 @@ public final class OverworldModel {
                 .setGridUpdater(new EntityGridUpdater(this.entityGrid));
             this.gridNotifier
                 .setListEnemyUpdater(
-                        pos -> this.enemySystem.removeEnemyAt(pos));
+                        this.enemySystem::removeEnemyAt);
             this.gridNotifier
-                .setListItemUpdater(pos -> this.pickupSystem.removeItemAt(pos));
+                .setListItemUpdater(this.pickupSystem::removeItemAt);
 
         }
         this.wallCollision = new WallCollisionImpl(baseGrid, entityGrid);

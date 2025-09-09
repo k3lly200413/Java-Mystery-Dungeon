@@ -12,19 +12,14 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 public class PatrolMovementStrategy implements MovementStrategy {
     /**
-     * The direction of this patrol movement.
-     */
-    private MoveDirection moveDirection;
-
-    /**
      * wall checker to check for walls.
      */
-    private WallCollision wallChecker;
+    private final WallCollision wallChecker;
 
     /**
      * combat transition checker to check for combat transitions.
      */
-    private CombatCollision combatTransitionChecker;
+    private final CombatCollision combatTransitionChecker;
 
     /**
      * Constructor for the PatrolMovementStrategy class.
@@ -43,11 +38,12 @@ public class PatrolMovementStrategy implements MovementStrategy {
     final Enemy context,
     final Player player,
     final MoveDirection currDirection) {
-        Position currentPos = context.getCurrentPosition();
+        final Position currentPos = context.getCurrentPosition();
         // Initialize target position to current position
         Position targetPos = currentPos;
 
-        this.moveDirection = currDirection; // Set the current direction
+        MoveDirection moveDirection =
+            currDirection; // Set the current direction
 
         switch (moveDirection) {
             case UP:
@@ -81,11 +77,11 @@ public class PatrolMovementStrategy implements MovementStrategy {
             context.setPosition(targetPos);
             context.getGridNotifier().notifyEnemyMoved(currentPos, targetPos);
 
-            return this.moveDirection;
+            return moveDirection;
         } else {
-            this.moveDirection = reverseDirection(this.moveDirection);
+            moveDirection = reverseDirection(moveDirection);
         }
-        return this.moveDirection;
+        return moveDirection;
     }
 
 

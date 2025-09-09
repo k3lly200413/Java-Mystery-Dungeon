@@ -159,7 +159,7 @@ public class InventoryView extends JPanel {
     }
 
     private JButton createBackButton() {
-        JButton button = new JButton("Back to Game");
+        final JButton button = new JButton("Back to Game");
         button.addActionListener(e -> {
             if (this.viewManager != null) {
                 //SwingUtilities.getWindowAncestor(this).dispose();
@@ -171,7 +171,7 @@ public class InventoryView extends JPanel {
     }
 
     private JLabel createStatusLabel() {
-        JLabel label = new JLabel(
+        final JLabel label = new JLabel(
             "<html><i>Click an item...</i></html>",
             SwingConstants.CENTER);
         label.setOpaque(true);
@@ -192,7 +192,7 @@ public class InventoryView extends JPanel {
     }
 
     private JPanel createStatusAreaPanel() {
-        JPanel statusAreaPanel = new JPanel(
+        final JPanel statusAreaPanel = new JPanel(
             new BorderLayout(0, STATUS_PADDING));
         statusAreaPanel.setBorder(
             BorderFactory.createEmptyBorder(
@@ -204,7 +204,8 @@ public class InventoryView extends JPanel {
         this.bottomStatusLabel = createStatusLabel();
         statusAreaPanel.add(this.bottomStatusLabel, BorderLayout.CENTER);
 
-        JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        final JPanel backButtonPanel =
+            new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.backButton = createBackButton();
         backButtonPanel.add(this.backButton);
         statusAreaPanel.add(backButtonPanel, BorderLayout.SOUTH);
@@ -213,10 +214,12 @@ public class InventoryView extends JPanel {
     }
 
     private Dimension calculatePreferredSize() {
-        int totalPreferredWidth = PREFERRED_CELL_WIDTH * VIEWPORT_WIDTH_CELLS;
-        int gridActualHeight = PREFERRED_CELL_HEIGHT * VIEWPORT_HEIGHT_CELLS
+        final int totalPreferredWidth =
+            PREFERRED_CELL_WIDTH * VIEWPORT_WIDTH_CELLS;
+        final int gridActualHeight =
+            PREFERRED_CELL_HEIGHT * VIEWPORT_HEIGHT_CELLS
             + VIEWPORT_HEIGHT_CELLS;
-        int statusAreaHeight = bottomStatusLabel.getPreferredSize().height
+        final int statusAreaHeight = bottomStatusLabel.getPreferredSize().height
             + backButton.getPreferredSize().height;
 
         return new Dimension(
@@ -249,7 +252,7 @@ public class InventoryView extends JPanel {
             ITEM_SLOT_1_COLOR, ITEM_SLOT_2_COLOR, ITEM_SLOT_3_COLOR
         };
 
-        int nItems = items.size();
+        final int nItems = items.size();
         int itemIndex = 0;
 
         for (int y = 0; y < VIEWPORT_HEIGHT_CELLS; y++) {
@@ -299,7 +302,7 @@ public class InventoryView extends JPanel {
     private JButton createItemButton(final String text, final Color color,
             final String htmlDescriptionActionCommand) {
 
-        JButton button = new JButton(text);
+        final JButton button = new JButton(text);
 
         button.setFocusPainted(false);
         button.setOpaque(true);

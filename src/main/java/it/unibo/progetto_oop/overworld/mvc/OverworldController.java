@@ -49,14 +49,14 @@ public class OverworldController implements ViewManagerObserver {
      * Initialize input bindings for the controller.
      */
     public void initializeInputBindings() {
-        JPanel panel = this.view;
+        final JPanel panel = this.view;
 
         // Bind pressed buttons to keys
-        InputBindings bindings = new InputBindings(panel);
+        final InputBindings bindings = new InputBindings(panel);
         bindings.setBindings();
 
         // Bind keys to actions
-        ActionMap actionMap = panel.getActionMap();
+        final ActionMap actionMap = panel.getActionMap();
 
         // action map
         actionMap.put("moveUp", new AbstractAction() {

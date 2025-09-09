@@ -13,22 +13,22 @@ public class FollowMovementStrategy implements MovementStrategy {
     /**
      * utility class to check visibility and line of sight.
      */
-    private VisibilityUtil visibilityUtil;
+    private final VisibilityUtil visibilityUtil;
 
     /**
      * patrol movement strategy to use when the player is not in sight.
      */
-    private PatrolMovementStrategy patrolMovementStrategy;
+    private final PatrolMovementStrategy patrolMovementStrategy;
 
     /**
      * wall checker to check for walls.
      */
-    private WallCollision wallChecker;
+    private final WallCollision wallChecker;
 
     /**
      * combat transition checker to check for combat transitions.
      */
-    private CombatCollision combatTransitionChecker;
+    private final CombatCollision combatTransitionChecker;
 
     // constants
     /**
@@ -53,8 +53,8 @@ public class FollowMovementStrategy implements MovementStrategy {
     @Override
     public final MoveDirection executeMove(final Enemy context,
     final Player player, final MoveDirection currDirection) {
-        Position currentPos = context.getCurrentPosition();
-        Position targetPos = this.visibilityUtil.firstMove(
+        final Position currentPos = context.getCurrentPosition();
+        final Position targetPos = this.visibilityUtil.firstMove(
             context.getCurrentPosition(), player.getPosition());
 
         Position playerPos = player.getPosition();

@@ -128,18 +128,18 @@ class EnemySystemTest {
 
     @Test
     void testRemoveEnemyAt() {
-        position1 = new Position(1, 1);
+        final Position position3 = new Position(1, 1);
         enemy1 = new GenericEnemy(
             ENEMY_HEALTH,
             ENEMY_HEALTH,
             ENEMY_HEALTH,
-            position1,
+            position3,
             mock(GridNotifier.class));
         enemySystem =
             new EnemySystem(
                 new ArrayList<>(Arrays.asList(enemy1)), player, model);
 
-        boolean removed = enemySystem.removeEnemyAt(position1);
+        boolean removed = enemySystem.removeEnemyAt(position3);
         assertTrue(removed);
         assertEquals(0, enemySystem.getEnemies().size());
     }

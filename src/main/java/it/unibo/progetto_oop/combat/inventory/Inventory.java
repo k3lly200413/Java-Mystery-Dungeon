@@ -58,7 +58,7 @@ public class Inventory {
             return false;
         }
         // updating item amount
-        int currentCount = this.items.getOrDefault(item, 0);
+        final int currentCount = this.items.getOrDefault(item, 0);
         items.put(item, currentCount + 1);
         return true;
     }
@@ -79,7 +79,7 @@ public class Inventory {
             return false;
         }
         // updating item amount
-        int currentCount = this.items.getOrDefault(item, 0);
+        final int currentCount = this.items.getOrDefault(item, 0);
         this.items.put(item, currentCount + quantity);
         return true;
     }
@@ -98,7 +98,7 @@ public class Inventory {
             System.err.println("Item does not have a key. Please Fix");
             return false;
         }
-        int currentAmount = this.items.get(item);
+        final int currentAmount = this.items.get(item);
 
         // when i'll decrease the count will be 0,
         // so remove the item from the inventory

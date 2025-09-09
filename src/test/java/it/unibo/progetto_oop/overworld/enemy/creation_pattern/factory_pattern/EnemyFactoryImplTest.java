@@ -17,16 +17,6 @@ import org.junit.jupiter.api.Test;
 
 class EnemyFactoryImplTest {
     /**
-     * mocked wall collision.
-     */
-    private WallCollision wallCollision;
-
-    /**
-     * mocked combat collision.
-     */
-    private CombatCollision combatCollision;
-
-    /**
      * mocked grid notifier.
      */
     private GridNotifier gridNotifier;
@@ -53,8 +43,8 @@ class EnemyFactoryImplTest {
 
     @BeforeEach
     void setUp() {
-        wallCollision = mock(WallCollision.class);
-        combatCollision = mock(CombatCollision.class);
+        WallCollision wallCollision = mock(WallCollision.class);
+        CombatCollision combatCollision = mock(CombatCollision.class);
         gridNotifier = mock(GridNotifier.class);
         position = mock(Position.class);
         factory = new EnemyFactoryImpl(wallCollision, combatCollision);
@@ -62,7 +52,7 @@ class EnemyFactoryImplTest {
 
     @Test
     void testCreatePatrollerEnemy() {
-        Enemy enemy = factory.
+        final Enemy enemy = factory.
             createPatrollerEnemy(HEALTH, POWER, position, true, gridNotifier);
         assertTrue(enemy instanceof GenericEnemy);
         assertEquals(enemy.getState().getDescription(), "Patroller State");
@@ -70,7 +60,7 @@ class EnemyFactoryImplTest {
 
     @Test
     void testCreateFollowerEnemy() {
-        Enemy enemy = factory.
+        final Enemy enemy = factory.
             createFollowerEnemy(HEALTH, POWER, position, false, gridNotifier);
         assertTrue(enemy instanceof GenericEnemy);
         assertEquals(enemy.getState().getDescription(), "Follower State");
@@ -78,7 +68,7 @@ class EnemyFactoryImplTest {
 
     @Test
     void testCreateSleeperEnemy() {
-        Enemy enemy = factory.
+        final Enemy enemy = factory.
             createSleeperEnemy(HEALTH, POWER, position, true, gridNotifier);
         assertTrue(enemy instanceof GenericEnemy);
         assertEquals(enemy.getState().getDescription(), "Sleeper State");
@@ -86,7 +76,7 @@ class EnemyFactoryImplTest {
 
     @Test
     void testCreateBossEnemy() {
-        Enemy enemy = factory.
+        final Enemy enemy = factory.
         createBossEnemy(HEALTH, POWER, position, false, gridNotifier);
         assertTrue(enemy instanceof BossEnemy);
         assertEquals(enemy.getState().getDescription(), "Sleeper State");
