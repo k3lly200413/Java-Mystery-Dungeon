@@ -7,6 +7,7 @@ import javax.swing.SwingUtilities;
 import it.unibo.progetto_oop.combat.CombatLauncher;
 import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.win_view.WinPanel;
 import it.unibo.progetto_oop.overworld.mvc.OverworldController;
 import it.unibo.progetto_oop.overworld.mvc.ViewManager;
 import it.unibo.progetto_oop.overworld.playground.OverworldLuncher;
@@ -37,9 +38,14 @@ public final class GameLuncher {
                 GameOverPanel gameOverPanel = new GameOverPanel(() -> {
                     combatController.restartGame();
                 });
+
+                WinPanel winPanel = new WinPanel(() -> {
+                    combatController.restartGame();
+                });
                 viewManager.setPlayGroundView(session.getView());
                 viewManager.setCombatController(combatController);
                 viewManager.setGameOverPanel(gameOverPanel);
+                viewManager.setWinPanel(winPanel);
                 OverworldController overworldController = new OverworldController(session.getModel(), session.getView(), viewManager);
                 session.getModel().setCombatTransitionListener(overworldController);
                 session.start();

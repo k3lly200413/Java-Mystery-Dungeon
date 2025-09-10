@@ -6,4 +6,5 @@ public interface ViewManagerObserver {
     public void onPlayerEnemyContact(Enemy encounteredEnemy);
     public void onEnemyDefeat();
     public void onPlayerDefeat();
+    public void onPlayerWin();
 }

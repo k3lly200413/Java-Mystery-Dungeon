@@ -11,6 +11,7 @@ import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
+import it.unibo.progetto_oop.combat.win_view.WinPanel;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.playground.view.GameStartView;
 import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
@@ -42,6 +43,11 @@ public class ViewManager {
     private static final String GAME_OVER = "GAME OVER";
 
     /**
+     * win card identifier.
+     */
+    private static final String WIN = "WIN";
+
+    /**
      * the frame of the game.
      */
     private JFrame frame;
@@ -70,6 +76,9 @@ public class ViewManager {
 
     /** Game over panel. */
     private GameOverPanel gameOverPanel;
+
+    /** Win panel. */
+    private WinPanel winPanel;
 
     /**
      * Method to start the view manager with the initial start view.
@@ -160,5 +169,14 @@ public class ViewManager {
 
     public void showGameOver() {
         this.cardLayout.show(this.mainCardPanel, GAME_OVER);
+    }
+
+    public void setWinPanel(final WinPanel newWinPanel) {
+        this.winPanel = newWinPanel;
+        this.mainCardPanel.add(this.winPanel, WIN);
+    }
+
+    public void showWin() {
+        this.cardLayout.show(this.mainCardPanel, WIN);
     }
 }
