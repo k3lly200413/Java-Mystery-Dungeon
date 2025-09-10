@@ -15,12 +15,12 @@ public class VisibilityUtil {
     /**
      * wall collision checker.
      */
-    private WallCollision wallChecker;
+    private final WallCollision wallChecker;
 
     /**
      * neighbours checker.
      */
-    private DrawHelper neighboursChecker;
+    private final DrawHelper neighboursChecker;
 
     /**
      * Constructor for VisibilityUtil.
@@ -43,12 +43,9 @@ public class VisibilityUtil {
     public boolean inLos(final Position enemy,
     final Position player,
     final int neighbourDistance) {
-        if (this.neighboursChecker
+        return this.neighboursChecker
         .neighbours(enemy, player, neighbourDistance)
-        && this.hasLineOfSight(enemy, player)) {
-            return true;
-        }
-        return false;
+        && this.hasLineOfSight(enemy, player);
     }
 
     /**
@@ -69,7 +66,7 @@ public class VisibilityUtil {
 
         // Bresenham's line algorithm to find
         // the cells between startPos and endPos
-        List<Position> lineCells = bresenhamLine(startPos, endPos);
+        final List<Position> lineCells = bresenhamLine(startPos, endPos);
 
         // close enough
         if (lineCells.size() <= 2) {
@@ -78,7 +75,8 @@ public class VisibilityUtil {
 
         // check if any of the cells in the line
         // (except the first and last) are walls
-        boolean collisionDetected = IntStream.range(1, lineCells.size() - 1)
+        final boolean collisionDetected =
+        IntStream.range(1, lineCells.size() - 1)
             .mapToObj(lineCells::get)
             .anyMatch(p -> !wallChecker.canEnemyEnter(p));
 
@@ -96,22 +94,22 @@ public class VisibilityUtil {
     final Position enemy,
     final Position player) {
 
-        List<Position> line = new ArrayList<>();
+        final List<Position> line = new ArrayList<>();
         // enemy's position
         int x0 = enemy.x();
-        int x1 = player.x();
+        final int x1 = player.x();
 
         // player's position
         int y0 = enemy.y();
-        int y1 = player.y();
+        final int y1 = player.y();
 
         // distance between the two points
-        int dx = Math.abs(x1 - x0);
-        int dy = Math.abs(y1 - y0);
+        final int dx = Math.abs(x1 - x0);
+        final int dy = Math.abs(y1 - y0);
 
         // determine the step direction for x and y
-        int sx = x0 < x1 ? 1 : -1;
-        int sy = y0 < y1 ? 1 : -1;
+        final int sx = x0 < x1 ? 1 : -1;
+        final int sy = y0 < y1 ? 1 : -1;
 
         int err = dx - dy; // decision variable
         int e2;

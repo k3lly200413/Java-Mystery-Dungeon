@@ -18,7 +18,6 @@ public interface GenericEnemyState {
      * @param context the enemy that is exiting the state
      */
     void exitState(Enemy context);
-
     /**
      * Update the state of the enemy based on the player's position.
      * this method will be called every turn of the enemy
@@ -40,5 +39,11 @@ public interface GenericEnemyState {
      * @return the type of the enemy state
      */
     EnemyType getType();
+
+    /**
+     * Get a description of the enemy state.
+     * @return a string describing the enemy state
+     */
+    String getDescription();
 }
 

@@ -33,6 +33,11 @@ import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.helper.Neighbours;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
+/**
+ * View class in Model View Controller Pattern.
+ *
+ * @author kelly.applebee@studio.unibo.it
+ */
 public class CombatView extends JPanel {
     /**
      * Serial version UID for serialization.
@@ -66,6 +71,22 @@ public class CombatView extends JPanel {
      * Length mutator for the info in the combat view.
      */
     private static final int DEFAULT_INFO_HEIGHT = 70;
+    /**
+     * String to separate numbers in health or stamina bars.
+     */
+    private static final String SEPARATOR_BAR = "/";
+    /**
+     * Colour of charging boss.
+     */
+    private static final String PURPLE = "/Screenshot 2025-03-25 164621.png";
+    /**
+     * Colour of enemy.
+     */
+    private static final String RED = "/red.jpg";
+    /**
+     * Colour of player.
+     */
+    private static final String GREEN = "/green.jpg";
     /**
      * Size to use for the combat view.
      */
@@ -218,6 +239,7 @@ public class CombatView extends JPanel {
         this.maxEnemyHealth = maxEnemyHealthToAssign;
         this.neighbours = new Neighbours();
     }
+
     /**
      * Initialize the combat view.
      * Created new method because of PMD
@@ -382,6 +404,11 @@ public class CombatView extends JPanel {
         this.playerHealtBar.setMaximum(max);
     }
 
+    /**
+     * Sets the maximum value for the enemy health bar.
+     *
+     * @param max maximum health value for the enemy
+     */
     public final void setEnemyHealthBarMax(final int max) {
         this.enemyHealthBar.setMaximum(max);
     }
@@ -394,7 +421,7 @@ public class CombatView extends JPanel {
     public final void updatePlayerHealth(final int value) {
         this.playerHealtBar.setValue(value);
         this.playerHealtBar.setString(
-            "Player: " + value + "/" + this.playerHealtBar.getMaximum());
+            "Player: " + value + SEPARATOR_BAR + this.playerHealtBar.getMaximum());
     }
 
     /**
@@ -405,7 +432,16 @@ public class CombatView extends JPanel {
     public final void updatePlayerStamina(final int value) {
         this.playerStaminaBar.setValue(value);
         this.playerStaminaBar.setString(
-            "Stamina: " + value + "/" + playerStaminaBar.getMaximum());
+            "Stamina: " + value + SEPARATOR_BAR + playerStaminaBar.getMaximum());
+    }
+
+    /**
+     * Sets the maximum value for the player's stamina bar.
+     *
+     * @param max maximum stamina value for the player
+     */
+    public final void setPlayerMaxStaminaBar(final int max) {
+        this.playerStaminaBar.setMaximum(max);
     }
 
     /**
@@ -416,7 +452,7 @@ public class CombatView extends JPanel {
     public final void updateEnemyHealth(final int value) {
         enemyHealthBar.setValue(value);
         enemyHealthBar.setString(
-            "Enemy: " + value + "/" + this.enemyHealthBar.getMaximum());
+            "Enemy: " + value + SEPARATOR_BAR + this.enemyHealthBar.getMaximum());
     }
 
     /**
@@ -455,7 +491,7 @@ public class CombatView extends JPanel {
                     icon =
                     this.getIconResource(
                         context.getWhoDied().equals(context.getPlayer())
-                        ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg",
+                        ? PURPLE : RED,
                         context.getSquareHeight(), context.getSquareWidth());
                 } else if (
                     context.isDrawPlayer()
@@ -466,7 +502,7 @@ public class CombatView extends JPanel {
                     icon =
                     getIconResource(
                         context.getWhoDied().equals(context.getPlayer())
-                        ? "/Screenshot 2025-03-25 164621.png" : "/red.jpg",
+                        ? PURPLE : RED,
                         context.getSquareWidth(), context.getSquareHeight());
                 }
             } else if ((context.isDrawFlame()
@@ -479,7 +515,7 @@ public class CombatView extends JPanel {
                     context.getSquareWidth(), context.getSquareHeight())
                         : context.isDrawPoison()
                         ? this.getIconResource(
-                            "/green.jpg",
+                            GREEN,
                             context.getSquareWidth(),
                             context.getSquareHeight())
                             : getIconResource("/purple.png",
@@ -490,7 +526,7 @@ public class CombatView extends JPanel {
                 && context.getWhoIsPoisoned() != null
                 && entry.getValue().y() == context.getPoisonYCoord()
                 && entry.getValue().x() == context.getWhoIsPoisoned().x()) {
-                icon = this.getIconResource("/green.jpg",
+                icon = this.getIconResource(GREEN,
                 context.getSquareWidth(), context.getSquareHeight());
             } else if (
                 (context.isDrawFlame() || context.isDrawPoison())
@@ -502,7 +538,7 @@ public class CombatView extends JPanel {
                     context.getSquareWidth(),
                     context.getSquareHeight())
                 : this.getIconResource(
-                    "/green.jpg",
+                    GREEN,
                     context.getSquareWidth(),
                     context.getSquareHeight());
             } else if (
@@ -511,7 +547,7 @@ public class CombatView extends JPanel {
                 && this.neighbours.neighbours(
                     context.getPlayer(), cellPos, context.getPlayerRange())) {
                 icon = this.getIconResource(
-                    "/Screenshot 2025-03-25 164621.png",
+                    PURPLE,
                     context.getSquareWidth(),
                     context.getSquareHeight());
             } else if (
@@ -520,7 +556,7 @@ public class CombatView extends JPanel {
                 && this.neighbours.neighbours(
                     context.getEnemy(), cellPos, context.getEnemyRange())) {
                 icon = getIconResource(
-                    "/red.jpg",
+                    RED,
                     context.getSquareWidth(),
                     context.getSquareHeight());
             } else if (
@@ -570,6 +606,13 @@ public class CombatView extends JPanel {
     public final void setAllButtonsEnabled() {
         this.setPanelEnabled(this.originalButtonPanel, true);
         this.setPanelEnabled(this.attackButtonPanel, true);
+    }
+
+    /**
+     * Enables all buttons in the bag button panel.
+     */
+    public final void setBagButtonsEnabled() {
+        this.setPanelEnabled(this.bagButtonPanel, true);
     }
 
     /**
@@ -858,18 +901,18 @@ public class CombatView extends JPanel {
     /**
      * Displays the game over panel with a restart option.
      *
-     * @param onRestart the runnable
-     * to execute when the restart button is clicked
+     * @param onRestart the runnable when the restart is clicked
      */
     public void showGameOver(final Runnable onRestart) {
         final JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (frame == null) {
             return;
         }
-        final GameOverPanel panel =
-            new GameOverPanel(() -> {
-                // TODO add reset logic
-            });
+        final GameOverPanel panel = new GameOverPanel(() -> {
+            if (onRestart != null) {
+                onRestart.run();   // <-- esegue davvero il restart
+            }
+        });
         frame.setContentPane(panel);
         frame.revalidate();
         frame.repaint();
@@ -879,7 +922,7 @@ public class CombatView extends JPanel {
      * Closes the view.
      */
     public void close() {
-        java.awt.Window w = SwingUtilities.getWindowAncestor(this);
+        final java.awt.Window w = SwingUtilities.getWindowAncestor(this);
         if (w != null) {
             w.dispose();
         }

@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop.overworld.mvc;
 
+import java.awt.event.ActionEvent;
 import java.util.Objects;
 
 import javax.swing.AbstractAction;
@@ -11,8 +12,9 @@ import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy
 import it.unibo.progetto_oop.overworld.mvc.input_bindings.InputBindings;
 import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
 
-import java.awt.event.ActionEvent;
-
+/**
+ * Controller principale dell'overworld.
+ */
 public class OverworldController implements ViewManagerObserver {
     /**
      * the model instance.
@@ -31,6 +33,7 @@ public class OverworldController implements ViewManagerObserver {
 
     /**
      * Constructor for the OverworldController.
+     *
      * @param newModel the model instance
      * @param newView the view instance
      * @param newViewManager the view manager instance
@@ -49,14 +52,14 @@ public class OverworldController implements ViewManagerObserver {
      * Initialize input bindings for the controller.
      */
     public void initializeInputBindings() {
-        JPanel panel = this.view;
+        final JPanel panel = this.view;
 
         // Bind pressed buttons to keys
-        InputBindings bindings = new InputBindings(panel);
+        final InputBindings bindings = new InputBindings(panel);
         bindings.setBindings();
 
         // Bind keys to actions
-        ActionMap actionMap = panel.getActionMap();
+        final ActionMap actionMap = panel.getActionMap();
 
         // action map
         actionMap.put("moveUp", new AbstractAction() {
@@ -124,5 +127,10 @@ public class OverworldController implements ViewManagerObserver {
     @Override
     public final void onEnemyDefeat() {
         this.viewManager.showOverworld();
+    }
+
+    @Override
+    public final void onPlayerDefeat() {
+        this.viewManager.showGameOver();
     }
 }

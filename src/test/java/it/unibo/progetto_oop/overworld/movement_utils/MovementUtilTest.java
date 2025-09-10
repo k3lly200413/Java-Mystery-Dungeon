@@ -1,7 +1,8 @@
-package it.unibo.progetto_oop.MovementUtils;
+package it.unibo.progetto_oop.overworld.movement_utils;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
@@ -14,7 +15,14 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 class MovementUtilTest {
 
+    /**
+     * mock wall collision.
+     */
     private WallCollision wallCollisionMock;
+
+    /**
+     * system under test.
+     */
     private MovementUtil movementUtil;
 
     @BeforeEach
@@ -24,56 +32,60 @@ class MovementUtilTest {
     }
 
     @Test
-    void testVerticalMovement_EnemyAboveWall() {
-        Position enemy = new Position(5, 5);
-        Position wall = new Position(5, 3); // muro sopra (y più piccolo)
+    void testVerticalMovementEnemyAboveWall() {
+        final Position enemy = new Position(0, 1);
+        // muro sopra (y più piccolo)
+        final Position wall = new Position(0, 0);
 
         when(wallCollisionMock.closestWall(enemy, 0, 1))
                 .thenReturn(Optional.of(wall));
 
-        MovementUtil.MoveDirection dir = 
+        MovementUtil.MoveDirection dir =
             movementUtil.getInitialGeneralMoveDirection(enemy, true);
 
         assertEquals(MovementUtil.MoveDirection.DOWN, dir);
     }
 
     @Test
-    void testVerticalMovement_EnemyBelowWall() {
-        Position enemy = new Position(5, 5);
-        Position wall = new Position(5, 8); // muro sotto (y più grande)
+    void testVerticalMovementEnemyBelowWall() {
+        final Position enemy = new Position(0, 0);
+        // muro sotto (y più grande)
+        final Position wall = new Position(0, 2);
 
         when(wallCollisionMock.closestWall(enemy, 0, 1))
                 .thenReturn(Optional.of(wall));
 
-        MovementUtil.MoveDirection dir = 
+        final MovementUtil.MoveDirection dir =
             movementUtil.getInitialGeneralMoveDirection(enemy, true);
 
         assertEquals(MovementUtil.MoveDirection.UP, dir);
     }
 
     @Test
-    void testHorizontalMovement_EnemyLeftOfWall() {
-        Position enemy = new Position(2, 4);
-        Position wall = new Position(5, 4); // muro a destra (x più grande)
+    void testHorizontalMovementEnemyLeftOfWall() {
+        final Position enemy = new Position(0, 0);
+        // muro a destra (x più grande)
+        final Position wall = new Position(2, 0);
 
         when(wallCollisionMock.closestWall(enemy, 1, 0))
                 .thenReturn(Optional.of(wall));
 
-        MovementUtil.MoveDirection dir = 
+        final MovementUtil.MoveDirection dir =
             movementUtil.getInitialGeneralMoveDirection(enemy, false);
 
         assertEquals(MovementUtil.MoveDirection.LEFT, dir);
     }
 
     @Test
-    void testHorizontalMovement_EnemyRightOfWall() {
-        Position enemy = new Position(7, 4);
-        Position wall = new Position(3, 4); // muro a sinistra (x più piccolo)
+    void testHorizontalMovementEnemyRightOfWall() {
+        final Position enemy = new Position(2, 0);
+        final Position wall = new Position(0, 0);
+        // muro a sinistra (x più piccolo)
 
         when(wallCollisionMock.closestWall(enemy, 1, 0))
                 .thenReturn(Optional.of(wall));
 
-        MovementUtil.MoveDirection dir = 
+        final MovementUtil.MoveDirection dir =
             movementUtil.getInitialGeneralMoveDirection(enemy, false);
 
         assertEquals(MovementUtil.MoveDirection.RIGHT, dir);
@@ -81,13 +93,13 @@ class MovementUtilTest {
 
     @Test
     void testEnemyAndWallOnSameCoordinate() {
-        Position enemy = new Position(5, 5);
-        Position wall = new Position(5, 5); // stessa posizione
+        final Position enemy = new Position(1, 1);
+        final Position wall = new Position(1, 1); // stessa posizione
 
         when(wallCollisionMock.closestWall(enemy, 0, 1))
                 .thenReturn(Optional.of(wall));
 
-        MovementUtil.MoveDirection dir = 
+        final MovementUtil.MoveDirection dir =
             movementUtil.getInitialGeneralMoveDirection(enemy, true);
 
         assertEquals(MovementUtil.MoveDirection.NONE, dir);
@@ -95,12 +107,12 @@ class MovementUtilTest {
 
     @Test
     void testNoWallFound() {
-        Position enemy = new Position(5, 5);
+        final Position enemy = new Position(1, 1);
 
         when(wallCollisionMock.closestWall(enemy, 0, 1))
                 .thenReturn(Optional.empty());
 
-        MovementUtil.MoveDirection dir = 
+        final MovementUtil.MoveDirection dir =
             movementUtil.getInitialGeneralMoveDirection(enemy, true);
 
         assertEquals(MovementUtil.MoveDirection.NONE, dir);

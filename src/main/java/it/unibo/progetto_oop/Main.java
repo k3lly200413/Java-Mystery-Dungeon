@@ -12,3 +12,4 @@ public final class Main {
         app.start();
     }
 }
+

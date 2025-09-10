@@ -10,6 +10,10 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
 
+/**
+ * Implementation of WallCollision for handling
+ * wall and entity collisions in the overworld.
+ */
 public final class WallCollisionImpl implements WallCollision {
 
     /**
@@ -24,11 +28,12 @@ public final class WallCollisionImpl implements WallCollision {
 
     /**
      * Constructor for WallCollisionImpl.
+     *
      * @param newBaseGrid the base grid structure
      * @param newEntityGrid the entity grid structure
      */
     public WallCollisionImpl(
-    final StructureData newBaseGrid, final StructureData newEntityGrid) {
+        final StructureData newBaseGrid, final StructureData newEntityGrid) {
         this.baseGrid   = Objects.requireNonNull(
             newBaseGrid, "baseGrid cannot be null");
         this.entityGrid = Objects.requireNonNull(
@@ -79,10 +84,13 @@ public final class WallCollisionImpl implements WallCollision {
         if (!canEnter(to)) {
             return false;
         }
+        // already not a wall and not occupied by an enemy
+
         final TileType t = baseGrid.get(to.x(), to.y());
         final TileType eg = entityGrid.get(to.x(), to.y());
-        return (eg == TileType.NONE || eg == TileType.PLAYER)
-        && (t != TileType.STAIRS);
+
+        // also not an entity and not stairs
+        return (eg == TileType.NONE) && (t != TileType.STAIRS);
     }
 
     /**
@@ -95,23 +103,23 @@ public final class WallCollisionImpl implements WallCollision {
      */
     @Override
     public Optional<Position> closestWall(final Position from,
-    final int dx, final int dy) {
-        int maxSteps;
-        ToIntFunction<Position> axisGetter;
-        int startX;
-        int startY;
+        final int dx, final int dy) {
+        final int maxSteps;
+        final ToIntFunction<Position> axisGetter;
+        final int startX;
+        final int startY;
 
         // if i move orizontally i'll be interested with the width
         if (dx != 0) {
             maxSteps = baseGrid.width();
-            axisGetter = Position :: x;
+            axisGetter = Position::x;
 
             startX = 0;
             startY = from.y(); // will remain the same
 
         } else { // same as above but with height
             maxSteps = baseGrid.height();
-            axisGetter = Position :: y;
+            axisGetter = Position::y;
 
             startX = from.x(); // will remain the same
             startY = 0;
@@ -119,30 +127,31 @@ public final class WallCollisionImpl implements WallCollision {
 
         // test right or down
         return IntStream.rangeClosed(0, maxSteps + 1)
-                .mapToObj(step ->
-                    new Position(startX + step * dx, startY + step * dy))
-                .filter(pos -> inBounds(pos)) // only in bounds positions
-                // i'm filtering all tipes of "obstacles"
-                .filter(pos -> baseGrid.get(pos.x(), pos.y()) == TileType.WALL
-                    || entityGrid.get(pos.x(), pos.y()) == TileType.ITEM
-                    || baseGrid.get(pos.x(), pos.y()) == TileType.TUNNEL
-                    || baseGrid.get(pos.x(), pos.y()) == TileType.STAIRS)
-                .min(Comparator.comparingInt(wallPos ->
-                        calculateDistanceOnAxis(from, wallPos, axisGetter)
-                ));
+            .mapToObj(step ->
+                new Position(startX + step * dx, startY + step * dy))
+            .filter(this::inBounds) // only in bounds positions
+            // i'm filtering all types of "obstacles"
+            .filter(pos -> baseGrid.get(pos.x(), pos.y()) == TileType.WALL
+                || baseGrid.get(pos.x(), pos.y()) == TileType.ITEM
+                || baseGrid.get(pos.x(), pos.y()) == TileType.TUNNEL
+                || baseGrid.get(pos.x(), pos.y()) == TileType.STAIRS)
+            .min(Comparator.comparingInt(wallPos ->
+                calculateDistanceOnAxis(from, wallPos, axisGetter)
+            ));
     }
 
     /**
-    * Calculates the distance between two positions on a specific axis.
-    * @param p1 the first position
-    * @param p2 the second position
-    * @param getCoordinate a function to extract the coordinate
-    * from a position (e.g., Position::getX or Position::getY)
-    * @return the distance between the two positions on the specified axis
-    */
+     * Calculates the distance between two positions on a specific axis.
+     *
+     * @param p1 the first position
+     * @param p2 the second position
+     * @param getCoordinate a function to extract the coordinate
+     *        from a position (e.g., Position::getX or Position::getY)
+     * @return the distance between the two positions on the specified axis
+     */
     private int calculateDistanceOnAxis(final Position p1, final Position p2,
-    final ToIntFunction<Position> getCoordinate) {
-        return Math.abs(
-            getCoordinate.applyAsInt(p1) - getCoordinate.applyAsInt(p2));
+        final ToIntFunction<Position> getCoordinate) {
+        return Math.abs(getCoordinate.applyAsInt(p1)
+        - getCoordinate.applyAsInt(p2));
     }
 }

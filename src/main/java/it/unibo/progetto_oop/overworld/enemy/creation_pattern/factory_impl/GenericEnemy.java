@@ -2,28 +2,24 @@ package it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl;
 
 import java.util.Objects;
 
-import it.unibo.progetto_oop.overworld.enemy.EnemyType;
 import it.unibo.progetto_oop.overworld.enemy.state_pattern.GenericEnemyState;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
-
+/**
+ * Generic implementation of the Enemy interface.
+ */
 public class GenericEnemy implements Enemy {
     /**
      * maxHealth of the enemy.
      */
-    private int maxHealth;
+    private final int maxHealth;
 
     /**
      * power of the enemy.
      */
     private final int power;
-
-    /**
-     * initial position of the enemy.
-     */
-    private Position initialPosition;
 
     /**
      * current position of the enemy.
@@ -46,7 +42,8 @@ public class GenericEnemy implements Enemy {
     private GridNotifier gridNotifier;
 
     /**
-     * Constructor of the BossEnemy class.
+     * Constructor of the GenericEnemy class.
+     *
      * @param newMaxHealth max health
      * @param newCurrentHealth current health
      * @param newPower power
@@ -54,8 +51,8 @@ public class GenericEnemy implements Enemy {
      * @param newGridNotifier grid notifier
      */
     public GenericEnemy(final int newMaxHealth, final int newCurrentHealth,
-    final int newPower, final Position newInitialPosition,
-    final GridNotifier newGridNotifier) {
+            final int newPower, final Position newInitialPosition,
+            final GridNotifier newGridNotifier) {
         if (newMaxHealth <= 0) {
             throw new IllegalArgumentException("hp must be > 0");
         }
@@ -69,20 +66,19 @@ public class GenericEnemy implements Enemy {
 
         this.maxHealth = newMaxHealth;
         this.power = newPower;
-        this.initialPosition = newInitialPosition;
         this.currentHealth = newCurrentHealth;
-        this.currentPosition = this.initialPosition;
+        this.currentPosition = newInitialPosition;
         this.gridNotifier = newGridNotifier;
     }
 
     //----getters----//
     @Override
-    public final int getCurrentHealth() {
+    public final int getCurrentHp() {
         return this.currentHealth;
     }
 
     @Override
-    public final int getMaxHealth() {
+    public final int getMaxHp() {
         return this.maxHealth;
     }
 
@@ -97,8 +93,8 @@ public class GenericEnemy implements Enemy {
     }
 
     @Override
-    public final EnemyType getState() {
-        return this.currentState.getType();
+    public final GenericEnemyState getState() {
+        return this.currentState;
     }
 
 
@@ -117,7 +113,7 @@ public class GenericEnemy implements Enemy {
 
     @Override
     public final void setState(final GenericEnemyState newState) {
-        if (newState == null || newState == this.currentState) {
+        if (newState == null || newState.equals(this.currentState)) {
             return;
         }
 
@@ -136,9 +132,9 @@ public class GenericEnemy implements Enemy {
     }
 
     @Override
-    public void setHealth(int health) {
+    public final void setHp(final int health) {
         if (health < 0) {
-            health = 0;
+            this.currentHealth = 0;
         } else if (health > this.maxHealth) {
             this.currentHealth = this.maxHealth;
         } else {

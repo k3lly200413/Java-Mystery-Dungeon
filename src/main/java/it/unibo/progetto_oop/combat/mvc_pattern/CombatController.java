@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import it.unibo.progetto_oop.GameLuncher;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.command_pattern.GameButton;
 import it.unibo.progetto_oop.combat.command_pattern.LongRangeButton;
@@ -27,9 +28,8 @@ import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
-
-/**.
- * Controller class in Model View Controller Pattern
+/**
+ * Controller class in Model View Controller Pattern.
  *
  * @author Kelly.applebee@studio.unibo.it
  * @author matteo.monari6@studio.unibo.it
@@ -71,7 +71,6 @@ public class CombatController {
      * Static instance of AttackBuff item to be used across states.
      */
     private final Item attackBuffItem;
-
 
     /**
      * Static instance of HealingItem item to be used across states.
@@ -130,6 +129,9 @@ public class CombatController {
      */
     private CombatState currentState;
 
+    /** State representing the enemy's turn. */
+    private CombatState enemyState;
+
     /** Combat collision handler. */
     private final CombatCollision combatCollision;
 
@@ -147,7 +149,6 @@ public class CombatController {
      * @param newPlayer  Player instance to manage inventory and stats
      * @param newCombatCollision Collision handler for combat state
      * @param newGridNotifier Grid notifier for managing grid updates
-     * @param newEnemy Enemy instance representing the current combat opponent
      */
     public CombatController(
         final CombatModel modelToUse,
@@ -241,7 +242,8 @@ public class CombatController {
         }
         enemyActionTimer = null;
         combatCollision.setInCombat(false);
-        this.setState(new GameOverState(combatCollision, gridNotifier, enemy, player));
+        this.setState(new GameOverState(
+            combatCollision, gridNotifier, enemy, player));
         // this.view.close();
     }
 
@@ -260,13 +262,14 @@ public class CombatController {
     private void handleBagMenu() {
         this.setState(new ItemSelectionState());
         this.view.showBagButtons();
-        if (!this.player.getInventory().canUseItem(this.attackBuffItem)) {
+        this.view.setBagButtonsEnabled();
+        if (!this.player.getInventory().canUseItem(attackBuffItem)) {
             this.view.setCustomButtonDisabled(this.view.getAttackBuffButton());
         }
-        if (!this.player.getInventory().canUseItem(this.curePoisonItem)) {
+        if (!this.player.getInventory().canUseItem(curePoisonItem)) {
             this.view.setCustomButtonDisabled(this.view.getCurePoisonButton());
         }
-        if (!this.player.getInventory().canUseItem(this.healingItem)) {
+        if (!this.player.getInventory().canUseItem(healingItem)) {
             this.view.setCustomButtonDisabled(this.view.getHealingButton());
         }
         view.clearInfo();
@@ -440,7 +443,7 @@ public class CombatController {
 
         model.setAttackPosition(new Position(
             attacker.x() + direction, attacker.y())); // Start flame at player
-        if (!this.checkGameOver()){
+        if (!this.checkGameOver()) {
             final RedrawContext redrawContext = new RedrawContext.Builder()
             .player(this.model.getPlayerPosition())
             .enemy(this.model.getEnemyPosition())
@@ -454,14 +457,6 @@ public class CombatController {
             .setIsGameOver(this.model.isGameOver())
             .build();
             this.view.redrawGrid(redrawContext);
-            /*this.redrawView(
-                this.model.getPlayerPosition(), this.model.getEnemyPosition(),
-                this.model.getAttackPosition(), 0, true, true, !isPoison, isPoison,
-                1, 1, this.model.isGameOver(), (model.isPlayerTurn()
-                ? model.getEnemyPosition()
-                : model.getPlayerPosition()), false, new ArrayList<>(),
-                false, 0, false, 0
-            );*/
         }
 
         animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
@@ -719,8 +714,6 @@ public class CombatController {
                     currentTargetPos[0] = nextTargetPos;
                     state[0] = 2;
                 }
-            /*
-            Da cambiare */
                 default -> {
                     if (currentAttackerPos[0].x() == attackerStartPos.x()) {
                         this.stopAnimationTimer();
@@ -808,7 +801,7 @@ public class CombatController {
 
         final int size = (model.getSize() / 2) - 2; // Target size for zoom
 
-        final int targetX = (model.getSize() / 2);
+        final int targetX = model.getSize() / 2;
 
         this.animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
             final Position currentEnemyPosition = model.getEnemyPosition();
@@ -904,7 +897,7 @@ public class CombatController {
 
                 if (this.model.isPlayerTurn() && !this.checkGameOver()) {
                     view.updateEnemyHealth(remaining);
-                    this.setState(new EnemyTurnState());
+                    this.setState(this.enemyState);
                 } else {
                     view.updatePlayerHealth(remaining);
                     this.setState(new PlayerTurnState());
@@ -1137,8 +1130,17 @@ public class CombatController {
         }
     }
 
-    public final void setEncounteredEnemy(Enemy encounteredEnemy) {
+    /**
+     * Sets the encountered enemy for the combat.
+     * This method updates the model with the new enemy
+     * and adjusts the enemy state accordingly.
+     *
+     * @param encounteredEnemy the enemy to set
+     */
+    public final void setEncounteredEnemy(final Enemy encounteredEnemy) {
         this.enemy = encounteredEnemy;
+        this.model.setEnemyState(this.enemy.isBoss());
+        this.enemyState = this.model.getEnemyState();
     }
 
     /**
@@ -1247,30 +1249,30 @@ public class CombatController {
                 if (this.model.isPlayerTurn() && !this.checkGameOver()) {
                     this.model.setPlayerTurn(false);
                     view.updateEnemyHealth(remaining);
-                    CombatController.this.setState(new EnemyTurnState());
+                    this.setState(this.enemyState);
                 } else {
-                    CombatController.this.model.setPlayerTurn(true);
+                    this.model.setPlayerTurn(true);
                     view.updatePlayerHealth(remaining);
-                    CombatController.this.setState(new PlayerTurnState());
+                    this.setState(new PlayerTurnState());
                 }
                 //this.currentState.stateChange(this);
             } else {
                 // ridisegno tutto con il veleno che sale
                 final RedrawContext defaultRedraw =
                     new RedrawContext.Builder()
-                        .player(CombatController.this.model.getPlayerPosition())
-                        .enemy(CombatController.this.model.getEnemyPosition())
-                        .flame(CombatController.this.model.getAttackPosition())
+                        .player(this.model.getPlayerPosition())
+                        .enemy(this.model.getEnemyPosition())
+                        .flame(this.model.getAttackPosition())
                         .drawPlayer(true).drawEnemy(true)
                         .playerRange(1).enemyRange(1)
                         .drawPoisonDamage(true).poisonYCoord(conto[0])
-                        .setIsGameOver(CombatController.this.model.isGameOver())
+                        .setIsGameOver(this.model.isGameOver())
                         .whoIsPoisoned(
-                            CombatController.this.model.isPlayerTurn()
-                                ? CombatController.this.model.getEnemyPosition()
-                                : CombatController.this.model
+                            this.model.isPlayerTurn()
+                                ? this.model.getEnemyPosition()
+                                : this.model
                                 .getPlayerPosition()).build();
-                CombatController.this.view.redrawGrid(defaultRedraw);
+                this.view.redrawGrid(defaultRedraw);
                 /* this.redrawView(this.model.getPlayerPosition(),
                 this.model.getEnemyPosition(),
                 this.model.getAttackPosition(), 0, true, true,
@@ -1288,17 +1290,44 @@ public class CombatController {
 
     }
 
+    /**
+     * Resets the combat for a new encounter.
+     * This method resets the model and view to their initial states
+     * for a new combat encounter.
+     */
     public final void resetForNewCombat() {
         this.model.setPlayerMaxHp(this.player.getMaxHp());
         // this.model.setPlayerCurrentHp(this.player.getCurrentHp());
         this.view.setPlayerHealthBarMax(model.getPlayerMaxHealth());
-        System.out.println("Max Helth => " + this.model.getPlayerMaxHealth());
         this.view.setEnemyHealthBarMax(this.model.getEnemyMaxHealth());
         this.view.updateEnemyHealth(this.model.getEnemyHealth());
         this.model.resetPositions();
         this.setState(new PlayerTurnState());
         this.view.updatePlayerHealth(this.model.getPlayerHealth());
         this.view.updateEnemyHealth(this.model.getEnemyHealth());
+        this.model.setPlayerPower(this.player.getPower());
+        this.model.setPlayerStamina(this.player.getStamina());
+        this.view.setPlayerMaxStaminaBar(this.player.getMaxStamina());
+        this.view.updatePlayerStamina(this.player.getStamina());
     }
+
+    /**
+     * Restarts the game by resetting the model and view.
+     */
+    public void restartGame() {
+    // Chiudi la finestra corrente
+    javax.swing.SwingUtilities.invokeLater(() -> {
+        // Distrugge la finestra esistente
+        final java.awt.Window window = javax.swing.FocusManager.
+        getCurrentManager().getActiveWindow();
+        if (window != null) {
+            window.dispose();
+        }
+
+        // Ricrea il gioco da capo
+        final GameLuncher app = new GameLuncher();
+        app.start();
+    });
+}
 
 }

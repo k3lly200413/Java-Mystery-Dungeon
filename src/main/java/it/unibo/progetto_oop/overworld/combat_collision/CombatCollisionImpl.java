@@ -6,8 +6,16 @@ import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
-
+/**
+ * Implementation of CombatCollision for
+ * handling combat logic between player and enemy.
+ */
 public class CombatCollisionImpl implements CombatCollision {
+    /**
+     * The distance within which combat is initiated.
+     */
+    private static final int COMBAT_DISTANCE = 1;
+
     /**
      * Helper class to check for neighbouring positions.
      */
@@ -16,7 +24,7 @@ public class CombatCollisionImpl implements CombatCollision {
     /**
      * Flag to indicate if the enemy is currently in combat.
      */
-    private boolean inCombat = false;
+    private boolean inCombat;
 
     /**
      * Observer to manage the view transition.
@@ -24,15 +32,11 @@ public class CombatCollisionImpl implements CombatCollision {
     private ViewManagerObserver viewManagerObserver;
 
     /**
-     * The distance within which combat is initiated.
-     */
-    private static final int COMBAT_DISTANCE = 1;
-
-    /**
      * Constructor for CombatCollisionImpl.
      */
     public CombatCollisionImpl() {
         this.neighboursCheck = new DrawHelper();
+        // inCombat defaults to false, no need to explicitly set
     }
 
     @Override
@@ -64,5 +68,10 @@ public class CombatCollisionImpl implements CombatCollision {
     public final void setViewManagerListener(
     final ViewManagerObserver currentViewManagerObserver) {
         this.viewManagerObserver = currentViewManagerObserver;
+    }
+
+    @Override
+    public final void showGameOver() {
+        this.viewManagerObserver.onPlayerDefeat();
     }
 }

@@ -1,5 +1,8 @@
 package it.unibo.progetto_oop.overworld.enemy;
 
+/**
+ * Enum representing the types of enemies in the overworld.
+ */
 public enum EnemyType {
     /**
      * Enemy that follows a predefined path.

@@ -1,10 +1,12 @@
 package it.unibo.progetto_oop.overworld.mvc;
 
-import javax.swing.*;
-
 import java.awt.CardLayout;
 import java.awt.Dimension;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
@@ -14,16 +16,49 @@ import it.unibo.progetto_oop.overworld.playground.view.GameStartView;
 import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
 
 public class ViewManager {
+    /**
+     * start game card identifier.
+     */
     private static final String START_GAME = "START GAME";
-    public static final String INVENTORY_CARD = "INVENTORY";
-    public static final String OVERWORLD_CARD = "OVERWORLD";
-    public static final String COMBAT_CARD = "COMBAT";
-    //private static final String GAME_OVER = "GAME OVER";
 
+    /**
+     * inventory card identifier.
+     */
+    public static final String INVENTORY_CARD = "INVENTORY";
+
+    /**
+     * overworld card identifier.
+     */
+    public static final String OVERWORLD_CARD = "OVERWORLD";
+
+    /**
+     * combat card identifier.
+     */
+    public static final String COMBAT_CARD = "COMBAT";
+
+    /**
+     * game over card identifier.
+     */
+    private static final String GAME_OVER = "GAME OVER";
+
+    /**
+     * the frame of the game.
+     */
     private JFrame frame;
-    private CardLayout cardLayout; 
+
+    /**
+     * the card layout to switch between views.
+     */
+    private CardLayout cardLayout;
+
+    /**
+     * the main panel that holds the different views.
+     */
     private JPanel mainCardPanel;
     
+    /**
+     * inventory view.
+     */
     private InventoryView invView;
     private CombatView combatView;
     private SwingMapView playGroundView;
@@ -33,6 +68,8 @@ public class ViewManager {
 
     private CombatController combatController;
 
+    /** Game over panel. */
+    private GameOverPanel gameOverPanel;
 
     /**
      * Method to start the view manager with the initial start view.
@@ -97,29 +134,6 @@ public class ViewManager {
         this.cardLayout.show(this.mainCardPanel, INVENTORY_CARD);
     }
 
-    /*
-    public void showInventory(Inventory inventory) {
-        JFrame frame = new JFrame("Inventario");
-
-        if (this.invView == null) {
-            this.invView = new InventoryView(inventory, this);
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.setSize(600, 400);
-            frame.add(this.invView);
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-
-        } else {
-            this.invView.updateInventoryModel(inventory); 
-            this.invView.refreshView(); 
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.setSize(600, 400);
-            frame.add(this.invView);
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        }
-    } */
-
     public void showCombat(Enemy encounteredEnemy) {
         JFrame frame = new JFrame("Combattimento");
         // if (this.combatView == null) {
@@ -130,12 +144,21 @@ public class ViewManager {
             // frame.setVisible(true);
         // } else {
         this.combatController.setEncounteredEnemy(encounteredEnemy);
-        this.combatController.getModel().setEnemyCurrentHp(encounteredEnemy.getCurrentHealth());
-        System.out.println("Enemy Health => " + encounteredEnemy.getCurrentHealth());
-        this.combatController.getModel().setEnemyMaxHp(encounteredEnemy.getMaxHealth());
+        this.combatController.getModel().setEnemyCurrentHp(encounteredEnemy.getCurrentHp());
+        System.out.println("Enemy Health => " + encounteredEnemy.getCurrentHp());
+        this.combatController.getModel().setEnemyMaxHp(encounteredEnemy.getMaxHp());
         this.combatController.resetForNewCombat();
         this.combatController.redrawView();
         // }
         this.cardLayout.show(this.mainCardPanel, COMBAT_CARD);
+    }
+
+    public void setGameOverPanel(final GameOverPanel newGameOverPanel) {
+        this.gameOverPanel = newGameOverPanel;
+        this.mainCardPanel.add(this.gameOverPanel, GAME_OVER);
+    }
+
+    public void showGameOver() {
+        this.cardLayout.show(this.mainCardPanel, GAME_OVER);
     }
 }

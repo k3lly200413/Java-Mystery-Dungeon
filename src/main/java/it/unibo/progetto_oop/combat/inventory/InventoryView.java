@@ -1,3 +1,7 @@
+
+/**
+ * View grafica dell'inventario.
+ */
 package it.unibo.progetto_oop.combat.inventory;
 
 import java.awt.BorderLayout;
@@ -97,7 +101,7 @@ public class InventoryView extends JPanel {
 
 
     /**
-     * Status Area padding
+     * Status Area padding.
      */
     private static final int STATUS_PADDING = 5;
 
@@ -114,7 +118,7 @@ public class InventoryView extends JPanel {
     /**
      * Panel containing the grid of item buttons.
      */
-    private JPanel gridPanel;
+    private final JPanel gridPanel;
 
     /**
      * Status label at the bottom.
@@ -128,7 +132,8 @@ public class InventoryView extends JPanel {
 
 
     /**
-     * constructor for the inventory view.
+     * Constructor for the inventory view.
+     *
      * @param initialInventory the inventory this view is referring
      * @param newViewManager the view manager
      */
@@ -148,7 +153,7 @@ public class InventoryView extends JPanel {
         this.add(this.gridPanel, BorderLayout.CENTER);
 
         // Status Area Panel and contents
-        JPanel statusAreaPanel = createStatusAreaPanel();
+    final JPanel statusAreaPanel = createStatusAreaPanel();
         this.add(statusAreaPanel, BorderLayout.SOUTH);
 
         // Initial population
@@ -159,7 +164,7 @@ public class InventoryView extends JPanel {
     }
 
     private JButton createBackButton() {
-        JButton button = new JButton("Back to Game");
+        final JButton button = new JButton("Back to Game");
         button.addActionListener(e -> {
             if (this.viewManager != null) {
                 //SwingUtilities.getWindowAncestor(this).dispose();
@@ -171,14 +176,18 @@ public class InventoryView extends JPanel {
     }
 
     private JLabel createStatusLabel() {
-        JLabel label = new JLabel(
+        final JLabel label = new JLabel(
             "<html><i>Click an item...</i></html>",
             SwingConstants.CENTER);
         label.setOpaque(true);
         label.setBackground(Color.WHITE);
         label.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(Color.DARK_GRAY),
-            BorderFactory.createEmptyBorder(STATUS_PADDING, STATUS_PADDING * 2, STATUS_PADDING, STATUS_PADDING * 2)
+            BorderFactory.createEmptyBorder(
+                STATUS_PADDING,
+                STATUS_PADDING * 2,
+                STATUS_PADDING,
+                STATUS_PADDING * 2)
         ));
 
         label.setPreferredSize(
@@ -188,13 +197,20 @@ public class InventoryView extends JPanel {
     }
 
     private JPanel createStatusAreaPanel() {
-        JPanel statusAreaPanel = new JPanel(new BorderLayout(0, STATUS_PADDING));
-        statusAreaPanel.setBorder(BorderFactory.createEmptyBorder(STATUS_PADDING, STATUS_PADDING, STATUS_PADDING, STATUS_PADDING));
-        
+        final JPanel statusAreaPanel = new JPanel(
+            new BorderLayout(0, STATUS_PADDING));
+        statusAreaPanel.setBorder(
+            BorderFactory.createEmptyBorder(
+                STATUS_PADDING,
+                STATUS_PADDING,
+                STATUS_PADDING,
+                STATUS_PADDING));
+
         this.bottomStatusLabel = createStatusLabel();
         statusAreaPanel.add(this.bottomStatusLabel, BorderLayout.CENTER);
 
-        JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        final JPanel backButtonPanel =
+            new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.backButton = createBackButton();
         backButtonPanel.add(this.backButton);
         statusAreaPanel.add(backButtonPanel, BorderLayout.SOUTH);
@@ -203,12 +219,14 @@ public class InventoryView extends JPanel {
     }
 
     private Dimension calculatePreferredSize() {
-        int totalPreferredWidth = PREFERRED_CELL_WIDTH * VIEWPORT_WIDTH_CELLS;
-        int gridActualHeight = PREFERRED_CELL_HEIGHT * VIEWPORT_HEIGHT_CELLS
+        final int totalPreferredWidth =
+            PREFERRED_CELL_WIDTH * VIEWPORT_WIDTH_CELLS;
+        final int gridActualHeight =
+            PREFERRED_CELL_HEIGHT * VIEWPORT_HEIGHT_CELLS
             + VIEWPORT_HEIGHT_CELLS;
-        int statusAreaHeight = bottomStatusLabel.getPreferredSize().height
+        final int statusAreaHeight = bottomStatusLabel.getPreferredSize().height
             + backButton.getPreferredSize().height;
-        
+
         return new Dimension(
                 totalPreferredWidth, gridActualHeight + statusAreaHeight);
     }
@@ -226,35 +244,38 @@ public class InventoryView extends JPanel {
     */
     private void populateGrid() {
         if (this.gridPanel == null || this.inventory == null) {
-            System.err.println("InventoryView: Cannot populate grid");
             return;
         }
 
         this.gridPanel.removeAll();
 
-        java.util.List<Item> items = new ArrayList<>(this.inventory.getFullInventory().keySet());
+        final java.util.List<Item> items = new ArrayList<>(
+            this.inventory.getFullInventory().keySet());
 
-        Color[] slotColors = new Color[] {
-            ITEM_SLOT_1_COLOR, ITEM_SLOT_2_COLOR, ITEM_SLOT_3_COLOR
+        final Color[] slotColors = new Color[] {
+            ITEM_SLOT_1_COLOR, ITEM_SLOT_2_COLOR, ITEM_SLOT_3_COLOR,
         };
 
-        int nItems = items.size();
+        final int nItems = items.size();
         int itemIndex = 0;
 
         for (int y = 0; y < VIEWPORT_HEIGHT_CELLS; y++) {
             for (int x = 0; x < VIEWPORT_WIDTH_CELLS; x++) {
-                JButton cellButton;
+                final JButton cellButton;
 
                 if (itemIndex < nItems) {
-                    Item currentItem = items.get(itemIndex);
-                    String desc = "<html>"
+                    final Item currentItem = items.get(itemIndex);
+                    final String desc = "<html>"
                         + currentItem.getDescription().replace("\n", "<br>")
                         + "<br><b style='color:blue;'>"
-                        + this.inventory.getItemCount(currentItem) + " in inventory"
+                        + this.inventory.getItemCount(currentItem)
+                        + " in inventory"
                         + "</b></html>";
-                    Color itemColor = slotColors[itemIndex % slotColors.length];
-                    cellButton = createItemButton(
-                        currentItem.getName(), itemColor, desc);
+                    final Color itemColor =
+                        slotColors[itemIndex % slotColors.length];
+                    cellButton =
+                        createItemButton(
+                            currentItem.getName(), itemColor, desc);
                     itemIndex++;
                 } else {
                     cellButton = new JButton(); // cella vuota
@@ -266,7 +287,8 @@ public class InventoryView extends JPanel {
                             GRID_LINE_COLOR.darker()));
                 }
 
-                cellButton.setPreferredSize(new Dimension(PREFERRED_CELL_WIDTH, PREFERRED_CELL_HEIGHT));
+                cellButton.setPreferredSize(
+                    new Dimension(PREFERRED_CELL_WIDTH, PREFERRED_CELL_HEIGHT));
                 this.gridPanel.add(cellButton);
             }
         }
@@ -276,17 +298,18 @@ public class InventoryView extends JPanel {
     }
 
     /**
-    * Creates a button for an item with consistent style and behavior.
-    * @param text Button text (item name)
-    * @param color Color to highlight the slot (border)
-    * @param htmlDescriptionActionCommand HTML description
-    * to display/use as an action command
-    * @return configured JButton
-    */
+     * Creates a button for an item with consistent style and behavior.
+     *
+     * @param text Button text (item name)
+     * @param color Color to highlight the slot (border)
+     * @param htmlDescriptionActionCommand HTML description to
+     * display/use as an action command
+     * @return configured JButton
+     */
     private JButton createItemButton(final String text, final Color color,
             final String htmlDescriptionActionCommand) {
 
-        JButton button = new JButton(text);
+        final JButton button = new JButton(text);
 
         button.setFocusPainted(false);
         button.setOpaque(true);

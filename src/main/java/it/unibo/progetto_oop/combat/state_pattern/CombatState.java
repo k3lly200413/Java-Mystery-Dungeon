@@ -4,6 +4,10 @@ import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.overworld.player.Player;
 
+/**
+ * Interface representing a state in the combat state pattern.
+ */
+
 public interface CombatState {
     /**
      * Handles the input for a physical attack during combat.

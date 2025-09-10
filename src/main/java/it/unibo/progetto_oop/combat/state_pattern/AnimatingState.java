@@ -6,6 +6,12 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 import it.unibo.progetto_oop.overworld.player.Player;
 
+/**
+ * Class representing the Animating State in the combat state pattern.
+ * In this state, the system is handling animations and does not accept
+ * user inputs for actions.
+ */
+
 public class AnimatingState implements CombatState {
 
     @Override
@@ -106,7 +112,7 @@ public class AnimatingState implements CombatState {
         if (!context.checkGameOver()) {
             if (wasPlayerTurn && !model.isEnemyPoisoned()) {
                     context.getModel().setPlayerTurn(false);
-                    context.setState(new EnemyTurnState());
+                    context.setState(context.getModel().getEnemyState());
             } else if (!wasPlayerTurn && !model.isPlayerPoison()) {
                     context.getModel().setPlayerTurn(true);
                     context.setState(new PlayerTurnState());

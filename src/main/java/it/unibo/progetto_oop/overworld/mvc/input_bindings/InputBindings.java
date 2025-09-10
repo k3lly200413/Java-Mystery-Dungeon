@@ -1,3 +1,7 @@
+
+/**
+ * Gestisce i bindings di input per la mappa.
+ */
 package it.unibo.progetto_oop.overworld.mvc.input_bindings;
 
 import java.awt.event.KeyEvent;
@@ -14,6 +18,7 @@ public class InputBindings {
 
     /**
      * Constructor of the InputBindings class.
+     *
      * @param component the panel to which the input bindings will be added
      */
     public InputBindings(final JComponent component) {
@@ -24,7 +29,7 @@ public class InputBindings {
      * Set the input bindings for the panel.
      */
     public void setBindings() {
-        InputMap inputMap = panel.
+        final InputMap inputMap = panel.
             getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 
         // ----keys---- //

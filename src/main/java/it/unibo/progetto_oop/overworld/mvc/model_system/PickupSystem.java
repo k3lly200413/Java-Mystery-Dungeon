@@ -6,10 +6,12 @@ import java.util.Optional;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
-import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
+/**
+ * Gestisce la logica di raccolta degli oggetti.
+ */
 public class PickupSystem {
     /**
      * the items on the map.
@@ -22,19 +24,13 @@ public class PickupSystem {
     private final Player player;
 
     /**
-     * the Overworld model.
-     */
-    private final OverworldModel model;
-
-    /**
-     * contructor.
+     * Constructor.
+     *
      * @param newItems the items on the map
      * @param newPlayer the player
-     * @param newModel the Overworld model
      */
     public PickupSystem(final List<Item> newItems,
-                        final Player newPlayer, final OverworldModel newModel) {
-        this.model = Objects.requireNonNull(newModel, "Model cannot be null");
+                        final Player newPlayer) {
         this.player = Objects.requireNonNull(
             newPlayer, "Player cannot be null");
         this.items = newItems;
@@ -43,7 +39,8 @@ public class PickupSystem {
     // ---- GETTERS ---- //
 
     /**
-     * get the items on the map.
+     * Get the items on the map.
+     *
      * @return the list of items in the overworld
      */
     public List<Item> getItem() {
@@ -51,7 +48,8 @@ public class PickupSystem {
     }
 
     /**
-     * get the player's inventory.
+     * Get the player's inventory.
+     *
      * @return the player's inventory
      */
 
@@ -62,7 +60,8 @@ public class PickupSystem {
     // ---- SETTERS ---- //
 
     /**
-     * set the items on the current floor.
+     * Set the items on the current floor.
+     *
      * @param newItems the items to set
      */
     public void setItems(final List<Item> newItems) {
@@ -73,6 +72,7 @@ public class PickupSystem {
 
     /**
      * Remove an item from the overworld and add it to the player's inventory.
+     *
      * @param itemToRemove the item to remove
      * @return true if the item was removed, false otherwise
      */
@@ -91,9 +91,9 @@ public class PickupSystem {
 
     /**
      * Check if an item is found at the player's position.
-     * @return an Optional containing the item
-     * if found,
-     * otherwise an empty Optional
+     *
+     * @return an Optional containing the
+     * item if found, otherwise an empty Optional
      */
     private Optional<Item> itemFoundAtPlayerPosition() {
         return this.items.stream().filter(
@@ -107,10 +107,9 @@ public class PickupSystem {
      * If an item is found, remove it from the overworld items list
      */
     public void checkAndAddItem() {
-        Optional<Item> itemOpt = this.itemFoundAtPlayerPosition();
+        final Optional<Item> itemOpt = this.itemFoundAtPlayerPosition();
 
         itemOpt.ifPresent(item -> {
-            System.out.println("Item found, picking it up " + item.getName());
             this.removeItemAt(item.getPosition());
             this.player.getInventory().printInventory();
         });

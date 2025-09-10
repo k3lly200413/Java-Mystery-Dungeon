@@ -6,13 +6,17 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 import it.unibo.progetto_oop.overworld.player.Player;
 
+/**
+ * Class representing the Info Display State in the combat state pattern.
+ * In this state, the player is viewing detailed information about the enemy.
+ * The view is zoomed in on the enemy, and only the Back button is enabled
+ * to return to the previous state.
+ */
 public class InfoDisplayState implements CombatState {
 
     @Override
     public void handlePhysicalAttackInput(final CombatController context) {
-        /*
-         * Handle physical attack should not be called while in this state
-         */
+
     }
 
     @Override
@@ -28,10 +32,9 @@ public class InfoDisplayState implements CombatState {
     }
 
     /**
-     *
      * @param context Instance of the controller
      *
-     * This method is called when the back button is pressed.
+     *                This method is called when the back button is pressed.
      */
     @Override
     public void handleBackInput(final CombatController context) {
@@ -58,7 +61,6 @@ public class InfoDisplayState implements CombatState {
 
     /**
      * Handles the transition logic when entering the InfoDisplayState.
-     *
      * Disables all combat buttons, displays enemy information on the view,
      * and enables only the Back button
      * while keeping the zoomed view persistent.
@@ -87,11 +89,8 @@ public class InfoDisplayState implements CombatState {
 
     }
 
-// --- Make sure exitState or PlayerTurnState.enterState handles the reset ---
-
     /**
      * Handles the transition logic when exiting the InfoDisplayState.
-     *
      * Resets all positions and prepares the view for the next state.
      *
      * @param context the CombatController providing access to the model

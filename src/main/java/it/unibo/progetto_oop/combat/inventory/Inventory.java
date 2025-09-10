@@ -50,15 +50,13 @@ public class Inventory {
      */
     public boolean addItem(final Item item) { // add one item
         if (item == null) {
-            System.out.println("Item is null");
             return false;
         }
         if (!this.items.containsKey(item) && items.size() >= this.capacity) {
-            System.out.println("Full cannot add new item");
             return false;
         }
         // updating item amount
-        int currentCount = this.items.getOrDefault(item, 0);
+        final int currentCount = this.items.getOrDefault(item, 0);
         items.put(item, currentCount + 1);
         return true;
     }
@@ -71,15 +69,13 @@ public class Inventory {
      */
     public boolean addItem(final Item item, final int quantity) {
         if (item == null) {
-            System.out.println("Item is null");
             return false;
         }
         if (!this.items.containsKey(item) && items.size() >= capacity) {
-            System.out.println("Full cannot add new item");
             return false;
         }
         // updating item amount
-        int currentCount = this.items.getOrDefault(item, 0);
+        final int currentCount = this.items.getOrDefault(item, 0);
         this.items.put(item, currentCount + quantity);
         return true;
     }
@@ -91,25 +87,20 @@ public class Inventory {
      */
     public boolean decreaseItemCount(final Item item) {
         if (item == null) {
-            System.out.println("Item is null");
             return false;
         }
         if (!this.items.containsKey(item)) {
-            System.err.println("Item does not have a key. Please Fix");
             return false;
         }
-        int currentAmount = this.items.get(item);
+        final int currentAmount = this.items.get(item);
 
         // when i'll decrease the count will be 0,
         // so remove the item from the inventory
         if (currentAmount <= 1) {
             this.items.remove(item);
-            System.out.println(
-                "Item removed becuause you don't have it anymore");
             return true;
         }
         this.items.replace(item, currentAmount - 1);
-        System.out.println("Removed from inventory because used");
         return true;
     }
 
@@ -138,7 +129,6 @@ public class Inventory {
      */
     public boolean canUseItem(final Item item) {
         if (item == null) {
-            System.out.println("Item provided is NULL.");
             return false;
         }
         return this.hasItem(item);
@@ -192,7 +182,7 @@ public class Inventory {
      * @return the description of the item, or an error message if not found
      */
     public String getItemDescription(final int index) {
-        Optional<Item> possibleItem = this.getNthItem(index);
+        final Optional<Item> possibleItem = this.getNthItem(index);
         if (possibleItem.isPresent()) {
             return possibleItem.get()
                 .getName() + ":" + possibleItem.get().getDescription();

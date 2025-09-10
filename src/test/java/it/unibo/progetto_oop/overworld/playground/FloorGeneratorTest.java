@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.playground;
+package it.unibo.progetto_oop.overworld.playground;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;

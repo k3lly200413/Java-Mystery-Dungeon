@@ -7,7 +7,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 /**
  * @author Laura Bertozzi
  */
-public abstract class ItemImpl implements Item {
+public abstract class AbstractItemImpl implements Item {
     /**
      * the name of the item.
      */
@@ -29,7 +29,7 @@ public abstract class ItemImpl implements Item {
      * @param newDescription the description of the item
      * @param newPosition the position of the item
      */
-    public ItemImpl(final String newName, final String newDescription,
+    public AbstractItemImpl(final String newName, final String newDescription,
     final Position newPosition) {
         this.name = newName;
         this.description = newDescription;
@@ -59,10 +59,10 @@ public abstract class ItemImpl implements Item {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ItemImpl)) {
+        if (!(o instanceof AbstractItemImpl)) {
             return false;
         }
-        ItemImpl other = (ItemImpl) o;
+        final AbstractItemImpl other = (AbstractItemImpl) o;
         return Objects.equals(name, other.name)
         && Objects.equals(description, other.description);
     }
