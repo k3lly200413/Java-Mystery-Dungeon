@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.placement_strategy;
+package it.unibo.progetto_oop.overworld.playground.placement_strategy;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,7 +9,6 @@ import it.unibo.progetto_oop.overworld.playground.data.ImplArrayListStructureDat
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
-import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRandomPlacement;
 
 public class RandomPlacementTest {
 
