@@ -104,6 +104,7 @@ public final class ViewManager {
 
     /**
      * Method to start the view manager with the initial start view.
+     * 
      * @param initialStartView the start view to display
      */
     public void start(final GameStartView initialStartView) {
@@ -113,9 +114,9 @@ public final class ViewManager {
         JFrame frame = new JFrame("JavaMysteryDungeon");
         this.startView = initialStartView;
         frame.setPreferredSize(
-            new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
+                new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
         this.mainCardPanel.setMinimumSize(
-            new Dimension(MINIMUM_WIDTH, MINIMUM_HEIGHT));
+                new Dimension(MINIMUM_WIDTH, MINIMUM_HEIGHT));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // first card
@@ -137,6 +138,7 @@ public final class ViewManager {
 
     /**
      * Sets the playground view.
+     * 
      * @param newPlayGroundView the playground view to set
      */
     public void setPlayGroundView(final ImplMapView newPlayGroundView) {
@@ -146,6 +148,7 @@ public final class ViewManager {
 
     /**
      * Method to set the inventory view.
+     * 
      * @param newInvView the inventory view to set
      */
     public void setInventoryView(final InventoryView newInvView) {
@@ -155,22 +158,22 @@ public final class ViewManager {
 
     /**
      * Sets the combat controller.
+     * 
      * @param currentCombatController the combat controller to set
      */
     public void setCombatController(
-        final CombatController currentCombatController
-    ) {
+            final CombatController currentCombatController) {
         this.combatController = currentCombatController;
         this.mainCardPanel.add(this.combatController.getView().getViewPanel(), COMBAT_CARD);
     }
 
-
     /**
      * Method to show the inventory view.
+     * 
      * @param inventory the inventory to display
      */
     public void showInventory(final Inventory inventory) {
-        if (this.invView == null) {  // prima volta
+        if (this.invView == null) { // prima volta
             this.setInventoryView(new InventoryView(inventory, this));
         } else { // aggiorna la view esistente
             this.invView.updateInventoryModel(inventory);
