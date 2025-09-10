@@ -149,7 +149,6 @@ public class CombatModel implements PossibleUser {
         this.playerStaminaMax = builder.getStaminaMax();
         this.playerPower = builder.getPlayerPower();
         this.playerPoisonPower = builder.getPlayerPoisonPower();
-        this.enemyPower = builder.getEnemyPower();
         this.enemySpeed = builder.getEnemySpeed();
         this.enemyName = builder.getEnemyName();
         this.basicPlayerPower = this.playerPower;
