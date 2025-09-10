@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.playground.placement_strategy;
+package it.unibo.progetto_oop.placement_strategy;
 
 import static org.junit.jupiter.api.Assertions.*;
 
