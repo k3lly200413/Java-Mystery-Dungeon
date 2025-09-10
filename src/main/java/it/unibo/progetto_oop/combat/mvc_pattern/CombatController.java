@@ -1135,6 +1135,11 @@ public class CombatController {
         this.enemy = encounteredEnemy;
         this.model.setEnemyState(this.enemy.isBoss());
         this.enemyState = this.model.getEnemyState();
+        this.model.setEnemyPower(enemy.getPower());
+    }
+
+    public final void setEnemyPower(final int newEnemyPower) {
+        this.model.setEnemyPower(newEnemyPower);
     }
 
     /**

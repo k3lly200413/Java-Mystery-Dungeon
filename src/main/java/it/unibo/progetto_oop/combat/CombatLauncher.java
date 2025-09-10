@@ -61,12 +61,12 @@ public final class CombatLauncher {
         // 1. Create the Model with our configuration
         final CombatModel model = new CombatBuilder()
         .setSize(size)
+        .setPlayerMaxHealth(maxHealth)
         .setStaminaMax(playerMaxStamina)
         .setPlayerPower(playerPower)
         .setPlayerPoisonPower(playerPoisonPower)
         .setPlayerLongRangePower(playerLongRangePower)
         .setPlayerCurrentHealth(player.getCurrentHp())
-        .setEnemyPower(enemyPower)
         .setEnemySpeed(enemySpeed)
         .setEnemyName(enemyName)
         .setPlayerMaxHealth(maxHealth)
