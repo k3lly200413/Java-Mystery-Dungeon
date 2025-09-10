@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashMap;
@@ -38,7 +37,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
  *
  * @author kelly.applebee@studio.unibo.it
  */
-public class CombatView extends JPanel {
+public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Serial version UID for serialization.
      */
@@ -111,6 +110,10 @@ public class CombatView extends JPanel {
      * Map to hold JLabel components and their corresponding Position.
      */
     private final Map<JLabel, Position> cells;
+    /**
+     * CombatController instance.
+     */
+    private CombatController controller;
     /**
      * Height and width of the player's health bar.
      */
@@ -418,6 +421,7 @@ public class CombatView extends JPanel {
      *
      * @param value the current health value of the player
      */
+    @Override
     public final void updatePlayerHealth(final int value) {
         this.playerHealtBar.setValue(value);
         this.playerHealtBar.setString(
@@ -429,6 +433,7 @@ public class CombatView extends JPanel {
      *
      * @param value the current stamina value of the player
      */
+    @Override
     public final void updatePlayerStamina(final int value) {
         this.playerStaminaBar.setValue(value);
         this.playerStaminaBar.setString(
@@ -449,6 +454,7 @@ public class CombatView extends JPanel {
      *
      * @param value the current health value of the enemy
      */
+    @Override
     public final void updateEnemyHealth(final int value) {
         enemyHealthBar.setValue(value);
         enemyHealthBar.setString(
@@ -460,6 +466,7 @@ public class CombatView extends JPanel {
      *
      * @param text the message to display
      */
+    @Override
     public final void showInfo(final String text) {
         // Use HTML to allow for multi-line messages
         infoLabel.setText("<html>" + text.replace("\n", "<br>") + "</html>");
@@ -468,8 +475,17 @@ public class CombatView extends JPanel {
     /**
      * Clears the info label, removing any displayed messages.
      */
+    @Override
     public final void clearInfo() {
         infoLabel.setText("");
+    }
+
+    /**
+     * Method used to set the controller to assign ActionListeners to buttons.
+     */
+    @Override
+    public final void setController(final CombatController combatController) {
+        this.controller = combatController;
     }
 
     /**
@@ -800,102 +816,80 @@ public class CombatView extends JPanel {
 
     /**
      * Adds an action listener to the attack button.
-     *
-     * @param e the action listener to add
      */
-    public final void addAttackButtonListener(final ActionListener e) {
-        this.attackButton.addActionListener(e);
+    public final void addAttackButtonListener() {
+        this.attackButton.addActionListener(e -> this.controller.handleAttackMenu());
     }
 
     /**
      * Adds an action listener to the bag button.
-     *
-     * @param e the action listener to add
      */
-    public final void addBagButtonListener(final ActionListener e) {
-        this.bagButton.addActionListener(e);
+    public final void addBagButtonListener() {
+        this.bagButton.addActionListener(e -> this.controller.handleBagMenu());
     }
 
     /**
      * Adds an action listener to the run button.
-     *
-     * @param e the action listener to add
      */
-    public final void addRunButtonListener(final ActionListener e) {
-        this.runButton.addActionListener(e);
+    public final void addRunButtonListener() {
+        this.runButton.addActionListener(e -> this.controller.exitCombat());
     }
 
     /**
      * Adds an action listener to the info button.
-     *
-     * @param e the action listener to add
      */
-    public final void addInfoButtonListener(final ActionListener e) {
-        this.infoButton.addActionListener(e);
+    public final void addInfoButtonListener() {
+        this.infoButton.addActionListener(e -> this.controller.handleInfo());
     }
 
     /**
      * Adds an action listener to the physical attack button.
-     *
-     * @param e the action listener to add
      */
-    public final void addPhysicalButtonListener(final ActionListener e) {
-        this.physicalAttackButton.addActionListener(e);
+    public final void addPhysicalButtonListener() {
+        this.physicalAttackButton.addActionListener(e -> this.controller.handlePlayerPhysicalAttack());
     }
 
     /**
      * Adds an action listener to the long-range attack button.
-     *
-     * @param e the action listener to add
      */
-    public final void addLongRangeButtonListener(final ActionListener e) {
-        this.longRangeButton.addActionListener(e);
+    public final void addLongRangeButtonListener() {
+        this.longRangeButton.addActionListener(e -> this.controller.handlePlayerLongRangeAttack(false, true));
     }
 
     /**
      * Adds an action listener to the poison button.
-     *
-     * @param e the action listener to add
      */
-    public final void addPoisonButtonListener(final ActionListener e) {
-        this.poisonButton.addActionListener(e);
+    public final void addPoisonButtonListener() {
+        this.poisonButton.addActionListener(e -> this.controller.handlePlayerLongRangeAttack(true, false));
     }
 
     /**
      * Adds an action listener to the back button.
-     *
-     * @param e the action listener to add
      */
-    public final void addBackButtonListener(final ActionListener e) {
-        this.backButton.addActionListener(e);
-        this.backAttackButton.addActionListener(e);
+    public final void addBackButtonListener() {
+        this.backButton.addActionListener(e -> this.controller.handleBackToMainMenu());
+        this.backAttackButton.addActionListener(e -> this.controller.handleBackToMainMenu());
     }
 
     /**
      * Adds an action listener to the attack buff button.
-     *
-     * @param e the action listener to add
      */
-    public final void addAttackBuffButtonListener(final ActionListener e) {
-        this.attackBuffButton.addActionListener(e);
+    public final void addAttackBuffButtonListener() {
+        this.attackBuffButton.addActionListener(e -> this.controller.handleAttackBuff());
     }
 
     /**
      * Adds an action listener to the cure button.
-     *
-     * @param e the action listener to add
      */
-    public final void addCurePoisonButtonListener(final ActionListener e) {
-        this.curePoisonButton.addActionListener(e);
+    public final void addCurePoisonButtonListener() {
+        this.curePoisonButton.addActionListener(e -> this.controller.handleCurePoisonInput());
     }
 
     /**
      * Adds an action listener to the heal button.
-     *
-     * @param e the action listener to add
      */
-    public final void addHealButtonListener(final ActionListener e) {
-        this.healButton.addActionListener(e);
+    public final void addHealButtonListener() {
+        this.healButton.addActionListener(e -> this.controller.handleHeal());
     }
 
     /**
@@ -903,6 +897,7 @@ public class CombatView extends JPanel {
      *
      * @param onRestart the runnable when the restart is clicked
      */
+    @Override
     public void showGameOver(final Runnable onRestart) {
         final JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (frame == null) {
