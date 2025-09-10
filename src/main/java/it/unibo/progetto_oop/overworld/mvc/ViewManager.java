@@ -47,11 +47,6 @@ public final class ViewManager {
     private static final String WIN = "WIN";
 
     /**
-     * the frame of the game.
-     */
-    private JFrame frame;
-
-    /**
      * Preferred width for the game window.
      */
     private static final int PREFERRED_WIDTH = 1000;
@@ -112,23 +107,22 @@ public final class ViewManager {
      * @param initialStartView the start view to display
      */
     public void start(final GameStartView initialStartView) {
-        this.startView = initialStartView;
-
-        this.frame.setPreferredSize(
-            new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
-        this.mainCardPanel.setMinimumSize(
-            new Dimension(MINIMUM_WIDTH, MINIMUM_HEIGHT));
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         // Setup CardLayout and main panel
         this.cardLayout = new CardLayout();
         this.mainCardPanel = new JPanel(cardLayout);
+        JFrame frame = new JFrame("JavaMysteryDungeon");
+        this.startView = initialStartView;
+        frame.setPreferredSize(
+            new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
+        this.mainCardPanel.setMinimumSize(
+            new Dimension(MINIMUM_WIDTH, MINIMUM_HEIGHT));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // first card
         this.mainCardPanel.add(this.startView, START_GAME);
-        this.frame.setContentPane(this.mainCardPanel);
-        this.frame.pack();
-        this.frame.setVisible(true);
+        frame.setContentPane(this.mainCardPanel);
+        frame.pack();
+        frame.setVisible(true);
 
         // Mostro start game come default
         this.cardLayout.show(this.mainCardPanel, START_GAME);

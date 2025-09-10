@@ -15,7 +15,7 @@ public record EntityStatsConfig(
     /** The default stamina level of the player. */
     private static final int PLAYER_STAMINA = 100;
     /** The default power level of the player. */
-    private static final int PLAYER_POWER = 99;
+    private static final int PLAYER_POWER = 100;
     /** The default health points of the enemy. */
     private static final int ENEMY_HP = 100;
     /** The default power level of the enemy. */
