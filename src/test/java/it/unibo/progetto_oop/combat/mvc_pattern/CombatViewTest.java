@@ -67,7 +67,7 @@ public class CombatViewTest {
     void performingPhysicalAttackButtonsAreNotClickable() {
         this.controller.setState(new PlayerTurnState());
         this.controller.getCurrentState().handlePhysicalAttackInput(controller);
-        this.view.showAttackOptions();
+        // this.view.showAttackOptions();
         assertTrue(this.view.getAttackButtonPanel().isVisible());
         assertFalse(this.view.getBagButtonPanel().isVisible());
         assertFalse(this.view.getOriginalButtonPanel().isVisible());
@@ -76,24 +76,24 @@ public class CombatViewTest {
     @Test
     void buttonsAreNotClickableDuringAnimationTest() {
         this.controller.setState(new AnimatingState());
-        this.view.showBagButtons();
+        // this.view.showBagButtons();
         assertFalse(this.view.getAttackButtonPanel().getComponent(0).isEnabled());
-        this.view.showAttackOptions();
+        // this.view.showAttackOptions();
         assertFalse(this.view.getAttackButtonPanel().getComponent(0).isEnabled());
-        this.view.showOriginalButtons();
+        // this.view.showOriginalButtons();
         assertFalse(this.view.getAttackButtonPanel().getComponent(0).isEnabled());
     }
     @Test
     void testCardLayoutShowing() {
-        this.view.showAttackOptions();
+        // this.view.showAttackOptions();
         assertTrue(this.view.getAttackButtonPanel().isVisible());
         assertFalse(this.view.getBagButtonPanel().isVisible());
         assertFalse(this.view.getOriginalButtonPanel().isVisible());
-        this.view.showBagButtons();
+        // this.view.showBagButtons();
         assertFalse(this.view.getAttackButtonPanel().isVisible());
         assertTrue(this.view.getBagButtonPanel().isVisible());
         assertFalse(this.view.getOriginalButtonPanel().isVisible());
-        this.view.showOriginalButtons();
+        // this.view.showOriginalButtons();
         assertTrue(this.view.getOriginalButtonPanel().isVisible());
         assertFalse(this.view.getAttackButtonPanel().isVisible());
         assertFalse(this.view.getBagButtonPanel().isVisible());

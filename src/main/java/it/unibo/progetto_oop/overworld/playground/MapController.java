@@ -4,20 +4,34 @@ import java.util.List;
 import java.util.Objects;
 import javax.swing.SwingUtilities;
 
-import it.unibo.progetto_oop.overworld.mvc.OverworldEntitiesGenerator;
 import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
-import it.unibo.progetto_oop.overworld.playground.data.ChangeFloorListener;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData;
+import it.unibo.progetto_oop.overworld.mvc.generation_entities.OverworldEntitiesGenerator;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.listner.ChangeFloorListener;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
-import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
+import it.unibo.progetto_oop.overworld.playground.view.playground_view.ImplMapView;
 
 public final class MapController implements ChangeFloorListener {
-    private final SwingMapView view;
+    /**
+     * The view responsible for rendering the map.
+     */
+    private final ImplMapView view;
+
+    /**
+     * The model representing the overworld state.
+     */
     private final OverworldModel model;
 
-    public MapController(final SwingMapView mapView, final OverworldModel model) {
+    /**
+     * Constructs a MapController with the specified view and model.
+     *
+     * @param mapView the view responsible for rendering the map
+     * @param overworldModel the model representing the overworld state
+     */
+    public MapController(final ImplMapView mapView,
+                         final OverworldModel overworldModel) {
         this.view = Objects.requireNonNull(mapView);
-        this.model = Objects.requireNonNull(model);
+        this.model = Objects.requireNonNull(overworldModel);
     }
 
     public void start() {

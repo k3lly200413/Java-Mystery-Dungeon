@@ -10,11 +10,10 @@ import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 import it.unibo.progetto_oop.combat.win_view.WinPanel;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
-import it.unibo.progetto_oop.overworld.playground.view.GameStartView;
-import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
+import it.unibo.progetto_oop.overworld.playground.view.game_start.GameStartView;
+import it.unibo.progetto_oop.overworld.playground.view.playground_view.ImplMapView;
 
 public final class ViewManager {
     /**
@@ -90,7 +89,7 @@ public final class ViewManager {
     /**
      * The playground.
      */
-    private SwingMapView playGroundView;
+    private ImplMapView playGroundView;
 
     /**
      * The start view for the game.
@@ -145,7 +144,7 @@ public final class ViewManager {
      * Sets the playground view.
      * @param newPlayGroundView the playground view to set
      */
-    public void setPlayGroundView(final SwingMapView newPlayGroundView) {
+    public void setPlayGroundView(final ImplMapView newPlayGroundView) {
         this.playGroundView = newPlayGroundView;
         this.mainCardPanel.add(this.playGroundView, OVERWORLD_CARD);
     }
@@ -167,7 +166,7 @@ public final class ViewManager {
         final CombatController currentCombatController
     ) {
         this.combatController = currentCombatController;
-        this.mainCardPanel.add(combatController.getView(), COMBAT_CARD);
+        this.mainCardPanel.add(this.combatController.getView().getViewPanel(), COMBAT_CARD);
     }
 
 
@@ -186,21 +185,12 @@ public final class ViewManager {
     }
 
     public void showCombat(Enemy encounteredEnemy) {
-        JFrame frame = new JFrame("Combattimento");
-        // if (this.combatView == null) {
-            // frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            // frame.setSize(600, 400);
-            // frame.add(this.combatController.getView());
-            // frame.setLocationRelativeTo(null);
-            // frame.setVisible(true);
-        // } else {
         this.combatController.setEncounteredEnemy(encounteredEnemy);
         this.combatController.getModel().setEnemyCurrentHp(encounteredEnemy.getCurrentHp());
         System.out.println("Enemy Health => " + encounteredEnemy.getCurrentHp());
         this.combatController.getModel().setEnemyMaxHp(encounteredEnemy.getMaxHp());
         this.combatController.resetForNewCombat();
         this.combatController.redrawView();
-        // }
         this.cardLayout.show(this.mainCardPanel, COMBAT_CARD);
     }
 

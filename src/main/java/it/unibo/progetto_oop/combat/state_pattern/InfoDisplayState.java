@@ -1,9 +1,10 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
+import it.unibo.progetto_oop.combat.mvc_pattern.ActionType;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatViewInterface;
 import it.unibo.progetto_oop.overworld.player.Player;
 
 /**
@@ -72,9 +73,9 @@ public class InfoDisplayState implements CombatState {
     @Override
     public void enterState(final CombatController context) {
         final CombatModel model = context.getModel();
-        final CombatView view = context.getView();
+        final CombatViewInterface view = context.getView();
 
-        view.setAllButtonsDisabled();
+        view.setAllMenusDisabled();
 
         final String infoText = String.format(
             "<html>Enemy Info:<br>Name: %s<br>Power: %d<br>Speed: %d</html>",
@@ -84,8 +85,8 @@ public class InfoDisplayState implements CombatState {
         );
         view.showInfo(infoText);
 
-        view.showAttackOptions();
-        view.setCustomButtonEnabled(view.getAttackBackButton());
+        view.showAttackMenu();
+        view.setActionEnabled(ActionType.BACK, true);
 
     }
 

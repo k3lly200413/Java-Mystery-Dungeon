@@ -7,13 +7,13 @@ import javax.swing.SwingUtilities;
 import it.unibo.progetto_oop.combat.CombatLauncher;
 import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
-import it.unibo.progetto_oop.overworld.mvc.EntityStatsConfig;
 import it.unibo.progetto_oop.combat.win_view.WinPanel;
 import it.unibo.progetto_oop.overworld.mvc.OverworldController;
 import it.unibo.progetto_oop.overworld.mvc.ViewManager;
+import it.unibo.progetto_oop.overworld.mvc.generation_entities.EntityStatsConfig;
 import it.unibo.progetto_oop.overworld.playground.OverworldLuncher;
 import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
-import it.unibo.progetto_oop.overworld.playground.view.GameStartView;
+import it.unibo.progetto_oop.overworld.playground.view.game_start.GameStartView;
 
 public final class GameLuncher {
     /**

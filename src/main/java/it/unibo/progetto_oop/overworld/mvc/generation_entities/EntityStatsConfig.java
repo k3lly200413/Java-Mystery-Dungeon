@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld.mvc;
+package it.unibo.progetto_oop.overworld.mvc.generation_entities;
 
 public record EntityStatsConfig(
         int playerMaxHp,

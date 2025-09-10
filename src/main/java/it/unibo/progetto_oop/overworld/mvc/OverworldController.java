@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import it.unibo.progetto_oop.overworld.ViewManagerObserver;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.mvc.input_bindings.InputBindings;
-import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
+import it.unibo.progetto_oop.overworld.playground.view.playground_view.ImplMapView;
 
 /**
  * Controller principale dell'overworld.
@@ -24,7 +24,7 @@ public class OverworldController implements ViewManagerObserver {
     /**
      * the view instance.
      */
-    private final SwingMapView view;
+    private final ImplMapView view;
 
     /**
      * the view manager instance.
@@ -39,7 +39,7 @@ public class OverworldController implements ViewManagerObserver {
      * @param newViewManager the view manager instance
      */
     public OverworldController(final OverworldModel newModel,
-    final SwingMapView newView, final ViewManager newViewManager) {
+    final ImplMapView newView, final ViewManager newViewManager) {
         this.model = Objects.requireNonNull(newModel, "Model cannot be null");
         this.view = Objects.requireNonNull(newView, "View cannot be null");
         this.viewManager = Objects.requireNonNull(newViewManager,

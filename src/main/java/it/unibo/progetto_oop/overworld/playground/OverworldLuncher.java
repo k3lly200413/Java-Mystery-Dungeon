@@ -5,6 +5,7 @@ import java.util.Random;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.mvc.generation_entities.EntityStatsConfig;
 import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Dungeon;
@@ -15,11 +16,11 @@ import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplTunnelP
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.RandomPlacementStrategy;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.RoomPlacementStrategy;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.TunnelPlacementStrategy;
-import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
+import it.unibo.progetto_oop.overworld.playground.view.playground_view.ImplMapView;
 
 public final class OverworldLuncher {
     private final OverworldModel model;
-    private final SwingMapView view;
+    private final ImplMapView view;
     private final MapController mapController;
 
     public OverworldLuncher(FloorConfig floorConfig, EntityStatsConfig entityStatsConfig, Random rand) {
@@ -32,7 +33,7 @@ public final class OverworldLuncher {
         this.model = new OverworldModel(List.<Enemy>of(), List.<Item>of(), entityStatsConfig);
         this.model.bindDungeon(dungeon);
 
-        this.view = new SwingMapView(floorConfig.tileSize());
+        this.view = new ImplMapView(floorConfig.tileSize());
         this.mapController = new MapController(this.view, this.model);
     }
 
@@ -40,7 +41,7 @@ public final class OverworldLuncher {
         this.mapController.start();
     }
 
-    public SwingMapView getView() {
+    public ImplMapView getView() {
         return this.view;
     }
     public OverworldModel getModel() {

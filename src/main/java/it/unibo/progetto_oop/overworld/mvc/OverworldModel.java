@@ -13,16 +13,17 @@ import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollision;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollisionImpl;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
+import it.unibo.progetto_oop.overworld.mvc.generation_entities.EntityStatsConfig;
 import it.unibo.progetto_oop.overworld.mvc.model_system.EnemySystem;
 import it.unibo.progetto_oop.overworld.mvc.model_system.MovementSystem;
 import it.unibo.progetto_oop.overworld.mvc.model_system.PickupSystem;
 import it.unibo.progetto_oop.overworld.player.Player;
-import it.unibo.progetto_oop.overworld.playground.data.ChangeFloorListener;
-import it.unibo.progetto_oop.overworld.playground.data.EntityGridUpdater;
-import it.unibo.progetto_oop.overworld.playground.data.ImplArrayListStructureData;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.listner.ChangeFloorListener;
+import it.unibo.progetto_oop.overworld.playground.data.listner.grid_updater.EntityGridUpdater;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Dungeon;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
 

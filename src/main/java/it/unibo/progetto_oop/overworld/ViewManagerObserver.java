@@ -20,7 +20,7 @@ public interface ViewManagerObserver {
     void onPlayerDefeat();
 
     /**
-     * Called when the player wins the game.
+     * Called when the Player beats the boss.
      */
     void onPlayerWin();
 }

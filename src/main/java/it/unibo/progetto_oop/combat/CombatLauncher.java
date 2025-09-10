@@ -4,6 +4,7 @@ import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatViewInterface;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
@@ -72,7 +73,7 @@ public final class CombatLauncher {
         .setPlayerMaxHealth(maxHealth)
         .build();
         // 2. Create the View
-        final CombatView view = new CombatView(model.getSize(),
+        final CombatViewInterface view = new CombatView(model.getSize(),
         viewWidthFactor * model.getSize() / sizeDivisor,
         viewHeightFactor * model.getSize() / sizeDivisor,
         buttonWidth, buttonHeight, windowWidth, windowHeight);

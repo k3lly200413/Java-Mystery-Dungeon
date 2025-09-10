@@ -6,8 +6,8 @@ import java.util.Objects;
 import java.util.Random;
 
 import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.RandomPlacementStrategy;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.RoomPlacementStrategy;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.TunnelPlacementStrategy;
@@ -55,6 +55,7 @@ public final class FloorGenerator {
      *
      * @param grid the structure data representing the floor grid
      * @param conf the floor configuration specifying parameters
+     * @param finalFloor indicates whether this is the final floor
      * @return a list of rooms generated on the floor
      */
     public List<Room> generate(
