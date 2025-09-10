@@ -30,16 +30,16 @@ public final class GameStartView extends JPanel {
     /**
      * The red component of the background color.
      */
-    private static final int RGB_COLOR_1 = 63;
+    private static final int R = 63;
 
     /**
      * The green component of the background color.
      */
-    private static final int RGB_COLOR_2 = 46;
+    private static final int G = 46;
     /**
      * The blue component of the background color.
      */
-    private static final int RGB_COLOR_3 = 30;
+    private static final int B = 30;
 
     /**
      * The font size for the button text.
@@ -79,39 +79,34 @@ public final class GameStartView extends JPanel {
      * initializing the layout, title, and start button.
      */
     public GameStartView() {
+        setLayout(new BorderLayout());
 
-        // charge image from resources
         var resourcePath = "/spritesOverWorld/startBackground.png";
         var url = getClass().getResource(resourcePath);
-        this.backgroundImage = new ImageIcon(url).getImage();
-        this.title.setFont(new Font("SansSerif", Font.BOLD, TITLE_FONT_SIZE));
-        setLayout(new BorderLayout());
+        this.backgroundImage = url != null ? new ImageIcon(url).getImage() : null;
 
         // title
         this.title = new JLabel("Java Mystery Dungeon", SwingConstants.CENTER);
+        title.setForeground(Color.WHITE);
         title.setFont(new Font("SansSerif", Font.BOLD, TITLE_FONT_SIZE));
 
         // button
         this.startButton = new JButton("  Start  ");
-        startButton.setFont(
-            new Font("SansSerif", Font.BOLD, START_BUTTON_FONT_SIZE)
-        );
-        add(title, BorderLayout.NORTH);
-        startButton.setFont(new Font("SansSerif", Font.BOLD, FONT_BUTTON));
+        startButton.setFont(new Font("SansSerif", Font.BOLD, START_BUTTON_FONT_SIZE));
         startButton.setForeground(Color.WHITE);
-        startButton.setBackground(
-            new Color(RGB_COLOR_1, RGB_COLOR_2, RGB_COLOR_3)
-        );
-        startButton.setBorder(
-            BorderFactory.createLineBorder(Color.WHITE, THICKNESS, true)
-        );
+        startButton.setBackground(new Color(R, G, B));
+        startButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, THICKNESS, true));
+        startButton.setFocusPainted(false);
         startButton.addActionListener(e -> onStart.run());
+
+        add(title, BorderLayout.NORTH);
 
         JPanel center = new JPanel(new GridBagLayout());
         center.setOpaque(false);
         center.add(startButton);
         add(center, BorderLayout.CENTER);
     }
+
 
     @Override
     protected void paintComponent(final Graphics g) {
