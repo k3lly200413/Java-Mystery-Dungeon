@@ -96,7 +96,7 @@ public final class OverworldModel {
         this.gridNotifier = new GridNotifier(null);
 
         this.pickupSystem = new PickupSystem(items, this.player);
-        this.enemySystem  = new EnemySystem(enemies, this.player, this);
+        this.enemySystem = new EnemySystem(enemies, this.player, this);
         this.movementSystem = new MovementSystem(this.player, this);
 
         this.combatCollision = new CombatCollisionImpl();

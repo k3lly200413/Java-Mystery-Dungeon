@@ -1,3 +1,7 @@
+
+/**
+ * Represents the patroller state for an enemy.
+ */
 package it.unibo.progetto_oop.overworld.enemy.state_pattern;
 
 import it.unibo.progetto_oop.overworld.enemy.EnemyType;
@@ -31,12 +35,13 @@ public class PatrollerState implements GenericEnemyState {
 
     /**
      * Constructor for PatrollerState.
+     *
      * @param newMovementUtil the movement utility
      * @param newMovementStrategy the movement strategy
      * @param vertical whether the patroller moves vertically
      */
     public PatrollerState(final MovementUtil newMovementUtil,
-    final MovementStrategy newMovementStrategy, final boolean vertical) {
+        final MovementStrategy newMovementStrategy, final boolean vertical) {
         this.movementUtil = newMovementUtil;
         this.isVertical = vertical;
         this.movementStrategy = newMovementStrategy;

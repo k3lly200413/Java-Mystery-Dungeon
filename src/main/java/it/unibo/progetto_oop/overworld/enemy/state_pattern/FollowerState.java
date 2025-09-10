@@ -7,7 +7,9 @@ import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementUtil;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementUtil.MoveDirection;
 import it.unibo.progetto_oop.overworld.player.Player;
 
-
+/**
+ * Represents the follower state for an enemy.
+ */
 public class FollowerState implements GenericEnemyState {
     /**
      * The current movement direction of the follower enemy.
@@ -32,14 +34,15 @@ public class FollowerState implements GenericEnemyState {
 
     /**
      * Constructor for FollowerState.
+     *
      * @param newMovementUtil the movement utility
      * @param newMovementStrategy the movement strategy
      * @param vertical whether the follower moves vertically
      */
     public FollowerState(
-    final MovementUtil newMovementUtil,
-    final MovementStrategy newMovementStrategy,
-    final boolean vertical) {
+        final MovementUtil newMovementUtil,
+        final MovementStrategy newMovementStrategy,
+        final boolean vertical) {
         this.movementUtil = newMovementUtil;
         this.isVertical = vertical;
         this.movementStrategy = newMovementStrategy;

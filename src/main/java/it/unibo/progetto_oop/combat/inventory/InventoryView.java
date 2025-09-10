@@ -1,8 +1,9 @@
+package it.unibo.progetto_oop.combat.inventory;
 
 /**
  * View grafica dell'inventario.
+ * Gestisce la visualizzazione e l'interazione con l'inventario del giocatore.
  */
-package it.unibo.progetto_oop.combat.inventory;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -85,18 +86,18 @@ public class InventoryView extends JPanel {
     private static final int BG_COLOR_B = 245;
 
     /**
-    * Border line thickness in pixels.
-    */
+     * Border line thickness in pixels.
+     */
     private static final int BORDER_THICKNESS = 2;
 
     /**
-    * Top and bottom padding in pixels.
-    */
+     * Top and bottom padding in pixels.
+     */
     private static final int BORDER_PADDING_VERTICAL = 6;
 
     /**
-    * Left and right padding in pixels.
-    */
+     * Left and right padding in pixels.
+     */
     private static final int BORDER_PADDING_HORIZONTAL = 10;
 
 
@@ -138,7 +139,7 @@ public class InventoryView extends JPanel {
      * @param newViewManager the view manager
      */
     public InventoryView(final Inventory initialInventory,
-    final ViewManager newViewManager) {
+        final ViewManager newViewManager) {
         this.inventory = initialInventory;
         this.viewManager = newViewManager;
 
@@ -233,6 +234,7 @@ public class InventoryView extends JPanel {
 
     /**
      * Method to update the inventory model this view is looking at.
+     *
      * @param newInventory the new inventory to display
      */
     public void updateInventoryModel(final Inventory newInventory) {
@@ -241,7 +243,7 @@ public class InventoryView extends JPanel {
 
     /**
      * Clears and re-populates the grid.
-    */
+     */
     private void populateGrid() {
         if (this.gridPanel == null || this.inventory == null) {
             return;
@@ -303,11 +305,11 @@ public class InventoryView extends JPanel {
      * @param text Button text (item name)
      * @param color Color to highlight the slot (border)
      * @param htmlDescriptionActionCommand HTML description to
-     * display/use as an action command
+     *        display/use as an action command
      * @return configured JButton
      */
     private JButton createItemButton(final String text, final Color color,
-            final String htmlDescriptionActionCommand) {
+        final String htmlDescriptionActionCommand) {
 
         final JButton button = new JButton(text);
 

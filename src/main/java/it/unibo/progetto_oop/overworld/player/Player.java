@@ -1,9 +1,10 @@
 
+package it.unibo.progetto_oop.overworld.player;
+
 /**
  * Represents the player in the overworld,
  * manages stats, position, and inventory.
  */
-package it.unibo.progetto_oop.overworld.player;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
@@ -67,6 +68,7 @@ public class Player {
         this.power = newPower;
     }
 
+
     /**
      * Use an item from the player's inventory.
      *
@@ -86,7 +88,6 @@ public class Player {
         }
     }
 
-
     /**
      * Add an item to the player's inventory.
      *
@@ -95,7 +96,6 @@ public class Player {
     public void addItem(final Item item) {
         this.inventory.addItem(item);
     }
-
 
     //---- SETTERS ----
 

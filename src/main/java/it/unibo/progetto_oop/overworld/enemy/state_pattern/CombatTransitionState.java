@@ -1,3 +1,7 @@
+
+/**
+ * Represents the combat transition state for an enemy.
+ */
 package it.unibo.progetto_oop.overworld.enemy.state_pattern;
 
 import it.unibo.progetto_oop.overworld.enemy.EnemyType;
@@ -12,6 +16,7 @@ public class CombatTransitionState implements GenericEnemyState {
 
     /**
      * Constructor of the CombatTransitionState class.
+     *
      * @param newEnemyType the type of the enemy
      */
     public CombatTransitionState(final EnemyType newEnemyType) {

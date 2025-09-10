@@ -1,8 +1,9 @@
 
+package it.unibo.progetto_oop.overworld.mvc.input_bindings;
+
 /**
  * Gestisce i bindings di input per la mappa.
  */
-package it.unibo.progetto_oop.overworld.mvc.input_bindings;
 
 import java.awt.event.KeyEvent;
 

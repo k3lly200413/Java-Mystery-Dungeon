@@ -1,8 +1,9 @@
 
+package it.unibo.progetto_oop.overworld.player.adapter_pattern;
+
 /**
  * Interface for possible user actions and stats in the overworld.
  */
-package it.unibo.progetto_oop.overworld.player.adapter_pattern;
 
 public interface PossibleUser {
     /**
