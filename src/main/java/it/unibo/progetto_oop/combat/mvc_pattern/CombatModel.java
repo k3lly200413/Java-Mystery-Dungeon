@@ -871,4 +871,13 @@ public final boolean isGameOver() {
         return this.getPlayerStamina();
     }
 
+    /**
+     * Sets the enemy's power.
+     *
+     * @param power the new power value
+     */
+    public void setEnemyPower(final int power) {
+        this.enemyPower = power;
+    }
+
 }
