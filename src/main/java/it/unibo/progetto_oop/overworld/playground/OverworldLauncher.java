@@ -18,7 +18,7 @@ import it.unibo.progetto_oop.overworld.playground.placement_strategy.RoomPlaceme
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.TunnelPlacementStrategy;
 import it.unibo.progetto_oop.overworld.playground.view.playground_view.ImplMapView;
 
-public final class OverworldLuncher {
+public final class OverworldLauncher {
     /**
      * The model representing the overworld state.
      */
@@ -40,7 +40,7 @@ public final class OverworldLuncher {
      * @param entityStatsConfig the configuration for entity stats
      * @param rand the random generator
      */
-    public OverworldLuncher(
+    public OverworldLauncher(
             final FloorConfig floorConfig,
             final EntityStatsConfig entityStatsConfig,
             final Random rand

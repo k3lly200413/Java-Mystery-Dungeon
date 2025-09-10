@@ -54,7 +54,6 @@ public final class MapController implements ChangeFloorListener {
      * Advances the game to the next floor.
      */
     public void next() {
-
         model.nextFloor();
     }
 

@@ -10,7 +10,7 @@ public final class Main {
      * @param args command line arguments
      */
     public static void main(final String[] args) {
-        GameLuncher app = new GameLuncher();
+        GameLauncher app = new GameLauncher();
         app.start();
     }
 }

@@ -11,11 +11,11 @@ import it.unibo.progetto_oop.combat.win_view.WinPanel;
 import it.unibo.progetto_oop.overworld.mvc.OverworldController;
 import it.unibo.progetto_oop.overworld.mvc.ViewManager;
 import it.unibo.progetto_oop.overworld.mvc.generation_entities.EntityStatsConfig;
-import it.unibo.progetto_oop.overworld.playground.OverworldLuncher;
+import it.unibo.progetto_oop.overworld.playground.OverworldLauncher;
 import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
 import it.unibo.progetto_oop.overworld.playground.view.game_start.GameStartView;
 
-public final class GameLuncher {
+public final class GameLauncher {
     /**
      * Configuration for the floor settings.
      */
@@ -44,7 +44,7 @@ public final class GameLuncher {
             viewManager.start(startView);
 
             startView.setOnStart(() -> {
-                OverworldLuncher session = new OverworldLuncher(
+                OverworldLauncher session = new OverworldLauncher(
                     floorConfig, entityStatsConfig, rand
                 );
 

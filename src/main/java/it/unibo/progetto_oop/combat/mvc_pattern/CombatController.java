@@ -7,7 +7,7 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
-import it.unibo.progetto_oop.GameLuncher;
+import it.unibo.progetto_oop.GameLauncher;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.command_pattern.GameButton;
 import it.unibo.progetto_oop.combat.command_pattern.LongRangeButton;
@@ -1324,7 +1324,7 @@ public class CombatController {
         }
 
         // Ricrea il gioco da capo
-        final GameLuncher app = new GameLuncher();
+        final GameLauncher app = new GameLauncher();
         app.start();
     });
 }
