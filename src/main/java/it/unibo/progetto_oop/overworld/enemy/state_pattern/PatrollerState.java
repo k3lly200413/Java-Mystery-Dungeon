@@ -4,6 +4,8 @@
  */
 package it.unibo.progetto_oop.overworld.enemy.state_pattern;
 
+import java.nio.channels.UnsupportedAddressTypeException;
+
 import it.unibo.progetto_oop.overworld.enemy.EnemyType;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementStrategy;
@@ -48,7 +50,12 @@ public class PatrollerState implements GenericEnemyState {
     }
 
     @Override
-    public final void enterState(final Enemy context) {
+    /**
+     * Initially the patroller will choose a direction based on its position.
+     * 
+     * @param context the enemy in case
+     */
+    public void enterState(final Enemy context) {
         currentDirection = movementUtil
             .getInitialGeneralMoveDirection(
                 context.getCurrentPosition(), this.isVertical);
@@ -59,28 +66,55 @@ public class PatrollerState implements GenericEnemyState {
         }
     }
 
+    /**
+     * No specific exit actions for the patroller state.
+     */
     @Override
-    public final void exitState(final Enemy context) {
+    public void exitState(final Enemy context) {
+        throw new UnsupportedOperationException(
+            "PatrollerState does not support exitState operation.");
     }
 
+    /**
+     * Update the enemy's movement based on the current strategy.
+     * 
+     * @param context the enemy
+     * @param player the player
+     * 
+     * @return the new direction of movement (if needed)
+     */
     @Override
     public final void update(final Enemy context, final Player player) {
         this.currentDirection = this.movementStrategy
             .executeMove(context, player, this.currentDirection);
     }
 
+    /**
+     * No specific actions when the player moves for the patroller state.
+     */
     @Override
-    public final void onPlayerMoved(final Enemy context, final Player player) {
+    public void onPlayerMoved(final Enemy context, final Player player) {
+        throw new UnsupportedOperationException(
+            "Patroller state doesn't support onPlayerMoved operation");
     }
 
+    /**
+     * Get the type of enemy associated with this state.
+     * 
+     * @return the enemy type (PATROLLER)
+     */
     @Override
-    public final EnemyType getType() {
+    public EnemyType getType() {
         return EnemyType.PATROLLER;
     }
 
+    /**
+     * Get a description of the enemy's current state.
+     * 
+     * @return the state description
+     */
     @Override
-    public final String getDescription() {
+    public String getDescription() {
         return "Patroller State";
     }
-
 }
