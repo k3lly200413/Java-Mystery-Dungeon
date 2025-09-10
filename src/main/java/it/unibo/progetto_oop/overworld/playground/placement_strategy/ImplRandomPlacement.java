@@ -13,33 +13,20 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
 
     @Override
     public void placeOnBase(StructureData base, TileType type, int n, Random rand) {
-        if (base == null || rand == null || n <= 0) return;
+        if (base == null || type == null || n <= 0 || rand == null) return;
 
-        List<Position> candidates = collectCandidates(base, null, 0);
-        if (candidates.isEmpty()) return;
-
-        Collections.shuffle(candidates, rand);
-        int limit = Math.min(n, candidates.size());
-        for (int i = 0; i < limit; i++) {
-            Position p = candidates.get(i);
+        for (Position p : pickRandomCandidates(base, null, 0, n, rand)) {
             base.set(p.x(), p.y(), type);
         }
     }
 
     @Override
-    // distanza minima dal player
     public void placeObject(StructureData base, StructureData entity,
                             TileType type, int n, Random rand,
                             Position player, int dist) {
-        if (base == null || entity == null || rand == null || n <= 0) return;
+        if (base == null || entity == null || type == null || n <= 0 || rand == null) return;
 
-        List<Position> candidates = collectCandidates(base, player, dist);
-        if (candidates.isEmpty()) return;
-
-        Collections.shuffle(candidates, rand);
-        int limit = Math.min(n, candidates.size());
-        for (int i = 0; i < limit; i++) {
-            Position p = candidates.get(i);
+        for (Position p : pickRandomCandidates(base, player, dist, n, rand)) {
             entity.set(p.x(), p.y(), type);
         }
     }
@@ -48,13 +35,24 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
     public Position placePlayer(StructureData base, StructureData entity, Random rand) {
         if (base == null || entity == null || rand == null) return null;
 
-        List<Position> candidates = collectCandidates(base, null, 0);
-        if (candidates.isEmpty()) return null;
+        List<Position> one = pickRandomCandidates(base, null, 0, 1, rand);
+        if (one.isEmpty()) return null;
 
-        Collections.shuffle(candidates, rand);
-        Position p = candidates.get(0);
+        Position p = one.get(0);
         entity.set(p.x(), p.y(), TileType.PLAYER);
         return p;
+    }
+
+    private static List<Position> pickRandomCandidates(
+            StructureData base, Position player, int minDist, int n, Random rand) {
+
+        List<Position> candidates = collectCandidates(base, player, minDist);
+        if (candidates.isEmpty() || n <= 0 || rand == null) {
+            return List.of();
+        }
+        Collections.shuffle(candidates, rand);
+        int limit = Math.min(n, candidates.size());
+        return candidates.subList(0, limit);
     }
 
     // Celle candidate: ROOM non adiacenti a TUNNEL e lontane dal player
@@ -74,7 +72,7 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
     }
 
     // true se cella vicino di 1 è TUNNEL
-    private static boolean adjacentToTunnel(StructureData g, int x, int y) {
+    public static boolean adjacentToTunnel(StructureData g, int x, int y) {
         for (int dy = -1; dy <= 1; dy++) {
             for (int dx = -1; dx <= 1; dx++) {
                 int nx = x + dx;
@@ -91,7 +89,7 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
         return false;
     }
 
-    private static boolean isFarFromPlayer(int x, int y, Position playerPos, int minDist) {
+    public static boolean isFarFromPlayer(int x, int y, Position playerPos, int minDist) {
         if (playerPos == null || minDist <= 0)
             return true;
         int dx = Math.abs(x - playerPos.x());

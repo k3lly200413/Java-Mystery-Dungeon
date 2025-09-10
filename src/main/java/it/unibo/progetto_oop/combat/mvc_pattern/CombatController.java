@@ -158,6 +158,7 @@ public class CombatController {
 
         this.model = modelToUse;
         this.view = viewToUse;
+        this.view.setController(this);
         this.neighbours = new Neighbours();
 
         this.view.setPlayerHealthBarMax(model.getPlayerMaxHealth());
@@ -218,24 +219,23 @@ public class CombatController {
      * Uses private methods to Assing Actionlisteners to buttons inside view.
      */
     private void attachListeners() {
-        this.view.addAttackButtonListener(e -> handleAttackMenu());
-        this.view.addPhysicalButtonListener(e -> handlePlayerPhysicalAttack());
-        this.view.addLongRangeButtonListener(
-            e -> handlePlayerLongRangeAttack(false, true));
-        this.view.addPoisonButtonListener(
-            e -> handlePlayerLongRangeAttack(true, false));
-        this.view.addBackButtonListener(e -> handleBackToMainMenu());
-        this.view.addInfoButtonListener(e -> handleInfo());
-        this.view.addBagButtonListener(e -> handleBagMenu());
-        this.view.addRunButtonListener(e -> exitCombat());
-        this.view.addCurePoisonButtonListener(
-            e -> this.handleCurePoisonInput());
-        this.view.addAttackButtonListener(e -> handleAttackMenu());
-        this.view.addAttackBuffButtonListener(e -> handleAttackBuff());
-        this.view.addHealButtonListener(e -> handleHeal());
+        this.view.addAttackButtonListener();
+        this.view.addPhysicalButtonListener();
+        this.view.addLongRangeButtonListener();
+        this.view.addPoisonButtonListener();
+        this.view.addBackButtonListener();
+        this.view.addInfoButtonListener();
+        this.view.addBagButtonListener();
+        this.view.addRunButtonListener();
+        this.view.addCurePoisonButtonListener();
+        this.view.addAttackBuffButtonListener();
+        this.view.addHealButtonListener();
     }
 
-    private void exitCombat() {
+    /**
+     * Exits the combat and transitions to the game over state.
+     */
+    public void exitCombat() {
         stopAnimationTimer();
         if (enemyActionTimer != null && enemyActionTimer.isRunning()) {
             enemyActionTimer.stop();
@@ -247,7 +247,10 @@ public class CombatController {
         // this.view.close();
     }
 
-    private void handleAttackMenu() {
+    /**
+     * Used in View to show the attack sub-menu.
+     */
+    public void handleAttackMenu() {
         this.view.showAttackOptions(); // Show the attack sub-menu
         if (this.model.getPlayerStamina()
         < MINIMUM_STAMINA_FOR_SPECIAL_ATTACK) {
@@ -259,7 +262,10 @@ public class CombatController {
 
     }
 
-    private void handleBagMenu() {
+    /**
+     * Used in View to show the bag sub-menu.
+     */
+    public void handleBagMenu() {
         this.setState(new ItemSelectionState());
         this.view.showBagButtons();
         this.view.setBagButtonsEnabled();
@@ -275,7 +281,10 @@ public class CombatController {
         view.clearInfo();
     }
 
-    private void handleBackToMainMenu() {
+    /**
+     * Used in View to go back to the main menu.
+     */
+    public void handleBackToMainMenu() {
         this.setState(new PlayerTurnState());
         this.currentState.enterState(this);
         this.currentState.handleBackInput(this);
@@ -293,7 +302,10 @@ public class CombatController {
         this.setState(new PlayerTurnState());
     }
 
-    private void handleInfo() {
+    /**
+     * Handles the info button click event.
+     */
+    public void handleInfo() {
         this.currentState.enterState(this);
         this.currentState.handleInfoInput(this);
     }
@@ -312,25 +324,18 @@ public class CombatController {
     }
 
     /**
-     * Handles the info button click event.
-     * This method is called when the info button is clicked in the view.
-     * It displays information about the enemy.
+     * Handles the physical attack button click.
      */
-    public void performInfo() {
-        performInfoZoomInAnimation(() -> {
-            this.setState(new InfoDisplayState());
-        });
-        this.view.showInfo("Enemy Info:\nName: " + this.model.getEnemyName());
-
-    }
-
-    private void handlePlayerPhysicalAttack() {
+    public void handlePlayerPhysicalAttack() {
         this.currentState.enterState(this);
         this.currentState.handlePhysicalAttackInput(this);
         // call playerturnstate and have it run performPlayerphysical Attack
     }
 
-    private void handleCurePoisonInput() {
+    /**
+     * Handles the Cure Poison button click.
+     */
+    public void handleCurePoisonInput() {
         this.currentState.handlePotionUsed(this, this.curePoisonItem, null);
         this.player.getInventory().decreaseItemCount(curePoisonItem);
         currentState.handleBackInput(this);
@@ -415,7 +420,13 @@ public class CombatController {
                 onEnemyAttackComplete);
     }
 
-    private void handlePlayerLongRangeAttack(
+    /**
+     * Handles the long-range attack button click.
+     *
+     * @param applyPoison     True if the attack should apply poison
+     * @param applyFlameIntent True if the attack should only be a flame
+     */
+    public void handlePlayerLongRangeAttack(
         final boolean applyPoison, final boolean applyFlameIntent) {
         this.currentState.enterState(this);
         this.currentState.handleLongRangeAttackInput(
@@ -919,17 +930,6 @@ public class CombatController {
                 .poisonYCoord(step[0])
                 .build();
                 this.view.redrawGrid(defaultRedraw);
-                /*redrawView(
-                    this.model.getPlayerPosition(),
-                    this.model.getEnemyPosition(),
-                    this.model.getAttackPosition(),
-                    0, true, true, false, false, 1, 1, this.model.isGameOver(),
-                    (this.model.isPlayerTurn()
-                    ? this.model.getEnemyPosition()
-                    : this.model.getPlayerPosition()),
-                    false, new ArrayList<Position>(),
-                    true, step[0], false, 0);
-                    */
                 step[0]--;
             }
         });
@@ -1088,7 +1088,10 @@ public class CombatController {
      * }
      */
 
-    private void handleAttackBuff() {
+    /**
+     * Handles the attack buff button click.
+     */
+    public void handleAttackBuff() {
         if (this.currentState != null) {
             currentState.handlePotionUsed(this, this.attackBuffItem, null);
             currentState.handleBackInput(this);
@@ -1096,7 +1099,10 @@ public class CombatController {
         }
     }
 
-    private void handleHeal() {
+    /**
+     * Handles the healing button click.
+     */
+    public void handleHeal() {
         if (this.currentState != null) {
             currentState.handlePotionUsed(this, this.healingItem, null);
             this.view.updatePlayerHealth(this.model.getPlayerHealth());
