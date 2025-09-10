@@ -10,7 +10,9 @@ import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 public class ImplTunnelPlacement implements TunnelPlacementStrategy {
 
     @Override
-    public void connect(StructureData grid, List<Room> rooms, Random rand) {
+    public final void connect(final StructureData grid,
+                              final List<Room> rooms,
+                              final Random rand) {
         for (int i = 0; i < rooms.size() - 1; i++) {
             Room r1 = rooms.get(i);
             Room r2 = rooms.get(i + 1);
@@ -29,7 +31,8 @@ public class ImplTunnelPlacement implements TunnelPlacementStrategy {
         }
     }
 
-    private void connectHorizontal(StructureData grid, int x1, int x2, int y) {
+    private void connectHorizontal(final StructureData grid, final int x1,
+                                   final int x2, final int y) {
         int startX = Math.min(x1, x2);
         int endX = Math.max(x1, x2);
         for (int x = startX; x <= endX; x++) {
@@ -37,7 +40,10 @@ public class ImplTunnelPlacement implements TunnelPlacementStrategy {
         }
     }
 
-    private void connectVertical(StructureData grid, int y1, int y2, int x) {
+    private void connectVertical(final StructureData grid,
+                                 final int y1,
+                                 final int y2,
+                                 final int x) {
         int startY = Math.min(y1, y2);
         int endY = Math.max(y1, y2);
         for (int y = startY; y <= endY; y++) {
@@ -46,12 +52,17 @@ public class ImplTunnelPlacement implements TunnelPlacementStrategy {
     }
 
     /**
-     * Scava TUNNEL solo se la cella è WALL; non modifica FLOOR (stanze) né cambia
-     * TUNNEL già esistenti.
+     * Only carve a TUNNEL if the cell is a WALL; do not modify FLOOR (rooms)
+     *  or existing TUNNEL tiles.
+     * @param grid The structure data representing the grid of the dungeon.
+     * @param x The x-coordinate of the cell to check and potentially modify.
+     * @param y The y-coordinate of the cell to check and potentially modify.
      */
-    private void setTunnelIfWall(StructureData grid, int x, int y) {
-        if (!grid.inBounds(x, y))
+    private void setTunnelIfWall(final StructureData grid,
+                                 final int x, final int y) {
+        if (!grid.inBounds(x, y)) {
             return;
+        }
         TileType t = grid.get(x, y);
         if (t == TileType.WALL) {
             grid.set(x, y, TileType.TUNNEL);
