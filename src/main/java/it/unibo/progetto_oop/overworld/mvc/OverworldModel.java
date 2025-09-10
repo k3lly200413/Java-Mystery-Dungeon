@@ -42,7 +42,7 @@ public final class OverworldModel {
     private static final int PLAYER_STAMINA = 100;
 
     /** Player power. */
-    private static final int PLAYER_POWER = 99;
+    private static final int PLAYER_POWER = 10;
 
     /** The dungeon instance. */
     private Dungeon dungeon;
