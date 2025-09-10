@@ -1,0 +1,120 @@
+package it.unibo.progetto_oop.playground.placement_strategy;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Random;
+import org.junit.jupiter.api.Test;
+
+import it.unibo.progetto_oop.overworld.playground.data.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRandomPlacement;
+
+public class RandomPlacementTest {
+
+    @Test
+    void testPlaceOnBase() {
+        StructureData base = new ImplArrayListStructureData(10, 8);
+        base.fill(TileType.ROOM);
+
+        ImplRandomPlacement placer = new ImplRandomPlacement();
+        Random rand = new Random(12345);
+
+        placer.placeOnBase(base, TileType.STAIRS, 12, rand);
+
+        assertEquals(12, count(base, TileType.STAIRS));
+    }
+
+    @Test
+    void testPlaceObjectConstraints() {
+        StructureData base   = new ImplArrayListStructureData(12, 10);
+        StructureData entity = new ImplArrayListStructureData(12, 10);
+        base.fill(TileType.ROOM);
+        entity.fill(TileType.NONE);
+
+        // tunnel to test adjacency
+        base.set(5, 5, TileType.TUNNEL);
+        base.set(6, 5, TileType.TUNNEL);
+
+        Position player = new Position(2, 2);
+        entity.set(player.x(), player.y(), TileType.PLAYER);
+
+        int n = 8, minDist = 3;
+        ImplRandomPlacement placer = new ImplRandomPlacement();
+        placer.placeObject(base, entity, TileType.ENEMY, n, new Random(999), player, minDist);
+
+        int placed = 0;
+        for (int y = 0; y < entity.height(); y++) {
+            for (int x = 0; x < entity.width(); x++) {
+                if (entity.get(x, y) == TileType.ENEMY) {
+                    placed++;
+                    assertTrue(
+                        ImplRandomPlacement.isFarFromPlayer(x, y, player, minDist),
+                        "Troppo vicino al player in ("+x+","+y+")"
+                    );
+                    assertFalse(
+                        ImplRandomPlacement.adjacentToTunnel(base, x, y),
+                        "Adiacente a TUNNEL in ("+x+","+y+")"
+                    );
+                }
+            }
+        }
+        assertTrue(placed <= n, "Non deve piazzare più di n nemici");
+    }
+
+    @Test
+    void testPlacePlayer() {
+        StructureData base   = new ImplArrayListStructureData(7, 6);
+        StructureData entity = new ImplArrayListStructureData(7, 6);
+        base.fill(TileType.ROOM);
+        entity.fill(TileType.NONE);
+
+        // tunnel to test
+        base.set(3, 2, TileType.TUNNEL);
+        base.set(4, 2, TileType.TUNNEL);
+
+        ImplRandomPlacement placer = new ImplRandomPlacement();
+        Random rand = new Random(123);
+
+        Position p = placer.placePlayer(base, entity, rand);
+        assertNotNull(p, "placePlayer mustn't return null");
+        assertEquals(TileType.PLAYER, entity.get(p.x(), p.y()));
+        assertEquals(TileType.ROOM, base.get(p.x(), p.y()));
+    }
+
+    @Test
+    void testPlaceObjectCap() {
+        StructureData base   = new ImplArrayListStructureData(5, 5);
+        StructureData entity = new ImplArrayListStructureData(5, 5);
+        base.fill(TileType.ROOM);
+        entity.fill(TileType.NONE);
+
+        Position player = new Position(0, 0);
+        entity.set(player.x(), player.y(), TileType.PLAYER);
+
+        ImplRandomPlacement placer = new ImplRandomPlacement();
+        Random rand = new Random(1);
+
+        int requested = 100; // more than available
+        int minDist   = 1;
+
+        placer.placeObject(base, entity, TileType.ENEMY, requested, rand, player, minDist);
+
+        int placed = count(entity, TileType.ENEMY);
+        int maxPossible = base.width() * base.height() - 1; // not the player
+
+        assertTrue(placed <= maxPossible);
+    }
+
+    private static int count(StructureData g, TileType t) {
+        int c = 0;
+        for (int y = 0; y < g.height(); y++) {
+            for (int x = 0; x < g.width(); x++) {
+                if (g.get(x, y) == t) c++;
+            }
+        }
+        return c;
+    }
+
+}
