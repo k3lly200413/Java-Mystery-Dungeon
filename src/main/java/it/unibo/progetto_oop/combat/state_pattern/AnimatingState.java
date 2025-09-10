@@ -3,7 +3,6 @@ package it.unibo.progetto_oop.combat.state_pattern;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatViewInterface;
 import it.unibo.progetto_oop.overworld.player.Player;
 
