@@ -34,7 +34,6 @@ public final class CombatLauncher {
         final int size = 12;
         final int playerPower = player.getPower();
         final int playerPoisonPower = 2;
-        final int enemyPower = 100;
         final int enemySpeed = 3;
         final String enemyName = "Dragon";
         final int playerMaxStamina = player.getStamina();

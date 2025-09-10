@@ -29,9 +29,6 @@ public class CombatBuilder {
     /** The current health points of the enemy. */
     private int enemyHealth;
 
-    /** The attack power of the enemy. */
-    private int enemyPower;
-
     /** The speed of the enemy. */
     private int enemySpeed;
 
@@ -105,15 +102,6 @@ public class CombatBuilder {
      */
     public int getEnemyCurrentHp() {
         return this.enemyHealth;
-    }
-
-    /**
-     * Returns the attack power of the enemy.
-     *
-     * @return the enemy's power
-     */
-    public int getEnemyPower() {
-        return this.enemyPower;
     }
 
     /**
@@ -218,17 +206,6 @@ public class CombatBuilder {
      */
     public CombatBuilder setEnemyCurrentHealth(final int currentHealth) {
         this.enemyHealth = currentHealth;
-        return this;
-    }
-
-    /**
-     * Sets the attack power of the enemy.
-     *
-     * @param newEnemyPower the power to set
-     * @return this builder for chaining
-     */
-    public CombatBuilder setEnemyPower(final int newEnemyPower) {
-        this.enemyPower = newEnemyPower;
         return this;
     }
 
