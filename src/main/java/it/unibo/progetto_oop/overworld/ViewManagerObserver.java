@@ -18,4 +18,9 @@ public interface ViewManagerObserver {
      * Called when the player is defeated.
      */
     void onPlayerDefeat();
+
+    /**
+     * Called when the player wins the game.
+     */
+    void onPlayerWin();
 }
