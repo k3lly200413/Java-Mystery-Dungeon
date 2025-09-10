@@ -1,3 +1,7 @@
+
+/**
+ * Interface for enemy states in the overworld.
+ */
 package it.unibo.progetto_oop.overworld.enemy.state_pattern;
 
 import it.unibo.progetto_oop.overworld.enemy.EnemyType;
@@ -18,13 +22,15 @@ public interface GenericEnemyState {
      * @param context the enemy that is exiting the state
      */
     void exitState(Enemy context);
+
     /**
      * Update the state of the enemy based on the player's position.
      * this method will be called every turn of the enemy
+     *
      * @param context the enemy that is updating its state
      * @param player the player that the enemy is interacting with
      */
-    void update(Enemy context,  Player player);
+    void update(Enemy context, Player player);
 
     /**
      * The specific action that a tipe of enemy
@@ -36,12 +42,15 @@ public interface GenericEnemyState {
     void onPlayerMoved(Enemy context, Player player);
 
     /**
+     * Get the type of the enemy state.
+     *
      * @return the type of the enemy state
      */
     EnemyType getType();
 
     /**
      * Get a description of the enemy state.
+     *
      * @return a string describing the enemy state
      */
     String getDescription();

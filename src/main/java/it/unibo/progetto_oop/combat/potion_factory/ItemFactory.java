@@ -1,10 +1,4 @@
-
 package it.unibo.progetto_oop.combat.potion_factory;
-
-/**
- * Factory per la creazione di oggetti Item.
- * @author Laura Bertozzi
- */
 
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_strategy.AttackBuff;
@@ -12,7 +6,9 @@ import it.unibo.progetto_oop.combat.potion_strategy.CurePoison;
 import it.unibo.progetto_oop.combat.potion_strategy.Healing;
 import it.unibo.progetto_oop.combat.potion_strategy.Potion;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
+
 /**
+ * Factory per la creazione di oggetti Item.
  * @author Laura Bertozzi
  */
 public class ItemFactory {

@@ -94,7 +94,7 @@ public class CombatController {
     /**
      * View which displays on screen information taken from controller.
      */
-    private final CombatView view;
+    private final CombatViewInterface view;
     /**
      * MeleeButton command for melee attacks.
      */
@@ -152,7 +152,7 @@ public class CombatController {
      */
     public CombatController(
         final CombatModel modelToUse,
-        final CombatView viewToUse, final Player newPlayer,
+        final CombatViewInterface viewToUse, final Player newPlayer,
         final CombatCollision newCombatCollision,
         final GridNotifier newGridNotifier) {
 
@@ -169,8 +169,6 @@ public class CombatController {
         this.combatCollision = newCombatCollision;
         this.gridNotifier = newGridNotifier;
 
-        this.attachListeners();
-
         this.redrawView();
 
         this.currentState = new PlayerTurnState();
@@ -180,6 +178,7 @@ public class CombatController {
         this.attackBuffItem = itemFactory.createItem("Attack Buff", null);
         this.curePoisonItem = itemFactory.createItem("Antidote", null);
         this.healingItem = itemFactory.createItem("Health Potion", null);
+        this.view.setAllMenusEnabled();
     }
 
     /**
@@ -216,23 +215,6 @@ public class CombatController {
     }
 
     /**
-     * Uses private methods to Assing Actionlisteners to buttons inside view.
-     */
-    private void attachListeners() {
-        this.view.addAttackButtonListener();
-        this.view.addPhysicalButtonListener();
-        this.view.addLongRangeButtonListener();
-        this.view.addPoisonButtonListener();
-        this.view.addBackButtonListener();
-        this.view.addInfoButtonListener();
-        this.view.addBagButtonListener();
-        this.view.addRunButtonListener();
-        this.view.addCurePoisonButtonListener();
-        this.view.addAttackBuffButtonListener();
-        this.view.addHealButtonListener();
-    }
-
-    /**
      * Exits the combat and transitions to the game over state.
      */
     public void exitCombat() {
@@ -251,13 +233,11 @@ public class CombatController {
      * Used in View to show the attack sub-menu.
      */
     public void handleAttackMenu() {
-        this.view.showAttackOptions(); // Show the attack sub-menu
+        this.view.showAttackMenu(); // Show the attack sub-menu
         if (this.model.getPlayerStamina()
         < MINIMUM_STAMINA_FOR_SPECIAL_ATTACK) {
-            this.view.setCustomButtonDisabled(
-                this.view.getLongRangeAttackButton());
-            this.view.setCustomButtonDisabled(
-                this.view.getPoisonAttackButton());
+            this.view.setActionEnabled(ActionType.LONG_RANGE, false);
+            this.view.setActionEnabled(ActionType.POISON, false);
         }
 
     }
@@ -267,16 +247,24 @@ public class CombatController {
      */
     public void handleBagMenu() {
         this.setState(new ItemSelectionState());
-        this.view.showBagButtons();
-        this.view.setBagButtonsEnabled();
+        this.view.showBagMenu();
         if (!this.player.getInventory().canUseItem(attackBuffItem)) {
-            this.view.setCustomButtonDisabled(this.view.getAttackBuffButton());
+            this.view.setActionEnabled(ActionType.ATTACK_BUFF, false);
+        }
+        else {
+            this.view.setActionEnabled(ActionType.ATTACK_BUFF, true);
         }
         if (!this.player.getInventory().canUseItem(curePoisonItem)) {
-            this.view.setCustomButtonDisabled(this.view.getCurePoisonButton());
+            this.view.setActionEnabled(ActionType.CURE_POISON, false);
+        }
+        else {
+            this.view.setActionEnabled(ActionType.CURE_POISON, true);
         }
         if (!this.player.getInventory().canUseItem(healingItem)) {
-            this.view.setCustomButtonDisabled(this.view.getHealingButton());
+            this.view.setActionEnabled(ActionType.HEAL, false);
+        }
+        else {
+            this.view.setActionEnabled(ActionType.HEAL, true);
         }
         view.clearInfo();
     }
@@ -296,7 +284,7 @@ public class CombatController {
      * It transitions back to the main menu or previous state.
      */
     public final void performBackToMainMenu() {
-        view.showOriginalButtons(); // Go back to the main menu
+        view.showMainMenu(); // Go back to the main menu
         this.model.resetPositions();
         this.redrawView();
         this.setState(new PlayerTurnState());
@@ -405,9 +393,9 @@ public class CombatController {
             }
 
             model.setPlayerTurn(this.model.isPlayerTurn());
-            view.setAllButtonsEnabled();
+            view.setAllMenusEnabled();
             view.showInfo("Player's turn!");
-            view.showOriginalButtons();
+            view.showMainMenu();
         };
 
         // Simple AI: The enemy always uses a physical attack.
@@ -808,7 +796,7 @@ public class CombatController {
 
     private void performInfoZoomInAnimation(final Runnable onZoomComplete) {
         this.stopAnimationTimer();
-        this.view.setAllButtonsDisabled();
+        this.view.setAllMenusDisabled();
 
         final int size = (model.getSize() / 2) - 2; // Target size for zoom
 
@@ -947,7 +935,7 @@ public class CombatController {
                 model.setEnemyPosition(
                     originalEnemyPosition); // Reset enemy position
                 redrawView();
-                this.view.setAllButtonsEnabled();
+                this.view.setAllMenusEnabled();
                 zoomerStep = 0;
             } else {
                 this.redrawView(
@@ -987,7 +975,7 @@ public class CombatController {
     public final boolean checkGameOver() {
         if (model.isGameOver()) {
             stopAnimationTimer();
-            view.setAllButtonsDisabled();
+            view.setAllMenusDisabled();
             final String winner =
                 model.getPlayerHealth() <= 0 ? "Enemy" : "Player";
             view.showInfo("Game Over! " + winner + " wins!");
@@ -1059,7 +1047,7 @@ public class CombatController {
      *
      * @return the view and model of the combat controller
      */
-    public final CombatView getView() {
+    public final CombatViewInterface getView() {
         return this.view;
     }
 
