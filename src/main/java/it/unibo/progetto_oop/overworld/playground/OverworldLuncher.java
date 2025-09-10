@@ -22,17 +22,17 @@ public final class OverworldLuncher {
     private final SwingMapView view;
     private final MapController mapController;
 
-    public OverworldLuncher(FloorConfig config, Random rand) {
+    public OverworldLuncher(FloorConfig floorConfig, EntityStatsConfig entityStatsConfig, Random rand) {
         RandomPlacementStrategy rps = new ImplRandomPlacement();
         RoomPlacementStrategy   rrs = new ImplRoomPlacement();
         TunnelPlacementStrategy tps = new ImplTunnelPlacement();
         FloorGenerator gen = new FloorGenerator(rrs, tps, rps, rand);
 
-        Dungeon dungeon = new Dungeon(gen, config);
-        this.model = new OverworldModel(List.<Enemy>of(), List.<Item>of());
+        Dungeon dungeon = new Dungeon(gen, floorConfig);
+        this.model = new OverworldModel(List.<Enemy>of(), List.<Item>of(), entityStatsConfig);
         this.model.bindDungeon(dungeon);
 
-        this.view = new SwingMapView(config.tileSize());
+        this.view = new SwingMapView(floorConfig.tileSize());
         this.mapController = new MapController(this.view, this.model);
     }
 

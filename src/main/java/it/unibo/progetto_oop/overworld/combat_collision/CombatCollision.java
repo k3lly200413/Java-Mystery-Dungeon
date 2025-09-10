@@ -54,4 +54,9 @@ public interface CombatCollision {
      */
     void showGameOver();
 
+    /**
+     * show the win view.
+     */
+    void showWin();
+
 }
