@@ -3,8 +3,15 @@ package it.unibo.progetto_oop.overworld.playground.data;
 import java.util.Objects;
 
 public final class EntityGridUpdater implements GridUpdater {
+    /**
+     * The StructureData instance representing the grid to be updated.
+     */
     private final StructureData entity;
 
+    /**
+     * Constructs an EntityGridUpdater with the specified StructureData.
+     * @param entityGrid the StructureData to be updated, must not be null
+     */
     public EntityGridUpdater(final StructureData entityGrid) {
         this.entity = Objects.requireNonNull(entityGrid);
     }

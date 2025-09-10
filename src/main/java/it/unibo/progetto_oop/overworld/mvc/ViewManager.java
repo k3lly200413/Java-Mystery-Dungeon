@@ -10,12 +10,11 @@ import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.playground.view.GameStartView;
 import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
 
-public class ViewManager {
+public final class ViewManager {
     /**
      * start game card identifier.
      */
@@ -47,25 +46,53 @@ public class ViewManager {
     private JFrame frame;
 
     /**
+     * Preferred width for the game window.
+     */
+    private static final int PREFERRED_WIDTH = 1000;
+
+    /**
+     * Preferred height for the game window.
+     */
+    private static final int PREFERRED_HEIGHT = 700;
+
+    /**
      * the card layout to switch between views.
      */
     private CardLayout cardLayout;
 
     /**
+     * Minimum width for the game window.
+     */
+    private static final int MINIMUM_WIDTH = 960;
+
+    /**
+     * Minimum height for the game window.
+     */
+    private static final int MINIMUM_HEIGHT = 640;
+
+    /**
      * the main panel that holds the different views.
      */
     private JPanel mainCardPanel;
-    
+
     /**
      * inventory view.
      */
     private InventoryView invView;
-    private CombatView combatView;
+
+    /**
+     * The playground.
+     */
     private SwingMapView playGroundView;
 
+    /**
+     * The start view for the game.
+     */
     private GameStartView startView;
-    //private GameOverView gameOverView;
 
+    /**
+     * The controller for managing combat logic and interactions.
+     */
     private CombatController combatController;
 
     /** Game over panel. */
@@ -73,22 +100,23 @@ public class ViewManager {
 
     /**
      * Method to start the view manager with the initial start view.
-     * @param startView the start view to display
+     * @param initialStartView the start view to display
      */
-    public void start(GameStartView startView) {
-        this.startView = startView;
-        this.frame = new JFrame("Java Mystery Dungeon");
+    public void start(final GameStartView initialStartView) {
+        this.startView = initialStartView;
+        this.frame.setPreferredSize(
+            new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
+        this.mainCardPanel.setMinimumSize(
+            new Dimension(MINIMUM_WIDTH, MINIMUM_HEIGHT));
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Setup il CardLayout e il panel principale
+        // Setup CardLayout and main panel
         this.cardLayout = new CardLayout();
         this.mainCardPanel = new JPanel(cardLayout);
 
-        // prima card
+        // first card
         this.mainCardPanel.add(this.startView, START_GAME);
         this.frame.setContentPane(this.mainCardPanel);
-        this.frame.setPreferredSize(new Dimension(1000, 700));
-        this.mainCardPanel.setMinimumSize(new Dimension(960, 640));
         this.frame.pack();
         this.frame.setVisible(true);
 
@@ -96,12 +124,19 @@ public class ViewManager {
         this.cardLayout.show(this.mainCardPanel, START_GAME);
     }
 
+    /**
+     * Displays the overworld view.
+     */
     public void showOverworld() {
         this.cardLayout.show(this.mainCardPanel, OVERWORLD_CARD);
     }
 
-    public void setPlayGroundView(SwingMapView playGroundView) {
-        this.playGroundView = playGroundView;
+    /**
+     * Sets the playground view.
+     * @param newPlayGroundView the playground view to set
+     */
+    public void setPlayGroundView(final SwingMapView newPlayGroundView) {
+        this.playGroundView = newPlayGroundView;
         this.mainCardPanel.add(this.playGroundView, OVERWORLD_CARD);
     }
 
@@ -114,7 +149,13 @@ public class ViewManager {
         this.mainCardPanel.add(this.invView, INVENTORY_CARD);
     }
 
-    public void setCombatController(CombatController currentCombatController) {
+    /**
+     * Sets the combat controller.
+     * @param currentCombatController the combat controller to set
+     */
+    public void setCombatController(
+        final CombatController currentCombatController
+    ) {
         this.combatController = currentCombatController;
         this.mainCardPanel.add(combatController.getView(), COMBAT_CARD);
     }
