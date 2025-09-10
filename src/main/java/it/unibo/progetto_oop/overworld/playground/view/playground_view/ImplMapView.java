@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -139,12 +140,12 @@ public final class ImplMapView extends JPanel implements MapView {
             this.initialCell = cellSize;
             setBackground(Color.BLACK);
             // Carica sprite dalle risorse
-            this.floorImg = loadSprite("/spritesOverworld/floor.png");
-            this.stairsImg = loadSprite("/spritesOverworld/stairs.png");
-            this.playerImg = loadSprite("/spritesOverworld/link.png");
-            this.enemyImg = loadSprite("/spritesOverworld/gengar.png");
-            this.itemImg = loadSprite("/spritesOverworld/potion.png");
-            this.bossImg = loadSprite("/spritesOverworld/boss.png");
+            this.floorImg = loadSprite("/spritesOverWorld/floor.png");
+            this.stairsImg = loadSprite("/spritesOverWorld/stairs.png");
+            this.playerImg = loadSprite("/spritesOverWorld/link.png");
+            this.enemyImg  = loadSprite("/spritesOverWorld/gengar.png");
+            this.itemImg = loadSprite("/spritesOverWorld/potion.png");
+            this.bossImg = loadSprite("/spritesOverWorld/boss.png");
         }
 
         void setGrid(final StructureData g) {
