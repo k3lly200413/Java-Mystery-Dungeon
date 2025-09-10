@@ -1,6 +1,7 @@
 package it.unibo.progetto_oop.overworld.playground.placement_strategy;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,18 +15,20 @@ import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.St
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 
 public class ImplTunnelPlacementTest {
-    
-    private static int count(StructureData g, TileType t) {
+
+    private static int count(final StructureData g, final TileType t) {
         int c = 0;
         for (int y = 0; y < g.height(); y++) {
-            for (int x = 0; x < g.width(); x++)
-                if (g.get(x, y) == t)
+            for (int x = 0; x < g.width(); x++) {
+                if (g.get(x, y) == t) {
                     c++;
+                }
+            }
         }
         return c;
     }
 
-    private static void carveRoom(StructureData g, Room r) {
+    private static void carveRoom(final StructureData g, final Room r) {
         for (int y = r.getY(); y < r.getY() + r.getHeight(); y++) {
             for (int x = r.getX(); x < r.getX() + r.getWidth(); x++) {
                 g.set(x, y, TileType.ROOM);
@@ -33,28 +36,32 @@ public class ImplTunnelPlacementTest {
         }
     }
 
-    private static int cx(Room r) {
+    private static int cx(final Room r) {
         return r.getX() + r.getWidth() / 2;
     }
 
-    private static int cy(Room r) {
+    private static int cy(final Room r) {
         return r.getY() + r.getHeight() / 2;
     }
 
-    private static boolean rowHasTunnelFromTo(StructureData g, int y, int x1, int x2) {
-        int a = Math.min(x1, x2), b = Math.max(x1, x2);
+    private static boolean rowHasTunnelFromTo(final StructureData g, final int y, final int x1, final int x2) {
+        final int a = Math.min(x1, x2);
+        final int b = Math.max(x1, x2);
         for (int x = a; x <= b; x++) {
-            if (g.get(x, y) == TileType.WALL)
+            if (g.get(x, y) == TileType.WALL) {
                 return false;
+            }
         }
         return true;
     }
 
-    private static boolean colHasTunnelFromTo(StructureData g, int x, int y1, int y2) {
-        int a = Math.min(y1, y2), b = Math.max(y1, y2);
+    private static boolean colHasTunnelFromTo(final StructureData g, final int x, final int y1, final int y2) {
+        int a = Math.min(y1, y2);
+        int b = Math.max(y1, y2);
         for (int y = a; y <= b; y++) {
-            if (g.get(x, y) == TileType.WALL)
+            if (g.get(x, y) == TileType.WALL) {
                 return false;
+            }
         }
         return true;
     }
@@ -81,10 +88,14 @@ public class ImplTunnelPlacementTest {
         assertTrue(count(grid, TileType.TUNNEL) > tunnelsBefore);
 
         // verify at least one L path between the two rooms
-        int x1 = cx(r1), y1 = cy(r1);
-        int x2 = cx(r2), y2 = cy(r2);
-        boolean pathVariantA = rowHasTunnelFromTo(grid, y1, x1, x2) && colHasTunnelFromTo(grid, x2, y1, y2);
-        boolean pathVariantB = colHasTunnelFromTo(grid, x1, y1, y2) && rowHasTunnelFromTo(grid, y2, x1, x2);
+        int x1 = cx(r1);
+        int y1 = cy(r1);
+        int x2 = cx(r2);
+        int y2 = cy(r2);
+        boolean pathVariantA = rowHasTunnelFromTo(grid, y1, x1, x2)
+                && colHasTunnelFromTo(grid, x2, y1, y2);
+        boolean pathVariantB = colHasTunnelFromTo(grid, x1, y1, y2)
+                && rowHasTunnelFromTo(grid, y2, x1, x2);
         assertTrue(pathVariantA || pathVariantB);
     }
 
@@ -107,7 +118,6 @@ public class ImplTunnelPlacementTest {
         assertEquals(t2, count(g2, TileType.TUNNEL));
     }
 
-
     @Test
     void testConnectMultipleRooms() {
         StructureData grid = new ImplArrayListStructureData(50, 30);
@@ -126,10 +136,14 @@ public class ImplTunnelPlacementTest {
         for (int i = 0; i < rooms.size() - 1; i++) {
             Room a = rooms.get(i);
             Room b = rooms.get(i + 1);
-            int x1 = cx(a), y1 = cy(a);
-            int x2 = cx(b), y2 = cy(b);
-            boolean pathVariantA = rowHasTunnelFromTo(grid, y1, x1, x2) && colHasTunnelFromTo(grid, x2, y1, y2);
-            boolean pathVariantB = colHasTunnelFromTo(grid, x1, y1, y2) && rowHasTunnelFromTo(grid, y2, x1, x2);
+            int x1 = cx(a);
+            int y1 = cy(a);
+            int x2 = cx(b);
+            int y2 = cy(b);
+            boolean pathVariantA = rowHasTunnelFromTo(grid, y1, x1, x2)
+                    && colHasTunnelFromTo(grid, x2, y1, y2);
+            boolean pathVariantB = colHasTunnelFromTo(grid, x1, y1, y2)
+                    && rowHasTunnelFromTo(grid, y2, x1, x2);
             assertTrue(pathVariantA || pathVariantB);
         }
 

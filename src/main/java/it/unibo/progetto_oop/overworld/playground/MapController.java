@@ -12,6 +12,12 @@ import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
 import it.unibo.progetto_oop.overworld.playground.view.playground_view.ImplMapView;
 
 public final class MapController implements ChangeFloorListener {
+
+    /**
+     * Default zoom level for the map view.
+     */
+    private static final int DEFAULT_ZOOM_LEVEL = 9;
+
     /**
      * The view responsible for rendering the map.
      */
@@ -34,14 +40,21 @@ public final class MapController implements ChangeFloorListener {
         this.model = Objects.requireNonNull(overworldModel);
     }
 
+    /**
+     * Starts the map controller by setting up the floor listener
+     * and initializing the first floor.
+     */
     public void start() {
         model.setChangeFloorListener(this);
         model.setFloorInitializer(this::initFloor);
         model.nextFloor();
     }
 
+    /**
+     * Advances the game to the next floor.
+     */
     public void next() {
-        
+
         model.nextFloor();
     }
 
@@ -59,7 +72,7 @@ public final class MapController implements ChangeFloorListener {
     public void onFloorChange(final StructureData baseGrid) {
         view.setEntityGrid(model.getEntityGridView());
         view.setCameraTarget(model.getPlayer().getPosition());
-        view.setZoom(9);
+        view.setZoom(DEFAULT_ZOOM_LEVEL);
         SwingUtilities.invokeLater(() -> view.render(baseGrid));
     }
 }

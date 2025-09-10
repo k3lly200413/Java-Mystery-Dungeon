@@ -113,6 +113,7 @@ public final class ViewManager {
      */
     public void start(final GameStartView initialStartView) {
         this.startView = initialStartView;
+
         this.frame.setPreferredSize(
             new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
         this.mainCardPanel.setMinimumSize(
