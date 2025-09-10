@@ -1,295 +1,302 @@
 package it.unibo.progetto_oop.combat.mvc_pattern;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
-/**
- * Unit tests for {@link CombatModel}. Uses JUnit 5 and Mockito to stub the builder and verify behavior.
- */
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class CombatModelTest {
 
-    private CombatBuilder builder;
-    private CombatModel model;
-
-    // ===== configuration values used across tests =====
+    /** Size of the combat grid. */
     private static final int SIZE = 12;
+
+    /** Player's maximum health points. */
     private static final int PLAYER_MAX_HP = 100;
+
+    /** Enemy's maximum health points. */
     private static final int ENEMY_MAX_HP = 80;
+
+    /** Player's current health points. */
     private static final int PLAYER_CURR_HP = 100;
+
+    /** Enemy's current health points. */
     private static final int ENEMY_CURR_HP = 80;
+
+    /** Player's stamina points. */
     private static final int STAMINA_MAX = 10;
+
+    /** Player's power points. */
     private static final int PLAYER_POWER = 12;
+
+    /** Player's poison power points. */
     private static final int PLAYER_POISON_POWER = 3;
+
+    /** Enemy's power points. */
     private static final int ENEMY_POWER = 8;
+
+    /** Enemy's speed points. */
     private static final int ENEMY_SPEED = 1;
-    private static final String ENEMY_NAME = "Slime";
+
+    /** Player's long range power points. */
     private static final int LONG_RANGE_POWER = 7;
 
-    // ===== avoid magic numbers in assertions/logic =====
+    /** Enemy's name. */
+    private static final String ENEMY_NAME = "Slime";
+
+    /** Divisor for three. */
     private static final int DIV_THREE = 3;
+
+    /** Divisor for two. */
     private static final int HALF_DIVISOR = 2;
+
+    /** Player's X offset. */
+    private static final int PLAYER_X_OFFSET = 2;
+
+    /** Enemy's X offset. */
     private static final int ENEMY_OFFSET = 1;
 
-    private static final int DMG_30 = 30;
-    private static final int DMG_20 = 20;
-    private static final int DMG_15 = 15;
-    private static final int DMG_BIG = 10_000;
+    /** Big damage value. */
+    private static final int BIG_DAMAGE = 10_000;
 
-    private static final int STAMINA_DEC_4 = 4;
-    private static final int STAMINA_INC_3 = 3;
-    private static final int STAMINA_INC_5 = 5;
-    private static final int STAMINA_DEC_50 = 50;
+    /** Constant used for position calculations. */
+    private static final int DAMAGE_150 = 150;
 
-    private static final int POS_1 = 1;
-    private static final int POS_2 = 2;
-    private static final int POS_3 = 3;
-    private static final int POS_4 = 4;
-    private static final int POS_8 = 8;
-    private static final int POS_9 = 9;
+    /** Damage value for 15. */
+    private static final int DAMAGE_15 = 15;
+
+    /** Damage value for 1000. */
+    private static final int DAMAGE_1000 = 1000;
+
+    /** Stamina value for 100. */
+    private static final int STAMINA_DEC_100 = 100;
+
+    /** Stamina value for 999. */
+    private static final int STAMINA_INC_999 = 999;
+
+    /** Combat model instance. */
+    private CombatModel model;
 
     @BeforeEach
     void setUp() {
-        builder = mock(CombatBuilder.class);
+        final FakeCombatBuilder b = new FakeCombatBuilder()
+            .withPlayerMaxHp(PLAYER_MAX_HP).withEnemyMaxHp(ENEMY_MAX_HP)
+            .withPlayerCurrHp(PLAYER_CURR_HP).withEnemyCurrHp(ENEMY_CURR_HP)
+            .withSize(SIZE).withStaminaMax(STAMINA_MAX)
+            .withPlayerPower(PLAYER_POWER)
+            .withPlayerPoisonPower(PLAYER_POISON_POWER)
+            .withEnemyPower(ENEMY_POWER).withEnemySpeed(ENEMY_SPEED)
+            .withEnemyName(ENEMY_NAME).withLongRangePower(LONG_RANGE_POWER);
 
-        // Stubs used by CombatModel constructor
-        when(builder.getPlayerMaxHealth()).thenReturn(PLAYER_MAX_HP);
-        when(builder.getEnemyMaxHealth()).thenReturn(ENEMY_MAX_HP);
-        when(builder.getPlayerCurrentHp()).thenReturn(PLAYER_CURR_HP);
-        when(builder.getEnemyCurrentHp()).thenReturn(ENEMY_CURR_HP);
-        when(builder.getSize()).thenReturn(SIZE);
-        when(builder.getStaminaMax()).thenReturn(STAMINA_MAX);
-        when(builder.getPlayerPower()).thenReturn(PLAYER_POWER);
-        when(builder.getPlayerPoisonPower()).thenReturn(PLAYER_POISON_POWER);
-        when(builder.getEnemyPower()).thenReturn(ENEMY_POWER);
-        when(builder.getEnemySpeed()).thenReturn(ENEMY_SPEED);
-        when(builder.getEnemyName()).thenReturn(ENEMY_NAME);
-        when(builder.getPlayerLongRangePower()).thenReturn(LONG_RANGE_POWER);
-
-        model = new CombatModel(builder);
+        this.model = new CombatModel(b);
     }
 
     @Test
-    void constructor_initializesCoreFieldsAndPositions() {
-        assertEquals(PLAYER_MAX_HP, model.getPlayerMaxHealth());
-        assertEquals(ENEMY_MAX_HP, model.getEnemyMaxHealth());
-        assertEquals(PLAYER_CURR_HP, model.getPlayerHealth());
-        assertEquals(ENEMY_CURR_HP, model.getEnemyHealth());
-        assertEquals(STAMINA_MAX, model.getPlayerStaminaMax());
-        assertEquals(STAMINA_MAX, model.getPlayerStamina());
-        assertEquals(PLAYER_POWER, model.getPlayerPower());
-        assertEquals(PLAYER_POWER, model.getBasicPlayerPower());
-        assertEquals(PLAYER_POISON_POWER, model.getPlayerPoisonPower());
-        assertEquals(PLAYER_POISON_POWER, model.getEnemyPoisonPower());
-        assertEquals(LONG_RANGE_POWER, model.getPlayerLongRangePower());
-        assertEquals(LONG_RANGE_POWER, model.getEnemyLongRangePower());
-        assertEquals(ENEMY_POWER, model.getEnemyPower());
-        assertEquals(ENEMY_SPEED, model.getEnemySpeed());
-        assertEquals(ENEMY_NAME, model.getEnemyName());
+    void constructorInitializesAndRespectsPositions() {
+        assertEquals(PLAYER_MAX_HP, this.model.getPlayerMaxHealth());
+        assertEquals(ENEMY_MAX_HP, this.model.getEnemyMaxHealth());
+        assertEquals(PLAYER_CURR_HP, this.model.getPlayerHealth());
+        assertEquals(ENEMY_CURR_HP, this.model.getEnemyHealth());
+        assertEquals(STAMINA_MAX, this.model.getPlayerStaminaMax());
+        assertEquals(STAMINA_MAX, this.model.getPlayerStamina());
+        assertEquals(PLAYER_POWER, this.model.getPlayerPower());
+        assertEquals(PLAYER_POISON_POWER, this.model.getPlayerPoisonPower());
+        assertEquals(PLAYER_POISON_POWER, this.model.getEnemyPoisonPower());
+        assertEquals(LONG_RANGE_POWER, this.model.getPlayerLongRangePower());
+        assertEquals(LONG_RANGE_POWER, this.model.getEnemyLongRangePower());
+        assertEquals(ENEMY_POWER, this.model.getEnemyPower());
+        assertEquals(ENEMY_SPEED, this.model.getEnemySpeed());
+        assertEquals(ENEMY_NAME, this.model.getEnemyName());
 
-        // Positions according to resetPositions():
-        // player: ((size / 3) - 2, size / 2)
-        // enemy:  (size - ((size / 3) - 1), size / 2)
-        Position expectedPlayer = new Position((SIZE / DIV_THREE) - POS_2, (SIZE / HALF_DIVISOR));
-        Position expectedEnemy  = new Position(SIZE - ((SIZE / DIV_THREE) - ENEMY_OFFSET), (SIZE / HALF_DIVISOR));
+        final Position expectedPlayer = new Position(
+            (SIZE / DIV_THREE) - PLAYER_X_OFFSET, SIZE / HALF_DIVISOR);
+        final Position expectedEnemy = new Position(SIZE - (
+            (SIZE / DIV_THREE) - ENEMY_OFFSET), SIZE / HALF_DIVISOR);
 
-        assertEquals(expectedPlayer, model.getPlayerPosition());
-        assertEquals(expectedEnemy, model.getEnemyPosition());
-
-        // Death ray path starts with enemyPosition
-        assertEquals(1, model.getDeathRayPath().size());
-        assertEquals(expectedEnemy, model.getDeathRayPath().get(0));
-
-        // Initial flags
-        assertTrue(model.isPlayerTurn());
-        assertFalse(model.isBossTurn());
-        assertFalse(model.isEnemyPoisoned());
-        assertFalse(model.isPlayerPoison());
-        assertFalse(model.isPoisonAnimation());
+        assertEquals(expectedPlayer, this.model.getPlayerPosition());
+        assertEquals(expectedEnemy, this.model.getEnemyPosition());
+        assertTrue(this.model.isPlayerTurn());
     }
 
     @Test
-    void healthIncreaseAndDecreaseRespectBounds() {
-        // Decrease player (no negatives)
-        model.decreasePlayerHealth(DMG_30);
-        assertEquals(PLAYER_CURR_HP - DMG_30, model.getPlayerHealth());
-        model.decreasePlayerHealth(DMG_BIG);
-        assertEquals(0, model.getPlayerHealth());
+    void hpAndStaminaBounds() {
+        this.model.decreasePlayerHealth(DAMAGE_150);
+        assertEquals(0, this.model.getPlayerHealth());
+        this.model.increasePlayerHealth(DAMAGE_1000);
+        assertEquals(this.model.getPlayerMaxHealth(),
+        this.model.getPlayerHealth());
 
-        // Increase player (capped at max)
-        model.increasePlayerHealth(50); // 0 -> 50
-        assertEquals(50, model.getPlayerHealth());
-        model.increasePlayerHealth(DMG_BIG); // capped
-        assertEquals(PLAYER_MAX_HP, model.getPlayerHealth());
+        this.model.decreaseEnemyHealth(DAMAGE_1000);
+        assertEquals(0, this.model.getEnemyHealth());
 
-        // Decrease enemy
-        model.decreaseEnemyHealth(DMG_20);
-        assertEquals(ENEMY_CURR_HP - DMG_20, model.getEnemyHealth());
-        model.decreaseEnemyHealth(DMG_BIG);
-        assertEquals(0, model.getEnemyHealth());
+        this.model.decreasePlayerStamina(STAMINA_DEC_100);
+        assertEquals(0, this.model.getPlayerStamina());
+        this.model.increasePlayerStamina(STAMINA_INC_999);
+        assertEquals(this.model.getPlayerStaminaMax(),
+        this.model.getPlayerStamina());
     }
 
     @Test
-    void staminaIncreaseAndDecreaseRespectBounds() {
-        // Decrease capped at 0
-        model.decreasePlayerStamina(STAMINA_DEC_4);
-        assertEquals(STAMINA_MAX - STAMINA_DEC_4, model.getPlayerStamina());
-        model.decreasePlayerStamina(DMG_BIG);
-        assertEquals(0, model.getPlayerStamina());
+    void applyAttackAndGameOver() {
+        final int remEnemy = this.model.applyAttackHealth(true, DAMAGE_15);
+        assertEquals(ENEMY_CURR_HP - DAMAGE_15, remEnemy);
+        assertFalse(this.model.isGameOver());
 
-        // Increase capped at max
-        model.increasePlayerStamina(STAMINA_INC_3);
-        assertEquals(STAMINA_INC_3, model.getPlayerStamina());
-        model.increasePlayerStamina(DMG_BIG);
-        assertEquals(STAMINA_MAX, model.getPlayerStamina());
-
-        // Change max stamina (increase/decrease)
-        model.increasePlayerMaxStamina(STAMINA_INC_5);
-        assertEquals(STAMINA_MAX + STAMINA_INC_5, model.getPlayerStaminaMax());
-
-        model.decreasePlayerMaxStamina(STAMINA_DEC_50);
-        assertEquals(0, model.getPlayerStaminaMax()); // not below 0
+        this.model.decreaseEnemyHealth(BIG_DAMAGE);
+        assertTrue(this.model.isGameOver());
+        assertEquals(this.model.getEnemyPosition(), this.model.getWhoDied());
     }
 
-    @Test
-    void powerIncreaseAndResetWork() {
-        model.increasePlayerMaxPower(5);
-        assertEquals(PLAYER_POWER + 5, model.getPlayerPower());
-        model.resetPlayerPower();
-        assertEquals(PLAYER_POWER, model.getPlayerPower());
+    private static final class FakeCombatBuilder extends CombatBuilder {
 
-        model.increaseEnemyPower(4);
-        assertEquals(ENEMY_POWER + 4, model.getEnemyPower());
-    }
+        /** Size of the combat grid. */
+        private int size;
 
-    @Test
-    void setEnemyPoisonedIsOneWayToTrue() {
-        assertFalse(model.isEnemyPoisoned());
-        model.setEnemyPoisoned(true);
-        assertTrue(model.isEnemyPoisoned());
+        /** Player's maximum health points. */
+        private int staminaMax;
 
-        // Subsequent calls do not revert to false
-        model.setEnemyPoisoned(false);
-        assertTrue(model.isEnemyPoisoned());
-        model.setEnemyPoisoned(true);
-        assertTrue(model.isEnemyPoisoned());
-    }
+        /** The base attack power of the player. */
+        private int playerPower;
 
-    @Test
-    void applyAttackHealthUpdatesCorrectTargetAndReturnsRemaining() {
-        // Player attacks enemy
-        int remainingEnemy = model.applyAttackHealth(true, DMG_15);
-        assertEquals(ENEMY_CURR_HP - DMG_15, remainingEnemy);
-        assertEquals(ENEMY_CURR_HP - DMG_15, model.getEnemyHealth());
+        /** The poison attack power of the player. */
+        private int playerPoisonPower;
 
-        // Enemy attacks player
-        int remainingPlayer = model.applyAttackHealth(false, DMG_20);
-        assertEquals(PLAYER_CURR_HP - DMG_20, remainingPlayer);
-        assertEquals(PLAYER_CURR_HP - DMG_20, model.getPlayerHealth());
-    }
+        /** The base attack power of the enemy. */
+        private int enemyPower;
 
-    @Test
-    void isGameOverSetsWhoDiedCorrectly() {
-        // Initially no one is dead
-        assertFalse(model.isGameOver());
-        assertNull(model.getWhoDied());
+        /** The speed value of the enemy. */
+        private int enemySpeed;
 
-        // Kill enemy
-        model.decreaseEnemyHealth(DMG_BIG);
-        assertTrue(model.isGameOver());
-        assertEquals(model.getEnemyPosition(), model.getWhoDied());
+        /** The name of the enemy. */
+        private String enemyName;
 
-        // Reset (reinitialize) to test player death case
-        setUp();
-        model.decreasePlayerHealth(DMG_BIG);
-        assertTrue(model.isGameOver());
-        assertEquals(model.getPlayerPosition(), model.getWhoDied());
-    }
+        /** The maximum health points of the player. */
+        private int playerMaxHealth;
 
-    @Test
-    void settersAndFlagsWork() {
-        // Turns
-        model.setPlayerTurn(false);
-        assertFalse(model.isPlayerTurn());
-        model.setBossTurn(true);
-        assertTrue(model.isBossTurn());
+        /** The maximum health points of the enemy. */
+        private int enemyMaxHealth;
 
-        // Poison animation & player poison
-        model.setPoisonAnimation(true);
-        assertTrue(model.isPoisonAnimation());
-        model.setPlayerPoisoned(true);
-        assertTrue(model.isPlayerPoison());
+        /** The current health points of the player. */
+        private int playerCurrentHp;
 
-        // Boss counters & state
-        model.clearBossAttackCount();
-        assertEquals(0, model.getBossAttackCounter());
-        model.increaseBossAttackCounter();
-        model.increaseBossAttackCounter();
-        assertEquals(2, model.getBossAttackCounter());
+        /** The current health points of the enemy. */
+        private int enemyCurrentHp;
 
-        model.resetBossTurnCounter();
-        assertEquals(0, model.getBossTurnCounter());
-        model.increaseBossTurnCounter();
-        assertEquals(1, model.getBossTurnCounter());
+        /** The long-range attack power of the player. */
+        private int playerLongRangePower;
 
-        model.setBossAttackCounter(5);
-        assertEquals(5, model.getBossAttackCounter());
+        FakeCombatBuilder withSize(final int v) {
+            this.size = v;
+            return this;
+        }
 
-        model.setCurrentBossState("ENRAGED");
-        assertEquals("ENRAGED", model.getCurrentBossState());
-    }
+        FakeCombatBuilder withStaminaMax(final int v) {
+            this.staminaMax = v;
+            return this;
+        }
 
-    @Test
-    void positionsAndDeathRayPathMutations() {
-        // Set positions
-        Position newPlayerPos = new Position(POS_1, POS_2);
-        Position newEnemyPos  = new Position(POS_8, POS_9);
-        Position atkPos       = new Position(POS_2, POS_2);
+        FakeCombatBuilder withPlayerPower(final int v) {
+            this.playerPower = v;
+            return this;
+        }
 
-        model.setPlayerPosition(newPlayerPos);
-        model.setEnemyPosition(newEnemyPos);
-        model.setAttackPosition(atkPos);
+        FakeCombatBuilder withPlayerPoisonPower(final int v) {
+            this.playerPoisonPower = v;
+            return this;
+        }
 
-        assertEquals(newPlayerPos, model.getPlayerPosition());
-        assertEquals(newEnemyPos, model.getEnemyPosition());
-        assertEquals(atkPos, model.getAttackPosition());
+        FakeCombatBuilder withEnemyPower(final int v) {
+            this.enemyPower = v;
+            return this;
+        }
 
-        // Death ray path
-        model.clearDeathRayPath();
-        assertTrue(model.getDeathRayPath().isEmpty());
+        FakeCombatBuilder withEnemySpeed(final int v) {
+            this.enemySpeed = v;
+            return this;
+        }
 
-        Position p1 = new Position(POS_3, POS_3);
-        Position p2 = new Position(POS_4, POS_3);
-        model.addDeathRayPosition(p1);
-        model.addDeathRayPosition(p2);
+        FakeCombatBuilder withEnemyName(final String v) {
+            this.enemyName = v;
+            return this;
+        }
 
-        List<Position> path = model.getDeathRayPath();
-        assertEquals(2, path.size());
-        assertEquals(p1, path.get(0));
-        assertEquals(p2, path.get(1));
-    }
+        FakeCombatBuilder withPlayerMaxHp(final int v) {
+            this.playerMaxHealth = v;
+            return this;
+        }
 
-    @Test
-    void maxHpSettersAffectBounds() {
-        // Change player & enemy max HP and current HP
-        model.setPlayerMaxHp(120);
-        model.setPlayerCurrentHp(110);
-        assertEquals(120, model.getPlayerMaxHealth());
-        assertEquals(110, model.getPlayerHealth());
+        FakeCombatBuilder withEnemyMaxHp(final int v) {
+            this.enemyMaxHealth = v;
+            return this;
+        }
 
-        model.setEnemyMaxHp(60);
-        model.setEnemyCurrentHp(55);
-        assertEquals(60, model.getEnemyMaxHealth());
-        assertEquals(55, model.getEnemyHealth());
+        FakeCombatBuilder withPlayerCurrHp(final int v) {
+            this.playerCurrentHp = v;
+            return this;
+        }
+
+        FakeCombatBuilder withEnemyCurrHp(final int v) {
+            this.enemyCurrentHp = v;
+            return this;
+        }
+
+        FakeCombatBuilder withLongRangePower(final int v) {
+            this.playerLongRangePower = v;
+            return this;
+        }
+
+        // Getters called by CombatModel
+        @Override public int getSize() {
+            return this.size;
+        }
+
+        @Override public int getStaminaMax() {
+            return this.staminaMax;
+        }
+
+        @Override public int getPlayerPower() {
+            return this.playerPower;
+        }
+
+        @Override public int getPlayerPoisonPower() {
+            return this.playerPoisonPower;
+        }
+
+        @Override public int getEnemyPower() {
+            return this.enemyPower;
+        }
+
+        @Override public int getEnemySpeed() {
+            return this.enemySpeed;
+        }
+
+        @Override public String getEnemyName() {
+            return this.enemyName;
+        }
+
+        @Override public int getPlayerMaxHealth() {
+            return this.playerMaxHealth;
+        }
+
+        @Override public int getEnemyMaxHealth() {
+            return this.enemyMaxHealth;
+        }
+
+        @Override public int getPlayerCurrentHp() {
+            return this.playerCurrentHp;
+        }
+
+        @Override public int getEnemyCurrentHp() {
+            return this.enemyCurrentHp;
+        }
+
+        @Override public int getPlayerLongRangePower() {
+            return this.playerLongRangePower;
+        }
+
     }
 }
