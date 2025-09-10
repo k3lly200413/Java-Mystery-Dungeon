@@ -82,6 +82,11 @@ public final class ImplMapView extends JPanel implements MapView {
         private static final int DEFAULT_GRID_HEIGHT = 15;
 
         /**
+         * The alpha transparency value for the cell border color.
+         */
+        private static final int CELL_BORDER_ALPHA = 40;
+
+        /**
          * The base grid representing the map structure.
          */
         private StructureData grid; // base
@@ -189,7 +194,7 @@ public final class ImplMapView extends JPanel implements MapView {
                 1, (int) Math.round(baseCell * zoom)
             );
 
-            // centra mappa su player
+            // center on player
             final int mapW = cell * cols;
             final int mapH = cell * rows;
             int offsetX = (int) Math.round(
@@ -205,10 +210,10 @@ public final class ImplMapView extends JPanel implements MapView {
                     ? clamp(offsetY, getHeight() - mapH, 0)
                     : (getHeight() - mapH) / 2;
 
-            // Disegna TERRENO
+            // draw base
             drawCells(g, grid, cell, rows, cols, offX, offY);
 
-            // Disegna ENTITÀ sopra
+            // draw entities on top
             drawCells(g, entityGrid, cell, rows, cols, offX, offY);
         }
 
@@ -240,9 +245,8 @@ public final class ImplMapView extends JPanel implements MapView {
                             g.setColor(colorFor(e));
                             g.fillRect(px, py, cellSize, cellSize);
                         }
-
-                        // bordo celle
-                        g.setColor(new Color(0, 0, 0, 40));
+                        // draw cell border
+                        g.setColor(new Color(0, 0, 0, CELL_BORDER_ALPHA));
                         g.drawRect(px, py, cellSize, cellSize);
                     }
                 }
@@ -283,13 +287,13 @@ public final class ImplMapView extends JPanel implements MapView {
             return switch (t) {
                 case WALL   ->  Color.BLACK;
                 case ROOM   ->  Color.LIGHT_GRAY;
-                case TUNNEL -> new Color(255, 215, 0);
-                case STAIRS -> new Color(0, 170, 255);
-                case PLAYER -> new Color(80, 200, 120);
-                case ENEMY  -> new Color(200, 50, 50);
-                case BOSS   -> new Color(255, 0, 0);
-                case ITEM   -> new Color(160, 120, 255);
-                case NONE   -> new Color(0, 0, 0, 0); // trasparente
+                case TUNNEL ->  Color.LIGHT_GRAY;
+                case STAIRS ->  Color.CYAN;
+                case PLAYER ->  Color.GREEN;
+                case ENEMY  ->  Color.RED;
+                case BOSS   ->  Color.MAGENTA;
+                case ITEM   ->  Color.PINK;
+                case NONE   -> new Color(0, 0, 0, 0); // clear
                 default     -> Color.MAGENTA;
             };
         }

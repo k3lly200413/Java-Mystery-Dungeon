@@ -1,6 +1,9 @@
 package it.unibo.progetto_oop.overworld.playground.placement_strategy;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Random;
 import org.junit.jupiter.api.Test;
@@ -39,9 +42,13 @@ public class RandomPlacementTest {
         Position player = new Position(2, 2);
         entity.set(player.x(), player.y(), TileType.PLAYER);
 
-        int n = 8, minDist = 3;
+        int n = 8;
+        int minDist = 3;
         ImplRandomPlacement placer = new ImplRandomPlacement();
-        placer.placeObject(base, entity, TileType.ENEMY, n, new Random(999), player, minDist);
+        placer.placeObject(
+                base, entity, TileType.ENEMY, n,
+                new Random(999), player, minDist
+        );
 
         int placed = 0;
         for (int y = 0; y < entity.height(); y++) {
@@ -49,13 +56,13 @@ public class RandomPlacementTest {
                 if (entity.get(x, y) == TileType.ENEMY) {
                     placed++;
                     assertTrue(
-                        ImplRandomPlacement.isFarFromPlayer(x, y, player, minDist),
-                        "Troppo vicino al player in ("+x+","+y+")"
-                    );
+                            ImplRandomPlacement.isFarFromPlayer(
+                                x, y, player, minDist
+                            ),
+                            "Troppo vicino al player in (" + x + "," + y + ")");
                     assertFalse(
-                        ImplRandomPlacement.adjacentToTunnel(base, x, y),
-                        "Adiacente a TUNNEL in ("+x+","+y+")"
-                    );
+                            ImplRandomPlacement.adjacentToTunnel(base, x, y),
+                            "Adiacente a TUNNEL in (" + x + "," + y + ")");
                 }
             }
         }
@@ -64,7 +71,7 @@ public class RandomPlacementTest {
 
     @Test
     void testPlacePlayer() {
-        StructureData base   = new ImplArrayListStructureData(7, 6);
+        StructureData base = new ImplArrayListStructureData(7, 6);
         StructureData entity = new ImplArrayListStructureData(7, 6);
         base.fill(TileType.ROOM);
         entity.fill(TileType.NONE);
@@ -84,7 +91,7 @@ public class RandomPlacementTest {
 
     @Test
     void testPlaceObjectCap() {
-        StructureData base   = new ImplArrayListStructureData(5, 5);
+        StructureData base = new ImplArrayListStructureData(5, 5);
         StructureData entity = new ImplArrayListStructureData(5, 5);
         base.fill(TileType.ROOM);
         entity.fill(TileType.NONE);
@@ -96,9 +103,11 @@ public class RandomPlacementTest {
         Random rand = new Random(1);
 
         int requested = 100; // more than available
-        int minDist   = 1;
+        int minDist = 1;
 
-        placer.placeObject(base, entity, TileType.ENEMY, requested, rand, player, minDist);
+        placer.placeObject(
+            base, entity, TileType.ENEMY, requested, rand, player, minDist
+        );
 
         int placed = count(entity, TileType.ENEMY);
         int maxPossible = base.width() * base.height() - 1; // not the player
@@ -106,11 +115,13 @@ public class RandomPlacementTest {
         assertTrue(placed <= maxPossible);
     }
 
-    private static int count(StructureData g, TileType t) {
+    private static int count(final StructureData g, final TileType t) {
         int c = 0;
         for (int y = 0; y < g.height(); y++) {
             for (int x = 0; x < g.width(); x++) {
-                if (g.get(x, y) == t) c++;
+                if (g.get(x, y) == t) {
+                    c++;
+                }
             }
         }
         return c;

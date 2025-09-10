@@ -32,6 +32,9 @@ public final class GameLuncher {
      */
     private final Random rand = new Random();
 
+    /**
+     * Starts the game by initializing the main game components and views.
+     */
     public void start() {
         SwingUtilities.invokeLater(() -> {
             // Schermata iniziale
@@ -41,11 +44,13 @@ public final class GameLuncher {
             viewManager.start(startView);
 
             startView.setOnStart(() -> {
-                OverworldLuncher session = new OverworldLuncher(floorConfig, entityStatsConfig, rand);
+                OverworldLuncher session = new OverworldLuncher(
+                    floorConfig, entityStatsConfig, rand
+                );
 
-                CombatController combatController = 
+                CombatController combatController =
                 new CombatLauncher().buildCombat(
-                    session.getModel().getPlayer(), 
+                    session.getModel().getPlayer(),
                     session.getModel().getCombatCollision(),
                     session.getModel().getGridNotifier()
                 );
@@ -60,8 +65,14 @@ public final class GameLuncher {
                 viewManager.setCombatController(combatController);
                 viewManager.setGameOverPanel(gameOverPanel);
                 viewManager.setWinPanel(winPanel);
-                OverworldController overworldController = new OverworldController(session.getModel(), session.getView(), viewManager);
-                session.getModel().setCombatTransitionListener(overworldController);
+                OverworldController overworldController =
+                    new OverworldController(
+                        session.getModel(),
+                        session.getView(),
+                        viewManager
+                );
+                session.getModel()
+                       .setCombatTransitionListener(overworldController);
                 session.start();
                 viewManager.showOverworld();
             });
