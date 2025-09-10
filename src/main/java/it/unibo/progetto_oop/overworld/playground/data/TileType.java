@@ -8,6 +8,8 @@ public enum TileType {
     ROOM,
     /** Represents a tunnel tile in the base grid. */
     TUNNEL,
+    /** Represents a stairs tile in the entity grid. */
+    STAIRS,
 
     //-----ENTITY GRID TILES------
     /** Represents the player's tile in the entity grid. */
@@ -18,8 +20,6 @@ public enum TileType {
     BOSS,
     /** Represents an item tile in the entity grid. */
     ITEM,
-    /** Represents a stairs tile in the entity grid. */
-    STAIRS,
     /** Represents an empty tile in the entity grid. */
     NONE;
 }

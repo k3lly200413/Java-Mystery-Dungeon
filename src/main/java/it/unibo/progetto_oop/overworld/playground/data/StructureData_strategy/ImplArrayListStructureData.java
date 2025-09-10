@@ -38,12 +38,10 @@ public final class ImplArrayListStructureData implements StructureData {
         for (int y = 0; y < h; y++) {
             ArrayList<TileType> row = new ArrayList<>(w);
             for (int x = 0; x < w; x++) {
-                row.add(null);
+                row.add(TileType.WALL);
             }
             this.grid.add(row);
         }
-
-        fill(TileType.WALL);
     }
 
     @Override
@@ -63,11 +61,17 @@ public final class ImplArrayListStructureData implements StructureData {
 
     @Override
     public TileType get(final int x, final int y) {
+        if (!inBounds(x, y)) {
+            throw new IndexOutOfBoundsException();
+        }
         return grid.get(y).get(x);
     }
 
     @Override
     public void set(final int x, final int y, final TileType t) {
+        if (!inBounds(x, y)) {
+            throw new IndexOutOfBoundsException();
+        }
         grid.get(y).set(x, t);
     }
 
