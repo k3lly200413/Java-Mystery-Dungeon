@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashMap;
@@ -38,7 +37,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
  *
  * @author kelly.applebee@studio.unibo.it
  */
-public class CombatView extends JPanel implements CombatViewInterface{
+public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Serial version UID for serialization.
      */
@@ -485,10 +484,10 @@ public class CombatView extends JPanel implements CombatViewInterface{
      * Method used to set the controller to assign ActionListeners to buttons.
      */
     @Override
-    public final void setController(CombatController combatController){
+    public final void setController(final CombatController combatController) {
         this.controller = combatController;
     }
-    
+
     /**
      * Redraws the grid with the specified parameters.
      *
@@ -817,8 +816,6 @@ public class CombatView extends JPanel implements CombatViewInterface{
 
     /**
      * Adds an action listener to the attack button.
-     *
-     * @param e the action listener to add
      */
     public final void addAttackButtonListener() {
         this.attackButton.addActionListener(e -> this.controller.handleAttackMenu());
@@ -826,8 +823,6 @@ public class CombatView extends JPanel implements CombatViewInterface{
 
     /**
      * Adds an action listener to the bag button.
-     *
-     * @param e the action listener to add
      */
     public final void addBagButtonListener() {
         this.bagButton.addActionListener(e -> this.controller.handleBagMenu());
@@ -835,8 +830,6 @@ public class CombatView extends JPanel implements CombatViewInterface{
 
     /**
      * Adds an action listener to the run button.
-     *
-     * @param e the action listener to add
      */
     public final void addRunButtonListener() {
         this.runButton.addActionListener(e -> this.controller.exitCombat());
@@ -844,8 +837,6 @@ public class CombatView extends JPanel implements CombatViewInterface{
 
     /**
      * Adds an action listener to the info button.
-     *
-     * @param e the action listener to add
      */
     public final void addInfoButtonListener() {
         this.infoButton.addActionListener(e -> this.controller.handleInfo());
@@ -853,8 +844,6 @@ public class CombatView extends JPanel implements CombatViewInterface{
 
     /**
      * Adds an action listener to the physical attack button.
-     *
-     * @param e the action listener to add
      */
     public final void addPhysicalButtonListener() {
         this.physicalAttackButton.addActionListener(e -> this.controller.handlePlayerPhysicalAttack());
@@ -862,8 +851,6 @@ public class CombatView extends JPanel implements CombatViewInterface{
 
     /**
      * Adds an action listener to the long-range attack button.
-     *
-     * @param e the action listener to add
      */
     public final void addLongRangeButtonListener() {
         this.longRangeButton.addActionListener(e -> this.controller.handlePlayerLongRangeAttack(false, true));
@@ -871,8 +858,6 @@ public class CombatView extends JPanel implements CombatViewInterface{
 
     /**
      * Adds an action listener to the poison button.
-     *
-     * @param e the action listener to add
      */
     public final void addPoisonButtonListener() {
         this.poisonButton.addActionListener(e -> this.controller.handlePlayerLongRangeAttack(true, false));
@@ -880,8 +865,6 @@ public class CombatView extends JPanel implements CombatViewInterface{
 
     /**
      * Adds an action listener to the back button.
-     *
-     * @param e the action listener to add
      */
     public final void addBackButtonListener() {
         this.backButton.addActionListener(e -> this.controller.handleBackToMainMenu());
@@ -890,8 +873,6 @@ public class CombatView extends JPanel implements CombatViewInterface{
 
     /**
      * Adds an action listener to the attack buff button.
-     *
-     * @param e the action listener to add
      */
     public final void addAttackBuffButtonListener() {
         this.attackBuffButton.addActionListener(e -> this.controller.handleAttackBuff());
@@ -899,8 +880,6 @@ public class CombatView extends JPanel implements CombatViewInterface{
 
     /**
      * Adds an action listener to the cure button.
-     *
-     * @param e the action listener to add
      */
     public final void addCurePoisonButtonListener() {
         this.curePoisonButton.addActionListener(e -> this.controller.handleCurePoisonInput());
@@ -908,8 +887,6 @@ public class CombatView extends JPanel implements CombatViewInterface{
 
     /**
      * Adds an action listener to the heal button.
-     *
-     * @param e the action listener to add
      */
     public final void addHealButtonListener() {
         this.healButton.addActionListener(e -> this.controller.handleHeal());

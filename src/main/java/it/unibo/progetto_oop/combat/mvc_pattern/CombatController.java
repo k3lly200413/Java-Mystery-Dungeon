@@ -232,6 +232,9 @@ public class CombatController {
         this.view.addHealButtonListener();
     }
 
+    /**
+     * Exits the combat and transitions to the game over state.
+     */
     public void exitCombat() {
         stopAnimationTimer();
         if (enemyActionTimer != null && enemyActionTimer.isRunning()) {
@@ -244,6 +247,9 @@ public class CombatController {
         // this.view.close();
     }
 
+    /**
+     * Used in View to show the attack sub-menu.
+     */
     public void handleAttackMenu() {
         this.view.showAttackOptions(); // Show the attack sub-menu
         if (this.model.getPlayerStamina()
@@ -256,6 +262,9 @@ public class CombatController {
 
     }
 
+    /**
+     * Used in View to show the bag sub-menu.
+     */
     public void handleBagMenu() {
         this.setState(new ItemSelectionState());
         this.view.showBagButtons();
@@ -272,6 +281,9 @@ public class CombatController {
         view.clearInfo();
     }
 
+    /**
+     * Used in View to go back to the main menu.
+     */
     public void handleBackToMainMenu() {
         this.setState(new PlayerTurnState());
         this.currentState.enterState(this);
@@ -290,6 +302,9 @@ public class CombatController {
         this.setState(new PlayerTurnState());
     }
 
+    /**
+     * Handles the info button click event.
+     */
     public void handleInfo() {
         this.currentState.enterState(this);
         this.currentState.handleInfoInput(this);
@@ -308,12 +323,18 @@ public class CombatController {
         getEnemyName() + "\nPower: " + model.getEnemyPower());
     }
 
+    /**
+     * Handles the physical attack button click.
+     */
     public void handlePlayerPhysicalAttack() {
         this.currentState.enterState(this);
         this.currentState.handlePhysicalAttackInput(this);
         // call playerturnstate and have it run performPlayerphysical Attack
     }
 
+    /**
+     * Handles the Cure Poison button click.
+     */
     public void handleCurePoisonInput() {
         this.currentState.handlePotionUsed(this, this.curePoisonItem, null);
         this.player.getInventory().decreaseItemCount(curePoisonItem);
@@ -399,6 +420,12 @@ public class CombatController {
                 onEnemyAttackComplete);
     }
 
+    /**
+     * Handles the long-range attack button click.
+     *
+     * @param applyPoison     True if the attack should apply poison
+     * @param applyFlameIntent True if the attack should only be a flame
+     */
     public void handlePlayerLongRangeAttack(
         final boolean applyPoison, final boolean applyFlameIntent) {
         this.currentState.enterState(this);
@@ -1061,6 +1088,9 @@ public class CombatController {
      * }
      */
 
+    /**
+     * Handles the attack buff button click.
+     */
     public void handleAttackBuff() {
         if (this.currentState != null) {
             currentState.handlePotionUsed(this, this.attackBuffItem, null);
@@ -1069,6 +1099,9 @@ public class CombatController {
         }
     }
 
+    /**
+     * Handles the healing button click.
+     */
     public void handleHeal() {
         if (this.currentState != null) {
             currentState.handlePotionUsed(this, this.healingItem, null);
