@@ -55,6 +55,7 @@ public final class FloorGenerator {
      *
      * @param grid the structure data representing the floor grid
      * @param conf the floor configuration specifying parameters
+     * @param finalFloor indicates whether this is the final floor
      * @return a list of rooms generated on the floor
      */
     public List<Room> generate(

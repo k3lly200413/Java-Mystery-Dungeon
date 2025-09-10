@@ -8,5 +8,18 @@ import it.unibo.progetto_oop.overworld.playground.data.StructureData;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 
 public interface RoomPlacementStrategy  {
-    void placeRooms(StructureData grid, List<Room> outRooms, Random rand, FloorConfig config);
+    /**
+     * Places rooms on the grid based on the given configuration.
+     *
+     * @param grid the structure data representing the grid
+     * @param outRooms the list to store the placed rooms
+     * @param rand the random number generator for placement
+     * @param config the floor configuration for placement rules
+     */
+    void placeRooms(
+        StructureData grid,
+        List<Room> outRooms,
+        Random rand,
+        FloorConfig config
+    );
 }

@@ -11,7 +11,11 @@ import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 public class ImplRoomPlacement implements RoomPlacementStrategy {
 
     @Override
-    public void placeRooms(StructureData grid, List<Room> outRooms, Random rand, FloorConfig config) {
+    public final void placeRooms(
+            final StructureData grid,
+            final List<Room> outRooms,
+            final Random rand,
+            final FloorConfig config) {
         for (int i = 0; i < config.nRooms(); i++) {
             Room newRoom = genRoom(rand, config);
 
@@ -30,7 +34,7 @@ public class ImplRoomPlacement implements RoomPlacementStrategy {
         }
     }
 
-    private static void carveRoom(StructureData g, Room r) {
+    private static void carveRoom(final StructureData g, final Room r) {
         for (int y = r.getY(); y < r.getY() + r.getHeight(); y++) {
             for (int x = r.getX(); x < r.getX() + r.getWidth(); x++) {
                 g.set(x, y, TileType.ROOM);
@@ -38,7 +42,7 @@ public class ImplRoomPlacement implements RoomPlacementStrategy {
         }
     }
 
-    private Room genRoom(Random rand, FloorConfig cfg) {
+    private Room genRoom(final Random rand, final FloorConfig cfg) {
         // check room size limits to stay in bounds
         int maxW = Math.max(1, Math.min(cfg.maxRoomW(), cfg.width()));
         int minW = Math.max(1, Math.min(cfg.minRoomW(), maxW));
