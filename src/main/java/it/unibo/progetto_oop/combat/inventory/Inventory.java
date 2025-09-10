@@ -1,11 +1,12 @@
 package it.unibo.progetto_oop.combat.inventory;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
 /**
  * @author Laura Bertozzi
  */
-
 public class Inventory {
     /**
      * Map that contains the items and their quantities.
@@ -19,7 +20,8 @@ public class Inventory {
 
     /**
      * Constructor of the Inventory class.
-     * @param newCapacity
+     * 
+     * @param newCapacity the maximum capacity of the inventory
      */
     public Inventory(final int newCapacity) {
         this.items = new HashMap<>();
@@ -34,9 +36,9 @@ public class Inventory {
         this(0);
     }
 
-
     /**
      * Get the current size of the inventory (number of different items).
+     *
      * @return the current size of the inventory
      */
     public int getCurrentSize() {
@@ -45,6 +47,7 @@ public class Inventory {
 
     /**
      * Add one item to the inventory.
+     *
      * @param item the item to be added
      * @return true if the item was added, false otherwise
      */
@@ -63,6 +66,7 @@ public class Inventory {
 
     /**
      * Add multiple items to the inventory.
+     *
      * @param item the item to be added
      * @param quantity the quantity of the item to be added
      * @return true if the items were added, false otherwise
@@ -82,6 +86,7 @@ public class Inventory {
 
     /**
      * Decrease the quantity of an item in the inventory by one.
+     *
      * @param item the item to be decreased
      * @return true if the item was decreased, false otherwise
      */
@@ -106,6 +111,7 @@ public class Inventory {
 
     /**
      * Get the quantity of a specific item in the inventory.
+     *
      * @param item the item to check
      * @return the quantity of the item in the inventory
      */
@@ -115,6 +121,7 @@ public class Inventory {
 
     /**
      * Check if the inventory contains at least one of the specified item.
+     *
      * @param item the item to check
      * @return true if the item is in the inventory, false otherwise
      */
@@ -124,6 +131,7 @@ public class Inventory {
 
     /**
      * Check if the item can be used (exists in inventory).
+     *
      * @param item the item to check
      * @return true if the item can be used, false otherwise
      */
@@ -136,6 +144,7 @@ public class Inventory {
 
     /**
      * Check if the inventory is empty.
+     *
      * @return true if the inventory is empty, false otherwise
      */
     public boolean isEmpty() {
@@ -144,6 +153,7 @@ public class Inventory {
 
     /**
      * Get the maximum capacity of the inventory.
+     *
      * @return the maximum capacity of the inventory
      */
     public int getCapacity() {
@@ -152,6 +162,7 @@ public class Inventory {
 
     /**
      * Get the full inventory as a map.
+     *
      * @return a map representing the full inventory
      */
     public Map<Item, Integer> getFullInventory() {
@@ -178,6 +189,7 @@ public class Inventory {
 
     /**
      * Get the description of the item at the specified index.
+     *
      * @param index the index of the item
      * @return the description of the item, or an error message if not found
      */
@@ -193,9 +205,10 @@ public class Inventory {
 
     /**
      * Get the nth item in the inventory.
+     *
      * @param index the index of the item
      * @return an Optional containing the item if found,
-     * or an empty Optional if not found
+     *         or an empty Optional if not found
      */
     public Optional<Item> getNthItem(final int index) {
         return this.items.keySet().stream().skip(index).findFirst();

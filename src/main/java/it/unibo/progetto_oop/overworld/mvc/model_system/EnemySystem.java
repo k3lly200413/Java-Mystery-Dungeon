@@ -18,7 +18,6 @@ public class EnemySystem {
      */
     private final Player player;
 
-
     /**
      * the model instance.
      */
@@ -68,7 +67,6 @@ public class EnemySystem {
         return this.encounteredEnemy;
     }
 
-
     // setters
 
     /**
@@ -93,7 +91,6 @@ public class EnemySystem {
         this.enemies = newEnemies;
     }
 
-
     // ----methods---- //
 
     /**
@@ -105,7 +102,7 @@ public class EnemySystem {
      */
     public Optional<Enemy> checkEnemyHit(final Position tempPosition) {
         return this.enemies.stream().filter(enemy ->
-            this.model.getCombatCollision().checkCombatCollision(
+        this.model.getCombatCollision().checkCombatCollision(
             enemy.getCurrentPosition(), tempPosition))
             .findFirst();
     }
@@ -129,6 +126,5 @@ public class EnemySystem {
     public void triggerEnemyTurns() {
         this.enemies.stream().forEach(enemy -> enemy.takeTurn(this.player));
     }
-
 
 }

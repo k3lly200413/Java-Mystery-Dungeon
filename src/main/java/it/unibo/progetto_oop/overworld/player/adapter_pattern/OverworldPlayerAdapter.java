@@ -10,7 +10,6 @@ import it.unibo.progetto_oop.overworld.player.Player;
  * --> in the overworld
  */
 
-
 public final class OverworldPlayerAdapter implements PossibleUser {
 
     /**

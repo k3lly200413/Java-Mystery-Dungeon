@@ -79,10 +79,10 @@ public class PickupSystem {
     public boolean removeItemAt(final Position itemToRemove) {
         this.player.getInventory().addItem(
             this.items.stream()
-                      .filter(item -> item.getPosition().equals(itemToRemove))
-                      .findFirst()
-                      .orElseThrow(() -> new IllegalArgumentException(
-                        "Item not found at position: " + itemToRemove))
+                .filter(item -> item.getPosition().equals(itemToRemove))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(
+                    "Item not found at position: " + itemToRemove))
         );
         return this.items.removeIf(item ->
             item.getPosition().equals(itemToRemove));
