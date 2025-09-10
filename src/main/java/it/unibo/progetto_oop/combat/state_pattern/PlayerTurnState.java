@@ -29,7 +29,7 @@ public class PlayerTurnState implements CombatState {
     @Override
     public final void handlePhysicalAttackInput(
         final CombatController context) {
-        context.getView().setAllButtonsDisabled();
+        context.getView().setAllMenusDisabled();
         context.getView().clearInfo();
         context.getView().showInfo("Player Has used physical Attack");
         context.setState(new AnimatingState());
@@ -76,8 +76,8 @@ public class PlayerTurnState implements CombatState {
     @Override
     public final void enterState(final CombatController context) {
         context.getModel().setPlayerTurn(true);
-        context.getView().setAllButtonsEnabled();
-        context.getView().showOriginalButtons();
+        context.getView().setAllMenusEnabled();
+        context.getView().showMainMenu();
         context.getView().showInfo("Your Turn!");
     }
 

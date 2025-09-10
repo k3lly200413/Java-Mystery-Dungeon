@@ -151,31 +151,31 @@ public class CombatView extends JPanel implements CombatViewInterface {
      */
     private JButton attackButton;
     /**
-     * Button for initiating an attack in the combat view.
+     * Button for opening the bag in the combat view.
      */
     private JButton bagButton;
     /**
-     * Button for opening the bag in the combat view.
+     * Button for running away in the combat view.
      */
     private JButton runButton;
     /**
-     * Button for running away in the combat view.
-     */
-    private JButton infoButton;
-    /**
      * Button for displaying information in the combat view.
      */
-    private JButton physicalAttackButton;
+     private JButton infoButton;
     /**
      * Button for performing a physical attack in the combat view.
      */
-    private JButton longRangeButton;
+    private JButton physicalAttackButton;
     /**
      *  Button for performing a long-range attack in the combat view.
      */
-    private JButton poisonButton;
+    private JButton longRangeButton;
     /**
      * Button for performing a poison attack in the combat view.
+     */
+    private JButton poisonButton;
+    /**
+     * Button for going back to the previous menu in the combat view.
      */
     private JButton backButton;
     /**
@@ -183,23 +183,23 @@ public class CombatView extends JPanel implements CombatViewInterface {
      */
     private JButton backAttackButton;
     /**
-     * Button for going back to the previous attack options in the combat view.
+     * Button for curing poison in the combat view.
      */
     private JButton curePoisonButton;
     /**
-     * Button for curing poison in the combat view.
+     * Button for applying an attack buff in the combat view.
      */
     private JButton attackBuffButton;
     /**
-     * Button for applying an attack buff in the combat view.
+     * Button for healing in the combat view.
      */
     private JButton healButton;
     /**
-     * Button for healing in the combat view.
+     * Label for displaying information in the combat view.
      */
     private JLabel infoLabel;
     /**
-     * Label for displaying information in the combat view.
+     * Neighbours helper class for position calculations.
      */
     private final Neighbours neighbours;
     /**
@@ -247,6 +247,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
      * Initialize the combat view.
      * Created new method because of PMD
      */
+    @Override
     public void init() {
         this.setLayout(new BorderLayout());
         this.initializeUI(
@@ -395,7 +396,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
         southPanel.add(infoLabel);
         this.add(southPanel, BorderLayout.SOUTH);
 
-        this.showOriginalButtons();
+        this.showMainMenu();
     }
 
     /**
@@ -486,6 +487,18 @@ public class CombatView extends JPanel implements CombatViewInterface {
     @Override
     public final void setController(final CombatController combatController) {
         this.controller = combatController;
+        this.attackButton.addActionListener(e -> this.controller.handleAttackMenu());
+        this.bagButton.addActionListener(e -> this.controller.handleBagMenu());
+        this.runButton.addActionListener(e -> this.controller.exitCombat());
+        this.infoButton.addActionListener(e -> this.controller.handleInfo());
+        this.physicalAttackButton.addActionListener(e -> this.controller.handlePlayerPhysicalAttack());
+        this.longRangeButton.addActionListener(e -> this.controller.handlePlayerLongRangeAttack(false, true));
+        this.poisonButton.addActionListener(e -> this.controller.handlePlayerLongRangeAttack(true, false));
+        this.backButton.addActionListener(e -> this.controller.handleBackToMainMenu());
+        this.backAttackButton.addActionListener(e -> this.controller.handleBackToMainMenu());
+        this.attackBuffButton.addActionListener(e -> this.controller.handleAttackBuff());
+        this.curePoisonButton.addActionListener(e -> this.controller.handleCurePoisonInput());
+        this.healButton.addActionListener(e -> this.controller.handleHeal());
     }
 
     /**
@@ -598,30 +611,31 @@ public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Sets the visibility of the combat view.
      */
-    public final void showAttackOptions() {
+    public final void showAttackMenu() {
         this.cardLayout.show(buttonPanelContainer, "attackOptions");
     }
 
     /**
      * Sets the visibility of the bag buttons in the combat view.
      */
-    public final void showOriginalButtons() {
+    public final void showMainMenu() {
         this.cardLayout.show(this.buttonPanelContainer, "originalButtons");
     }
 
     /**
      * Sets the visibility of the bag buttons in the combat view.
      */
-    public final void showBagButtons() {
+    public final void showBagMenu() {
         this.cardLayout.show(this.buttonPanelContainer, "bagButtons");
     }
 
     /**
      * Enables all buttons in the combat view, allowing user interaction.
      */
-    public final void setAllButtonsEnabled() {
-        this.setPanelEnabled(this.originalButtonPanel, true);
-        this.setPanelEnabled(this.attackButtonPanel, true);
+    @Override
+    public final void setAllMenusDisabled() {
+        this.setPanelEnabled(this.originalButtonPanel, false);
+        this.setPanelEnabled(this.attackButtonPanel, false);
     }
 
     /**
@@ -634,9 +648,10 @@ public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Disables all buttons in the combat view, preventing user interaction.
      */
-    public final void setAllButtonsDisabled() {
-        this.setPanelEnabled(this.originalButtonPanel, false);
-        this.setPanelEnabled(this.attackButtonPanel, false);
+    @Override
+    public final void setAllMenusEnabled() {
+        this.setPanelEnabled(this.originalButtonPanel, true);
+        this.setPanelEnabled(this.attackButtonPanel, true);
     }
 
     /**
@@ -644,8 +659,35 @@ public class CombatView extends JPanel implements CombatViewInterface {
      *
      * @param buttonToEnable the button to enable
      */
-    public final void setCustomButtonEnabled(final JButton buttonToEnable) {
-        buttonToEnable.setEnabled(true);
+    public final void setActionEnabled(final ActionType action, final boolean isEnabled) {
+        switch (action) {
+            case PHYSICAL:
+                this.physicalAttackButton.setEnabled(isEnabled);
+                break;
+            case LONG_RANGE:
+                this.longRangeButton.setEnabled(isEnabled);
+                break;
+            case POISON:
+                this.poisonButton.setEnabled(isEnabled);
+                break;
+            case ATTACK_BUFF:
+                this.attackBuffButton.setEnabled(isEnabled);
+                break;
+            case CURE_POISON:
+                this.curePoisonButton.setEnabled(isEnabled);
+                break;
+            case HEAL:
+                this.healButton.setEnabled(isEnabled);
+                break;
+            case RUN:
+                this.runButton.setEnabled(isEnabled);
+                break;
+            case BACK:
+                this.backAttackButton.setEnabled(isEnabled);
+                this.backButton.setEnabled(isEnabled);
+            default:
+                break;
+        }
     }
 
     /**
@@ -921,6 +963,11 @@ public class CombatView extends JPanel implements CombatViewInterface {
         if (w != null) {
             w.dispose();
         }
+    }
+
+    @Override
+    public CombatView getViewPanel() {
+        return this;
     }
 
 }

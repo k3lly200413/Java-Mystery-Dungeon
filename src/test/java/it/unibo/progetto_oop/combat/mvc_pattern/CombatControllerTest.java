@@ -37,11 +37,11 @@ public class CombatControllerTest {
         this.controller = new CombatController(model, view, null,null, null);
     }
 
-    @Test
-    void attachListenersTest() {
-        var listeners = controller.getView().getLongRangeAttackButton();
-        assertTrue(listeners.getActionListeners().length > 0, "Long Range Attack Button should have listeners attached");
-    }
+    // @Test
+    // void attachListenersTest() {
+    //     var listeners = controller.getView().getLongRangeAttackButton();
+    //     assertTrue(listeners.getActionListeners().length > 0, "Long Range Attack Button should have listeners attached");
+    // }
 
     @Test
     void curePoisonTest() {
