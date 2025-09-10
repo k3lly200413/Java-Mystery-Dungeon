@@ -1,4 +1,6 @@
-package it.unibo.progetto_oop.overworld.playground.data;
+package it.unibo.progetto_oop.overworld.playground.data.listner;
+
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 
 @FunctionalInterface
 public interface ChangeFloorListener {

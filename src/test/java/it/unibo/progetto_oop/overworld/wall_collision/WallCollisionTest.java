@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollisionImpl;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 
 class WallCollisionTest {
     /**

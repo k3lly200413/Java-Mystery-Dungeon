@@ -1,4 +1,6 @@
-package it.unibo.progetto_oop.overworld.playground.data;
+package it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy;
+
+import it.unibo.progetto_oop.overworld.playground.data.TileType;
 
 public interface StructureData {
     /**

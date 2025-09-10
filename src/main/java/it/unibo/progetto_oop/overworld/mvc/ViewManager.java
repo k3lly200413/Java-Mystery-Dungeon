@@ -12,8 +12,8 @@ import it.unibo.progetto_oop.combat.inventory.InventoryView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.win_view.WinPanel;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
-import it.unibo.progetto_oop.overworld.playground.view.GameStartView;
-import it.unibo.progetto_oop.overworld.playground.view.SwingMapView;
+import it.unibo.progetto_oop.overworld.playground.view.game_start.GameStartView;
+import it.unibo.progetto_oop.overworld.playground.view.playground_view.ImplMapView;
 
 public final class ViewManager {
     /**
@@ -89,7 +89,7 @@ public final class ViewManager {
     /**
      * The playground.
      */
-    private SwingMapView playGroundView;
+    private ImplMapView playGroundView;
 
     /**
      * The start view for the game.
@@ -144,7 +144,7 @@ public final class ViewManager {
      * Sets the playground view.
      * @param newPlayGroundView the playground view to set
      */
-    public void setPlayGroundView(final SwingMapView newPlayGroundView) {
+    public void setPlayGroundView(final ImplMapView newPlayGroundView) {
         this.playGroundView = newPlayGroundView;
         this.mainCardPanel.add(this.playGroundView, OVERWORLD_CARD);
     }

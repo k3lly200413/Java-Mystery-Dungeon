@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Random;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.progetto_oop.overworld.playground.data.ImplArrayListStructureData;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 
 public class RandomPlacementTest {
 

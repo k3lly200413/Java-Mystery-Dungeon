@@ -7,8 +7,8 @@ import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 
 /**
  * Implementation of WallCollision for handling

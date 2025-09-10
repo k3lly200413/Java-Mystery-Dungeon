@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld.playground.view;
+package it.unibo.progetto_oop.overworld.playground.view.playground_view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -9,9 +9,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
-public final class SwingMapView extends JPanel implements MapView {
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
+public final class ImplMapView extends JPanel implements MapView {
 
     /**
      * The panel used to render the map view.
@@ -23,7 +23,7 @@ public final class SwingMapView extends JPanel implements MapView {
      *
      * @param cellSize the size of each cell in the map
      */
-    public SwingMapView(final int cellSize) {
+    public ImplMapView(final int cellSize) {
         this.panel = new MapPanel(cellSize);
         setLayout(new BorderLayout());
         add(this.panel, BorderLayout.CENTER);
@@ -253,7 +253,7 @@ public final class SwingMapView extends JPanel implements MapView {
         }
 
         private static BufferedImage loadSprite(final String path) {
-            try (var is = SwingMapView.class.getResourceAsStream(path)) {
+            try (var is = ImplMapView.class.getResourceAsStream(path)) {
                 return is == null ? null : ImageIO.read(is);
             } catch (Exception e) {
                 return null;

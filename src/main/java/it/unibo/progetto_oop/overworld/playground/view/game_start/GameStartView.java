@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld.playground.view;
+package it.unibo.progetto_oop.overworld.playground.view.game_start;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

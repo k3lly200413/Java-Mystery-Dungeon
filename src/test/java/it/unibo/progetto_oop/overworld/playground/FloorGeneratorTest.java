@@ -6,10 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
-import it.unibo.progetto_oop.overworld.playground.data.ImplArrayListStructureData;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.*;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.*;
 

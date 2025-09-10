@@ -1,4 +1,6 @@
-package it.unibo.progetto_oop.overworld.playground.data;
+package it.unibo.progetto_oop.overworld.playground.data.listner.grid_updater;
+
+import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 public interface GridUpdater {
     /**

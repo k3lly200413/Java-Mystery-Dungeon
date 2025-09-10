@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Objects;
 
 import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
-import it.unibo.progetto_oop.overworld.playground.data.ImplArrayListStructureData;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 
 public final class Floor {
     /**

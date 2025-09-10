@@ -1,7 +1,9 @@
-package it.unibo.progetto_oop.overworld.playground.data;
+package it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy;
 
 import java.util.ArrayList;
 import java.util.stream.IntStream;
+
+import it.unibo.progetto_oop.overworld.playground.data.TileType;
 
 public final class ImplArrayListStructureData implements StructureData {
     /**
