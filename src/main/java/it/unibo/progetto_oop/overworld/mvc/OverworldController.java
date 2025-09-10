@@ -133,4 +133,9 @@ public class OverworldController implements ViewManagerObserver {
     public final void onPlayerDefeat() {
         this.viewManager.showGameOver();
     }
+
+    @Override
+    public void onPlayerWin() {
+        this.viewManager.showWin();
+    }
 }

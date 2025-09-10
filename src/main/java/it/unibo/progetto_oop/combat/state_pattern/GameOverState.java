@@ -65,24 +65,26 @@ public class GameOverState implements CombatState {
             if (context.getModel().getPlayerHealth() <= 0) {
                 combatCollision.showGameOver();
             } else if (context.getModel().getEnemyHealth() <= 0) {
-                userPlayer.increasePlayerMaxPower(increaseAmount);
-                userPlayer.increasePlayerMaxHealth(increaseAmount);
-                userPlayer.increasePlayerMaxStamina(increaseAmount);
-                // userPlayer.increasePlayerHealth(increaseAmount);
-                gridNotifier.notifyEnemyRemoved(enemy.getCurrentPosition());
-                gridNotifier.notifyListEnemyRemoved(enemy.getCurrentPosition());
-                combatCollision.setInCombat(false);
-                // context.getView().close();
-                context.getView().showInfo(
-                    "You Win! Returning to Overworld...");
-                this.combatCollision.showOverworld();
+                if (context.getModel().getEnemyState() instanceof  EnemyTurnState) {
+                    userPlayer.increasePlayerMaxPower(increaseAmount);
+                    userPlayer.increasePlayerMaxHealth(increaseAmount);
+                    userPlayer.increasePlayerMaxStamina(increaseAmount);
+                    gridNotifier.notifyEnemyRemoved(enemy.getCurrentPosition());
+                    gridNotifier.notifyListEnemyRemoved(enemy.getCurrentPosition());
+                    combatCollision.setInCombat(false);
+                    context.getView().showInfo(
+                        "You Win! Returning to Overworld...");
+                    this.combatCollision.showOverworld();
+                } else {
+                    this.combatCollision.showWin();
+                }
             } else {
                 combatCollision.setInCombat(false);
                 this.combatCollision.showOverworld();
                 this.enemy.setHp(context.getModel().getEnemyHealth());
                 System.out.println(
                     "Enemy health after combat => " + enemy.getCurrentHp());
-            }
+                }
         });
         enemyActionTimer.setRepeats(false);
         enemyActionTimer.start();

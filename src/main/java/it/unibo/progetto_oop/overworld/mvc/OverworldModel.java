@@ -29,20 +29,15 @@ import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
 /**
  * OverworldModel: orchestratore del mondo di gioco.
  * - possiede Player e i systems (movement/pickup/enemy)
- * - valida i movimenti contro la griglia del Floor corrente (read-only)
- * - inoltra gli aggiornamenti al Floor tramite GridUpdater (notify*)
+ * - inoltra gli aggiornamenti al Floor tramite GridNotifier
  * - contiene il Dungeon e gestisce il cambio piano (binding del Floor corrente)
  */
 public final class OverworldModel {
 
-    /** Player max hp. */
-    private static final int PLAYER_MAX_HP = 100;
-
-    /** Player stamina. */
-    private static final int PLAYER_STAMINA = 100;
-
-    /** Player power. */
-    private static final int PLAYER_POWER = 99;
+    /**
+     * Configuration for entity statistics.
+     */
+    private final EntityStatsConfig esConfig;
 
     /** The dungeon instance. */
     private Dungeon dungeon;
@@ -88,10 +83,17 @@ public final class OverworldModel {
      *
      * @param enemies the enemies on the current floor
      * @param items the items on the current floor
+     * @param config the entity stats configuration
      */
-    public OverworldModel(final List<Enemy> enemies, final List<Item> items) {
-        this.player = new Player(PLAYER_MAX_HP, PLAYER_STAMINA,
-            PLAYER_POWER, new Inventory());
+    public OverworldModel(final List<Enemy> enemies, final List<Item> items,
+                          final EntityStatsConfig config) {
+        this.esConfig = Objects.requireNonNull(config);
+        this.player = new Player(
+            esConfig.playerMaxHp(),
+            esConfig.playerStamina(),
+            esConfig.playerPower(),
+            new Inventory()
+        );
         this.inCombat = false;
         this.gridNotifier = new GridNotifier(null);
 
@@ -362,6 +364,15 @@ public final class OverworldModel {
      */
     public TileType getEntityAt(final Position p) {
         return entityGrid.get(p.x(), p.y());
+    }
+
+    /**
+     * Get the entity stats configuration.
+     *
+     * @return the entity stats configuration
+     */
+    public EntityStatsConfig getEntityStatsConfig() {
+        return this.esConfig;
     }
 
     // ---- Combat flags ---- //

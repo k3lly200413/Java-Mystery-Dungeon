@@ -74,4 +74,9 @@ public class CombatCollisionImpl implements CombatCollision {
     public final void showGameOver() {
         this.viewManagerObserver.onPlayerDefeat();
     }
+
+    @Override
+    public void showWin() {
+        this.viewManagerObserver.onPlayerWin();
+    }
 }

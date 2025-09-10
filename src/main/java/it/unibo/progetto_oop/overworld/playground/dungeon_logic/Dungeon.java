@@ -24,6 +24,10 @@ public class Dungeon {
      * Configuration settings for the dungeon floors.
      */
     private final FloorConfig config;
+    /**
+     * Adjustment value for room dimensions in the final room configuration.
+     */
+    private static final int ROOM_DIMENSION_ADJUSTMENT = 4;
 
     /**
      * Constructs a Dungeon with the specified generator and configuration.
@@ -42,7 +46,7 @@ public class Dungeon {
     public int getCurrentFloorIndex() {
         return this.currentFloor;
     }
-    
+
     /**
      * Give the current floor of the dungeon.
      *
@@ -77,7 +81,10 @@ public class Dungeon {
                 .size(c.width(), c.height())
                 .rooms(1)
                 .roomSize(
-                    c.minRoomW()+1, c.maxRoomW() - 4, c.minRoomH()+1, c.maxRoomH() - 4
+                        c.minRoomW() + 1,
+                        c.maxRoomW() - ROOM_DIMENSION_ADJUSTMENT,
+                        c.minRoomH() + 1,
+                        c.maxRoomH() - ROOM_DIMENSION_ADJUSTMENT
                 )
                 .build();
     }
