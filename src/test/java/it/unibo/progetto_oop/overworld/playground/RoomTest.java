@@ -1,6 +1,9 @@
 package it.unibo.progetto_oop.overworld.playground;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,7 +18,7 @@ import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 public class RoomTest {
 
     @Test
-    void CellsOfRoom() {
+    void cellsOfRoom() {
         Room r = new Room(2, 5, 3, 2);
         // y=5: (2,5) (3,5) (4,5)
         // y=6: (2,6) (3,6) (4,6)
@@ -37,7 +40,7 @@ public class RoomTest {
 
     @Test
     void checkIteratorHasNext() {
-        Room r = new Room(0, 0, 1, 1); // room da una cella sola
+        Room r = new Room(0, 0, 1, 1); // room with a single cell
         Iterator<Position> it = r.iterator();
 
         assertTrue(it.hasNext());
@@ -47,7 +50,7 @@ public class RoomTest {
             it.next();
         });
     }
-    
+
     @Test
     void containsWorksCorrectly() {
         Room r = new Room(2, 5, 3, 2);

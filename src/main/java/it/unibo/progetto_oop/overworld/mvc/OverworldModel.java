@@ -19,9 +19,9 @@ import it.unibo.progetto_oop.overworld.mvc.model_system.MovementSystem;
 import it.unibo.progetto_oop.overworld.mvc.model_system.PickupSystem;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ImplArrayListStructureData;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.listner.ChangeFloorListener;
 import it.unibo.progetto_oop.overworld.playground.data.listner.grid_updater.EntityGridUpdater;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Dungeon;
@@ -87,7 +87,7 @@ public final class OverworldModel {
      * @param config the entity stats configuration
      */
     public OverworldModel(final List<Enemy> enemies, final List<Item> items,
-                          final EntityStatsConfig config) {
+                        final EntityStatsConfig config) {
         this.esConfig = Objects.requireNonNull(config);
         this.player = new Player(
             esConfig.playerMaxHp(),

@@ -1,6 +1,9 @@
 package it.unibo.progetto_oop.overworld.playground.placement_strategy;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +19,7 @@ import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 
 public class ImplRoomPlacementTest {
 
-    private FloorConfig cfg(int w, int h, int nRooms) {
+    private FloorConfig cfg(final int w, final int h, final int nRooms) {
         return new FloorConfig.Builder()
                 .size(w, h)
                 .rooms(nRooms)
@@ -24,22 +27,24 @@ public class ImplRoomPlacementTest {
                 .build();
     }
 
-    private static int count(StructureData g, TileType t) {
+    private static int count(final StructureData g, final TileType t) {
         int c = 0;
         for (int y = 0; y < g.height(); y++) {
             for (int x = 0; x < g.width(); x++) {
-                if (g.get(x, y) == t)
+                if (g.get(x, y) == t) {
                     c++;
+                }
             }
         }
         return c;
     }
 
-    private static boolean roomsOverlap(List<Room> rooms) {
+    private static boolean roomsOverlap(final List<Room> rooms) {
         for (int i = 0; i < rooms.size(); i++) {
             for (int j = i + 1; j < rooms.size(); j++) {
-                if (rooms.get(i).intersects(rooms.get(j)))
+                if (rooms.get(i).intersects(rooms.get(j))) {
                     return true;
+                }
             }
         }
         return false;

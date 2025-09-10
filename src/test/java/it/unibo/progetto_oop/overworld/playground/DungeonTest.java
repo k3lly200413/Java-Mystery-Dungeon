@@ -24,7 +24,7 @@ import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplTunnelP
  */
 public class DungeonTest {
 
-    private Dungeon newDungeon(int maxFloors) {
+    private Dungeon newDungeon(final int maxFloors) {
         FloorConfig conf = new FloorConfig.Builder()
                 .size(20, 15)
                 .rooms(3)
@@ -33,58 +33,74 @@ public class DungeonTest {
                 .tileSize(14)
                 .build();
 
-        FloorGenerator gen = new FloorGenerator(new ImplRoomPlacement(), new ImplTunnelPlacement(), new ImplRandomPlacement(), new Random());
+        FloorGenerator gen = new FloorGenerator(
+                new ImplRoomPlacement(),
+                new ImplTunnelPlacement(),
+                new ImplRandomPlacement(),
+                new Random()
+        );
         return new Dungeon(gen, conf);
     }
 
     @Test
-    void FirstFloorCreated() {
+    void firstFloorCreated() {
         Dungeon d = newDungeon(3);
-        assertTrue(d.nextFloor(), "creo piano 0 partendo da -1");
+        assertTrue(d.nextFloor(), "create floor 0 must succeed");
         assertEquals(0, d.getCurrentFloorIndex());
-        assertNotNull(d.getCurrentFloor(), "Il piano 0 deve esistere dopo il primo nextFloor()");
+        assertNotNull(
+            d.getCurrentFloor(),
+            "floor 0 must be non-null after nextFloor()"
+        );
     }
 
     @Test
     void nextFloorAdvancesUntilMax() {
         Dungeon d = newDungeon(3);
-        
-        assertTrue(d.nextFloor());               // piano 0
+
+        assertTrue(d.nextFloor());               // floor 0
         assertEquals(0, d.getCurrentFloorIndex());
-        
-        assertTrue(d.nextFloor());               // piano 1
+
+        assertTrue(d.nextFloor());               // floor 1
         assertEquals(1, d.getCurrentFloorIndex());
-        
-        assertTrue(d.nextFloor());               // piano 2
+
+        assertTrue(d.nextFloor());               // floor 2
         assertEquals(2, d.getCurrentFloorIndex());
-        // max raggiunto
+        // max reached
         assertFalse(d.nextFloor());
         assertEquals(2, d.getCurrentFloorIndex());
     }
 
     @Test
-    void sameInstanceWithoutNextFloor_And_DifferentInstancesWhenAdvancing() {
+    void sameInstanceWithoutNextFloorAndDifferentInstancesWhenAdvancing() {
         Dungeon d = newDungeon(3);
-        assertTrue(d.nextFloor());              // piano 0
+        assertTrue(d.nextFloor());              // floor 0
 
-        // due chiamate consecutive -> stessa istanza
+        // two consecutive calls -> same instance
         Floor f1a = d.getCurrentFloor();
         Floor f1b = d.getCurrentFloor();
-        assertSame(f1a, f1b, "Senza avanzare il piano deve restare la stessa istanza");
+        assertSame(
+            f1a, f1b, "without advancing the floor must be the same instance"
+        );
 
-        // avanza -> nuova istanza
-        assertTrue(d.nextFloor(), "Dovrebbe avanzare al piano 1");
+        // advance -> new instance
+        assertTrue(d.nextFloor(), "Should advance to floor 1");
         Floor f2 = d.getCurrentFloor();
-        assertNotSame(f1a, f2, "Ogni avanzamento deve produrre un'istanza diversa");
+        assertNotSame(
+            f1a, f2, "Each advancement must produce a different instance"
+        );
 
-        //due chiamate consecutive -> stessa istanza
+        // two consecutive calls -> same instance
         Floor f2a = d.getCurrentFloor();
         Floor f2b = d.getCurrentFloor();
-        assertSame(f2a, f2b, "Senza avanzare il piano deve restare la stessa istanza");
+        assertSame(
+            f2a, f2b, "Without advancing the floor must be the same instance"
+        );
 
-        assertTrue(d.nextFloor(), "Dovrebbe avanzare al piano 2");
+        assertTrue(d.nextFloor(), "Should advance to floor 2");
         Floor f3 = d.getCurrentFloor();
-        assertNotSame(f2, f3, "Ogni avanzamento deve produrre un'istanza diversa");
+        assertNotSame(
+            f2, f3, "Each advancement must produce a different instance"
+        );
     }
 
 }

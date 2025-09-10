@@ -4,5 +4,10 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 @FunctionalInterface
 public interface ListEnemyUpdater {
+    /**
+     * Called when an enemy is removed from the specified position.
+     *
+     * @param at the position where the enemy was removed
+     */
     void onEnemyRemoved(Position at);
 }

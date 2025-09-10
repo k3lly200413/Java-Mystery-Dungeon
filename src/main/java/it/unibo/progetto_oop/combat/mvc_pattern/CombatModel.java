@@ -149,7 +149,6 @@ public class CombatModel implements PossibleUser {
         this.playerStaminaMax = builder.getStaminaMax();
         this.playerPower = builder.getPlayerPower();
         this.playerPoisonPower = builder.getPlayerPoisonPower();
-        this.enemyPower = builder.getEnemyPower();
         this.enemySpeed = builder.getEnemySpeed();
         this.enemyName = builder.getEnemyName();
         this.basicPlayerPower = this.playerPower;
@@ -869,6 +868,15 @@ public final boolean isGameOver() {
     @Override
     public int getStamina() {
         return this.getPlayerStamina();
+    }
+
+    /**
+     * Sets the enemy's power.
+     *
+     * @param power the new power value
+     */
+    public void setEnemyPower(final int power) {
+        this.enemyPower = power;
     }
 
 }

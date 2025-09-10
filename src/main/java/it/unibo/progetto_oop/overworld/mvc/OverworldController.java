@@ -135,7 +135,7 @@ public class OverworldController implements ViewManagerObserver {
     }
 
     @Override
-    public void onPlayerWin() {
+    public final void onPlayerWin() {
         this.viewManager.showWin();
     }
 }
