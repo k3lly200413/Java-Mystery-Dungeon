@@ -1,5 +1,8 @@
 package it.unibo.progetto_oop.overworld.combat_collision;
 
+import javax.swing.Timer;
+import javax.swing.SwingUtilities;
+
 import it.unibo.progetto_oop.combat.draw_helper.DrawHelper;
 import it.unibo.progetto_oop.overworld.ViewManagerObserver;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
@@ -46,12 +49,18 @@ public class CombatCollisionImpl implements CombatCollision {
     }
 
     @Override
-    public final void showCombat(final Enemy enemy,
-    final Player player) {
-        if (!inCombat) {
-            inCombat = true;
-            this.viewManagerObserver.onPlayerEnemyContact(enemy);
+    public final void showCombat(final Enemy enemy, final Player player) {
+        if (inCombat) {
+            return;
         }
+        inCombat = true;
+
+        SwingUtilities.invokeLater(() -> {
+            new Timer(80, e -> {
+                ((Timer) e.getSource()).stop();
+                viewManagerObserver.onPlayerEnemyContact(enemy);
+            }).start();
+        });
     }
 
     @Override
