@@ -60,9 +60,9 @@ class CombatModelTest {
     private static final int ENEMY_OFFSET = 1;
 
     /** Big damage value. */
-    private static final int BIG_DAMAGE = 10_000;
+    private static final int BIG_DAMAGE = 10000;
 
-    /** Constant used for position calculations. */
+    /** Constant used for health calculations. */
     private static final int DAMAGE_150 = 150;
 
     /** Damage value for 15. */
