@@ -850,7 +850,7 @@ public class CombatController {
                 stopAnimationTimer();
                 conto[0] = 0;
                 if (onZoomComplete != null) {
-                    onZoomComplete.run(); // farà partire nuovo State
+                    onZoomComplete.run();
                 }
             } else {
                 final RedrawContext defaultRedraw = new RedrawContext.Builder()
@@ -864,13 +864,6 @@ public class CombatController {
                 .build();
                 this.view.redrawGrid(defaultRedraw);
                 conto[0]++;
-                /* this.redrawView(this.model.getPlayerPosition(),
-                this.model.getEnemyPosition(), this.model.getAttackPosition(),
-                0, false, true, false, false, 1, 1,
-                this.model.isGameOver(), this.model.isPlayerTurn()
-                ? this.model.getEnemyPosition()
-                : this.model.getPlayerPosition(), false,
-                new ArrayList<>(), false, 0, false, 0);*/
             }
         });
         animationTimer.start();
