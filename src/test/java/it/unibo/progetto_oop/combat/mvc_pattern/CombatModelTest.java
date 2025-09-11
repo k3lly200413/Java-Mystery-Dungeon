@@ -62,7 +62,7 @@ class CombatModelTest {
     /** Big damage value. */
     private static final int BIG_DAMAGE = 10_000;
 
-    /** Constant used for position calculations. */
+    /** Constant used for health calculations. */
     private static final int DAMAGE_150 = 150;
 
     /** Damage value for 15. */
@@ -164,9 +164,6 @@ class CombatModelTest {
         /** The poison attack power of the player. */
         private int playerPoisonPower;
 
-        /** The base attack power of the enemy. */
-        private int enemyPower;
-
         /** The speed value of the enemy. */
         private int enemySpeed;
 
@@ -187,6 +184,9 @@ class CombatModelTest {
 
         /** The long-range attack power of the player. */
         private int playerLongRangePower;
+
+        /** The base attack power of the enemy. */
+        private int enemyPower;
 
         FakeCombatBuilder withSize(final int v) {
             this.size = v;

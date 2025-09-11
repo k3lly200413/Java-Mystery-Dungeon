@@ -87,13 +87,6 @@ public interface Enemy {
     void setHp(int health);
 
     /**
-     * Notify the enemy that the player has moved.
-     *
-     * @param player The player that has moved.
-     */
-    void playerMoved(Player player);
-
-    /**
      * Method to know if the enemy is a boss.
      *
      * @return if the enemy is a boss or not

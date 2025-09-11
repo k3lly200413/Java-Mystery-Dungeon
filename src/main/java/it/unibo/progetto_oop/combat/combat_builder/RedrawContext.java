@@ -117,8 +117,6 @@ public final class RedrawContext {
         this.whoIsPoisoned = builder.whoIsPoisoned;
     }
 
-    // Getters
-
     /**
      * Getter for player position.
      *

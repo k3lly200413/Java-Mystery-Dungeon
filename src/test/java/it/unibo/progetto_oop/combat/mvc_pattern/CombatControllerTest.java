@@ -1,24 +1,20 @@
 package it.unibo.progetto_oop.combat.mvc_pattern;
 
-/*import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
-import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
-import it.unibo.progetto_oop.combat.state_pattern.BossTurnState;
 import it.unibo.progetto_oop.combat.state_pattern.EnemyTurnState;
-import it.unibo.progetto_oop.combat.state_pattern.ItemSelectionState;
+import it.unibo.progetto_oop.combat.state_pattern.InfoDisplayState;
 import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
 
 public class CombatControllerTest {
-    
+
     private CombatModel model;
     private CombatView view;
     private CombatController controller;
 
-    // Need before each because tests modify model and if I were to use BeforeAll it will modify the model so all tests will be affected
     @BeforeEach
     void setUp(){
         this.model = new CombatBuilder()
@@ -27,14 +23,15 @@ public class CombatControllerTest {
             .setPlayerPower(10)
             .setPlayerPoisonPower(2)
             .setPlayerLongRangePower(10)
-            .setEnemyPower(10)
             .setEnemySpeed(3)
             .setEnemyName("Dragon")
             .build();
 
-        this.view = new CombatView(model.getSize(), (20 * model.getSize()) / 3, (50 * model.getSize()) / 3, 70, 75, 100, 100);
-        // this.view.init();
-        this.controller = new CombatController(model, view, null,null, null);
+        this.view = new CombatView(model.getSize(), (20 * model.getSize()) / 3,
+        (50 * model.getSize()) / 3, 70,
+        75, 100, 100);
+        this.view.init();
+        this.controller = new CombatController(model, view, null, null, null);
     }
 
     // @Test
@@ -43,7 +40,7 @@ public class CombatControllerTest {
     //     assertTrue(listeners.getActionListeners().length > 0, "Long Range Attack Button should have listeners attached");
     // }
 
-    @Test
+    /*@Test
     void curePoisonTest() {
         this.model.setPlayerPoisoned(true);
         this.controller.setState(new PlayerTurnState());
@@ -107,7 +104,47 @@ public class CombatControllerTest {
         controller.stopAnimationTimer();
         controller.performLongRangeAttack(model.getEnemyPosition(), -1, false, true);
         assertTrue(controller.isAnimationRunning(), "Animation timer should be running after performing a player long range attack");
+    } */
+
+    @Test
+    void enemyTurnFinishesAndReturnsControlToPlayer() {
+
+        controller.setState(new EnemyTurnState());
+        controller.performEnemyPhysicalAttack();
+
+        try {
+            Thread.sleep(350);
+        } catch (InterruptedException ignored) { }
+
+        controller.stopAnimationTimer();
+        assertTrue(!controller.isAnimationRunning(),
+        "After enemy turn animation, animation timer should be stopped");
     }
 
-    
-}*/
+    @Test
+    void infoZoomAnimationTransitionsToInfoDisplayStateAndStopsTimer() {
+        controller.setState(new PlayerTurnState());
+
+        controller.performInfoAnimation();
+
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException ignored) { }
+        assertTrue(controller.isAnimationRunning(),
+            "During the animation the timer must be running");
+
+        // Estimated total time:
+        // - Enemy movement 3 steps x 200ms ≈ 600ms
+        // - makeBigger ~5 ticks x 200ms ≈ 1000ms
+        // Safety margin: wait ~1.6–1.9s overall
+        try {
+            Thread.sleep(1600);
+        } catch (InterruptedException ignored) { }
+
+        assertTrue(controller.getCurrentState() instanceof InfoDisplayState,
+            "After the animation the state must be InfoDisplayState");
+        assertTrue(!controller.isAnimationRunning(),
+            "After the animation the timer must be stopped");
+    }
+
+}

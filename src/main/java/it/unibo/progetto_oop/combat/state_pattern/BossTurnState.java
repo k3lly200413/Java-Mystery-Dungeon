@@ -120,7 +120,6 @@ public class BossTurnState implements CombatState {
                 context.getModel().increaseBossTurnCounter();
             }
         }
-        System.out.println("Turn Count => " + context.getModel().getBossTurnCounter());
     }
 
     @Override

@@ -46,14 +46,14 @@ public interface CombatState {
      *
      * @param context Instance of the controller
      */
-    void handleBagInput(CombatController context); // Add if implementing
+    void handleBagInput(CombatController context);
 
     /**
      * This method is called when running away is attempted during combat.
      *
      * @param context Istance of the controller
      */
-    void handleRunInput(CombatController context);  // Add if implementing
+    void handleRunInput(CombatController context);
 
     /**
      * This method is called when an attack buff is used during combat.

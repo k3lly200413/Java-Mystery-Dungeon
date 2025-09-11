@@ -9,6 +9,7 @@ import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollisionImpl;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementUtil.MoveDirection;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollision;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollisionImpl;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
@@ -200,7 +201,7 @@ public final class OverworldModel {
         this.gridNotifier = newGridNotifier;
     }
 
-    //--------- Getters ----------
+    //---------Getters----------
 
     /**
      * Get the current floor.
@@ -349,17 +350,6 @@ public final class OverworldModel {
         return this.esConfig;
     }
 
-    // ---- Combat flags ---- //
-
-    /**
-     * Set the encountered enemy.
-     *
-     * @param e the encountered enemy
-     */
-    public void setEncounteredEnemy(final Enemy e) {
-        this.enemySystem.setEncounteredEnemy(e);
-    }
-
     /**
      * Clear the combat transition flag.
      */
@@ -387,31 +377,20 @@ public final class OverworldModel {
 
     //--------- Movement ---------
 
-    /**
-     * Move the player to the right.
-     */
-    public void moveRight() {
-        this.movementSystem.move(1, 0, pickupSystem, enemySystem);
-    }
 
     /**
-     * Move the player to the left.
+     * Move the player to the right direction.
      */
-    public void moveLeft() {
-        this.movementSystem.move(-1, 0, pickupSystem, enemySystem);
-    }
-
-    /**
-     * Move the player up.
-     */
-    public void moveUp() {
-        this.movementSystem.move(0, -1, pickupSystem, enemySystem);
-    }
-
-    /**
-     * Move the player down.
-     */
-    public void moveDown() {
-        this.movementSystem.move(0, 1, pickupSystem, enemySystem);
+    public void move(MoveDirection direction) {
+        switch (direction) {
+            case UP -> this.movementSystem.move(0, -1, pickupSystem, enemySystem);
+            case DOWN -> this.movementSystem.move(0, 1, pickupSystem, enemySystem);
+            case LEFT -> this.movementSystem.move(-1, 0, pickupSystem, enemySystem);
+            case RIGHT -> this.movementSystem.move(1, 0, pickupSystem, enemySystem);
+            case NONE -> this.movementSystem.move(0, 0, pickupSystem, enemySystem);
+            default ->
+                throw new IllegalStateException(
+                    "Unexpected value: " + direction);
+        }
     }
 }

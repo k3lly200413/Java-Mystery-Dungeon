@@ -3,11 +3,8 @@ package it.unibo.progetto_oop.overworld.player.adapter_pattern;
 import it.unibo.progetto_oop.overworld.player.Player;
 
 /**
- * OverworldPlayerAdapter - used to break the dependency between
- * potions and CombatModel.
- * PossibleUser could be also an enemy
+ * Adapter class to adapt the Player class to the PossibleUser interface.
  */
-
 public final class OverworldPlayerAdapter implements PossibleUser {
 
     /**
@@ -27,7 +24,7 @@ public final class OverworldPlayerAdapter implements PossibleUser {
      */
     public OverworldPlayerAdapter(final Player playerToAdapt) {
         if (playerToAdapt == null) {
-            throw new IllegalArgumentException("Player to adapt is null");
+            throw new IllegalArgumentException(ERROR_MSG);
         }
         this.adaptedPlayer = playerToAdapt;
     }

@@ -16,14 +16,14 @@ public class PlayerTurnState implements CombatState {
     /**
      * Strategy for curing poison.
      */
-    private final CurePoison curePoison;
+    // private final CurePoison curePoison;
 
     /**
      * Constructor for PlayerTurnState.
      * Initializes the CurePoison strategy.
      */
     public PlayerTurnState() {
-        this.curePoison = new CurePoison();
+        // this.curePoison = new CurePoison();
     }
 
     @Override
@@ -84,7 +84,6 @@ public class PlayerTurnState implements CombatState {
     @Override
     public final void exitState(final CombatController context) {
         context.getView().clearInfo();
-        // context.getModel().setPlayerTurn(false);
     }
 
     @Override
@@ -96,14 +95,14 @@ public class PlayerTurnState implements CombatState {
 
     @Override
     public final void handleCurePoisonInput(final CombatController context) {
-        this.curePoison.applyEffect(context.getModel());
+        // this.curePoison.applyEffect(context.getModel());
     }
 
     @Override
     public final void handleAttackBuffInput(final CombatController context) {
         // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException(
-                // "Unimplemented method 'handleAttackBuffInput'");
+        throw new UnsupportedOperationException(
+                "Unimplemented method 'handleAttackBuffInput'");
     }
 
     @Override

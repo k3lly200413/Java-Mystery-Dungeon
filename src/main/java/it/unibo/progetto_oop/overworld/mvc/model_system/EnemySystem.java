@@ -67,7 +67,7 @@ public class EnemySystem {
         return this.encounteredEnemy;
     }
 
-    // setters
+    // ---- SETTERS ---- //
 
     /**
      * Set the encountered enemy.

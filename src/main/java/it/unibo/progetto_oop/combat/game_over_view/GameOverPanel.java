@@ -22,6 +22,21 @@ import javax.swing.border.EmptyBorder;
  */
 public class GameOverPanel extends JPanel {
 
+    /** RGB components for the button background color. */
+    private static final int RED = 63;
+
+    /** RGB components for the button background color. */
+    private static final int GREEN = 46;
+
+    /** RGB components for the button background color. */
+    private static final int BLUE = 30;
+
+    /** Serial version UID for serialization. */
+    private static final long serialVersionUID = 1L;
+
+    /** GridBagConstraints gridx value for layout. */
+    private static  final int GBC_GRIDY = 3;
+
     /** Color of the title text. */
     private static final Color TITLE_COLOR = Color.RED;
 
@@ -55,18 +70,6 @@ public class GameOverPanel extends JPanel {
     /** Background image for the game over panel. */
     private final Image backgroundImage;
 
-    /** RGB components for the button background color. */
-    private final int red = 63;
-
-    /** RGB components for the button background color. */
-    private final int green = 46;
-
-    /** RGB components for the button background color. */
-    private final int blue = 30;
-
-    /** GridBagConstraints gridx value for layout. */
-    private final int gbcGridy = 3;
-
     /**
      * Constructs a GameOverPanel with a background image and a restart button.
      *
@@ -77,9 +80,9 @@ public class GameOverPanel extends JPanel {
             "/spritesOverWorld/gameOverBackground.png");
         backgroundImage = new ImageIcon(url).getImage();
 
-        setOpaque(false); // importante: non dipingere background piatto
-        setLayout(new GridBagLayout());
-        setBorder(new EmptyBorder(
+        super.setOpaque(false);
+        super.setLayout(new GridBagLayout());
+        super.setBorder(new EmptyBorder(
             EXTRA_VERTICAL_SPACING, EXTRA_VERTICAL_SPACING,
                 EXTRA_VERTICAL_SPACING, EXTRA_VERTICAL_SPACING));
 
@@ -90,36 +93,32 @@ public class GameOverPanel extends JPanel {
                 VERTICAL_SPACING, VERTICAL_SPACING);
         gbc.fill = GridBagConstraints.NONE;
 
-        // Titolo
         final JLabel title = new JLabel("GAME  OVER");
         title.setForeground(TITLE_COLOR);
         title.setFont(title.getFont().deriveFont(Font.BOLD, TITLE_FONT_SIZE));
-        add(title, gbc);
+        super.add(title, gbc);
 
-        // Sottotitolo
         gbc.gridy = 1;
         final JLabel subtitle = new JLabel("You're dead");
         subtitle.setForeground(SUBTITLE_COLOR);
         subtitle.setFont(subtitle.getFont().deriveFont(
             Font.PLAIN, SUBTITLE_FONT_SIZE));
-        add(subtitle, gbc);
+        super.add(subtitle, gbc);
 
-        // Spazio
         gbc.gridy = 2;
         gbc.insets = new Insets(EXTRA_VERTICAL_SPACING, VERTICAL_SPACING,
                 EXTRA_VERTICAL_SPACING, VERTICAL_SPACING);
-        add(Box.createVerticalStrut(VERTICAL_SPACING), gbc);
+        super.add(Box.createVerticalStrut(VERTICAL_SPACING), gbc);
 
-        // Bottone Restart
-        gbc.gridy = gbcGridy;
+        gbc.gridy = GBC_GRIDY;
         restartButton = new JButton("Restart");
         restartButton.setFocusPainted(false);
         restartButton.setFont(
             new Font("SansSerif", Font.BOLD, BUTTON_FONT_SIZE));
         restartButton.setForeground(Color.WHITE);
-        restartButton.setBackground(new Color(red, green, blue));
+        restartButton.setBackground(new Color(RED, GREEN, BLUE));
         restartButton.setBorder(
-            BorderFactory.createLineBorder(Color.WHITE, gbcGridy, true));
+            BorderFactory.createLineBorder(Color.WHITE, GBC_GRIDY, true));
         restartButton.setPreferredSize(
             new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         restartButton.addActionListener(e -> {
@@ -127,7 +126,7 @@ public class GameOverPanel extends JPanel {
                 onRestart.run();
             }
         });
-        add(restartButton, gbc);
+        super.add(restartButton, gbc);
     }
 
     /**
@@ -138,7 +137,6 @@ public class GameOverPanel extends JPanel {
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        // Disegna immagine di sfondo scalata a tutto il pannello
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
 }

@@ -233,11 +233,8 @@ public class CombatView extends JPanel implements CombatViewInterface {
         this.heightModifier = heightModifierToAssign;
         this.widthModifier = widthModifierToAssign;
         this.cells = new HashMap<>();
-        // this.buttonHeight = (20 * size) / 3;
         this.buttonHeight = buttonHeightToAssign;
-        // this.buttonWidth = (50 * size) / 3;
         this.buttonWidth = buttonWidthToAssign;
-        // this.setSize(70 * size, 75 * size);
         this.maxPlayerHealth = maxPlayerHealthToAssign;
         this.maxEnemyHealth = maxEnemyHealthToAssign;
         this.neighbours = new Neighbours();
@@ -278,16 +275,15 @@ public class CombatView extends JPanel implements CombatViewInterface {
                     BorderFactory.createBevelBorder(
                         BevelBorder.RAISED));
                 cellLabel.setOpaque(true);
-                // Set an initial icon for the background
                 cellLabel.setHorizontalAlignment(SwingConstants.CENTER);
                 cellLabel.setIcon(
                     this.getIconResource(
                         "/white.jpg", squareWidth, squareHeight));
                 this.cells.put(
                     cellLabel,
-                    new Position(j, i)); // Store the label and its position
+                    new Position(j, i));
                 gridpanel.add(
-                    cellLabel); // Add the label to the grid panel
+                    cellLabel);
             }
         }
         this.add(gridpanel, BorderLayout.CENTER);
@@ -303,14 +299,14 @@ public class CombatView extends JPanel implements CombatViewInterface {
 
         this.playerStaminaBar =
             new JProgressBar(
-                0, this.maxPlayerHealth); // Set max from model later
+                0, this.maxPlayerHealth);
         this.playerStaminaBar.setValue(
-            this.maxPlayerHealth); // Set value from model later
+            this.maxPlayerHealth);
         this.playerStaminaBar.setStringPainted(true);
-        this.playerStaminaBar.setForeground(Color.CYAN); // Light Blue
+        this.playerStaminaBar.setForeground(Color.CYAN);
         this.playerStaminaBar.setPreferredSize(
             new Dimension(
-                barWidth * size, barHeight)); // Match others
+                barWidth * size, barHeight));
 
         this.enemyHealthBar = new JProgressBar(0, this.maxEnemyHealth);
         this.enemyHealthBar.setValue(this.maxEnemyHealth);
@@ -469,7 +465,6 @@ public class CombatView extends JPanel implements CombatViewInterface {
      */
     @Override
     public final void showInfo(final String text) {
-        // Use HTML to allow for multi-line messages
         infoLabel.setText("<html>" + text.replace("\n", "<br>") + "</html>");
     }
 
@@ -947,7 +942,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
         }
         final GameOverPanel panel = new GameOverPanel(() -> {
             if (onRestart != null) {
-                onRestart.run();   // <-- esegue davvero il restart
+                onRestart.run();
             }
         });
         frame.setContentPane(panel);

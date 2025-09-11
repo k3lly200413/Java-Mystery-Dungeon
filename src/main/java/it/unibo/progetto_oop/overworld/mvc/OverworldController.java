@@ -8,6 +8,7 @@ import javax.swing.ActionMap;
 import javax.swing.JPanel;
 
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementUtil.MoveDirection;
 import it.unibo.progetto_oop.overworld.mvc.input_bindings.InputBindings;
 import it.unibo.progetto_oop.overworld.playground.view.playground_view.ImplMapView;
 import it.unibo.progetto_oop.overworld.view_manager_observer.ViewManagerObserver;
@@ -65,7 +66,7 @@ public class OverworldController implements ViewManagerObserver {
         actionMap.put("moveUp", new AbstractAction() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                model.moveUp();
+                model.move(MoveDirection.UP);
                 view.setCameraTarget(model.getPlayer().getPosition());
                 view.repaint();
             }
@@ -74,7 +75,7 @@ public class OverworldController implements ViewManagerObserver {
         actionMap.put("moveDown", new AbstractAction() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                model.moveDown();
+                model.move(MoveDirection.DOWN);
                 view.setCameraTarget(model.getPlayer().getPosition());
                 view.repaint();
             }
@@ -83,7 +84,7 @@ public class OverworldController implements ViewManagerObserver {
         actionMap.put("moveLeft", new AbstractAction() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                model.moveLeft();
+                model.move(MoveDirection.LEFT);
                 view.setCameraTarget(model.getPlayer().getPosition());
                 view.repaint();
             }
@@ -92,7 +93,7 @@ public class OverworldController implements ViewManagerObserver {
         actionMap.put("moveRight", new AbstractAction() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                model.moveRight();
+                model.move(MoveDirection.RIGHT);
                 view.setCameraTarget(model.getPlayer().getPosition());
                 view.repaint();
             }

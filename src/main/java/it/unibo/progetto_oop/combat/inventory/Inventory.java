@@ -20,7 +20,7 @@ public class Inventory {
 
     /**
      * Constructor of the Inventory class.
-     * 
+     *
      * @param newCapacity the maximum capacity of the inventory
      */
     public Inventory(final int newCapacity) {

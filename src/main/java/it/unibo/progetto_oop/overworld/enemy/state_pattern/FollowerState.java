@@ -76,12 +76,6 @@ public class FollowerState implements GenericEnemyState {
     }
 
     @Override
-    public final void onPlayerMoved(final Enemy context, final Player player) {
-        throw new UnsupportedOperationException(
-            "FollowerState does not react to player movement");
-    }
-
-    @Override
     public final EnemyType getType() {
         return EnemyType.FOLLOWER;
     }

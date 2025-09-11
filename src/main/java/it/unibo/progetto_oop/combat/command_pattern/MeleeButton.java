@@ -3,6 +3,7 @@ package it.unibo.progetto_oop.combat.command_pattern;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import it.unibo.progetto_oop.combat.helper.Neighbours;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
@@ -54,18 +55,15 @@ public class MeleeButton implements GameButton {
 
     @Override
     public final List<Position> execute() {
-        // Check if the next step would result in contact
         if (neighbours.neighbours(
             new Position(
                 this.player.x() + this.where, this.player.y()
             ),
                 this.enemy, 1)
             ) {
-            // If so, execute the "push back" move
             this.giocatori = this.moveEnemy();
             return this.giocatori;
         } else {
-            // Otherwise, just move the attacker forward
             this.player = new Position(
                 this.player.x() + this.where, this.player.y());
         }
