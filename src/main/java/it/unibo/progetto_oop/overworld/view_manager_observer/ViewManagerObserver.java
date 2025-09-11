@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld;
+package it.unibo.progetto_oop.overworld.view_manager_observer;
 
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 /**
