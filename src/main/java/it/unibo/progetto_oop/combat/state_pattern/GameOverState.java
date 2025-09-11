@@ -88,8 +88,6 @@ public class GameOverState implements CombatState {
                 combatCollision.setInCombat(false);
                 this.combatCollision.showOverworld();
                 this.enemy.setHp(context.getModel().getEnemyHealth());
-                System.out.println(
-                    "Enemy health after combat => " + enemy.getCurrentHp());
                 }
         });
         enemyActionTimer.setRepeats(false);
