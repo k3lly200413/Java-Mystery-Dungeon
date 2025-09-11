@@ -77,7 +77,7 @@ public class WinPanel extends JPanel {
             "/spritesOverWorld/winBackground.png");
         backgroundImage = new ImageIcon(url).getImage();
 
-        setOpaque(false); // importante: non dipingere background piatto
+        setOpaque(false);
         setLayout(new GridBagLayout());
         setBorder(new EmptyBorder(
             EXTRA_VERTICAL_SPACING, EXTRA_VERTICAL_SPACING,
@@ -90,13 +90,11 @@ public class WinPanel extends JPanel {
                 VERTICAL_SPACING, VERTICAL_SPACING);
         gbc.fill = GridBagConstraints.NONE;
 
-        // Titolo
         final JLabel title = new JLabel("WIN!");
         title.setForeground(TITLE_COLOR);
         title.setFont(title.getFont().deriveFont(Font.BOLD, TITLE_FONT_SIZE));
         add(title, gbc);
 
-        // Sottotitolo
         gbc.gridy = 1;
         final JLabel subtitle = new JLabel(
             "You beat the boss!");
@@ -105,13 +103,11 @@ public class WinPanel extends JPanel {
             Font.PLAIN, SUBTITLE_FONT_SIZE));
         add(subtitle, gbc);
 
-        // Spazio
         gbc.gridy = 2;
         gbc.insets = new Insets(EXTRA_VERTICAL_SPACING, VERTICAL_SPACING,
                 EXTRA_VERTICAL_SPACING, VERTICAL_SPACING);
         add(Box.createVerticalStrut(VERTICAL_SPACING), gbc);
 
-        // Bottone Restart
         gbc.gridy = gbcGridy;
         restartButton = new JButton("Restart");
         restartButton.setFocusPainted(false);
@@ -139,7 +135,6 @@ public class WinPanel extends JPanel {
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        // Disegna immagine di sfondo scalata a tutto il pannello
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
 }

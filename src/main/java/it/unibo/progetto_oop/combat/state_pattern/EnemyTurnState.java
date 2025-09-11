@@ -30,27 +30,15 @@ public class EnemyTurnState implements CombatState {
      */
     @Override
     public void enterState(final CombatController context) {
-        // Logic for entering enemy turn state
         final CombatModel model = context.getModel();
 
-        // Check if this is a boss turn
-        // AND if its special attack sequence is active
-        // context.setState(new BossState());
         if (model.isBossTurn()
         && model.getBossAttackCounter() < model.getMaxBossHit()) {
-            // --- The boss performs another attack in its sequence ---
-            // We are performing hit #1, #2, or #3
             model.increaseBossAttackCounter();
 
-            // Use the controller's helper to perform a delayed action
             context.performDelayedEnemyAction(ENEMY_ACTION_DELAY, () -> {
-                // This is the action to perform after the delay.
-                // In this case, it's always the super attack.
                 context.performEnemySuperAttack();
             });
-            // The state machine will
-            // cycle through AnimatingState and come back here
-            // for the next hit if the sequence isn't over.
         } else {
             if (model.isBossTurn() && model.getBossAttackCounter() > 0) {
                 model.clearBossAttackCount();
@@ -58,15 +46,10 @@ public class EnemyTurnState implements CombatState {
                 context.setState(new PlayerTurnState());
                 model.setPlayerTurn(true);
             } else {
-                // context.stopAnimationTimer();
                 model.setBossTurn(false);
                 final Timer enemyDelay = new Timer(ENEMY_ACTION_DELAY, e -> {
-                    // Ensure we are still in the EnemyTurnState before acting
                     if (context.getCurrentState().equals(this)) {
-                        // Assume enemy action leads to animation
                         context.setState(new AnimatingState());
-                        // context.performEnemySuperAttack();
-                        // Renamed controller method
                         context.performEnemyAttack();
                     }
                 });
@@ -78,28 +61,23 @@ public class EnemyTurnState implements CombatState {
 
     @Override
     public void exitState(final CombatController context) {
-        // Logic for exiting enemy turn state
-        // context.getModel().setPlayerTurn(true);
-        // context.getView().updatePlayerTurnView();
+        // TODO Auto-generated method stub
     }
 
     @Override
     public void handlePhysicalAttackInput(final CombatController context) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
     public void handleLongRangeAttackInput(final CombatController context,
     final boolean isPoison, final boolean isFlame) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
     public void handleInfoInput(final CombatController context) {
         // TODO Auto-generated method stub
-
     }
 
     @Override

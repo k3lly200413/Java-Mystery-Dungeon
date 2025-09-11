@@ -17,7 +17,6 @@ public class DrawHelper {
      */
     public final boolean neighbours(
             final Position pos1, final Position pos2, final int dist) {
-        // Check if two positions are neighbours (adjacent in any direction)
         return
         Math.abs(pos1.x() - pos2.x()) <= dist
         && Math.abs(pos1.y() - pos2.y()) <= dist;
@@ -33,7 +32,6 @@ public class DrawHelper {
      */
     public final boolean deathNeighbours(
         final Position pos1, final Position pos2, final int dist) {
-        // Check if two positions are neighbours (adjacent in any direction)
         return
         Math.abs(pos1.x() - pos2.x()) == dist
         && Math.abs(pos1.y() - pos2.y()) == dist

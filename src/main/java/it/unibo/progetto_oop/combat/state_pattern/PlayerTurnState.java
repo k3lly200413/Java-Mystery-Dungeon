@@ -84,7 +84,6 @@ public class PlayerTurnState implements CombatState {
     @Override
     public final void exitState(final CombatController context) {
         context.getView().clearInfo();
-        // context.getModel().setPlayerTurn(false);
     }
 
     @Override
@@ -102,8 +101,8 @@ public class PlayerTurnState implements CombatState {
     @Override
     public final void handleAttackBuffInput(final CombatController context) {
         // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException(
-                // "Unimplemented method 'handleAttackBuffInput'");
+        throw new UnsupportedOperationException(
+                "Unimplemented method 'handleAttackBuffInput'");
     }
 
     @Override
