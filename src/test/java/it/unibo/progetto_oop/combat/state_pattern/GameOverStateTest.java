@@ -23,6 +23,28 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 class GameOverStateTest {
 
+    /** HP value. */
+    private static final int HP_VALUE = 42;
+
+    /** Timeout time for async operations. */
+    private static final long TIMEOUT_TIME = 200;
+
+    /** HP value for enemy. */
+    private static final int ENEMY_HP_VALUE = 25;
+
+    /** Message shown when the player wins. */
+    private static final String WIN_MESSAGE =
+    "You Win! Returning to Overworld...";
+
+    /** Return value for tests. */
+    private static final int RETURN_VALUE = 10;
+
+    /** Sleep time to wait for async operations. */
+    private static final int SLEEP_TIME = 1000;
+
+    /** Sleep time to wait for async operations. */
+    private static final int SLEEP_BOSS_TIME = 800;
+
     /** Combat collision instance. */
     private CombatCollision combatCollision;
 
@@ -53,27 +75,6 @@ class GameOverStateTest {
     /** Attack position. */
     private final Position attackPos = new Position(4, 4);
 
-    /** HP value. */
-    private static final int HP_VALUE = 42;
-
-    /** Timeout time for async operations. */
-    private static final long TIMEOUT_TIME = 200;
-
-    /** HP value for enemy. */
-    private static final int ENEMY_HP_VALUE = 25;
-
-    /** Message shown when the player wins. */
-    private static final String WIN_MESSAGE =
-    "You Win! Returning to Overworld...";
-
-    /** Return value for tests. */
-    private static final int RETURN_VALUE = 10;
-
-    /** Sleep time to wait for async operations. */
-    private static final int SLEEP_TIME = 1000;
-
-    /** Sleep time to wait for async operations. */
-    private static final int SLEEP_BOSS_TIME = 800;
 
     @BeforeEach
     void setUp() {
@@ -194,7 +195,8 @@ void whenBossIsDeadShowWinScreenNotOverworld() {
     state.enterState(controller);
 
     verify(gridNotifier, timeout(SLEEP_BOSS_TIME)).notifyEnemyRemoved(enemyPos);
-    verify(gridNotifier, timeout(SLEEP_BOSS_TIME)).notifyListEnemyRemoved(enemyPos);
+    verify(gridNotifier, timeout(SLEEP_BOSS_TIME))
+    .notifyListEnemyRemoved(enemyPos);
     verify(combatCollision, timeout(SLEEP_BOSS_TIME)).setInCombat(false);
 
     verify(combatCollision, timeout(SLEEP_BOSS_TIME)).showWin();
