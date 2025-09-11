@@ -53,8 +53,8 @@ public final class FloorGenerator {
      * Generate floor using confiurguration data.
      * And fill the provided grid with rooms, tunnels, and objects.
      *
-     * @param grid the structure data representing the floor grid
-     * @param conf the floor configuration specifying parameters
+     * @param grid       the structure data representing the floor grid
+     * @param conf       the floor configuration specifying parameters
      * @param finalFloor indicates whether this is the final floor
      * @return a list of rooms generated on the floor
      */
