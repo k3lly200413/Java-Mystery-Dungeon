@@ -32,15 +32,6 @@ public interface GenericEnemyState {
     void update(Enemy context, Player player);
 
     /**
-     * The specific action that a tipe of enemy
-     * should take when the player moves.
-     *
-     * @param context the enemy that is taking the action
-     * @param player the player that the enemy is interacting with
-     */
-    void onPlayerMoved(Enemy context, Player player);
-
-    /**
      * Get the type of the enemy state.
      *
      * @return the type of the enemy state
