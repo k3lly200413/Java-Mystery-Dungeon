@@ -1,13 +1,12 @@
-
-/**
- * Interface for enemy states in the overworld.
- */
 package it.unibo.progetto_oop.overworld.enemy.state_pattern;
 
 import it.unibo.progetto_oop.overworld.enemy.EnemyType;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.player.Player;
 
+/**
+ * Interface for enemy states in the overworld.
+ */
 public interface GenericEnemyState {
     /**
      * Enter the state of the enemy.
@@ -31,15 +30,6 @@ public interface GenericEnemyState {
      * @param player the player that the enemy is interacting with
      */
     void update(Enemy context, Player player);
-
-    /**
-     * The specific action that a tipe of enemy
-     * should take when the player moves.
-     *
-     * @param context the enemy that is taking the action
-     * @param player the player that the enemy is interacting with
-     */
-    void onPlayerMoved(Enemy context, Player player);
 
     /**
      * Get the type of the enemy state.

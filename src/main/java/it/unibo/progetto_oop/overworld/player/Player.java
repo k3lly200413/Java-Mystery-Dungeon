@@ -1,11 +1,6 @@
 
 package it.unibo.progetto_oop.overworld.player;
 
-/**
- * Represents the player in the overworld,
- * manages stats, position, and inventory.
- */
-
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
@@ -13,7 +8,10 @@ import it.unibo.progetto_oop.overworld.player.adapter_pattern.OverworldPlayerAda
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
-// The Player class - Observer-free version
+/**
+ * Represents the player in the overworld,
+ * manages stats, position, and inventory.
+ */
 public class Player {
     /**
      * the player current hp value.
@@ -67,7 +65,6 @@ public class Player {
         this.maxStamina = newStamina;
         this.power = newPower;
     }
-
 
     /**
      * Use an item from the player's inventory.

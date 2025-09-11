@@ -24,6 +24,7 @@ public class VisibilityUtil {
 
     /**
      * Constructor for VisibilityUtil.
+     * 
      * @param newWallChecker wall collision checker
      */
     public VisibilityUtil(final WallCollision newWallChecker) {
@@ -33,6 +34,7 @@ public class VisibilityUtil {
 
     /**
      * check if the player is in the enemy's line of sight.
+     * 
      * @param enemy enemy's position
      * @param player player's position
      * @param neighbourDistance the distance considered as
@@ -50,6 +52,7 @@ public class VisibilityUtil {
 
     /**
      * Check if the enemy has line of sight to the player.
+     * 
      * @param startPos the enemy's position
      * @param endPos the player's position
      * @return true if there is a clear line of sight, false otherwise
@@ -85,6 +88,7 @@ public class VisibilityUtil {
 
     /**
      * Bresenhamm's line algorithm.
+     * 
      * @param enemy the enemy's position
      * @param player the player's position
      * @return a list of positions representing
@@ -136,6 +140,7 @@ public class VisibilityUtil {
 
     /**
      * Get the first move position towards the player.
+     * 
      * @param enemy enemy's position
      * @param player player's position
      * @return the position to move to
@@ -155,8 +160,6 @@ public class VisibilityUtil {
             nextY--;
         }
         return new Position(nextX, nextY);
-
     }
-
 
 }

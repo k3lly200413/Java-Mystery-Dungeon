@@ -1,16 +1,15 @@
 
 package it.unibo.progetto_oop.overworld.mvc.input_bindings;
 
-/**
- * Gestisce i bindings di input per la mappa.
- */
-
 import java.awt.event.KeyEvent;
 
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
+/**
+ * Gestisce i bindings di input per la mappa.
+ */
 public class InputBindings {
     /**
      * The panel to which the input bindings will be added.

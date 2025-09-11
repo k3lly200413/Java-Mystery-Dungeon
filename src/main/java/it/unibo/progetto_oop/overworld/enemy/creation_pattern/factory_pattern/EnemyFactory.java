@@ -6,7 +6,9 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 /**
  * Factory interface for creating different types of enemies in the overworld.
  */
+
 public interface EnemyFactory {
+
     /**
      * Create a new patroller enemy.
      *

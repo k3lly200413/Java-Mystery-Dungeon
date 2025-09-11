@@ -5,6 +5,7 @@ import java.util.function.ToIntFunction;
 
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollision;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
+
 /**
  * This class is used by the follower and patroller enemies.
  */
@@ -15,6 +16,9 @@ public class MovementUtil {
      */
     private final WallCollision checker;
 
+    /**
+     * Enum representing the possible movement directions for an enemy.
+     */
     public enum MoveDirection {
         /**
          * up movement direction.
@@ -44,6 +48,7 @@ public class MovementUtil {
 
     /**
      * Constructor for MovementUtil.
+     * 
      * @param newChecker the wall collision checker
      */
     public MovementUtil(final WallCollision newChecker) {
@@ -77,6 +82,7 @@ public class MovementUtil {
     /**
      * Determines the initial general move direction
      * for an enemy based on its position and movement axis.
+     * 
      * @param enemyPosition the position of the enemy
      * @param doesEnemyGoVertically true if the enemy is moving
      * vertically, false if horizontally
