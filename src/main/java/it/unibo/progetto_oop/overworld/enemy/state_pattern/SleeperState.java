@@ -35,11 +35,4 @@ public class SleeperState implements GenericEnemyState {
     public final String getDescription() {
         return "Sleeper State";
     }
-
-    @Override
-    public void onPlayerMoved(Enemy context, Player player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'onPlayerMoved'");
-    }
-
 }

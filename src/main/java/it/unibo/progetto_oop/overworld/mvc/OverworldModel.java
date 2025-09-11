@@ -9,6 +9,7 @@ import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollisionImpl;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementUtil.MoveDirection;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollision;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollisionImpl;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
@@ -45,9 +46,6 @@ public final class OverworldModel {
 
     /** The player instance. */
     private final Player player;
-
-    /** True if the player is in combat. */
-    private boolean inCombat;
 
     /** PickupSystem instance. */
     private final PickupSystem pickupSystem;
@@ -95,7 +93,6 @@ public final class OverworldModel {
             esConfig.playerPower(),
             new Inventory()
         );
-        this.inCombat = false;
         this.gridNotifier = new GridNotifier(null);
 
         this.pickupSystem = new PickupSystem(items, this.player);
@@ -107,7 +104,6 @@ public final class OverworldModel {
         setSpawnObjects(enemies, items);
     }
 
-    // Collega il dungeon e seleziona il primo Floor
     /**
      * Bind the dungeon to the model.
      *
@@ -117,7 +113,6 @@ public final class OverworldModel {
         this.dungeon = newDungeon;
     }
 
-    // Imposta quale floor è quello attivo
     /**
      * Sets the active floor.
      *
@@ -238,6 +233,17 @@ public final class OverworldModel {
         this.gridNotifier = newGridNotifier;
     }
 
+    /**
+     * Set the combat transition listener.
+     *
+     * @param curranteViewManagerObserver the view manager observer
+     */
+    public void setCombatTransitionListener(
+    final ViewManagerObserver curranteViewManagerObserver) {
+        this.combatCollision
+            .setViewManagerListener(curranteViewManagerObserver);
+    }
+
     //---------Getters----------
 
     /**
@@ -285,41 +291,6 @@ public final class OverworldModel {
         return this.pickupSystem.getInventoryInstance();
     }
 
-    /**
-     * Get the enemy system.
-     *
-     * @return the enemy system
-     */
-    public List<Enemy> getEnemies() {
-        return this.enemySystem.getEnemies();
-    }
-
-    /**
-     * Get the encountered enemy.
-     *
-     * @return the encountered enemy
-     */
-    public Enemy getEncounteredEnemy() {
-        return this.enemySystem.getEncounteredEnemy();
-    }
-
-    /**
-     * Check if the player is in combat.
-     *
-     * @return true if the player is in combat, false otherwise
-     */
-    public boolean isInCombat() {
-        return this.inCombat;
-    }
-
-    /**
-     * Check if a combat transition is pending.
-     *
-     * @return true if a combat transition is pending, false otherwise
-     */
-    public boolean isCombatTransitionPending() {
-        return this.movementSystem.isCombatTransitionPending();
-    }
 
     /**
      * Get the wall collision instance.
@@ -376,83 +347,25 @@ public final class OverworldModel {
         return this.esConfig;
     }
 
-    // ---- Combat flags ---- //
-
-    /**
-     * Set the encountered enemy.
-     *
-     * @param e the encountered enemy
-     */
-    public void setEncounteredEnemy(final Enemy e) {
-        this.enemySystem.setEncounteredEnemy(e);
+    public boolean isCombatTransitionPending() {
+        return this.movementSystem.isCombatTransitionPending();
     }
-
-    /**
-     * Clear the inCombat flag.
-     */
-    public void clearInCombatFlag() {
-        this.inCombat = false;
-    }
-
-    /**
-     * Set the inCombat flag.
-     */
-    public void setInCombatFlag() {
-        this.inCombat = true;
-    }
-
-    /**
-     * Clear the combat transition flag.
-     */
-    public void clearCombatTransitionFlag() {
-        this.movementSystem.clearCombatTransitionFlag();
-    }
-
-    /**
-     * Set the combat transition flag.
-     */
-    public void setCombatTransitionFlag() {
-        this.movementSystem.setCombatTransitionFlag();
-    }
-
-    /**
-     * Set the combat transition listener.
-     *
-     * @param curranteViewManagerObserver the view manager observer
-     */
-    public void setCombatTransitionListener(
-    final ViewManagerObserver curranteViewManagerObserver) {
-        this.combatCollision
-            .setViewManagerListener(curranteViewManagerObserver);
-    }
-
     //---------Movimento---------
+
 
     /**
      * Move the player to the right.
      */
-    public void moveRight() {
-        this.movementSystem.move(1, 0, pickupSystem, enemySystem);
-    }
-
-    /**
-     * Move the player to the left.
-     */
-    public void moveLeft() {
-        this.movementSystem.move(-1, 0, pickupSystem, enemySystem);
-    }
-
-    /**
-     * Move the player up.
-     */
-    public void moveUp() {
-        this.movementSystem.move(0, -1, pickupSystem, enemySystem);
-    }
-
-    /**
-     * Move the player down.
-     */
-    public void moveDown() {
-        this.movementSystem.move(0, 1, pickupSystem, enemySystem);
+    public void move(MoveDirection direction) {
+        switch (direction) {
+            case UP -> this.movementSystem.move(0, -1, pickupSystem, enemySystem);
+            case DOWN -> this.movementSystem.move(0, 1, pickupSystem, enemySystem);
+            case LEFT -> this.movementSystem.move(-1, 0, pickupSystem, enemySystem);
+            case RIGHT -> this.movementSystem.move(1, 0, pickupSystem, enemySystem);
+            case NONE -> this.movementSystem.move(0, 0, pickupSystem, enemySystem);
+            default ->
+                throw new IllegalStateException(
+                    "Unexpected value: " + direction);
+        }
     }
 }
