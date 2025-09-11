@@ -97,7 +97,6 @@ public class GenericEnemy implements Enemy {
         return this.currentState;
     }
 
-
     @Override
     public final GridNotifier getGridNotifier() {
         return this.gridNotifier;

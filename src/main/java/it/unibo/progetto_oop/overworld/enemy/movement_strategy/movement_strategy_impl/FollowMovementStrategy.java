@@ -9,9 +9,19 @@ import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.Wa
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
+/**
+* utility class to check visibility and line of sight.
+*/
+
 public class FollowMovementStrategy implements MovementStrategy {
+
     /**
-     * utility class to check visibility and line of sight.
+     * The distance within which the enemy can detect the player.
+     */
+    private static final int NEIGHBOUR_DISTANCE = 6;
+
+    /**
+     * Utility class for visibility-related operations.
      */
     private final VisibilityUtil visibilityUtil;
 
@@ -30,14 +40,9 @@ public class FollowMovementStrategy implements MovementStrategy {
      */
     private final CombatCollision combatTransitionChecker;
 
-    // constants
-    /**
-     * The distance within which the enemy can detect the player.
-     */
-    private static final int NEIGHBOUR_DISTANCE = 6;
-
     /**
      * Constructor for the FollowMovementStrategy class.
+     * 
      * @param newWallChecker the wall checker
      * @param newCombatCollisionChecker the combat collision checker
      */

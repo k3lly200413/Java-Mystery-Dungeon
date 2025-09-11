@@ -23,9 +23,9 @@ public final class GameStartView extends JPanel {
     private static final int TITLE_FONT_SIZE = 55;
 
     /**
-     * The font size for the start button.
+     * The font size for the button text.
      */
-    private static final int START_BUTTON_FONT_SIZE = 28;
+    private static final int FONT_BUTTON = 28;
 
     /**
      * The red component of the background color.
@@ -40,11 +40,6 @@ public final class GameStartView extends JPanel {
      * The blue component of the background color.
      */
     private static final int B = 30;
-
-    /**
-     * The font size for the button text.
-     */
-    private static final int FONT_BUTTON = 28;
 
     /**
      * The thickness of the button border.
@@ -92,7 +87,7 @@ public final class GameStartView extends JPanel {
 
         // button
         this.startButton = new JButton("  Start  ");
-        startButton.setFont(new Font("SansSerif", Font.BOLD, START_BUTTON_FONT_SIZE));
+        startButton.setFont(new Font("SansSerif", Font.BOLD, FONT_BUTTON));
         startButton.setForeground(Color.WHITE);
         startButton.setBackground(new Color(R, G, B));
         startButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, THICKNESS, true));

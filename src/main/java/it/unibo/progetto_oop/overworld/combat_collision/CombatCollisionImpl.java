@@ -20,6 +20,11 @@ public class CombatCollisionImpl implements CombatCollision {
     private static final int COMBAT_DISTANCE = 1;
 
     /**
+     * Delay before combat starts.
+     */
+    private static final int DELAY = 80;
+
+    /**
      * Helper class to check for neighbouring positions.
      */
     private final DrawHelper neighboursCheck;
@@ -56,7 +61,7 @@ public class CombatCollisionImpl implements CombatCollision {
         inCombat = true;
 
         SwingUtilities.invokeLater(() -> {
-            new Timer(80, e -> {
+            new Timer(DELAY, e -> {
                 ((Timer) e.getSource()).stop();
                 viewManagerObserver.onPlayerEnemyContact(enemy);
             }).start();
@@ -85,7 +90,7 @@ public class CombatCollisionImpl implements CombatCollision {
     }
 
     @Override
-    public void showWin() {
+    public final void showWin() {
         this.viewManagerObserver.onPlayerWin();
     }
 }

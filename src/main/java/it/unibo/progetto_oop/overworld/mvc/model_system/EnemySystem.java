@@ -100,6 +100,7 @@ public class EnemySystem {
      * @return an Optional containing the enemy
      * if found,otherwise an empty Optional
      */
+        
     public Optional<Enemy> checkEnemyHit(final Position tempPosition) {
         return this.enemies.stream().filter(enemy ->
         this.model.getCombatCollision().checkCombatCollision(
@@ -120,7 +121,6 @@ public class EnemySystem {
 
     /**
      * Trigger the enemy turns, allowing them to take actions.
-     *
      * This method should be called after the player has moved
      */
     public void triggerEnemyTurns() {

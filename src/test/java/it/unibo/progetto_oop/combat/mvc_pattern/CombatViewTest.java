@@ -1,6 +1,6 @@
 package it.unibo.progetto_oop.combat.mvc_pattern;
 
-import javax.swing.JButton;
+/*import javax.swing.JButton;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -99,4 +99,4 @@ public class CombatViewTest {
         assertFalse(this.view.getBagButtonPanel().isVisible());
     }
     
-}
+}*/

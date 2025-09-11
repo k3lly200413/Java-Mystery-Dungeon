@@ -8,8 +8,9 @@ import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.Wa
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
-
-
+/**
+ * utility class to handle patrol movement strategy.
+ */
 public class PatrolMovementStrategy implements MovementStrategy {
     /**
      * wall checker to check for walls.
@@ -23,6 +24,7 @@ public class PatrolMovementStrategy implements MovementStrategy {
 
     /**
      * Constructor for the PatrolMovementStrategy class.
+     * 
      * @param newWallChecker wall checker
      * @param newCombatTransitionChecker combat transition checker
      */
@@ -83,7 +85,6 @@ public class PatrolMovementStrategy implements MovementStrategy {
         }
         return moveDirection;
     }
-
 
     private MoveDirection reverseDirection(final MoveDirection dir) {
         switch (dir) {

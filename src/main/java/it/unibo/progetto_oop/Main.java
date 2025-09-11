@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop;
 
+/** the main class of the game */
 public final class Main {
     private Main() {
     }
@@ -10,7 +11,7 @@ public final class Main {
      * @param args command line arguments
      */
     public static void main(final String[] args) {
-        GameLauncher app = new GameLauncher();
+        final GameLauncher app = new GameLauncher();
         app.start();
     }
 }

@@ -55,7 +55,6 @@ public interface PossibleUser {
      */
     void increasePlayerMaxPower(int amount);
 
-
     /**
      * Increase the player's stamina by the given amount.
      *
