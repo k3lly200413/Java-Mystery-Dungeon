@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
 public final class ImplMapView extends JPanel implements MapView {
 
     /**
@@ -31,7 +31,7 @@ public final class ImplMapView extends JPanel implements MapView {
     }
 
     @Override
-    public void render(final StructureData grid) {
+    public void render(final ReadOnlyGrid grid) {
         panel.setGrid(grid);
         revalidate();
         repaint();
@@ -42,7 +42,7 @@ public final class ImplMapView extends JPanel implements MapView {
      *
      * @param entity the entity grid data
      */
-    public void setEntityGrid(final StructureData entity) {
+    public void setEntityGrid(final ReadOnlyGrid entity) {
         panel.setEntityGrid(entity);
         repaint();
     }
@@ -89,12 +89,12 @@ public final class ImplMapView extends JPanel implements MapView {
         /**
          * The base grid representing the map structure.
          */
-        private StructureData grid; // base
+        private ReadOnlyGrid grid; // base
 
         /**
          * The overlay grid representing entities on the map.
          */
-        private StructureData entityGrid; // overlay
+        private ReadOnlyGrid entityGrid; // overlay
 
         /**
          * The initial size of each cell in pixels.
@@ -153,11 +153,11 @@ public final class ImplMapView extends JPanel implements MapView {
             this.bossImg = loadSprite("/spritesOverWorld/boss.png");
         }
 
-        void setGrid(final StructureData g) {
+        void setGrid(final ReadOnlyGrid g) {
             this.grid = g;
         }
 
-        void setEntityGrid(final StructureData eg) {
+        void setEntityGrid(final ReadOnlyGrid eg) {
             this.entityGrid = eg;
         }
 
@@ -219,7 +219,7 @@ public final class ImplMapView extends JPanel implements MapView {
 
         private void drawCells(
                 final Graphics g,
-                final StructureData typeGrid,
+                final ReadOnlyGrid typeGrid,
                 final int cellSize,
                 final int rows,
                 final int cols,

@@ -6,6 +6,7 @@ import javax.swing.SwingUtilities;
 
 import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.mvc.generation_entities.OverworldEntitiesGenerator;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.listner.ChangeFloorListener;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
@@ -67,10 +68,10 @@ public final class MapController implements ChangeFloorListener {
     }
 
     @Override
-    public void onFloorChange(final StructureData baseGrid) {
+    public void onFloorChange(ReadOnlyGrid base) {
         view.setEntityGrid(model.getEntityGridView());
         view.setCameraTarget(model.getPlayer().getPosition());
         view.setZoom(DEFAULT_ZOOM_LEVEL);
-        SwingUtilities.invokeLater(() -> view.render(baseGrid));
+        SwingUtilities.invokeLater(() -> view.render(base));
     }
 }

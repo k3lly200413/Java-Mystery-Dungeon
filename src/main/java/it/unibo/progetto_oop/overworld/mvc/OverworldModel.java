@@ -18,6 +18,8 @@ import it.unibo.progetto_oop.overworld.mvc.model_system.MovementSystem;
 import it.unibo.progetto_oop.overworld.mvc.model_system.PickupSystem;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGridAdapter;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.listner.ChangeFloorListener;
@@ -152,7 +154,7 @@ public final class OverworldModel {
             final Floor floor = this.dungeon.getCurrentFloor();
             bindCurrentFloor(floor);
             floorInitializer.accept(floor);
-            this.changeFloorListener.onFloorChange(this.baseGrid);
+            this.changeFloorListener.onFloorChange(getBaseGridView());
         }
         return changedFloor;
     }
@@ -295,8 +297,8 @@ public final class OverworldModel {
      *
      * @return the base grid view
      */
-    public StructureData getBaseGridView() {
-        return baseGrid;
+    public ReadOnlyGrid getBaseGridView() {
+        return ReadOnlyGridAdapter.of(this.baseGrid);
     }
 
     /**
@@ -304,8 +306,28 @@ public final class OverworldModel {
      *
      * @return the entity grid view
      */
-    public StructureData getEntityGridView() {
-        return entityGrid;
+    public ReadOnlyGrid getEntityGridView() {
+        return ReadOnlyGridAdapter.of(this.entityGrid);
+    }
+    
+    /**
+     * Get the base grid (structure).
+     * INTERNAL: mutable base grid for model services (not for UI).
+     *
+     * @return the base grid
+     */
+    public StructureData getBaseGrid() {
+        return this.baseGrid;
+    }
+
+    /**
+     * Get the entity grid (structure).
+     * INTERNAL: mutable entity grid for model services (not for UI).
+     *
+     * @return the entity grid
+     */
+    public StructureData getEntityGrid() {
+        return this.entityGrid;
     }
 
     /**

@@ -4,11 +4,12 @@ import java.util.Random;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 
 public interface RandomPlacementStrategy {
     /**
-     * Places an object on the base structure.
+     * Places an object on the entity structure.
      *
      * @param base    The base structure data.
      * @param entity  The entity structure data.
@@ -19,7 +20,7 @@ public interface RandomPlacementStrategy {
      * @param dist    The minimum distance from the player.
      */
     void placeObject(
-        StructureData base,
+        ReadOnlyGrid base,
         StructureData entity,
         TileType type,
         int n,
@@ -28,14 +29,14 @@ public interface RandomPlacementStrategy {
         int dist
     );
     /**
-     * Places the player on the base structure.
+     * Places the player on the entity structure.
      *
      * @param base    The base structure data.
      * @param entity  The entity structure data.
      * @param rand    The random generator for placement.
      * @return The position where the player is placed.
      */
-    Position placePlayer(StructureData base, StructureData entity, Random rand);
+    Position placePlayer(ReadOnlyGrid base, StructureData entity, Random rand);
 
     /**
      * Places tiles of a specific type on the base structure.

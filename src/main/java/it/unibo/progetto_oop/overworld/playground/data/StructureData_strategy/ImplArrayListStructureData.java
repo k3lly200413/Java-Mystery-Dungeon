@@ -43,22 +43,7 @@ public final class ImplArrayListStructureData implements StructureData {
             this.grid.add(row);
         }
     }
-
-    @Override
-    public int width() {
-        return w;
-    }
-
-    @Override
-    public int height() {
-        return h;
-    }
-
-    @Override
-    public boolean inBounds(final int x, final int y) {
-        return x >= 0 && x < w && y >= 0 && y < h;
-    }
-
+    
     @Override
     public TileType get(final int x, final int y) {
         if (!inBounds(x, y)) {
@@ -78,5 +63,15 @@ public final class ImplArrayListStructureData implements StructureData {
     @Override
     public void fill(final TileType t) {
         grid.forEach(row -> IntStream.range(0, w).forEach(i -> row.set(i, t)));
+    }
+
+    @Override
+    public int width() {
+        return this.w;
+    }
+
+    @Override
+    public int height() {
+        return this.h;
     }
 }

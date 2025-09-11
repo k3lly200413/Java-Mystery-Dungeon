@@ -7,6 +7,8 @@ import java.util.Random;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGridAdapter;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 
 public final class ImplRandomPlacement implements RandomPlacementStrategy {
@@ -18,14 +20,14 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
             return;
         }
 
-        for (Position p : pickRandomCandidates(base, null, 0, n, rand)) {
+        for (Position p : pickRandomCandidates(ReadOnlyGridAdapter.of(base), null, 0, n, rand)) {
             base.set(p.x(), p.y(), type);
         }
     }
 
     @Override
     public void placeObject(
-            final StructureData base, final StructureData entity,
+            final ReadOnlyGrid base, final StructureData entity,
             final TileType type, final int n, final Random rand,
             final Position player, final int dist) {
         if (base == null || entity == null || type == null
@@ -40,7 +42,7 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
 
     @Override
     public Position placePlayer(
-            final StructureData base,
+            final ReadOnlyGrid base,
             final StructureData entity,
             final Random rand) {
         if (base == null || entity == null || rand == null) {
@@ -58,7 +60,7 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
     }
 
     private static List<Position> pickRandomCandidates(
-            final StructureData base,
+            final ReadOnlyGrid base,
             final Position player,
             final int minDist,
             final int n,
@@ -75,7 +77,7 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
 
     // candidates cells: ROOM not adjacent to TUNNEL and far from player
     private static List<Position> collectCandidates(
-            final StructureData g, final Position player, final int dist) {
+            final ReadOnlyGrid g, final Position player, final int dist) {
         List<Position> out = new ArrayList<>();
         for (int y = 0; y < g.height(); y++) {
             for (int x = 0; x < g.width(); x++) {
@@ -99,7 +101,7 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
      * @return true if the cell is adjacent to a tunnel, false otherwise.
      */
     public static boolean adjacentToTunnel(
-            final StructureData g,
+            final ReadOnlyGrid g,
             final int x,
             final int y) {
         for (int dy = -1; dy <= 1; dy++) {

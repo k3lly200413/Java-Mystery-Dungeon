@@ -1,6 +1,6 @@
 package it.unibo.progetto_oop.overworld.playground.view.playground_view;
 
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
 
 public interface MapView {
     /**
@@ -8,5 +8,5 @@ public interface MapView {
      *
      * @param grid the structure data representing the floor grid to render
      */
-    void render(StructureData grid);
+    void render(ReadOnlyGrid grid);
 }

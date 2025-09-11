@@ -14,6 +14,7 @@ import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRandomPlacement;
@@ -68,8 +69,8 @@ public class OverworldEntitiesGenerator {
             final OverworldModel model,
             final GridNotifier gridNotifier) {
 
-        final StructureData base = model.getBaseGridView();
-        final StructureData entity = model.getEntityGridView();
+        final ReadOnlyGrid base = model.getBaseGridView();
+        final StructureData entity = model.getEntityGrid();
         final RandomPlacementStrategy placer = new ImplRandomPlacement();
 
         // PLAYER
@@ -127,7 +128,7 @@ public class OverworldEntitiesGenerator {
             "Attack Buff"
         );
         for (Position pos : getPositionsOfType(
-                TileType.ITEM, model.getEntityGridView())) {
+                TileType.ITEM, model.getEntityGrid())) {
             String type = types.get(rand.nextInt(types.size()));
             itemList.add(itemFactory.createItem(type, pos));
         }
@@ -142,7 +143,7 @@ public class OverworldEntitiesGenerator {
         );
         if (this.isBoss) {
             Position pos = getPositionsOfType(
-                TileType.BOSS, model.getEntityGridView()).get(0);
+                TileType.BOSS, model.getEntityGrid()).get(0);
             Enemy enemy = factory.createBossEnemy(
                 model.getEntityStatsConfig().enemyHp()
                     * model.getEntityStatsConfig().bossHpMultiplier(),
@@ -155,7 +156,7 @@ public class OverworldEntitiesGenerator {
             enemyList.add(enemy);
         } else {
             for (Position pos : getPositionsOfType(
-                    TileType.ENEMY, model.getEntityGridView())) {
+                    TileType.ENEMY, model.getEntityGrid())) {
                 int roll = rand.nextInt(ENEMY_TYPE_COUNT);
                 Enemy enemy = switch (roll) {
                     case 0 -> factory.createFollowerEnemy(
