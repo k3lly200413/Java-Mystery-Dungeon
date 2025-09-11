@@ -196,13 +196,6 @@ public class FloorGeneratorTest {
         }
     }
 
-    private static boolean isBorder(final Room r, final Position p) {
-        return p.x() == r.getX()
-                || p.x() == r.getX() + r.getWidth() - 1
-                || p.y() == r.getY()
-                || p.y() == r.getY() + r.getHeight() - 1;
-    }
-
     private boolean inMap(final Position p) {
         return p.x() >= 0 && p.y() >= 0
             && p.x() < grid.width() && p.y() < grid.height();

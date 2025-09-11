@@ -6,7 +6,6 @@ import java.util.function.Consumer;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
-import it.unibo.progetto_oop.overworld.ViewManagerObserver;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollisionImpl;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
@@ -26,6 +25,7 @@ import it.unibo.progetto_oop.overworld.playground.data.listner.ChangeFloorListen
 import it.unibo.progetto_oop.overworld.playground.data.listner.grid_updater.EntityGridUpdater;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Dungeon;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
+import it.unibo.progetto_oop.overworld.view_manager_observer.ViewManagerObserver;
 
 /**
  * OverworldModel: orchestratore del mondo di gioco.

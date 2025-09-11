@@ -4,10 +4,10 @@ import javax.swing.Timer;
 import javax.swing.SwingUtilities;
 
 import it.unibo.progetto_oop.combat.draw_helper.DrawHelper;
-import it.unibo.progetto_oop.overworld.ViewManagerObserver;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
+import it.unibo.progetto_oop.overworld.view_manager_observer.ViewManagerObserver;
 
 /**
  * Implementation of CombatCollision for

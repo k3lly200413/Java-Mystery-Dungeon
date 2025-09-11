@@ -79,4 +79,10 @@ public class PatrollerState implements GenericEnemyState {
         return "Patroller State";
     }
 
+    @Override
+    public void onPlayerMoved(Enemy context, Player player) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'onPlayerMoved'");
+    }
+
 }
