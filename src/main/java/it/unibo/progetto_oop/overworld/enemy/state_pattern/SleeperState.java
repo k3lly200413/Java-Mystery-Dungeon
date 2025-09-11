@@ -12,12 +12,12 @@ public class SleeperState implements GenericEnemyState {
 
     @Override
     public final void enterState(final Enemy context) {
-        throw new UnsupportedOperationException("In" + this.getDescription() + "so no action taken");
+        // throw new UnsupportedOperationException("In" + this.getDescription() + "so no action taken");
     }
 
     @Override
     public final void exitState(final Enemy context) {
-        throw new UnsupportedOperationException("In" + this.getDescription() + "so no action taken");
+        // throw new UnsupportedOperationException("In" + this.getDescription() + "so no action taken");
     }
 
     @Override
@@ -34,6 +34,12 @@ public class SleeperState implements GenericEnemyState {
     @Override
     public final String getDescription() {
         return "Sleeper State";
+    }
+
+    @Override
+    public void onPlayerMoved(Enemy context, Player player) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'onPlayerMoved'");
     }
 
 }
