@@ -1,6 +1,5 @@
 package it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_pattern;
 
-
 import java.util.Objects;
 
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
@@ -18,10 +17,12 @@ import it.unibo.progetto_oop.overworld.enemy.state_pattern.SleeperState;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
+/**
+* movement utility class to help with movement.
+*/
+
 public class EnemyFactoryImpl implements EnemyFactory {
-    /**
-     * movement utility class to help with movement.
-     */
+    
     private final MovementUtil movementUtil;
 
     /**
@@ -36,6 +37,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
 
     /**
      * Constructor of the EnemyFactoryImpl class.
+     * 
      * @param newWallChecker wall checker to check for walls
      * @param newCombatTransitionChecker combat transition checker
      * to check for combat transitions

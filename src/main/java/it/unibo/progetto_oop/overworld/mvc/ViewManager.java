@@ -185,7 +185,6 @@ public final class ViewManager {
     public void showCombat(Enemy encounteredEnemy) {
         this.combatController.setEncounteredEnemy(encounteredEnemy);
         this.combatController.getModel().setEnemyCurrentHp(encounteredEnemy.getCurrentHp());
-        System.out.println("Enemy Health => " + encounteredEnemy.getCurrentHp());
         this.combatController.getModel().setEnemyMaxHp(encounteredEnemy.getMaxHp());
         this.combatController.resetForNewCombat();
         this.combatController.redrawView();

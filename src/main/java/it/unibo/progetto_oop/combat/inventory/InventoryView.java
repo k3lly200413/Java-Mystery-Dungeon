@@ -1,10 +1,5 @@
 package it.unibo.progetto_oop.combat.inventory;
 
-/**
- * View grafica dell'inventario.
- * Gestisce la visualizzazione e l'interazione con l'inventario del giocatore.
- */
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,6 +15,10 @@ import javax.swing.SwingConstants;
 
 import it.unibo.progetto_oop.overworld.mvc.ViewManager;
 
+/**
+ * View grafica dell'inventario.
+ * Gestisce la visualizzazione e l'interazione con l'inventario del giocatore.
+ */
 public class InventoryView extends JPanel {
     /**
      * Number of cells in the viewport width-wise.
@@ -100,7 +99,6 @@ public class InventoryView extends JPanel {
      */
     private static final int BORDER_PADDING_HORIZONTAL = 10;
 
-
     /**
      * Status Area padding.
      */
@@ -131,7 +129,6 @@ public class InventoryView extends JPanel {
      */
     private JButton backButton;
 
-
     /**
      * Constructor for the inventory view.
      *
@@ -154,7 +151,7 @@ public class InventoryView extends JPanel {
         this.add(this.gridPanel, BorderLayout.CENTER);
 
         // Status Area Panel and contents
-    final JPanel statusAreaPanel = createStatusAreaPanel();
+        final JPanel statusAreaPanel = createStatusAreaPanel();
         this.add(statusAreaPanel, BorderLayout.SOUTH);
 
         // Initial population
