@@ -148,11 +148,4 @@ public class GenericEnemy implements Enemy {
     public final void takeTurn(final Player player) {
         this.currentState.update(this, player);
     }
-
-    @Override
-    public final void playerMoved(final Player player) {
-        if (this.currentState != null) {
-            this.currentState.onPlayerMoved(this, player);
-        }
-    }
 }
