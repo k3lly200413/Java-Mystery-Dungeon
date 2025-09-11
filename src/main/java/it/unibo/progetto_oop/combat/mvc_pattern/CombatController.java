@@ -441,7 +441,7 @@ public class CombatController {
             .flame(this.model.getAttackPosition())
             .drawPlayer(true)
             .drawEnemy(true)
-            .drawFlame(!isPoison)
+            .drawFlame(isAttack)
             .drawPoison(isPoison)
             .playerRange(1)
             .enemyRange(1)

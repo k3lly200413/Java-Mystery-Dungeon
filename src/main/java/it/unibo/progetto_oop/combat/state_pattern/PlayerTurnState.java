@@ -16,14 +16,14 @@ public class PlayerTurnState implements CombatState {
     /**
      * Strategy for curing poison.
      */
-    private final CurePoison curePoison;
+    // private final CurePoison curePoison;
 
     /**
      * Constructor for PlayerTurnState.
      * Initializes the CurePoison strategy.
      */
     public PlayerTurnState() {
-        this.curePoison = new CurePoison();
+        // this.curePoison = new CurePoison();
     }
 
     @Override
@@ -95,7 +95,7 @@ public class PlayerTurnState implements CombatState {
 
     @Override
     public final void handleCurePoisonInput(final CombatController context) {
-        this.curePoison.applyEffect(context.getModel());
+        // this.curePoison.applyEffect(context.getModel());
     }
 
     @Override
