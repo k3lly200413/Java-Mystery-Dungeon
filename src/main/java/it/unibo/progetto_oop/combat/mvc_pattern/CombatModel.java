@@ -355,7 +355,6 @@ public final boolean isGameOver() {
         this.deathRayPath.clear();
     }
 
-    // Getters
     /**
      * Returns the size of the combat area.
      *
@@ -617,7 +616,6 @@ public final boolean isGameOver() {
         return this.poisonAnimation;
     }
 
-    // setters
     /**
      * Sets the player's position.
      *

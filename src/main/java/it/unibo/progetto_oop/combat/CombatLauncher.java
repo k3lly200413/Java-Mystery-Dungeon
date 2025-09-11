@@ -30,7 +30,6 @@ public final class CombatLauncher {
     public CombatController buildCombat(final Player player,
     final CombatCollision combatCollision,
     final GridNotifier gridNotifier) {
-        // --- Game Configuration ---
         final int size = 12;
         final int playerPower = player.getPower();
         final int playerPoisonPower = 2;
@@ -55,10 +54,6 @@ public final class CombatLauncher {
 
         final int maxHealth = player.getMaxHp();
 
-        // --- Application Startup ---
-        // Ensure UI creation happens on the Event
-        // Dispatch Thread (EDT) for safety.
-        // 1. Create the Model with our configuration
         final CombatModel model = new CombatBuilder()
         .setSize(size)
         .setPlayerMaxHealth(maxHealth)
@@ -71,13 +66,11 @@ public final class CombatLauncher {
         .setEnemyName(enemyName)
         .setPlayerMaxHealth(maxHealth)
         .build();
-        // 2. Create the View
         final CombatViewInterface view = new CombatView(model.getSize(),
         viewWidthFactor * model.getSize() / sizeDivisor,
         viewHeightFactor * model.getSize() / sizeDivisor,
         buttonWidth, buttonHeight, windowWidth, windowHeight);
         view.init();
-        // 3. Create the Controller, linking the Model and View
         this.combatController =
             new CombatController(model, view, player,
             combatCollision, gridNotifier);

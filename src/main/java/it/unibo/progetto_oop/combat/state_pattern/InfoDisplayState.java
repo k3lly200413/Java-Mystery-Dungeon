@@ -81,7 +81,7 @@ public class InfoDisplayState implements CombatState {
             "<html>Enemy Info:<br>Name: %s<br>Power: %d<br>Speed: %d</html>",
             model.getEnemyName(),
             model.getEnemyPower(),
-            model.getEnemySpeed() // Add other stats
+            model.getEnemySpeed()
         );
         view.showInfo(infoText);
 
@@ -99,12 +99,8 @@ public class InfoDisplayState implements CombatState {
      */
     @Override
     public void exitState(final CombatController context) {
-        // Reset positions when leaving the info view
         context.getModel().resetPositions();
-        // Clear the specific info text
         context.getView().clearInfo();
-        // The next state's enterState will
-        // handle redrawing and enabling buttons.
     }
 
     @Override

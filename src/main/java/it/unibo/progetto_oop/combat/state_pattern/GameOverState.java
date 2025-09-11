@@ -65,19 +65,22 @@ public class GameOverState implements CombatState {
             if (context.getModel().getPlayerHealth() <= 0) {
                 combatCollision.showGameOver();
             } else if (context.getModel().getEnemyHealth() <= 0) {
-                if (context.getModel().getEnemyState() instanceof  EnemyTurnState) {
+                if (context.getModel()
+                .getEnemyState() instanceof  EnemyTurnState) {
                     userPlayer.increasePlayerMaxPower(increaseAmount);
                     userPlayer.increasePlayerMaxHealth(increaseAmount);
                     userPlayer.increasePlayerMaxStamina(increaseAmount);
                     gridNotifier.notifyEnemyRemoved(enemy.getCurrentPosition());
-                    gridNotifier.notifyListEnemyRemoved(enemy.getCurrentPosition());
+                    gridNotifier.notifyListEnemyRemoved(
+                        enemy.getCurrentPosition());
                     combatCollision.setInCombat(false);
                     context.getView().showInfo(
                         "You Win! Returning to Overworld...");
                     this.combatCollision.showOverworld();
                 } else {
                     gridNotifier.notifyEnemyRemoved(enemy.getCurrentPosition());
-                    gridNotifier.notifyListEnemyRemoved(enemy.getCurrentPosition());
+                    gridNotifier.notifyListEnemyRemoved(
+                        enemy.getCurrentPosition());
                     combatCollision.setInCombat(false);
                     this.combatCollision.showWin();
                 }
