@@ -72,7 +72,7 @@ public final class GameLauncher {
                         viewManager
                 );
                 session.getModel()
-                       .setCombatTransitionListener(overworldController);
+                    .setCombatTransitionListener(overworldController);
                 session.start();
                 viewManager.showOverworld();
             });

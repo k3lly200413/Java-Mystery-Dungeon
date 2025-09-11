@@ -32,10 +32,10 @@ public class GameOverState implements CombatState {
     private final PossibleUser userPlayer;
 
     /** Amount to increase player stats. */
-    private final int increaseAmount = 5;
+    private static final int INCREASE_AMOUNT = 5;
 
     /** Timer duration in milliseconds. */
-    private final int timerDuration = 700;
+    private static final int TIMER_DURATION = 700;
 
     /**
      * @param newCombatCollision    Instance of the CombatCollision
@@ -61,15 +61,15 @@ public class GameOverState implements CombatState {
      */
     @Override
     public void enterState(final CombatController context) {
-        final Timer enemyActionTimer = new Timer(timerDuration, e -> {
+        final Timer enemyActionTimer = new Timer(TIMER_DURATION, e -> {
             if (context.getModel().getPlayerHealth() <= 0) {
                 combatCollision.showGameOver();
             } else if (context.getModel().getEnemyHealth() <= 0) {
                 if (context.getModel()
                 .getEnemyState() instanceof  EnemyTurnState) {
-                    userPlayer.increasePlayerMaxPower(increaseAmount);
-                    userPlayer.increasePlayerMaxHealth(increaseAmount);
-                    userPlayer.increasePlayerMaxStamina(increaseAmount);
+                    userPlayer.increasePlayerMaxPower(INCREASE_AMOUNT);
+                    userPlayer.increasePlayerMaxHealth(INCREASE_AMOUNT);
+                    userPlayer.increasePlayerMaxStamina(INCREASE_AMOUNT);
                     gridNotifier.notifyEnemyRemoved(enemy.getCurrentPosition());
                     gridNotifier.notifyListEnemyRemoved(
                         enemy.getCurrentPosition());
