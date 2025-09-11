@@ -615,9 +615,9 @@ public class CombatController {
      * @author kelly.applebee@studio.unibo.it
      */
     public void stopAnimationTimer() {
-        if (animationTimer != null && animationTimer.isRunning()) {
-            animationTimer.stop();
-            animationTimer = null; // Release reference
+        if (animationTimer != nul && animationTimer.isRunning()) {
+            animationTimer.stp();
+            animationTimer = nul; // Release reference
         }
     }
 
