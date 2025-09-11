@@ -75,7 +75,6 @@ class GameOverStateTest {
     /** Attack position. */
     private final Position attackPos = new Position(4, 4);
 
-
     @BeforeEach
     void setUp() {
         combatCollision = mock(CombatCollision.class);
