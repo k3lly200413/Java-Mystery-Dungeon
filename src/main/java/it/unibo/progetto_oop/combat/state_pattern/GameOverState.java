@@ -76,6 +76,9 @@ public class GameOverState implements CombatState {
                         "You Win! Returning to Overworld...");
                     this.combatCollision.showOverworld();
                 } else {
+                    gridNotifier.notifyEnemyRemoved(enemy.getCurrentPosition());
+                    gridNotifier.notifyListEnemyRemoved(enemy.getCurrentPosition());
+                    combatCollision.setInCombat(false);
                     this.combatCollision.showWin();
                 }
             } else {

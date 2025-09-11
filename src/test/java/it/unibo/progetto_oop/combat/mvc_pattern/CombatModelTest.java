@@ -1,14 +1,13 @@
 package it.unibo.progetto_oop.combat.mvc_pattern;
 
-import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
-import it.unibo.progetto_oop.overworld.playground.data.Position;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 class CombatModelTest {
 
@@ -264,10 +263,6 @@ class CombatModelTest {
 
         @Override public int getPlayerPoisonPower() {
             return this.playerPoisonPower;
-        }
-
-        @Override public int getEnemyPower() {
-            return this.enemyPower;
         }
 
         @Override public int getEnemySpeed() {

@@ -1,15 +1,15 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.timeout;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
@@ -18,8 +18,8 @@ import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
-import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 class GameOverStateTest {
 
@@ -72,6 +72,9 @@ class GameOverStateTest {
     /** Sleep time to wait for async operations. */
     private static final int SLEEP_TIME = 1000;
 
+    /** Sleep time to wait for async operations. */
+    private static final int SLEEP_BOSS_TIME = 800;
+
     @BeforeEach
     void setUp() {
         combatCollision = mock(CombatCollision.class);
@@ -122,7 +125,6 @@ class GameOverStateTest {
 
         verify(combatCollision, times(1)).showGameOver();
 
-        // Altri effetti non dovrebbero accadere
         verify(combatCollision, never()).setInCombat(false);
         verify(combatCollision, never()).showOverworld();
         verify(gridNotifier, never()).notifyEnemyRemoved(any());
@@ -136,6 +138,8 @@ class GameOverStateTest {
     throws InterruptedException {
         when(model.getPlayerHealth()).thenReturn(RETURN_VALUE);
         when(model.getEnemyHealth()).thenReturn(0);
+
+        when(model.getEnemyState()).thenReturn(new EnemyTurnState());
 
         final GameOverState state = new GameOverState(
             combatCollision, gridNotifier, enemy, player);
@@ -178,4 +182,27 @@ class GameOverStateTest {
 
         verify(combatCollision, never()).showGameOver();
     }
+
+    @Test
+void whenBossIsDeadShowWinScreenNotOverworld() {
+    when(model.getPlayerHealth()).thenReturn(RETURN_VALUE);
+    when(model.getEnemyHealth()).thenReturn(0);
+    when(enemy.isBoss()).thenReturn(true);
+
+    final GameOverState state = new GameOverState(
+        combatCollision, gridNotifier, enemy, player);
+    state.enterState(controller);
+
+    verify(gridNotifier, timeout(SLEEP_BOSS_TIME)).notifyEnemyRemoved(enemyPos);
+    verify(gridNotifier, timeout(SLEEP_BOSS_TIME)).notifyListEnemyRemoved(enemyPos);
+    verify(combatCollision, timeout(SLEEP_BOSS_TIME)).setInCombat(false);
+
+    verify(combatCollision, timeout(SLEEP_BOSS_TIME)).showWin();
+
+    verify(combatCollision, never()).showOverworld();
+    verify(view, never()).showInfo(WIN_MESSAGE);
+
+    verify(combatCollision, never()).showGameOver();
+    verify(enemy, never()).setHp(anyInt());
+}
 }
