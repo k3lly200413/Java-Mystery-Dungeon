@@ -40,6 +40,10 @@ public class FloorGeneratorTest {
      */
     private StructureData grid;
     /**
+     * Data structure representing the entity grid of the floor.
+     */
+    private StructureData entityGrid;
+    /**
      * List of rooms generated in the floor.
      */
     private List<Room> rooms;
@@ -80,7 +84,9 @@ public class FloorGeneratorTest {
                 roomPlacer, tunnelPlacer, objPlacer, rng);
 
         grid = new ImplArrayListStructureData(cfg.width(), cfg.height());
-        rooms = gen.generate(grid,e cfg, false);
+        entityGrid = new ImplArrayListStructureData(cfg.width(), cfg.height());
+        entityGrid.fill(TileType.NONE);
+        rooms = gen.generate(grid, entityGrid, cfg, false);
 
         players = getPositions(grid, TileType.PLAYER);
         stairs = getPositions(grid, TileType.STAIRS);

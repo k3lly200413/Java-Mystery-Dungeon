@@ -126,6 +126,8 @@ public final class OverworldModel {
                 this.gridNotifier.setListItemUpdater(null);
             }
         } else {
+            this.baseGrid   = floor.grid();
+            this.entityGrid = floor.entityGrid();
             if (this.gridNotifier == null) {
                 this.gridNotifier = new GridNotifier(null);
             }
