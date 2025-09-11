@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGridAdapter;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 
 public class RandomPlacementTest {
@@ -39,6 +41,8 @@ public class RandomPlacementTest {
         base.set(5, 5, TileType.TUNNEL);
         base.set(6, 5, TileType.TUNNEL);
 
+        ReadOnlyGrid baseRO = ReadOnlyGridAdapter.of(base);
+
         Position player = new Position(2, 2);
         entity.set(player.x(), player.y(), TileType.PLAYER);
 
@@ -46,7 +50,7 @@ public class RandomPlacementTest {
         int minDist = 3;
         ImplRandomPlacement placer = new ImplRandomPlacement();
         placer.placeObject(
-                base, entity, TileType.ENEMY, n,
+                baseRO, entity, TileType.ENEMY, n,
                 new Random(999), player, minDist
         );
 
@@ -61,7 +65,7 @@ public class RandomPlacementTest {
                             ),
                             "Troppo vicino al player in (" + x + "," + y + ")");
                     assertFalse(
-                            ImplRandomPlacement.adjacentToTunnel(base, x, y),
+                            ImplRandomPlacement.adjacentToTunnel(baseRO, x, y),
                             "Adiacente a TUNNEL in (" + x + "," + y + ")");
                 }
             }
@@ -80,10 +84,12 @@ public class RandomPlacementTest {
         base.set(3, 2, TileType.TUNNEL);
         base.set(4, 2, TileType.TUNNEL);
 
+        ReadOnlyGrid baseRO = ReadOnlyGridAdapter.of(base);
+
         ImplRandomPlacement placer = new ImplRandomPlacement();
         Random rand = new Random(123);
 
-        Position p = placer.placePlayer(base, entity, rand);
+        Position p = placer.placePlayer(baseRO, entity, rand);
         assertNotNull(p, "placePlayer mustn't return null");
         assertEquals(TileType.PLAYER, entity.get(p.x(), p.y()));
         assertEquals(TileType.ROOM, base.get(p.x(), p.y()));
@@ -96,6 +102,8 @@ public class RandomPlacementTest {
         base.fill(TileType.ROOM);
         entity.fill(TileType.NONE);
 
+        ReadOnlyGrid baseRO = ReadOnlyGridAdapter.of(base);
+
         Position player = new Position(0, 0);
         entity.set(player.x(), player.y(), TileType.PLAYER);
 
@@ -106,7 +114,7 @@ public class RandomPlacementTest {
         int minDist = 1;
 
         placer.placeObject(
-            base, entity, TileType.ENEMY, requested, rand, player, minDist
+            baseRO, entity, TileType.ENEMY, requested, rand, player, minDist
         );
 
         int placed = count(entity, TileType.ENEMY);

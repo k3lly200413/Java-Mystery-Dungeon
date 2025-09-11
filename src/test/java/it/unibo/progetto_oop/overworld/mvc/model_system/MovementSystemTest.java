@@ -108,7 +108,7 @@ class MovementSystemTest {
         when(model.getWallCollision()).thenReturn(wallCollision);
         when(model.getWallCollision()
             .canEnter(any(Position.class))).thenReturn(true);
-        when(model.getBaseGridView()).thenReturn(structureData);
+        when(model.getBaseGrid()).thenReturn(structureData);
 
         when(model.getBaseGridView()
             .get(anyInt(), anyInt())).thenReturn(TileType.STAIRS);
@@ -124,7 +124,7 @@ class MovementSystemTest {
         when(model.getWallCollision()).thenReturn(wallCollision);
         when(model.getWallCollision()
             .canEnter(any(Position.class))).thenReturn(true);
-        when(model.getBaseGridView()).thenReturn(structureData);
+        when(model.getBaseGrid()).thenReturn(structureData);
         when(model.getBaseGridView()
             .get(anyInt(), anyInt())).thenReturn(TileType.ROOM);
         when(model.getGridNotifier()).thenReturn(gridNotifier);
@@ -144,7 +144,7 @@ class MovementSystemTest {
         when(model.getWallCollision()).thenReturn(wallCollision);
         when(model.getWallCollision()
             .canEnter(any(Position.class))).thenReturn(true);
-        when(model.getBaseGridView()).thenReturn(structureData);
+        when(model.getBaseGrid()).thenReturn(structureData);
         when(model.getBaseGridView()
             .get(anyInt(), anyInt())).thenReturn(TileType.ROOM);
         when(model.getGridNotifier()).thenReturn(gridNotifier);
