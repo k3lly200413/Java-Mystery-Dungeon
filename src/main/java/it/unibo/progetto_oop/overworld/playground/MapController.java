@@ -31,11 +31,11 @@ public final class MapController implements ChangeFloorListener {
     /**
      * Constructs a MapController with the specified view and model.
      *
-     * @param mapView the view responsible for rendering the map
+     * @param mapView        the view responsible for rendering the map
      * @param overworldModel the model representing the overworld state
      */
     public MapController(final ImplMapView mapView,
-                         final OverworldModel overworldModel) {
+            final OverworldModel overworldModel) {
         this.view = Objects.requireNonNull(mapView);
         this.model = Objects.requireNonNull(overworldModel);
     }
@@ -60,11 +60,10 @@ public final class MapController implements ChangeFloorListener {
     private void initFloor(final Floor floor) {
         model.setSpawnObjects(List.of(), List.of());
         new OverworldEntitiesGenerator(
-            floor,
-            model.getPlayer(),
-            model,
-            model.getGridNotifier()
-        );
+                floor,
+                model.getPlayer(),
+                model,
+                model.getGridNotifier());
     }
 
     @Override

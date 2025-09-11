@@ -59,20 +59,20 @@ public final class FloorGenerator {
      * @return a list of rooms generated on the floor
      */
     public List<Room> generate(
-            final StructureData grid,
+            final StructureData baseGrid,
+            final StructureData entityGrid,
             final FloorConfig conf,
             final boolean finalFloor) {
         if (conf.nRooms() <= 0) {
             throw new IllegalArgumentException("nRooms must be > 0");
         }
-        grid.fill(TileType.WALL);
         List<Room> rooms = new ArrayList<>();
-        roomPlacement.placeRooms(grid, rooms, rand, conf);
+        roomPlacement.placeRooms(baseGrid, rooms, rand, conf);
         if (rooms.size() >= 2) {
-            tunnelPlacement.connect(grid, rooms, rand);
+            tunnelPlacement.connect(baseGrid, rooms, rand);
         }
         if (!finalFloor) {
-            objectPlacer.placeOnBase(grid, TileType.STAIRS, 1, rand);
+            objectPlacer.placeOnBase(baseGrid, TileType.STAIRS, 1, rand);
         }
         return rooms; // Floor farà List.copyOf()
     }

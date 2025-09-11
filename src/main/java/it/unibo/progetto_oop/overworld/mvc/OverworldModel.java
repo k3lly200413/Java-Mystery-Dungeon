@@ -18,7 +18,6 @@ import it.unibo.progetto_oop.overworld.mvc.model_system.MovementSystem;
 import it.unibo.progetto_oop.overworld.mvc.model_system.PickupSystem;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ImplArrayListStructureData;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.listner.ChangeFloorListener;
@@ -28,10 +27,10 @@ import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
 import it.unibo.progetto_oop.overworld.view_manager_observer.ViewManagerObserver;
 
 /**
- * OverworldModel: orchestratore del mondo di gioco.
- * - possiede Player e i systems (movement/pickup/enemy)
- * - inoltra gli aggiornamenti al Floor tramite GridNotifier
- * - contiene il Dungeon e gestisce il cambio piano (binding del Floor corrente)
+ * OverworldModel: orchestrator of the game world.
+ * - Owns the Player and the model systems (movement / pickup / enemy)
+ * - Forwards updates to the Floor through GridNotifier
+ * - Holds the Dungeon and manages floor changes (binding the current Floor)
  */
 public final class OverworldModel {
 
@@ -46,9 +45,6 @@ public final class OverworldModel {
     /** The player instance. */
     private final Player player;
 
-    /** True if the player is in combat. */
-    private boolean inCombat;
-
     /** PickupSystem instance. */
     private final PickupSystem pickupSystem;
 
@@ -58,25 +54,25 @@ public final class OverworldModel {
     /** MovementSystem instance. */
     private final MovementSystem movementSystem;
 
-    /** Current floor's grid (read-only). */
-    private StructureData baseGrid;   // playground: WALL/ROOM/TUNNEL/STAIRS
+    /** Current floor's base grid (structure). */
+    private StructureData baseGrid;   // playground: WALL / ROOM / TUNNEL / STAIRS
 
     /** Current floor's entity grid. */
-    private StructureData entityGrid; // entities: PLAYER/ENEMY/ITEM/NONE
+    private StructureData entityGrid; // entities: PLAYER / ENEMY / ITEM / NONE
 
-    /** The grid notifier. To update the grid. Incapsulates GridUpdater. */
+    /** Grid notifier used to propagate grid updates (encapsulates GridUpdater). */
     private GridNotifier gridNotifier;
 
-    /** The change floor listener. */
+    /** Listener for floor changes. */
     private ChangeFloorListener changeFloorListener;
 
-    /** The wall collision instance. */
+    /** Wall-collision service. */
     private WallCollision wallCollision;
 
-    /** The floor initializer function. */
+    /** Hook executed after a floor is bound/loaded. */
     private Consumer<Floor> floorInitializer = f -> { };
 
-    /** The combat collision instance. */
+    /** Combat-collision service. */
     private final CombatCollision combatCollision;
 
     /**
@@ -87,7 +83,7 @@ public final class OverworldModel {
      * @param config the entity stats configuration
      */
     public OverworldModel(final List<Enemy> enemies, final List<Item> items,
-                        final EntityStatsConfig config) {
+                          final EntityStatsConfig config) {
         this.esConfig = Objects.requireNonNull(config);
         this.player = new Player(
             esConfig.playerMaxHp(),
@@ -95,7 +91,6 @@ public final class OverworldModel {
             esConfig.playerPower(),
             new Inventory()
         );
-        this.inCombat = false;
         this.gridNotifier = new GridNotifier(null);
 
         this.pickupSystem = new PickupSystem(items, this.player);
@@ -107,7 +102,6 @@ public final class OverworldModel {
         setSpawnObjects(enemies, items);
     }
 
-    // Collega il dungeon e seleziona il primo Floor
     /**
      * Bind the dungeon to the model.
      *
@@ -117,9 +111,8 @@ public final class OverworldModel {
         this.dungeon = newDungeon;
     }
 
-    // Imposta quale floor è quello attivo
     /**
-     * Sets the active floor.
+     * Set the active floor.
      *
      * @param floor current floor
      */
@@ -133,22 +126,15 @@ public final class OverworldModel {
                 this.gridNotifier.setListItemUpdater(null);
             }
         } else {
-            this.baseGrid = floor.grid(); // il Floor ha solo il terreno
-            entityGrid =
-                new ImplArrayListStructureData(
-                    baseGrid.width(), baseGrid.height());
-            entityGrid.fill(TileType.NONE);
             if (this.gridNotifier == null) {
                 this.gridNotifier = new GridNotifier(null);
             }
             this.gridNotifier
                 .setGridUpdater(new EntityGridUpdater(this.entityGrid));
             this.gridNotifier
-                .setListEnemyUpdater(
-                        this.enemySystem::removeEnemyAt);
+                .setListEnemyUpdater(this.enemySystem::removeEnemyAt);
             this.gridNotifier
                 .setListItemUpdater(this.pickupSystem::removeItemAt);
-
         }
         this.wallCollision = new WallCollisionImpl(baseGrid, entityGrid);
     }
@@ -178,13 +164,13 @@ public final class OverworldModel {
      * @param items the items on the current floor
      */
     public void setSpawnObjects(final List<Enemy> enemies,
-    final List<Item> items) {
+                                final List<Item> items) {
         this.pickupSystem.setItems(items);
         this.enemySystem.setEnemies(enemies);
     }
 
     /**
-     * Set the floor initializer.
+     * Set the floor initializer hook.
      *
      * @param init the floor initializer
      */
@@ -193,40 +179,12 @@ public final class OverworldModel {
     }
 
     /**
-     * Set the change floor listener.
+     * Set the floor-change listener.
      *
-     * @param l the change floor listener
+     * @param l the change-floor listener
      */
     public void setChangeFloorListener(final ChangeFloorListener l) {
         this.changeFloorListener = l;
-    }
-
-    /**
-     * Set the entity at a given position.
-     *
-     * @param p the position to set
-     * @param t the tile type to set
-     */
-    public void setEntityAt(final Position p, final TileType t) {
-        entityGrid.set(p.x(), p.y(), t);
-    }
-
-    /**
-     * Set the base grid view.
-     *
-     * @param base the base grid view
-     */
-    public void setBaseGridView(final StructureData base) {
-        this.baseGrid = base;
-    }
-
-    /**
-     * Set the entity grid view.
-     *
-     * @param entity the entity grid view
-     */
-    public void setEntityGridView(final StructureData entity) {
-        this.entityGrid = entity;
     }
 
     /**
@@ -238,7 +196,7 @@ public final class OverworldModel {
         this.gridNotifier = newGridNotifier;
     }
 
-    //---------Getters----------
+    //--------- Getters ----------
 
     /**
      * Get the current floor.
@@ -246,7 +204,7 @@ public final class OverworldModel {
      * @return the current floor
      */
     public Floor getCurrentFloor() {
-    return this.dungeon.getCurrentFloor();
+        return this.dungeon.getCurrentFloor();
     }
 
     /**
@@ -286,9 +244,9 @@ public final class OverworldModel {
     }
 
     /**
-     * Get the enemy system.
+     * Get the enemy system's current enemies.
      *
-     * @return the enemy system
+     * @return the enemy list
      */
     public List<Enemy> getEnemies() {
         return this.enemySystem.getEnemies();
@@ -304,15 +262,6 @@ public final class OverworldModel {
     }
 
     /**
-     * Check if the player is in combat.
-     *
-     * @return true if the player is in combat, false otherwise
-     */
-    public boolean isInCombat() {
-        return this.inCombat;
-    }
-
-    /**
      * Check if a combat transition is pending.
      *
      * @return true if a combat transition is pending, false otherwise
@@ -322,7 +271,7 @@ public final class OverworldModel {
     }
 
     /**
-     * Get the wall collision instance.
+     * Get the wall-collision service.
      *
      * @return the wall collision instance
      */
@@ -331,7 +280,7 @@ public final class OverworldModel {
     }
 
     /**
-     * Get the combat collision instance.
+     * Get the combat-collision service.
      *
      * @return the combat collision instance
      */
@@ -340,7 +289,7 @@ public final class OverworldModel {
     }
 
     /**
-     * Get the base grid view.
+     * Get the base grid (structure) view.
      *
      * @return the base grid view
      */
@@ -388,20 +337,6 @@ public final class OverworldModel {
     }
 
     /**
-     * Clear the inCombat flag.
-     */
-    public void clearInCombatFlag() {
-        this.inCombat = false;
-    }
-
-    /**
-     * Set the inCombat flag.
-     */
-    public void setInCombatFlag() {
-        this.inCombat = true;
-    }
-
-    /**
      * Clear the combat transition flag.
      */
     public void clearCombatTransitionFlag() {
@@ -421,12 +356,12 @@ public final class OverworldModel {
      * @param curranteViewManagerObserver the view manager observer
      */
     public void setCombatTransitionListener(
-    final ViewManagerObserver curranteViewManagerObserver) {
+        final ViewManagerObserver curranteViewManagerObserver) {
         this.combatCollision
             .setViewManagerListener(curranteViewManagerObserver);
     }
 
-    //---------Movimento---------
+    //--------- Movement ---------
 
     /**
      * Move the player to the right.

@@ -80,7 +80,7 @@ public class FloorGeneratorTest {
                 roomPlacer, tunnelPlacer, objPlacer, rng);
 
         grid = new ImplArrayListStructureData(cfg.width(), cfg.height());
-        rooms = gen.generate(grid, cfg, false);
+        rooms = gen.generate(grid,e cfg, false);
 
         players = getPositions(grid, TileType.PLAYER);
         stairs = getPositions(grid, TileType.STAIRS);

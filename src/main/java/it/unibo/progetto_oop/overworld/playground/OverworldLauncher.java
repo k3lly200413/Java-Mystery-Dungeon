@@ -36,26 +36,24 @@ public final class OverworldLauncher {
     /**
      * Constructs an OverworldLuncher with the specified configurations.
      *
-     * @param floorConfig the configuration for the dungeon floor
+     * @param floorConfig       the configuration for the dungeon floor
      * @param entityStatsConfig the configuration for entity stats
-     * @param rand the random generator
+     * @param rand              the random generator
      */
     public OverworldLauncher(
             final FloorConfig floorConfig,
             final EntityStatsConfig entityStatsConfig,
-            final Random rand
-    ) {
+            final Random rand) {
         RandomPlacementStrategy rps = new ImplRandomPlacement();
-        RoomPlacementStrategy   rrs = new ImplRoomPlacement();
+        RoomPlacementStrategy rrs = new ImplRoomPlacement();
         TunnelPlacementStrategy tps = new ImplTunnelPlacement();
         FloorGenerator gen = new FloorGenerator(rrs, tps, rps, rand);
 
         Dungeon dungeon = new Dungeon(gen, floorConfig);
         this.model = new OverworldModel(
-            List.<Enemy>of(),
-            List.<Item>of(),
-            entityStatsConfig
-        );
+                List.<Enemy>of(),
+                List.<Item>of(),
+                entityStatsConfig);
         this.model.bindDungeon(dungeon);
 
         this.view = new ImplMapView(floorConfig.tileSize());
@@ -77,6 +75,7 @@ public final class OverworldLauncher {
     public ImplMapView getView() {
         return this.view;
     }
+
     /**
      * Gets the model representing the overworld state.
      *

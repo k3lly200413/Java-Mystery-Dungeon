@@ -20,6 +20,15 @@ import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRandomP
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.RandomPlacementStrategy;
 
 public class OverworldEntitiesGenerator {
+    /**
+     * Minimum distance from the player for placing objects.
+     */
+    private static final int MIN_DIST_FROM_PLAYER = 2;
+
+    /**
+     * Number of enemy types available for random selection.
+     */
+    private static final int ENEMY_TYPE_COUNT = 3;
 
     /**
      * List to store the items generated in the overworld.
@@ -44,16 +53,6 @@ public class OverworldEntitiesGenerator {
      * Indicates whether the current floor contains a boss.
      */
     private boolean isBoss = false;
-
-    /**
-     * Minimum distance from the player for placing objects.
-     */
-    private static final int MIN_DIST_FROM_PLAYER = 2;
-
-    /**
-     * Number of enemy types available for random selection.
-     */
-    private static final int ENEMY_TYPE_COUNT = 3;
 
     /**
      * Constructor for OverworldEntitiesGenerator.
