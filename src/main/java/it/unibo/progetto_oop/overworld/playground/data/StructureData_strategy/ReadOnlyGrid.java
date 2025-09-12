@@ -12,9 +12,10 @@ public interface ReadOnlyGrid {
      * Get the height of the grid.
      */
     int height();
-    
+
     /**
      * Gets the tile type at the specified coordinates.
+     *
      * @param x the x-coordinate.
      * @param y the y-coordinate.
      * @return the tile type at the given coordinates.
@@ -23,9 +24,10 @@ public interface ReadOnlyGrid {
 
     /**
      * Checks if the given coordinates are within the bounds of the grid.
+     *
      * @param x the x-coordinate.
      * @param y the y-coordinate.
      * @return true if the coordinates are within bounds, false otherwise.
      */
-    boolean inBounds(final int x, final int y);
+    boolean inBounds(int x, int y);
 }

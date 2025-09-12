@@ -36,7 +36,7 @@ class CombatControllerTest {
     private CombatController controller;
 
     @BeforeEach
-    void setUp() {
+    void setUpCombatController() {
         final Player player = new Player(100, 100, 100, new Inventory());
         final CombatCollision collision = mock(CombatCollision.class);
         final GridNotifier gridNotifier = mock(GridNotifier.class);

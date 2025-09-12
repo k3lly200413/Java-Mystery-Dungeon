@@ -19,7 +19,7 @@ class VisibilityUtilTest {
      * constant coordinate for tests.
      */
     private static final int COORDINATE = 5;
-    
+
     /**
      * mock wall collision.
      */
@@ -31,7 +31,7 @@ class VisibilityUtilTest {
     private VisibilityUtil visibilityUtil;
 
     @BeforeEach
-    void setUp() {
+    void setUpVisibilityUtil() {
         wallCollision = mock(WallCollision.class);
         visibilityUtil = new VisibilityUtil(wallCollision);
     }

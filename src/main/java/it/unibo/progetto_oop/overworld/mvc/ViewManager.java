@@ -131,7 +131,7 @@ public final class ViewManager {
         frame.pack();
         frame.setVisible(true);
 
-        // Mostro start game come default
+        // Show start game as default
         this.cardLayout.show(this.mainCardPanel, START_GAME);
     }
 

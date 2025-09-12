@@ -3,8 +3,8 @@ package it.unibo.progetto_oop.overworld.playground.data.listner.grid_updater;
 import java.util.Objects;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.TileType;
 
 public final class EntityGridUpdater implements GridUpdater {
     /**
@@ -14,6 +14,7 @@ public final class EntityGridUpdater implements GridUpdater {
 
     /**
      * Constructs an EntityGridUpdater with the specified StructureData.
+     *
      * @param entityGrid the StructureData to be updated, must not be null
      */
     public EntityGridUpdater(final StructureData entityGrid) {
@@ -23,12 +24,12 @@ public final class EntityGridUpdater implements GridUpdater {
     @Override
     public void onPlayerMove(final Position from, final Position to) {
         entity.set(from.x(), from.y(), TileType.NONE);
-        entity.set(to.x(),   to.y(),   TileType.PLAYER);
+        entity.set(to.x(), to.y(), TileType.PLAYER);
     }
 
     @Override
     public void onEnemyMove(final Position from, final Position to) {
-        TileType tmp = entity.get(from.x(), from.y());
+        final TileType tmp = entity.get(from.x(), from.y());
         if (tmp == TileType.ENEMY || tmp == TileType.BOSS) {
             entity.set(from.x(), from.y(), TileType.NONE);
         }

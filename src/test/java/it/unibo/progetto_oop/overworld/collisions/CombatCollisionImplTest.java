@@ -56,7 +56,7 @@ class CombatCollisionImplTest {
     private ViewManagerObserver observer;
 
     @BeforeEach
-    void setUp() {
+    void setUpCombatCollision() {
         collision = new CombatCollisionImpl();
         playerPos = mock(Position.class);
         enemyPos = mock(Position.class);

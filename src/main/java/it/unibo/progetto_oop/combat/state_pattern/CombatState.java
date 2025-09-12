@@ -73,7 +73,7 @@ public interface CombatState {
     /**
      * This method is called when a potion is used during combat.
      *
-     * @param context Instance of the controller
+     * @param user The PossibleUser using the potion
      * @param selectedPotion The potion selected from the bag
      * @param player The player using the potion
      */

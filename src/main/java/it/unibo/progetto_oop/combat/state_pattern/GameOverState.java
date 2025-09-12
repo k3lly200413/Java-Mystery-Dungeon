@@ -103,6 +103,7 @@ public class GameOverState implements CombatState {
                 .enemyRange(2)
                 .setIsGameOver(context.getReadOnlyModel().isGameOver())
                 .whoDied(context.getReadOnlyModel().getWhoDied())
+                .isBoss(enemy.isBoss())
                 .build();
         context.getViewApi().updateDisplay(defaultRedraw);
     }

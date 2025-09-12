@@ -45,7 +45,7 @@ class PlayerTest {
      * set up the test.
      */
     @BeforeEach
-    void setUp() {
+    void setUpPlayer() {
         // Create a inventory
         inventory = new Inventory();
 

@@ -79,15 +79,27 @@ public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Colour of charging boss.
      */
-    private static final String PURPLE = "/Screenshot 2025-03-25 164621.png";
+    private static final String LINK = "/Screenshot 2025-09-12 192147.png";
     /**
-     * Colour of enemy.
+     * Colour of charging boss.
      */
-    private static final String RED = "/red.jpg";
+    private static final String PURPLE = "/purple.png";
     /**
      * Colour of player.
      */
     private static final String GREEN = "/green.jpg";
+    /**
+     * Colour of enemy Boss.
+     */
+    private static final String RED = "/red.jpg";
+    /**
+     * Colour of enemy.
+     */
+    private static final String GENGAR = "/Screenshot 2025-09-12 192332.png";
+    /**
+     * Colour of flame attack.
+     */
+    private static final String YELLOW = "/yellow.jpg";
     /**
      * Size to use for the combat view.
      */
@@ -112,6 +124,10 @@ public class CombatView extends JPanel implements CombatViewInterface {
      * Map to hold JLabel components and their corresponding Position.
      */
     private transient Map<JLabel, Position> cells;
+    /**
+     * Colour of enemy or Boss.
+     */
+    private String enemyColour;
     /**
      * Height and width of the player's health bar.
      */
@@ -504,13 +520,17 @@ public class CombatView extends JPanel implements CombatViewInterface {
     }
 
     /**
-     * Redraws the grid with the specified parameters.
+     * GENGARraws the grid with the specified parameters.
      *
-     * @param context the context containing necessary information for redrawing
+     * @param context the context containing necessary information for GENGARrawing
      */
     @Override
     public final void updateDisplay(final RedrawContext context) {
-
+        if (context.isBoss()) {
+            this.enemyColour = RED;
+        } else {
+            this.enemyColour = GENGAR;
+        }
         for (final var entry : cells.entrySet()) {
             final JLabel cellLabel = entry.getKey();
             final Position cellPos = entry.getValue();
@@ -523,7 +543,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
                     icon =
                     this.getIconResource(
                         context.getWhoDied().equals(context.getPlayer())
-                        ? PURPLE : RED,
+                        ? LINK : enemyColour,
                         context.getSquareHeight(), context.getSquareWidth());
                 } else if (
                     context.isDrawPlayer()
@@ -534,25 +554,28 @@ public class CombatView extends JPanel implements CombatViewInterface {
                     icon =
                     getIconResource(
                         context.getWhoDied().equals(context.getPlayer())
-                        ? PURPLE : RED,
+                        ? LINK : enemyColour,
                         context.getSquareWidth(), context.getSquareHeight());
                 }
             } else if ((context.isDrawFlame()
-            || context.isDrawPoison()
-            || context.isDrawBossRayAttack())
+            || context.isDrawPoison())
                     && this.neighbours.neighbours(
                         cellPos, context.getFlame(), context.getFlameSize())) {
                 icon = context.isDrawFlame()
-                    ? this.getIconResource("/yellow.jpg",
+                    ? this.getIconResource(YELLOW,
                     context.getSquareWidth(), context.getSquareHeight())
-                        : context.isDrawPoison()
-                        ? this.getIconResource(
-                            GREEN,
-                            context.getSquareWidth(),
-                            context.getSquareHeight())
-                            : getIconResource("/purple.png",
+                        : getIconResource(
+                            "/green.jpg",
                             context.getSquareWidth(),
                             context.getSquareHeight());
+            } else if (context.isDrawBossRayAttack()
+                && this.neighbours.neighbours(
+                    cellPos, context.getFlame(), 1)) {
+                        icon = this.getIconResource(
+                            PURPLE, 
+                            context.getSquareWidth(), 
+                            context.getSquareHeight()
+                        );
             } else if (
                 context.isDrawPoisonDamage()
                 && context.getWhoIsPoisoned() != null
@@ -560,26 +583,26 @@ public class CombatView extends JPanel implements CombatViewInterface {
                 && entry.getValue().x() == context.getWhoIsPoisoned().x()) {
                 icon = this.getIconResource(GREEN,
                 context.getSquareWidth(), context.getSquareHeight());
-            } else if (
-                (context.isDrawFlame() || context.isDrawPoison())
-                && this.neighbours.neighbours(
-                    cellPos, context.getFlame(), 0)) {
-                icon = context.isDrawFlame()
-                ? this.getIconResource(
-                    "/yellow.jpg",
-                    context.getSquareWidth(),
-                    context.getSquareHeight())
-                : this.getIconResource(
-                    GREEN,
-                    context.getSquareWidth(),
-                    context.getSquareHeight());
-            } else if (
+            // } else if (
+            //     (context.isDrawFlame() || context.isDrawPoison())
+            //     && this.neighbours.neighbours(
+            //         cellPos, context.getFlame(), 0)) {
+            //     icon = context.isDrawFlame()
+            //     ? this.getIconResource(
+            //         GREEN,
+            //         context.getSquareWidth(),
+            //         context.getSquareHeight())
+            //     : this.getIconResource(
+            //         YELLOW,
+            //         context.getSquareWidth(),
+            //         context.getSquareHeight());
+                } else if (
                 context.isDrawPlayer()
                 && context.getPlayer() != null
                 && this.neighbours.neighbours(
                     context.getPlayer(), cellPos, context.getPlayerRange())) {
                 icon = this.getIconResource(
-                    PURPLE,
+                    LINK,
                     context.getSquareWidth(),
                     context.getSquareHeight());
             } else if (
@@ -588,7 +611,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
                 && this.neighbours.neighbours(
                     context.getEnemy(), cellPos, context.getEnemyRange())) {
                 icon = getIconResource(
-                    RED,
+                    enemyColour,
                     context.getSquareWidth(),
                     context.getSquareHeight());
             } else if (
@@ -597,7 +620,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
                     context.getEnemy(),
                     cellPos,
                     context.getChargingCellDistance())) {
-                icon = getIconResource("/purple.png",
+                icon = getIconResource(PURPLE,
                 context.getSquareWidth(), context.getSquareHeight());
             } else {
                 icon = getIconResource(
@@ -733,6 +756,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
+            System.err.println("Icon not found: " + path);
             return createDefaultIcon(width, height);
         }
     }

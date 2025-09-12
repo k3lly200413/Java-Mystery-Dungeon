@@ -67,7 +67,7 @@ public class FloorGeneratorTest {
     private List<Position> items;
 
     @BeforeEach
-    final void setup() {
+    final void setupFloorGenerator() {
         cfg = new FloorConfig.Builder()
                 .size(50, 50)
                 .rooms(8)

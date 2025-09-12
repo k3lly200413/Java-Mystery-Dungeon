@@ -44,7 +44,7 @@ class PickupSystemTest {
     private PickupSystem pickupSystem;
 
     @BeforeEach
-    void setUp() {
+    void setUpPickupSystem() {
         item1 = mock(Item.class);
         item2 = mock(Item.class);
         player = mock(Player.class);

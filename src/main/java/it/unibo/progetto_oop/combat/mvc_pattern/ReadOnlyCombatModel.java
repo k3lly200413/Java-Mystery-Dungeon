@@ -58,14 +58,14 @@ public interface ReadOnlyCombatModel {
 
     /**
      * Returns true if it's the player's turn, false otherwise.
-     * 
+     *
      * @return true if it's the player's turn
      */
     boolean isPlayerTurn();
 
     /**
      * Returns true if the game is over, false otherwise.
-     * 
+     *
      * @return true if the game is over
      */
     boolean isGameOver();
@@ -91,43 +91,135 @@ public interface ReadOnlyCombatModel {
      */
     Position getEnemyPosition();
 
+    /**
+     * Returns true if the enemy is poisoned, false otherwise.
+     *
+     * @return true if the enemy is poisoned
+     */
     boolean isEnemyPoisoned();
 
+    /**
+     * Returns true if the player is poisoned, false otherwise.
+     *
+     * @return true if the player is poisoned
+     */
     boolean isPlayerPoison();
 
+    /**
+     * Sets whether it's the player's turn.
+     *
+     * @param b true if it's the player's turn, false otherwise
+     */
     void setPlayerTurn(boolean b);
 
+    /**
+     * Returns the current state of the enemy.
+     *
+     * @return the enemy's current state
+     */
     CombatState getEnemyState();
 
+    /**
+     * Returns the boss turn counter.
+     *
+     * @return the boss turn counter
+     */
     int getBossTurnCounter();
 
+    /**
+     * Sets whether it's the boss's turn.
+     *
+     * @param b true if it's the boss's turn, false otherwise
+     */
     void setBossTurn(boolean b);
 
+    /**
+     * Increases the boss turn counter.
+     */
     void increaseBossTurnCounter();
 
+    /**
+     * Returns true if it's the boss's turn, false otherwise.
+     *
+     * @return true if it's the boss's turn
+     */
     boolean isBossTurn();
 
+    /**
+     * Returns the boss attack counter.
+     *
+     * @return the boss attack counter
+     */
     int getBossAttackCounter();
 
+    /**
+     * Returns the maximum hit of the boss.
+     *
+     * @return the maximum hit of the boss
+     */
     int getMaxBossHit();
 
+    /**
+     * Increases the boss attack counter.
+     */
     void increaseBossAttackCounter();
 
+    /**
+     * Resests the boss attack counter.
+     */
     void clearBossAttackCount();
 
+    /**
+     * Returns the position of the long-range attack.
+     *
+     * @return the position of the long-range attack
+     */
     Position getAttackPosition();
 
+    /**
+     * Returns the position of who died.
+     *
+     * @return the position of the character who died
+     */
     Position getWhoDied();
 
+    /**
+     * Resets the positions of the player, enemy, attack and who died.
+     */
     void resetPositions();
 
-    Object getEnemyName();
+    /**
+     * Returns the name of the enemy.
+     *
+     * @return the enemy's name
+     */
+    String getEnemyName();
 
-    Object getEnemySpeed();
+    /**
+     * Returns the speed of the enemy.
+     *
+     * @return the enemy's speed
+     */
+    int getEnemySpeed();
 
+    /**
+     * decreases the player's stamina.
+     *
+     * @param staminaToRemove the amount of stamina to remove
+     */
     void decreasePlayerStamina(int staminaToRemove);
 
+    /**
+     * Sets the current health of the enemy.
+     *
+     * @param currentHp the enemy's current health
+     */
     void setEnemyCurrentHp(int currentHp);
 
+    /**
+     * Sets the maximum health of the enemy.
+     *
+     * @param maxHp the enemy's maximum health
+     */
     void setEnemyMaxHp(int maxHp);
 }
