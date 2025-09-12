@@ -10,8 +10,15 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
+import it.unibo.progetto_oop.overworld.playground.data.TileType;
+
+/**
+ * A Swing-based implementation of the MapView interface.
+ * This class provides a graphical representation of a grid-based map
+ * using Java Swing components.
+ */
+
 public final class ImplMapView extends JPanel implements MapView {
 
     /**
@@ -116,39 +123,38 @@ public final class ImplMapView extends JPanel implements MapView {
         /**
          * The image representing the floor tile.
          */
-        private BufferedImage floorImg;
+        private final BufferedImage floorImg;
 
         /**
          * The image representing the stairs tile.
          */
-        private BufferedImage stairsImg;
+        private final BufferedImage stairsImg;
         /**
          * The image representing the player entity.
          */
-        private BufferedImage playerImg;
+        private final BufferedImage playerImg;
 
         /**
          * The image representing the enemy entity.
          */
-        private BufferedImage enemyImg;
+        private final BufferedImage enemyImg;
         /**
          * The image representing the item entity.
          */
-        private BufferedImage itemImg;
+        private final BufferedImage itemImg;
 
         /**
          * The image representing the boss entity.
          */
-        private BufferedImage bossImg;
+        private final BufferedImage bossImg;
 
         MapPanel(final int cellSize) {
             this.initialCell = cellSize;
             setBackground(Color.BLACK);
-            // Carica sprite dalle risorse
             this.floorImg = loadSprite("/spritesOverWorld/floor.png");
             this.stairsImg = loadSprite("/spritesOverWorld/stairs.png");
             this.playerImg = loadSprite("/spritesOverWorld/link.png");
-            this.enemyImg  = loadSprite("/spritesOverWorld/gengar.png");
+            this.enemyImg = loadSprite("/spritesOverWorld/gengar.png");
             this.itemImg = loadSprite("/spritesOverWorld/potion.png");
             this.bossImg = loadSprite("/spritesOverWorld/boss.png");
         }
@@ -171,8 +177,8 @@ public final class ImplMapView extends JPanel implements MapView {
 
         @Override
         public Dimension getPreferredSize() {
-            int w = (grid == null ? DEFAULT_GRID_WIDTH : grid.width());
-            int h = (grid == null ? DEFAULT_GRID_HEIGHT : grid.height());
+            final int w = grid == null ? DEFAULT_GRID_WIDTH : grid.width();
+            final int h = grid == null ? DEFAULT_GRID_HEIGHT : grid.height();
             return new Dimension(w * initialCell, h * initialCell);
         }
 
@@ -197,10 +203,10 @@ public final class ImplMapView extends JPanel implements MapView {
             // center on player
             final int mapW = cell * cols;
             final int mapH = cell * rows;
-            int offsetX = (int) Math.round(
+            final int offsetX = (int) Math.round(
                 getWidth() / 2.0 - camTarget.x() * cell
             );
-            int offsetY = (int) Math.round(
+            final int offsetY = (int) Math.round(
                 getHeight() / 2.0 - camTarget.y() * cell
             );
             final int offX = (mapW > getWidth())
@@ -260,7 +266,7 @@ public final class ImplMapView extends JPanel implements MapView {
         private static BufferedImage loadSprite(final String path) {
             try (var is = ImplMapView.class.getResourceAsStream(path)) {
                 return is == null ? null : ImageIO.read(is);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 return null;
             }
         }
@@ -276,25 +282,25 @@ public final class ImplMapView extends JPanel implements MapView {
                 case PLAYER -> playerImg;
                 case ENEMY -> enemyImg;
                 case BOSS -> bossImg;
-                case ITEM   -> itemImg;
+                case ITEM -> itemImg;
 
-                case NONE   -> null;
-                default     -> null;
+                case NONE -> null;
+                default -> null;
             };
         }
 
         private Color colorFor(final TileType t) {
             return switch (t) {
-                case WALL   ->  Color.BLACK;
-                case ROOM   ->  Color.LIGHT_GRAY;
-                case TUNNEL ->  Color.LIGHT_GRAY;
-                case STAIRS ->  Color.CYAN;
-                case PLAYER ->  Color.GREEN;
-                case ENEMY  ->  Color.RED;
-                case BOSS   ->  Color.MAGENTA;
-                case ITEM   ->  Color.PINK;
-                case NONE   -> new Color(0, 0, 0, 0); // clear
-                default     -> Color.MAGENTA;
+                case WALL -> Color.BLACK;
+                case ROOM -> Color.LIGHT_GRAY;
+                case TUNNEL -> Color.LIGHT_GRAY;
+                case STAIRS -> Color.CYAN;
+                case PLAYER -> Color.GREEN;
+                case ENEMY -> Color.RED;
+                case BOSS -> Color.MAGENTA;
+                case ITEM -> Color.PINK;
+                case NONE -> new Color(0, 0, 0, 0); // clear
+                default -> Color.MAGENTA;
             };
         }
     }

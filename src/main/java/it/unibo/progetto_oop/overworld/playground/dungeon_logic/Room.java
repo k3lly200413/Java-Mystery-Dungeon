@@ -5,7 +5,11 @@ import java.util.NoSuchElementException;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
-
+/**
+ * Represents a rectangular room in a dungeon.
+ * Provides methods to check for intersections with other rooms
+ * and to iterate over the positions within the room.
+ */
 public class Room implements Iterable<Position> {
     /**
      * The x-coordinate of the room.
@@ -28,6 +32,7 @@ public class Room implements Iterable<Position> {
 
     /**
      * Constructs a Room with the specified position and dimensions.
+     *
      * @param xCoord the x-coordinate of the room
      * @param yCoord the y-coordinate of the room
      * @param roomWidth the width of the room
@@ -46,19 +51,23 @@ public class Room implements Iterable<Position> {
 
     /**
      * Checks if this room intersects with another room.
+     *
      * @param other the other room to check for intersection
+     *
      * @return true if the rooms intersect, false otherwise
      */
     public final boolean intersects(final Room other) {
-        return (this.x < other.x + other.width
+        return this.x < other.x + other.width
                 && this.x + this.width > other.x
                 && this.y < other.y + other.height
-                && this.y + this.height > other.y);
+                && this.y + this.height > other.y;
     }
 
     /**
      * Checks if the given position is within the bounds of the room.
+     *
      * @param p the position to check
+     *
      * @return true if the position is inside the room, false otherwise
      */
     public final boolean contains(final Position p) {
@@ -70,6 +79,7 @@ public class Room implements Iterable<Position> {
 
     /**
      * Gets the x-coordinate of the room.
+     *
      * @return the x-coordinate of the room
      */
     public final int getX() {
@@ -78,6 +88,7 @@ public class Room implements Iterable<Position> {
 
     /**
      * Sets the x-coordinate of the room.
+     *
      * @param newX the new x-coordinate of the room
      */
     public final void setX(final int newX) {
@@ -86,6 +97,7 @@ public class Room implements Iterable<Position> {
 
     /**
      * Gets the y-coordinate of the room.
+     *
      * @return the y-coordinate of the room
      */
     public final int getY() {
@@ -94,6 +106,7 @@ public class Room implements Iterable<Position> {
 
     /**
      * Sets the y-coordinate of the room.
+     *
      * @param newY the new y-coordinate of the room
      */
     public final void setY(final int newY) {
@@ -102,6 +115,7 @@ public class Room implements Iterable<Position> {
 
     /**
      * Gets the width of the room.
+     *
      * @return the width of the room
      */
     public final int getWidth() {
@@ -110,6 +124,7 @@ public class Room implements Iterable<Position> {
 
     /**
      * Sets the width of the room.
+     *
      * @param newWidth the new width of the room
      */
     public final void setWidth(final int newWidth) {
@@ -118,6 +133,7 @@ public class Room implements Iterable<Position> {
 
     /**
      * Gets the height of the room.
+     *
      * @return the height of the room
      */
     public final int getHeight() {
@@ -126,6 +142,7 @@ public class Room implements Iterable<Position> {
 
     /**
      * Sets the height of the room.
+     *
      * @param newHeight the new height of the room
      */
     public final void setHeight(final int newHeight) {
@@ -148,7 +165,7 @@ public class Room implements Iterable<Position> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                Position c = new Position(cx, cy);
+                final Position c = new Position(cx, cy);
                 cx++;
                 if (cx >= x + width) {
                     cx = x;

@@ -1,5 +1,19 @@
 package it.unibo.progetto_oop.overworld.playground.data;
 
+/**
+ * Immutable configuration record for floor generation parameters.
+ *
+ * @param width     the width of the floor grid
+ * @param height    the height of the floor grid
+ * @param nRooms    the number of rooms to generate
+ * @param minRoomW  the minimum width of a room
+ * @param maxRoomW  the maximum width of a room
+ * @param minRoomH  the minimum height of a room
+ * @param maxRoomH  the maximum height of a room
+ * @param nFloors   the number of floors to generate
+ * @param tileSize  the size of each tile in pixels
+ */
+
 public record FloorConfig(
         int width, int height,
         int nRooms,
@@ -11,39 +25,43 @@ public record FloorConfig(
     /**
      * Default width of the floor grid.
      */
-    public static final int WIDTH     = 50;
+    public static final int WIDTH = 50;
 
     /**
      * Default height of the floor grid.
      */
-    public static final int HEIGHT    = 50;
+    public static final int HEIGHT = 50;
+
     /**
      * Default number of rooms in the floor configuration.
      */
-    public static final int NROOMS    = 8;
+    public static final int NROOMS = 8;
 
     /**
      * Default minimum width of a room.
      */
-    public static final int MIN_W     = 5;
+    public static final int MIN_W = 5;
+
     /**
      * Default maximum width of a room.
      */
-    public static final int MAX_W     = 12;
+    public static final int MAX_W = 12;
 
     /**
      * Default minimum height of a room.
      */
-    public static final int MIN_H     = 5;
+    public static final int MIN_H = 5;
+
     /**
      * Default maximum height of a room.
      */
-    public static final int MAX_H     = 10;
+    public static final int MAX_H = 10;
 
     /**
      * Default number of floors in the floor configuration.
      */
-    public static final int NFLOORS   = 5;
+    public static final int NFLOORS = 5;
+
     /**
      * Default size of each tile in the floor configuration.
      */
@@ -51,14 +69,16 @@ public record FloorConfig(
 
     /**
      * Creates a new Builder instance for constructing FloorConfig objects.
+     *
      * @return a new Builder instance
      */
     public static Builder builder() {
         return new Builder();
     }
 
-
-    //class nested for convenience in building
+    /**
+     * Builder class for constructing FloorConfig instances.
+     */
     public static class Builder {
         /**
          * The width of the floor grid, initialized to the default value.
@@ -69,6 +89,7 @@ public record FloorConfig(
          * The height of the floor grid, initialized to the default value.
          */
         private int height = HEIGHT;
+
         /**
          * The number of rooms, initialized to the default value.
          */
@@ -78,6 +99,7 @@ public record FloorConfig(
          * The minimum width of a room, initialized to the default value.
          */
         private int minRoomW = MIN_W;
+
         /**
          * The maximum width of a room, initialized to the default value.
          */
@@ -87,6 +109,7 @@ public record FloorConfig(
          * The minimum height of a room, initialized to the default value.
          */
         private int minRoomH = MIN_H;
+
         /**
          * The maximum height of a room, initialized to the default value.
          */
@@ -96,6 +119,7 @@ public record FloorConfig(
          * The number of floors, initialized to the default value.
          */
         private int nFloors = NFLOORS;
+
         /**
          * The size of each tile, initialized to the default value.
          */
@@ -103,8 +127,10 @@ public record FloorConfig(
 
         /**
          * Sets the size of the floor grid.
+         *
          * @param w the width of the grid, must be a positive integer
          * @param h the height of the grid, must be a positive integer
+         *
          * @return the Builder instance for method chaining
          */
         public final Builder size(final int w, final int h) {
@@ -115,7 +141,9 @@ public record FloorConfig(
 
         /**
          * Sets the number of rooms for the floor configuration.
+         *
          * @param n the number of rooms, must be a positive integer
+         *
          * @return the Builder instance for method chaining
          */
         public final Builder rooms(final int n) {
@@ -125,10 +153,12 @@ public record FloorConfig(
 
         /**
          * Sets the room size for the floor configuration.
+         *
          * @param minW the minimum room width, must be >= 1
          * @param maxW the maximum room width, must be >= minW
          * @param minH the minimum room height, must be >= 1
          * @param maxH the maximum room height, must be >= minH
+         *
          * @return the Builder instance for method chaining
          */
         public final Builder roomSize(
@@ -144,7 +174,9 @@ public record FloorConfig(
 
         /**
          * Sets the number of floors for the floor configuration.
+         *
          * @param n the number of floors, must be a positive integer
+         *
          * @return the Builder instance for method chaining
          */
         public final Builder floors(final int n) {
@@ -154,7 +186,9 @@ public record FloorConfig(
 
         /**
          * Sets the tile size for the floor configuration.
+         *
          * @param s the size of each tile, must be a positive integer
+         *
          * @return the Builder instance for method chaining
          */
         public final Builder tileSize(final int s) {
@@ -165,6 +199,7 @@ public record FloorConfig(
         /**
          * Builds FloorConfig instance with the specified parameters.
          * Validates the parameters.
+         *
          * @return a new FloorConfig instance
          * @throws IllegalArgumentException if any parameter is invalid
          */

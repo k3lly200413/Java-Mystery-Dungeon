@@ -16,6 +16,11 @@ import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy
 import it.unibo.progetto_oop.overworld.playground.view.game_start.GameStartView;
 import it.unibo.progetto_oop.overworld.playground.view.playground_view.ImplMapView;
 
+/**
+ * Manages different views in the game using a CardLayout.
+ * Allows switching between start game, inventory,
+ * overworld, combat, game over, and win views.
+ */
 public final class ViewManager {
     /**
      * start game card identifier.
@@ -58,11 +63,6 @@ public final class ViewManager {
     private static final int PREFERRED_HEIGHT = 700;
 
     /**
-     * the card layout to switch between views.
-     */
-    private CardLayout cardLayout;
-
-    /**
      * Minimum width for the game window.
      */
     private static final int MINIMUM_WIDTH = 960;
@@ -71,6 +71,11 @@ public final class ViewManager {
      * Minimum height for the game window.
      */
     private static final int MINIMUM_HEIGHT = 640;
+
+    /**
+     * the card layout to switch between views.
+     */
+    private CardLayout cardLayout;
 
     /**
      * the main panel that holds the different views.
@@ -105,7 +110,7 @@ public final class ViewManager {
 
     /**
      * Method to start the view manager with the initial start view.
-     * 
+     *
      * @param initialStartView the start view to display
      */
     public void start(final GameStartView initialStartView) {
@@ -139,7 +144,7 @@ public final class ViewManager {
 
     /**
      * Sets the playground view.
-     * 
+     *
      * @param newPlayGroundView the playground view to set
      */
     public void setPlayGroundView(final ImplMapView newPlayGroundView) {
@@ -149,7 +154,7 @@ public final class ViewManager {
 
     /**
      * Method to set the inventory view.
-     * 
+     *
      * @param newInvView the inventory view to set
      */
     public void setInventoryView(final InventoryView newInvView) {
@@ -160,7 +165,8 @@ public final class ViewManager {
     /**
      * Sets the combat controller.
      *
-     * Wraps the full controller in a small adapter exposing only the required API so
+     * Wraps the full controller in a small
+     * adapter exposing only the required API so
      * ViewManager does not keep a concrete mutable controller reference.
      *
      * @param fullController the concrete CombatController to adapt
@@ -193,12 +199,20 @@ public final class ViewManager {
                 return fullController.getViewApi().getViewPanel();
             }
         };
-        this.mainCardPanel.add(this.combatController.getViewPanel(), COMBAT_CARD);
+        this.mainCardPanel.add(
+            this.combatController.getViewPanel(), COMBAT_CARD);
     }
 
-    public void showCombat(final Enemy encounteredEnemy) {
+    /**
+     * Method to show the combat view.
+     *
+     * @param encounteredEnemy the enemy that has been encountered
+     */
+    public void showCombat(
+        final Enemy encounteredEnemy) {
         this.combatController.setEncounteredEnemy(encounteredEnemy);
-        this.combatController.setEnemyHp(encounteredEnemy.getCurrentHp(), encounteredEnemy.getMaxHp());
+        this.combatController.setEnemyHp(
+            encounteredEnemy.getCurrentHp(), encounteredEnemy.getMaxHp());
         this.combatController.resetForNewCombat();
         this.combatController.redrawView();
         this.cardLayout.show(this.mainCardPanel, COMBAT_CARD);
@@ -206,7 +220,7 @@ public final class ViewManager {
 
     /**
      * Method to show the inventory view.
-     * 
+     *
      * @param inventory the inventory to display
      */
     public void showInventory(final Inventory inventory) {
@@ -219,29 +233,36 @@ public final class ViewManager {
         this.cardLayout.show(this.mainCardPanel, INVENTORY_CARD);
     }
 
-    // public void showCombat(Enemy encounteredEnemy) {
-    //     this.combatController.setEncounteredEnemy(encounteredEnemy);
-    //     this.combatController.getModel().setEnemyCurrentHp(encounteredEnemy.getCurrentHp());
-    //     this.combatController.getModel().setEnemyMaxHp(encounteredEnemy.getMaxHp());
-    //     this.combatController.resetForNewCombat();
-    //     this.combatController.redrawView();
-    //     this.cardLayout.show(this.mainCardPanel, COMBAT_CARD);
-    // }
-
+    /**
+     * Method to set the game over view.
+     *
+     * @param newGameOverPanel the game over panel to set
+     */
     public void setGameOverPanel(final GameOverPanel newGameOverPanel) {
         this.gameOverPanel = newGameOverPanel;
         this.mainCardPanel.add(this.gameOverPanel, GAME_OVER);
     }
 
+    /**
+     * Method to show the game over view.
+     */
     public void showGameOver() {
         this.cardLayout.show(this.mainCardPanel, GAME_OVER);
     }
 
+    /**
+     * Method to set the win view.
+     *
+     * @param newWinPanel the win panel to set
+     */
     public void setWinPanel(final WinPanel newWinPanel) {
         this.winPanel = newWinPanel;
         this.mainCardPanel.add(this.winPanel, WIN);
     }
 
+    /**
+     * Method to show the win view.
+     */
     public void showWin() {
         this.cardLayout.show(this.mainCardPanel, WIN);
     }
