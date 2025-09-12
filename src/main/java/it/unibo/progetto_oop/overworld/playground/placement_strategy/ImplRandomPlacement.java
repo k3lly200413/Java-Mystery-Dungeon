@@ -6,11 +6,18 @@ import java.util.List;
 import java.util.Random;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGridAdapter;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.TileType;
 
+/**
+ * Implementation of a random placement strategy for placing objects
+ * and the player on a grid-based map.
+ * This class provides methods to place objects randomly on valid tiles,
+ * ensuring they are not adjacent to tunnels and optionally maintaining
+ * a minimum distance from the player's position.
+ */
 public final class ImplRandomPlacement implements RandomPlacementStrategy {
 
     @Override
@@ -20,7 +27,8 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
             return;
         }
 
-        for (Position p : pickRandomCandidates(ReadOnlyGridAdapter.of(base), null, 0, n, rand)) {
+        for (Position p : pickRandomCandidates(
+            ReadOnlyGridAdapter.of(base), null, 0, n, rand)) {
             base.set(p.x(), p.y(), type);
         }
     }
@@ -35,7 +43,8 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
             return;
         }
 
-        for (Position p : pickRandomCandidates(base, player, dist, n, rand)) {
+        for (final Position p : pickRandomCandidates(
+            base, player, dist, n, rand)) {
             entity.set(p.x(), p.y(), type);
         }
     }
@@ -49,12 +58,12 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
             return null;
         }
 
-        List<Position> one = pickRandomCandidates(base, null, 0, 1, rand);
+        final List<Position> one = pickRandomCandidates(base, null, 0, 1, rand);
         if (one.isEmpty()) {
             return null;
         }
 
-        Position p = one.get(0);
+        final Position p = one.get(0);
         entity.set(p.x(), p.y(), TileType.PLAYER);
         return p;
     }
@@ -66,19 +75,19 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
             final int n,
             final Random rand) {
 
-        List<Position> candidates = collectCandidates(base, player, minDist);
+        final List<Position> candidates = collectCandidates(
+            base, player, minDist);
         if (candidates.isEmpty() || n <= 0 || rand == null) {
             return List.of();
         }
         Collections.shuffle(candidates, rand);
-        int limit = Math.min(n, candidates.size());
+        final int limit = Math.min(n, candidates.size());
         return candidates.subList(0, limit);
     }
 
-    // candidates cells: ROOM not adjacent to TUNNEL and far from player
     private static List<Position> collectCandidates(
             final ReadOnlyGrid g, final Position player, final int dist) {
-        List<Position> out = new ArrayList<>();
+        final List<Position> out = new ArrayList<>();
         for (int y = 0; y < g.height(); y++) {
             for (int x = 0; x < g.width(); x++) {
                 TileType t = g.get(x, y);
@@ -106,8 +115,8 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
             final int y) {
         for (int dy = -1; dy <= 1; dy++) {
             for (int dx = -1; dx <= 1; dx++) {
-                int nx = x + dx;
-                int ny = y + dy;
+                final int nx = x + dx;
+                final int ny = y + dy;
 
                 // jump the center and check only if in-bounds
                 if ((dx != 0 || dy != 0)
@@ -135,9 +144,9 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
         if (playerPos == null || minDist <= 0) {
             return true;
         }
-        int dx = Math.abs(x - playerPos.x());
-        int dy = Math.abs(y - playerPos.y());
-        int dist = Math.max(dx, dy);
+        final int dx = Math.abs(x - playerPos.x());
+        final int dy = Math.abs(y - playerPos.y());
+        final int dist = Math.max(dx, dy);
         return dist >= minDist;
     }
 }

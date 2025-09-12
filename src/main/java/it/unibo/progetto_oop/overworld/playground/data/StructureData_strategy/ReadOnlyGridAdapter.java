@@ -4,15 +4,37 @@ import java.util.Objects;
 
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
 
+/**
+ * Adapter class that wraps a StructureData instance
+ * and exposes it as a ReadOnlyGrid.
+ * This allows read-only access to the grid data
+ * without exposing modification methods.
+ */
 public final class ReadOnlyGridAdapter implements ReadOnlyGrid {
+
+    /**
+     * The underlying StructureData instance being adapted.
+     */
     private final StructureData delegate;
 
-    private ReadOnlyGridAdapter(StructureData delegate) {
-        this.delegate = Objects.requireNonNull(delegate);
+    /**
+     * Private constructor to enforce usage of the static factory method.
+     *
+     * @param newDelegate the StructureData instance to adapt
+     */
+    private ReadOnlyGridAdapter(final StructureData newDelegate) {
+        this.delegate = Objects.requireNonNull(newDelegate);
     }
 
-    public static ReadOnlyGrid of(StructureData data) {
-        return new ReadOnlyGridAdapter(data);
+    /**
+     * Static factory method to create a ReadOnlyGridAdapter
+     * from a given StructureData instance.
+     *
+     * @param newData the StructureData instance to adapt
+     * @return a ReadOnlyGrid wrapping the provided StructureData
+     */
+    public static ReadOnlyGrid of(final StructureData newData) {
+        return new ReadOnlyGridAdapter(newData);
     }
 
     @Override
@@ -26,12 +48,12 @@ public final class ReadOnlyGridAdapter implements ReadOnlyGrid {
     }
 
     @Override
-    public TileType get(int x, int y) {
+    public TileType get(final int x, final int y) {
         return delegate.get(x, y);
     }
 
     @Override
-    public boolean inBounds(int x, int y) {
+    public boolean inBounds(final int x, final int y) {
         return delegate.inBounds(x, y);
     }
 }
