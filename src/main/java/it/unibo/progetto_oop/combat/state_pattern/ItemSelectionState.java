@@ -7,6 +7,7 @@ package it.unibo.progetto_oop.combat.state_pattern;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
 /**
  * Class representing the Item Selection State in the combat state pattern.
@@ -87,9 +88,9 @@ public class ItemSelectionState implements CombatState {
      */
     @Override
     public void handlePotionUsed(
-        final CombatController context,
+        final PossibleUser user,
         final Item selectedPotion, final Player player) {
-        selectedPotion.use(context.getModel());
+        selectedPotion.use(user);
     }
 
     /**

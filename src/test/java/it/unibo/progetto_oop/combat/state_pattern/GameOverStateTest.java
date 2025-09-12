@@ -13,8 +13,8 @@ import static org.mockito.Mockito.when;
 
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatViewApi;
+import it.unibo.progetto_oop.combat.mvc_pattern.ReadOnlyCombatModel;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
@@ -61,7 +61,7 @@ class GameOverStateTest {
     private CombatController controller;
 
     /** Combat model instance. */
-    private CombatModel model;
+    private ReadOnlyCombatModel model;
 
     /** Combat view instance. */
     private CombatViewApi view;
@@ -83,10 +83,10 @@ class GameOverStateTest {
         player = mock(Player.class);
 
         controller = mock(CombatController.class);
-        model = mock(CombatModel.class);
+        model = mock(ReadOnlyCombatModel.class);
         view = mock(CombatViewApi.class);
 
-        when(controller.getModel()).thenReturn(model);
+        when(controller.getReadOnlyModel()).thenReturn(model);
         when(controller.getViewApi()).thenReturn(view);
 
         when(model.getPlayerPosition()).thenReturn(playerPos);
