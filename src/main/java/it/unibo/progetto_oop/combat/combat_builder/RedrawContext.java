@@ -93,6 +93,12 @@ public final class RedrawContext {
      * Position of who is poisoned (player or enemy).
      */
     private final Position whoIsPoisoned;
+    /**
+     * Indicates if the current enemy is a boss.
+     */
+    private final boolean isBoss;
+
+    private final boolean isPlayerTurn;
 
     private RedrawContext(final Builder builder) {
         this.player = builder.player;
@@ -116,6 +122,8 @@ public final class RedrawContext {
         this.squareWidth = builder.squareWidth;
         this.squareHeight = builder.squareHeight;
         this.whoIsPoisoned = builder.whoIsPoisoned;
+        this.isBoss = builder.isBoss;
+        this.isPlayerTurn = builder.isPlayerTurn;
     }
 
     /**
@@ -134,6 +142,15 @@ public final class RedrawContext {
      */
     public Position getEnemy() {
         return enemy;
+    }
+
+    /**
+     * Getter for isBoss.
+     *
+     * @return true if the enemy is a boss, false otherwise
+     */
+    public boolean isBoss() {
+        return isBoss;
     }
 
     /**
@@ -306,11 +323,23 @@ public final class RedrawContext {
     public Position getWhoIsPoisoned() {
         return whoIsPoisoned;
     }
+    /**
+     * Getter for isPlayerTurn.
+     *
+     * @return true if it is the player's turn, false otherwise
+     */
+    public boolean isPlayerTurn() {
+        return isPlayerTurn;
+    }
 
     /**
      * Builder for the redraw context.
      */
     public static class Builder {
+        /**
+         * Indicates if the current enemy is a boss.
+         */
+        public boolean isBoss = false;
         /**
          * Position of the player.
          */
@@ -395,6 +424,10 @@ public final class RedrawContext {
          * Position of who is poisoned (player or enemy).
          */
         private Position whoIsPoisoned;
+        /**
+         * Indicates if it is the player's turn.
+         */
+        private boolean isPlayerTurn;
 
         /**
          * Builder for the player position.
@@ -415,6 +448,17 @@ public final class RedrawContext {
          */
         public Builder enemy(final Position enemyPosition) {
             this.enemy = enemyPosition;
+            return this;
+        }
+
+        /**
+         * Builder for the enemy boss status.
+         *
+         * @param isEnemyBoss whether the enemy is a boss
+         * @return the builder
+         */
+        public Builder isBoss(final boolean isEnemyBoss) {
+            this.isBoss = isEnemyBoss;
             return this;
         }
 
@@ -626,6 +670,11 @@ public final class RedrawContext {
         public Builder whoIsPoisoned(
             final Position whoIsPoisonedPosition) {
             this.whoIsPoisoned = whoIsPoisonedPosition;
+            return this;
+        }
+
+        public Builder isPlayerTurn(final boolean isPlayerTurn) {
+            this.isPlayerTurn = isPlayerTurn;
             return this;
         }
 

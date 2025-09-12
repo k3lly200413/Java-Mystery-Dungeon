@@ -156,13 +156,6 @@ public class CombatController implements CombatControllerApi {
      * @param newCombatCollision Collision handler for combat state
      * @param newGridNotifier Grid notifier for managing grid updates
      */
-    @SuppressFBWarnings(
-        value = "EI_EXPOSE_REP2",
-        justification =
-        "CombatController must keep a live reference to the CombatCollision "
-        + "to manage combat lifecycle (setInCombat etc.). "
-        + "The controller is the logical owner of this object at runtime."
-    )
     public CombatController(
         final CombatModel modelToUse,
         final CombatViewInterface viewToUse, final Player newPlayer,
@@ -223,7 +216,9 @@ public class CombatController implements CombatControllerApi {
         .whoDied(this.model.isPlayerTurn()
         ? this.model.getEnemyPosition()
         : this.model.getPlayerPosition())
-        .build();
+        .isBoss(this.enemy != null ? this.enemy.isBoss() : false)
+        .isPlayerTurn(!this.model.isPlayerTurn())
+                        .build();
 
         this.view.updateDisplay(defaultRedraw);
     }
@@ -472,6 +467,11 @@ public class CombatController implements CombatControllerApi {
             .playerRange(1)
             .enemyRange(1)
             .setIsGameOver(this.model.isGameOver())
+            .isBoss(this.enemy != null ? this.enemy.isBoss() : false)
+            .squareHeight(SQUARE_HEIGHT)
+            .squareWidth(SQUARE_WIDTH)
+            .isPlayerTurn(!this.model.isPlayerTurn())
+            .drawBossRayAttack(!(isAttack || isPoison))
             .build();
             this.view.updateDisplay(redrawContext);
         }
@@ -513,12 +513,17 @@ public class CombatController implements CombatControllerApi {
             .flameSize((isAttack || isPoison) ? 0 : 1)
             .drawPlayer(true)
             .drawEnemy(true)
-            .drawFlame(!isPoison)
+            .drawFlame(isAttack)
             .drawPoison(isPoison)
             .playerRange(1)
             .enemyRange(1)
             .drawBossRayAttack(!(isAttack || isPoison))
             .setIsGameOver(this.model.isGameOver())
+            .isBoss(this.enemy != null ? this.enemy.isBoss() : false)
+            .squareHeight(SQUARE_HEIGHT)
+            .squareWidth(SQUARE_WIDTH)
+            .isPlayerTurn(!this.model.isPlayerTurn())
+            .drawBossRayAttack(!(isAttack || isPoison))
             .build();
             this.view.updateDisplay(defaultRedraw);
         });
@@ -594,7 +599,11 @@ public class CombatController implements CombatControllerApi {
                 .setIsGameOver(this.model.isGameOver())
                 .drawBossRayAttack(true)
                 .deathRayPath(deathRayLastPosition)
-                .build();
+                .isBoss(this.enemy != null ? this.enemy.isBoss() : false)
+                .squareHeight(SQUARE_HEIGHT)
+                .squareWidth(SQUARE_WIDTH)
+                .isPlayerTurn(!this.model.isPlayerTurn())
+                        .build();
                 this.view.updateDisplay(defaultRedraw);
             }
         });
@@ -804,7 +813,11 @@ public class CombatController implements CombatControllerApi {
                 .playerRange(1)
                 .enemyRange(1)
                 .setIsGameOver(this.model.isGameOver())
-                .build();
+                .isBoss(this.enemy != null ? this.enemy.isBoss() : false)
+                .squareHeight(SQUARE_HEIGHT)
+                .squareWidth(SQUARE_WIDTH)
+                .isPlayerTurn(!this.model.isPlayerTurn())
+                        .build();
                 this.view.updateDisplay(defaultRedraw);
             }
         });
@@ -835,7 +848,11 @@ public class CombatController implements CombatControllerApi {
                 .playerRange(1)
                 .enemyRange(conto[0])
                 .setIsGameOver(this.model.isGameOver())
-                .build();
+                .isBoss(this.enemy != null ? this.enemy.isBoss() : false)
+                .squareHeight(SQUARE_HEIGHT)
+                .squareWidth(SQUARE_WIDTH)
+                .isPlayerTurn(!this.model.isPlayerTurn())
+                        .build();
                 this.view.updateDisplay(defaultRedraw);
                 conto[0]++;
             }
@@ -883,7 +900,11 @@ public class CombatController implements CombatControllerApi {
                     ? this.model.getEnemyPosition()
                     : this.model.getPlayerPosition())
                 .poisonYCoord(step[0])
-                .build();
+                .isBoss(this.enemy != null ? this.enemy.isBoss() : false)
+                .squareHeight(SQUARE_HEIGHT)
+                .squareWidth(SQUARE_WIDTH)
+                .isPlayerTurn(!this.model.isPlayerTurn())
+                        .build();
                 this.view.updateDisplay(defaultRedraw);
                 step[0]--;
             }
@@ -959,7 +980,11 @@ public class CombatController implements CombatControllerApi {
                 .setIsGameOver(this.model.isGameOver())
                 .setIsCharging(isCharging)
                 .chargingCellDistance(position[0])
-                .build();
+                .isBoss(this.enemy != null ? this.enemy.isBoss() : false)
+                .squareHeight(SQUARE_HEIGHT)
+                .squareWidth(SQUARE_WIDTH)
+                .isPlayerTurn(!this.model.isPlayerTurn())
+                        .build();
                 this.view.updateDisplay(defaultRedraw);
                 if (position[0] == 0) {
                     times[0]--;
@@ -1462,6 +1487,16 @@ public class CombatController implements CombatControllerApi {
     }
 
     /**
+     * Store the encountered enemy.
+     *
+     * Suppressed because the controller legitimately owns and mutates the Enemy
+     * during combat; documenting ownership prevents false positives from static analysis.
+     */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "CombatController is the logical owner of the Enemy during combat and must keep a live reference to manage its lifecycle."
+    )
+    /**
      * Sets the encountered enemy for the combat.
      * This method updates the model with the new enemy
      * and adjusts the enemy state accordingly.
@@ -1503,14 +1538,15 @@ public class CombatController implements CombatControllerApi {
         final int physical = 0;
         final int longRange = 1;
         final int num = RANDOM.nextInt(2);
+        final int poison = RANDOM.nextInt(2);
 
         switch (num) {
             case physical -> performEnemyPhysicalAttack();
             case longRange -> performLongRangeAttack(
                     model.getEnemyPosition(),
                     -1,
-                    false,
-                    true);
+                    true,
+                    false);
             default -> {
             }
         }
@@ -1602,7 +1638,12 @@ public class CombatController implements CombatControllerApi {
                             this.model.isPlayerTurn()
                                 ? this.model.getEnemyPosition()
                                 : this.model
-                                .getPlayerPosition()).build();
+                                .getPlayerPosition())
+                        .isBoss(this.enemy != null ? this.enemy.isBoss() : false)
+                        .squareHeight(SQUARE_HEIGHT)
+                        .squareWidth(SQUARE_WIDTH)
+                        .isPlayerTurn(!this.model.isPlayerTurn())
+                        .build();
                 this.view.updateDisplay(defaultRedraw);
                 conto[0]--;
             }
