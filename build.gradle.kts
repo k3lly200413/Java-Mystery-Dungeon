@@ -47,13 +47,13 @@ dependencies {
     testImplementation("org.mockito:mockito-core:5.19.0")    
     testImplementation("org.easytesting:fest-swing:1.2")
 
-    testImplementation("org.assertj:assertj-swing-junit:3.17.1")
+    //testImplementation("org.assertj:assertj-swing-junit:3.17.1") test per GUI
     
 }
 
 application {
     // Define the main class for the application.
-    mainClass.set("it.unibo.progetto_oop.Main") // DA CAMBIARE
+    mainClass.set("it.unibo.progetto_oop.Main")
 }
 
 tasks.test {
