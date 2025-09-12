@@ -92,9 +92,6 @@ public final class ViewManager {
      */
     private CombatControllerApi combatController;
 
-    /** Win panel. */
-    private WinPanel winPanel;
-
     /**
      * Method to start the view manager with the initial start view.
      *
@@ -240,8 +237,7 @@ public final class ViewManager {
      * @param newWinPanel the win panel to set
      */
     public void setWinPanel(final WinPanel newWinPanel) {
-        this.winPanel = newWinPanel;
-        this.mainCardPanel.add(this.winPanel, WIN);
+        this.mainCardPanel.add(newWinPanel, WIN);
     }
 
     /**
