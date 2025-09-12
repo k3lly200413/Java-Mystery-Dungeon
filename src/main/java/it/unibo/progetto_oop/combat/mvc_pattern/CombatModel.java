@@ -595,7 +595,7 @@ public final boolean isGameOver() {
      * @return the death ray path as a list of positions
      */
     public final List<Position> getDeathRayPath() {
-        return this.deathRayPath;
+        return new ArrayList<>(this.deathRayPath);
     }
 
     /**
