@@ -3,7 +3,11 @@ package it.unibo.progetto_oop.combat.mvc_pattern;
 import java.awt.*;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+// Source: https://gist.github.com/jirkapenzes/4560255
+//CHECKSTYLE:OFF
+@SuppressFBWarnings(value = "all", justification = "This is third party code we did not have any hand in creating this class")
 public class WrapLayout extends FlowLayout
 {
 	public WrapLayout()

@@ -33,7 +33,6 @@ import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.helper.Neighbours;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.combat.mvc_pattern.WrapLayout;
 
 /**
  * View class in Model View Controller Pattern.
@@ -124,11 +123,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Map to hold JLabel components and their corresponding Position.
      */
-    private transient Map<JLabel, Position> cells;
-    /**
-     * Colour of enemy or Boss.
-     */
-    private String enemyColour;
+    private transient Map<JLabel, Position> cells; 
     /**
      * Height and width of the player's health bar.
      */
@@ -527,10 +522,11 @@ public class CombatView extends JPanel implements CombatViewInterface {
      */
     @Override
     public final void updateDisplay(final RedrawContext context) {
+        final String enemyColour;
         if (context.isBoss()) {
-            this.enemyColour = RED;
+            enemyColour = RED;
         } else {
-            this.enemyColour = GENGAR;
+            enemyColour = GENGAR;
         }
         for (final var entry : cells.entrySet()) {
             final JLabel cellLabel = entry.getKey();
@@ -744,7 +740,6 @@ public class CombatView extends JPanel implements CombatViewInterface {
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
-            System.err.println("Icon not found: " + path);
             return createDefaultIcon(width, height);
         }
     }
