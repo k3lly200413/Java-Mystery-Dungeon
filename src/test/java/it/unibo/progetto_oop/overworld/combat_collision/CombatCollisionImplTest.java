@@ -22,6 +22,8 @@ class CombatCollisionImplTest {
      */
     private static final int COORDINATE = 5;
 
+    private static final int DELAY = 80;
+
     /**
      * combat collision implementation under test.
      */
@@ -82,9 +84,11 @@ class CombatCollisionImplTest {
     }
 
     @Test
-    void testShowCombatCallsObserver() {
+    void testShowCombatCallsObserver() throws InterruptedException {
         collision.setInCombat(false);
         collision.showCombat(enemy, player);
+        // waiting for invokeLater to execute
+        Thread.sleep(DELAY);
         verify(observer).onPlayerEnemyContact(enemy);
     }
 
