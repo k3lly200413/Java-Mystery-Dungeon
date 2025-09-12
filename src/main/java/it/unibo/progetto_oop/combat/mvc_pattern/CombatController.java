@@ -1067,6 +1067,14 @@ public class CombatController implements CombatControllerApi {
         this.model.setEnemyMaxHp(maxHp);
     }
 
+    @Deprecated
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+    value = "EI_EXPOSE_REP",
+    justification =
+        "CombatController returns the internal model for backward compatibility. " +
+        "No mutating methods are exposed to external callers. " +
+        "Prefer using getModelApi() which provides a read-only view."
+)
     /**
      * Getters for the model and view.
      *
@@ -1121,6 +1129,14 @@ public class CombatController implements CombatControllerApi {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+    value = "EI_EXPOSE_REP2",
+    justification =
+        "CombatController must keep a live reference to the current Enemy " +
+        "to manage combat logic and lifecycle. " +
+        "The controller is the logical owner of this object at runtime."
+    )
+    
     /**
      * Sets the encountered enemy for the combat.
      * This method updates the model with the new enemy
