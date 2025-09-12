@@ -19,7 +19,7 @@ class VisibilityUtilTest {
      * constant coordinate for tests.
      */
     private static final int COORDINATE = 5;
-    
+
     /**
      * mock wall collision.
      */

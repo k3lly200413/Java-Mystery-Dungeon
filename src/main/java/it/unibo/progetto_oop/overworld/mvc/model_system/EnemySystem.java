@@ -98,7 +98,7 @@ public class EnemySystem {
      *
      * @param tempPosition the position to check for enemy encounter
      * @return an Optional containing the enemy
-     * if found,otherwise an empty Optional
+     *     if found,otherwise an empty Optional
      */
 
     public Optional<Enemy> checkEnemyHit(final Position tempPosition) {
