@@ -3,8 +3,8 @@ package it.unibo.progetto_oop.overworld.playground.data.listner.grid_updater;
 import java.util.Objects;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 
 public final class EntityGridUpdater implements GridUpdater {
     /**

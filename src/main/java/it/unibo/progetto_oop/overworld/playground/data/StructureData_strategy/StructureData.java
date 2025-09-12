@@ -1,4 +1,4 @@
-package it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy;
+package it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy;
 
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
 

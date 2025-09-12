@@ -11,8 +11,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGrid;
 
 /**
  * A Swing-based implementation of the MapView interface.
@@ -82,7 +82,7 @@ public final class ImplMapView extends JPanel implements MapView {
     private static final class MapPanel extends JPanel {
 
         private static final long serialVersionUID = 1L;
-        
+
         /**
          * The default width of the grid in cells.
          */
