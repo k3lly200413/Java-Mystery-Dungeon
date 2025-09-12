@@ -25,15 +25,10 @@ public record EntityStatsConfig(
     /** The default power multiplier for the boss. */
     private static final int BOSS_POWER_MULT = 2;
 
-    /** Default configuration. */
-    public static final EntityStatsConfig DEFAULT = builder().build();
-
-    /** Entry-point for the builder. */
-    public static Builder builder() {
-        return new Builder();
-    }
-
     public static final class Builder {
+
+        /** Default configuration. */
+        public static final EntityStatsConfig DEFAULT = builder().build();
         /** The maximum health points of the player. */
         private int playerMaxHp = PLAYER_MAX_HP;
         /** The stamina level of the player. */
@@ -50,7 +45,17 @@ public record EntityStatsConfig(
         private int bossPowerMultiplier = BOSS_POWER_MULT;
 
         /**
+         * Entry-point for the builder.
+         *
+         * @return new builder
+         */
+        public static Builder builder() {
+            return new Builder();
+        }
+
+        /**
          * Sets the maximum health points of the player.
+         *
          * @param v the maximum health points value to set.
          * @return the Builder instance for method chaining.
          */
@@ -61,6 +66,7 @@ public record EntityStatsConfig(
 
         /**
          * Sets the stamina level of the player.
+         *
          * @param v the stamina value to set.
          * @return the Builder instance for method chaining.
          */
@@ -71,6 +77,7 @@ public record EntityStatsConfig(
 
         /**
          * Sets the power level of the player.
+         *
          * @param v the power value to set.
          * @return the Builder instance for method chaining.
          */
@@ -81,6 +88,7 @@ public record EntityStatsConfig(
 
         /**
          * Sets the health points of the enemy.
+         *
          * @param v the health points value to set.
          * @return the Builder instance for method chaining.
          */
@@ -91,6 +99,7 @@ public record EntityStatsConfig(
 
         /**
          * Sets the power level of the enemy.
+         *
          * @param v the power value to set.
          * @return the Builder instance for method chaining.
          */
@@ -101,6 +110,7 @@ public record EntityStatsConfig(
 
         /**
          * Sets the health multiplier for the boss.
+         *
          * @param v the multiplier value to set.
          * @return the Builder instance for method chaining.
          */
@@ -111,6 +121,7 @@ public record EntityStatsConfig(
 
         /**
          * Sets the power multiplier for the boss.
+         *
          * @param v the multiplier value to set.
          * @return the Builder instance for method chaining.
          */
@@ -121,6 +132,7 @@ public record EntityStatsConfig(
 
         /**
          * Builds and validates an EntityStatsConfig instance.
+         *
          * @return a new EntityStatsConfig instance with the specified values.
          * @throws IllegalArgumentException if any of the values are invalid.
          */

@@ -38,13 +38,13 @@ public final class GameLauncher {
     public void start() {
         SwingUtilities.invokeLater(() -> {
             // Schermata iniziale
-            GameStartView startView = new GameStartView();
-            ViewManager viewManager = new ViewManager();
+            final GameStartView startView = new GameStartView();
+            final ViewManager viewManager = new ViewManager();
 
             viewManager.start(startView);
 
             startView.setOnStart(() -> {
-                OverworldLauncher session = new OverworldLauncher(
+                final OverworldLauncher session = new OverworldLauncher(
                     floorConfig, entityStatsConfig, rand
                 );
 
@@ -54,18 +54,18 @@ public final class GameLauncher {
                     session.getModel().getCombatCollision(),
                     session.getModel().getGridNotifier()
                 );
-                GameOverPanel gameOverPanel = new GameOverPanel(() -> {
+                final GameOverPanel gameOverPanel = new GameOverPanel(() -> {
                     combatController.restartGame();
                 });
 
-                WinPanel winPanel = new WinPanel(() -> {
+                final WinPanel winPanel = new WinPanel(() -> {
                     combatController.restartGame();
                 });
                 viewManager.setPlayGroundView(session.getView());
                 viewManager.setCombatController(combatController);
                 viewManager.setGameOverPanel(gameOverPanel);
                 viewManager.setWinPanel(winPanel);
-                OverworldController overworldController =
+                final OverworldController overworldController =
                     new OverworldController(
                         session.getModel(),
                         session.getView(),

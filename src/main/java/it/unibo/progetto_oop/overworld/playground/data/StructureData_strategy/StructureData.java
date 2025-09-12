@@ -15,6 +15,7 @@ public interface StructureData {
 
     /**
      * Gets the tile type at the specified coordinates.
+     *
      * @param x the x-coordinate.
      * @param y the y-coordinate.
      * @return the tile type at the given coordinates.
@@ -23,6 +24,7 @@ public interface StructureData {
 
     /**
      * Sets the tile at the specified coordinates.
+     *
      * @param x the x-coordinate.
      * @param y the y-coordinate.
      * @param t the tile type to set.
@@ -31,12 +33,14 @@ public interface StructureData {
 
     /**
      * Fills the entire structure with the specified tile type.
+     *
      * @param t the tile type to fill the structure with.
      */
     void fill(TileType t);
 
     /**
      * Checks if the given coordinates are within the bounds of the grid.
+     *
      * @param x the x-coordinate.
      * @param y the y-coordinate.
      * @return true if the coordinates are within bounds, false otherwise.
