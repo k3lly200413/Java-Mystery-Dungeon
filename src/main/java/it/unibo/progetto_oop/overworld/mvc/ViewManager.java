@@ -117,7 +117,7 @@ public final class ViewManager {
         // Setup CardLayout and main panel
         this.cardLayout = new CardLayout();
         this.mainCardPanel = new JPanel(cardLayout);
-        JFrame frame = new JFrame("JavaMysteryDungeon");
+        final JFrame frame = new JFrame("JavaMysteryDungeon");
         this.startView = initialStartView;
         frame.setPreferredSize(
                 new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
