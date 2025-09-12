@@ -3,6 +3,7 @@ package it.unibo.progetto_oop.combat.state_pattern;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
 /**
  * Boss' Turn State during combat.
@@ -82,7 +83,7 @@ public class BossTurnState implements CombatState {
     @Override
     public final void enterState(final CombatController context) {
         context.getViewApi().showInfo("Starting Boss Turn");
-        if (context.getModel().getEnemyHealth() < BOSS_ENRAGED_THRESHOLD
+        if (context.getReadOnlyModel().getEnemyHealth() < BOSS_ENRAGED_THRESHOLD
             && "NORMAL".equalsIgnoreCase(this.bossState)) {
             this.bossState = "ENRAGED";
             context.getViewApi().showInfo("The Boss is now ENRAGED");
@@ -91,33 +92,33 @@ public class BossTurnState implements CombatState {
             context.setState(new AnimatingState());
             context.performEnemySuperAttack();
         } else {
-            if (context.getModel().getBossTurnCounter() == 0) {
+            if (context.getReadOnlyModel().getBossTurnCounter() == 0) {
                 context.setState(new AnimatingState());
                 context.performEnemyPhysicalAttack();
-                context.getModel().setBossTurn(false);
-                context.getModel().increaseBossTurnCounter();
-            } else if (context.getModel().getBossTurnCounter()
+                context.getReadOnlyModel().setBossTurn(false);
+                context.getReadOnlyModel().increaseBossTurnCounter();
+            } else if (context.getReadOnlyModel().getBossTurnCounter()
                 % DEATH_RAY_INTERVAL == 0) {
                 context.setState(new AnimatingState());
                 context.performBossDeathRayAttack();
-                context.getModel().setBossTurn(false);
-                context.getModel().increaseBossTurnCounter();
-            } else if (context.getModel().
+                context.getReadOnlyModel().setBossTurn(false);
+                context.getReadOnlyModel().increaseBossTurnCounter();
+            } else if (context.getReadOnlyModel().
             getBossTurnCounter() % SUPER_ATTACK_CHARGE_INTERVAL == 0) {
                 context.getViewApi().showInfo(
                     "The Boss is charging up his Super Attack!");
                 context.setState(new AnimatingState());
                 context.performDeathAnimation(
-                    context.getModel().getEnemyPosition(), true, () -> {
+                    context.getReadOnlyModel().getEnemyPosition(), true, () -> {
                     context.getCurrentState().handleAnimationComplete(context);
                 });
-                context.getModel().setBossTurn(false);
-                context.getModel().increaseBossTurnCounter();
+                context.getReadOnlyModel().setBossTurn(false);
+                context.getReadOnlyModel().increaseBossTurnCounter();
             } else {
                 context.setState(new AnimatingState());
                 context.performEnemyAttack();
-                context.getModel().setBossTurn(false);
-                context.getModel().increaseBossTurnCounter();
+                context.getReadOnlyModel().setBossTurn(false);
+                context.getReadOnlyModel().increaseBossTurnCounter();
             }
         }
     }
@@ -150,7 +151,7 @@ public class BossTurnState implements CombatState {
 
     @Override
     public final void handlePotionUsed(
-        final CombatController context,
+        final PossibleUser user,
         final Item selectedPotion,
         final Player player) {
         // TODO Auto-generated method stub

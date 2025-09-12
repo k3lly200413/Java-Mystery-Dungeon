@@ -3,9 +3,10 @@ package it.unibo.progetto_oop.combat.state_pattern;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.ActionType;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatViewApi;
+import it.unibo.progetto_oop.combat.mvc_pattern.ReadOnlyCombatModel;
 import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
 /**
  * Class representing the Info Display State in the combat state pattern.
@@ -39,7 +40,7 @@ public class InfoDisplayState implements CombatState {
      */
     @Override
     public void handleBackInput(final CombatController context) {
-        context.getModel().resetPositions();
+        context.getReadOnlyModel().resetPositions();
         context.redrawView();
         context.setState(new PlayerTurnState());
     }
@@ -72,7 +73,7 @@ public class InfoDisplayState implements CombatState {
      */
     @Override
     public void enterState(final CombatController context) {
-        final CombatModel model = context.getModel();
+        final ReadOnlyCombatModel model = context.getReadOnlyModel();
         final CombatViewApi view = context.getViewApi();
 
         view.setAllMenusDisabled();
@@ -99,7 +100,7 @@ public class InfoDisplayState implements CombatState {
      */
     @Override
     public void exitState(final CombatController context) {
-        context.getModel().resetPositions();
+        context.getReadOnlyModel().resetPositions();
         context.getViewApi().clearInfo();
     }
 
@@ -119,7 +120,7 @@ public class InfoDisplayState implements CombatState {
     }
 
     @Override
-    public void handlePotionUsed(final CombatController context,
+    public void handlePotionUsed(final PossibleUser user,
     final Item selectedPotion, final Player player) {
         // TODO Auto-generated method stub
     }

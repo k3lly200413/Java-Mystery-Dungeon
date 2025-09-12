@@ -1,5 +1,8 @@
 package it.unibo.progetto_oop.overworld.playground;
 
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Objects;
 import javax.swing.SwingUtilities;
@@ -47,6 +50,8 @@ public final class MapController implements ChangeFloorListener {
     public void start() {
         model.setChangeFloorListener(this);
         model.setFloorInitializer(this::initFloor);
+        KeyboardFocusManager.getCurrentKeyboardFocusManager()
+                .addKeyEventDispatcher(this.nextFloorOnN);
         model.nextFloor();
     }
 
@@ -73,4 +78,12 @@ public final class MapController implements ChangeFloorListener {
         view.setZoom(DEFAULT_ZOOM_LEVEL);
         SwingUtilities.invokeLater(() -> view.render(base));
     }
+
+    private final KeyEventDispatcher nextFloorOnN = e -> {
+        if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_N) {
+            next();
+            return true;
+        }
+        return false;
+    };
 }
