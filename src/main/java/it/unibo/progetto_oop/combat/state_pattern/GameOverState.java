@@ -45,6 +45,15 @@ public class GameOverState implements CombatState {
      *
      *                               Constructor of the GameOverState class.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+    value = "EI_EXPOSE_REP2",
+    justification =
+        "GameOverState needs live references to controller-owned services "
+        + "(CombatCollision, GridNotifier) during the terminal state. "
+        + "References are not leaked outside the state. "
+        + "Enemy is used read-only in this state; external mutation does not "
+        + "violate GameOverState invariants."
+    )
     public GameOverState(final CombatCollision newCombatCollision,
     final GridNotifier newGridNotifier,
     final Enemy newEnemy, final Player player) {
