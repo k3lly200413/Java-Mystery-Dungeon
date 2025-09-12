@@ -254,7 +254,7 @@ public final class InventoryView extends JPanel {
             this.inventory.getFullInventory().keySet());
 
         final Color[] slotColors = {
-            ITEM_SLOT_1_COLOR, ITEM_SLOT_2_COLOR, ITEM_SLOT_3_COLOR
+            ITEM_SLOT_1_COLOR, ITEM_SLOT_2_COLOR, ITEM_SLOT_3_COLOR,
         };
 
         final int nItems = items.size();
