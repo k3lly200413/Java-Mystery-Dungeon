@@ -19,6 +19,12 @@ import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
  */
 public class GameOverState implements CombatState {
 
+    /** Amount to increase player stats. */
+    private static final int INCREASE_AMOUNT = 5;
+
+    /** Timer duration in milliseconds. */
+    private static final int TIMER_DURATION = 700;
+
     /** Combat collision instance. */
     private final CombatCollision combatCollision;
 
@@ -30,12 +36,6 @@ public class GameOverState implements CombatState {
 
     /** User player instance. */
     private final PossibleUser userPlayer;
-
-    /** Amount to increase player stats. */
-    private static final int INCREASE_AMOUNT = 5;
-
-    /** Timer duration in milliseconds. */
-    private static final int TIMER_DURATION = 700;
 
     /**
      * @param newCombatCollision    Instance of the CombatCollision
@@ -66,7 +66,7 @@ public class GameOverState implements CombatState {
                 combatCollision.showGameOver();
             } else if (context.getModel().getEnemyHealth() <= 0) {
                 if (context.getModel()
-                .getEnemyState() instanceof  EnemyTurnState) {
+                .getEnemyState() instanceof EnemyTurnState) {
                     userPlayer.increasePlayerMaxPower(INCREASE_AMOUNT);
                     userPlayer.increasePlayerMaxHealth(INCREASE_AMOUNT);
                     userPlayer.increasePlayerMaxStamina(INCREASE_AMOUNT);

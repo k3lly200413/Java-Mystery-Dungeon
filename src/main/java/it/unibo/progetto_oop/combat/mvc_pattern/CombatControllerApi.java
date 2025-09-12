@@ -5,7 +5,8 @@ import javax.swing.JPanel;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 
 /**
- * Narrow API that exposes only the operations ViewManager needs from the controller.
+ * Narrow API that exposes only the operations
+ * ViewManager needs from the controller.
  */
 public interface CombatControllerApi {
     /**

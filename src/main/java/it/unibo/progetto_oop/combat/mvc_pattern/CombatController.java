@@ -158,7 +158,8 @@ public class CombatController implements CombatControllerApi {
      */
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP2",
-        justification = "CombatController must keep a live reference to the CombatCollision "
+        justification =
+        "CombatController must keep a live reference to the CombatCollision "
         + "to manage combat lifecycle (setInCombat etc.). "
         + "The controller is the logical owner of this object at runtime."
     )
@@ -168,9 +169,7 @@ public class CombatController implements CombatControllerApi {
         final CombatCollision newCombatCollision,
         final GridNotifier newGridNotifier) {
 
-        // TODO: SPOTBUGS here
         this.model = modelToUse;
-        // TODO: SPOTBUGS here
         this.view = viewToUse;
         this.view.setController(this);
         this.neighbours = new Neighbours();
@@ -180,7 +179,6 @@ public class CombatController implements CombatControllerApi {
         this.view.updatePlayerHealth(model.getPlayerHealth());
         this.view.updateEnemyHealth(model.getEnemyHealth());
 
-        // TODO: SPOTBUGS here
         this.combatCollision = newCombatCollision;
         this.gridNotifier = newGridNotifier;
 
@@ -188,7 +186,6 @@ public class CombatController implements CombatControllerApi {
 
         this.currentState = new PlayerTurnState();
 
-        // TODO: SPOTBUGS here
         this.itemFactory = new ItemFactory();
         this.player = newPlayer;
         this.attackBuffItem = itemFactory.createItem("Attack Buff", null);
@@ -994,7 +991,8 @@ public class CombatController implements CombatControllerApi {
             }
 
             @Override
-            public void updateDisplay(final RedrawContext ctx) { 
+            public void updateDisplay(
+                final RedrawContext ctx) {
                 backing.updateDisplay(ctx);
             }
 
@@ -1044,7 +1042,8 @@ public class CombatController implements CombatControllerApi {
             }
 
             @Override
-            public void setActionEnabled(final ActionType action, final boolean enabled) {
+            public void setActionEnabled(
+                final ActionType action, final boolean enabled) {
                 backing.setActionEnabled(action, enabled);
             }
 
@@ -1073,7 +1072,6 @@ public class CombatController implements CombatControllerApi {
      *
      * @return the model of the combat controller
      */
-    // TODO: SPOTBUGS here
     public final CombatModel getModel() {
         return this.model;
     }
@@ -1132,7 +1130,6 @@ public class CombatController implements CombatControllerApi {
      */
     @Override
     public final void setEncounteredEnemy(final Enemy encounteredEnemy) {
-        // TODO: SPOTBUGS here
         this.enemy = encounteredEnemy;
         this.model.setEnemyState(this.enemy.isBoss());
         this.enemyState = this.model.getEnemyState();
