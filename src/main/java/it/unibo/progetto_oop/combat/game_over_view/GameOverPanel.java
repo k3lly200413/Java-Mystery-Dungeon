@@ -68,7 +68,7 @@ public class GameOverPanel extends JPanel {
     private final JButton restartButton;
 
     /** Background image for the game over panel. */
-    private final Image backgroundImage;
+    private final transient Image backgroundImage;
 
     /**
      * Constructs a GameOverPanel with a background image and a restart button.
@@ -76,7 +76,7 @@ public class GameOverPanel extends JPanel {
      * @param onRestart a Runnable to execute when the restart button is clicked
      */
     public GameOverPanel(final Runnable onRestart) {
-        final var url = getClass().getResource(
+        final var url = GameOverPanel.class.getResource(
             "/spritesOverWorld/gameOverBackground.png");
         backgroundImage = new ImageIcon(url).getImage();
 
