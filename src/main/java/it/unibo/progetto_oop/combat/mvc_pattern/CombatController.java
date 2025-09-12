@@ -1075,9 +1075,9 @@ public class CombatController implements CombatControllerApi {
     @SuppressFBWarnings(
     value = "EI_EXPOSE_REP",
     justification =
-        "CombatController returns the internal model by design. " +
-        "The controller owns the lifecycle, and external callers cannot break invariants. " +
-        "Safe in this context."
+        "CombatController returns the internal model by design. "
+        + "The controller owns the lifecycle, and external callers cannot break invariants. "
+        + "Safe in this context."
     )
     public final CombatModel getModel() {
         return this.model;
@@ -1135,12 +1135,12 @@ public class CombatController implements CombatControllerApi {
      *
      * @param encounteredEnemy the enemy to set
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+    @SuppressFBWarnings(
     value = "EI_EXPOSE_REP2",
     justification =
-        "CombatController must keep a live reference to the current Enemy " +
-        "to manage combat logic and lifecycle. " +
-        "The controller is the logical owner of this object at runtime."
+        "CombatController must keep a live reference to the current Enemy "
+        + "to manage combat logic and lifecycle. "
+        + "The controller is the logical owner of this object at runtime."
     )
     @Override
     public final void setEncounteredEnemy(final Enemy encounteredEnemy) {
