@@ -7,6 +7,8 @@ import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 
+
+@FunctionalInterface
 public interface RoomPlacementStrategy  {
     /**
      * Places rooms on the grid based on the given configuration.

@@ -66,9 +66,9 @@ public class Dungeon {
         if (currentFloor >= config.nFloors() - 1) {
             return false;
         }
-        int nextIndex = currentFloor + 1;
+        final int nextIndex = currentFloor + 1;
         if (nextIndex >= floors.size()) {
-            final boolean isFinal = (nextIndex == config.nFloors() - 1);
+            final boolean isFinal = nextIndex == config.nFloors() - 1;
             final FloorConfig cfg = isFinal ? finalRoomConfig(config) : config;
             floors.add(new Floor(cfg, generator, isFinal));
         }

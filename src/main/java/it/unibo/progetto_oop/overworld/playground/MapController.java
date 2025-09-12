@@ -72,7 +72,7 @@ public final class MapController implements ChangeFloorListener {
     }
 
     @Override
-    public void onFloorChange(ReadOnlyGrid base) {
+    public void onFloorChange(final ReadOnlyGrid base) {
         view.setEntityGrid(model.getEntityGridView());
         view.setCameraTarget(model.getPlayer().getPosition());
         view.setZoom(DEFAULT_ZOOM_LEVEL);

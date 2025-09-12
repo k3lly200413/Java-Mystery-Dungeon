@@ -36,7 +36,7 @@ public final class ImplArrayListStructureData implements StructureData {
 
         this.grid = new ArrayList<>(h);
         for (int y = 0; y < h; y++) {
-            ArrayList<TileType> row = new ArrayList<>(w);
+            final ArrayList<TileType> row = new ArrayList<>(w);
             for (int x = 0; x < w; x++) {
                 row.add(TileType.WALL);
             }

@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -20,6 +21,8 @@ import it.unibo.progetto_oop.overworld.playground.data.TileType;
  */
 
 public final class ImplMapView extends JPanel implements MapView {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * The panel used to render the map view.
@@ -78,6 +81,8 @@ public final class ImplMapView extends JPanel implements MapView {
     /* ============ Canvas ============ */
     private static final class MapPanel extends JPanel {
 
+        private static final long serialVersionUID = 1L;
+        
         /**
          * The default width of the grid in cells.
          */
@@ -266,7 +271,7 @@ public final class ImplMapView extends JPanel implements MapView {
         private static BufferedImage loadSprite(final String path) {
             try (var is = ImplMapView.class.getResourceAsStream(path)) {
                 return is == null ? null : ImageIO.read(is);
-            } catch (final Exception e) {
+            } catch (final IOException e) {
                 return null;
             }
         }
@@ -300,7 +305,6 @@ public final class ImplMapView extends JPanel implements MapView {
                 case BOSS -> Color.MAGENTA;
                 case ITEM -> Color.PINK;
                 case NONE -> new Color(0, 0, 0, 0); // clear
-                default -> Color.MAGENTA;
             };
         }
     }

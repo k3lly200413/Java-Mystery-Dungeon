@@ -2,6 +2,7 @@ package it.unibo.progetto_oop.overworld.playground.view.playground_view;
 
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
 
+@FunctionalInterface
 public interface MapView {
     /**
      * Renders the map view based on the provided grid structure.

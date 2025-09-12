@@ -66,7 +66,7 @@ public final class FloorGenerator {
         if (conf.nRooms() <= 0) {
             throw new IllegalArgumentException("nRooms must be > 0");
         }
-        List<Room> rooms = new ArrayList<>();
+        final List<Room> rooms = new ArrayList<>();
         roomPlacement.placeRooms(baseGrid, rooms, rand, conf);
         if (rooms.size() >= 2) {
             tunnelPlacement.connect(baseGrid, rooms, rand);
