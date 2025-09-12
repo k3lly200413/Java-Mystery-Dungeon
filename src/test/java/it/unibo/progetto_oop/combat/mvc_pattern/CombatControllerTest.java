@@ -164,7 +164,8 @@ class CombatControllerTest {
     void resetForNewCombatTest() {
         controller.setState(new EnemyTurnState());
         controller.resetForNewCombat();
-        assertTrue(controller.getCurrentState() instanceof PlayerTurnState, "After resetting for the new combat it shuold be the player's turn");
+        assertTrue(controller.getCurrentState() instanceof PlayerTurnState,
+        "After resetting for the new combat it should be the player's turn");
     }
 
     @Test
