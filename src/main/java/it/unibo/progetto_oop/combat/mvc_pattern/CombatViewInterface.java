@@ -1,5 +1,7 @@
 package it.unibo.progetto_oop.combat.mvc_pattern;
 
+import javax.swing.JPanel;
+
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 
 /**
@@ -93,7 +95,7 @@ public interface CombatViewInterface {
      */
     void setActionEnabled(ActionType action, boolean isEnabled);
 
-     /**
+    /**
      * Display the main set of actions (Attack, Bag, Run).
      */
     void showMainMenu();
@@ -113,14 +115,14 @@ public interface CombatViewInterface {
      *
      * @param context the context containing information for redrawing
      */
-    void redrawGrid(RedrawContext context);
+    void updateDisplay(RedrawContext context);
 
     /**
      * Returns instance of CombatView.
      *
      * @return the CombatView instance
      */
-    CombatView getViewPanel();
+    JPanel getViewPanel();
 
     /**
      * Disables all Menus so that player cannot interact with them.

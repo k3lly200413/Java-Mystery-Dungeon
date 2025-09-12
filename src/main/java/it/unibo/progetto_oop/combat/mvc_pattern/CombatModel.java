@@ -41,6 +41,9 @@ public class CombatModel implements PossibleUser {
     /** The maximum number of hits the boss can perform in one sequence. */
     private static final int MAX_BOSS_HIT = 3;
 
+    /** The maximum health points allowed for both player and enemy. */
+    private static final int MAX_HEALTH = 100;
+
     /** The size of the game board or arena. */
     private final int size;
 
@@ -65,9 +68,6 @@ public class CombatModel implements PossibleUser {
 
     /** The maximum health points of the enemy. */
     private int enemyMaxHealth;
-
-    /** The maximum health points allowed for both player and enemy. */
-    private int maxHealth;
 
     /** The current stamina points of the player. */
     private int playerStamina;
@@ -415,7 +415,7 @@ public final boolean isGameOver() {
      * @return the maximum health
      */
     public final int getMaxHealth() {
-        return this.maxHealth;
+        return MAX_HEALTH;
     }
 
     /**

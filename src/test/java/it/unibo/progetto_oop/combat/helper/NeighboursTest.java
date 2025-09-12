@@ -7,17 +7,17 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
-public class NeighboursTest {
+class NeighboursTest {
 
     private Neighbours neighbours;
 
     @BeforeAll
-    void setUp() {
+    void neighboursSetUp() {
         this.neighbours = new Neighbours();
     }
 
     @Test
-    void neighboursTest(){
+    void neighboursTest() {
         assertTrue(neighbours.neighbours(new Position(0, 1), new Position(0, 0), 1));
         assertTrue(neighbours.neighbours(new Position(0, 0), new Position(0, 2), 2));
         assertTrue(neighbours.neighbours(new Position(0, 0), new Position(0, 0), 10));
@@ -26,6 +26,7 @@ public class NeighboursTest {
         assertFalse(neighbours.neighbours(new Position(1, 0), new Position(3, 0), 1));
     }
 
+    @Test
     void deathNeighboursTest() {
         assertTrue(neighbours.deathNeighbours(new Position(0, 0), new Position(1, 1), 1));
         assertTrue(neighbours.deathNeighbours(new Position(0, 0), new Position(1, 0), 1));

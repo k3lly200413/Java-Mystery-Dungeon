@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatViewApi;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
@@ -64,7 +64,7 @@ class GameOverStateTest {
     private CombatModel model;
 
     /** Combat view instance. */
-    private CombatView view;
+    private CombatViewApi view;
 
     /** Enemy position. */
     private final Position enemyPos = new Position(7, 4);
@@ -84,10 +84,10 @@ class GameOverStateTest {
 
         controller = mock(CombatController.class);
         model = mock(CombatModel.class);
-        view = mock(CombatView.class);
+        view = mock(CombatViewApi.class);
 
         when(controller.getModel()).thenReturn(model);
-        when(controller.getView()).thenReturn(view);
+        when(controller.getViewApi()).thenReturn(view);
 
         when(model.getPlayerPosition()).thenReturn(playerPos);
         when(model.getEnemyPosition()).thenReturn(enemyPos);
@@ -109,7 +109,7 @@ class GameOverStateTest {
         state.enterState(controller);
 
         verify(view, timeout(TIMEOUT_TIME))
-        .redrawGrid(any(RedrawContext.class));
+        .updateDisplay(any(RedrawContext.class));
     }
 
     @Test

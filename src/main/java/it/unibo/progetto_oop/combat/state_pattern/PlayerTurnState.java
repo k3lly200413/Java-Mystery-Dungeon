@@ -2,7 +2,6 @@ package it.unibo.progetto_oop.combat.state_pattern;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
-import it.unibo.progetto_oop.combat.potion_strategy.CurePoison;
 import it.unibo.progetto_oop.overworld.player.Player;
 
 /**
@@ -13,10 +12,6 @@ public class PlayerTurnState implements CombatState {
      * The amount of stamina to be removed after a special attack.
      */
     private static final int STAMINA_TO_REMOVE = 10;
-    /**
-     * Strategy for curing poison.
-     */
-    // private final CurePoison curePoison;
 
     /**
      * Constructor for PlayerTurnState.
@@ -29,9 +24,9 @@ public class PlayerTurnState implements CombatState {
     @Override
     public final void handlePhysicalAttackInput(
         final CombatController context) {
-        context.getView().setAllMenusDisabled();
-        context.getView().clearInfo();
-        context.getView().showInfo("Player Has used physical Attack");
+        context.getViewApi().setAllMenusDisabled();
+        context.getViewApi().clearInfo();
+        context.getViewApi().showInfo("Player Has used physical Attack");
         context.setState(new AnimatingState());
         context.performPlayerPhysicalAttack();
     }
@@ -44,9 +39,9 @@ public class PlayerTurnState implements CombatState {
 
         context.setState(new AnimatingState());
         context.getModel().decreasePlayerStamina(STAMINA_TO_REMOVE);
-        context.getView().updatePlayerStamina(
+        context.getViewApi().updatePlayerStamina(
             context.getModel().getPlayerStamina());
-        context.getView().showInfo("Player Has used Long Range Attack");
+        context.getViewApi().showInfo("Player Has used Long Range Attack");
         context.performLongRangeAttack(
             context.getModel().getPlayerPosition(), 1, isFalme, isPoison);
     }
@@ -63,7 +58,7 @@ public class PlayerTurnState implements CombatState {
 
     @Override
     public final void handleBagInput(final CombatController context) {
-        context.getView().showInfo("Bag Selected");
+        context.getViewApi().showInfo("Bag Selected");
     }
 
     @Override
@@ -76,14 +71,14 @@ public class PlayerTurnState implements CombatState {
     @Override
     public final void enterState(final CombatController context) {
         context.getModel().setPlayerTurn(true);
-        context.getView().setAllMenusEnabled();
-        context.getView().showMainMenu();
-        context.getView().showInfo("Your Turn!");
+        context.getViewApi().setAllMenusEnabled();
+        context.getViewApi().showMainMenu();
+        context.getViewApi().showInfo("Your Turn!");
     }
 
     @Override
     public final void exitState(final CombatController context) {
-        context.getView().clearInfo();
+        context.getViewApi().clearInfo();
     }
 
     @Override

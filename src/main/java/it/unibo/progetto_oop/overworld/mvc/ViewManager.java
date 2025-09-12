@@ -10,6 +10,7 @@ import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatControllerApi;
 import it.unibo.progetto_oop.combat.win_view.WinPanel;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.playground.view.game_start.GameStartView;
@@ -94,7 +95,7 @@ public final class ViewManager {
     /**
      * The controller for managing combat logic and interactions.
      */
-    private CombatController combatController;
+    private CombatControllerApi combatController;
 
     /** Game over panel. */
     private GameOverPanel gameOverPanel;
@@ -158,13 +159,49 @@ public final class ViewManager {
 
     /**
      * Sets the combat controller.
-     * 
-     * @param currentCombatController the combat controller to set
+     *
+     * Wraps the full controller in a small adapter exposing only the required API so
+     * ViewManager does not keep a concrete mutable controller reference.
+     *
+     * @param fullController the concrete CombatController to adapt
      */
-    public void setCombatController(
-            final CombatController currentCombatController) {
-        this.combatController = currentCombatController;
-        this.mainCardPanel.add(this.combatController.getView().getViewPanel(), COMBAT_CARD);
+    public void setCombatController(final CombatController fullController) {
+        this.combatController = new CombatControllerApi() {
+            @Override
+            public void setEncounteredEnemy(final Enemy enemy) {
+                fullController.setEncounteredEnemy(enemy);
+            }
+
+            @Override
+            public void setEnemyHp(final int currentHp, final int maxHp) {
+                fullController.getModel().setEnemyCurrentHp(currentHp);
+                fullController.getModel().setEnemyMaxHp(maxHp);
+            }
+
+            @Override
+            public void resetForNewCombat() {
+                fullController.resetForNewCombat();
+            }
+
+            @Override
+            public void redrawView() {
+                fullController.redrawView();
+            }
+
+            @Override
+            public JPanel getViewPanel() {
+                return fullController.getViewApi().getViewPanel();
+            }
+        };
+        this.mainCardPanel.add(this.combatController.getViewPanel(), COMBAT_CARD);
+    }
+
+    public void showCombat(final Enemy encounteredEnemy) {
+        this.combatController.setEncounteredEnemy(encounteredEnemy);
+        this.combatController.setEnemyHp(encounteredEnemy.getCurrentHp(), encounteredEnemy.getMaxHp());
+        this.combatController.resetForNewCombat();
+        this.combatController.redrawView();
+        this.cardLayout.show(this.mainCardPanel, COMBAT_CARD);
     }
 
     /**
@@ -182,14 +219,14 @@ public final class ViewManager {
         this.cardLayout.show(this.mainCardPanel, INVENTORY_CARD);
     }
 
-    public void showCombat(Enemy encounteredEnemy) {
-        this.combatController.setEncounteredEnemy(encounteredEnemy);
-        this.combatController.getModel().setEnemyCurrentHp(encounteredEnemy.getCurrentHp());
-        this.combatController.getModel().setEnemyMaxHp(encounteredEnemy.getMaxHp());
-        this.combatController.resetForNewCombat();
-        this.combatController.redrawView();
-        this.cardLayout.show(this.mainCardPanel, COMBAT_CARD);
-    }
+    // public void showCombat(Enemy encounteredEnemy) {
+    //     this.combatController.setEncounteredEnemy(encounteredEnemy);
+    //     this.combatController.getModel().setEnemyCurrentHp(encounteredEnemy.getCurrentHp());
+    //     this.combatController.getModel().setEnemyMaxHp(encounteredEnemy.getMaxHp());
+    //     this.combatController.resetForNewCombat();
+    //     this.combatController.redrawView();
+    //     this.cardLayout.show(this.mainCardPanel, COMBAT_CARD);
+    // }
 
     public void setGameOverPanel(final GameOverPanel newGameOverPanel) {
         this.gameOverPanel = newGameOverPanel;

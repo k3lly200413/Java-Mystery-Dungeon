@@ -16,6 +16,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CombatCollisionImplTest {
+
+    /**
+     * coordinate constant.
+     */
+    private static final int COORDINATE = 5;
+
     /**
      * combat collision implementation under test.
      */
@@ -45,11 +51,6 @@ class CombatCollisionImplTest {
      * mocked observer.
      */
     private ViewManagerObserver observer;
-
-    /**
-     * coordinate constant.
-     */
-    private static final int COORDINATE = 5;
 
     @BeforeEach
     void setUp() {

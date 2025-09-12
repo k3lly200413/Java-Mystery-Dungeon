@@ -74,7 +74,7 @@ public class GameOverState implements CombatState {
                     gridNotifier.notifyListEnemyRemoved(
                         enemy.getCurrentPosition());
                     combatCollision.setInCombat(false);
-                    context.getView().showInfo(
+                    context.getViewApi().showInfo(
                         "You Win! Returning to Overworld...");
                     this.combatCollision.showOverworld();
                 } else {
@@ -104,7 +104,7 @@ public class GameOverState implements CombatState {
                 .setIsGameOver(context.getModel().isGameOver())
                 .whoDied(context.getModel().getWhoDied())
                 .build();
-        context.getView().redrawGrid(defaultRedraw);
+        context.getViewApi().updateDisplay(defaultRedraw);
     }
 
     /**
@@ -114,7 +114,7 @@ public class GameOverState implements CombatState {
      */
     @Override
     public void exitState(final CombatController context) {
-        context.getView().showInfo("Exiting Game Over State");
+        context.getViewApi().showInfo("Exiting Game Over State");
     }
 
     /**
@@ -125,7 +125,7 @@ public class GameOverState implements CombatState {
      */
     @Override
     public void handleAnimationComplete(final CombatController context) {
-        context.getView().showInfo("Animation Complete in Game Over State");
+        context.getViewApi().showInfo("Animation Complete in Game Over State");
     }
 
     @Override

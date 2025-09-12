@@ -1,6 +1,7 @@
 
 package it.unibo.progetto_oop.combat.command_pattern;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class MeleeButton implements GameButton {
                 this.enemy, 1)
             ) {
             this.giocatori = this.moveEnemy();
-            return this.giocatori;
+            return new ArrayList<>(this.giocatori);
         } else {
             this.player = new Position(
                 this.player.x() + this.where, this.player.y());
@@ -71,7 +72,7 @@ public class MeleeButton implements GameButton {
         this.giocatori.clear();
         this.giocatori.add(this.player);
         this.giocatori.add(this.enemy);
-        return this.giocatori;
+        return new ArrayList<>(this.giocatori);
     }
 
     /**
@@ -90,6 +91,6 @@ public class MeleeButton implements GameButton {
         this.giocatori.add(this.player);
         this.giocatori.add(this.enemy);
 
-        return this.giocatori;
+        return new ArrayList<>(this.giocatori);
     }
 }

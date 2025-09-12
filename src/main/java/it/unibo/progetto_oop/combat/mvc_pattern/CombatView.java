@@ -9,6 +9,8 @@ import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -109,11 +111,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Map to hold JLabel components and their corresponding Position.
      */
-    private final Map<JLabel, Position> cells;
-    /**
-     * CombatController instance.
-     */
-    private CombatController controller;
+    private transient Map<JLabel, Position> cells;
     /**
      * Height and width of the player's health bar.
      */
@@ -159,9 +157,9 @@ public class CombatView extends JPanel implements CombatViewInterface {
      */
     private JButton runButton;
     /**
-     * Button for displaying information in the combat view.
+     * Button for displaying info in the combat view.
      */
-     private JButton infoButton;
+    private JButton infoButton;
     /**
      * Button for performing a physical attack in the combat view.
      */
@@ -201,7 +199,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Neighbours helper class for position calculations.
      */
-    private final Neighbours neighbours;
+    private transient Neighbours neighbours;
     /**
      * Maximum health of the player.
      */
@@ -255,6 +253,12 @@ public class CombatView extends JPanel implements CombatViewInterface {
             DEFAULT_SQUARE_WIDTH,
             DEFAULT_SQUARE_HEIGHT
         );
+    }
+
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.neighbours = new Neighbours();
+        this.cells = new HashMap<>();
     }
 
     private void initializeUI(final int size,
@@ -400,6 +404,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
      *
      * @param max the maximum health value for both player and enemy
      */
+    @Override
     public final void setPlayerHealthBarMax(final int max) {
         this.playerHealtBar.setMaximum(max);
     }
@@ -409,6 +414,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
      *
      * @param max maximum health value for the enemy
      */
+    @Override
     public final void setEnemyHealthBarMax(final int max) {
         this.enemyHealthBar.setMaximum(max);
     }
@@ -442,6 +448,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
      *
      * @param max maximum stamina value for the player
      */
+    @Override
     public final void setPlayerMaxStaminaBar(final int max) {
         this.playerStaminaBar.setMaximum(max);
     }
@@ -481,19 +488,19 @@ public class CombatView extends JPanel implements CombatViewInterface {
      */
     @Override
     public final void setController(final CombatController combatController) {
-        this.controller = combatController;
-        this.attackButton.addActionListener(e -> this.controller.handleAttackMenu());
-        this.bagButton.addActionListener(e -> this.controller.handleBagMenu());
-        this.runButton.addActionListener(e -> this.controller.exitCombat());
-        this.infoButton.addActionListener(e -> this.controller.handleInfo());
-        this.physicalAttackButton.addActionListener(e -> this.controller.handlePlayerPhysicalAttack());
-        this.longRangeButton.addActionListener(e -> this.controller.handlePlayerLongRangeAttack(false, true));
-        this.poisonButton.addActionListener(e -> this.controller.handlePlayerLongRangeAttack(true, false));
-        this.backButton.addActionListener(e -> this.controller.handleBackToMainMenu());
-        this.backAttackButton.addActionListener(e -> this.controller.handleBackToMainMenu());
-        this.attackBuffButton.addActionListener(e -> this.controller.handleAttackBuff());
-        this.curePoisonButton.addActionListener(e -> this.controller.handleCurePoisonInput());
-        this.healButton.addActionListener(e -> this.controller.handleHeal());
+        final CombatController ctrl = combatController;
+        this.attackButton.addActionListener(e -> ctrl.handleAttackMenu());
+        this.bagButton.addActionListener(e -> ctrl.handleBagMenu());
+        this.runButton.addActionListener(e -> ctrl.exitCombat());
+        this.infoButton.addActionListener(e -> ctrl.handleInfo());
+        this.physicalAttackButton.addActionListener(e -> ctrl.handlePlayerPhysicalAttack());
+        this.longRangeButton.addActionListener(e -> ctrl.handlePlayerLongRangeAttack(false, true));
+        this.poisonButton.addActionListener(e -> ctrl.handlePlayerLongRangeAttack(true, false));
+        this.backButton.addActionListener(e -> ctrl.handleBackToMainMenu());
+        this.backAttackButton.addActionListener(e -> ctrl.handleBackToMainMenu());
+        this.attackBuffButton.addActionListener(e -> ctrl.handleAttackBuff());
+        this.curePoisonButton.addActionListener(e -> ctrl.handleCurePoisonInput());
+        this.healButton.addActionListener(e -> ctrl.handleHeal());
     }
 
     /**
@@ -501,7 +508,8 @@ public class CombatView extends JPanel implements CombatViewInterface {
      *
      * @param context the context containing necessary information for redrawing
      */
-    public final void redrawGrid(final RedrawContext context) {
+    @Override
+    public final void updateDisplay(final RedrawContext context) {
 
         for (final var entry : cells.entrySet()) {
             final JLabel cellLabel = entry.getKey();
@@ -606,6 +614,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Sets the visibility of the combat view.
      */
+    @Override
     public final void showAttackMenu() {
         this.cardLayout.show(buttonPanelContainer, "attackOptions");
     }
@@ -613,6 +622,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Sets the visibility of the bag buttons in the combat view.
      */
+    @Override
     public final void showMainMenu() {
         this.cardLayout.show(this.buttonPanelContainer, "originalButtons");
     }
@@ -620,6 +630,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Sets the visibility of the bag buttons in the combat view.
      */
+    @Override
     public final void showBagMenu() {
         this.cardLayout.show(this.buttonPanelContainer, "bagButtons");
     }
@@ -652,8 +663,10 @@ public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Enables a specific button in the combat view, allowing user interaction.
      *
-     * @param buttonToEnable the button to enable
+     * @param action the action type corresponding to the button to enable
+     * @param isEnabled true to enable the button, false to disable it
      */
+    @Override
     public final void setActionEnabled(final ActionType action, final boolean isEnabled) {
         switch (action) {
             case PHYSICAL:
@@ -680,7 +693,6 @@ public class CombatView extends JPanel implements CombatViewInterface {
             case BACK:
                 this.backAttackButton.setEnabled(isEnabled);
                 this.backButton.setEnabled(isEnabled);
-            default:
                 break;
         }
     }
@@ -708,6 +720,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Sets the visibility of the combat view.
      */
+    @Override
     public final void display() {
         this.setVisible(true);
     }
@@ -716,7 +729,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
         final String path,
         final int width,
         final int height) {
-        final URL imgURL = getClass().getResource(path);
+        final URL imgURL = CombatView.class.getResource(path);
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
@@ -727,109 +740,134 @@ public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Returns the attack button for the combat view.
      *
-     * @return the attack button
+     * @return a defensive copy of the long range attack button, or null if not initialized
      */
     public final JButton getLongRangeAttackButton() {
-        return this.longRangeButton;
+        return copyButton(this.longRangeButton);
     }
 
     /**
-     * Returns the physical attack button for the combat view.
+     * Returns the poison attack button.
      *
-     * @return the physical attack button
+     * @return a copy of the poison button (may be null if view not initialized)
      */
     public final JButton getPoisonAttackButton() {
-        return this.poisonButton;
+        if (this.poisonButton == null) {
+            return null;
+        }
+        final JButton copy = new JButton(this.poisonButton.getText());
+        copy.setEnabled(this.poisonButton.isEnabled());
+        copy.setPreferredSize(this.poisonButton.getPreferredSize());
+        copy.setToolTipText(this.poisonButton.getToolTipText());
+        copy.setIcon(this.poisonButton.getIcon());
+        return copy;
     }
 
     /**
      * Returns the cure poison button for the combat view.
      *
-     * @return the cure poison button
+     * @return a defensive copy of the cure poison button, or null if not initialized
      */
     public final JButton getCurePoisonButton() {
-        return this.curePoisonButton;
+        return copyButton(this.curePoisonButton);
     }
 
     /**
      * Returns the attack buff button for the combat view.
      *
-     * @return the attack buff button
+     * @return a defensive copy of the attack buff button, or null if not initialized
      */
     public final JButton getAttackBuffButton() {
-        return this.attackBuffButton;
+        return copyButton(this.attackBuffButton);
     }
 
     /**
      * Returns the heal button for the combat view.
      *
-     * @return the heal button
+     * @return a defensive copy of the heal button, or null if not initialized
      */
     public final JButton getHealingButton() {
-        return this.healButton;
+        return copyButton(this.healButton);
     }
 
     /**
      * Returns the back button for the combat view.
      *
-     * @return the back button
+     * @return a defensive copy of the back attack button, or null if not initialized
      */
     public final JButton getAttackBackButton() {
-        return this.backAttackButton;
+        return copyButton(this.backAttackButton);
     }
 
     /**
      * Returns the bag button panel for the combat view.
      *
-     * @return the bag button panel
+     * @return a defensive copy of the bag button panel
      */
     public final JPanel getBagButtonPanel() {
-        return this.bagButtonPanel;
+        return copyPanel(this.bagButtonPanel);
     }
 
     /**
      * Returns the attack button panel for the combat view.
      *
-     * @return the attack button panel
+     * @return a defensive copy of the attack button panel
      */
     public final JPanel getAttackButtonPanel() {
-        return this.attackButtonPanel;
+        return copyPanel(this.attackButtonPanel);
     }
 
     /**
      * Returns the original button panel for the combat view.
      *
-     * @return the original button panel
+     * @return a defensive copy of the original button panel
      */
     public final JPanel getOriginalButtonPanel() {
-        return this.originalButtonPanel;
+        return copyPanel(this.originalButtonPanel);
     }
 
     /**
      * Returns the button panel container for the combat view.
      *
-     * @return the button panel container
+     * @return a defensive copy of the button panel container
      */
     public final JPanel getButtonPanelContainer() {
-        return this.buttonPanelContainer;
+        return copyPanel(this.buttonPanelContainer);
     }
 
     /**
      * Returns the player health bar for the combat view.
      *
-     * @return the player health bar
+     * @return a defensive copy of the player health bar
      */
     public final JProgressBar getPlayerHealthBar() {
-        return this.playerHealtBar;
+        return copyProgressBar(this.playerHealtBar);
+    }
+
+    private JProgressBar copyProgressBar(final JProgressBar src) {
+        if (src == null) {
+            return null;
+        }
+        final JProgressBar copy = new JProgressBar(src.getMinimum(), src.getMaximum());
+        copy.setValue(src.getValue());
+        copy.setStringPainted(src.isStringPainted());
+        copy.setString(src.getString());
+        copy.setPreferredSize(src.getPreferredSize());
+        copy.setForeground(src.getForeground());
+        copy.setBackground(src.getBackground());
+        copy.setBorder(src.getBorder());
+        copy.setOrientation(src.getOrientation());
+        copy.setIndeterminate(src.isIndeterminate());
+        return copy;
     }
 
     /**
-     * Returns the enemy health bar for the combat view.
+     * Returns a defensive copy of the enemy health bar.
      *
-     * @return the enemy health bar
+     * @return a copy of the internal enemy health JProgressBar, or null if not initialized
      */
     public final JProgressBar getEnemyHealthBar() {
-        return this.enemyHealthBar;
+        return copyProgressBar(this.enemyHealthBar);
     }
 
     private ImageIcon createDefaultIcon(final int width, final int height) {
@@ -851,82 +889,32 @@ public class CombatView extends JPanel implements CombatViewInterface {
         return tempButton;
     }
 
-    /**
-     * Adds an action listener to the attack button.
-     */
-    public final void addAttackButtonListener() {
-        this.attackButton.addActionListener(e -> this.controller.handleAttackMenu());
+    private JButton copyButton(final JButton src) {
+        if (src == null) {
+            return null;
+        }
+        final JButton copy = new JButton(src.getText());
+        copy.setEnabled(src.isEnabled());
+        copy.setPreferredSize(src.getPreferredSize());
+        copy.setToolTipText(src.getToolTipText());
+        copy.setIcon(src.getIcon());
+        return copy;
     }
 
-    /**
-     * Adds an action listener to the bag button.
-     */
-    public final void addBagButtonListener() {
-        this.bagButton.addActionListener(e -> this.controller.handleBagMenu());
-    }
-
-    /**
-     * Adds an action listener to the run button.
-     */
-    public final void addRunButtonListener() {
-        this.runButton.addActionListener(e -> this.controller.exitCombat());
-    }
-
-    /**
-     * Adds an action listener to the info button.
-     */
-    public final void addInfoButtonListener() {
-        this.infoButton.addActionListener(e -> this.controller.handleInfo());
-    }
-
-    /**
-     * Adds an action listener to the physical attack button.
-     */
-    public final void addPhysicalButtonListener() {
-        this.physicalAttackButton.addActionListener(e -> this.controller.handlePlayerPhysicalAttack());
-    }
-
-    /**
-     * Adds an action listener to the long-range attack button.
-     */
-    public final void addLongRangeButtonListener() {
-        this.longRangeButton.addActionListener(e -> this.controller.handlePlayerLongRangeAttack(false, true));
-    }
-
-    /**
-     * Adds an action listener to the poison button.
-     */
-    public final void addPoisonButtonListener() {
-        this.poisonButton.addActionListener(e -> this.controller.handlePlayerLongRangeAttack(true, false));
-    }
-
-    /**
-     * Adds an action listener to the back button.
-     */
-    public final void addBackButtonListener() {
-        this.backButton.addActionListener(e -> this.controller.handleBackToMainMenu());
-        this.backAttackButton.addActionListener(e -> this.controller.handleBackToMainMenu());
-    }
-
-    /**
-     * Adds an action listener to the attack buff button.
-     */
-    public final void addAttackBuffButtonListener() {
-        this.attackBuffButton.addActionListener(e -> this.controller.handleAttackBuff());
-    }
-
-    /**
-     * Adds an action listener to the cure button.
-     */
-    public final void addCurePoisonButtonListener() {
-        this.curePoisonButton.addActionListener(e -> this.controller.handleCurePoisonInput());
-    }
-
-    /**
-     * Adds an action listener to the heal button.
-     */
-    public final void addHealButtonListener() {
-        this.healButton.addActionListener(e -> this.controller.handleHeal());
+    private JPanel copyPanel(final JPanel src) {
+        if (src == null) {
+            return null;
+        }
+        final JPanel copy = new JPanel(src.getLayout());
+        for (final Component c : src.getComponents()) {
+            if (c instanceof JButton) {
+                copy.add(copyButton((JButton) c));
+            } else {
+                // add non-button components directly if safe (labels, struts...). Adjust if needed.
+                copy.add(c);
+            }
+        }
+        return copy;
     }
 
     /**
@@ -960,9 +948,35 @@ public class CombatView extends JPanel implements CombatViewInterface {
         }
     }
 
+    /**
+     * Returns the main panel of the combat view.
+     */
     @Override
-    public CombatView getViewPanel() {
+    public JPanel getViewPanel() {
         return this;
+    }
+
+    /**
+     * Returns a defensive copy of the info label to avoid exposing internal state.
+     * Prefer using showInfo/clearInfo for reading/modifying the info text.
+     *
+     * @return a copy of the internal info JLabel, or null if not initialized
+     */
+    public JLabel getInfoLabel() {
+        if (this.infoLabel == null) {
+            return null;
+        }
+        final JLabel copy = new JLabel(
+            this.infoLabel.getText(),
+            this.infoLabel.getIcon(),
+            this.infoLabel.getHorizontalAlignment()
+        );
+        copy.setPreferredSize(this.infoLabel.getPreferredSize());
+        copy.setToolTipText(this.infoLabel.getToolTipText());
+        copy.setOpaque(this.infoLabel.isOpaque());
+        copy.setHorizontalAlignment(this.infoLabel.getHorizontalAlignment());
+        copy.setVerticalAlignment(this.infoLabel.getVerticalAlignment());
+        return copy;
     }
 
 }

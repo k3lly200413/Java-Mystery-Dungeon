@@ -16,9 +16,6 @@ import it.unibo.progetto_oop.overworld.player.Player;
  */
 public final class CombatLauncher {
 
-    /** Combat controller instance. */
-    private CombatController combatController;
-
     /**
      * Main method to launch the combat application.
      *
@@ -71,19 +68,18 @@ public final class CombatLauncher {
         viewHeightFactor * model.getSize() / sizeDivisor,
         buttonWidth, buttonHeight, windowWidth, windowHeight);
         view.init();
-        this.combatController =
-            new CombatController(model, view, player,
+        return new CombatController(model, view, player,
             combatCollision, gridNotifier);
-        return this.combatController;
     }
 
     /**
      * Sets the encountered enemy in the combat controller.
      *
      * @param encounteredEnemy the enemy encountered by the player
+     * @param controller the combat controller instance
      */
-    public void setEncounteredEnemy(final Enemy encounteredEnemy) {
-        this.combatController.setEncounteredEnemy(encounteredEnemy);
+    public void setEncounteredEnemy(final CombatController controller, final Enemy encounteredEnemy) {
+        controller.setEncounteredEnemy(encounteredEnemy);
     }
 
 }

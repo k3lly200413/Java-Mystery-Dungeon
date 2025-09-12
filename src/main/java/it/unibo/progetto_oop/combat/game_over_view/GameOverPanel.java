@@ -35,7 +35,7 @@ public class GameOverPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /** GridBagConstraints gridx value for layout. */
-    private static  final int GBC_GRIDY = 3;
+    private static final int GBC_GRIDY = 3;
 
     /** Color of the title text. */
     private static final Color TITLE_COLOR = Color.RED;

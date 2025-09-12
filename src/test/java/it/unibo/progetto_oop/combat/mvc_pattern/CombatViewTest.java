@@ -1,39 +1,63 @@
 package it.unibo.progetto_oop.combat.mvc_pattern;
 
-/*import javax.swing.JButton;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
+import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.state_pattern.AnimatingState;
-import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
+import it.unibo.progetto_oop.combat.state_pattern.InfoDisplayState;
+import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
+import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
+import it.unibo.progetto_oop.overworld.player.Player;
 
-public class CombatViewTest {
-    CombatView view;
-    CombatModel model;
-    CombatController controller;
+class CombatViewTest {
+    private CombatView view;
+    private CombatModel model;
+    private CombatController controller;
 
     @BeforeEach
     void setUp() {
+        final Player player = new Player(100, 100, 100, new Inventory());
+        final CombatCollision collision = mock(CombatCollision.class);
+        final GridNotifier gridNotifier = mock(GridNotifier.class);
         this.model = new CombatBuilder()
             .setSize(12)
             .setStaminaMax(100)
             .setPlayerPower(10)
             .setPlayerPoisonPower(2)
             .setPlayerLongRangePower(10)
-            .setEnemyPower(10)
             .setEnemySpeed(3)
             .setEnemyName("Dragon")
+            .setPlayerCurrentHealth(100)
+            .setEnemyCurrentHealth(100)
+            .setEnemyMaxHealth(100)
             .build();
 
-        this.view = new CombatView(model.getSize(), (20 * model.getSize()) / 3, (50 * model.getSize()) / 3, 70, 75, 100, 100);
-        // this.view.init();
-        this.controller = new CombatController(model, view, null,null, null);
+        this.view = new CombatView(model.getSize(), 20 * model.getSize() / 3,
+        50 * model.getSize() / 3, 70,
+        75, 100, 100);
+        this.view.init();
+        this.controller = new CombatController(model, view, player, collision, gridNotifier);
+        this.view.setPlayerMaxStaminaBar(100);
+        this.view.setPlayerHealthBarMax(100);
+    }
+
+    public CombatView getView() {
+        return this.view;
+    }
+
+    public CombatModel getModel() {
+        return this.model;
+    }
+
+    public CombatController getController() {
+        return this.controller;
     }
 
     @Test
@@ -43,14 +67,6 @@ public class CombatViewTest {
     }
 
     @Test
-    void poisonAttackButtonPressedTest() {
-        JButton poisonButton = this.view.getPoisonAttackButton();
-        poisonButton.doClick();
-        assertNotNull(poisonButton);
-        assertFalse(poisonButton.isEnabled());
-        assertTrue(controller.isAnimationRunning());
-    }
-    @Test
     void playerHealthBarUpdateTest() {
         this.model.decreasePlayerHealth(10);
         this.view.updatePlayerHealth(this.model.getPlayerHealth());
@@ -58,45 +74,33 @@ public class CombatViewTest {
     }
 
     @Test
-    void EnemyHealthBarUpdateTest() {
-        this.model.decreaseEnemyHealth(10);
-        this.view.updateEnemyHealth(this.model.getEnemyHealth());
+    void enemyHealthBarUpdateTest() {
+        final int remaining = model.applyAttackHealth(
+            true,
+            10
+        );
+        this.view.updateEnemyHealth(remaining);
         assertEquals(90, this.view.getEnemyHealthBar().getValue());
     }
-    @Test
-    void performingPhysicalAttackButtonsAreNotClickable() {
-        this.controller.setState(new PlayerTurnState());
-        this.controller.getCurrentState().handlePhysicalAttackInput(controller);
-        // this.view.showAttackOptions();
-        assertTrue(this.view.getAttackButtonPanel().isVisible());
-        assertFalse(this.view.getBagButtonPanel().isVisible());
-        assertFalse(this.view.getOriginalButtonPanel().isVisible());
-        assertFalse(this.view.getPoisonAttackButton().isEnabled());
-    }
+
     @Test
     void buttonsAreNotClickableDuringAnimationTest() {
         this.controller.setState(new AnimatingState());
-        // this.view.showBagButtons();
+        this.view.showBagMenu();
         assertFalse(this.view.getAttackButtonPanel().getComponent(0).isEnabled());
-        // this.view.showAttackOptions();
+        this.view.showAttackMenu();
         assertFalse(this.view.getAttackButtonPanel().getComponent(0).isEnabled());
-        // this.view.showOriginalButtons();
+        this.view.showMainMenu();
         assertFalse(this.view.getAttackButtonPanel().getComponent(0).isEnabled());
     }
+
     @Test
-    void testCardLayoutShowing() {
-        // this.view.showAttackOptions();
-        assertTrue(this.view.getAttackButtonPanel().isVisible());
-        assertFalse(this.view.getBagButtonPanel().isVisible());
-        assertFalse(this.view.getOriginalButtonPanel().isVisible());
-        // this.view.showBagButtons();
-        assertFalse(this.view.getAttackButtonPanel().isVisible());
-        assertTrue(this.view.getBagButtonPanel().isVisible());
-        assertFalse(this.view.getOriginalButtonPanel().isVisible());
-        // this.view.showOriginalButtons();
-        assertTrue(this.view.getOriginalButtonPanel().isVisible());
-        assertFalse(this.view.getAttackButtonPanel().isVisible());
-        assertFalse(this.view.getBagButtonPanel().isVisible());
+    void setTextOnInfoLabel() {
+        this.controller.setState(new InfoDisplayState());
+        this.controller.handleInfo();
+        this.view.getInfoLabel().getText();
+        final String stringResult = "<html><html>Enemy Info:<br>Name: " + this.model.getEnemyName() + "<br>Power: " + this.model.getEnemyPower() + "<br>Speed: " + this.model.getEnemySpeed() + "</html></html>";
+        assertEquals(this.view.getInfoLabel().getText(), stringResult);
     }
-    
-}*/
+
+}

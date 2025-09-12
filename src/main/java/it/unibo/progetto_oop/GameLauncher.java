@@ -48,7 +48,7 @@ public final class GameLauncher {
                     floorConfig, entityStatsConfig, rand
                 );
 
-                CombatController combatController =
+                final CombatController combatController =
                 new CombatLauncher().buildCombat(
                     session.getModel().getPlayer(),
                     session.getModel().getCombatCollision(),

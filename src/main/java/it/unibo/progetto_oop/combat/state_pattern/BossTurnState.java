@@ -81,11 +81,11 @@ public class BossTurnState implements CombatState {
     // Constants for Boss logic
     @Override
     public final void enterState(final CombatController context) {
-        context.getView().showInfo("Starting Boss Turn");
+        context.getViewApi().showInfo("Starting Boss Turn");
         if (context.getModel().getEnemyHealth() < BOSS_ENRAGED_THRESHOLD
             && "NORMAL".equalsIgnoreCase(this.bossState)) {
             this.bossState = "ENRAGED";
-            context.getView().showInfo("The Boss is now ENRAGED");
+            context.getViewApi().showInfo("The Boss is now ENRAGED");
         }
         if ("ENRAGED".equalsIgnoreCase(this.bossState)) {
             context.setState(new AnimatingState());
@@ -104,7 +104,7 @@ public class BossTurnState implements CombatState {
                 context.getModel().increaseBossTurnCounter();
             } else if (context.getModel().
             getBossTurnCounter() % SUPER_ATTACK_CHARGE_INTERVAL == 0) {
-                context.getView().showInfo(
+                context.getViewApi().showInfo(
                     "The Boss is charging up his Super Attack!");
                 context.setState(new AnimatingState());
                 context.performDeathAnimation(
@@ -124,7 +124,7 @@ public class BossTurnState implements CombatState {
 
     @Override
     public final void exitState(final CombatController context) {
-        context.getView().showInfo("Finished Boss turn");
+        context.getViewApi().showInfo("Finished Boss turn");
     }
 
     @Override

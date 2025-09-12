@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop.combat.combat_builder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
@@ -240,7 +241,7 @@ public final class RedrawContext {
      * @return the path of the death ray
      */
     public List<Position> getDeathRayPath() {
-        return deathRayPath;
+        return new ArrayList<>(deathRayPath);
     }
 
     /**
@@ -542,13 +543,12 @@ public final class RedrawContext {
         /**
          * Builder for the death ray path.
          *
-         * @param deathRayPathArrayList the path of the death ray
+         * @param path the path of the death ray
          * @return the builder
          */
-        public Builder deathRayPath(
-            final List<Position> deathRayPathArrayList) {
-                this.deathRayPath = deathRayPathArrayList;
-                return this;
+        public Builder deathRayPath(final List<Position> path) {
+            this.deathRayPath = (path == null) ? null : new ArrayList<>(path);
+            return this;
         }
 
         /**

@@ -3,7 +3,7 @@ package it.unibo.progetto_oop.combat.state_pattern;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatViewInterface;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatViewApi;
 import it.unibo.progetto_oop.overworld.player.Player;
 
 /**
@@ -67,9 +67,9 @@ public class AnimatingState implements CombatState {
 
     @Override
     public final void enterState(final CombatController context) {
-        context.getView().showInfo(
+        context.getViewApi().showInfo(
             "Entered Animating State!\nNo issues for now");
-        context.getView().setAllMenusDisabled();
+        context.getViewApi().setAllMenusDisabled();
     }
 
     /**
@@ -77,14 +77,14 @@ public class AnimatingState implements CombatState {
      */
     @Override
     public final void exitState(final CombatController context) {
-        context.getView().showInfo("Animation Completed");
+        context.getViewApi().showInfo("Animation Completed");
     }
 
     @Override
     public final void handleAnimationComplete(final CombatController context) {
 
         final CombatModel model = context.getModel();
-        final CombatViewInterface view = context.getView();
+        final CombatViewApi view = context.getViewApi();
 
         final boolean wasPlayerTurn = model.isPlayerTurn();
 

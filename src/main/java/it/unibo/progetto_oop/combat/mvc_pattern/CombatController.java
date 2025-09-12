@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.progetto_oop.GameLauncher;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.command_pattern.GameButton;
@@ -34,7 +36,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
  * @author Kelly.applebee@studio.unibo.it
  * @author matteo.monari6@studio.unibo.it
  */
-public class CombatController {
+public class CombatController implements CombatControllerApi {
 
     /**
      * Animation delay for each step in the animation.
@@ -61,6 +63,10 @@ public class CombatController {
      * Width of each square in the grid.
      */
     private static final int SQUARE_WIDTH = 20;
+    /**
+     * Random instance for any randomization needs.
+     */
+    private static final Random RANDOM = new Random();
 
     /**
      * Static instance of CurePoison item to be used across states.
@@ -150,13 +156,21 @@ public class CombatController {
      * @param newCombatCollision Collision handler for combat state
      * @param newGridNotifier Grid notifier for managing grid updates
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "CombatController must keep a live reference to the CombatCollision "
+        + "to manage combat lifecycle (setInCombat etc.). "
+        + "The controller is the logical owner of this object at runtime."
+    )
     public CombatController(
         final CombatModel modelToUse,
         final CombatViewInterface viewToUse, final Player newPlayer,
         final CombatCollision newCombatCollision,
         final GridNotifier newGridNotifier) {
 
+        // TODO: SPOTBUGS here
         this.model = modelToUse;
+        // TODO: SPOTBUGS here
         this.view = viewToUse;
         this.view.setController(this);
         this.neighbours = new Neighbours();
@@ -166,6 +180,7 @@ public class CombatController {
         this.view.updatePlayerHealth(model.getPlayerHealth());
         this.view.updateEnemyHealth(model.getEnemyHealth());
 
+        // TODO: SPOTBUGS here
         this.combatCollision = newCombatCollision;
         this.gridNotifier = newGridNotifier;
 
@@ -173,6 +188,7 @@ public class CombatController {
 
         this.currentState = new PlayerTurnState();
 
+        // TODO: SPOTBUGS here
         this.itemFactory = new ItemFactory();
         this.player = newPlayer;
         this.attackBuffItem = itemFactory.createItem("Attack Buff", null);
@@ -194,6 +210,7 @@ public class CombatController {
      *
      * @author kelly.applebee@studio.unibo.it
      */
+    @Override
     public final void redrawView() {
 
         final RedrawContext defaultRedraw = new RedrawContext.Builder()
@@ -211,7 +228,7 @@ public class CombatController {
         : this.model.getPlayerPosition())
         .build();
 
-        this.view.redrawGrid(defaultRedraw);
+        this.view.updateDisplay(defaultRedraw);
     }
 
     /**
@@ -447,7 +464,7 @@ public class CombatController {
             .enemyRange(1)
             .setIsGameOver(this.model.isGameOver())
             .build();
-            this.view.redrawGrid(redrawContext);
+            this.view.updateDisplay(redrawContext);
         }
 
         animationTimer = new Timer(INFO_ZOOM_DELAY, e -> {
@@ -494,7 +511,7 @@ public class CombatController {
             .drawBossRayAttack(!(isAttack || isPoison))
             .setIsGameOver(this.model.isGameOver())
             .build();
-            this.view.redrawGrid(defaultRedraw);
+            this.view.updateDisplay(defaultRedraw);
         });
         animationTimer.start();
     }
@@ -569,7 +586,7 @@ public class CombatController {
                 .drawBossRayAttack(true)
                 .deathRayPath(deathRayLastPosition)
                 .build();
-                this.view.redrawGrid(defaultRedraw);
+                this.view.updateDisplay(defaultRedraw);
             }
         });
 
@@ -640,18 +657,10 @@ public class CombatController {
                     nextAttackerPos = result.get(0);
                     nextTargetPos = result.get(1);
                     if (this.neighbours.neighbours(
-                    nextAttackerPos, nextTargetPos, meleeCheckDistance)
-                            || !nextTargetPos.equals(currentTargetPos[0])) {
+                            nextAttackerPos, nextTargetPos, meleeCheckDistance)
+                            || !nextTargetPos.equals(currentTargetPos[0])
+                            || nextAttackerPos.equals(currentAttackerPos[0])) {
                         state[0] = 1;
-                    } else if (nextAttackerPos.equals(currentAttackerPos[0])) {
-                        if (this.neighbours.neighbours(
-                                nextAttackerPos,
-                                nextTargetPos,
-                                meleeCheckDistance + 1)) {
-                            state[0] = 1;
-                        } else {
-                            state[0] = 1;
-                        }
                     }
                     currentAttackerPos[0] = nextAttackerPos;
                     currentTargetPos[0] = nextTargetPos;
@@ -787,7 +796,7 @@ public class CombatController {
                 .enemyRange(1)
                 .setIsGameOver(this.model.isGameOver())
                 .build();
-                this.view.redrawGrid(defaultRedraw);
+                this.view.updateDisplay(defaultRedraw);
             }
         });
         animationTimer.start();
@@ -818,7 +827,7 @@ public class CombatController {
                 .enemyRange(conto[0])
                 .setIsGameOver(this.model.isGameOver())
                 .build();
-                this.view.redrawGrid(defaultRedraw);
+                this.view.updateDisplay(defaultRedraw);
                 conto[0]++;
             }
         });
@@ -866,7 +875,7 @@ public class CombatController {
                     : this.model.getPlayerPosition())
                 .poisonYCoord(step[0])
                 .build();
-                this.view.redrawGrid(defaultRedraw);
+                this.view.updateDisplay(defaultRedraw);
                 step[0]--;
             }
         });
@@ -942,7 +951,7 @@ public class CombatController {
                 .setIsCharging(isCharging)
                 .chargingCellDistance(position[0])
                 .build();
-                this.view.redrawGrid(defaultRedraw);
+                this.view.updateDisplay(defaultRedraw);
                 if (position[0] == 0) {
                     times[0]--;
                     if (times[0] == 0) {
@@ -961,12 +970,102 @@ public class CombatController {
     }
 
     /**
-     * Getters for the model and view.
+     * Return a narrow view API to avoid exposing the full view implementation.
      *
-     * @return the view and model of the combat controller
+     * @return a CombatViewApi instance
      */
-    public final CombatViewInterface getView() {
-        return this.view;
+    public final CombatViewApi getViewApi() {
+        final CombatViewInterface backing = this.view;
+        return new CombatViewApi() {
+
+            @Override
+            public JPanel getViewPanel() {
+                return backing.getViewPanel();
+            }
+
+            @Override
+            public void showInfo(final String text) {
+                backing.showInfo(text);
+            }
+
+            @Override
+            public void clearInfo() {
+                backing.clearInfo();
+            }
+
+            @Override
+            public void updateDisplay(final RedrawContext ctx) { 
+                backing.updateDisplay(ctx);
+            }
+
+            @Override
+            public void setAllMenusEnabled() {
+                backing.setAllMenusEnabled();
+            }
+
+            @Override
+            public void setAllMenusDisabled() {
+                backing.setAllMenusDisabled();
+            }
+
+            @Override
+            public void setPlayerHealthBarMax(final int max) {
+                backing.setPlayerHealthBarMax(max);
+            }
+
+            @Override
+            public void setEnemyHealthBarMax(final int max) {
+                backing.setEnemyHealthBarMax(max);
+            }
+
+            @Override
+            public void updatePlayerHealth(final int hp) {
+                backing.updatePlayerHealth(hp);
+            }
+
+            @Override
+            public void updateEnemyHealth(final int hp) {
+                backing.updateEnemyHealth(hp);
+            }
+
+            @Override
+            public void showMainMenu() {
+                backing.showMainMenu();
+            }
+
+            @Override
+            public void updatePlayerStamina(final int stamina) {
+                backing.updatePlayerStamina(stamina);
+            }
+
+            @Override
+            public void showAttackMenu() {
+                backing.showAttackMenu();
+            }
+
+            @Override
+            public void setActionEnabled(final ActionType action, final boolean enabled) {
+                backing.setActionEnabled(action, enabled);
+            }
+
+        };
+    }
+
+    /**
+     * Get the main panel of the view.
+     */
+    @Override
+    public JPanel getViewPanel() {
+        return this.view.getViewPanel();
+    }
+
+    /**
+     * Set enemy HP in the model.
+     */
+    @Override
+    public void setEnemyHp(final int currentHp, final int maxHp) {
+        this.model.setEnemyCurrentHp(currentHp);
+        this.model.setEnemyMaxHp(maxHp);
     }
 
     /**
@@ -974,6 +1073,7 @@ public class CombatController {
      *
      * @return the model of the combat controller
      */
+    // TODO: SPOTBUGS here
     public final CombatModel getModel() {
         return this.model;
     }
@@ -1030,7 +1130,9 @@ public class CombatController {
      *
      * @param encounteredEnemy the enemy to set
      */
+    @Override
     public final void setEncounteredEnemy(final Enemy encounteredEnemy) {
+        // TODO: SPOTBUGS here
         this.enemy = encounteredEnemy;
         this.model.setEnemyState(this.enemy.isBoss());
         this.enemyState = this.model.getEnemyState();
@@ -1063,7 +1165,7 @@ public class CombatController {
     public final void performEnemyAttack() {
         final int physical = 0;
         final int longRange = 1;
-        final int num = new Random().nextInt(2);
+        final int num = RANDOM.nextInt(2);
 
         switch (num) {
             case physical -> performEnemyPhysicalAttack();
@@ -1164,7 +1266,7 @@ public class CombatController {
                                 ? this.model.getEnemyPosition()
                                 : this.model
                                 .getPlayerPosition()).build();
-                this.view.redrawGrid(defaultRedraw);
+                this.view.updateDisplay(defaultRedraw);
                 conto[0]--;
             }
         });
@@ -1177,6 +1279,7 @@ public class CombatController {
      * This method resets the model and view to their initial states
      * for a new combat encounter.
      */
+    @Override
     public final void resetForNewCombat() {
         this.model.setPlayerMaxHp(this.player.getMaxHp());
         this.view.setPlayerHealthBarMax(model.getPlayerMaxHealth());
