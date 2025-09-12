@@ -19,9 +19,7 @@ import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRandomP
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRoomPlacement;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplTunnelPlacement;
 
-/**
- * Test basilari su Dungeon: creazione, avanzamento piano, limiti.
- */
+// Test on Dungeon: creation, floor advancement, limits.
 public class DungeonTest {
 
     private Dungeon newDungeon(final int maxFloors) {
@@ -71,7 +69,7 @@ public class DungeonTest {
     }
 
     @Test
-    void sameInstanceWithoutNextFloorAndDifferentInstancesWhenAdvancing() {
+    void checkFloorInstances() {
         Dungeon d = newDungeon(3);
         assertTrue(d.nextFloor());              // floor 0
 

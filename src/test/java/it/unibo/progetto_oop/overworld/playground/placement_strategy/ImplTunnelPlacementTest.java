@@ -101,14 +101,14 @@ public class ImplTunnelPlacementTest {
 
     @Test
     void testNoOpWithZeroOrOneRoom() {
-        // 0 stanze
+        // 0 rooms
         StructureData g = new ImplArrayListStructureData(20, 15);
         g.fill(TileType.WALL);
         int c = count(g, TileType.TUNNEL);
         new ImplTunnelPlacement().connect(g, List.of(), new Random(1));
         assertEquals(c, count(g, TileType.TUNNEL));
 
-        // 1 stanza
+        // 1 room
         StructureData g2 = new ImplArrayListStructureData(20, 15);
         g2.fill(TileType.WALL);
         Room c2 = new Room(3, 3, 4, 4);
