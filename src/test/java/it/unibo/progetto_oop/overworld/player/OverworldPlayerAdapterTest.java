@@ -44,7 +44,7 @@ class OverworldPlayerAdapterTest {
     private OverworldPlayerAdapter playerAdapter;
 
     @BeforeEach
-    void setUp() {
+    void setUpOverworldPlayerAdapter() {
         final var inventory = new Inventory();
         final var player = new Player(MAX_HP, MAX_STAMINA, POWER, inventory);
         playerAdapter = new OverworldPlayerAdapter(player);

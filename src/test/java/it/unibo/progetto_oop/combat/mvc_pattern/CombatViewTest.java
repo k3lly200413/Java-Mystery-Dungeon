@@ -22,7 +22,7 @@ class CombatViewTest {
     private CombatController controller;
 
     @BeforeEach
-    void setUp() {
+    void setUpCombatView() {
 
         final Player player = new Player(100, 100, 100, new Inventory());
         final int size = 12;

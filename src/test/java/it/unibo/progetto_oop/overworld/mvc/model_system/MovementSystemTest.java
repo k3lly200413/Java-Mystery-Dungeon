@@ -75,7 +75,7 @@ class MovementSystemTest {
     private GridNotifier gridNotifier;
 
     @BeforeEach
-    void setUp() {
+    void setUpMovementSystem() {
         player = mock(Player.class);
         model = mock(OverworldModel.class);
         pickupSystem = mock(PickupSystem.class);

@@ -33,7 +33,7 @@ class InventoryTest {
     private Inventory inventory;
 
     @BeforeEach
-    void setup() {
+    void setupInventory() {
         inventory = new Inventory(2); // capacity of 2 different items
 
         final ItemFactory itemFactory = new ItemFactory();

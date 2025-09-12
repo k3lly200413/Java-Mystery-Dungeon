@@ -78,7 +78,7 @@ class CombatModelTest {
     private CombatModel model;
 
     @BeforeEach
-    void setUp() {
+    void setUpCombatModel() {
         final FakeCombatBuilder b = new FakeCombatBuilder()
             .withPlayerMaxHp(PLAYER_MAX_HP).withEnemyMaxHp(ENEMY_MAX_HP)
             .withPlayerCurrHp(PLAYER_CURR_HP).withEnemyCurrHp(ENEMY_CURR_HP)

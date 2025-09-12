@@ -26,7 +26,7 @@ class MovementUtilTest {
     private MovementUtil movementUtil;
 
     @BeforeEach
-    void setup() {
+    void setupMovementUtil() {
         wallCollisionMock = mock(WallCollision.class);
         movementUtil = new MovementUtil(wallCollisionMock);
     }

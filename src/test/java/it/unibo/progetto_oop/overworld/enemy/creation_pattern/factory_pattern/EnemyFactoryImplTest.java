@@ -42,7 +42,7 @@ class EnemyFactoryImplTest {
     private EnemyFactoryImpl factory;
 
     @BeforeEach
-    void setUp() {
+    void setUpEnemyFactory() {
         final WallCollision wallCollision = mock(WallCollision.class);
         final CombatCollision combatCollision = mock(CombatCollision.class);
         gridNotifier = mock(GridNotifier.class);
