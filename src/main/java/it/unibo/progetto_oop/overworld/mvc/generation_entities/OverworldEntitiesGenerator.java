@@ -80,7 +80,7 @@ public class OverworldEntitiesGenerator {
         }
         player.setPosition(playerPos);
 
-        if (model.getCurrentFloor().rooms().size() == 1) {
+        if (currentFloor.rooms().size() == 1) {
             //boss
             this.isBoss = true;
             placer.placeObject(
@@ -98,7 +98,7 @@ public class OverworldEntitiesGenerator {
                 base,
                 entity,
                 TileType.ENEMY,
-                model.getCurrentFloor().rooms().size(),
+                currentFloor.rooms().size(),
                 rand,
                 playerPos,
                 MIN_DIST_FROM_PLAYER
@@ -108,7 +108,7 @@ public class OverworldEntitiesGenerator {
                 base,
                 entity,
                 TileType.ITEM,
-                model.getCurrentFloor().rooms().size(),
+                currentFloor.rooms().size(),
                 rand,
                 null,
                 MIN_DIST_FROM_PLAYER
