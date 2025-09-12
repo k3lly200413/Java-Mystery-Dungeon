@@ -129,7 +129,7 @@ public final class OverworldModel {
                 this.gridNotifier.setListItemUpdater(null);
             }
         } else {
-            this.baseGrid   = floor.grid();
+            this.baseGrid = floor.grid();
             this.entityGrid = floor.entityGrid();
             if (this.gridNotifier == null) {
                 this.gridNotifier = new GridNotifier(null);
@@ -310,7 +310,7 @@ public final class OverworldModel {
     public ReadOnlyGrid getEntityGridView() {
         return ReadOnlyGridAdapter.of(this.entityGrid);
     }
-    
+
     /**
      * Get the base grid (structure).
      * INTERNAL: mutable base grid for model services (not for UI).
@@ -377,20 +377,19 @@ public final class OverworldModel {
 
     //--------- Movement ---------
 
-
     /**
      * Move the player to the right direction.
+     *
+     * @param direction the direction to move
      */
-    public void move(MoveDirection direction) {
+    
+    public void move(final MoveDirection direction) {
         switch (direction) {
             case UP -> this.movementSystem.move(0, -1, pickupSystem, enemySystem);
             case DOWN -> this.movementSystem.move(0, 1, pickupSystem, enemySystem);
             case LEFT -> this.movementSystem.move(-1, 0, pickupSystem, enemySystem);
             case RIGHT -> this.movementSystem.move(1, 0, pickupSystem, enemySystem);
             case NONE -> this.movementSystem.move(0, 0, pickupSystem, enemySystem);
-            default ->
-                throw new IllegalStateException(
-                    "Unexpected value: " + direction);
         }
     }
 }

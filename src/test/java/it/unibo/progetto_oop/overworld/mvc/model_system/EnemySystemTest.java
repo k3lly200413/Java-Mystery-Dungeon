@@ -21,8 +21,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
 class EnemySystemTest {
+    /**
+     * enemy health for tests.
+     */
+    private static final int ENEMY_HEALTH = 10;
+
     /**
      * mock enemy 1.
      */
@@ -57,11 +61,6 @@ class EnemySystemTest {
      * mock combat collision.
      */
     private CombatCollision combatCollision;
-
-    /**
-     * enemy health for tests.
-     */
-    private static final int ENEMY_HEALTH = 10;
 
     @BeforeEach
     void setUp() {

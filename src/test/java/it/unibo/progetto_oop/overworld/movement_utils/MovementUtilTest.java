@@ -40,7 +40,7 @@ class MovementUtilTest {
         when(wallCollisionMock.closestWall(enemy, 0, 1))
                 .thenReturn(Optional.of(wall));
 
-        MovementUtil.MoveDirection dir =
+        final MovementUtil.MoveDirection dir =
             movementUtil.getInitialGeneralMoveDirection(enemy, true);
 
         assertEquals(MovementUtil.MoveDirection.DOWN, dir);

@@ -17,6 +17,16 @@ import org.junit.jupiter.api.Test;
 
 class EnemyFactoryImplTest {
     /**
+     * health costant for enemy creation tests.
+     */
+    private static final int HEALTH = 10;
+
+    /**
+     * power costant for enemy creation tests.
+     */
+    private static final int POWER = 5;
+
+    /**
      * mocked grid notifier.
      */
     private GridNotifier gridNotifier;
@@ -30,16 +40,6 @@ class EnemyFactoryImplTest {
      * Class under test.
      */
     private EnemyFactoryImpl factory;
-
-    /**
-     * health costant for enemy creation tests.
-     */
-    private static final int HEALTH = 10;
-
-    /**
-     * power costant for enemy creation tests.
-     */
-    private static final int POWER = 5;
 
     @BeforeEach
     void setUp() {

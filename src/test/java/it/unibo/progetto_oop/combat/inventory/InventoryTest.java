@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import it.unibo.progetto_oop.combat.potion_factory.ItemFactory;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
-
-
 class InventoryTest {
 
     /**
@@ -44,12 +42,11 @@ class InventoryTest {
         antidote = itemFactory.createItem("Antidote", new Position(0, 1));
     }
 
-
     @Test
     void addItemTest() {
         // Add first item
         final boolean added1 = inventory.addItem(health);
-        assertEquals(true, added1);
+        assertTrue(added1);
         assertEquals(1, inventory.getCurrentSize());
 
         // Add second item
@@ -83,7 +80,6 @@ class InventoryTest {
         assertTrue(added5);
         assertEquals(2, inventory.getCurrentSize());
     }
-
 
     @Test
     void decreaseItemCountTest() {

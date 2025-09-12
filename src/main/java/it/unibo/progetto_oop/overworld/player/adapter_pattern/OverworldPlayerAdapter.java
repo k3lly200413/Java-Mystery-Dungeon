@@ -10,7 +10,8 @@ public final class OverworldPlayerAdapter implements PossibleUser {
     /**
      * Error message constant.
      */
-    private static final String ERROR_MSG = "Player to adapt is null";
+    private static final String ERROR_MSG_1 = "Player to adapt is null";
+    private static final String ERROR_MSG = "Amount must not be negative";
 
     /**
      * The player to adapt.
@@ -24,7 +25,7 @@ public final class OverworldPlayerAdapter implements PossibleUser {
      */
     public OverworldPlayerAdapter(final Player playerToAdapt) {
         if (playerToAdapt == null) {
-            throw new IllegalArgumentException(ERROR_MSG);
+            throw new IllegalArgumentException(ERROR_MSG_1);
         }
         this.adaptedPlayer = playerToAdapt;
     }

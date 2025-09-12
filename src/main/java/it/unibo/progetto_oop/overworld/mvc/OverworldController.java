@@ -52,7 +52,7 @@ public class OverworldController implements ViewManagerObserver {
     /**
      * Initialize input bindings for the controller.
      */
-    public void initializeInputBindings() {
+    public final void initializeInputBindings() {
         final JPanel panel = this.view;
 
         // Bind pressed buttons to keys
@@ -103,7 +103,6 @@ public class OverworldController implements ViewManagerObserver {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 viewManager.showInventory(model.getInventoryInstance());
-                System.out.println("Menu aperto!");
             }
         });
 

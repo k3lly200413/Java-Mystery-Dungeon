@@ -14,8 +14,12 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 class VisibilityUtilTest {
+    /**
+     * constant coordinate for tests.
+     */
+    private static final int COORDINATE = 5;
+    
     /**
      * mock wall collision.
      */
@@ -25,11 +29,6 @@ class VisibilityUtilTest {
      * system under test.
      */
     private VisibilityUtil visibilityUtil;
-
-    /**
-     * constant coordinate for tests.
-     */
-    private static final int COORDINATE = 5;
 
     @BeforeEach
     void setUp() {

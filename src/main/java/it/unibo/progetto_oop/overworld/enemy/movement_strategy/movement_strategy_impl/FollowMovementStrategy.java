@@ -10,8 +10,8 @@ import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 /**
-* utility class to check visibility and line of sight.
-*/
+ * utility class to check visibility and line of sight.
+ */
 
 public class FollowMovementStrategy implements MovementStrategy {
 
@@ -42,7 +42,7 @@ public class FollowMovementStrategy implements MovementStrategy {
 
     /**
      * Constructor for the FollowMovementStrategy class.
-     * 
+     *
      * @param newWallChecker the wall checker
      * @param newCombatCollisionChecker the combat collision checker
      */

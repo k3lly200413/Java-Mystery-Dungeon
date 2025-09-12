@@ -48,7 +48,7 @@ public class MovementUtil {
 
     /**
      * Constructor for MovementUtil.
-     * 
+     *
      * @param newChecker the wall collision checker
      */
     public MovementUtil(final WallCollision newChecker) {
@@ -82,7 +82,7 @@ public class MovementUtil {
     /**
      * Determines the initial general move direction
      * for an enemy based on its position and movement axis.
-     * 
+     *
      * @param enemyPosition the position of the enemy
      * @param doesEnemyGoVertically true if the enemy is moving
      * vertically, false if horizontally

@@ -18,11 +18,11 @@ import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 /**
-* movement utility class to help with movement.
-*/
+ * movement utility class to help with movement.
+ */
 
 public class EnemyFactoryImpl implements EnemyFactory {
-    
+
     private final MovementUtil movementUtil;
 
     /**

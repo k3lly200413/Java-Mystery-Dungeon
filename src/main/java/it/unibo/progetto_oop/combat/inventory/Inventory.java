@@ -136,10 +136,7 @@ public class Inventory {
      * @return true if the item can be used, false otherwise
      */
     public boolean canUseItem(final Item item) {
-        if (item == null) {
-            return false;
-        }
-        return this.hasItem(item);
+        return item != null && this.hasItem(item);
     }
 
     /**
@@ -180,11 +177,6 @@ public class Inventory {
      * Print the inventory.
      */
     public void printInventory() {
-        this.items.entrySet()
-            .stream()
-            .forEach(
-                key -> System.out.println(
-                    key.getKey().getName() + ":" + key.getValue()));
     }
 
     /**

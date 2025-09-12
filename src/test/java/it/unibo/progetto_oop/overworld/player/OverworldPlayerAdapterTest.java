@@ -16,6 +16,8 @@ class OverworldPlayerAdapterTest {
      */
     private OverworldPlayerAdapter playerAdapter;
 
+    private static final String ERR_MSG = "Amount must not be negative";
+
     /**
      * costant max hp.
      */
@@ -58,7 +60,7 @@ class OverworldPlayerAdapterTest {
             () -> playerAdapter.increasePlayerMaxHealth(AMOUNT_2)
         );
 
-        assertEquals("Amount must not be negative", exception.getMessage());
+        assertEquals(ERR_MSG, exception.getMessage());
     }
 
 
@@ -72,7 +74,7 @@ class OverworldPlayerAdapterTest {
             () -> playerAdapter.increasePlayerMaxStamina(AMOUNT_2)
         );
 
-        assertEquals("Amount must not be negative", exception.getMessage());
+        assertEquals(ERR_MSG, exception.getMessage());
     }
 
 
@@ -86,7 +88,7 @@ class OverworldPlayerAdapterTest {
             () -> playerAdapter.increasePlayerMaxPower(AMOUNT_2)
         );
 
-        assertEquals("Amount must not be negative", exception.getMessage());
+        assertEquals(ERR_MSG, exception.getMessage());
     }
 
     @Test
@@ -102,6 +104,6 @@ class OverworldPlayerAdapterTest {
             () -> playerAdapter.increasePlayerHealth(AMOUNT_2)
         );
 
-        assertEquals("Amount must not be negative", exception.getMessage());
+        assertEquals(ERR_MSG, exception.getMessage());
     }
 }

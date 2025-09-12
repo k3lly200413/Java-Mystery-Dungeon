@@ -7,7 +7,8 @@ import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
-
 
 class MovementSystemTest {
     /**
@@ -67,7 +67,7 @@ class MovementSystemTest {
     /**
      * mock structure data.
      */
-    private StructureData structureData;
+    private ReadOnlyGrid gridView;
 
     /**
      * mock grid notifier.
@@ -85,7 +85,7 @@ class MovementSystemTest {
         position = new Position(1, 1);
 
         wallCollision = mock(WallCollision.class);
-        structureData = mock(StructureData.class);
+        gridView = mock(ReadOnlyGrid.class);
         gridNotifier = mock(GridNotifier.class);
     }
 
@@ -108,10 +108,8 @@ class MovementSystemTest {
         when(model.getWallCollision()).thenReturn(wallCollision);
         when(model.getWallCollision()
             .canEnter(any(Position.class))).thenReturn(true);
-        when(model.getBaseGrid()).thenReturn(structureData);
-
-        when(model.getBaseGridView()
-            .get(anyInt(), anyInt())).thenReturn(TileType.STAIRS);
+        when(model.getBaseGridView()).thenReturn(gridView);
+        when(gridView.get(anyInt(), anyInt())).thenReturn(TileType.STAIRS);
         when(model.getGridNotifier()).thenReturn(gridNotifier);
 
         movementSystem.move(1, 0, pickupSystem, enemySystem);
@@ -124,9 +122,8 @@ class MovementSystemTest {
         when(model.getWallCollision()).thenReturn(wallCollision);
         when(model.getWallCollision()
             .canEnter(any(Position.class))).thenReturn(true);
-        when(model.getBaseGrid()).thenReturn(structureData);
-        when(model.getBaseGridView()
-            .get(anyInt(), anyInt())).thenReturn(TileType.ROOM);
+        when(model.getBaseGridView()).thenReturn(gridView);
+        when(gridView.get(anyInt(), anyInt())).thenReturn(TileType.ROOM);
         when(model.getGridNotifier()).thenReturn(gridNotifier);
 
         final Enemy enemy = mock(Enemy.class);
@@ -144,8 +141,8 @@ class MovementSystemTest {
         when(model.getWallCollision()).thenReturn(wallCollision);
         when(model.getWallCollision()
             .canEnter(any(Position.class))).thenReturn(true);
-        when(model.getBaseGrid()).thenReturn(structureData);
-        when(model.getBaseGridView()
+        when(model.getBaseGridView()).thenReturn(gridView);
+        when(gridView
             .get(anyInt(), anyInt())).thenReturn(TileType.ROOM);
         when(model.getGridNotifier()).thenReturn(gridNotifier);
         when(enemySystem.checkEnemyHit(

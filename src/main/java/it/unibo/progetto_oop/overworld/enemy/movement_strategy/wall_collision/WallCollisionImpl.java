@@ -34,7 +34,7 @@ public final class WallCollisionImpl implements WallCollision {
      */
     public WallCollisionImpl(
         final StructureData newBaseGrid, final StructureData newEntityGrid) {
-        this.baseGrid  = Objects.requireNonNull(
+        this.baseGrid = Objects.requireNonNull(
             newBaseGrid, "baseGrid cannot be null");
         this.entityGrid = Objects.requireNonNull(
             newEntityGrid, "entityGrid cannot be null");
@@ -61,7 +61,7 @@ public final class WallCollisionImpl implements WallCollision {
 
     /**
      * Check if a position can be entered by the player.
-     * 
+     *
      * @param to the position to check
      * @return true if the position can be entered, false otherwise
      */
@@ -77,7 +77,7 @@ public final class WallCollisionImpl implements WallCollision {
 
     /**
      * Check if an enemy can enter a specific position.
-     * 
+     *
      * @param to the position to check
      * @return true if the enemy can enter the position, false otherwise
      */
@@ -92,12 +92,12 @@ public final class WallCollisionImpl implements WallCollision {
         final TileType eg = entityGrid.get(to.x(), to.y());
 
         // also not an entity and not stairs
-        return (eg == TileType.NONE) && (t != TileType.STAIRS);
+        return eg == TileType.NONE && t != TileType.STAIRS;
     }
 
     /**
      * Finds the closest wall in the specified direction from a given position.
-     * 
+     *
      * @param from the starting position
      * @param dx the x direction (-1, 0, 1)
      * @param dy the y direction (-1, 0, 1)

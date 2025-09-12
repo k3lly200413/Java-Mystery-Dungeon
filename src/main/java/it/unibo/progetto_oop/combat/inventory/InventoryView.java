@@ -19,7 +19,9 @@ import it.unibo.progetto_oop.overworld.mvc.ViewManager;
  * View grafica dell'inventario.
  * Gestisce la visualizzazione e l'interazione con l'inventario del giocatore.
  */
-public class InventoryView extends JPanel {
+public final class InventoryView extends JPanel {
+    private static final long serialVersionUID = 1L;
+
     /**
      * Number of cells in the viewport width-wise.
      */
@@ -251,8 +253,8 @@ public class InventoryView extends JPanel {
         final java.util.List<Item> items = new ArrayList<>(
             this.inventory.getFullInventory().keySet());
 
-        final Color[] slotColors = new Color[] {
-            ITEM_SLOT_1_COLOR, ITEM_SLOT_2_COLOR, ITEM_SLOT_3_COLOR,
+        final Color[] slotColors = {
+            ITEM_SLOT_1_COLOR, ITEM_SLOT_2_COLOR, ITEM_SLOT_3_COLOR
         };
 
         final int nItems = items.size();
@@ -340,7 +342,7 @@ public class InventoryView extends JPanel {
      * Public method to be called when the view
      * needs to reflect the current inventory state.
      */
-    public void refreshView() {
+    public final void refreshView() {
         populateGrid(); // Rebuild the grid's content
 
         if (bottomStatusLabel != null) {

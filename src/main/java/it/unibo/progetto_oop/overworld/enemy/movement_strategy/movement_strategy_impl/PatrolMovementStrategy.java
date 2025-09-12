@@ -24,7 +24,7 @@ public class PatrolMovementStrategy implements MovementStrategy {
 
     /**
      * Constructor for the PatrolMovementStrategy class.
-     * 
+     *
      * @param newWallChecker wall checker
      * @param newCombatTransitionChecker combat transition checker
      */
@@ -62,9 +62,6 @@ public class PatrolMovementStrategy implements MovementStrategy {
                 break;
             case NONE:
                 break;
-            default:
-                throw new IllegalStateException(
-                    "Unexpected value: " + moveDirection);
         }
 
         // Check if the target position is not the
