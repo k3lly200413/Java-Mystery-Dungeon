@@ -35,9 +35,6 @@ class CombatModelTest {
     /** Player's poison power points. */
     private static final int PLAYER_POISON_POWER = 3;
 
-    /** Enemy's power points. */
-    private static final int ENEMY_POWER = 8;
-
     /** Enemy's speed points. */
     private static final int ENEMY_SPEED = 1;
 
@@ -88,7 +85,7 @@ class CombatModelTest {
             .withSize(SIZE).withStaminaMax(STAMINA_MAX)
             .withPlayerPower(PLAYER_POWER)
             .withPlayerPoisonPower(PLAYER_POISON_POWER)
-            .withEnemyPower(ENEMY_POWER).withEnemySpeed(ENEMY_SPEED)
+            .withEnemySpeed(ENEMY_SPEED)
             .withEnemyName(ENEMY_NAME).withLongRangePower(LONG_RANGE_POWER);
 
         this.model = new CombatModel(b);
@@ -107,7 +104,6 @@ class CombatModelTest {
         assertEquals(PLAYER_POISON_POWER, this.model.getEnemyPoisonPower());
         assertEquals(LONG_RANGE_POWER, this.model.getPlayerLongRangePower());
         assertEquals(LONG_RANGE_POWER, this.model.getEnemyLongRangePower());
-        assertEquals(ENEMY_POWER, this.model.getEnemyPower());
         assertEquals(ENEMY_SPEED, this.model.getEnemySpeed());
         assertEquals(ENEMY_NAME, this.model.getEnemyName());
 
@@ -185,9 +181,6 @@ class CombatModelTest {
         /** The long-range attack power of the player. */
         private int playerLongRangePower;
 
-        /** The base attack power of the enemy. */
-        private int enemyPower;
-
         FakeCombatBuilder withSize(final int v) {
             this.size = v;
             return this;
@@ -205,11 +198,6 @@ class CombatModelTest {
 
         FakeCombatBuilder withPlayerPoisonPower(final int v) {
             this.playerPoisonPower = v;
-            return this;
-        }
-
-        FakeCombatBuilder withEnemyPower(final int v) {
-            this.enemyPower = v;
             return this;
         }
 
