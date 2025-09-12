@@ -1545,8 +1545,8 @@ public class CombatController implements CombatControllerApi {
             case longRange -> performLongRangeAttack(
                     model.getEnemyPosition(),
                     -1,
-                    true,
-                    false);
+                    poison == 0,
+                    poison == 1);
             default -> {
             }
         }
