@@ -8,6 +8,9 @@ import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ImplArrayListStructureData;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 
+/**
+ * Represents a dungeon floor with its grid structure, entity grid, and rooms.
+ */
 public final class Floor {
     /**
      * The grid representing the structure of the floor.

@@ -18,6 +18,9 @@ import it.unibo.progetto_oop.overworld.playground.placement_strategy.RoomPlaceme
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.TunnelPlacementStrategy;
 import it.unibo.progetto_oop.overworld.playground.view.playground_view.ImplMapView;
 
+/**
+ * Launcher class for initializing and starting the overworld map.
+ */
 public final class OverworldLauncher {
     /**
      * The model representing the overworld state.

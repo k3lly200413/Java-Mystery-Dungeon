@@ -9,6 +9,9 @@ import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 
 
 @FunctionalInterface
+/**
+ * Strategy interface for placing rooms in a grid structure.
+ */
 public interface RoomPlacementStrategy  {
     /**
      * Places rooms on the grid based on the given configuration.

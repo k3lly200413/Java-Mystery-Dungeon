@@ -7,7 +7,6 @@ import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 
-
 public class ImplTunnelPlacement implements TunnelPlacementStrategy {
 
     @Override

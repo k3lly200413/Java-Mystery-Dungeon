@@ -7,6 +7,9 @@ import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGrid;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 
+/**
+ * Strategy interface for random placement of objects and players in a grid structure.
+ */
 public interface RandomPlacementStrategy {
     /**
      * Places an object on the entity structure.

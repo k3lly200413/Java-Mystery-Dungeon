@@ -15,6 +15,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * The GameStartView class represents the initial view of the game,
+ * displaying a title and a start button.
+ * It extends JPanel and uses a BorderLayout to arrange components.
+ */
 public final class GameStartView extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -100,7 +105,6 @@ public final class GameStartView extends JPanel {
         center.add(startButton);
         add(center, BorderLayout.CENTER);
     }
-
 
     @Override
     protected void paintComponent(final Graphics g) {

@@ -6,6 +6,9 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 
+/**
+ * Implementation of GridUpdater that updates a StructureData grid based on entity movements and removals.
+ */
 public final class EntityGridUpdater implements GridUpdater {
     /**
      * The StructureData instance representing the grid to be updated.

@@ -12,6 +12,9 @@ import it.unibo.progetto_oop.overworld.playground.placement_strategy.RandomPlace
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.RoomPlacementStrategy;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.TunnelPlacementStrategy;
 
+/**
+ * Class responsible for generating a dungeon floor with rooms, tunnels, and objects.
+ */
 public final class FloorGenerator {
     /**
      * Strategy for placing rooms.
@@ -53,7 +56,8 @@ public final class FloorGenerator {
      * Generate floor using confiurguration data.
      * And fill the provided grid with rooms, tunnels, and objects.
      *
-     * @param grid       the structure data representing the floor grid
+     * @param baseGrid   the structure data representing the floor grid
+     * @param entityGrid the structure data representing the entity grid
      * @param conf       the floor configuration specifying parameters
      * @param finalFloor indicates whether this is the final floor
      * @return a list of rooms generated on the floor

@@ -18,7 +18,7 @@ public interface GridUpdater {
      * @param to the destination position of the enemy
      */
     void onEnemyMove(Position from, Position to);
-    
+
     /**
      * Called when an item is removed from a specific position.
      *

@@ -7,7 +7,7 @@ import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.St
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 
 @FunctionalInterface
-public interface TunnelPlacementStrategy  {
+public interface TunnelPlacementStrategy {
     /**
      * Connects the given rooms in the grid.
      *
