@@ -33,6 +33,7 @@ import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.helper.Neighbours;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
+import it.unibo.progetto_oop.combat.mvc_pattern.WrapLayout;
 
 /**
  * View class in Model View Controller Pattern.
@@ -349,7 +350,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
         this.buttonPanelContainer = new JPanel(cardLayout);
 
         this.originalButtonPanel = new JPanel(
-            new FlowLayout(FlowLayout.CENTER));
+            new WrapLayout(FlowLayout.CENTER));
         this.attackButton = this.createButton(
             "Attack", this.buttonHeight, this.buttonWidth);
         this.bagButton = this.createButton(
@@ -581,22 +582,9 @@ public class CombatView extends JPanel implements CombatViewInterface {
                 && context.getWhoIsPoisoned() != null
                 && entry.getValue().y() == context.getPoisonYCoord()
                 && entry.getValue().x() == context.getWhoIsPoisoned().x()) {
-                icon = this.getIconResource(GREEN,
-                context.getSquareWidth(), context.getSquareHeight());
-            // } else if (
-            //     (context.isDrawFlame() || context.isDrawPoison())
-            //     && this.neighbours.neighbours(
-            //         cellPos, context.getFlame(), 0)) {
-            //     icon = context.isDrawFlame()
-            //     ? this.getIconResource(
-            //         GREEN,
-            //         context.getSquareWidth(),
-            //         context.getSquareHeight())
-            //     : this.getIconResource(
-            //         YELLOW,
-            //         context.getSquareWidth(),
-            //         context.getSquareHeight());
-                } else if (
+                    icon = this.getIconResource(GREEN,
+                    context.getSquareWidth(), context.getSquareHeight());
+            } else if (
                 context.isDrawPlayer()
                 && context.getPlayer() != null
                 && this.neighbours.neighbours(
