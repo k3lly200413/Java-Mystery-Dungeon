@@ -88,22 +88,9 @@ public final class ViewManager {
     private InventoryView invView;
 
     /**
-     * The playground.
-     */
-    private ImplMapView playGroundView;
-
-    /**
-     * The start view for the game.
-     */
-    private GameStartView startView;
-
-    /**
      * The controller for managing combat logic and interactions.
      */
     private CombatControllerApi combatController;
-
-    /** Game over panel. */
-    private GameOverPanel gameOverPanel;
 
     /** Win panel. */
     private WinPanel winPanel;
@@ -118,7 +105,6 @@ public final class ViewManager {
         this.cardLayout = new CardLayout();
         this.mainCardPanel = new JPanel(cardLayout);
         final JFrame frame = new JFrame("JavaMysteryDungeon");
-        this.startView = initialStartView;
         frame.setPreferredSize(
                 new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
         this.mainCardPanel.setMinimumSize(
@@ -126,7 +112,7 @@ public final class ViewManager {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // first card
-        this.mainCardPanel.add(this.startView, START_GAME);
+        this.mainCardPanel.add(initialStartView, START_GAME);
         frame.setContentPane(this.mainCardPanel);
         frame.pack();
         frame.setVisible(true);
@@ -148,8 +134,7 @@ public final class ViewManager {
      * @param newPlayGroundView the playground view to set
      */
     public void setPlayGroundView(final ImplMapView newPlayGroundView) {
-        this.playGroundView = newPlayGroundView;
-        this.mainCardPanel.add(this.playGroundView, OVERWORLD_CARD);
+        this.mainCardPanel.add(newPlayGroundView, OVERWORLD_CARD);
     }
 
     /**
@@ -239,8 +224,7 @@ public final class ViewManager {
      * @param newGameOverPanel the game over panel to set
      */
     public void setGameOverPanel(final GameOverPanel newGameOverPanel) {
-        this.gameOverPanel = newGameOverPanel;
-        this.mainCardPanel.add(this.gameOverPanel, GAME_OVER);
+        this.mainCardPanel.add(newGameOverPanel, GAME_OVER);
     }
 
     /**
