@@ -2,10 +2,10 @@ package it.unibo.progetto_oop.combat.mvc_pattern;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-
+import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
 
 import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
@@ -20,6 +20,17 @@ import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.player.Player;
 
 class CombatControllerTest {
+
+    /** sleep value for thread.sleep. */
+    private static final int SLEEP_1 = 350;
+
+    /** sleep value for thread.sleep. */
+    private static final int SLEEP_2 = 300;
+
+    /** sleep value for thread.sleep. */
+    private static final int SLEEP_3 = 1600;
+
+    private static final String IGNORED = "test interrupt";
 
     private CombatModel model;
     private CombatController controller;
@@ -175,8 +186,10 @@ class CombatControllerTest {
         controller.performEnemyPhysicalAttack();
 
         try {
-            Thread.sleep(350);
-        } catch (final InterruptedException ignored) { }
+            Thread.sleep(SLEEP_1);
+        } catch (final InterruptedException ignored) {
+            fail(IGNORED, ignored);
+        }
 
         controller.stopAnimationTimer();
         assertTrue(!controller.isAnimationRunning(),
@@ -190,8 +203,10 @@ class CombatControllerTest {
         controller.performInfoAnimation();
 
         try {
-            Thread.sleep(300);
-        } catch (InterruptedException ignored) { }
+            Thread.sleep(SLEEP_2);
+        } catch (final InterruptedException ignored) {
+            fail(IGNORED, ignored);
+        }
         assertTrue(controller.isAnimationRunning(),
             "During the animation the timer must be running");
 
@@ -200,8 +215,10 @@ class CombatControllerTest {
         // - makeBigger ~5 ticks x 200ms ≈ 1000ms
         // Safety margin: wait ~1.6–1.9s overall
         try {
-            Thread.sleep(1600);
-        } catch (InterruptedException ignored) { }
+            Thread.sleep(SLEEP_3);
+        } catch (final InterruptedException ignored) {
+            fail(IGNORED, ignored);
+        }
 
         assertTrue(controller.getCurrentState() instanceof InfoDisplayState,
             "After the animation the state must be InfoDisplayState");
