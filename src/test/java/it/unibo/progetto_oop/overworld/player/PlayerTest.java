@@ -12,21 +12,6 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 class PlayerTest {
     /**
-     * the inventory mock.
-     */
-    private Inventory inventory;
-
-    /**
-     * health potion mock.
-     */
-    private Item health;
-
-    /**
-     * antidote mock.
-     */
-    private Item antidote;
-
-    /**
      * costant max hp.
      */
     private static final int MAX_HP = 100;
@@ -41,7 +26,20 @@ class PlayerTest {
      */
     private static final int POWER = 10;
 
+    /**
+     * the inventory mock.
+     */
+    private Inventory inventory;
 
+    /**
+     * health potion mock.
+     */
+    private Item health;
+
+    /**
+     * antidote mock.
+     */
+    private Item antidote;
 
     /**
      * set up the test.

@@ -6,7 +6,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 
 /**
- * interface to manage enemy's and player's collision with walls
+ * interface to manage enemy's and player's collision with walls.
  */
 public interface WallCollision {
 

@@ -342,7 +342,7 @@ public final class InventoryView extends JPanel {
      * Public method to be called when the view
      * needs to reflect the current inventory state.
      */
-    public final void refreshView() {
+    public void refreshView() {
         populateGrid(); // Rebuild the grid's content
 
         if (bottomStatusLabel != null) {

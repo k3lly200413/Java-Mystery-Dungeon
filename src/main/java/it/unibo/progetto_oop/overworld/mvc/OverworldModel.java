@@ -382,7 +382,7 @@ public final class OverworldModel {
      *
      * @param direction the direction to move
      */
-    
+
     public void move(final MoveDirection direction) {
         switch (direction) {
             case UP -> this.movementSystem.move(0, -1, pickupSystem, enemySystem);

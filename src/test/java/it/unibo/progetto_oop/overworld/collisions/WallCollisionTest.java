@@ -19,6 +19,16 @@ import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.St
 
 class WallCollisionTest {
     /**
+     * max x dimension.
+     */
+    private static final int MAX_X = 5;
+
+    /**
+     * max y dimension.
+     */
+    private static final int MAX_Y = 5;
+
+    /**
      * mocked structure data for the grid.
      */
     private StructureData gridMock;
@@ -32,16 +42,6 @@ class WallCollisionTest {
      * system under test.
      */
     private WallCollisionImpl wallCollision;
-
-    /**
-     * max x dimension.
-     */
-    private static final int MAX_X = 5;
-
-    /**
-     * max y dimension.
-     */
-    private static final int MAX_Y = 5;
 
     @BeforeEach
     void setup() {

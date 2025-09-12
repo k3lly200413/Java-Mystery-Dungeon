@@ -11,11 +11,6 @@ import it.unibo.progetto_oop.overworld.player.adapter_pattern.OverworldPlayerAda
 
 class OverworldPlayerAdapterTest {
 
-    /**
-     * object under test.
-     */
-    private OverworldPlayerAdapter playerAdapter;
-
     private static final String ERR_MSG = "Amount must not be negative";
 
     /**
@@ -43,6 +38,11 @@ class OverworldPlayerAdapterTest {
      */
     private static final int AMOUNT_2 = -100;
 
+    /**
+     * object under test.
+     */
+    private OverworldPlayerAdapter playerAdapter;
+
     @BeforeEach
     void setUp() {
         final var inventory = new Inventory();
@@ -63,7 +63,6 @@ class OverworldPlayerAdapterTest {
         assertEquals(ERR_MSG, exception.getMessage());
     }
 
-
     @Test
     void increaseStaminaTest() {
         playerAdapter.increasePlayerMaxStamina(AMOUNT_1);
@@ -76,7 +75,6 @@ class OverworldPlayerAdapterTest {
 
         assertEquals(ERR_MSG, exception.getMessage());
     }
-
 
     @Test
     void increasePowerTest() {

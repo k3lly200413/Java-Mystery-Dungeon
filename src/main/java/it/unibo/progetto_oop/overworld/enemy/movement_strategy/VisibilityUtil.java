@@ -46,8 +46,8 @@ public class VisibilityUtil {
     final Position player,
     final int neighbourDistance) {
         return this.neighboursChecker
-        .neighbours(enemy, player, neighbourDistance)
-        && this.hasLineOfSight(enemy, player);
+            .neighbours(enemy, player, neighbourDistance)
+            && this.hasLineOfSight(enemy, player);
     }
 
     /**
