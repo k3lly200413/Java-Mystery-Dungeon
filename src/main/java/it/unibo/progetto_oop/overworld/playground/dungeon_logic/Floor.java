@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Objects;
 
 import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
-import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ImplArrayListStructureData;
 import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.TileType;
 
 public final class Floor {
     /**
@@ -27,7 +27,7 @@ public final class Floor {
     /**
      * Constructs a Floor instance with the given configuration, generator,
      * and final floor flag.
-     * 
+     *
      * @param conf       the configuration for the floor
      * @param gen        the generator used to create the floor
      * @param finalFloor whether this is the final floor
@@ -48,16 +48,16 @@ public final class Floor {
 
     /**
      * Returns the grid representing the structure of the floor.
-     * 
+     *
      * @return the grid of the floor
      */
     public StructureData grid() {
         return grid;
     }
-    
+
     /**
      * Returns the grid representing entities on the floor.
-     * 
+     *
      * @return the entity grid of the floor
      */
     public StructureData entityGrid() {
@@ -66,7 +66,7 @@ public final class Floor {
 
     /**
      * Returns the list of rooms present on the floor.
-     * 
+     *
      * @return an immutable list of rooms
      */
     public List<Room> rooms() {

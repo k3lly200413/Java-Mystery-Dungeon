@@ -44,12 +44,12 @@ public final class OverworldLauncher {
             final FloorConfig floorConfig,
             final EntityStatsConfig entityStatsConfig,
             final Random rand) {
-        RandomPlacementStrategy rps = new ImplRandomPlacement();
-        RoomPlacementStrategy rrs = new ImplRoomPlacement();
-        TunnelPlacementStrategy tps = new ImplTunnelPlacement();
-        FloorGenerator gen = new FloorGenerator(rrs, tps, rps, rand);
+        final RandomPlacementStrategy rps = new ImplRandomPlacement();
+        final RoomPlacementStrategy rrs = new ImplRoomPlacement();
+        final TunnelPlacementStrategy tps = new ImplTunnelPlacement();
+        final FloorGenerator gen = new FloorGenerator(rrs, tps, rps, rand);
 
-        Dungeon dungeon = new Dungeon(gen, floorConfig);
+        final Dungeon dungeon = new Dungeon(gen, floorConfig);
         this.model = new OverworldModel(
                 List.<Enemy>of(),
                 List.<Item>of(),
