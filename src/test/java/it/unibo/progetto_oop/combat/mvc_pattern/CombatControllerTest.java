@@ -78,12 +78,6 @@ class CombatControllerTest {
         assertTrue(this.controller.getCurrentState() instanceof PlayerTurnState, "Initial state should be PlayerTurnState");
     }
 
-    // @Test
-    // void attachListenersTest() {
-    //     var listeners = controller.getView().
-    //     assertTrue(listeners.getActionListeners().length > 0, "Long Range Attack Button should have listeners attached");
-    // }
-
     @Test
     void curePoisonTest() {
         this.model.setPlayerPoisoned(true);

@@ -28,6 +28,7 @@ import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 /**
@@ -336,7 +337,8 @@ public class CombatController implements CombatControllerApi {
      * Handles the Cure Poison button click.
      */
     public void handleCurePoisonInput() {
-        this.currentState.handlePotionUsed(this, this.curePoisonItem, null);
+        final PossibleUser user = new CombatModelPossibleUserAdapter(this.model);
+        this.currentState.handlePotionUsed(user, this.curePoisonItem, null);
         this.player.getInventory().decreaseItemCount(curePoisonItem);
         currentState.handleBackInput(this);
     }
@@ -1068,12 +1070,235 @@ public class CombatController implements CombatControllerApi {
     }
 
     /**
-     * Getters for the model and view.
+     * Returns a read-only view of the model to avoid exposing the mutable CombatModel.
      *
-     * @return the model of the combat controller
+     * Callers should use this instead of getModel() to avoid mutating internal state.
      */
-    public final CombatModel getModel() {
-        return this.model;
+    public final ReadOnlyCombatModel getReadOnlyModel() {
+        final CombatModel backing = this.model;
+        return new ReadOnlyCombatModel() {
+
+            /**
+             * 
+             */
+            @Override 
+            public int getPlayerHealth() {
+                return backing.getPlayerHealth();
+            }
+
+            /**
+             * 
+             */
+            @Override 
+            public int getEnemyHealth() {
+                return backing.getEnemyHealth();
+            }
+
+            /**
+             * 
+             */
+            @Override 
+            public int getPlayerMaxHealth() {
+                return backing.getPlayerMaxHealth();
+            }
+
+            /**
+             * 
+             */
+            @Override 
+            public int getEnemyMaxHealth() {
+                return backing.getEnemyMaxHealth();
+            }
+
+            /**
+             * 
+             */
+            @Override 
+            public int getPlayerPower() {
+                return backing.getPlayerPower();
+            }
+
+            /**
+             * 
+             */
+            @Override 
+            public int getEnemyPower() {
+                return backing.getEnemyPower();
+            }
+
+            /**
+             * 
+             */
+            @Override 
+            public int getPlayerStamina() {
+                return backing.getPlayerStamina();
+            }
+
+            /**
+             * 
+             */
+            @Override 
+            public boolean isPlayerTurn() {
+                return backing.isPlayerTurn();
+            }
+
+            /**
+             * 
+             */
+            @Override 
+            public boolean isGameOver() {
+                return backing.isGameOver();
+            }
+
+            /**
+             * 
+             */
+            @Override 
+            public int getSize() {
+                return backing.getSize();
+            }
+
+            /**
+             * 
+             */
+            @Override 
+            public Position getPlayerPosition() {
+                return backing.getPlayerPosition();
+            }
+
+            /**
+             * 
+             */
+            @Override 
+            public Position getEnemyPosition() {
+                return backing.getEnemyPosition();
+            }
+
+            /**
+             * 
+             */
+            @Override 
+            public boolean isEnemyPoisoned() {
+                return backing.isEnemyPoisoned();
+            }
+
+            /**
+             * 
+             */
+            @Override 
+            public boolean isPlayerPoison() {
+                return backing.isPlayerPoison();
+            }
+
+
+            @Override
+            public void setPlayerTurn(boolean b) {
+                backing.setPlayerTurn(b);
+            }
+
+
+            @Override
+            public CombatState getEnemyState() {
+                return backing.getEnemyState();
+            }
+
+
+            @Override
+            public int getBossTurnCounter() {
+                return backing.getBossTurnCounter();
+            }
+
+
+            @Override
+            public void setBossTurn(boolean b) {
+                backing.setBossTurn(b);
+            }
+
+
+            @Override
+            public void increaseBossTurnCounter() {
+                backing.increaseBossTurnCounter();
+            }
+
+
+            @Override
+            public boolean isBossTurn() {
+                return backing.isBossTurn();
+            }
+
+
+            @Override
+            public int getBossAttackCounter() {
+                return backing.getBossAttackCounter();
+            }
+
+
+            @Override
+            public int getMaxBossHit() {
+                return backing.getMaxBossHit();
+            }
+
+
+            @Override
+            public void increaseBossAttackCounter() {
+                backing.increaseBossAttackCounter();
+            }
+
+
+            @Override
+            public void clearBossAttackCount() {
+                backing.clearBossAttackCount();
+            }
+
+
+            @Override
+            public Position getAttackPosition() {
+                return backing.getAttackPosition();
+            }
+
+
+            @Override
+            public Position getWhoDied() {
+                return backing.getWhoDied();
+            }
+
+
+            @Override
+            public void resetPositions() {
+                backing.resetPositions();
+            }
+
+
+            @Override
+            public Object getEnemyName() {
+                return backing.getEnemyName();
+            }
+
+
+            @Override
+            public Object getEnemySpeed() {
+                return backing.getEnemySpeed();
+            }
+
+
+            @Override
+            public void decreasePlayerStamina(int staminaToRemove) {
+                backing.decreasePlayerStamina(staminaToRemove);
+            }
+
+
+            @Override
+            public void setEnemyCurrentHp(int currentHp) {
+                backing.setEnemyCurrentHp(currentHp);
+            }
+
+
+            @Override
+            public void setEnemyMaxHp(int maxHp) {
+                backing.setEnemyMaxHp(maxHp);
+            }
+
+        };
     }
 
     /**
@@ -1081,7 +1306,8 @@ public class CombatController implements CombatControllerApi {
      */
     public void handleAttackBuff() {
         if (this.currentState != null) {
-            currentState.handlePotionUsed(this, this.attackBuffItem, null);
+            final PossibleUser user = new CombatModelPossibleUserAdapter(this.model);
+            currentState.handlePotionUsed(user, this.attackBuffItem, null);
             currentState.handleBackInput(this);
             this.player.getInventory().decreaseItemCount(attackBuffItem);
         }
@@ -1092,7 +1318,8 @@ public class CombatController implements CombatControllerApi {
      */
     public void handleHeal() {
         if (this.currentState != null) {
-            currentState.handlePotionUsed(this, this.healingItem, null);
+            final PossibleUser user = new CombatModelPossibleUserAdapter(this.model);
+            currentState.handlePotionUsed(user, this.healingItem, null);
             this.view.updatePlayerHealth(this.model.getPlayerHealth());
             currentState.handleBackInput(this);
             this.player.getInventory().decreaseItemCount(healingItem);
