@@ -38,9 +38,9 @@ public class VisibilityUtil {
      * @param enemy enemy's position
      * @param player player's position
      * @param neighbourDistance the distance considered as
-     * "neighbour" for the enemy
+     *     "neighbour" for the enemy
      * @return true if the player is in the
-     * enemy'sline of sight, false otherwise
+     *     enemy'sline of sight, false otherwise
      */
     public boolean inLos(final Position enemy,
     final Position player,
@@ -92,7 +92,7 @@ public class VisibilityUtil {
      * @param enemy the enemy's position
      * @param player the player's position
      * @return a list of positions representing
-     * the line between the enemy and the player
+     *     the line between the enemy and the player
      */
     private List<Position> bresenhamLine(
     final Position enemy,

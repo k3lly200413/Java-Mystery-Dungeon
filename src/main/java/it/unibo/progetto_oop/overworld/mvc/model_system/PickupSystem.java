@@ -93,7 +93,7 @@ public class PickupSystem {
      * Check if an item is found at the player's position.
      *
      * @return an Optional containing the
-     * item if found, otherwise an empty Optional
+     *     item if found, otherwise an empty Optional
      */
     private Optional<Item> itemFoundAtPlayerPosition() {
         return this.items.stream().filter(
