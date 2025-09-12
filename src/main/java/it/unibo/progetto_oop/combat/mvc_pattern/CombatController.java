@@ -1068,11 +1068,11 @@ public class CombatController implements CombatControllerApi {
     }
 
     /**
-     * Getters for the model and view.
+     * Getters for the model.
      *
      * @return the model of the combat controller
      */
-    public final CombatModel getModel() {
+    public final ModelRead_Only getModel() {
         return this.model;
     }
 

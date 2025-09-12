@@ -18,7 +18,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
  * including player and enemy attributes, positions,
  * health, stamina, and turn management.
  */
-public class CombatModel implements PossibleUser {
+public class CombatModel implements PossibleUser, ModelRead_Only  {
 
     /** Offset applied to the player's initial X coordinate. */
     private static final int PLAYER_X_OFFSET = 2;
@@ -432,6 +432,7 @@ public final boolean isGameOver() {
      *
      * @return the player's maximum stamina
      */
+    @Override
     public final int getPlayerStaminaMax() {
         return this.playerStaminaMax;
     }
