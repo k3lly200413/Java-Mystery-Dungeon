@@ -60,10 +60,10 @@ public class MovementUtil {
      * (vertical or horizontal) from the enemy's position.
      *
      * @param enemyPosition the position of the enemy
-     * @param isVerticalCheck true if checking for vertical
-     * walls(enemy is moving vertically), false for horizontal walls
+     * @param isVerticalCheck true if checking for vertical 
+     *     walls(enemy is moving vertically), false for horizontal walls
      * @return an Optional containing the closest wall position if found,
-     * or an empty Optional if no wall is found
+     *     or an empty Optional if no wall is found
      */
     private Optional<Position> findClosestWallOnAxis(
     final Position enemyPosition, final boolean isVerticalCheck) {
@@ -85,7 +85,7 @@ public class MovementUtil {
      *
      * @param enemyPosition the position of the enemy
      * @param doesEnemyGoVertically true if the enemy is moving
-     * vertically, false if horizontally
+     *     vertically, false if horizontally
      * @return the initial general move direction for the enemy
      */
     public MoveDirection getInitialGeneralMoveDirection(

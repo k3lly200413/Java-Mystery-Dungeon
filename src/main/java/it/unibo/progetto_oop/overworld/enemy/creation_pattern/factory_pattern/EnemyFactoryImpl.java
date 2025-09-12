@@ -37,10 +37,10 @@ public class EnemyFactoryImpl implements EnemyFactory {
 
     /**
      * Constructor of the EnemyFactoryImpl class.
-     * 
+     *
      * @param newWallChecker wall checker to check for walls
      * @param newCombatTransitionChecker combat transition checker
-     * to check for combat transitions
+     *     to check for combat transitions
      */
     public EnemyFactoryImpl(final WallCollision newWallChecker,
     final CombatCollision newCombatTransitionChecker) {

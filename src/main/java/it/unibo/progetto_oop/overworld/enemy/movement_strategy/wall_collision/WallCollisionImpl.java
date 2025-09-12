@@ -102,7 +102,7 @@ public final class WallCollisionImpl implements WallCollision {
      * @param dx the x direction (-1, 0, 1)
      * @param dy the y direction (-1, 0, 1)
      * @return an Optional containing the position
-     * of the closest wall if found, otherwise an empty
+     *     of the closest wall if found, otherwise an empty
      */
     @Override
     public Optional<Position> closestWall(final Position from,
