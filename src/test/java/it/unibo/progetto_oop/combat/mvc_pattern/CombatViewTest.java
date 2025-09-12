@@ -23,25 +23,45 @@ class CombatViewTest {
 
     @BeforeEach
     void setUp() {
+
         final Player player = new Player(100, 100, 100, new Inventory());
+        final int size = 12;
+        final int playerPower = player.getPower();
+        final int playerPoisonPower = 2;
+        final int enemySpeed = 3;
+        final String enemyName = "Dragon";
+        final int playerMaxStamina = player.getStamina();
+        final int playerLongRangePower = 5;
+
+        final int viewWidthFactor = 20;
+
+        final int viewHeightFactor = 50;
+
+        final int buttonWidth = 70;
+
+        final int buttonHeight = 75;
+
+        final int sizeDivisor = 3;
+
+        final int maxHealth = player.getMaxHp();
         final CombatCollision collision = mock(CombatCollision.class);
         final GridNotifier gridNotifier = mock(GridNotifier.class);
         this.model = new CombatBuilder()
-            .setSize(12)
-            .setStaminaMax(100)
-            .setPlayerPower(10)
-            .setPlayerPoisonPower(2)
-            .setPlayerLongRangePower(10)
-            .setEnemySpeed(3)
-            .setEnemyName("Dragon")
+            .setSize(size)
+            .setStaminaMax(playerMaxStamina)
+            .setPlayerPower(playerPower)
+            .setPlayerPoisonPower(playerPoisonPower)
+            .setPlayerLongRangePower(playerLongRangePower)
+            .setEnemySpeed(enemySpeed)
+            .setEnemyName(enemyName)
             .setPlayerCurrentHealth(100)
             .setEnemyCurrentHealth(100)
-            .setEnemyMaxHealth(100)
+            .setEnemyMaxHealth(maxHealth)
             .build();
 
-        this.view = new CombatView(model.getSize(), 20 * model.getSize() / 3,
-        50 * model.getSize() / 3, 70,
-        75, 100, 100);
+        this.view = new CombatView(model.getSize(), viewWidthFactor * model.getSize() / sizeDivisor,
+        viewHeightFactor * model.getSize() / sizeDivisor, buttonWidth,
+        buttonHeight, 100, 100);
         this.view.init();
         this.controller = new CombatController(model, view, player, collision, gridNotifier);
         this.view.setPlayerMaxStaminaBar(100);
