@@ -14,6 +14,9 @@ import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.Re
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
 import it.unibo.progetto_oop.overworld.playground.view.playground_view.ImplMapView;
 
+/**
+ * Controller class for managing the map view and handling floor changes in the overworld.
+ */
 public final class MapController implements ChangeFloorListener {
 
     /**

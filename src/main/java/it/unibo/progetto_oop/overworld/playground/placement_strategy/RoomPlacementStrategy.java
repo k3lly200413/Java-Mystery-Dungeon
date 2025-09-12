@@ -7,12 +7,11 @@ import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 
-
 @FunctionalInterface
 /**
  * Strategy interface for placing rooms in a grid structure.
  */
-public interface RoomPlacementStrategy  {
+public interface RoomPlacementStrategy {
     /**
      * Places rooms on the grid based on the given configuration.
      *
