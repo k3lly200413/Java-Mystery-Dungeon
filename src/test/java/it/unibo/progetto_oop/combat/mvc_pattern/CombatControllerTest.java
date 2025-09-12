@@ -16,6 +16,7 @@ import it.unibo.progetto_oop.combat.state_pattern.InfoDisplayState;
 import it.unibo.progetto_oop.combat.state_pattern.ItemSelectionState;
 import it.unibo.progetto_oop.combat.state_pattern.PlayerTurnState;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.player.Player;
 
@@ -40,6 +41,7 @@ class CombatControllerTest {
         final Player player = new Player(100, 100, 100, new Inventory());
         final CombatCollision collision = mock(CombatCollision.class);
         final GridNotifier gridNotifier = mock(GridNotifier.class);
+        final Enemy enemy = mock(Enemy.class);
         final int size = 12;
         final int playerPower = player.getPower();
         final int playerPoisonPower = 2;
@@ -82,6 +84,7 @@ class CombatControllerTest {
         buttonWidth, buttonHeight, windowWidth, windowHeight);
         view.init();
         this.controller = new CombatController(model, view, player, collision, gridNotifier);
+        this.controller.setEncounteredEnemy(enemy);
     }
 
     @Test

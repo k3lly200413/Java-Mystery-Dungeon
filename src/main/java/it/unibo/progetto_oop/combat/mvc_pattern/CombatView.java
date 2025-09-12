@@ -123,11 +123,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Map to hold JLabel components and their corresponding Position.
      */
-    private transient Map<JLabel, Position> cells;
-    /**
-     * Colour of enemy or Boss.
-     */
-    private String enemyColour;
+    private transient Map<JLabel, Position> cells; 
     /**
      * Height and width of the player's health bar.
      */
@@ -349,7 +345,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
         this.buttonPanelContainer = new JPanel(cardLayout);
 
         this.originalButtonPanel = new JPanel(
-            new FlowLayout(FlowLayout.CENTER));
+            new WrapLayout(FlowLayout.CENTER));
         this.attackButton = this.createButton(
             "Attack", this.buttonHeight, this.buttonWidth);
         this.bagButton = this.createButton(
@@ -526,10 +522,11 @@ public class CombatView extends JPanel implements CombatViewInterface {
      */
     @Override
     public final void updateDisplay(final RedrawContext context) {
+        final String enemyColour;
         if (context.isBoss()) {
-            this.enemyColour = RED;
+            enemyColour = RED;
         } else {
-            this.enemyColour = GENGAR;
+            enemyColour = GENGAR;
         }
         for (final var entry : cells.entrySet()) {
             final JLabel cellLabel = entry.getKey();
@@ -581,22 +578,9 @@ public class CombatView extends JPanel implements CombatViewInterface {
                 && context.getWhoIsPoisoned() != null
                 && entry.getValue().y() == context.getPoisonYCoord()
                 && entry.getValue().x() == context.getWhoIsPoisoned().x()) {
-                icon = this.getIconResource(GREEN,
-                context.getSquareWidth(), context.getSquareHeight());
-            // } else if (
-            //     (context.isDrawFlame() || context.isDrawPoison())
-            //     && this.neighbours.neighbours(
-            //         cellPos, context.getFlame(), 0)) {
-            //     icon = context.isDrawFlame()
-            //     ? this.getIconResource(
-            //         GREEN,
-            //         context.getSquareWidth(),
-            //         context.getSquareHeight())
-            //     : this.getIconResource(
-            //         YELLOW,
-            //         context.getSquareWidth(),
-            //         context.getSquareHeight());
-                } else if (
+                    icon = this.getIconResource(GREEN,
+                    context.getSquareWidth(), context.getSquareHeight());
+            } else if (
                 context.isDrawPlayer()
                 && context.getPlayer() != null
                 && this.neighbours.neighbours(
@@ -756,7 +740,6 @@ public class CombatView extends JPanel implements CombatViewInterface {
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
-            System.err.println("Icon not found: " + path);
             return createDefaultIcon(width, height);
         }
     }
