@@ -63,7 +63,7 @@ class EnemySystemTest {
     private CombatCollision combatCollision;
 
     @BeforeEach
-    void setUp() {
+    void setUpEnemySystem() {
         enemy1 = mock(Enemy.class);
         enemy2 = mock(Enemy.class);
         player = mock(Player.class);

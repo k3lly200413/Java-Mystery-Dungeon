@@ -44,7 +44,7 @@ class WallCollisionTest {
     private WallCollisionImpl wallCollision;
 
     @BeforeEach
-    void setup() {
+    void setupWallCollision() {
         gridMock = mock(StructureData.class);
         entityGridMock = mock(StructureData.class);
         wallCollision = new WallCollisionImpl(gridMock, entityGridMock);

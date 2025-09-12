@@ -336,7 +336,19 @@ public class CombatController implements CombatControllerApi {
      * Handles the Cure Poison button click.
      */
     public void handleCurePoisonInput() {
-        this.currentState.handlePotionUsed(this, this.curePoisonItem, null);
+        final CombatModelPossibleUserAdapter adapter = new CombatModelPossibleUserAdapter(
+            model::getPlayerMaxHealth,
+            model::getPlayerHealth,
+            model::getPlayerPower,
+            model::getMaxStamina,
+            model::getStamina,
+            model::increasePlayerHealth,
+            model::increasePlayerMaxPower,
+            model::increasePlayerMaxStamina,
+            model::increasePlayerMaxHealth,
+            model::setPlayerPoisoned
+        );
+        this.currentState.handlePotionUsed(adapter, this.curePoisonItem, null);
         this.player.getInventory().decreaseItemCount(curePoisonItem);
         currentState.handleBackInput(this);
     }
@@ -1068,12 +1080,316 @@ public class CombatController implements CombatControllerApi {
     }
 
     /**
-     * Getters for the model and view.
+     * Returns a read-only view of the model to avoid exposing the mutable CombatModel.
+     * Callers should use this instead of getModel() to avoid mutating internal state.
      *
-     * @return the model of the combat controller
+     * @return a read-only view of the model
      */
-    public final CombatModel getModel() {
-        return this.model;
+    public final ReadOnlyCombatModel getReadOnlyModel() {
+        final CombatModel backing = this.model;
+        return new ReadOnlyCombatModel() {
+
+            /**
+             * Returns the current health points of the player.
+             *
+             * @return the current health points of the player
+             */
+            @Override 
+            public int getPlayerHealth() {
+                return backing.getPlayerHealth();
+            }
+
+            /**
+             * Returns the current health points of the enemy.
+             *
+             * @return the current health points of the enemy
+             */
+            @Override 
+            public int getEnemyHealth() {
+                return backing.getEnemyHealth();
+            }
+
+            /**
+             * Returns the maximum health points of the player.
+             *
+             * @return the maximum health points of the player
+             */
+            @Override 
+            public int getPlayerMaxHealth() {
+                return backing.getPlayerMaxHealth();
+            }
+
+            /**
+             * Returns the maximum health points of the enemy.
+             *
+             * @return the maximum health points of the enemy
+             */
+            @Override 
+            public int getEnemyMaxHealth() {
+                return backing.getEnemyMaxHealth();
+            }
+
+            /**
+             * Returns the current power points of the player.
+             *
+             * @return the current power points of the player
+             */
+            @Override 
+            public int getPlayerPower() {
+                return backing.getPlayerPower();
+            }
+
+            /**
+             * Returns the current power points of the enemy.
+             *
+             * @return the current power points of the enemy
+             */
+            @Override 
+            public int getEnemyPower() {
+                return backing.getEnemyPower();
+            }
+
+            /**
+             * Returns the current stamina points of the player.
+             *
+             * @return the current stamina points of the player
+             */
+            @Override 
+            public int getPlayerStamina() {
+                return backing.getPlayerStamina();
+            }
+
+            /**
+             * Returns whether it is the player's turn.
+             *
+             * @return true if it is the player's turn, false otherwise
+             */
+            @Override 
+            public boolean isPlayerTurn() {
+                return backing.isPlayerTurn();
+            }
+
+            /**
+             * Returns whether the game is over.
+             *
+             * @return true if the game is over, false otherwise
+             */
+            @Override 
+            public boolean isGameOver() {
+                return backing.isGameOver();
+            }
+
+            /**
+             * Returns the size of the view.
+             */
+            @Override 
+            public int getSize() {
+                return backing.getSize();
+            }
+
+            /**
+             * Returns the current position of the player.
+             *
+             * @return the current position of the player
+             */
+            @Override 
+            public Position getPlayerPosition() {
+                return backing.getPlayerPosition();
+            }
+
+            /**
+             * Returns the current position of the enemy.
+             *
+             * @return the current position of the enemy
+             */
+            @Override 
+            public Position getEnemyPosition() {
+                return backing.getEnemyPosition();
+            }
+
+            /**
+             * Returns whether the enemy is poisoned.
+             *
+             * @return true if the enemy is poisoned, false otherwise
+             */
+            @Override 
+            public boolean isEnemyPoisoned() {
+                return backing.isEnemyPoisoned();
+            }
+
+            /**
+             * Returns whether the player is poisoned.
+             *
+             * @return true if the player is poisoned, false otherwise
+             */
+            @Override 
+            public boolean isPlayerPoison() {
+                return backing.isPlayerPoison();
+            }
+
+            /**
+             * Sets whether it is the player's turn.
+             */
+            @Override
+            public void setPlayerTurn(final boolean b) {
+                backing.setPlayerTurn(b);
+            }
+
+            /**
+             * Returns the current state of the enemy.
+             *
+             * @return the current state of the enemy
+             */
+            @Override
+            public CombatState getEnemyState() {
+                return backing.getEnemyState();
+            }
+
+            /**
+             * Returns the current turn counter of the boss.
+             *
+             * @return the current turn counter of the boss
+             */
+            @Override
+            public int getBossTurnCounter() {
+                return backing.getBossTurnCounter();
+            }
+
+            /**
+             * Sets whether it is the boss's turn.
+             */
+            @Override
+            public void setBossTurn(final boolean b) {
+                backing.setBossTurn(b);
+            }
+
+            /**
+             * Increases the boss's turn counter by one.
+             */
+            @Override
+            public void increaseBossTurnCounter() {
+                backing.increaseBossTurnCounter();
+            }
+
+            /**
+             * Returns whether it is the boss's turn.
+             *
+             * @return true if it is the boss's turn, false otherwise
+             */
+            @Override
+            public boolean isBossTurn() {
+                return backing.isBossTurn();
+            }
+
+            /**
+             * Returns the current attack counter of the boss.
+             *
+             * @return the current attack counter of the boss
+             */
+            @Override
+            public int getBossAttackCounter() {
+                return backing.getBossAttackCounter();
+            }
+
+            /**
+             * Returns the maximum hit points of the boss.
+             *
+             * @return the maximum hit points of the boss
+             */
+            @Override
+            public int getMaxBossHit() {
+                return backing.getMaxBossHit();
+            }
+
+            /**
+             * Increases the boss's attack counter by one.
+             */
+            @Override
+            public void increaseBossAttackCounter() {
+                backing.increaseBossAttackCounter();
+            }
+
+            /**
+             * Clears the boss's attack counter.
+             */
+            @Override
+            public void clearBossAttackCount() {
+                backing.clearBossAttackCount();
+            }
+
+            /**
+             * Returns the current attack position.
+             *
+             * @return the current attack position
+             */
+            @Override
+            public Position getAttackPosition() {
+                return backing.getAttackPosition();
+            }
+
+            /**
+             * Returns the position of the character who died.
+             */
+            @Override
+            public Position getWhoDied() {
+                return backing.getWhoDied();
+            }
+
+            /**
+             * Resets the positions of all characters.
+             */
+            @Override
+            public void resetPositions() {
+                backing.resetPositions();
+            }
+
+            /**
+             * Returns the name of the enemy.
+             */
+            @Override
+            public String getEnemyName() {
+                return backing.getEnemyName();
+            }
+
+            /**
+             * Returns the speed of the enemy.
+             */
+            @Override
+            public int getEnemySpeed() {
+                return backing.getEnemySpeed();
+            }
+
+            /**
+             * Decreases the player's stamina by the specified amount.
+             *
+             * @param staminaToRemove the amount of stamina to remove
+             */
+            @Override
+            public void decreasePlayerStamina(final int staminaToRemove) {
+                backing.decreasePlayerStamina(staminaToRemove);
+            }
+
+            /**
+             * Sets the enemy's current hit points.
+             *
+             * @param currentHp the current hit points to set
+             */
+            @Override
+            public void setEnemyCurrentHp(final int currentHp) {
+                backing.setEnemyCurrentHp(currentHp);
+            }
+
+            /**
+             * Sets the enemy's maximum hit points.
+             *
+             * @param maxHp the maximum hit points to set
+             */
+            @Override
+            public void setEnemyMaxHp(final int maxHp) {
+                backing.setEnemyMaxHp(maxHp);
+            }
+
+        };
     }
 
     /**
@@ -1081,7 +1397,19 @@ public class CombatController implements CombatControllerApi {
      */
     public void handleAttackBuff() {
         if (this.currentState != null) {
-            currentState.handlePotionUsed(this, this.attackBuffItem, null);
+            final CombatModelPossibleUserAdapter adapter = new CombatModelPossibleUserAdapter(
+            model::getPlayerMaxHealth,
+            model::getPlayerHealth,
+            model::getPlayerPower,
+            model::getMaxStamina,
+            model::getStamina,
+            model::increasePlayerHealth,
+            model::increasePlayerMaxPower,
+            model::increasePlayerMaxStamina,
+            model::increasePlayerMaxHealth,
+            model::setPlayerPoisoned
+            );
+            currentState.handlePotionUsed(adapter, this.attackBuffItem, null);
             currentState.handleBackInput(this);
             this.player.getInventory().decreaseItemCount(attackBuffItem);
         }
@@ -1092,7 +1420,19 @@ public class CombatController implements CombatControllerApi {
      */
     public void handleHeal() {
         if (this.currentState != null) {
-            currentState.handlePotionUsed(this, this.healingItem, null);
+            final CombatModelPossibleUserAdapter adapter = new CombatModelPossibleUserAdapter(
+            model::getPlayerMaxHealth,
+            model::getPlayerHealth,
+            model::getPlayerPower,
+            model::getMaxStamina,
+            model::getStamina,
+            model::increasePlayerHealth,
+            model::increasePlayerMaxPower,
+            model::increasePlayerMaxStamina,
+            model::increasePlayerMaxHealth,
+            model::setPlayerPoisoned
+            );
+            currentState.handlePotionUsed(adapter, this.healingItem, null);
             this.view.updatePlayerHealth(this.model.getPlayerHealth());
             currentState.handleBackInput(this);
             this.player.getInventory().decreaseItemCount(healingItem);

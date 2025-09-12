@@ -3,6 +3,7 @@ package it.unibo.progetto_oop.combat.state_pattern;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
 /**
  * Interface representing a state in the combat state pattern.
@@ -72,11 +73,11 @@ public interface CombatState {
     /**
      * This method is called when a potion is used during combat.
      *
-     * @param context Instance of the controller
+     * @param user The PossibleUser using the potion
      * @param selectedPotion The potion selected from the bag
      * @param player The player using the potion
      */
-    void handlePotionUsed(CombatController context,
+    void handlePotionUsed(PossibleUser user,
     Item selectedPotion, Player player);
 
     /**

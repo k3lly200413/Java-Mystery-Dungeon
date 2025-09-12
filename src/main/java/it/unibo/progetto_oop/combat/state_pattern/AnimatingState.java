@@ -2,9 +2,10 @@ package it.unibo.progetto_oop.combat.state_pattern;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatViewApi;
+import it.unibo.progetto_oop.combat.mvc_pattern.ReadOnlyCombatModel;
 import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
 /**
  * Class representing the Animating State in the combat state pattern.
@@ -83,7 +84,7 @@ public class AnimatingState implements CombatState {
     @Override
     public final void handleAnimationComplete(final CombatController context) {
 
-        final CombatModel model = context.getModel();
+        final ReadOnlyCombatModel model = context.getReadOnlyModel();
         final CombatViewApi view = context.getViewApi();
 
         final boolean wasPlayerTurn = model.isPlayerTurn();
@@ -111,10 +112,10 @@ public class AnimatingState implements CombatState {
 
         if (!context.checkGameOver()) {
             if (wasPlayerTurn && !model.isEnemyPoisoned()) {
-                    context.getModel().setPlayerTurn(false);
-                    context.setState(context.getModel().getEnemyState());
+                    context.getReadOnlyModel().setPlayerTurn(false);
+                    context.setState(context.getReadOnlyModel().getEnemyState());
             } else if (!wasPlayerTurn && !model.isPlayerPoison()) {
-                    context.getModel().setPlayerTurn(true);
+                    context.getReadOnlyModel().setPlayerTurn(true);
                     context.setState(new PlayerTurnState());
             }
         }
@@ -159,7 +160,7 @@ public class AnimatingState implements CombatState {
     /** */
     @Override
     public void handlePotionUsed(
-        final CombatController context,
+        final PossibleUser user,
         final Item selectedPotion,
         final Player player) {
         // TODO Auto-generated method stub

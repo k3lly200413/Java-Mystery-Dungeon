@@ -62,10 +62,10 @@ public class GameOverState implements CombatState {
     @Override
     public void enterState(final CombatController context) {
         final Timer enemyActionTimer = new Timer(TIMER_DURATION, e -> {
-            if (context.getModel().getPlayerHealth() <= 0) {
+            if (context.getReadOnlyModel().getPlayerHealth() <= 0) {
                 combatCollision.showGameOver();
-            } else if (context.getModel().getEnemyHealth() <= 0) {
-                if (context.getModel()
+            } else if (context.getReadOnlyModel().getEnemyHealth() <= 0) {
+                if (context.getReadOnlyModel()
                 .getEnemyState() instanceof EnemyTurnState) {
                     userPlayer.increasePlayerMaxPower(INCREASE_AMOUNT);
                     userPlayer.increasePlayerMaxHealth(INCREASE_AMOUNT);
@@ -87,22 +87,22 @@ public class GameOverState implements CombatState {
             } else {
                 combatCollision.setInCombat(false);
                 this.combatCollision.showOverworld();
-                this.enemy.setHp(context.getModel().getEnemyHealth());
+                this.enemy.setHp(context.getReadOnlyModel().getEnemyHealth());
                 }
         });
         enemyActionTimer.setRepeats(false);
         enemyActionTimer.start();
 
         final RedrawContext defaultRedraw = new RedrawContext.Builder()
-                .player(context.getModel().getPlayerPosition())
-                .enemy(context.getModel().getEnemyPosition())
-                .flame(context.getModel().getAttackPosition())
+                .player(context.getReadOnlyModel().getPlayerPosition())
+                .enemy(context.getReadOnlyModel().getEnemyPosition())
+                .flame(context.getReadOnlyModel().getAttackPosition())
                 .drawPlayer(true)
                 .drawEnemy(true)
                 .playerRange(2)
                 .enemyRange(2)
-                .setIsGameOver(context.getModel().isGameOver())
-                .whoDied(context.getModel().getWhoDied())
+                .setIsGameOver(context.getReadOnlyModel().isGameOver())
+                .whoDied(context.getReadOnlyModel().getWhoDied())
                 .build();
         context.getViewApi().updateDisplay(defaultRedraw);
     }
@@ -174,7 +174,7 @@ public class GameOverState implements CombatState {
     }
 
     @Override
-    public void handlePotionUsed(final CombatController context,
+    public void handlePotionUsed(final PossibleUser user,
             final Item selectedPotion, final Player player) {
         // TODO Auto-generated method stub
 

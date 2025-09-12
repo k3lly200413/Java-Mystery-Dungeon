@@ -3,6 +3,7 @@ package it.unibo.progetto_oop.combat.state_pattern;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
 import it.unibo.progetto_oop.overworld.player.Player;
+import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
 /**
  * Player's turn state in combat.
@@ -38,12 +39,12 @@ public class PlayerTurnState implements CombatState {
         final boolean isFalme) {
 
         context.setState(new AnimatingState());
-        context.getModel().decreasePlayerStamina(STAMINA_TO_REMOVE);
+        context.getReadOnlyModel().decreasePlayerStamina(STAMINA_TO_REMOVE);
         context.getViewApi().updatePlayerStamina(
-            context.getModel().getPlayerStamina());
+            context.getReadOnlyModel().getPlayerStamina());
         context.getViewApi().showInfo("Player Has used Long Range Attack");
         context.performLongRangeAttack(
-            context.getModel().getPlayerPosition(), 1, isFalme, isPoison);
+            context.getReadOnlyModel().getPlayerPosition(), 1, isFalme, isPoison);
     }
 
     @Override
@@ -70,7 +71,7 @@ public class PlayerTurnState implements CombatState {
 
     @Override
     public final void enterState(final CombatController context) {
-        context.getModel().setPlayerTurn(true);
+        context.getReadOnlyModel().setPlayerTurn(true);
         context.getViewApi().setAllMenusEnabled();
         context.getViewApi().showMainMenu();
         context.getViewApi().showInfo("Your Turn!");
@@ -109,7 +110,7 @@ public class PlayerTurnState implements CombatState {
 
     @Override
     public final void handlePotionUsed(
-        final CombatController context,
+        final PossibleUser user,
         final Item selectedPotion,
         final Player player) {
         // TODO Auto-generated method stub

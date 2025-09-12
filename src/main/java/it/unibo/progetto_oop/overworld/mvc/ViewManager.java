@@ -180,8 +180,8 @@ public final class ViewManager {
 
             @Override
             public void setEnemyHp(final int currentHp, final int maxHp) {
-                fullController.getModel().setEnemyCurrentHp(currentHp);
-                fullController.getModel().setEnemyMaxHp(maxHp);
+                fullController.getReadOnlyModel().setEnemyCurrentHp(currentHp);
+                fullController.getReadOnlyModel().setEnemyMaxHp(maxHp);
             }
 
             @Override

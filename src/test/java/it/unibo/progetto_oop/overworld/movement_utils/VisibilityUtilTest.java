@@ -31,7 +31,7 @@ class VisibilityUtilTest {
     private VisibilityUtil visibilityUtil;
 
     @BeforeEach
-    void setUp() {
+    void setUpVisibilityUtil() {
         wallCollision = mock(WallCollision.class);
         visibilityUtil = new VisibilityUtil(wallCollision);
     }
