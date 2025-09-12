@@ -94,9 +94,11 @@ class CombatCollisionImplTest {
     }
 
     @Test
-    void testShowCombatDoesNotCallObserverIfAlreadyInCombat() {
+    void testShowCombatDoesNotCallObserverIfAlreadyInCombat() throws InterruptedException{
         collision.setInCombat(true);
         collision.showCombat(enemy, player);
+        // waiting for invokeLater to execute
+        Thread.sleep(DELAY);
         verify(observer, never()).onPlayerEnemyContact(enemy);
     }
 
