@@ -85,21 +85,23 @@ class CombatCollisionImplTest {
     }
 
     @Test
-    void testShowCombatCallsObserver() throws InterruptedException {
+    void testShowCombatCallsObserver() {
         collision.setInCombat(false);
         collision.showCombat(enemy, player);
         // waiting for invokeLater to execute
-        Thread.sleep(DELAY);
-        verify(observer).onPlayerEnemyContact(enemy);
+        new javax.swing.Timer(DELAY, e -> {
+            verify(observer).onPlayerEnemyContact(enemy);
+        }).start();
     }
 
     @Test
-    void testShowCombatDoesNotCallObserverIfAlreadyInCombat() throws InterruptedException{
+    void testShowCombatDoesNotCallObserverIfAlreadyInCombat() {
         collision.setInCombat(true);
         collision.showCombat(enemy, player);
         // waiting for invokeLater to execute
-        Thread.sleep(DELAY);
-        verify(observer, never()).onPlayerEnemyContact(enemy);
+        new javax.swing.Timer(DELAY, e -> {
+            verify(observer, never()).onPlayerEnemyContact(enemy);
+        }).start();
     }
 
     @Test
