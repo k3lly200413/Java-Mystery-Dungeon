@@ -37,8 +37,6 @@ dependencies {
     // Logback backend for SLF4J
     runtimeOnly("ch.qos.logback:logback-classic:1.5.18")
 
-    // JUnit API and testing engine
-    val jUnitVersion = "5.11.4"
     // when dependencies share the same version, grouping in a val helps to keep them in sync
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.4")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
@@ -62,4 +60,14 @@ tasks.test {
         events(*org.gradle.api.tasks.testing.logging.TestLogEvent.values())
         showStandardStreams = true
     }
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+tasks.withType<JavaCompile> {
+    options.release.set(21)
 }
