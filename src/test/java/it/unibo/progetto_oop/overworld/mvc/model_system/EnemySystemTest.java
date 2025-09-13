@@ -3,7 +3,6 @@ package it.unibo.progetto_oop.overworld.mvc.model_system;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.GenericEnemy;
-import it.unibo.progetto_oop.overworld.enemy.state_pattern.SleeperState;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.player.Player;
