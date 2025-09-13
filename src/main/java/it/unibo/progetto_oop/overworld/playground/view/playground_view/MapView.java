@@ -27,7 +27,7 @@ public interface MapView {
      * @param p the position to center the camera on
      */
     void setCameraTarget(Position p);
-    
+
     /**
      * Sets the zoom level for the map view.
      *

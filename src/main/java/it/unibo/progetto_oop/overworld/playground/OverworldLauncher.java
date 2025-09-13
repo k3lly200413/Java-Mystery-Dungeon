@@ -74,6 +74,8 @@ public final class OverworldLauncher {
 
     /**
      * Attaches the playground view to the provided ViewManager.
+     *
+     * @param vm the ViewManager to attach the playground view to
      */
     public void attachPlaygroundView(final ViewManager vm) {
         vm.setPlayGroundView(this.view);

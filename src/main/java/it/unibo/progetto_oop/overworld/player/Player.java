@@ -69,6 +69,11 @@ public class Player {
         this.power = newPower;
     }
 
+    /**
+     * Creates a copy of the player.
+     *
+     * @return a new Player instance with the same attributes
+     */
     public Player copy() {
         return new Player(this.maxHP, this.maxStamina, this.power, this.inventory.copy());
     }

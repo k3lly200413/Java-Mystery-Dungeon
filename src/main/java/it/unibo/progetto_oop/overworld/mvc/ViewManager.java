@@ -21,7 +21,7 @@ import it.unibo.progetto_oop.overworld.playground.view.playground_view.ImplMapVi
  * Allows switching between start game, inventory,
  * overworld, combat, game over, and win views.
  */
-public final class ViewManager{
+public final class ViewManager {
     /**
      * start game card identifier.
      */

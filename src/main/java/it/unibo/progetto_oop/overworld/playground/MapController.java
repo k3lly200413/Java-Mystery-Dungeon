@@ -75,7 +75,6 @@ public final class MapController implements ChangeFloorListener {
         model.nextFloor();
     }
 
-
     @Override
     public void onFloorChange(final ReadOnlyGrid base) {
         view.setEntityGrid(model.getEntityGridView());

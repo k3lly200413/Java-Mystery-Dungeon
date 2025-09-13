@@ -131,30 +131,30 @@ public final class ImplMapView extends JPanel implements MapView {
         /**
          * The image representing the floor tile.
          */
-        private transient final BufferedImage floorImg;
+        private final transient BufferedImage floorImg;
 
         /**
          * The image representing the stairs tile.
          */
-        private transient final BufferedImage stairsImg;
+        private final transient BufferedImage stairsImg;
         /**
          * The image representing the player entity.
          */
-        private transient final BufferedImage playerImg;
+        private final transient BufferedImage playerImg;
 
         /**
          * The image representing the enemy entity.
          */
-        private transient final BufferedImage enemyImg;
+        private final transient BufferedImage enemyImg;
         /**
          * The image representing the item entity.
          */
-        private transient final BufferedImage itemImg;
+        private final transient BufferedImage itemImg;
 
         /**
          * The image representing the boss entity.
          */
-        private transient final BufferedImage bossImg;
+        private final transient BufferedImage bossImg;
 
         MapPanel(final int cellSize) {
             this.initialCell = cellSize;
