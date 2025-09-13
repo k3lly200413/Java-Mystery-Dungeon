@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.overworld.player.Player;
@@ -12,6 +13,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 /**
  * Gestisce la logica di raccolta degli oggetti.
  */
+@SuppressFBWarnings("EI_EXPOSE_REP2")
 public class PickupSystem {
     /**
      * the items on the map.
@@ -111,7 +113,6 @@ public class PickupSystem {
 
         itemOpt.ifPresent(item -> {
             this.removeItemAt(item.getPosition());
-            this.player.getInventory().printInventory();
         });
     }
 }

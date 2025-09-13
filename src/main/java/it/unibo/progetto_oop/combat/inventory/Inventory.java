@@ -1,5 +1,7 @@
 package it.unibo.progetto_oop.combat.inventory;
 
+import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -7,7 +9,7 @@ import java.util.Optional;
 /**
  * @author Laura Bertozzi
  */
-public class Inventory {
+public class Inventory implements Serializable{
     /**
      * Map that contains the items and their quantities.
      */
@@ -27,6 +29,14 @@ public class Inventory {
         this.items = new HashMap<>();
         // Set to Integer.MAX_VALUE if capacity is not specified
         this.capacity = newCapacity > 0 ? newCapacity : Integer.MAX_VALUE;
+    }
+
+    public Inventory copy() {
+        Inventory copyInventory = new Inventory(this.capacity);
+        for (Map.Entry<Item, Integer> entry : this.items.entrySet()) {
+            copyInventory.items.put(entry.getKey(), entry.getValue());
+        }
+        return copyInventory;
     }
 
     /**
@@ -163,7 +173,7 @@ public class Inventory {
      * @return a map representing the full inventory
      */
     public Map<Item, Integer> getFullInventory() {
-        return this.items;
+        return Collections.unmodifiableMap(this.items);
     }
 
     /**
@@ -171,12 +181,6 @@ public class Inventory {
      */
     public void clear() {
         this.items.clear();
-    }
-
-    /**
-     * Print the inventory.
-     */
-    public void printInventory() {
     }
 
     /**

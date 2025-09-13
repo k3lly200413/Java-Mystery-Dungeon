@@ -13,12 +13,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.progetto_oop.overworld.mvc.ViewManager;
 
 /**
  * View grafica dell'inventario.
  * Gestisce la visualizzazione e l'interazione con l'inventario del giocatore.
  */
+@SuppressFBWarnings("EI_EXPOSE_REP2")
 public final class InventoryView extends JPanel {
     private static final long serialVersionUID = 1L;
 

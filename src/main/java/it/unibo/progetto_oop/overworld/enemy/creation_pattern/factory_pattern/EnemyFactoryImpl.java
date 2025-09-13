@@ -96,7 +96,6 @@ public class EnemyFactoryImpl implements EnemyFactory {
         final Enemy enemy =
             new GenericEnemy(hp, hp, power, spawnPosition, gridNotifier);
 
-        enemy.setState(new SleeperState());
         return enemy;
     }
 
