@@ -61,7 +61,7 @@ public class EnemySystem {
      * @return list of enemies in the map
      */
     public List<Enemy> getEnemies() {
-        return this.enemies;
+        return Collections.unmodifiableList(this.enemies);
     }
 
     /**
