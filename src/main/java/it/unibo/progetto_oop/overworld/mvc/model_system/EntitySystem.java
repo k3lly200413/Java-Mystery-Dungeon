@@ -5,11 +5,14 @@ import java.util.Optional;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
+/**
+ * Interface for pickup system and enemysystem.
+ */
 public interface EntitySystem<T> {
 
     /**
      * Removes an entity at the specified position.
-     * 
+     *
      * @param pos the position to check
      * @return true if an entity was found and removed, false otherwise
      */
