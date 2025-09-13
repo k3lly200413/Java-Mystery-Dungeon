@@ -119,12 +119,13 @@ class CombatViewTest {
         this.presenter.setState(new InfoDisplayState());
         this.presenter.handleInfo();
         this.view.getInfoLabel().getText();
+        //<html><html>Enemy Info:<br>Name: Dragon<br>Power: 0<br>Speed: 3</html></html>
         final String stringResult = "<html><html>Enemy Info:<br>Name: "
         + this.model.getEnemyName()
-        + "<br>Power: "
+        + "<br>Physical Power: "
         + this.model.getEnemyPower()
-        + "<br>Speed: "
-        + this.model.getEnemySpeed()
+        + "<br>Long Range Power: "
+        + this.model.getEnemyLongRangePower()
         + "</html></html>";
         assertEquals(this.view.getInfoLabel().getText(), stringResult);
     }
