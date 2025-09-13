@@ -113,7 +113,7 @@ public class MovementSystem {
 
         // Check Enemies
         final Optional<Enemy> enemyOpt =
-            enemySystem.checkEnemyHit(tempPosition);
+            enemySystem.entityFoundAtPlayerPosition();
         if (enemyOpt.isPresent()) {
             this.setCombatTransitionFlag();
             enemySystem.setEncounteredEnemy(enemyOpt.get());

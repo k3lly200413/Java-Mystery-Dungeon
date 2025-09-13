@@ -140,7 +140,7 @@ public final class ViewManager {
      *
      * @param newInvView the inventory view to set
      */
-    public void setInventoryView(final InventoryView newInvView) {
+    private void setInventoryView(final InventoryView newInvView) {
         this.invView = newInvView;
         this.mainCardPanel.add(this.invView, INVENTORY_CARD);
     }
@@ -206,9 +206,9 @@ public final class ViewManager {
      * @param inventory the inventory to display
      */
     public void showInventory(final Inventory inventory) {
-        if (this.invView == null) { // prima volta
+        if (this.invView == null) { // first time
             this.setInventoryView(new InventoryView(inventory, this));
-        } else { // aggiorna la view esistente
+        } else { // update existing view
             this.invView.updateInventoryModel(inventory);
             this.invView.refreshView();
         }

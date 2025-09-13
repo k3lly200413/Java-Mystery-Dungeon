@@ -76,7 +76,7 @@ class EnemySystemTest {
 
     @Test
     void testGetEnemies() {
-        final List<Enemy> enemies = enemySystem.getEnemies();
+        final List<Enemy> enemies = enemySystem.getEntities();
         assertEquals(2, enemies.size());
         assertTrue(enemies.contains(enemy1));
         assertTrue(enemies.contains(enemy2));
@@ -100,9 +100,9 @@ class EnemySystemTest {
     @Test
     void testSetEnemies() {
         final Enemy enemy3 = mock(Enemy.class);
-        enemySystem.setEnemies(Arrays.asList(enemy3));
-        assertEquals(1, enemySystem.getEnemies().size());
-        assertTrue(enemySystem.getEnemies().contains(enemy3));
+        enemySystem.setEntities(Arrays.asList(enemy3));
+        assertEquals(1, enemySystem.getEntities().size());
+        assertTrue(enemySystem.getEntities().contains(enemy3));
     }
 
     @Test
@@ -111,7 +111,9 @@ class EnemySystemTest {
         when(model.getCombatCollision()).thenReturn(combatCollision);
         when(model.getCombatCollision()
                 .checkCombatCollision(position, position)).thenReturn(true);
-        final Optional<Enemy> result = enemySystem.checkEnemyHit(position);
+
+        when(player.getPosition()).thenReturn(position);
+        final Optional<Enemy> result = enemySystem.entityFoundAtPlayerPosition();
         assertTrue(result.isPresent());
         assertEquals(enemy1, result.get());
     }
@@ -122,7 +124,8 @@ class EnemySystemTest {
         when(model.getCombatCollision()).thenReturn(combatCollision);
         when(model.getCombatCollision()
             .checkCombatCollision(position, position)).thenReturn(false);
-        final Optional<Enemy> result = enemySystem.checkEnemyHit(position);
+        when(player.getPosition()).thenReturn(position);
+        final Optional<Enemy> result = enemySystem.entityFoundAtPlayerPosition();
         assertFalse(result.isPresent());
     }
 
@@ -139,9 +142,9 @@ class EnemySystemTest {
             new EnemySystem(
                 new ArrayList<>(Arrays.asList(enemy1)), player, model);
 
-        final boolean removed = enemySystem.removeEnemyAt(position3);
+        final boolean removed = enemySystem.removeEntityAt(position3);
         assertTrue(removed);
-        assertEquals(0, enemySystem.getEnemies().size());
+        assertEquals(0, enemySystem.getEntities().size());
     }
 
     @Test

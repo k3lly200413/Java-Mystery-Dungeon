@@ -113,7 +113,7 @@ public class GenericEnemy implements Enemy {
 
     @Override
     public final GridNotifier getGridNotifier() {
-        return this.gridNotifier;
+        return this.gridNotifier.copy();
     }
 
 
