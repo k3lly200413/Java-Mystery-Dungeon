@@ -86,7 +86,7 @@ public final class OverworldLauncher {
      * 
      * @return the OverworldController managing the overworld interactions
      */
-    public OverworldController wireOverworldTo(final ViewManager vm) {
+    public OverworldController wireOverworldController(final ViewManager vm) {
         final OverworldController oc = new OverworldController(this.model, this.view, vm);
         this.model.setCombatTransitionListener(oc);
         return oc;

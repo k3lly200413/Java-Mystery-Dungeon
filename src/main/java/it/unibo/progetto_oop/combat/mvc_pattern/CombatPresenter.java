@@ -320,8 +320,6 @@ public class CombatPresenter implements CombatControllerApi {
         performInfoZoomInAnimation(() -> {
             this.setState(new InfoDisplayState());
         });
-        this.view.showInfo("Enemy Info:\nName: " + this.model.
-        getEnemyName() + "\nPower: " + model.getEnemyPower());
     }
 
     /**

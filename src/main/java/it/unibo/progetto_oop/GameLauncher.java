@@ -51,13 +51,13 @@ public final class GameLauncher {
                 final WinPanel winPanel = new WinPanel(() -> {
                     combatController.restartGame();
                 });
-                
-                session.attachPlaygroundTo(viewManager);
+
+                session.attachPlaygroundView(viewManager);
                 viewManager.setCombatController(combatController);
                 viewManager.setGameOverPanel(gameOverPanel);
                 viewManager.setWinPanel(winPanel);
-                
-                session.wireOverworldTo(viewManager);
+
+                session.wireOverworldController(viewManager);
 
                 session.start();
                 viewManager.showOverworld();
