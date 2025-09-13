@@ -1,114 +1,157 @@
 package it.unibo.progetto_oop.combat.mvc_pattern;
 
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Insets;
+import java.io.Serial;
+
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 // Source: https://gist.github.com/jirkapenzes/4560255
-//CHECKSTYLE:OFF
-@SuppressFBWarnings(value = "all", justification = "This is third party code we did not have any hand in creating this class")
-public class WrapLayout extends FlowLayout
-{
-	public WrapLayout()
-	{
-		super();
-	}
+/**
+ * A FlowLayout subclass that fully supports wrapping of components.
+ */
+public class WrapLayout extends FlowLayout {
 
-	public WrapLayout(int align)
-	{
-		super(align);
-	}
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-	public WrapLayout(int align, int hgap, int vgap)
-	{
-		super(align, hgap, vgap);
-	}
+    /**
+     * Constructs a new WrapLayout with a left alignment and a
+     * default 5-unit horizontal and vertical gap.
+     */
+    public WrapLayout() {
+        super();
+    }
 
-	@Override
-	public Dimension preferredLayoutSize(Container target)
-	{
-		return layoutSize(target, true);
-	}
+    /**
+     * Constructs a new WrapLayout with the specified alignment.
+     *
+     * @param align the alignment value
+     */
+    public WrapLayout(final int align) {
+        super(align);
+    }
 
-	@Override
-	public Dimension minimumLayoutSize(Container target)
-	{
-		Dimension minimum = layoutSize(target, false);
-		minimum.width -= (getHgap() + 1);
-		return minimum;
-	}
+    /**
+     * Constructs a new WrapLayout with the specified alignment
+     * and the specified horizontal and vertical gaps.
+     *
+     * @param align the alignment value
+     * @param hgap the horizontal gap
+     * @param vgap the vertical gap
+     */
+    public WrapLayout(final int align, final int hgap, final int vgap) {
+        super(align, hgap, vgap);
+    }
 
-	private Dimension layoutSize(Container target, boolean preferred)
-	{
-	synchronized (target.getTreeLock())
-	{
-		int targetWidth = target.getSize().width;
+    /**
+     * Returns the preferred dimensions for this layout given the
+     * visible components in the specified target container.
+     *
+     * @param target the component which needs to be laid out
+     * @return the preferred dimensions to lay out the subcomponents of the
+     *         specified container
+     */
+    @Override
+    public final Dimension preferredLayoutSize(final Container target) {
+        return layoutSize(target, true);
+    }
 
-		if (targetWidth == 0)
-			targetWidth = Integer.MAX_VALUE;
+    /**
+     * Returns the minimum dimensions needed to layout the visible
+     * components contained in the specified target container.
+     *
+     * @param target the component which needs to be laid out
+     * @return the minimum dimensions to lay out the subcomponents of the
+     *         specified container
+     */
+    @Override
+    public final Dimension minimumLayoutSize(final Container target) {
+        final Dimension minimum = layoutSize(target, false);
+        minimum.width -= getHgap() + 1;
+        return minimum;
+    }
 
-		int hgap = getHgap();
-		int vgap = getVgap();
-		Insets insets = target.getInsets();
-		int horizontalInsetsAndGap = insets.left + insets.right + (hgap * 2);
-		int maxWidth = targetWidth - horizontalInsetsAndGap;
+    /**
+     * Returns the minimum or preferred dimension needed to layout the target.
+     *
+     * @param target the component which needs to be laid out
+     * @param preferred whether to use preferred or minimum sizes
+     * @return the layout size for the target container
+     */
+    private Dimension layoutSize(final Container target, final boolean preferred) {
+        synchronized (target.getTreeLock()) {
+            int targetWidth = target.getSize().width;
 
-		Dimension dim = new Dimension(0, 0);
-		int rowWidth = 0;
-		int rowHeight = 0;
+            if (targetWidth == 0) {
+                targetWidth = Integer.MAX_VALUE;
+            }
 
-		int nmembers = target.getComponentCount();
+            final int hgap = getHgap();
+            final int vgap = getVgap();
+            final Insets insets = target.getInsets();
+            final int horizontalInsetsAndGap = insets.left + insets.right + (hgap * 2);
+            final int maxWidth = targetWidth - horizontalInsetsAndGap;
 
-		for (int i = 0; i < nmembers; i++)
-		{
-			Component m = target.getComponent(i);
+            final Dimension dim = new Dimension(0, 0);
+            int rowWidth = 0;
+            int rowHeight = 0;
 
-			if (m.isVisible())
-			{
-				Dimension d = preferred ? m.getPreferredSize() : m.getMinimumSize();
+            final int nmembers = target.getComponentCount();
 
-				if (rowWidth + d.width > maxWidth)
-				{
-					addRow(dim, rowWidth, rowHeight);
-					rowWidth = 0;
-					rowHeight = 0;
-				}
+            for (int i = 0; i < nmembers; i++) {
+                final Component m = target.getComponent(i);
 
-				if (rowWidth != 0)
-				{
-					rowWidth += hgap;
-				}
+                if (m.isVisible()) {
+                    final Dimension d = preferred ? m.getPreferredSize() : m.getMinimumSize();
 
-				rowWidth += d.width;
-				rowHeight = Math.max(rowHeight, d.height);
-			}
-		}
+                    if (rowWidth + d.width > maxWidth) {
+                        addRow(dim, rowWidth, rowHeight);
+                        rowWidth = 0;
+                        rowHeight = 0;
+                    }
 
-		addRow(dim, rowWidth, rowHeight);
+                    if (rowWidth != 0) {
+                        rowWidth += hgap;
+                    }
 
-		dim.width += horizontalInsetsAndGap;
-		dim.height += insets.top + insets.bottom + vgap * 2;
+                    rowWidth += d.width;
+                    rowHeight = Math.max(rowHeight, d.height);
+                }
+            }
 
-		Container scrollPane = SwingUtilities.getAncestorOfClass(JScrollPane.class, target);
-		if (scrollPane != null)
-		{
-			dim.width -= (hgap + 1);
-		}
+            addRow(dim, rowWidth, rowHeight);
 
-		return dim;
-	}
-	}
+            dim.width += horizontalInsetsAndGap;
+            dim.height += insets.top + insets.bottom + vgap * 2;
 
-	private void addRow(Dimension dim, int rowWidth, int rowHeight)
-	{
-		dim.width = Math.max(dim.width, rowWidth);
+            final Container scrollPane = SwingUtilities.getAncestorOfClass(JScrollPane.class, target);
+            if (scrollPane != null) {
+                dim.width -= hgap + 1;
+            }
 
-		if (dim.height > 0)
-		{
-			dim.height += getVgap();
-		}
+            return dim;
+        }
+    }
 
-		dim.height += rowHeight;
-	}
+    /**
+     * Adds a new row to the given dimension.
+     *
+     * @param dim the dimension to add the row to
+     * @param rowWidth the width of the row
+     * @param rowHeight the height of the row
+     */
+    private void addRow(final Dimension dim, final int rowWidth, final int rowHeight) {
+        dim.width = Math.max(dim.width, rowWidth);
+
+        if (dim.height > 0) {
+            dim.height += getVgap();
+        }
+
+        dim.height += rowHeight;
+    }
 }

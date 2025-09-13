@@ -11,7 +11,7 @@ public record EntityStatsConfig(
 ) {
     // default centralizzati (unica fonte di verità)
     /** The default maximum health points of the player. */
-    private static final int PLAYER_MAX_HP = 1000000;
+    private static final int PLAYER_MAX_HP = 1_000_000;
     /** The default stamina level of the player. */
     private static final int PLAYER_STAMINA = 100;
     /** The default power level of the player. */

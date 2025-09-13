@@ -315,8 +315,6 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Handles the info button click event.
-     * This method is called when the info button is clicked in the view.
-     * It displays information about the enemy.
      */
     public void performInfoAnimation() {
         performInfoZoomInAnimation(() -> {
@@ -361,7 +359,7 @@ public class CombatController implements CombatControllerApi {
      * It checks if it's the player's turn
      * also if an animation is not already running.
      * If conditions are met, it animates the physical move
-     * thenhandles the attack completion.
+     * then handles the attack completion.
      */
     public final void performPlayerPhysicalAttack() {
         if (!model.isPlayerTurn() || isAnimationRunning()) {
@@ -538,21 +536,11 @@ public class CombatController implements CombatControllerApi {
     }
 
     /**
-     * Handles the boss death ray attack.
-     * This method is called when the boss unleashes a death ray attack.
-     * It should be called from the boss state.
-     */
-    public void handleBossDeathRayAttack() {
-    }
-
-    /**
      * Performs the boss death ray attack.
-     * This method is called when the boss unleashes a death ray attack.
-     * It sets up the animation and handles the attack logic.
      */
     public final void performBossDeathRayAttack() {
         this.view.clearInfo();
-        this.view.showInfo("Boss Unleasehs Death Ray");
+        this.view.showInfo("Boss Unleashes Death Ray");
 
         this.longRangeAttackAnimation(
             model.getEnemyPosition(), -1, false, false, () -> {
@@ -564,8 +552,6 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Animates the boss death ray attack.
-     * This method handles the animation of the boss death ray attack.
-     * It moves the death ray towards the player and checks for hits.
      *
      * @param onHit Runnable to execute when the death ray hits the player
      */
@@ -619,8 +605,6 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Method to cleanly stop a Timer which is running.
-     *
-     * @author kelly.applebee@studio.unibo.it
      */
     public void stopAnimationTimer() {
         if (animationTimer != null && animationTimer.isRunning()) {
@@ -935,8 +919,6 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Checks if the game is over.
-     * This method checks if either the player or the enemy has no health left.
-     * If the game is over, it stops the animation timer and displays a message.
      *
      * @return true if the game is over, false otherwise
      */
@@ -1113,7 +1095,6 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Returns a read-only view of the model to avoid exposing the mutable CombatModel.
-     * Callers should use this instead of getModel() to avoid mutating internal state.
      *
      * @return a read-only view of the model
      */
@@ -1171,8 +1152,6 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Sets the current state of the combat controller.
-     * This method handles the transition between states,
-     * calling exitState on the old state and enterState on the new one.
      *
      * @param state the new state to set
      */
@@ -1253,8 +1232,6 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Performs a long-range attack by the specified attacker.
-     * This method animates the long-range attack and applies any effects
-     * such as flame or poison.
      *
      * @param attacker the position of the attacker (player or enemy)
      * @param direction the direction of the attack (1 for player, -1 for enemy)
@@ -1295,7 +1272,6 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Performs the poison effect animation.
-     * This method animates the poison effect on the affected character.
      */
     public final void performPoisonEffectAnimation() {
         stopAnimationTimer();
@@ -1366,7 +1342,7 @@ public class CombatController implements CombatControllerApi {
         this.view.updatePlayerHealth(this.model.getPlayerHealth());
         this.view.updateEnemyHealth(this.model.getEnemyHealth());
         this.model.setPlayerPower(this.player.getPower());
-        this.model.setPlayerStamina(this.player.getStamina());
+        this.model.setPlayerStamina(this.player.getMaxStamina());
         this.view.setPlayerMaxStaminaBar(this.player.getMaxStamina());
         this.view.updatePlayerStamina(this.player.getStamina());
     }

@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop.combat.inventory;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -163,7 +164,7 @@ public class Inventory {
      * @return a map representing the full inventory
      */
     public Map<Item, Integer> getFullInventory() {
-        return this.items;
+        return Collections.unmodifiableMap(new HashMap<>(this.items));
     }
 
     /**
