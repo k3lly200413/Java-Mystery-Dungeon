@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -75,10 +74,9 @@ class FloorGeneratorTest {
         final RoomPlacementStrategy roomPlacer = new ImplRoomPlacement();
         final TunnelPlacementStrategy tunnelPlacer = new ImplTunnelPlacement();
         final RandomPlacementStrategy objPlacer = new ImplRandomPlacement();
-        final Random rng = new Random(42);
 
         final FloorGenerator gen = new FloorGenerator(
-                roomPlacer, tunnelPlacer, objPlacer, rng);
+                roomPlacer, tunnelPlacer, objPlacer);
 
         grid = new ImplArrayListStructureData(cfg.width(), cfg.height());
         final StructureData entityGrid = new ImplArrayListStructureData(cfg.width(), cfg.height());

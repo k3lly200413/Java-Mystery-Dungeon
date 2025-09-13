@@ -1,7 +1,5 @@
 package it.unibo.progetto_oop;
 
-import java.util.Random;
-
 import javax.swing.SwingUtilities;
 
 import it.unibo.progetto_oop.combat.CombatLauncher;
@@ -33,11 +31,6 @@ public final class GameLauncher {
         new EntityStatsConfig.Builder().build();
 
     /**
-     * Random number generator for game logic.
-     */
-    private final Random rand = new Random();
-
-    /**
      * Starts the game by initializing the main game components and views.
      */
     public void start() {
@@ -50,7 +43,7 @@ public final class GameLauncher {
 
             startView.setOnStart(() -> {
                 final OverworldLauncher session = new OverworldLauncher(
-                    floorConfig, entityStatsConfig, rand
+                    floorConfig, entityStatsConfig
                 );
 
                 final CombatController combatController =

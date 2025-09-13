@@ -61,7 +61,7 @@ public final class GameStartView extends JPanel {
     /**
      * The background image displayed in the view.
      */
-    private final Image backgroundImage;
+    private transient Image backgroundImage;
 
     /**
      * The title label displayed at the top of the view.
@@ -71,7 +71,7 @@ public final class GameStartView extends JPanel {
     /**
      * The action to be executed when the start button is pressed.
      */
-    private Runnable onStart = () -> { };
+    private transient Runnable onStart = () -> { };
 
     /**
      * Constructs a new GameStartView,

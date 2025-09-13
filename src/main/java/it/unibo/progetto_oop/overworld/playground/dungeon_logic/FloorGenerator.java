@@ -13,7 +13,8 @@ import it.unibo.progetto_oop.overworld.playground.placement_strategy.RoomPlaceme
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.TunnelPlacementStrategy;
 
 /**
- * Class responsible for generating a dungeon floor with rooms, tunnels, and objects.
+ * Class responsible for generating a dungeon floor with rooms, tunnels, and
+ * objects.
  */
 public final class FloorGenerator {
     /**
@@ -44,16 +45,15 @@ public final class FloorGenerator {
     public FloorGenerator(
             final RoomPlacementStrategy roomps,
             final TunnelPlacementStrategy tunnelps,
-            final RandomPlacementStrategy randps,
-            final Random r) {
+            final RandomPlacementStrategy randps) {
         this.roomPlacement = Objects.requireNonNull(roomps);
         this.tunnelPlacement = Objects.requireNonNull(tunnelps);
         this.objectPlacer = Objects.requireNonNull(randps);
-        this.rand = Objects.requireNonNull(r);
+        this.rand = new Random();
     }
 
     /**
-     * Generate floor using confiurguration data.
+     * Generate floor using configuration data.
      * And fill the provided grid with rooms, tunnels, and objects.
      *
      * @param baseGrid   the structure data representing the floor grid
