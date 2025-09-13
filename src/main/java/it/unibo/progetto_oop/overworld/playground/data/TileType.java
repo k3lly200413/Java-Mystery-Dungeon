@@ -1,5 +1,8 @@
 package it.unibo.progetto_oop.overworld.playground.data;
 
+/**
+ * Enum representing different types of tiles in the playground (base grid or entity grid).
+ */
 public enum TileType {
     //-----BASE GRID TILES------
     /** Represents a wall tile in the base grid. */
@@ -10,7 +13,6 @@ public enum TileType {
     TUNNEL,
     /** Represents a stairs tile in the entity grid. */
     STAIRS,
-
     //-----ENTITY GRID TILES------
     /** Represents the player's tile in the entity grid. */
     PLAYER,

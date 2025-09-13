@@ -6,10 +6,10 @@ import java.util.Random;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 
-@FunctionalInterface
 /**
  * Strategy interface for placing tunnels in a grid structure.
  */
+@FunctionalInterface
 public interface TunnelPlacementStrategy {
     /**
      * Connects the given rooms in the grid.

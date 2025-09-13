@@ -6,7 +6,15 @@ import java.util.Objects;
 
 import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
 
+/**
+ * Represents THE DUNGEON of the application,
+ * with its multiple floors.
+ */
 public class Dungeon {
+    /**
+     * Adjustment value for room dimensions in the final room configuration.
+     */
+    private static final int ROOM_DIMENSION_ADJUSTMENT = 4;
     /**
      * List of floors in the dungeon.
      */
@@ -24,10 +32,6 @@ public class Dungeon {
      * Configuration settings for the dungeon floors.
      */
     private final FloorConfig config;
-    /**
-     * Adjustment value for room dimensions in the final room configuration.
-     */
-    private static final int ROOM_DIMENSION_ADJUSTMENT = 4;
 
     /**
      * Constructs a Dungeon with the specified generator and configuration.

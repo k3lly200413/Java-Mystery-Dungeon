@@ -31,7 +31,7 @@ public interface RandomPlacementStrategy {
         Position player,
         int dist
     );
-    
+
     /**
      * Places the player on the entity structure.
      *
