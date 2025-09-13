@@ -1,8 +1,5 @@
 package it.unibo.progetto_oop.overworld.playground;
 
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
-import java.awt.event.KeyEvent;
 import java.util.Objects;
 import javax.swing.SwingUtilities;
 
