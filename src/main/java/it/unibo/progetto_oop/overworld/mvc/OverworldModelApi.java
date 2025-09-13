@@ -30,7 +30,8 @@ public interface OverworldModelApi {
      */
     Position getPlayerPosition();
 
-    /** Registra il listener per cambio piano. 
+    /**
+     * Registra il listener per cambio piano.
      *
      * @param l il listener da registrare
      */
