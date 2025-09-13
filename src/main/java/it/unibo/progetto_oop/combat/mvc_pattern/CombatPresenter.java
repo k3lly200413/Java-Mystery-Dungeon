@@ -1335,6 +1335,7 @@ public class CombatPresenter implements CombatControllerApi {
         this.model.setPlayerStamina(this.player.getMaxStamina());
         this.view.setPlayerMaxStaminaBar(this.player.getMaxStamina());
         this.view.updatePlayerStamina(this.player.getStamina());
+        this.model.setEnemyPoisoned(false);
     }
 
     /**
