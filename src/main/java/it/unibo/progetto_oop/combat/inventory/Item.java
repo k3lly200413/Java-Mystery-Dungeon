@@ -5,7 +5,7 @@ import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 /**
- * Interfaccia per gli oggetti dell'inventario.
+ * Interface for inventory items.
  */
 public interface Item {
 

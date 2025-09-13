@@ -9,8 +9,6 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 /**
  * Factory per la creazione di oggetti Item.
- *
- * @author Laura Bertozzi
  */
 public class ItemFactory {
     /**

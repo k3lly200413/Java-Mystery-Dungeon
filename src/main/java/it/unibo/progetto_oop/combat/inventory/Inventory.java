@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * @author Laura Bertozzi
+ * Class that represents an inventory of items.
  */
 public class Inventory implements Serializable {
     private static final long serialVersionUID = 1L;
