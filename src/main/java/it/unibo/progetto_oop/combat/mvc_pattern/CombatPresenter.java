@@ -32,9 +32,6 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 /**
  * Controller class in Model View Controller Pattern.
- *
- * @author Kelly.applebee@studio.unibo.it
- * @author matteo.monari6@studio.unibo.it
  */
 public class CombatPresenter implements CombatControllerApi {
 
@@ -146,9 +143,6 @@ public class CombatPresenter implements CombatControllerApi {
 
     /**
      * Constructor of CombatController takes in both model and view.
-     *
-     * @author kelly.applebee@studio.unibo.it
-     * @author matteo.monari6@studio.unibo.it
      *
      * @param modelToUse Model which holds information necessary to controller
      * @param viewToUse  View which displays on screen information
