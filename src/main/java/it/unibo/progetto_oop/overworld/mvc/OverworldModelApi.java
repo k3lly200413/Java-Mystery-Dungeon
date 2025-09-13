@@ -4,6 +4,9 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.listner.ChangeFloorListener;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGrid;
 
+/**
+ * API for the Overworld Model.
+ */
 public interface OverworldModelApi {
 
     /**
@@ -30,7 +33,7 @@ public interface OverworldModelApi {
     /** Registra il listener per cambio piano. 
      *
      * @param l il listener da registrare
-    */
+     */
     void setChangeFloorListener(ChangeFloorListener l);
 
     /**
