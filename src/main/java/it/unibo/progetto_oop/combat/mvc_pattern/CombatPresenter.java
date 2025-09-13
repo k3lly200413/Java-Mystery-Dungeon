@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.progetto_oop.GameLauncher;
+import it.unibo.progetto_oop.JavaMysteryDungeon;
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
 import it.unibo.progetto_oop.combat.command_pattern.GameButton;
 import it.unibo.progetto_oop.combat.command_pattern.LongRangeButton;
@@ -1356,7 +1356,7 @@ public class CombatPresenter implements CombatPresenterApi {
             window.dispose();
         }
 
-        final GameLauncher app = new GameLauncher();
+        final JavaMysteryDungeon app = new JavaMysteryDungeon();
         app.start();
     });
 }

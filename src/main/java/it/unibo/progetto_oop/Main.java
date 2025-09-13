@@ -11,7 +11,7 @@ public final class Main {
      * @param args command line arguments
      */
     public static void main(final String[] args) {
-        final GameLauncher app = new GameLauncher();
+        final JavaMysteryDungeon app = new JavaMysteryDungeon();
         app.start();
     }
 }

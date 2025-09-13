@@ -17,7 +17,7 @@ import it.unibo.progetto_oop.overworld.playground.view.game_start.GameStartView;
  * It initializes the main components and views, and manages the transition
  * between the overworld and combat modes.
  */
-public final class GameLauncher {
+public final class JavaMysteryDungeon {
     /**
      * Configuration for the floor settings.
      */
