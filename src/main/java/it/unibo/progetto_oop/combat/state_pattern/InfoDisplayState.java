@@ -79,10 +79,10 @@ public class InfoDisplayState implements CombatState {
         view.setAllMenusDisabled();
 
         final String infoText = String.format(
-            "<html>Enemy Info:<br>Name: %s<br>Power: %d<br>Speed: %d</html>",
+            "<html>Enemy Info:<br>Name: %s<br>Physical Power: %d<br>Long Range Power: %d</html>",
             model.getEnemyName(),
             model.getEnemyPower(),
-            model.getEnemySpeed()
+            model.getEnemyLongRangePower()
         );
         view.showInfo(infoText);
 
