@@ -14,7 +14,7 @@ import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.Im
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 
-@SuppressWarnings("checkstyle:MagicNumber")
+// CHECKSTYLE: MagicNumber OFF
 class ImplTunnelPlacementTest {
 
     private static int count(final StructureData g, final TileType t) {

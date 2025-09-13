@@ -15,6 +15,7 @@ import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.Re
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGridAdapter;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 
+// CHECKSTYLE: MagicNumber OFF
 class RandomPlacementTest {
 
     @Test

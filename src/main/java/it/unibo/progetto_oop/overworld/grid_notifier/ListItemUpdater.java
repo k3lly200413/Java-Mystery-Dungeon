@@ -2,6 +2,9 @@ package it.unibo.progetto_oop.overworld.grid_notifier;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
+/**
+ * Functional interface for updating list items when an item is removed.
+ */
 @FunctionalInterface
 public interface ListItemUpdater {
     /**

@@ -20,6 +20,7 @@ import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRoomPla
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplTunnelPlacement;
 
 // Test on Dungeon: creation, floor advancement, limits.
+// CHECKSTYLE: MagicNumber OFF
 class DungeonTest {
 
     private Dungeon newDungeon(final int maxFloors) {

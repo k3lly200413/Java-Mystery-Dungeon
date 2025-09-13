@@ -17,6 +17,7 @@ import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.Im
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 
+// CHECKSTYLE: MagicNumber OFF
 class ImplRoomPlacementTest {
 
     private FloorConfig cfg(final int w, final int h, final int nRooms) {

@@ -101,12 +101,12 @@ public final class ImplMapView extends JPanel implements MapView {
         /**
          * The base grid representing the map structure.
          */
-        private ReadOnlyGrid grid; // base
+        private transient ReadOnlyGrid grid; // base
 
         /**
          * The overlay grid representing entities on the map.
          */
-        private ReadOnlyGrid entityGrid; // overlay
+        private transient ReadOnlyGrid entityGrid; // overlay
 
         /**
          * The initial size of each cell in pixels.
@@ -122,36 +122,36 @@ public final class ImplMapView extends JPanel implements MapView {
          * The camera target position on the map.
          * This determines the center of the view.
          */
-        private Position camTarget;
+        private transient Position camTarget;
 
         // Sprite
         /**
          * The image representing the floor tile.
          */
-        private final BufferedImage floorImg;
+        private transient final BufferedImage floorImg;
 
         /**
          * The image representing the stairs tile.
          */
-        private final BufferedImage stairsImg;
+        private transient final BufferedImage stairsImg;
         /**
          * The image representing the player entity.
          */
-        private final BufferedImage playerImg;
+        private transient final BufferedImage playerImg;
 
         /**
          * The image representing the enemy entity.
          */
-        private final BufferedImage enemyImg;
+        private transient final BufferedImage enemyImg;
         /**
          * The image representing the item entity.
          */
-        private final BufferedImage itemImg;
+        private transient final BufferedImage itemImg;
 
         /**
          * The image representing the boss entity.
          */
-        private final BufferedImage bossImg;
+        private transient final BufferedImage bossImg;
 
         MapPanel(final int cellSize) {
             this.initialCell = cellSize;

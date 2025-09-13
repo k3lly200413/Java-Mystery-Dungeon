@@ -20,6 +20,10 @@ import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRandomPlacement;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.RandomPlacementStrategy;
 
+/**
+ * Generates instances of entities (player, enemies, items) in the overworld
+ * and places them on the entity grid of the model.
+ */
 public class OverworldEntitiesGenerator {
     /**
      * Minimum distance from the player for placing objects.

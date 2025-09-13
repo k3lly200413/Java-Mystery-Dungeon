@@ -30,17 +30,17 @@ public final class ViewManager {
     /**
      * inventory card identifier.
      */
-    public static final String INVENTORY_CARD = "INVENTORY";
+    private static final String INVENTORY_CARD = "INVENTORY";
 
     /**
      * overworld card identifier.
      */
-    public static final String OVERWORLD_CARD = "OVERWORLD";
+    private static final String OVERWORLD_CARD = "OVERWORLD";
 
     /**
      * combat card identifier.
      */
-    public static final String COMBAT_CARD = "COMBAT";
+    private static final String COMBAT_CARD = "COMBAT";
 
     /**
      * game over card identifier.
@@ -147,7 +147,6 @@ public final class ViewManager {
 
     /**
      * Sets the combat controller.
-     *
      * Wraps the full controller in a small
      * adapter exposing only the required API so
      * ViewManager does not keep a concrete mutable controller reference.

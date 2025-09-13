@@ -24,6 +24,7 @@ import it.unibo.progetto_oop.overworld.playground.placement_strategy.RandomPlace
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.RoomPlacementStrategy;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.TunnelPlacementStrategy;
 
+// CHECKSTYLE: MagicNumber OFF
 class FloorGeneratorTest {
 
     /**
@@ -164,7 +165,7 @@ class FloorGeneratorTest {
         return newList;
     }
 
-   // each room has at least one border cell adjacent to a corridor
+    // each room has at least one border cell adjacent to a corridor
     @Test
     void roomsHaveOneAdjacentCorridor() {
         assertFalse(rooms.isEmpty(), "At least one room");
@@ -201,6 +202,5 @@ class FloorGeneratorTest {
         return p.x() >= 0 && p.y() >= 0
             && p.x() < grid.width() && p.y() < grid.height();
     }
-
 
 }

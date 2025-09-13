@@ -22,49 +22,14 @@ public record FloorConfig(
         int nFloors,
         int tileSize
 ) {
-    /**
-     * Default width of the floor grid.
-     */
     public static final int WIDTH = 50;
-
-    /**
-     * Default height of the floor grid.
-     */
     public static final int HEIGHT = 50;
-
-    /**
-     * Default number of rooms in the floor configuration.
-     */
     public static final int NROOMS = 8;
-
-    /**
-     * Default minimum width of a room.
-     */
     public static final int MIN_W = 5;
-
-    /**
-     * Default maximum width of a room.
-     */
     public static final int MAX_W = 12;
-
-    /**
-     * Default minimum height of a room.
-     */
     public static final int MIN_H = 5;
-
-    /**
-     * Default maximum height of a room.
-     */
     public static final int MAX_H = 10;
-
-    /**
-     * Default number of floors in the floor configuration.
-     */
     public static final int NFLOORS = 5;
-
-    /**
-     * Default size of each tile in the floor configuration.
-     */
     public static final int TILE_SIZE = 14;
 
     /**
@@ -80,49 +45,14 @@ public record FloorConfig(
      * Builder class for constructing FloorConfig instances.
      */
     public static class Builder {
-        /**
-         * The width of the floor grid, initialized to the default value.
-         */
         private int width = WIDTH;
-
-        /**
-         * The height of the floor grid, initialized to the default value.
-         */
         private int height = HEIGHT;
-
-        /**
-         * The number of rooms, initialized to the default value.
-         */
         private int nRooms = NROOMS;
-
-        /**
-         * The minimum width of a room, initialized to the default value.
-         */
         private int minRoomW = MIN_W;
-
-        /**
-         * The maximum width of a room, initialized to the default value.
-         */
         private int maxRoomW = MAX_W;
-
-        /**
-         * The minimum height of a room, initialized to the default value.
-         */
         private int minRoomH = MIN_H;
-
-        /**
-         * The maximum height of a room, initialized to the default value.
-         */
         private int maxRoomH = MAX_H;
-
-        /**
-         * The number of floors, initialized to the default value.
-         */
         private int nFloors = NFLOORS;
-
-        /**
-         * The size of each tile, initialized to the default value.
-         */
         private int tileSize = TILE_SIZE;
 
         /**
