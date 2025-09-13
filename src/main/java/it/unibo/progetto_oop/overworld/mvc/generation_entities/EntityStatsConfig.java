@@ -26,7 +26,7 @@ public record EntityStatsConfig(
     private static final int PLAYER_MAX_HP = 100;
     /** The default stamina level of the player. */
     private static final int PLAYER_STAMINA = 100;
-    private static final int PLAYER_POWER = 12;
+    private static final int PLAYER_POWER = 35;
     private static final int ENEMY_HP = 100;
     private static final int ENEMY_POWER = 10;
     private static final int BOSS_HP_MULT = 3;
