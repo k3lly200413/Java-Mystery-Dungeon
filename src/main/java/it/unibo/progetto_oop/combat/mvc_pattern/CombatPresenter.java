@@ -31,12 +31,12 @@ import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 /**
- * Controller class in Model View Controller Pattern.
+ * Presenter class in Model View Presenter Pattern.
  *
  * @author Kelly.applebee@studio.unibo.it
  * @author matteo.monari6@studio.unibo.it
  */
-public class CombatPresenter implements CombatControllerApi {
+public class CombatPresenter implements CombatPresenterApi {
 
     /**
      * Animation delay for each step in the animation.
@@ -94,11 +94,11 @@ public class CombatPresenter implements CombatControllerApi {
     private final ItemFactory itemFactory;
 
     /**
-     * Model which holds information necessary to controller.
+     * Model which holds information necessary to Presenter.
      */
     private final CombatModel model;
     /**
-     * View which displays on screen information taken from controller.
+     * View which displays on screen information taken from Presenter.
      */
     private final CombatViewInterface view;
     /**
@@ -145,12 +145,12 @@ public class CombatPresenter implements CombatControllerApi {
     private final GridNotifier gridNotifier;
 
     /**
-     * Constructor of CombatController takes in both model and view.
+     * Constructor of CombatPresenter takes in both model and view.
      *
      * @author kelly.applebee@studio.unibo.it
      * @author matteo.monari6@studio.unibo.it
      *
-     * @param modelToUse Model which holds information necessary to controller
+     * @param modelToUse Model which holds information necessary to Presenter
      * @param viewToUse  View which displays on screen information
      * @param newPlayer  Player instance to manage inventory and stats
      * @param newCombatCollision Collision handler for combat state
@@ -158,9 +158,9 @@ public class CombatPresenter implements CombatControllerApi {
      */
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP2",
-        justification = "CombatController intentionally keeps live references"
-            + " to provided collaborators (CombatModel, CombatViewInterface, CombatCollision, GridNotifier). "
-            + "The controller is the logical owner during combat and must manipulate the view and" 
+        justification = "CombatPresenter intentionally keeps live references"
+            + " to provided collaborators (Player, Model, GridNotifier, View, CombatCOllision). "
+            + "The Presenter is the logical owner during combat and must manipulate the view and" 
             + " model directly; defensive copying of UI/model objects is impractical."
     )
     public CombatPresenter(
@@ -171,7 +171,7 @@ public class CombatPresenter implements CombatControllerApi {
 
         this.model = modelToUse;
         this.view = viewToUse;
-        this.view.setController(this);
+        this.view.setPresenter(this);
         this.neighbours = new Neighbours();
 
         this.view.setPlayerHealthBarMax(model.getPlayerMaxHealth());
@@ -1149,7 +1149,7 @@ public class CombatPresenter implements CombatControllerApi {
     }
 
     /**
-     * Sets the current state of the combat controller.
+     * Sets the current state of the combat Presenter.
      *
      * @param state the new state to set
      */
@@ -1174,7 +1174,7 @@ public class CombatPresenter implements CombatControllerApi {
      */
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP",
-        justification = "CombatController is the logical owner of the"
+        justification = "CombatPresenter is the logical owner of the"
         + " Enemy during combat"
         + " and must keep a live reference to manage its lifecycle."
     )
@@ -1196,7 +1196,7 @@ public class CombatPresenter implements CombatControllerApi {
     }
 
     /**
-     * Gets the current state of the combat controller.
+     * Gets the current state of the combat Presenter.
      *
      * @return the current state
      */

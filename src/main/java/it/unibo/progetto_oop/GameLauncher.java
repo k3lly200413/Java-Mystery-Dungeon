@@ -42,18 +42,18 @@ public final class GameLauncher {
             startView.setOnStart(() -> {
                 final OverworldLauncher session = new OverworldLauncher(
                         floorConfig, entityStatsConfig);
-                final CombatPresenter combatController = session.buildCombat(new CombatLauncher());
+                final CombatPresenter combatPresenter = session.buildCombat(new CombatLauncher());
 
                 final GameOverPanel gameOverPanel = new GameOverPanel(() -> {
-                    combatController.restartGame();
+                    combatPresenter.restartGame();
                 });
 
                 final WinPanel winPanel = new WinPanel(() -> {
-                    combatController.restartGame();
+                    combatPresenter.restartGame();
                 });
 
                 session.attachPlaygroundView(viewManager);
-                viewManager.setCombatController(combatController);
+                viewManager.setCombatPresenter(combatPresenter);
                 viewManager.setGameOverPanel(gameOverPanel);
                 viewManager.setWinPanel(winPanel);
 

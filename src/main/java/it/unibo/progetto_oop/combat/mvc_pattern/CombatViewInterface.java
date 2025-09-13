@@ -43,11 +43,11 @@ public interface CombatViewInterface {
     void clearInfo();
 
     /**
-     * Sets the controller for this view.
+     * Sets the Presenter for this view.
      *
-     * @param combatController the combat controller to set
+     * @param combatPresenter the combat presenter to set
      */
-    void setController(CombatPresenter combatController);
+    void setPresenter(CombatPresenter combatPresenter);
 
     /**
      * Shows the game over screen with an option to restart.

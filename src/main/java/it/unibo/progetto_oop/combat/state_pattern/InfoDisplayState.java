@@ -34,7 +34,7 @@ public class InfoDisplayState implements CombatState {
     }
 
     /**
-     * @param context Instance of the controller
+     * @param context Instance of the presenter
      *
      *                This method is called when the back button is pressed.
      */
@@ -68,7 +68,7 @@ public class InfoDisplayState implements CombatState {
      * while keeping the zoomed view persistent.
      *
      *
-     * @param context the CombatController providing access to the model
+     * @param context the CombatPresenter providing access to the model
      *                and view for updating the UI state
      */
     @Override
@@ -95,7 +95,7 @@ public class InfoDisplayState implements CombatState {
      * Handles the transition logic when exiting the InfoDisplayState.
      * Resets all positions and prepares the view for the next state.
      *
-     * @param context the CombatController providing access to the model
+     * @param context the CombatPresenter providing access to the model
      *                and view for updating the UI state
      */
     @Override

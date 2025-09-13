@@ -50,7 +50,7 @@ public class GameOverState implements CombatState {
         value = "EI_EXPOSE_REP2",
         justification = "GameOverState is an internal combat-state object and intentionally"
             + " keeps references to collaborators (CombatCollision, GridNotifier, Enemy). "
-            + "Controller/overworld retain ownership; suppressing to avoid noisy"
+            + "Presenter/overworld retain ownership; suppressing to avoid noisy"
             + "SpotBugs warnings while preserving behavior."
     )
     public GameOverState(final CombatCollision newCombatCollision,
@@ -63,7 +63,7 @@ public class GameOverState implements CombatState {
     }
 
     /**
-     * @param context Istance of the controller
+     * @param context Istance of the presenter
      *
      *                This method is called when entering a combat state.
      */
@@ -117,7 +117,7 @@ public class GameOverState implements CombatState {
     }
 
     /**
-     * @param context Istance of the controller
+     * @param context Istance of the presenter
      *
      *                This method is called when exiting a combat state.
      */
@@ -127,7 +127,7 @@ public class GameOverState implements CombatState {
     }
 
     /**
-     * @param context Istance of the controller
+     * @param context Istance of the presenter
      *
      *                This method is called when an animation is complete during
      *                combat.

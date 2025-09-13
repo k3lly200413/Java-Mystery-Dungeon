@@ -20,7 +20,7 @@ import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.player.Player;
 
-class CombatControllerTest {
+class CombatPresenterTest {
 
     /** sleep value for thread.sleep. */
     private static final int SLEEP_1 = 350;
@@ -34,10 +34,10 @@ class CombatControllerTest {
     private static final String IGNORED = "test interrupt";
 
     private CombatModel model;
-    private CombatPresenter controller;
+    private CombatPresenter presenter;
 
     @BeforeEach
-    void setUpCombatController() {
+    void setUpCombatPresenter() {
         final Player player = new Player(100, 100, 100, new Inventory());
         final CombatCollision collision = mock(CombatCollision.class);
         final GridNotifier gridNotifier = mock(GridNotifier.class);
@@ -83,104 +83,104 @@ class CombatControllerTest {
         viewHeightFactor * model.getSize() / sizeDivisor,
         buttonWidth, buttonHeight, windowWidth, windowHeight);
         view.init();
-        this.controller = new CombatPresenter(model, view, player, collision, gridNotifier);
-        this.controller.setEncounteredEnemy(enemy);
+        this.presenter = new CombatPresenter(model, view, player, collision, gridNotifier);
+        this.presenter.setEncounteredEnemy(enemy);
     }
 
     @Test
-    void initialControllerPlayerTurnStatesTest() {
-        assertTrue(this.controller.getCurrentState() instanceof PlayerTurnState, "Initial state should be PlayerTurnState");
+    void initialpresenterPlayerTurnStatesTest() {
+        assertTrue(this.presenter.getCurrentState() instanceof PlayerTurnState, "Initial state should be PlayerTurnState");
     }
 
     @Test
     void curePoisonTest() {
         this.model.setPlayerPoisoned(true);
-        this.controller.setState(new ItemSelectionState());
+        this.presenter.setState(new ItemSelectionState());
         assertTrue(this.model.isPlayerPoison(), "Player should be poisoned");
 
         this.model.setPlayerPoisoned(true);
-        this.controller.setState(new ItemSelectionState());
-        this.controller.handleCurePoisonInput();
+        this.presenter.setState(new ItemSelectionState());
+        this.presenter.handleCurePoisonInput();
         assertFalse(this.model.isPlayerPoison(), "Player should not be poisoned");
-        initialControllerPlayerTurnStatesTest();
+        initialpresenterPlayerTurnStatesTest();
     }
 
     @Test
     void setStateTest() {
-        controller.setState(new BossTurnState());
-        assertTrue(this.controller.getCurrentState() instanceof AnimatingState,
+        presenter.setState(new BossTurnState());
+        assertTrue(this.presenter.getCurrentState() instanceof AnimatingState,
         "State should be set to AnimatingState because BossTurnState transitions to AnimatingState");
-        controller.setState(new EnemyTurnState());
-        assertTrue(this.controller.getCurrentState() instanceof EnemyTurnState, "State should be set to EnemyTurnState");
-        controller.setState(new PlayerTurnState());
-        assertTrue(this.controller.getCurrentState() instanceof PlayerTurnState);
-        controller.setState(new AnimatingState());
-        assertTrue(this.controller.getCurrentState() instanceof AnimatingState);
-        controller.setState(new ItemSelectionState());
-        assertTrue(this.controller.getCurrentState() instanceof ItemSelectionState);
+        presenter.setState(new EnemyTurnState());
+        assertTrue(this.presenter.getCurrentState() instanceof EnemyTurnState, "State should be set to EnemyTurnState");
+        presenter.setState(new PlayerTurnState());
+        assertTrue(this.presenter.getCurrentState() instanceof PlayerTurnState);
+        presenter.setState(new AnimatingState());
+        assertTrue(this.presenter.getCurrentState() instanceof AnimatingState);
+        presenter.setState(new ItemSelectionState());
+        assertTrue(this.presenter.getCurrentState() instanceof ItemSelectionState);
     }
 
     @Test
     void stopAnimationTimerTest() {
-        controller.performPlayerPhysicalAttack();
-        controller.stopAnimationTimer();
-        assertTrue(!controller.isAnimationRunning(), "Animation timer should be stopped after calling stopAnimationTimer");
+        presenter.performPlayerPhysicalAttack();
+        presenter.stopAnimationTimer();
+        assertTrue(!presenter.isAnimationRunning(), "Animation timer should be stopped after calling stopAnimationTimer");
     }
 
     @Test
     void isAnimationRunningTest() {
-        controller.performPlayerPhysicalAttack();
-        assertTrue(controller.isAnimationRunning(),
+        presenter.performPlayerPhysicalAttack();
+        assertTrue(presenter.isAnimationRunning(),
         "Animation timer should be running after performing a player physical attack");
     }
 
     @Test
     void playerPhysicalAttackAnimationStartedTest() {
-        controller.performPlayerPhysicalAttack();
-        assertTrue(controller.isAnimationRunning(),
+        presenter.performPlayerPhysicalAttack();
+        assertTrue(presenter.isAnimationRunning(),
         "Animation timer should be running after performing a player physical attack");
     }
 
     @Test
     void enemyPhysicalAttackAnimationStartedTest() {
-        controller.performEnemyPhysicalAttack();
-        assertTrue(controller.isAnimationRunning(),
+        presenter.performEnemyPhysicalAttack();
+        assertTrue(presenter.isAnimationRunning(),
         "Animation timer should be running after performing an enemy physical attack");
     }
 
     @Test
     void longRangeAttackAnimationStartedTest() {
-        controller.stopAnimationTimer();
-        controller.performLongRangeAttack(model.getPlayerPosition(), 1, true, false);
-        assertTrue(controller.isAnimationRunning(),
+        presenter.stopAnimationTimer();
+        presenter.performLongRangeAttack(model.getPlayerPosition(), 1, true, false);
+        assertTrue(presenter.isAnimationRunning(),
         "Animation timer should be running after performing a player long range attack");
-        controller.stopAnimationTimer();
-        controller.performLongRangeAttack(model.getEnemyPosition(), -1, true, false);
-        assertTrue(controller.isAnimationRunning(),
+        presenter.stopAnimationTimer();
+        presenter.performLongRangeAttack(model.getEnemyPosition(), -1, true, false);
+        assertTrue(presenter.isAnimationRunning(),
         "Animation timer should be running after performing an enemy long range attack");
-        controller.stopAnimationTimer();
-        controller.performLongRangeAttack(model.getPlayerPosition(), 1, false, true);
-        assertTrue(controller.isAnimationRunning(),
+        presenter.stopAnimationTimer();
+        presenter.performLongRangeAttack(model.getPlayerPosition(), 1, false, true);
+        assertTrue(presenter.isAnimationRunning(),
         "Animation timer should be running after performing a player poison attack");
-        controller.stopAnimationTimer();
-        controller.performLongRangeAttack(model.getEnemyPosition(), -1, false, true);
-        assertTrue(controller.isAnimationRunning(),
+        presenter.stopAnimationTimer();
+        presenter.performLongRangeAttack(model.getEnemyPosition(), -1, false, true);
+        assertTrue(presenter.isAnimationRunning(),
         "Animation timer should be running after performing an enemy poison attack");
     }
 
     @Test
     void resetForNewCombatTest() {
-        controller.setState(new EnemyTurnState());
-        controller.resetForNewCombat();
-        assertTrue(controller.getCurrentState() instanceof PlayerTurnState,
+        presenter.setState(new EnemyTurnState());
+        presenter.resetForNewCombat();
+        assertTrue(presenter.getCurrentState() instanceof PlayerTurnState,
         "After resetting for the new combat it should be the player's turn");
     }
 
     @Test
     void enemyTurnFinishesAndReturnsControlToPlayer() {
 
-        controller.setState(new EnemyTurnState());
-        controller.performEnemyPhysicalAttack();
+        presenter.setState(new EnemyTurnState());
+        presenter.performEnemyPhysicalAttack();
 
         try {
             Thread.sleep(SLEEP_1);
@@ -188,23 +188,23 @@ class CombatControllerTest {
             fail(IGNORED, ignored);
         }
 
-        controller.stopAnimationTimer();
-        assertTrue(!controller.isAnimationRunning(),
+        presenter.stopAnimationTimer();
+        assertTrue(!presenter.isAnimationRunning(),
         "After enemy turn animation, animation timer should be stopped");
     }
 
     @Test
     void infoZoomAnimationTransitionsToInfoDisplayStateAndStopsTimer() {
-        controller.setState(new PlayerTurnState());
+        presenter.setState(new PlayerTurnState());
 
-        controller.performInfoAnimation();
+        presenter.performInfoAnimation();
 
         try {
             Thread.sleep(SLEEP_2);
         } catch (final InterruptedException ignored) {
             fail(IGNORED, ignored);
         }
-        assertTrue(controller.isAnimationRunning(),
+        assertTrue(presenter.isAnimationRunning(),
             "During the animation the timer must be running");
 
         // Estimated total time:
@@ -217,9 +217,9 @@ class CombatControllerTest {
             fail(IGNORED, ignored);
         }
 
-        assertTrue(controller.getCurrentState() instanceof InfoDisplayState,
+        assertTrue(presenter.getCurrentState() instanceof InfoDisplayState,
             "After the animation the state must be InfoDisplayState");
-        assertTrue(!controller.isAnimationRunning(),
+        assertTrue(!presenter.isAnimationRunning(),
             "After the animation the timer must be stopped");
     }
 

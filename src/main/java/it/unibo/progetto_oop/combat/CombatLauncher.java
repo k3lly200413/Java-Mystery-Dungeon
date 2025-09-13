@@ -22,7 +22,7 @@ public final class CombatLauncher {
      * @param player the player instance
      * @param combatCollision the combat collision instance
      * @param gridNotifier the grid notifier instance
-     * @return combatController instance
+     * @return combatPresenter instance
      */
     public CombatPresenter buildCombat(final Player player,
     final CombatCollision combatCollision,

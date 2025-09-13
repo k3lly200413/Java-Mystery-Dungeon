@@ -10,7 +10,7 @@ import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatPresenter;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatControllerApi;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatPresenterApi;
 import it.unibo.progetto_oop.combat.win_view.WinPanel;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.playground.view.game_start.GameStartView;
@@ -88,9 +88,9 @@ public final class ViewManager {
     private InventoryView invView;
 
     /**
-     * The controller for managing combat logic and interactions.
+     * The presenter for managing combat logic and interactions.
      */
-    private CombatControllerApi combatController;
+    private CombatPresenterApi combatPresenter;
 
     /**
      * Method to start the view manager with the initial start view.
@@ -146,43 +146,43 @@ public final class ViewManager {
     }
 
     /**
-     * Sets the combat controller.
-     * Wraps the full controller in a small
+     * Sets the combat Presenter.
+     * Wraps the full Presenter in a small
      * adapter exposing only the required API so
-     * ViewManager does not keep a concrete mutable controller reference.
+     * ViewManager does not keep a concrete mutable Presenter reference.
      *
-     * @param fullController the concrete CombatController to adapt
+     * @param fullPresenter the concrete CombatPresenter to adapt
      */
-    public void setCombatController(final CombatPresenter fullController) {
-        this.combatController = new CombatControllerApi() {
+    public void setCombatPresenter(final CombatPresenter fullPresenter) {
+        this.combatPresenter = new CombatPresenterApi() {
             @Override
             public void setEncounteredEnemy(final Enemy enemy) {
-                fullController.setEncounteredEnemy(enemy);
+                fullPresenter.setEncounteredEnemy(enemy);
             }
 
             @Override
             public void setEnemyHp(final int currentHp, final int maxHp) {
-                fullController.getReadOnlyModel().setEnemyCurrentHp(currentHp);
-                fullController.getReadOnlyModel().setEnemyMaxHp(maxHp);
+                fullPresenter.getReadOnlyModel().setEnemyCurrentHp(currentHp);
+                fullPresenter.getReadOnlyModel().setEnemyMaxHp(maxHp);
             }
 
             @Override
             public void resetForNewCombat() {
-                fullController.resetForNewCombat();
+                fullPresenter.resetForNewCombat();
             }
 
             @Override
             public void redrawView() {
-                fullController.redrawView();
+                fullPresenter.redrawView();
             }
 
             @Override
             public JPanel getViewPanel() {
-                return fullController.getViewApi().getViewPanel();
+                return fullPresenter.getViewApi().getViewPanel();
             }
         };
         this.mainCardPanel.add(
-            this.combatController.getViewPanel(), COMBAT_CARD);
+            this.combatPresenter.getViewPanel(), COMBAT_CARD);
     }
 
     /**
@@ -192,11 +192,11 @@ public final class ViewManager {
      */
     public void showCombat(
         final Enemy encounteredEnemy) {
-        this.combatController.setEncounteredEnemy(encounteredEnemy);
-        this.combatController.setEnemyHp(
+        this.combatPresenter.setEncounteredEnemy(encounteredEnemy);
+        this.combatPresenter.setEnemyHp(
             encounteredEnemy.getCurrentHp(), encounteredEnemy.getMaxHp());
-        this.combatController.resetForNewCombat();
-        this.combatController.redrawView();
+        this.combatPresenter.resetForNewCombat();
+        this.combatPresenter.redrawView();
         this.cardLayout.show(this.mainCardPanel, COMBAT_CARD);
     }
 

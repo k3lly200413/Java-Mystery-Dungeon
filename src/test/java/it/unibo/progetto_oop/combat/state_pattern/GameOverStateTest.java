@@ -57,8 +57,8 @@ class GameOverStateTest {
     /** User player instance. */
     private Player player;
 
-    /** Combat controller instance. */
-    private CombatPresenter controller;
+    /** Combat presenter instance. */
+    private CombatPresenter presenter;
 
     /** Combat model instance. */
     private ReadOnlyCombatModel model;
@@ -82,13 +82,13 @@ class GameOverStateTest {
         enemy = mock(Enemy.class);
         player = mock(Player.class);
 
-        controller = mock(CombatPresenter.class);
+        presenter = mock(CombatPresenter.class);
         model = mock(ReadOnlyCombatModel.class);
         view = mock(CombatViewApi.class);
-        controller.setEncounteredEnemy(enemy);
+        presenter.setEncounteredEnemy(enemy);
 
-        when(controller.getReadOnlyModel()).thenReturn(model);
-        when(controller.getViewApi()).thenReturn(view);
+        when(presenter.getReadOnlyModel()).thenReturn(model);
+        when(presenter.getViewApi()).thenReturn(view);
 
         when(model.getPlayerPosition()).thenReturn(playerPos);
         when(model.getEnemyPosition()).thenReturn(enemyPos);
@@ -107,7 +107,7 @@ class GameOverStateTest {
 
         final GameOverState state = new GameOverState(
             combatCollision, gridNotifier, enemy, player);
-        state.enterState(controller);
+        state.enterState(presenter);
 
         verify(view, timeout(TIMEOUT_TIME))
         .updateDisplay(any(RedrawContext.class));
@@ -120,7 +120,7 @@ class GameOverStateTest {
 
         final GameOverState state = new GameOverState(
             combatCollision, gridNotifier, enemy, player);
-        state.enterState(controller);
+        state.enterState(presenter);
 
         Thread.sleep(SLEEP_TIME);
 
@@ -144,7 +144,7 @@ class GameOverStateTest {
 
         final GameOverState state = new GameOverState(
             combatCollision, gridNotifier, enemy, player);
-        state.enterState(controller);
+        state.enterState(presenter);
 
         Thread.sleep(SLEEP_TIME);
 
@@ -168,7 +168,7 @@ class GameOverStateTest {
 
         final GameOverState state = new GameOverState(
             combatCollision, gridNotifier, enemy, player);
-        state.enterState(controller);
+        state.enterState(presenter);
 
         Thread.sleep(SLEEP_TIME);
 
@@ -192,7 +192,7 @@ void whenBossIsDeadShowWinScreenNotOverworld() {
 
     final GameOverState state = new GameOverState(
         combatCollision, gridNotifier, enemy, player);
-    state.enterState(controller);
+    state.enterState(presenter);
 
     verify(gridNotifier, timeout(SLEEP_BOSS_TIME)).notifyEnemyRemoved(enemyPos);
     verify(gridNotifier, timeout(SLEEP_BOSS_TIME))
