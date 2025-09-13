@@ -36,7 +36,6 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 /**
  * View class in Model View Controller Pattern.
  *
- * @author kelly.applebee@studio.unibo.it
  */
 public class CombatView extends JPanel implements CombatViewInterface {
     /**

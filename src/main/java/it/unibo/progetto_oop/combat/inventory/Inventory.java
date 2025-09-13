@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * @author Laura Bertozzi
+ * Inventroy
  */
 public class Inventory implements Serializable{
     private static final long serialVersionUID = 1L;

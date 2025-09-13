@@ -1,5 +1,5 @@
 /**
- * @author Laura Bertozzi
+ * ItemSelectionState
  */
 
 package it.unibo.progetto_oop.combat.state_pattern;

@@ -7,7 +7,7 @@ import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 /**
- * @author Laura Bertozzi
+ * Abstract class for Item
  */
 public abstract class AbstractItemImpl implements Item, Serializable {
     /**
