@@ -1,7 +1,6 @@
 package it.unibo.progetto_oop.overworld.playground;
 
 import java.util.List;
-import java.util.Random;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
@@ -41,16 +40,14 @@ public final class OverworldLauncher {
      *
      * @param floorConfig       the configuration for the dungeon floor
      * @param entityStatsConfig the configuration for entity stats
-     * @param rand              the random generator
      */
     public OverworldLauncher(
             final FloorConfig floorConfig,
-            final EntityStatsConfig entityStatsConfig,
-            final Random rand) {
+            final EntityStatsConfig entityStatsConfig) {
         final RandomPlacementStrategy rps = new ImplRandomPlacement();
         final RoomPlacementStrategy rrs = new ImplRoomPlacement();
         final TunnelPlacementStrategy tps = new ImplTunnelPlacement();
-        final FloorGenerator gen = new FloorGenerator(rrs, tps, rps, rand);
+        final FloorGenerator gen = new FloorGenerator(rrs, tps, rps);
 
         final Dungeon dungeon = new Dungeon(gen, floorConfig);
         this.model = new OverworldModel(

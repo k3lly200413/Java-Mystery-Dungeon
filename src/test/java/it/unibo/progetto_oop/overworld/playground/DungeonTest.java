@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
@@ -35,8 +34,7 @@ class DungeonTest {
         final FloorGenerator gen = new FloorGenerator(
                 new ImplRoomPlacement(),
                 new ImplTunnelPlacement(),
-                new ImplRandomPlacement(),
-                new Random()
+                new ImplRandomPlacement()
         );
         return new Dungeon(gen, conf);
     }
