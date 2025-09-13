@@ -146,9 +146,9 @@ public final class OverworldModel implements OverworldModelApi {
             this.gridNotifier
                 .setGridUpdater(new EntityGridUpdater(this.entityGrid));
             this.gridNotifier
-                .setListEnemyUpdater(this.enemySystem::removeEnemyAt);
+                .setListEnemyUpdater(this.enemySystem::removeEntityAt);
             this.gridNotifier
-                    .setListItemUpdater(this.pickupSystem::removeItemAt);
+                    .setListItemUpdater(this.pickupSystem::removeEntityAt);
 
         this.wallCollision = new WallCollisionImpl(baseGrid, entityGrid);
         }
@@ -193,8 +193,8 @@ public final class OverworldModel implements OverworldModelApi {
      */
     public void setSpawnObjects(final List<Enemy> enemies,
                                 final List<Item> items) {
-        this.pickupSystem.setItems(items);
-        this.enemySystem.setEnemies(enemies);
+        this.pickupSystem.setEntities(items);
+        this.enemySystem.setEntities(enemies);
     }
 
     /**
@@ -261,7 +261,7 @@ public final class OverworldModel implements OverworldModelApi {
      * @return the list of items in the overworld
      */
     public List<Item> getItem() {
-        return this.pickupSystem.getItem();
+        return this.pickupSystem.getEntities();
     }
 
     /**
@@ -279,7 +279,7 @@ public final class OverworldModel implements OverworldModelApi {
      * @return the enemy list
      */
     public List<Enemy> getEnemies() {
-        return this.enemySystem.getEnemies();
+        return this.enemySystem.getEntities();
     }
 
     /**

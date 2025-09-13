@@ -16,7 +16,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
  * Gestisce la logica degli enemy nel sistema.
  */
 @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Enemies list is mutable by design")
-public class EnemySystem {
+public class EnemySystem implements EntitySystem<Enemy> {
     /**
      * the player instance.
      */
@@ -60,7 +60,8 @@ public class EnemySystem {
     /**
      * @return list of enemies in the map
      */
-    public List<Enemy> getEnemies() {
+    @Override
+    public List<Enemy> getEntities() {
         return Collections.unmodifiableList(this.enemies);
     }
 
@@ -91,7 +92,8 @@ public class EnemySystem {
      *
      * @param newEnemies the enemies to set
      */
-    public void setEnemies(final List<Enemy> newEnemies) {
+    @Override
+    public void setEntities(final List<Enemy> newEnemies) {
         this.enemies = newEnemies;
     }
 
@@ -100,15 +102,14 @@ public class EnemySystem {
     /**
      * Check if the player has encountered an enemy at the current position.
      *
-     * @param tempPosition the position to check for enemy encounter
      * @return an Optional containing the enemy
      *     if found,otherwise an empty Optional
      */
-
-    public Optional<Enemy> checkEnemyHit(final Position tempPosition) {
+    @Override
+    public Optional<Enemy> entityFoundAtPlayerPosition() {
         return this.enemies.stream().filter(enemy ->
         this.model.getCombatCollision().checkCombatCollision(
-            enemy.getCurrentPosition(), tempPosition))
+            enemy.getCurrentPosition(), this.player.getPosition()))
             .findFirst();
     }
 
@@ -118,7 +119,8 @@ public class EnemySystem {
      * @param enemyToRemove la posizione dell'enemy da rimuovere
      * @return true se l'enemy è stato rimosso, false altrimenti
      */
-    public boolean removeEnemyAt(final Position enemyToRemove) {
+    @Override
+    public boolean removeEntityAt(final Position enemyToRemove) {
         return this.enemies.removeIf(enemy ->
             enemy.getCurrentPosition().equals(enemyToRemove));
     }

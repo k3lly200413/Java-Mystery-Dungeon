@@ -15,7 +15,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
  * Gestisce la logica di raccolta degli oggetti.
  */
 @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Items list is mutable by design")
-public class PickupSystem {
+public class PickupSystem implements EntitySystem<Item> {
     /**
      * the items on the map.
      */
@@ -46,7 +46,8 @@ public class PickupSystem {
      *
      * @return the list of items in the overworld
      */
-    public List<Item> getItem() {
+    @Override
+    public List<Item> getEntities() {
         return Collections.unmodifiableList(items);
     }
 
@@ -67,7 +68,7 @@ public class PickupSystem {
      *
      * @param newItems the items to set
      */
-    public void setItems(final List<Item> newItems) {
+    public void setEntities(final List<Item> newItems) {
         this.items = newItems;
     }
 
@@ -79,7 +80,7 @@ public class PickupSystem {
      * @param itemToRemove the item to remove
      * @return true if the item was removed, false otherwise
      */
-    public boolean removeItemAt(final Position itemToRemove) {
+    public boolean removeEntityAt(final Position itemToRemove) {
         this.player.getInventory().addItem(
             this.items.stream()
                 .filter(item -> item.getPosition().equals(itemToRemove))
@@ -98,7 +99,8 @@ public class PickupSystem {
      * @return an Optional containing the
      *     item if found, otherwise an empty Optional
      */
-    private Optional<Item> itemFoundAtPlayerPosition() {
+    @Override
+    public Optional<Item> entityFoundAtPlayerPosition() {
         return this.items.stream().filter(
             item -> item.getPosition().equals(this.player.getPosition())
             ).findFirst();
@@ -110,10 +112,10 @@ public class PickupSystem {
      * If an item is found, remove it from the overworld items list
      */
     public void checkAndAddItem() {
-        final Optional<Item> itemOpt = this.itemFoundAtPlayerPosition();
+        final Optional<Item> itemOpt = this.entityFoundAtPlayerPosition();
 
         itemOpt.ifPresent(item -> {
-            this.removeItemAt(item.getPosition());
+            this.removeEntityAt(item.getPosition());
         });
     }
 }
