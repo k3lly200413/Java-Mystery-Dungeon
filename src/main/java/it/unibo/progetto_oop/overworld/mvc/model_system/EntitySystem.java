@@ -5,11 +5,16 @@ import java.util.Optional;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
+/**
+ * A system that manages entities of type T in the overworld.
+ *
+ * @param <T> the type of entity managed by the system
+ */
 public interface EntitySystem<T> {
 
     /**
      * Removes an entity at the specified position.
-     * 
+     *
      * @param pos the position to check
      * @return true if an entity was found and removed, false otherwise
      */

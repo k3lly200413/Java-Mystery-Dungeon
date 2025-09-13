@@ -9,6 +9,7 @@ import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
  */
 
 public class CurePoison implements PotionStrategy, Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Override
     public final void applyEffect(final PossibleUser user) {

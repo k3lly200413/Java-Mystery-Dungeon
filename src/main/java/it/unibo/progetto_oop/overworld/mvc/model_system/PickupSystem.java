@@ -68,6 +68,7 @@ public class PickupSystem implements EntitySystem<Item> {
      *
      * @param newItems the items to set
      */
+    @Override
     public void setEntities(final List<Item> newItems) {
         this.items = newItems;
     }
@@ -80,6 +81,7 @@ public class PickupSystem implements EntitySystem<Item> {
      * @param itemToRemove the item to remove
      * @return true if the item was removed, false otherwise
      */
+    @Override
     public boolean removeEntityAt(final Position itemToRemove) {
         this.player.getInventory().addItem(
             this.items.stream()
@@ -90,7 +92,6 @@ public class PickupSystem implements EntitySystem<Item> {
         );
         return this.items.removeIf(item ->
             item.getPosition().equals(itemToRemove));
-        //this.model.getGridNotifier().notifyItemRemoved(itemToRemove);
     }
 
     /**
