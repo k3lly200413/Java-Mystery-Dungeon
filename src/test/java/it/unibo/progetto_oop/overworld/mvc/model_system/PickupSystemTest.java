@@ -56,7 +56,7 @@ class PickupSystemTest {
 
     @Test
     void testGetItem() {
-        final List<Item> items = pickupSystem.getItem();
+        final List<Item> items = pickupSystem.getEntities();
         assertEquals(2, items.size());
         assertTrue(items.contains(item1));
         assertTrue(items.contains(item2));
@@ -65,9 +65,9 @@ class PickupSystemTest {
     @Test
     void testSetItems() {
         final Item item3 = mock(Item.class);
-        pickupSystem.setItems(new ArrayList<>(List.of(item3)));
-        assertEquals(1, pickupSystem.getItem().size());
-        assertTrue(pickupSystem.getItem().contains(item3));
+        pickupSystem.setEntities(new ArrayList<>(List.of(item3)));
+        assertEquals(1, pickupSystem.getEntities().size());
+        assertTrue(pickupSystem.getEntities().contains(item3));
     }
 
     @Test
@@ -83,9 +83,9 @@ class PickupSystemTest {
         pickupSystem = new PickupSystem(
             new ArrayList<>(List.of(item3)), player);
 
-        final boolean removed = pickupSystem.removeItemAt(position3);
+        final boolean removed = pickupSystem.removeEntityAt(position3);
         assertTrue(removed);
-        assertEquals(0, pickupSystem.getItem().size());
+        assertEquals(0, pickupSystem.getEntities().size());
         verify(inventory).addItem(item3);
     }
 

@@ -124,8 +124,7 @@ class MovementSystemTest {
         when(model.getGridNotifier()).thenReturn(gridNotifier);
 
         final Enemy enemy = mock(Enemy.class);
-        when(enemySystem.checkEnemyHit(
-            any(Position.class))).thenReturn(Optional.of(enemy));
+        when(enemySystem.entityFoundAtPlayerPosition()).thenReturn(Optional.of(enemy));
 
         movementSystem.move(1, 0, pickupSystem, enemySystem);
         verify(enemySystem).setEncounteredEnemy(enemy);
@@ -142,8 +141,7 @@ class MovementSystemTest {
         when(gridView
             .get(anyInt(), anyInt())).thenReturn(TileType.ROOM);
         when(model.getGridNotifier()).thenReturn(gridNotifier);
-        when(enemySystem.checkEnemyHit(
-            any(Position.class))).thenReturn(Optional.empty());
+        when(enemySystem.entityFoundAtPlayerPosition()).thenReturn(Optional.empty());
         movementSystem.move(1, 0, pickupSystem, enemySystem);
 
         verify(enemySystem).triggerEnemyTurns();
