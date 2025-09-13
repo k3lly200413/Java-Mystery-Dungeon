@@ -112,11 +112,11 @@ public class AnimatingState implements CombatState {
 
         if (!context.checkGameOver()) {
             if (wasPlayerTurn && !model.isEnemyPoisoned()) {
-                    context.getReadOnlyModel().setPlayerTurn(false);
-                    context.setState(context.getReadOnlyModel().getEnemyState());
+                context.getReadOnlyModel().setPlayerTurn(false);
+                context.setState(context.getReadOnlyModel().getEnemyState());
             } else if (!wasPlayerTurn && !model.isPlayerPoison()) {
-                    context.getReadOnlyModel().setPlayerTurn(true);
-                    context.setState(new PlayerTurnState());
+                context.getReadOnlyModel().setPlayerTurn(true);
+                context.setState(new PlayerTurnState());
             }
         }
     }

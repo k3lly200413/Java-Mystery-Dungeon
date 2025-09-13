@@ -653,7 +653,9 @@ public final boolean isGameOver() {
     public final void setEnemyPoisoned(final boolean newEnemyPoisoned) {
         if (!this.enemyPoisoned && newEnemyPoisoned) {
             this.enemyPoisoned = true;
+            return;
         }
+        this.enemyPoisoned = false;
     }
 
     /**
