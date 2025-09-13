@@ -1,7 +1,7 @@
 package it.unibo.progetto_oop.combat;
 
 import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatPresenter;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatModel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatView;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatViewInterface;
@@ -24,7 +24,7 @@ public final class CombatLauncher {
      * @param gridNotifier the grid notifier instance
      * @return combatController instance
      */
-    public CombatController buildCombat(final Player player,
+    public CombatPresenter buildCombat(final Player player,
     final CombatCollision combatCollision,
     final GridNotifier gridNotifier) {
         final int size = 12;
@@ -68,7 +68,7 @@ public final class CombatLauncher {
         viewHeightFactor * model.getSize() / sizeDivisor,
         buttonWidth, buttonHeight, windowWidth, windowHeight);
         view.init();
-        return new CombatController(model, view, player,
+        return new CombatPresenter(model, view, player,
             combatCollision, gridNotifier);
     }
 
@@ -78,7 +78,7 @@ public final class CombatLauncher {
      * @param encounteredEnemy the enemy encountered by the player
      * @param controller the combat controller instance
      */
-    public void setEncounteredEnemy(final CombatController controller, final Enemy encounteredEnemy) {
+    public void setEncounteredEnemy(final CombatPresenter controller, final Enemy encounteredEnemy) {
         controller.setEncounteredEnemy(encounteredEnemy);
     }
 

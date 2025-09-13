@@ -1,7 +1,7 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatPresenter;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
@@ -15,7 +15,7 @@ public interface CombatState {
      *
      * @param context Instance of the controller
      */
-    void handlePhysicalAttackInput(CombatController context);
+    void handlePhysicalAttackInput(CombatPresenter context);
 
     /**
      * This method is called when a long-range attack
@@ -25,7 +25,7 @@ public interface CombatState {
      * @param isPoison boolean that indicates if the attack is poison
      * @param isFlame boolean that indicates if the attack is flame
      */
-    void handleLongRangeAttackInput(CombatController context,
+    void handleLongRangeAttackInput(CombatPresenter context,
     boolean isPoison, boolean isFlame);
 
     /**
@@ -33,42 +33,42 @@ public interface CombatState {
      *
      * @param context Instance of the controller
      */
-    void handleInfoInput(CombatController context);
+    void handleInfoInput(CombatPresenter context);
 
     /**
      * This method is called when running away is attempted during combat.
      *
      * @param context Instance of the controller
      */
-    void handleBackInput(CombatController context);
+    void handleBackInput(CombatPresenter context);
 
     /**
      * This method is called when the bag is opened during combat.
      *
      * @param context Instance of the controller
      */
-    void handleBagInput(CombatController context);
+    void handleBagInput(CombatPresenter context);
 
     /**
      * This method is called when running away is attempted during combat.
      *
      * @param context Istance of the controller
      */
-    void handleRunInput(CombatController context);
+    void handleRunInput(CombatPresenter context);
 
     /**
      * This method is called when an attack buff is used during combat.
      *
      * @param context Instance of the controller
      */
-    void handleAttackBuffInput(CombatController context);
+    void handleAttackBuffInput(CombatPresenter context);
 
     /**
      * This method is called when healing is performed during combat.
      *
      * @param context Instance of the controller
      */
-    void handleHealInput(CombatController context);
+    void handleHealInput(CombatPresenter context);
 
     /**
      * This method is called when a potion is used during combat.
@@ -85,27 +85,27 @@ public interface CombatState {
      *
      * @param context Instance of the controller
      */
-    void handleCurePoisonInput(CombatController context);
+    void handleCurePoisonInput(CombatPresenter context);
 
     /**
      * This method is called when curing flame during combat.
      *
      * @param context Instance of the controller
      */
-    void enterState(CombatController context);
+    void enterState(CombatPresenter context);
 
     /**
      * This method is called when exiting a combat state.
      *
      * @param context Instance of the controller
      */
-    void exitState(CombatController context);
+    void exitState(CombatPresenter context);
 
     /**
      * This method is called when an animation is complete during combat.
      *
      * @param context Instance of the controller
      */
-    void handleAnimationComplete(CombatController context);
+    void handleAnimationComplete(CombatPresenter context);
 
 }

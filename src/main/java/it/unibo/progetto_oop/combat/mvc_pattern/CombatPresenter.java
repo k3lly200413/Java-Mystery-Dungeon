@@ -36,7 +36,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
  * @author Kelly.applebee@studio.unibo.it
  * @author matteo.monari6@studio.unibo.it
  */
-public class CombatController implements CombatControllerApi {
+public class CombatPresenter implements CombatControllerApi {
 
     /**
      * Animation delay for each step in the animation.
@@ -163,7 +163,7 @@ public class CombatController implements CombatControllerApi {
             + "The controller is the logical owner during combat and must manipulate the view and" 
             + " model directly; defensive copying of UI/model objects is impractical."
     )
-    public CombatController(
+    public CombatPresenter(
         final CombatModel modelToUse,
         final CombatViewInterface viewToUse, final Player newPlayer,
         final CombatCollision newCombatCollision,

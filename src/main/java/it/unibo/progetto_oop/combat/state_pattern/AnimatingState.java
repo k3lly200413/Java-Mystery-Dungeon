@@ -1,7 +1,7 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatPresenter;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatViewApi;
 import it.unibo.progetto_oop.combat.mvc_pattern.ReadOnlyCombatModel;
 import it.unibo.progetto_oop.overworld.player.Player;
@@ -17,7 +17,7 @@ public class AnimatingState implements CombatState {
 
     @Override
     public final void handlePhysicalAttackInput(
-        final CombatController context) {
+        final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 
@@ -26,7 +26,7 @@ public class AnimatingState implements CombatState {
 
     @Override
     public final void handleLongRangeAttackInput(
-        final CombatController context, final boolean isPoison,
+        final CombatPresenter context, final boolean isPoison,
             final boolean isFlame) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
@@ -35,7 +35,7 @@ public class AnimatingState implements CombatState {
     }
 
     @Override
-    public final void handleInfoInput(final CombatController context) {
+    public final void handleInfoInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 
@@ -43,7 +43,7 @@ public class AnimatingState implements CombatState {
     }
 
     @Override
-    public final void handleBackInput(final CombatController context) {
+    public final void handleBackInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 
@@ -51,7 +51,7 @@ public class AnimatingState implements CombatState {
     }
 
     @Override
-    public final void handleBagInput(final CombatController context) {
+    public final void handleBagInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 
@@ -59,7 +59,7 @@ public class AnimatingState implements CombatState {
     }
 
     @Override
-    public final void handleRunInput(final CombatController context) {
+    public final void handleRunInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 
@@ -67,7 +67,7 @@ public class AnimatingState implements CombatState {
     }
 
     @Override
-    public final void enterState(final CombatController context) {
+    public final void enterState(final CombatPresenter context) {
         context.getViewApi().showInfo(
             "Entered Animating State!\nNo issues for now");
         context.getViewApi().setAllMenusDisabled();
@@ -77,12 +77,12 @@ public class AnimatingState implements CombatState {
      * No actions required when exiting the AnimatingState.
      */
     @Override
-    public final void exitState(final CombatController context) {
+    public final void exitState(final CombatPresenter context) {
         context.getViewApi().showInfo("Animation Completed");
     }
 
     @Override
-    public final void handleAnimationComplete(final CombatController context) {
+    public final void handleAnimationComplete(final CombatPresenter context) {
 
         final ReadOnlyCombatModel model = context.getReadOnlyModel();
         final CombatViewApi view = context.getViewApi();
@@ -122,7 +122,7 @@ public class AnimatingState implements CombatState {
     }
 
     @Override
-    public final void handleCurePoisonInput(final CombatController context) {
+    public final void handleCurePoisonInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 
@@ -134,7 +134,7 @@ public class AnimatingState implements CombatState {
      *
      * @param context The combat controller context.
      */
-    public void handleBossDeathRayAttack(final CombatController context) {
+    public void handleBossDeathRayAttack(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 
@@ -142,7 +142,7 @@ public class AnimatingState implements CombatState {
     }
 
     @Override
-    public final void handleAttackBuffInput(final CombatController context) {
+    public final void handleAttackBuffInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 
@@ -150,7 +150,7 @@ public class AnimatingState implements CombatState {
     }
 
     @Override
-    public final void handleHealInput(final CombatController context) {
+    public final void handleHealInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 

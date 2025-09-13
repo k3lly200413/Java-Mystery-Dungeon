@@ -3,7 +3,7 @@ package it.unibo.progetto_oop.combat.state_pattern;
 import javax.swing.Timer;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatPresenter;
 import it.unibo.progetto_oop.combat.mvc_pattern.ReadOnlyCombatModel;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
@@ -30,7 +30,7 @@ public class EnemyTurnState implements CombatState {
      *                to the model, view, and state transitions
      */
     @Override
-    public void enterState(final CombatController context) {
+    public void enterState(final CombatPresenter context) {
         final ReadOnlyCombatModel model = context.getReadOnlyModel();
 
         if (model.isBossTurn()
@@ -61,48 +61,48 @@ public class EnemyTurnState implements CombatState {
     }
 
     @Override
-    public void exitState(final CombatController context) {
+    public void exitState(final CombatPresenter context) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void handlePhysicalAttackInput(final CombatController context) {
+    public void handlePhysicalAttackInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void handleLongRangeAttackInput(final CombatController context,
+    public void handleLongRangeAttackInput(final CombatPresenter context,
     final boolean isPoison, final boolean isFlame) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void handleInfoInput(final CombatController context) {
+    public void handleInfoInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void handleBackInput(final CombatController context) {
+    public void handleBackInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void handleBagInput(final CombatController context) {
+    public void handleBagInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void handleRunInput(final CombatController context) {
+    public void handleRunInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void handleAttackBuffInput(final CombatController context) {
+    public void handleAttackBuffInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void handleHealInput(final CombatController context) {
+    public void handleHealInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
     }
 
@@ -113,12 +113,12 @@ public class EnemyTurnState implements CombatState {
     }
 
     @Override
-    public void handleCurePoisonInput(final CombatController context) {
+    public void handleCurePoisonInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void handleAnimationComplete(final CombatController context) {
+    public void handleAnimationComplete(final CombatPresenter context) {
         // TODO Auto-generated method stub
     }
 

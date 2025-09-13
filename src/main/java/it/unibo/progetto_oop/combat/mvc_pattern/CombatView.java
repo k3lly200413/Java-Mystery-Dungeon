@@ -492,8 +492,8 @@ public class CombatView extends JPanel implements CombatViewInterface {
      * Method used to set the controller to assign ActionListeners to buttons.
      */
     @Override
-    public final void setController(final CombatController combatController) {
-        final CombatController ctrl = combatController;
+    public final void setController(final CombatPresenter combatController) {
+        final CombatPresenter ctrl = combatController;
         this.attackButton.addActionListener(e -> ctrl.handleAttackMenu());
         this.bagButton.addActionListener(e -> ctrl.handleBagMenu());
         this.runButton.addActionListener(e -> ctrl.exitCombat());

@@ -5,7 +5,7 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatPresenter;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
@@ -20,7 +20,7 @@ public class ItemSelectionState implements CombatState {
      * @param context Instance of the controller
      */
     @Override
-    public void enterState(final CombatController context) {
+    public void enterState(final CombatPresenter context) {
         context.getViewApi().showInfo("\nEntered selection section");
     }
 
@@ -30,7 +30,7 @@ public class ItemSelectionState implements CombatState {
      * @param context Instance of the controller
      */
     @Override
-    public void exitState(final CombatController context) {
+    public void exitState(final CombatPresenter context) {
         context.getViewApi().showInfo("\nEXITING\n");
 
     }
@@ -39,7 +39,7 @@ public class ItemSelectionState implements CombatState {
      * Handles the physical attack input action.
      */
     @Override
-    public void handlePhysicalAttackInput(final CombatController context) {
+    public void handlePhysicalAttackInput(final CombatPresenter context) {
         throw new UnsupportedOperationException("Unimplemented method 'handlePhysicalAttackInput'");
     }
 
@@ -47,7 +47,7 @@ public class ItemSelectionState implements CombatState {
      * Handles the info input action.
      */
     @Override
-    public void handleInfoInput(final CombatController context) {
+    public void handleInfoInput(final CombatPresenter context) {
         throw new UnsupportedOperationException("Unimplemented method 'handleInfoInput'");
     }
 
@@ -55,7 +55,7 @@ public class ItemSelectionState implements CombatState {
      * Handles the back input action.
      */
     @Override
-    public void handleBackInput(final CombatController context) {
+    public void handleBackInput(final CombatPresenter context) {
         context.performBackToMainMenu();
     }
 
@@ -63,7 +63,7 @@ public class ItemSelectionState implements CombatState {
      * Handles the bag input action.
      */
     @Override
-    public void handleBagInput(final CombatController context) {
+    public void handleBagInput(final CombatPresenter context) {
         throw new UnsupportedOperationException("Unimplemented method 'handleBagInput'");
     }
 
@@ -71,7 +71,7 @@ public class ItemSelectionState implements CombatState {
      * Handles the run input action.
      */
     @Override
-    public void handleRunInput(final CombatController context) {
+    public void handleRunInput(final CombatPresenter context) {
         throw new UnsupportedOperationException("Unimplemented method 'handleRunInput'");
     }
 
@@ -79,7 +79,7 @@ public class ItemSelectionState implements CombatState {
      * Handles the completion of an animation.
      */
     @Override
-    public void handleAnimationComplete(final CombatController context) {
+    public void handleAnimationComplete(final CombatPresenter context) {
         throw new UnsupportedOperationException("Unimplemented method 'handleAnimationComplete'");
     }
 
@@ -97,13 +97,13 @@ public class ItemSelectionState implements CombatState {
      * Handles the input for long range attacks.
      */
     @Override
-    public void handleLongRangeAttackInput(final CombatController context, final boolean isPoison, final boolean isFlame) {
+    public void handleLongRangeAttackInput(final CombatPresenter context, final boolean isPoison, final boolean isFlame) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleLongRangeAttackInput'");
     }
 
     @Override
-    public void handleCurePoisonInput(final CombatController context) {
+    public void handleCurePoisonInput(final CombatPresenter context) {
         // this.handlePotionUsed(context, null, null); is this class needed???
     }
 
@@ -111,7 +111,7 @@ public class ItemSelectionState implements CombatState {
      * Handles the input for attack buff items.
      */
     @Override
-    public void handleAttackBuffInput(final CombatController context) {
+    public void handleAttackBuffInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleAttackBuffInput'");
     }
@@ -120,7 +120,7 @@ public class ItemSelectionState implements CombatState {
      * Handles the input for healing items.
      */
     @Override
-    public void handleHealInput(final CombatController context) {
+    public void handleHealInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'handleHealInput'");
     }

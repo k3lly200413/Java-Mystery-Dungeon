@@ -1,7 +1,7 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatPresenter;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
@@ -22,7 +22,7 @@ public class BossTurnState implements CombatState {
 
     @Override
     public final void handlePhysicalAttackInput(
-        final CombatController context) {
+        final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 
@@ -31,7 +31,7 @@ public class BossTurnState implements CombatState {
 
     @Override
     public final void handleLongRangeAttackInput(
-        final CombatController context, final boolean isPoison,
+        final CombatPresenter context, final boolean isPoison,
             final boolean isFalme) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
@@ -40,7 +40,7 @@ public class BossTurnState implements CombatState {
     }
 
     @Override
-    public final void handleInfoInput(final CombatController context) {
+    public final void handleInfoInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 
@@ -48,7 +48,7 @@ public class BossTurnState implements CombatState {
     }
 
     @Override
-    public final void handleBackInput(final CombatController context) {
+    public final void handleBackInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 
@@ -56,7 +56,7 @@ public class BossTurnState implements CombatState {
     }
 
     @Override
-    public final void handleBagInput(final CombatController context) {
+    public final void handleBagInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 
@@ -64,7 +64,7 @@ public class BossTurnState implements CombatState {
     }
 
     @Override
-    public final void handleRunInput(final CombatController context) {
+    public final void handleRunInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 
@@ -72,7 +72,7 @@ public class BossTurnState implements CombatState {
     }
 
     @Override
-    public final void handleCurePoisonInput(final CombatController context) {
+    public final void handleCurePoisonInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 
@@ -81,7 +81,7 @@ public class BossTurnState implements CombatState {
 
     // Constants for Boss logic
     @Override
-    public final void enterState(final CombatController context) {
+    public final void enterState(final CombatPresenter context) {
         context.getViewApi().showInfo("Starting Boss Turn");
         if (context.getReadOnlyModel().getEnemyHealth() < BOSS_ENRAGED_THRESHOLD
             && "NORMAL".equalsIgnoreCase(this.bossState)) {
@@ -124,26 +124,26 @@ public class BossTurnState implements CombatState {
     }
 
     @Override
-    public final void exitState(final CombatController context) {
+    public final void exitState(final CombatPresenter context) {
         context.getViewApi().showInfo("Finished Boss turn");
     }
 
     @Override
-    public final void handleAnimationComplete(final CombatController context) {
+    public final void handleAnimationComplete(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 "Unimplemented method 'handleAnimationComplete'");
     }
 
     @Override
-    public final void handleAttackBuffInput(final CombatController context) {
+    public final void handleAttackBuffInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 "Unimplemented method 'handleAttackBuffInput'");
     }
 
     @Override
-    public final void handleHealInput(final CombatController context) {
+    public final void handleHealInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
 "Unimplemented method 'handleHealInput'");

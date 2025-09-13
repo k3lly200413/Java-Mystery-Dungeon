@@ -1,6 +1,6 @@
 package it.unibo.progetto_oop.combat.enemy_strategy_pattern;
 
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatPresenter;
 
 /**
  * Strategy interface for enemy attack behaviors.
@@ -13,5 +13,5 @@ public interface EnemyAttackStrategy {
      *
      * @param context the combat controller context
      */
-    void performAttack(CombatController context);
+    void performAttack(CombatPresenter context);
 }

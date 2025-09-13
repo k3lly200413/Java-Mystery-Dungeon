@@ -4,7 +4,7 @@ import javax.swing.SwingUtilities;
 
 import it.unibo.progetto_oop.combat.CombatLauncher;
 import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatPresenter;
 import it.unibo.progetto_oop.combat.win_view.WinPanel;
 import it.unibo.progetto_oop.overworld.mvc.OverworldController;
 import it.unibo.progetto_oop.overworld.mvc.ViewManager;
@@ -46,7 +46,7 @@ public final class GameLauncher {
                     floorConfig, entityStatsConfig
                 );
 
-                final CombatController combatController =
+                final CombatPresenter combatController =
                 new CombatLauncher().buildCombat(
                     session.getModel().getPlayer(),
                     session.getModel().getCombatCollision(),

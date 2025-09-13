@@ -19,7 +19,7 @@ import it.unibo.progetto_oop.overworld.player.Player;
 class CombatViewTest {
     private CombatView view;
     private CombatModel model;
-    private CombatController controller;
+    private CombatPresenter controller;
 
     @BeforeEach
     void setUpCombatView() {
@@ -63,7 +63,7 @@ class CombatViewTest {
         viewHeightFactor * model.getSize() / sizeDivisor, buttonWidth,
         buttonHeight, 100, 100);
         this.view.init();
-        this.controller = new CombatController(model, view, player, collision, gridNotifier);
+        this.controller = new CombatPresenter(model, view, player, collision, gridNotifier);
         this.view.setPlayerMaxStaminaBar(100);
         this.view.setPlayerHealthBarMax(100);
     }
@@ -76,7 +76,7 @@ class CombatViewTest {
         return this.model;
     }
 
-    public CombatController getController() {
+    public CombatPresenter getController() {
         return this.controller;
     }
 

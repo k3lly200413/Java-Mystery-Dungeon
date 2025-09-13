@@ -47,7 +47,7 @@ public interface CombatViewInterface {
      *
      * @param combatController the combat controller to set
      */
-    void setController(CombatController combatController);
+    void setController(CombatPresenter combatController);
 
     /**
      * Shows the game over screen with an option to restart.

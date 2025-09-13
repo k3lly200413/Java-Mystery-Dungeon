@@ -1,7 +1,7 @@
 package it.unibo.progetto_oop.combat.state_pattern;
 
 import it.unibo.progetto_oop.combat.inventory.Item;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatPresenter;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
@@ -24,7 +24,7 @@ public class PlayerTurnState implements CombatState {
 
     @Override
     public final void handlePhysicalAttackInput(
-        final CombatController context) {
+        final CombatPresenter context) {
         context.getViewApi().setAllMenusDisabled();
         context.getViewApi().clearInfo();
         context.getViewApi().showInfo("Player Has used physical Attack");
@@ -34,7 +34,7 @@ public class PlayerTurnState implements CombatState {
 
     @Override
     public final void handleLongRangeAttackInput(
-        final CombatController context,
+        final CombatPresenter context,
         final boolean isPoison,
         final boolean isFalme) {
 
@@ -48,29 +48,29 @@ public class PlayerTurnState implements CombatState {
     }
 
     @Override
-    public final void handleInfoInput(final CombatController context) {
+    public final void handleInfoInput(final CombatPresenter context) {
         context.performInfoAnimation();
     }
 
     @Override
-    public final void handleBackInput(final CombatController context) {
+    public final void handleBackInput(final CombatPresenter context) {
         context.performBackToMainMenu();
     }
 
     @Override
-    public final void handleBagInput(final CombatController context) {
+    public final void handleBagInput(final CombatPresenter context) {
         context.getViewApi().showInfo("Bag Selected");
     }
 
     @Override
-    public final void handleRunInput(final CombatController context) {
+    public final void handleRunInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
                 "Unimplemented method 'handleRunInput'");
     }
 
     @Override
-    public final void enterState(final CombatController context) {
+    public final void enterState(final CombatPresenter context) {
         context.getReadOnlyModel().setPlayerTurn(true);
         context.getViewApi().setAllMenusEnabled();
         context.getViewApi().showMainMenu();
@@ -78,31 +78,31 @@ public class PlayerTurnState implements CombatState {
     }
 
     @Override
-    public final void exitState(final CombatController context) {
+    public final void exitState(final CombatPresenter context) {
         context.getViewApi().clearInfo();
     }
 
     @Override
-    public final void handleAnimationComplete(final CombatController context) {
+    public final void handleAnimationComplete(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
                 "Unimplemented method 'handleAnimationComplete'");
     }
 
     @Override
-    public final void handleCurePoisonInput(final CombatController context) {
+    public final void handleCurePoisonInput(final CombatPresenter context) {
         // this.curePoison.applyEffect(context.getModel());
     }
 
     @Override
-    public final void handleAttackBuffInput(final CombatController context) {
+    public final void handleAttackBuffInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
                 "Unimplemented method 'handleAttackBuffInput'");
     }
 
     @Override
-    public final void handleHealInput(final CombatController context) {
+    public final void handleHealInput(final CombatPresenter context) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(
                 "Unimplemented method 'handleHealInput'");

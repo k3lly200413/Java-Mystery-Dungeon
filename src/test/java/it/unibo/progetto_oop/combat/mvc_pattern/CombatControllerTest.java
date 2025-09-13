@@ -34,7 +34,7 @@ class CombatControllerTest {
     private static final String IGNORED = "test interrupt";
 
     private CombatModel model;
-    private CombatController controller;
+    private CombatPresenter controller;
 
     @BeforeEach
     void setUpCombatController() {
@@ -83,7 +83,7 @@ class CombatControllerTest {
         viewHeightFactor * model.getSize() / sizeDivisor,
         buttonWidth, buttonHeight, windowWidth, windowHeight);
         view.init();
-        this.controller = new CombatController(model, view, player, collision, gridNotifier);
+        this.controller = new CombatPresenter(model, view, player, collision, gridNotifier);
         this.controller.setEncounteredEnemy(enemy);
     }
 

@@ -12,7 +12,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import it.unibo.progetto_oop.combat.combat_builder.RedrawContext;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatPresenter;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatViewApi;
 import it.unibo.progetto_oop.combat.mvc_pattern.ReadOnlyCombatModel;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
@@ -58,7 +58,7 @@ class GameOverStateTest {
     private Player player;
 
     /** Combat controller instance. */
-    private CombatController controller;
+    private CombatPresenter controller;
 
     /** Combat model instance. */
     private ReadOnlyCombatModel model;
@@ -82,7 +82,7 @@ class GameOverStateTest {
         enemy = mock(Enemy.class);
         player = mock(Player.class);
 
-        controller = mock(CombatController.class);
+        controller = mock(CombatPresenter.class);
         model = mock(ReadOnlyCombatModel.class);
         view = mock(CombatViewApi.class);
         controller.setEncounteredEnemy(enemy);

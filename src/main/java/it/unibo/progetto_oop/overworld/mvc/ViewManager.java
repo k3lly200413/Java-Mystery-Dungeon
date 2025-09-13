@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.InventoryView;
-import it.unibo.progetto_oop.combat.mvc_pattern.CombatController;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatPresenter;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatControllerApi;
 import it.unibo.progetto_oop.combat.win_view.WinPanel;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
@@ -154,7 +154,7 @@ public final class ViewManager implements Serializable{
      *
      * @param fullController the concrete CombatController to adapt
      */
-    public void setCombatController(final CombatController fullController) {
+    public void setCombatController(final CombatPresenter fullController) {
         this.combatController = new CombatControllerApi() {
             @Override
             public void setEncounteredEnemy(final Enemy enemy) {
