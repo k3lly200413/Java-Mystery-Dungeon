@@ -2,7 +2,9 @@ package it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl;
 
 import java.util.Objects;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.progetto_oop.overworld.enemy.state_pattern.GenericEnemyState;
+import it.unibo.progetto_oop.overworld.enemy.state_pattern.SleeperState;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
@@ -10,6 +12,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 /**
  * Generic implementation of the Enemy interface.
  */
+@SuppressFBWarnings("EI_EXPOSE_REP2")
 public class GenericEnemy implements Enemy {
     /**
      * maxHealth of the enemy.
@@ -69,6 +72,7 @@ public class GenericEnemy implements Enemy {
         this.currentHealth = newCurrentHealth;
         this.currentPosition = newInitialPosition;
         this.gridNotifier = newGridNotifier;
+        this.currentState = new SleeperState(); // default state
     }
 
     //----getters----//

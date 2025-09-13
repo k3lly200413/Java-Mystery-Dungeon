@@ -7,6 +7,9 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.progetto_oop.overworld.player.Player;
+
 /**
  * Gestisce i bindings di input per la mappa.
  */
@@ -21,6 +24,7 @@ public class InputBindings {
      *
      * @param component the panel to which the input bindings will be added
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2")
     public InputBindings(final JComponent component) {
         this.panel = component;
     }

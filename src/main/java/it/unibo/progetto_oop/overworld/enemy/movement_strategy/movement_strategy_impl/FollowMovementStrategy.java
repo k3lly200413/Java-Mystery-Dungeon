@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop.overworld.enemy.movement_strategy.movement_strategy_impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementStrategy;
@@ -12,7 +13,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 /**
  * utility class to check visibility and line of sight.
  */
-
+@SuppressFBWarnings("EI_EXPOSE_REP2")
 public class FollowMovementStrategy implements MovementStrategy {
 
     /**
@@ -59,34 +60,31 @@ public class FollowMovementStrategy implements MovementStrategy {
     public final MoveDirection executeMove(final Enemy context,
     final Player player, final MoveDirection currDirection) {
         final Position currentPos = context.getCurrentPosition();
-        final Position targetPos = this.visibilityUtil.firstMove(
-            context.getCurrentPosition(), player.getPosition());
 
-        final Position playerPos = player.getPosition();
+        if (player != null) {
+            final Position playerPos = player.getPosition();
+            final Position targetPos = this.visibilityUtil.firstMove(
+                currentPos, playerPos);
 
-        // if the player is in the enemy's line of sight,
-        // move towards the player
-        if (player != null
-            && this.visibilityUtil.inLos(
-                currentPos, playerPos, NEIGHBOUR_DISTANCE)
-            && wallChecker.canEnemyEnter(targetPos)) {
+            // if the player is in the enemy's line of sight,
+            // move towards the player
+            if (this.visibilityUtil.inLos(
+                    currentPos, playerPos, NEIGHBOUR_DISTANCE)
+                && wallChecker.canEnemyEnter(targetPos)) {
 
-            // if the player and the enemy are close enough
-            // -> enter combat state
-            if (this.combatTransitionChecker.
-            checkCombatCollision(playerPos, targetPos)) {
-                this.combatTransitionChecker.
-                    showCombat(context, player);
+                // if the player and the enemy are close enough -> enter combat state
+                if (this.combatTransitionChecker
+                        .checkCombatCollision(playerPos, targetPos)) {
+                    this.combatTransitionChecker.showCombat(context, player);
+                }
+
+                // not close enough -> move closer towards the player
+                context.setPosition(targetPos);
+                context.getGridNotifier().notifyEnemyMoved(currentPos, targetPos);
+                return currDirection;
             }
-
-            // not close enough -> move closer towards the player
-            context.setPosition(targetPos);
-            context.getGridNotifier().notifyEnemyMoved(currentPos, targetPos);
-            return currDirection;
-
-        } else { // else, continue patrolling
-            return patrolMovementStrategy.
-                executeMove(context, player, currDirection);
         }
+        // keep patrolling
+        return patrolMovementStrategy.executeMove(context, player, currDirection);
     }
 }

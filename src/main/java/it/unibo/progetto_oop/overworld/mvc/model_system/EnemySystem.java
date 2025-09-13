@@ -1,9 +1,11 @@
 package it.unibo.progetto_oop.overworld.mvc.model_system;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.player.Player;
@@ -12,6 +14,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 /**
  * Gestisce la logica degli enemy nel sistema.
  */
+@SuppressFBWarnings("EI_EXPOSE_REP2")
 public class EnemySystem {
     /**
      * the player instance.
@@ -57,14 +60,16 @@ public class EnemySystem {
      * @return list of enemies in the map
      */
     public List<Enemy> getEnemies() {
-        return this.enemies;
+        List<Enemy> unmodifiable = Collections.unmodifiableList(this.enemies);
+        return unmodifiable;
     }
 
     /**
      * @return the encountered enemy
      */
     public Enemy getEncounteredEnemy() {
-        return this.encounteredEnemy;
+        encounteredEnemy = this.encounteredEnemy;
+        return encounteredEnemy;
     }
 
     // ---- SETTERS ---- //

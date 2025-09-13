@@ -1,6 +1,7 @@
 
 package it.unibo.progetto_oop.overworld.player;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.combat.potion_strategy.PotionStrategy;
@@ -12,6 +13,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
  * Represents the player in the overworld,
  * manages stats, position, and inventory.
  */
+@SuppressFBWarnings("EI_EXPOSE_REP2")
 public class Player {
     /**
      * the player current hp value.
@@ -221,6 +223,6 @@ public class Player {
      * @return the player's inventory
      */
     public Inventory getInventory() {
-        return this.inventory;
+        return this.inventory.copy();
     }
 }

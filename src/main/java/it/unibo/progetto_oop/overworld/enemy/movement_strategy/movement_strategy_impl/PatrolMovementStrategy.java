@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop.overworld.enemy.movement_strategy.movement_strategy_impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.MovementStrategy;
@@ -11,6 +12,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 /**
  * utility class to handle patrol movement strategy.
  */
+@SuppressFBWarnings("EI_EXPOSE_REP2")
 public class PatrolMovementStrategy implements MovementStrategy {
     /**
      * wall checker to check for walls.

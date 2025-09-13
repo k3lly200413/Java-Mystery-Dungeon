@@ -3,6 +3,7 @@ package it.unibo.progetto_oop.overworld.enemy.movement_strategy;
 import java.util.Optional;
 import java.util.function.ToIntFunction;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollision;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
@@ -51,6 +52,7 @@ public class MovementUtil {
      *
      * @param newChecker the wall collision checker
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2")
     public MovementUtil(final WallCollision newChecker) {
         this.checker = newChecker;
     }

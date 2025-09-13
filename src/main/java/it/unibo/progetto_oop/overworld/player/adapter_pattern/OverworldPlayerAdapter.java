@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop.overworld.player.adapter_pattern;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.progetto_oop.overworld.player.Player;
 
 /**
@@ -23,6 +24,7 @@ public final class OverworldPlayerAdapter implements PossibleUser {
      *
      * @param playerToAdapt the player to adapt
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2")
     public OverworldPlayerAdapter(final Player playerToAdapt) {
         if (playerToAdapt == null) {
             throw new IllegalArgumentException(ERROR_MSG_1);
