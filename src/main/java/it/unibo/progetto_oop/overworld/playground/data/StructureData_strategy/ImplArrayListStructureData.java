@@ -1,10 +1,14 @@
 package it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
 
+/**
+ * Implementation of the StructureData interface using a 2D ArrayList.
+ */
 public final class ImplArrayListStructureData implements StructureData {
     /**
      * The width of the structure.
@@ -18,7 +22,7 @@ public final class ImplArrayListStructureData implements StructureData {
     /**
      * The grid representing the structure (2D ArrayList of TileType).
      */
-    private final ArrayList<ArrayList<TileType>> grid;
+    private final List<List<TileType>> grid;
 
     /**
      * Constructs a new structure object with the specified width and height.
@@ -36,14 +40,14 @@ public final class ImplArrayListStructureData implements StructureData {
 
         this.grid = new ArrayList<>(h);
         for (int y = 0; y < h; y++) {
-            final ArrayList<TileType> row = new ArrayList<>(w);
+            final List<TileType> row = new ArrayList<>(w);
             for (int x = 0; x < w; x++) {
                 row.add(TileType.WALL);
             }
             this.grid.add(row);
         }
     }
-    
+
     @Override
     public TileType get(final int x, final int y) {
         if (!inBounds(x, y)) {

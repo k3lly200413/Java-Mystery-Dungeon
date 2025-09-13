@@ -2,32 +2,40 @@ package it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy;
 
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
 
+/**
+ * Read-only interface for accessing grid structure data.
+ */
 public interface ReadOnlyGrid {
-    /*
-     * Get the width of the grid.
+
+    /**
+     * Returns the width of the grid.
+     *
+     * @return the width of the grid
      */
     int width();
 
-    /*
-     * Get the height of the grid.
+    /**
+     * Returns the height of the grid.
+     *
+     * @return the height of the grid
      */
     int height();
 
     /**
-     * Gets the tile type at the specified coordinates.
+     * Returns the tile type at the specified coordinates.
      *
-     * @param x the x-coordinate.
-     * @param y the y-coordinate.
-     * @return the tile type at the given coordinates.
+     * @param x the column index (0-based)
+     * @param y the row index (0-based)
+     * @return the tile type at (x, y)
      */
     TileType get(int x, int y);
 
     /**
-     * Checks if the given coordinates are within the bounds of the grid.
+     * Checks whether the given coordinates are within the grid bounds.
      *
-     * @param x the x-coordinate.
-     * @param y the y-coordinate.
-     * @return true if the coordinates are within bounds, false otherwise.
+     * @param x the column index (0-based)
+     * @param y the row index (0-based)
+     * @return {@code true} if (x, y) is within bounds; {@code false} otherwise
      */
     boolean inBounds(int x, int y);
 }

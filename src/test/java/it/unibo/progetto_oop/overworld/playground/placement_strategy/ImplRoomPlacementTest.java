@@ -17,7 +17,7 @@ import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.Im
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 
-public class ImplRoomPlacementTest {
+class ImplRoomPlacementTest {
 
     private FloorConfig cfg(final int w, final int h, final int nRooms) {
         return new FloorConfig.Builder()
@@ -52,16 +52,16 @@ public class ImplRoomPlacementTest {
 
     @Test
     void testPlaceRooms() {
-        StructureData grid = new ImplArrayListStructureData(40, 30);
-        var outRooms = new ArrayList<Room>();
-        var rand = new Random(123);
-        var config = cfg(40, 30, 6);
+        final StructureData grid = new ImplArrayListStructureData(40, 30);
+        final var outRooms = new ArrayList<Room>();
+        final var rand = new Random(123);
+        final var config = cfg(40, 30, 6);
         new ImplRoomPlacement().placeRooms(grid, outRooms, rand, config);
 
         assertTrue(outRooms.size() <= config.nRooms());
         assertFalse(roomsOverlap(outRooms));
 
-        for (Room r : outRooms) {
+        for (final Room r : outRooms) {
             for (int y = r.getY(); y < r.getY() + r.getHeight(); y++) {
                 for (int x = r.getX(); x < r.getX() + r.getWidth(); x++) {
                     assertTrue(grid.inBounds(x, y));
@@ -73,15 +73,15 @@ public class ImplRoomPlacementTest {
 
     @Test
     void testSmallMap() {
-        StructureData grid = new ImplArrayListStructureData(7, 7);
-        var outRooms = new ArrayList<Room>();
-        var rand = new Random(7);
+        final StructureData grid = new ImplArrayListStructureData(7, 7);
+        final var outRooms = new ArrayList<Room>();
+        final var rand = new Random(123);
 
-        var config = cfg(7, 7, 10);
+        final var config = cfg(7, 7, 10);
 
         new ImplRoomPlacement().placeRooms(grid, outRooms, rand, config);
 
-        for (Room r : outRooms) {
+        for (final Room r : outRooms) {
             assertTrue(r.getWidth() >= 1 && r.getHeight() >= 1);
             assertTrue(r.getX() >= 0 && r.getY() >= 0);
             assertTrue(r.getX() + r.getWidth() <= grid.width());
@@ -91,8 +91,8 @@ public class ImplRoomPlacementTest {
 
     @Test
     void testZeroRooms() {
-        StructureData grid = new ImplArrayListStructureData(20, 15);
-        var outRooms = new ArrayList<Room>();
+        final StructureData grid = new ImplArrayListStructureData(20, 15);
+        final var outRooms = new ArrayList<Room>();
 
         assertThrows(IllegalArgumentException.class, () -> {
             cfg(7, 7, 0);
