@@ -331,4 +331,9 @@ public final class ReadOnlyCombatModelAdapter implements ReadOnlyCombatModel {
     public void setEnemyMaxHp(final int maxHp) {
         delegate.setEnemyMaxHp(maxHp);
     }
+
+    @Override
+    public int getEnemyLongRangePower() {
+        return delegate.getEnemyLongRangePower();
+    }
 }
