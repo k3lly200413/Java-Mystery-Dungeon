@@ -12,7 +12,8 @@ import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.St
  */
 @SuppressFBWarnings(
         value = "EI_EXPOSE_REP2",
-        justification = "intentional to allow external modification of the StructureData. Need to modify the entity grid. Only internal use."
+        justification = "intentional to allow external modification of the StructureData."
+        + "Need to modify the entity grid. Only internal use."
     )
 public final class EntityGridUpdater implements GridUpdater {
     /**

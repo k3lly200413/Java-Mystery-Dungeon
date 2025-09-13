@@ -4,6 +4,7 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.util.Objects;
+
 import javax.swing.SwingUtilities;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -74,7 +75,6 @@ public final class MapController implements ChangeFloorListener {
     public void next() {
         model.nextFloor();
     }
-
 
     @Override
     public void onFloorChange(final ReadOnlyGrid base) {

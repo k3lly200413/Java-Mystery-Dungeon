@@ -7,9 +7,11 @@ import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 /**
- * Abstract class for Item
+ * Abstract class for Item.
  */
 public abstract class AbstractItemImpl implements Item, Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      * the name of the item.
      */

@@ -75,6 +75,11 @@ public class GenericEnemy implements Enemy {
         this.currentState = new SleeperState(); // default state
     }
 
+    /**
+     * Copy constructor of the GenericEnemy class.
+     *
+     * @param enemy the enemy to copy
+     */
     public GenericEnemy(final Enemy enemy) {
         Objects.requireNonNull(enemy, "enemy cannot be null");
         this.maxHealth = enemy.getMaxHp();
@@ -113,7 +118,7 @@ public class GenericEnemy implements Enemy {
 
     @Override
     public final GridNotifier getGridNotifier() {
-        return this.gridNotifier;
+        return this.gridNotifier.copy();
     }
 
 

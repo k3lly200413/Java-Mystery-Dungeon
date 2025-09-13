@@ -4,6 +4,7 @@ import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy
 /**
  * Observer interface for the ViewManager to handle game events.
  */
+
 public interface ViewManagerObserver {
     /**
      * Called when the player comes into contact with an enemy.
