@@ -64,7 +64,7 @@ public class PlayerTurnState implements CombatState {
 
     @Override
     public final void handleRunInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
         throw new UnsupportedOperationException(
                 "Unimplemented method 'handleRunInput'");
     }
@@ -84,7 +84,7 @@ public class PlayerTurnState implements CombatState {
 
     @Override
     public final void handleAnimationComplete(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
         throw new UnsupportedOperationException(
                 "Unimplemented method 'handleAnimationComplete'");
     }
@@ -96,14 +96,14 @@ public class PlayerTurnState implements CombatState {
 
     @Override
     public final void handleAttackBuffInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
         throw new UnsupportedOperationException(
                 "Unimplemented method 'handleAttackBuffInput'");
     }
 
     @Override
     public final void handleHealInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
         throw new UnsupportedOperationException(
                 "Unimplemented method 'handleHealInput'");
     }
@@ -113,7 +113,7 @@ public class PlayerTurnState implements CombatState {
         final PossibleUser user,
         final Item selectedPotion,
         final Player player) {
-        // TODO Auto-generated method stub
+        // Method should not be called
         throw new UnsupportedOperationException(
                 "Unimplemented method 'handlePotionUsed'");
     }

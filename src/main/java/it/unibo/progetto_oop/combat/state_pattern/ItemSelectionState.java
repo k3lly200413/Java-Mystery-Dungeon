@@ -98,7 +98,7 @@ public class ItemSelectionState implements CombatState {
      */
     @Override
     public void handleLongRangeAttackInput(final CombatPresenter context, final boolean isPoison, final boolean isFlame) {
-        // TODO Auto-generated method stub
+        // Method should not be called
         throw new UnsupportedOperationException("Unimplemented method 'handleLongRangeAttackInput'");
     }
 
@@ -112,7 +112,7 @@ public class ItemSelectionState implements CombatState {
      */
     @Override
     public void handleAttackBuffInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
         throw new UnsupportedOperationException("Unimplemented method 'handleAttackBuffInput'");
     }
 
@@ -121,7 +121,7 @@ public class ItemSelectionState implements CombatState {
      */
     @Override
     public void handleHealInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
         throw new UnsupportedOperationException("Unimplemented method 'handleHealInput'");
     }
 

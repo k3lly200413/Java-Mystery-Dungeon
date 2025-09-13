@@ -62,64 +62,64 @@ public class EnemyTurnState implements CombatState {
 
     @Override
     public void exitState(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
     }
 
     @Override
     public void handlePhysicalAttackInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
     }
 
     @Override
     public void handleLongRangeAttackInput(final CombatPresenter context,
     final boolean isPoison, final boolean isFlame) {
-        // TODO Auto-generated method stub
+        // Method should not be called
     }
 
     @Override
     public void handleInfoInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
     }
 
     @Override
     public void handleBackInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
     }
 
     @Override
     public void handleBagInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
     }
 
     @Override
     public void handleRunInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
     }
 
     @Override
     public void handleAttackBuffInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
     }
 
     @Override
     public void handleHealInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
     }
 
     @Override
     public void handlePotionUsed(final PossibleUser user,
     final Item selectedPotion, final Player player) {
-        // TODO Auto-generated method stub
+        // Method should not be called
     }
 
     @Override
     public void handleCurePoisonInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
     }
 
     @Override
     public void handleAnimationComplete(final CombatPresenter context) {
-        // TODO Auto-generated method stub
+        // Method should not be called
     }
 
 }

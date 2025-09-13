@@ -18,52 +18,34 @@ public class AnimatingState implements CombatState {
     @Override
     public final void handlePhysicalAttackInput(
         final CombatPresenter context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-
-            "Unimplemented method 'handlePhysicalAttackInput'");
+        // Method should not be called
     }
 
     @Override
     public final void handleLongRangeAttackInput(
         final CombatPresenter context, final boolean isPoison,
             final boolean isFlame) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-
-            "Unimplemented method 'handleLongRangeAttackInput'");
+        // Method should not be called
     }
 
     @Override
     public final void handleInfoInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-
-            "Unimplemented method 'handleInfoInput'");
+        // Method should not be called
     }
 
     @Override
     public final void handleBackInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-
-            "Unimplemented method 'handleBackInput'");
+        // Method should not be called
     }
 
     @Override
     public final void handleBagInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-
-            "Unimplemented method 'handleBagInput'");
+        // Method should not be called
     }
 
     @Override
     public final void handleRunInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-
-            "Unimplemented method 'handleRunInput'");
+        // Method should not be called
     }
 
     @Override
@@ -123,10 +105,7 @@ public class AnimatingState implements CombatState {
 
     @Override
     public final void handleCurePoisonInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-
-            "Unimplemented method 'handleCurePoisonInput'");
+        // Method should not be called
     }
 
     /**
@@ -135,26 +114,17 @@ public class AnimatingState implements CombatState {
      * @param context The combat controller context.
      */
     public void handleBossDeathRayAttack(final CombatPresenter context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-
-            "Unimplemented method 'handleBossDeathRayAttack'");
+        // Method should not be called
     }
 
     @Override
     public final void handleAttackBuffInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-
-            "Unimplemented method 'handleAttackBuffInput'");
+        // Method should not be called
     }
 
     @Override
     public final void handleHealInput(final CombatPresenter context) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-
-            "Unimplemented method 'handleHealInput'");
+        // Method should not be called
     }
 
     /** */
@@ -163,10 +133,7 @@ public class AnimatingState implements CombatState {
         final PossibleUser user,
         final Item selectedPotion,
         final Player player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException(
-
-            "Unimplemented method 'handlePotionUsed'");
+        // Method should not be called
     }
 
 }
