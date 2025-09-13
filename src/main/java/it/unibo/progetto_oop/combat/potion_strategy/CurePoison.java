@@ -1,12 +1,14 @@
 package it.unibo.progetto_oop.combat.potion_strategy;
 
+import java.io.Serializable;
+
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 
 /**
  * Class representing a potion strategy that cures the player's poison status.
  */
 
-public class CurePoison implements PotionStrategy {
+public class CurePoison implements PotionStrategy, Serializable {
 
     @Override
     public final void applyEffect(final PossibleUser user) {
