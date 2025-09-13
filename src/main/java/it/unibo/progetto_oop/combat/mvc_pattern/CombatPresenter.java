@@ -198,8 +198,6 @@ public class CombatPresenter implements CombatControllerApi {
     /**
      * Default method to redraw View.
      *
-     *
-     * @author kelly.applebee@studio.unibo.it
      */
     @Override
     public final void redrawView() {
