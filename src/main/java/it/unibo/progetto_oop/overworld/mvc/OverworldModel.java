@@ -134,12 +134,12 @@ public final class OverworldModel implements OverworldModelApi {
             this.wallCollision = null;
         } else {
             // immutable views for UI
-            final ReadOnlyGrid baseView   = floor.grid();
+            final ReadOnlyGrid baseView  = floor.grid();
             final ReadOnlyGrid entityView = floor.entityGrid();
             // mutable copies for model services (not for UI)
-            this.baseGrid   = toMutable(baseView);
+            this.baseGrid = toMutable(baseView);
             this.entityGrid = toMutable(entityView);
-        
+  
             if (this.gridNotifier == null) {
                 this.gridNotifier = new GridNotifier(null);
             }
@@ -168,12 +168,12 @@ public final class OverworldModel implements OverworldModelApi {
 
             //initialize
             initFloor(floor);
-            
+    
             this.changeFloorListener.onFloorChange(getBaseGridView());
         }
         return changedFloor;
     }
-    
+
     private void initFloor(final Floor floor) {
         this.setSpawnObjects(List.of(), List.of());
             new OverworldEntitiesGenerator(
@@ -247,7 +247,7 @@ public final class OverworldModel implements OverworldModelApi {
 
     /**
      * Get the player's position.
-     * 
+     *
      * @return the player's position
      */
     @Override
