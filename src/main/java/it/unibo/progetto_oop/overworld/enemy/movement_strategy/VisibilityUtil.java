@@ -13,7 +13,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * visual range related utilities.
  */
-@SuppressFBWarnings("EI_EXPOSE_REP")
+@SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "WallChecker is mutable by design")
 public class VisibilityUtil {
     /**
      * wall collision checker.

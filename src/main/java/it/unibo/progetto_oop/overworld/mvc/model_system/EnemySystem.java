@@ -15,7 +15,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 /**
  * Gestisce la logica degli enemy nel sistema.
  */
-@SuppressFBWarnings("EI_EXPOSE_REP2")
+@SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Enemies list is mutable by design")
 public class EnemySystem {
     /**
      * the player instance.
@@ -61,7 +61,7 @@ public class EnemySystem {
      * @return list of enemies in the map
      */
     public List<Enemy> getEnemies() {
-        return Collections.unmodifiableList(this.enemies);
+        return this.enemies;
     }
 
     /**

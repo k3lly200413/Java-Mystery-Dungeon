@@ -14,7 +14,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 /**
  * Gestisce la logica di raccolta degli oggetti.
  */
-@SuppressFBWarnings("EI_EXPOSE_REP2")
+@SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Items list is mutable by design")
 public class PickupSystem {
     /**
      * the items on the map.

@@ -24,7 +24,7 @@ public final class OverworldPlayerAdapter implements PossibleUser {
      *
      * @param playerToAdapt the player to adapt
      */
-    @SuppressFBWarnings("EI_EXPOSE_REP2")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Player is mutable by design")
     public OverworldPlayerAdapter(final Player playerToAdapt) {
         if (playerToAdapt == null) {
             throw new IllegalArgumentException(ERROR_MSG_1);

@@ -13,7 +13,8 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
  * Represents the player in the overworld,
  * manages stats, position, and inventory.
  */
-@SuppressFBWarnings("EI_EXPOSE_REP")
+@SuppressFBWarnings(value = "EI_EXPOSE_REP", 
+    justification = "Position and Inventory are mutable by design")
 public class Player {
     /**
      * the player current hp value.
