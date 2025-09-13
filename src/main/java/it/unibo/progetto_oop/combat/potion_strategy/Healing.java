@@ -9,6 +9,8 @@ import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
  */
 
 public class Healing implements PotionStrategy, Serializable {
+    private static final long serialVersionUID = 1L;
+
     /** The amount of health to restore. */
     private static final int HEAL_AMOUNT = 30;
 

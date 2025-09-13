@@ -37,14 +37,6 @@ public final class MapController implements ChangeFloorListener {
      */
     private final OverworldModelApi model;
 
-    private final KeyEventDispatcher nextFloorOnN = e -> {
-        if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_N) {
-            next();
-            return true;
-        }
-        return false;
-    };
-
     /**
      * Constructs a MapController with the specified view and model.
      *
@@ -63,8 +55,6 @@ public final class MapController implements ChangeFloorListener {
      */
     public void start() {
         model.setChangeFloorListener(this);
-        KeyboardFocusManager.getCurrentKeyboardFocusManager()
-                .addKeyEventDispatcher(this.nextFloorOnN);
         model.nextFloor();
     }
 

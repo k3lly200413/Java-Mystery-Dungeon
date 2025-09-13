@@ -9,6 +9,7 @@ import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
  */
 
 public class AttackBuff implements PotionStrategy, Serializable {
+    private static final long serialVersionUID = 1L;
 
     /** The amount of attack power to buff. */
     private static final int BUFF_AMOUNT = 50;
