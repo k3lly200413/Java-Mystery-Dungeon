@@ -13,7 +13,6 @@ import it.unibo.progetto_oop.overworld.player.adapter_pattern.OverworldPlayerAda
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-
 /**
  * This class represents the Game Over state in a combat scenario.
  * It implements the CombatState interface and defines the behavior

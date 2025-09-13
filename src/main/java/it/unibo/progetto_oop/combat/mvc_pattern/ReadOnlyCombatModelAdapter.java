@@ -203,7 +203,7 @@ public final class ReadOnlyCombatModelAdapter implements ReadOnlyCombatModel {
      */
     @Override
     public void setBossTurn(final boolean b) {
-delegate.setBossTurn(b);
+        delegate.setBossTurn(b);
     }
 
     /**
@@ -211,7 +211,7 @@ delegate.setBossTurn(b);
      */
     @Override
     public void increaseBossTurnCounter() {
-delegate.increaseBossTurnCounter();
+        delegate.increaseBossTurnCounter();
     }
 
     /**
@@ -249,7 +249,7 @@ delegate.increaseBossTurnCounter();
      */
     @Override
     public void increaseBossAttackCounter() {
-delegate.increaseBossAttackCounter();
+        delegate.increaseBossAttackCounter();
     }
 
     /**
@@ -257,7 +257,7 @@ delegate.increaseBossAttackCounter();
      */
     @Override
     public void clearBossAttackCount() {
-delegate.clearBossAttackCount();
+        delegate.clearBossAttackCount();
     }
 
     /**
@@ -283,7 +283,7 @@ delegate.clearBossAttackCount();
      */
     @Override
     public void resetPositions() {
-delegate.resetPositions();
+        delegate.resetPositions();
     }
 
     /**

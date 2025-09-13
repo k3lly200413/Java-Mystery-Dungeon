@@ -21,7 +21,10 @@ public record EntityStatsConfig(
         int bossHpMultiplier,
         int bossPowerMultiplier
 ) {
-    private static final int PLAYER_MAX_HP = 1000000;
+    // default centralizzati (unica fonte di verità)
+    /** The default maximum health points of the player. */
+    private static final int PLAYER_MAX_HP = 1_000_000;
+    /** The default stamina level of the player. */
     private static final int PLAYER_STAMINA = 100;
     private static final int PLAYER_POWER = 50;
     private static final int ENEMY_HP = 100;

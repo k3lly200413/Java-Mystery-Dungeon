@@ -9,7 +9,6 @@ import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.HashMap;
@@ -77,7 +76,7 @@ public class CombatView extends JPanel implements CombatViewInterface {
      */
     private static final String SEPARATOR_BAR = "/";
     /**
-     * Colour of charging boss.
+     * Colour of Hero.
      */
     private static final String LINK = "/Screenshot 2025-09-12 192147.png";
     /**
@@ -123,13 +122,13 @@ public class CombatView extends JPanel implements CombatViewInterface {
     /**
      * Map to hold JLabel components and their corresponding Position.
      */
-    private transient Map<JLabel, Position> cells; 
+    private transient Map<JLabel, Position> cells;
     /**
      * Height and width of the player's health bar.
      */
     private JProgressBar playerHealtBar;
     /**
-     * Height and width of the player's health bar.
+     * Height and width of the enemy's health bar.
      */
     private JProgressBar enemyHealthBar;
     /**
@@ -265,12 +264,6 @@ public class CombatView extends JPanel implements CombatViewInterface {
             DEFAULT_SQUARE_WIDTH,
             DEFAULT_SQUARE_HEIGHT
         );
-    }
-
-    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        this.neighbours = new Neighbours();
-        this.cells = new HashMap<>();
     }
 
     private void initializeUI(final int size,
@@ -537,40 +530,44 @@ public class CombatView extends JPanel implements CombatViewInterface {
                 if (context.getWhoDied() != null
                     && this.neighbours.deathNeighbours(
                     context.getWhoDied(), cellPos, context.getEnemyRange())) {
-                    icon =
-                    this.getIconResource(
-                        context.getWhoDied().equals(context.getPlayer())
-                        ? LINK : enemyColour,
-                        context.getSquareHeight(), context.getSquareWidth());
+                        icon =
+                        this.getIconResource(
+                            context.getWhoDied().equals(context.getPlayer())
+                            ? LINK : enemyColour,
+                            context.getSquareHeight(), context.getSquareWidth()
+                        );
                 } else if (
                     context.isDrawPlayer()
                     && neighbours.deathNeighbours(
                         context.getWhoDied(),
                         cellPos,
                         context.getEnemyRange())) {
-                    icon =
-                    getIconResource(
-                        context.getWhoDied().equals(context.getPlayer())
-                        ? LINK : enemyColour,
-                        context.getSquareWidth(), context.getSquareHeight());
+                            icon = this.getIconResource(
+                                context.getWhoDied().equals(context.getPlayer())
+                                ? LINK : enemyColour,
+                                context.getSquareWidth(), context.getSquareHeight()
+                            );
                 }
-            } else if ((context.isDrawFlame()
-            || context.isDrawPoison())
-                    && this.neighbours.neighbours(
-                        cellPos, context.getFlame(), context.getFlameSize())) {
-                icon = context.isDrawFlame()
-                    ? this.getIconResource(YELLOW,
-                    context.getSquareWidth(), context.getSquareHeight())
-                        : getIconResource(
-                            "/green.jpg",
+            } else if (
+                (context.isDrawFlame()
+                || context.isDrawPoison())
+                && this.neighbours.neighbours(
+                    cellPos, context.getFlame(), context.getFlameSize())) {
+                        icon = context.isDrawFlame()
+                        ? this.getIconResource(YELLOW,
+                            context.getSquareWidth(), context.getSquareHeight()
+                            )
+                        : this.getIconResource(
+                            GREEN,
                             context.getSquareWidth(),
-                            context.getSquareHeight());
+                            context.getSquareHeight()
+                        );
             } else if (context.isDrawBossRayAttack()
                 && this.neighbours.neighbours(
                     cellPos, context.getFlame(), 1)) {
                         icon = this.getIconResource(
                             PURPLE, 
-                            context.getSquareWidth(), 
+                            context.getSquareWidth(),
                             context.getSquareHeight()
                         );
             } else if (
@@ -579,38 +576,46 @@ public class CombatView extends JPanel implements CombatViewInterface {
                 && entry.getValue().y() == context.getPoisonYCoord()
                 && entry.getValue().x() == context.getWhoIsPoisoned().x()) {
                     icon = this.getIconResource(GREEN,
-                    context.getSquareWidth(), context.getSquareHeight());
+                        context.getSquareWidth(), context.getSquareHeight()
+                    );
             } else if (
                 context.isDrawPlayer()
                 && context.getPlayer() != null
                 && this.neighbours.neighbours(
-                    context.getPlayer(), cellPos, context.getPlayerRange())) {
+                    context.getPlayer(), cellPos, context.getPlayerRange()
+                    )
+                ) {
                 icon = this.getIconResource(
                     LINK,
                     context.getSquareWidth(),
-                    context.getSquareHeight());
+                    context.getSquareHeight()
+                );
             } else if (
                 context.isDrawEnemy()
                 && context.getEnemy() != null
                 && this.neighbours.neighbours(
                     context.getEnemy(), cellPos, context.getEnemyRange())) {
-                icon = getIconResource(
-                    enemyColour,
-                    context.getSquareWidth(),
-                    context.getSquareHeight());
+                        icon = this.getIconResource(
+                            enemyColour,
+                            context.getSquareWidth(),
+                            context.getSquareHeight()
+                        );
             } else if (
                 context.isCharging()
                 && this.neighbours.deathNeighbours(
                     context.getEnemy(),
                     cellPos,
-                    context.getChargingCellDistance())) {
-                icon = getIconResource(PURPLE,
-                context.getSquareWidth(), context.getSquareHeight());
+                    context.getChargingCellDistance()
+                    )
+                ) {
+                    icon = this.getIconResource(PURPLE,
+                    context.getSquareWidth(), context.getSquareHeight());
             } else {
-                icon = getIconResource(
+                icon = this.getIconResource(
                     "/white.jpg",
                     context.getSquareWidth(),
-                    context.getSquareHeight());
+                    context.getSquareHeight()
+                );
             }
             cellLabel.setIcon(icon);
         }
@@ -986,4 +991,17 @@ public class CombatView extends JPanel implements CombatViewInterface {
         return copy;
     }
 
+    /**
+     * Ensure transient fields are initialized after deserialization.
+     *
+     * @param in the ObjectInputStream
+     * @throws java.io.IOException if an I/O error occurs
+     * @throws ClassNotFoundException if the class of a serialized object cannot be found
+     */
+    private void readObject(final ObjectInputStream in)
+           throws java.io.IOException, ClassNotFoundException {
+       in.defaultReadObject();
+       this.cells = new HashMap<>();
+       this.neighbours = new Neighbours();
+    }
 }
