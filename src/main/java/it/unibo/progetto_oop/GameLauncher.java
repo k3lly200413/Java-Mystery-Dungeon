@@ -6,7 +6,6 @@ import it.unibo.progetto_oop.combat.CombatLauncher;
 import it.unibo.progetto_oop.combat.game_over_view.GameOverPanel;
 import it.unibo.progetto_oop.combat.mvc_pattern.CombatPresenter;
 import it.unibo.progetto_oop.combat.win_view.WinPanel;
-import it.unibo.progetto_oop.overworld.mvc.OverworldController;
 import it.unibo.progetto_oop.overworld.mvc.ViewManager;
 import it.unibo.progetto_oop.overworld.mvc.generation_entities.EntityStatsConfig;
 import it.unibo.progetto_oop.overworld.playground.OverworldLauncher;
@@ -27,8 +26,7 @@ public final class GameLauncher {
     /**
      * Configuration for the entity stats.
      */
-    private final EntityStatsConfig entityStatsConfig =
-        new EntityStatsConfig.Builder().build();
+    private final EntityStatsConfig entityStatsConfig = new EntityStatsConfig.Builder().build();
 
     /**
      * Starts the game by initializing the main game components and views.
@@ -43,15 +41,9 @@ public final class GameLauncher {
 
             startView.setOnStart(() -> {
                 final OverworldLauncher session = new OverworldLauncher(
-                    floorConfig, entityStatsConfig
-                );
+                        floorConfig, entityStatsConfig);
+                final CombatPresenter combatController = session.buildCombat(new CombatLauncher());
 
-                final CombatPresenter combatController =
-                new CombatLauncher().buildCombat(
-                    session.getModel().getPlayer(),
-                    session.getModel().getCombatCollision(),
-                    session.getModel().getGridNotifier()
-                );
                 final GameOverPanel gameOverPanel = new GameOverPanel(() -> {
                     combatController.restartGame();
                 });
@@ -59,18 +51,14 @@ public final class GameLauncher {
                 final WinPanel winPanel = new WinPanel(() -> {
                     combatController.restartGame();
                 });
-                viewManager.setPlayGroundView(session.getView());
+                
+                session.attachPlaygroundTo(viewManager);
                 viewManager.setCombatController(combatController);
                 viewManager.setGameOverPanel(gameOverPanel);
                 viewManager.setWinPanel(winPanel);
-                final OverworldController overworldController =
-                    new OverworldController(
-                        session.getModel(),
-                        session.getView(),
-                        viewManager
-                );
-                session.getModel()
-                    .setCombatTransitionListener(overworldController);
+                
+                session.wireOverworldTo(viewManager);
+
                 session.start();
                 viewManager.showOverworld();
             });

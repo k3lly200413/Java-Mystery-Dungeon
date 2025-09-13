@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.util.Objects;
 import javax.swing.SwingUtilities;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.progetto_oop.overworld.mvc.OverworldModelApi;
 import it.unibo.progetto_oop.overworld.playground.data.listner.ChangeFloorListener;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGrid;
@@ -14,6 +15,11 @@ import it.unibo.progetto_oop.overworld.playground.view.playground_view.MapView;
 /**
  * Controller class for managing the map view and handling floor changes in the overworld.
  */
+@SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "MVC: controller keeps references to injected collaborators; "
+                      + "does not expose them and uses reduced interfaces."
+    )
 public final class MapController implements ChangeFloorListener {
 
     /**

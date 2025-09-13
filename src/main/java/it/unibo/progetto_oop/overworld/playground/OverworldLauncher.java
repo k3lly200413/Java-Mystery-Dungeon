@@ -1,10 +1,15 @@
 package it.unibo.progetto_oop.overworld.playground;
 
 import java.util.List;
+import java.util.Objects;
 
+import it.unibo.progetto_oop.combat.CombatLauncher;
 import it.unibo.progetto_oop.combat.inventory.Item;
+import it.unibo.progetto_oop.combat.mvc_pattern.CombatPresenter;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.mvc.OverworldController;
 import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
+import it.unibo.progetto_oop.overworld.mvc.ViewManager;
 import it.unibo.progetto_oop.overworld.mvc.generation_entities.EntityStatsConfig;
 import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Dungeon;
@@ -68,20 +73,39 @@ public final class OverworldLauncher {
     }
 
     /**
-     * Gets the view responsible for displaying the map.
-     *
-     * @return the map view
+     * Attaches the playground view to the provided ViewManager.
      */
-    public ImplMapView getView() {
-        return this.view;
+    public void attachPlaygroundView(final ViewManager vm) {
+        vm.setPlayGroundView(this.view);
     }
 
     /**
-     * Gets the model representing the overworld state.
+     * Wires the overworld components to the provided ViewManager.
      *
-     * @return the overworld model
+     * @param vm the ViewManager to wire the components to
+     * 
+     * @return the OverworldController managing the overworld interactions
      */
-    public OverworldModel getModel() {
-        return this.model;
+    public OverworldController wireOverworldTo(final ViewManager vm) {
+        final OverworldController oc = new OverworldController(this.model, this.view, vm);
+        this.model.setCombatTransitionListener(oc);
+        return oc;
+    }
+
+    /**
+     * builds and returns a CombatPresenter using the provided CombatLauncher.
+     * without exposing the model internals.
+     *
+     * @param combatLauncher combat launcher used to build the combat presenter
+     * 
+     * @return the combat presenter ready for use
+     */
+    public CombatPresenter buildCombat(final CombatLauncher combatLauncher) {
+        Objects.requireNonNull(combatLauncher);
+        return combatLauncher.buildCombat(
+            this.model.getPlayer(),
+            this.model.getCombatCollision(),
+            this.model.getGridNotifier()
+        );
     }
 }
