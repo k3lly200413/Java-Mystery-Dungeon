@@ -7,6 +7,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 
 /**
  * Interface for pickup system and enemysystem.
+ *
  * @param <T> the type of entity managed by the system
  */
 public interface EntitySystem<T> {
