@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop.overworld.mvc.model_system;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -13,7 +14,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 /**
  * Gestisce la logica di raccolta degli oggetti.
  */
-@SuppressFBWarnings("EI_EXPOSE_REP2")
+@SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Items list is mutable by design")
 public class PickupSystem {
     /**
      * the items on the map.
@@ -46,7 +47,7 @@ public class PickupSystem {
      * @return the list of items in the overworld
      */
     public List<Item> getItem() {
-        return this.items;
+        return Collections.unmodifiableList(items);
     }
 
     /**

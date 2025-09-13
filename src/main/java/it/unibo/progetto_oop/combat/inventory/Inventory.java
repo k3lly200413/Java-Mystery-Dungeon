@@ -10,6 +10,9 @@ import java.util.Optional;
  * @author Laura Bertozzi
  */
 public class Inventory implements Serializable{
+    private static final long serialVersionUID = 1L;
+
+    
     /**
      * Map that contains the items and their quantities.
      */

@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * visual range related utilities.
  */
+@SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "WallChecker is mutable by design")
 public class VisibilityUtil {
     /**
      * wall collision checker.

@@ -9,6 +9,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
  * various effects using different strategies.
  */
 public class Potion extends AbstractItemImpl {
+    private static final long serialVersionUID = 1L;
 
     /** The strategy for applying potion effects. */
     private final PotionStrategy strategy;

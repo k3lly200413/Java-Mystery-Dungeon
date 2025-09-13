@@ -13,7 +13,8 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
  * Represents the player in the overworld,
  * manages stats, position, and inventory.
  */
-@SuppressFBWarnings("EI_EXPOSE_REP2")
+@SuppressFBWarnings(value = "EI_EXPOSE_REP", 
+    justification = "Position and Inventory are mutable by design")
 public class Player {
     /**
      * the player current hp value.
@@ -66,6 +67,10 @@ public class Player {
         this.stamina = newStamina;
         this.maxStamina = newStamina;
         this.power = newPower;
+    }
+
+    public Player copy() {
+        return new Player(this.maxHP, this.maxStamina, this.power, this.inventory.copy());
     }
 
     /**
@@ -223,6 +228,6 @@ public class Player {
      * @return the player's inventory
      */
     public Inventory getInventory() {
-        return this.inventory.copy();
+        return this.inventory;
     }
 }

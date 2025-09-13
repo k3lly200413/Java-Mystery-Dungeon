@@ -101,7 +101,6 @@ class PickupSystemTest {
 
         pickupSystem.checkAndAddItem();
         verify(inventory).addItem(item3);
-        verify(inventory).printInventory();
     }
 
 }

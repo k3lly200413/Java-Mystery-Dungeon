@@ -75,6 +75,16 @@ public class GenericEnemy implements Enemy {
         this.currentState = new SleeperState(); // default state
     }
 
+    public GenericEnemy(final Enemy enemy) {
+        Objects.requireNonNull(enemy, "enemy cannot be null");
+        this.maxHealth = enemy.getMaxHp();
+        this.power = enemy.getPower();
+        this.currentHealth = enemy.getCurrentHp();
+        this.currentPosition = enemy.getCurrentPosition();
+        this.gridNotifier = enemy.getGridNotifier();
+        this.currentState = enemy.getState();
+    }
+
     //----getters----//
     @Override
     public final int getCurrentHp() {

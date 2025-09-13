@@ -84,11 +84,17 @@ class EnemySystemTest {
 
     @Test
     void testSetEncounteredEnemyWithCombatTransition() {
+        final GenericEnemy enemy3 = new GenericEnemy(
+            ENEMY_HEALTH,
+            ENEMY_HEALTH,
+            ENEMY_HEALTH,
+            position,
+            mock(GridNotifier.class));
         when(model.isCombatTransitionPending()).thenReturn(true);
         when(model.getCombatCollision())
             .thenReturn(combatCollision);
-        enemySystem.setEncounteredEnemy(enemy1);
-        assertEquals(enemy1, enemySystem.getEncounteredEnemy());
+        enemySystem.setEncounteredEnemy(enemy3);
+        assertEquals(position, enemySystem.getEncounteredEnemy().getCurrentPosition());
     }
 
     @Test

@@ -8,7 +8,6 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.progetto_oop.overworld.player.Player;
 
 /**
  * Gestisce i bindings di input per la mappa.
