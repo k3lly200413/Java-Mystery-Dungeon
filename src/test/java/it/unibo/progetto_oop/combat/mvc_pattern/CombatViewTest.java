@@ -3,10 +3,9 @@ package it.unibo.progetto_oop.combat.mvc_pattern;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
 
 import it.unibo.progetto_oop.combat.combat_builder.CombatBuilder;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
@@ -121,10 +120,10 @@ class CombatViewTest {
         this.view.getInfoLabel().getText();
         final String stringResult = "<html><html>Enemy Info:<br>Name: "
         + this.model.getEnemyName()
-        + "<br>Power: "
+        + "<br>Physical Power: "
         + this.model.getEnemyPower()
-        + "<br>Speed: "
-        + this.model.getEnemySpeed()
+        + "<br>Long Range Power: "
+        + this.model.getEnemyLongRangePower()
         + "</html></html>";
         assertEquals(this.view.getInfoLabel().getText(), stringResult);
     }
