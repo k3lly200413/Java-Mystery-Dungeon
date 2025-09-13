@@ -132,7 +132,7 @@ public class AnimatingState implements CombatState {
     /**
      * Method to handle the boss death ray attack.
      *
-     * @param context The combat controller context.
+     * @param context The combat Presenter context.
      */
     public void handleBossDeathRayAttack(final CombatPresenter context) {
         // TODO Auto-generated method stub
