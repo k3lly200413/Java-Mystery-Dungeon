@@ -3,16 +3,13 @@ package it.unibo.progetto_oop.overworld.playground;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
-import java.util.List;
 import java.util.Objects;
 import javax.swing.SwingUtilities;
 
-import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
-import it.unibo.progetto_oop.overworld.mvc.generation_entities.OverworldEntitiesGenerator;
+import it.unibo.progetto_oop.overworld.mvc.OverworldModelApi;
 import it.unibo.progetto_oop.overworld.playground.data.listner.ChangeFloorListener;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGrid;
-import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
-import it.unibo.progetto_oop.overworld.playground.view.playground_view.ImplMapView;
+import it.unibo.progetto_oop.overworld.playground.view.playground_view.MapView;
 
 /**
  * Controller class for managing the map view and handling floor changes in the overworld.
@@ -27,12 +24,12 @@ public final class MapController implements ChangeFloorListener {
     /**
      * The view responsible for rendering the map.
      */
-    private final ImplMapView view;
+    private final MapView view;
 
     /**
      * The model representing the overworld state.
      */
-    private final OverworldModel model;
+    private final OverworldModelApi model;
 
     private final KeyEventDispatcher nextFloorOnN = e -> {
         if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_N) {
@@ -48,8 +45,8 @@ public final class MapController implements ChangeFloorListener {
      * @param mapView        the view responsible for rendering the map
      * @param overworldModel the model representing the overworld state
      */
-    public MapController(final ImplMapView mapView,
-            final OverworldModel overworldModel) {
+    public MapController(final MapView mapView,
+            final OverworldModelApi overworldModel) {
         this.view = Objects.requireNonNull(mapView);
         this.model = Objects.requireNonNull(overworldModel);
     }
@@ -60,7 +57,6 @@ public final class MapController implements ChangeFloorListener {
      */
     public void start() {
         model.setChangeFloorListener(this);
-        model.setFloorInitializer(this::initFloor);
         KeyboardFocusManager.getCurrentKeyboardFocusManager()
                 .addKeyEventDispatcher(this.nextFloorOnN);
         model.nextFloor();
@@ -73,19 +69,11 @@ public final class MapController implements ChangeFloorListener {
         model.nextFloor();
     }
 
-    private void initFloor(final Floor floor) {
-        model.setSpawnObjects(List.of(), List.of());
-        new OverworldEntitiesGenerator(
-                floor,
-                model.getPlayer(),
-                model,
-                model.getGridNotifier());
-    }
 
     @Override
     public void onFloorChange(final ReadOnlyGrid base) {
         view.setEntityGrid(model.getEntityGridView());
-        view.setCameraTarget(model.getPlayer().getPosition());
+        view.setCameraTarget(model.getPlayerPosition());
         view.setZoom(DEFAULT_ZOOM_LEVEL);
         SwingUtilities.invokeLater(() -> view.render(base));
     }

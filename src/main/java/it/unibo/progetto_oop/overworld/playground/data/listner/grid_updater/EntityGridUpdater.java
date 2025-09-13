@@ -2,6 +2,7 @@ package it.unibo.progetto_oop.overworld.playground.data.listner.grid_updater;
 
 import java.util.Objects;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
@@ -9,6 +10,10 @@ import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.St
 /**
  * Implementation of GridUpdater that updates a StructureData grid based on entity movements and removals.
  */
+@SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "intentional to allow external modification of the StructureData. Need to modify the entity grid. Only internal use."
+    )
 public final class EntityGridUpdater implements GridUpdater {
     /**
      * The StructureData instance representing the grid to be updated.

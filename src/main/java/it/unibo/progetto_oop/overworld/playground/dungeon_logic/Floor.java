@@ -6,6 +6,8 @@ import java.util.Objects;
 import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGrid;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGridAdapter;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 
 /**
@@ -54,8 +56,8 @@ public final class Floor {
      *
      * @return the grid of the floor
      */
-    public StructureData grid() {
-        return grid;
+    public ReadOnlyGrid grid() {
+        return ReadOnlyGridAdapter.of(grid);
     }
 
     /**
@@ -63,8 +65,8 @@ public final class Floor {
      *
      * @return the entity grid of the floor
      */
-    public StructureData entityGrid() {
-        return entityGrid;
+    public ReadOnlyGrid entityGrid() {
+        return ReadOnlyGridAdapter.of(entityGrid);
     }
 
     /**

@@ -2,7 +2,6 @@ package it.unibo.progetto_oop.overworld.mvc;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
@@ -14,6 +13,7 @@ import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.Wa
 import it.unibo.progetto_oop.overworld.enemy.movement_strategy.wall_collision.WallCollisionImpl;
 import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.mvc.generation_entities.EntityStatsConfig;
+import it.unibo.progetto_oop.overworld.mvc.generation_entities.OverworldEntitiesGenerator;
 import it.unibo.progetto_oop.overworld.mvc.model_system.EnemySystem;
 import it.unibo.progetto_oop.overworld.mvc.model_system.MovementSystem;
 import it.unibo.progetto_oop.overworld.mvc.model_system.PickupSystem;
@@ -22,6 +22,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
 import it.unibo.progetto_oop.overworld.playground.data.listner.ChangeFloorListener;
 import it.unibo.progetto_oop.overworld.playground.data.listner.grid_updater.EntityGridUpdater;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ImplArrayListStructureData;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGrid;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGridAdapter;
 import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
@@ -35,7 +36,7 @@ import it.unibo.progetto_oop.overworld.view_manager_observer.ViewManagerObserver
  * - Forwards updates to the Floor through GridNotifier
  * - Holds the Dungeon and manages floor changes (binding the current Floor)
  */
-public final class OverworldModel {
+public final class OverworldModel implements OverworldModelApi {
 
     /**
      * Configuration for entity statistics.
@@ -71,9 +72,6 @@ public final class OverworldModel {
 
     /** Wall-collision service. */
     private WallCollision wallCollision;
-
-    /** Hook executed after a floor is bound/loaded. */
-    private Consumer<Floor> floorInitializer = f -> { };
 
     /** Combat-collision service. */
     private final CombatCollision combatCollision;
@@ -129,8 +127,13 @@ public final class OverworldModel {
                 this.gridNotifier.setListItemUpdater(null);
             }
         } else {
-            this.baseGrid = floor.grid();
-            this.entityGrid = floor.entityGrid();
+            // immutable views for UI
+            final ReadOnlyGrid baseView   = floor.grid();
+            final ReadOnlyGrid entityView = floor.entityGrid();
+            // mutable copies for model services (not for UI)
+            this.baseGrid   = toMutable(baseView);
+            this.entityGrid = toMutable(entityView);
+        
             if (this.gridNotifier == null) {
                 this.gridNotifier = new GridNotifier(null);
             }
@@ -154,10 +157,22 @@ public final class OverworldModel {
         if (changedFloor) {
             final Floor floor = this.dungeon.getCurrentFloor();
             bindCurrentFloor(floor);
-            floorInitializer.accept(floor);
+
+            //initialize
+            initFloor(floor);
+            
             this.changeFloorListener.onFloorChange(getBaseGridView());
         }
         return changedFloor;
+    }
+    
+    private void initFloor(final Floor floor) {
+        this.setSpawnObjects(List.of(), List.of());
+            new OverworldEntitiesGenerator(
+                    floor,
+                    this.player,
+                    this,
+                    this.gridNotifier);
     }
 
     // --------- Setters ---------- //
@@ -175,19 +190,11 @@ public final class OverworldModel {
     }
 
     /**
-     * Set the floor initializer hook.
-     *
-     * @param init the floor initializer
-     */
-    public void setFloorInitializer(final Consumer<Floor> init) {
-        this.floorInitializer = Objects.requireNonNull(init);
-    }
-
-    /**
      * Set the floor-change listener.
      *
      * @param l the change-floor listener
      */
+    @Override
     public void setChangeFloorListener(final ChangeFloorListener l) {
         this.changeFloorListener = l;
     }
@@ -228,6 +235,16 @@ public final class OverworldModel {
      */
     public Player getPlayer() {
         return this.player;
+    }
+
+    /**
+     * Get the player's position.
+     * 
+     * @return the player's position
+     */
+    @Override
+    public Position getPlayerPosition() {
+        return this.player.getPosition();
     }
 
     /**
@@ -298,6 +315,7 @@ public final class OverworldModel {
      *
      * @return the base grid view
      */
+    @Override
     public ReadOnlyGrid getBaseGridView() {
         return ReadOnlyGridAdapter.of(this.baseGrid);
     }
@@ -307,6 +325,7 @@ public final class OverworldModel {
      *
      * @return the entity grid view
      */
+    @Override
     public ReadOnlyGrid getEntityGridView() {
         return ReadOnlyGridAdapter.of(this.entityGrid);
     }
@@ -392,4 +411,14 @@ public final class OverworldModel {
             case NONE -> this.movementSystem.move(0, 0, pickupSystem, enemySystem);
         }
     }
+
+    private static StructureData toMutable(final ReadOnlyGrid src) {
+    final StructureData dst = new ImplArrayListStructureData(src.width(), src.height());
+    for (int y = 0; y < src.height(); y++) {
+        for (int x = 0; x < src.width(); x++) {
+            dst.set(x, y, src.get(x, y));
+        }
+    }
+    return dst;
+}
 }
