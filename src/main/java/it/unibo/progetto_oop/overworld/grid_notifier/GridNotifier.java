@@ -32,6 +32,15 @@ public class GridNotifier {
     }
 
     /**
+     * Creates a copy of the GridNotifier.
+     *
+     * @return a new GridNotifier instance with the same attributes
+     */
+    public GridNotifier copy() {
+        return new GridNotifier(this.grid);
+    }
+
+    /**
      * Sets the GridUpdater responsible for updating the state of the grid.
      *
      * @param newGrid the GridUpdater to set

@@ -26,7 +26,7 @@ public class EnemyTurnState implements CombatState {
      * has completed its sequence and returns control to the player,
      * or performs a standard enemy attack after a short delay.
      *
-     * @param context the CombatController providing access
+     * @param context the CombatPresenter providing access
      *                to the model, view, and state transitions
      */
     @Override

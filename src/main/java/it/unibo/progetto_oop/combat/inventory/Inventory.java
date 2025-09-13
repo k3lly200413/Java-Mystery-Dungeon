@@ -9,10 +9,9 @@ import java.util.Optional;
 /**
  * @author Laura Bertozzi
  */
-public class Inventory implements Serializable{
+public class Inventory implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    
     /**
      * Map that contains the items and their quantities.
      */
@@ -34,19 +33,24 @@ public class Inventory implements Serializable{
         this.capacity = newCapacity > 0 ? newCapacity : Integer.MAX_VALUE;
     }
 
-    public Inventory copy() {
-        Inventory copyInventory = new Inventory(this.capacity);
-        for (Map.Entry<Item, Integer> entry : this.items.entrySet()) {
-            copyInventory.items.put(entry.getKey(), entry.getValue());
-        }
-        return copyInventory;
-    }
-
     /**
      * Default constructor with infinite capacity.
      */
     public Inventory() {
         this(0);
+    }
+
+    /**
+     * Create a copy of the inventory.
+     *
+     * @return a new Inventory object with the same items
+     */
+    public Inventory copy() {
+        final Inventory copyInventory = new Inventory(this.capacity);
+        for (final Map.Entry<Item, Integer> entry : this.items.entrySet()) {
+            copyInventory.items.put(entry.getKey(), entry.getValue());
+        }
+        return copyInventory;
     }
 
     /**

@@ -11,7 +11,7 @@ public interface EnemyAttackStrategy {
     /**
      * Performs an attack using the specified context.
      *
-     * @param context the combat controller context
+     * @param context the combat Presenter context
      */
     void performAttack(CombatPresenter context);
 }

@@ -10,7 +10,7 @@ public class PhysicalAttackStrategy implements EnemyAttackStrategy {
     /**
      * Performs a physical attack using the specified context.
      *
-     * @param context the combat controller context
+     * @param context the combat Presenter context
      */
     @Override
     public void performAttack(final CombatPresenter context) {

@@ -6,9 +6,9 @@ import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy
 
 /**
  * Narrow API that exposes only the operations
- * ViewManager needs from the controller.
+ * ViewManager needs from the Presenter.
  */
-public interface CombatControllerApi {
+public interface CombatPresenterApi {
     /**
      * Set the enemy that has been encountered.
      *
@@ -25,7 +25,7 @@ public interface CombatControllerApi {
     void setEnemyHp(int currentHp, int maxHp);
 
     /**
-     * Reset the controller for a new combat.
+     * Reset the Presenter for a new combat.
      */
     void resetForNewCombat();
 

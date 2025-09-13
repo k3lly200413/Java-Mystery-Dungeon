@@ -10,6 +10,8 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
  * @author Laura Bertozzi
  */
 public abstract class AbstractItemImpl implements Item, Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      * the name of the item.
      */
