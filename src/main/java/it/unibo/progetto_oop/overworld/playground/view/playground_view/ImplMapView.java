@@ -52,6 +52,7 @@ public final class ImplMapView extends JPanel implements MapView {
      *
      * @param entity the entity grid data
      */
+    @Override
     public void setEntityGrid(final ReadOnlyGrid entity) {
         panel.setEntityGrid(entity);
         repaint();
@@ -62,6 +63,7 @@ public final class ImplMapView extends JPanel implements MapView {
      *
      * @param p the position to center the camera on
      */
+    @Override
     public void setCameraTarget(final Position p) {
         panel.setCameraTarget(p);
         repaint();
@@ -72,6 +74,7 @@ public final class ImplMapView extends JPanel implements MapView {
      *
      * @param z the zoom level, where 1.0 represents the default zoom
      */
+    @Override
     public void setZoom(final double z) {
         panel.setZoom(z);
         revalidate();

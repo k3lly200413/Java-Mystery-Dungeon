@@ -2,7 +2,6 @@ package it.unibo.progetto_oop.overworld.mvc;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.io.Serializable;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,7 +21,7 @@ import it.unibo.progetto_oop.overworld.playground.view.playground_view.ImplMapVi
  * Allows switching between start game, inventory,
  * overworld, combat, game over, and win views.
  */
-public final class ViewManager implements Serializable{
+public final class ViewManager{
     /**
      * start game card identifier.
      */

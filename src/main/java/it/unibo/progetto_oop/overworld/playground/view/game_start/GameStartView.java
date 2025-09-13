@@ -61,7 +61,7 @@ public final class GameStartView extends JPanel {
     /**
      * The background image displayed in the view.
      */
-    private transient Image backgroundImage;
+    private final transient Image backgroundImage;
 
     /**
      * The title label displayed at the top of the view.

@@ -3,6 +3,7 @@ package it.unibo.progetto_oop.overworld.mvc;
 import java.util.List;
 import java.util.Objects;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.progetto_oop.combat.inventory.Inventory;
 import it.unibo.progetto_oop.combat.inventory.Item;
 import it.unibo.progetto_oop.overworld.combat_collision.CombatCollision;
@@ -36,6 +37,10 @@ import it.unibo.progetto_oop.overworld.view_manager_observer.ViewManagerObserver
  * - Forwards updates to the Floor through GridNotifier
  * - Holds the Dungeon and manages floor changes (binding the current Floor)
  */
+@SuppressFBWarnings(
+    value = "EI_EXPOSE_REP",
+    justification = "mutable fields are exposed for models services (not for UI). Other classes need to set them"
+)
 public final class OverworldModel implements OverworldModelApi {
 
     /**
@@ -126,6 +131,7 @@ public final class OverworldModel implements OverworldModelApi {
                 this.gridNotifier.setListEnemyUpdater(null);
                 this.gridNotifier.setListItemUpdater(null);
             }
+            this.wallCollision = null;
         } else {
             // immutable views for UI
             final ReadOnlyGrid baseView   = floor.grid();
@@ -142,9 +148,10 @@ public final class OverworldModel implements OverworldModelApi {
             this.gridNotifier
                 .setListEnemyUpdater(this.enemySystem::removeEnemyAt);
             this.gridNotifier
-                .setListItemUpdater(this.pickupSystem::removeItemAt);
-        }
+                    .setListItemUpdater(this.pickupSystem::removeItemAt);
+
         this.wallCollision = new WallCollisionImpl(baseGrid, entityGrid);
+        }
     }
 
     /**
@@ -152,6 +159,7 @@ public final class OverworldModel implements OverworldModelApi {
      *
      * @return true if the floor changed, false otherwise
      */
+    @Override
     public boolean nextFloor() {
         final boolean changedFloor = this.dungeon.nextFloor();
         if (changedFloor) {
