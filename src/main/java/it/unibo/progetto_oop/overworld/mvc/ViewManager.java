@@ -65,12 +65,12 @@ public final class ViewManager {
     /**
      * Minimum width for the game window.
      */
-    private static final int MINIMUM_WIDTH = 960;
+    private static final int MINIMUM_WIDTH = 854;
 
     /**
      * Minimum height for the game window.
      */
-    private static final int MINIMUM_HEIGHT = 640;
+    private static final int MINIMUM_HEIGHT = 480;
 
     /**
      * the card layout to switch between views.
@@ -112,6 +112,7 @@ public final class ViewManager {
         this.mainCardPanel.add(initialStartView, START_GAME);
         frame.setContentPane(this.mainCardPanel);
         frame.pack();
+        frame.setMinimumSize(new Dimension(MINIMUM_WIDTH, MINIMUM_HEIGHT));
         frame.setVisible(true);
 
         // Show start game as default
