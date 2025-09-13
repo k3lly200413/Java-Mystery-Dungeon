@@ -223,6 +223,6 @@ public class Player {
      * @return the player's inventory
      */
     public Inventory getInventory() {
-        return this.inventory.copy();
+        return this.inventory;
     }
 }

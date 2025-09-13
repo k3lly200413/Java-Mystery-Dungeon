@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.Enemy;
+import it.unibo.progetto_oop.overworld.enemy.creation_pattern.factory_impl.GenericEnemy;
 import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
@@ -60,16 +61,14 @@ public class EnemySystem {
      * @return list of enemies in the map
      */
     public List<Enemy> getEnemies() {
-        List<Enemy> unmodifiable = Collections.unmodifiableList(this.enemies);
-        return unmodifiable;
+        return Collections.unmodifiableList(this.enemies);
     }
 
     /**
      * @return the encountered enemy
      */
     public Enemy getEncounteredEnemy() {
-        encounteredEnemy = this.encounteredEnemy;
-        return encounteredEnemy;
+        return (this.encounteredEnemy != null) ? new GenericEnemy(this.encounteredEnemy) : null;
     }
 
     // ---- SETTERS ---- //

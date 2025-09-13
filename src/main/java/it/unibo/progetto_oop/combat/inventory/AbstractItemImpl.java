@@ -1,5 +1,6 @@
 package it.unibo.progetto_oop.combat.inventory;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
@@ -8,7 +9,7 @@ import it.unibo.progetto_oop.overworld.playground.data.Position;
 /**
  * @author Laura Bertozzi
  */
-public abstract class AbstractItemImpl implements Item {
+public abstract class AbstractItemImpl implements Item, Serializable {
     /**
      * the name of the item.
      */

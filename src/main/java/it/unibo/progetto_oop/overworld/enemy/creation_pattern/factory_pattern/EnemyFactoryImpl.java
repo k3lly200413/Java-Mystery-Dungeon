@@ -93,10 +93,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     final Position spawnPosition,
     final boolean isVertical,
     final GridNotifier gridNotifier) {
-        final Enemy enemy =
-            new GenericEnemy(hp, hp, power, spawnPosition, gridNotifier);
-
-        return enemy;
+        return new GenericEnemy(hp, hp, power, spawnPosition, gridNotifier);
     }
 
     @Override
