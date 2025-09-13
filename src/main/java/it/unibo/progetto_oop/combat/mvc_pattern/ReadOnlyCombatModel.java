@@ -222,6 +222,7 @@ public interface ReadOnlyCombatModel {
      * @param maxHp the enemy's maximum health
      */
     void setEnemyMaxHp(int maxHp);
+
     /**
      * Gets the long range power of the enemy.
      *
