@@ -64,16 +64,6 @@ public final class ViewManager implements Serializable{
     private static final int PREFERRED_HEIGHT = 700;
 
     /**
-     * Minimum width for the game window.
-     */
-    private static final int MINIMUM_WIDTH = 854;
-
-    /**
-     * Minimum height for the game window.
-     */
-    private static final int MINIMUM_HEIGHT = 480;
-
-    /**
      * the card layout to switch between views.
      */
     private CardLayout cardLayout;
@@ -105,15 +95,15 @@ public final class ViewManager implements Serializable{
         final JFrame frame = new JFrame("JavaMysteryDungeon");
         frame.setPreferredSize(
                 new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
-        this.mainCardPanel.setMinimumSize(
-                new Dimension(MINIMUM_WIDTH, MINIMUM_HEIGHT));
+        // this.mainCardPanel.setMinimumSize(
+        //         new Dimension(MINIMUM_WIDTH, MINIMUM_HEIGHT));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // first card
         this.mainCardPanel.add(initialStartView, START_GAME);
         frame.setContentPane(this.mainCardPanel);
         frame.pack();
-        frame.setMinimumSize(new Dimension(MINIMUM_WIDTH, MINIMUM_HEIGHT));
+        // frame.setMinimumSize(new Dimension(MINIMUM_WIDTH, MINIMUM_HEIGHT));
         frame.setVisible(true);
 
         // Show start game as default
