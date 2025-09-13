@@ -13,6 +13,7 @@ public enum TileType {
     TUNNEL,
     /** Represents a stairs tile in the entity grid. */
     STAIRS,
+
     //-----ENTITY GRID TILES------
     /** Represents the player's tile in the entity grid. */
     PLAYER,
@@ -23,5 +24,5 @@ public enum TileType {
     /** Represents an item tile in the entity grid. */
     ITEM,
     /** Represents an empty tile in the entity grid. */
-    NONE;
+    NONE
 }

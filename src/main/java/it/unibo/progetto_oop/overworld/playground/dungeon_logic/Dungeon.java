@@ -64,7 +64,7 @@ public class Dungeon {
      * Advances to the next floor in the dungeon if possible.
      *
      * @return {@code true} if the floor was successfully advanced,
-     * {@code false} if already on the last floor
+     *         {@code false} if already on the last floor
      */
     public final boolean nextFloor() {
         if (currentFloor >= config.nFloors() - 1) {
