@@ -69,6 +69,10 @@ public class Player {
         this.power = newPower;
     }
 
+    public Player copy() {
+        return new Player(this.maxHP, this.maxStamina, this.power, this.inventory.copy());
+    }
+
     /**
      * Use an item from the player's inventory.
      *

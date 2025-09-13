@@ -80,8 +80,7 @@ public class GenericEnemy implements Enemy {
         this.maxHealth = enemy.getMaxHp();
         this.power = enemy.getPower();
         this.currentHealth = enemy.getCurrentHp();
-        this.currentPosition = new Position(enemy.getCurrentPosition().x(),
-                enemy.getCurrentPosition().y());
+        this.currentPosition = enemy.getCurrentPosition();
         this.gridNotifier = enemy.getGridNotifier();
         this.currentState = enemy.getState();
     }
