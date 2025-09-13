@@ -1,5 +1,8 @@
 package it.unibo.progetto_oop.overworld.playground.data;
 
+/**
+ * Enum representing different types of tiles in the playground (base grid or entity grid).
+ */
 public enum TileType {
     //-----BASE GRID TILES------
     /** Represents a wall tile in the base grid. */
@@ -21,5 +24,5 @@ public enum TileType {
     /** Represents an item tile in the entity grid. */
     ITEM,
     /** Represents an empty tile in the entity grid. */
-    NONE;
+    NONE
 }

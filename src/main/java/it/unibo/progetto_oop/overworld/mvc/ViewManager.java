@@ -31,17 +31,17 @@ public final class ViewManager implements Serializable{
     /**
      * inventory card identifier.
      */
-    public static final String INVENTORY_CARD = "INVENTORY";
+    private static final String INVENTORY_CARD = "INVENTORY";
 
     /**
      * overworld card identifier.
      */
-    public static final String OVERWORLD_CARD = "OVERWORLD";
+    private static final String OVERWORLD_CARD = "OVERWORLD";
 
     /**
      * combat card identifier.
      */
-    public static final String COMBAT_CARD = "COMBAT";
+    private static final String COMBAT_CARD = "COMBAT";
 
     /**
      * game over card identifier.
@@ -66,12 +66,12 @@ public final class ViewManager implements Serializable{
     /**
      * Minimum width for the game window.
      */
-    private static final int MINIMUM_WIDTH = 960;
+    private static final int MINIMUM_WIDTH = 854;
 
     /**
      * Minimum height for the game window.
      */
-    private static final int MINIMUM_HEIGHT = 640;
+    private static final int MINIMUM_HEIGHT = 480;
 
     /**
      * the card layout to switch between views.
@@ -89,25 +89,9 @@ public final class ViewManager implements Serializable{
     private InventoryView invView;
 
     /**
-     * The playground.
-     */
-    private ImplMapView playGroundView;
-
-    /**
-     * The start view for the game.
-     */
-    private GameStartView startView;
-
-    /**
      * The controller for managing combat logic and interactions.
      */
     private CombatControllerApi combatController;
-
-    /** Game over panel. */
-    private GameOverPanel gameOverPanel;
-
-    /** Win panel. */
-    private WinPanel winPanel;
 
     /**
      * Method to start the view manager with the initial start view.
@@ -118,8 +102,7 @@ public final class ViewManager implements Serializable{
         // Setup CardLayout and main panel
         this.cardLayout = new CardLayout();
         this.mainCardPanel = new JPanel(cardLayout);
-        JFrame frame = new JFrame("JavaMysteryDungeon");
-        this.startView = initialStartView;
+        final JFrame frame = new JFrame("JavaMysteryDungeon");
         frame.setPreferredSize(
                 new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
         this.mainCardPanel.setMinimumSize(
@@ -127,9 +110,10 @@ public final class ViewManager implements Serializable{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // first card
-        this.mainCardPanel.add(this.startView, START_GAME);
+        this.mainCardPanel.add(initialStartView, START_GAME);
         frame.setContentPane(this.mainCardPanel);
         frame.pack();
+        frame.setMinimumSize(new Dimension(MINIMUM_WIDTH, MINIMUM_HEIGHT));
         frame.setVisible(true);
 
         // Show start game as default
@@ -149,8 +133,7 @@ public final class ViewManager implements Serializable{
      * @param newPlayGroundView the playground view to set
      */
     public void setPlayGroundView(final ImplMapView newPlayGroundView) {
-        this.playGroundView = newPlayGroundView;
-        this.mainCardPanel.add(this.playGroundView, OVERWORLD_CARD);
+        this.mainCardPanel.add(newPlayGroundView, OVERWORLD_CARD);
     }
 
     /**
@@ -165,7 +148,6 @@ public final class ViewManager implements Serializable{
 
     /**
      * Sets the combat controller.
-     *
      * Wraps the full controller in a small
      * adapter exposing only the required API so
      * ViewManager does not keep a concrete mutable controller reference.
@@ -240,8 +222,7 @@ public final class ViewManager implements Serializable{
      * @param newGameOverPanel the game over panel to set
      */
     public void setGameOverPanel(final GameOverPanel newGameOverPanel) {
-        this.gameOverPanel = newGameOverPanel;
-        this.mainCardPanel.add(this.gameOverPanel, GAME_OVER);
+        this.mainCardPanel.add(newGameOverPanel, GAME_OVER);
     }
 
     /**
@@ -257,8 +238,7 @@ public final class ViewManager implements Serializable{
      * @param newWinPanel the win panel to set
      */
     public void setWinPanel(final WinPanel newWinPanel) {
-        this.winPanel = newWinPanel;
-        this.mainCardPanel.add(this.winPanel, WIN);
+        this.mainCardPanel.add(newWinPanel, WIN);
     }
 
     /**

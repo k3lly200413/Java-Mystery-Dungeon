@@ -13,13 +13,17 @@ import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGrid;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRandomPlacement;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.RandomPlacementStrategy;
 
+/**
+ * Generates instances of entities (player, enemies, items) in the overworld
+ * and places them on the entity grid of the model.
+ */
 public class OverworldEntitiesGenerator {
     /**
      * Minimum distance from the player for placing objects.
@@ -80,7 +84,7 @@ public class OverworldEntitiesGenerator {
         }
         player.setPosition(playerPos);
 
-        if (model.getCurrentFloor().rooms().size() == 1) {
+        if (currentFloor.rooms().size() == 1) {
             //boss
             this.isBoss = true;
             placer.placeObject(
@@ -98,7 +102,7 @@ public class OverworldEntitiesGenerator {
                 base,
                 entity,
                 TileType.ENEMY,
-                model.getCurrentFloor().rooms().size(),
+                currentFloor.rooms().size(),
                 rand,
                 playerPos,
                 MIN_DIST_FROM_PLAYER
@@ -108,7 +112,7 @@ public class OverworldEntitiesGenerator {
                 base,
                 entity,
                 TileType.ITEM,
-                model.getCurrentFloor().rooms().size(),
+                currentFloor.rooms().size(),
                 rand,
                 null,
                 MIN_DIST_FROM_PLAYER

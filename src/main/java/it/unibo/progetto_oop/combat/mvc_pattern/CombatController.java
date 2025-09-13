@@ -158,10 +158,10 @@ public class CombatController implements CombatControllerApi {
      */
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP2",
-        justification =
-        "CombatController must keep a live reference to the CombatCollision "
-        + "to manage combat lifecycle (setInCombat etc.). "
-        + "The controller is the logical owner of this object at runtime."
+        justification = "CombatController intentionally keeps live references"
+            + " to provided collaborators (CombatModel, CombatViewInterface, CombatCollision, GridNotifier). "
+            + "The controller is the logical owner during combat and must manipulate the view and" 
+            + " model directly; defensive copying of UI/model objects is impractical."
     )
     public CombatController(
         final CombatModel modelToUse,
@@ -223,6 +223,8 @@ public class CombatController implements CombatControllerApi {
         .whoDied(this.model.isPlayerTurn()
         ? this.model.getEnemyPosition()
         : this.model.getPlayerPosition())
+        .boss(this.enemy != null && this.enemy.isBoss())
+        .playerTurn(!this.model.isPlayerTurn())
         .build();
 
         this.view.updateDisplay(defaultRedraw);
@@ -313,8 +315,6 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Handles the info button click event.
-     * This method is called when the info button is clicked in the view.
-     * It displays information about the enemy.
      */
     public void performInfoAnimation() {
         performInfoZoomInAnimation(() -> {
@@ -359,7 +359,7 @@ public class CombatController implements CombatControllerApi {
      * It checks if it's the player's turn
      * also if an animation is not already running.
      * If conditions are met, it animates the physical move
-     * thenhandles the attack completion.
+     * then handles the attack completion.
      */
     public final void performPlayerPhysicalAttack() {
         if (!model.isPlayerTurn() || isAnimationRunning()) {
@@ -472,6 +472,11 @@ public class CombatController implements CombatControllerApi {
             .playerRange(1)
             .enemyRange(1)
             .setIsGameOver(this.model.isGameOver())
+            .boss(this.enemy != null && this.enemy.isBoss())
+            .squareHeight(SQUARE_HEIGHT)
+            .squareWidth(SQUARE_WIDTH)
+            .playerTurn(!this.model.isPlayerTurn())
+            .drawBossRayAttack(!(isAttack || isPoison))
             .build();
             this.view.updateDisplay(redrawContext);
         }
@@ -513,12 +518,17 @@ public class CombatController implements CombatControllerApi {
             .flameSize((isAttack || isPoison) ? 0 : 1)
             .drawPlayer(true)
             .drawEnemy(true)
-            .drawFlame(!isPoison)
+            .drawFlame(isAttack)
             .drawPoison(isPoison)
             .playerRange(1)
             .enemyRange(1)
             .drawBossRayAttack(!(isAttack || isPoison))
             .setIsGameOver(this.model.isGameOver())
+            .boss(this.enemy != null && this.enemy.isBoss())
+            .squareHeight(SQUARE_HEIGHT)
+            .squareWidth(SQUARE_WIDTH)
+            .playerTurn(!this.model.isPlayerTurn())
+            .drawBossRayAttack(!(isAttack || isPoison))
             .build();
             this.view.updateDisplay(defaultRedraw);
         });
@@ -526,21 +536,11 @@ public class CombatController implements CombatControllerApi {
     }
 
     /**
-     * Handles the boss death ray attack.
-     * This method is called when the boss unleashes a death ray attack.
-     * It should be called from the boss state.
-     */
-    public void handleBossDeathRayAttack() {
-    }
-
-    /**
      * Performs the boss death ray attack.
-     * This method is called when the boss unleashes a death ray attack.
-     * It sets up the animation and handles the attack logic.
      */
     public final void performBossDeathRayAttack() {
         this.view.clearInfo();
-        this.view.showInfo("Boss Unleasehs Death Ray");
+        this.view.showInfo("Boss Unleashes Death Ray");
 
         this.longRangeAttackAnimation(
             model.getEnemyPosition(), -1, false, false, () -> {
@@ -552,8 +552,6 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Animates the boss death ray attack.
-     * This method handles the animation of the boss death ray attack.
-     * It moves the death ray towards the player and checks for hits.
      *
      * @param onHit Runnable to execute when the death ray hits the player
      */
@@ -594,6 +592,10 @@ public class CombatController implements CombatControllerApi {
                 .setIsGameOver(this.model.isGameOver())
                 .drawBossRayAttack(true)
                 .deathRayPath(deathRayLastPosition)
+                .boss(this.enemy != null && this.enemy.isBoss())
+                .squareHeight(SQUARE_HEIGHT)
+                .squareWidth(SQUARE_WIDTH)
+                .playerTurn(!this.model.isPlayerTurn())
                 .build();
                 this.view.updateDisplay(defaultRedraw);
             }
@@ -603,8 +605,6 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Method to cleanly stop a Timer which is running.
-     *
-     * @author kelly.applebee@studio.unibo.it
      */
     public void stopAnimationTimer() {
         if (animationTimer != null && animationTimer.isRunning()) {
@@ -804,6 +804,10 @@ public class CombatController implements CombatControllerApi {
                 .playerRange(1)
                 .enemyRange(1)
                 .setIsGameOver(this.model.isGameOver())
+                .boss(this.enemy != null && this.enemy.isBoss())
+                .squareHeight(SQUARE_HEIGHT)
+                .squareWidth(SQUARE_WIDTH)
+                .playerTurn(!this.model.isPlayerTurn())
                 .build();
                 this.view.updateDisplay(defaultRedraw);
             }
@@ -835,6 +839,10 @@ public class CombatController implements CombatControllerApi {
                 .playerRange(1)
                 .enemyRange(conto[0])
                 .setIsGameOver(this.model.isGameOver())
+                .boss(this.enemy != null && this.enemy.isBoss())
+                .squareHeight(SQUARE_HEIGHT)
+                .squareWidth(SQUARE_WIDTH)
+                .playerTurn(!this.model.isPlayerTurn())
                 .build();
                 this.view.updateDisplay(defaultRedraw);
                 conto[0]++;
@@ -883,6 +891,10 @@ public class CombatController implements CombatControllerApi {
                     ? this.model.getEnemyPosition()
                     : this.model.getPlayerPosition())
                 .poisonYCoord(step[0])
+                .boss(this.enemy != null && this.enemy.isBoss())
+                .squareHeight(SQUARE_HEIGHT)
+                .squareWidth(SQUARE_WIDTH)
+                .playerTurn(!this.model.isPlayerTurn())
                 .build();
                 this.view.updateDisplay(defaultRedraw);
                 step[0]--;
@@ -907,8 +919,6 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Checks if the game is over.
-     * This method checks if either the player or the enemy has no health left.
-     * If the game is over, it stops the animation timer and displays a message.
      *
      * @return true if the game is over, false otherwise
      */
@@ -959,6 +969,10 @@ public class CombatController implements CombatControllerApi {
                 .setIsGameOver(this.model.isGameOver())
                 .setIsCharging(isCharging)
                 .chargingCellDistance(position[0])
+                .boss(this.enemy != null && this.enemy.isBoss())
+                .squareHeight(SQUARE_HEIGHT)
+                .squareWidth(SQUARE_WIDTH)
+                .playerTurn(!this.model.isPlayerTurn())
                 .build();
                 this.view.updateDisplay(defaultRedraw);
                 if (position[0] == 0) {
@@ -1081,315 +1095,11 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Returns a read-only view of the model to avoid exposing the mutable CombatModel.
-     * Callers should use this instead of getModel() to avoid mutating internal state.
      *
      * @return a read-only view of the model
      */
     public final ReadOnlyCombatModel getReadOnlyModel() {
-        final CombatModel backing = this.model;
-        return new ReadOnlyCombatModel() {
-
-            /**
-             * Returns the current health points of the player.
-             *
-             * @return the current health points of the player
-             */
-            @Override 
-            public int getPlayerHealth() {
-                return backing.getPlayerHealth();
-            }
-
-            /**
-             * Returns the current health points of the enemy.
-             *
-             * @return the current health points of the enemy
-             */
-            @Override 
-            public int getEnemyHealth() {
-                return backing.getEnemyHealth();
-            }
-
-            /**
-             * Returns the maximum health points of the player.
-             *
-             * @return the maximum health points of the player
-             */
-            @Override 
-            public int getPlayerMaxHealth() {
-                return backing.getPlayerMaxHealth();
-            }
-
-            /**
-             * Returns the maximum health points of the enemy.
-             *
-             * @return the maximum health points of the enemy
-             */
-            @Override 
-            public int getEnemyMaxHealth() {
-                return backing.getEnemyMaxHealth();
-            }
-
-            /**
-             * Returns the current power points of the player.
-             *
-             * @return the current power points of the player
-             */
-            @Override 
-            public int getPlayerPower() {
-                return backing.getPlayerPower();
-            }
-
-            /**
-             * Returns the current power points of the enemy.
-             *
-             * @return the current power points of the enemy
-             */
-            @Override 
-            public int getEnemyPower() {
-                return backing.getEnemyPower();
-            }
-
-            /**
-             * Returns the current stamina points of the player.
-             *
-             * @return the current stamina points of the player
-             */
-            @Override 
-            public int getPlayerStamina() {
-                return backing.getPlayerStamina();
-            }
-
-            /**
-             * Returns whether it is the player's turn.
-             *
-             * @return true if it is the player's turn, false otherwise
-             */
-            @Override 
-            public boolean isPlayerTurn() {
-                return backing.isPlayerTurn();
-            }
-
-            /**
-             * Returns whether the game is over.
-             *
-             * @return true if the game is over, false otherwise
-             */
-            @Override 
-            public boolean isGameOver() {
-                return backing.isGameOver();
-            }
-
-            /**
-             * Returns the size of the view.
-             */
-            @Override 
-            public int getSize() {
-                return backing.getSize();
-            }
-
-            /**
-             * Returns the current position of the player.
-             *
-             * @return the current position of the player
-             */
-            @Override 
-            public Position getPlayerPosition() {
-                return backing.getPlayerPosition();
-            }
-
-            /**
-             * Returns the current position of the enemy.
-             *
-             * @return the current position of the enemy
-             */
-            @Override 
-            public Position getEnemyPosition() {
-                return backing.getEnemyPosition();
-            }
-
-            /**
-             * Returns whether the enemy is poisoned.
-             *
-             * @return true if the enemy is poisoned, false otherwise
-             */
-            @Override 
-            public boolean isEnemyPoisoned() {
-                return backing.isEnemyPoisoned();
-            }
-
-            /**
-             * Returns whether the player is poisoned.
-             *
-             * @return true if the player is poisoned, false otherwise
-             */
-            @Override 
-            public boolean isPlayerPoison() {
-                return backing.isPlayerPoison();
-            }
-
-            /**
-             * Sets whether it is the player's turn.
-             */
-            @Override
-            public void setPlayerTurn(final boolean b) {
-                backing.setPlayerTurn(b);
-            }
-
-            /**
-             * Returns the current state of the enemy.
-             *
-             * @return the current state of the enemy
-             */
-            @Override
-            public CombatState getEnemyState() {
-                return backing.getEnemyState();
-            }
-
-            /**
-             * Returns the current turn counter of the boss.
-             *
-             * @return the current turn counter of the boss
-             */
-            @Override
-            public int getBossTurnCounter() {
-                return backing.getBossTurnCounter();
-            }
-
-            /**
-             * Sets whether it is the boss's turn.
-             */
-            @Override
-            public void setBossTurn(final boolean b) {
-                backing.setBossTurn(b);
-            }
-
-            /**
-             * Increases the boss's turn counter by one.
-             */
-            @Override
-            public void increaseBossTurnCounter() {
-                backing.increaseBossTurnCounter();
-            }
-
-            /**
-             * Returns whether it is the boss's turn.
-             *
-             * @return true if it is the boss's turn, false otherwise
-             */
-            @Override
-            public boolean isBossTurn() {
-                return backing.isBossTurn();
-            }
-
-            /**
-             * Returns the current attack counter of the boss.
-             *
-             * @return the current attack counter of the boss
-             */
-            @Override
-            public int getBossAttackCounter() {
-                return backing.getBossAttackCounter();
-            }
-
-            /**
-             * Returns the maximum hit points of the boss.
-             *
-             * @return the maximum hit points of the boss
-             */
-            @Override
-            public int getMaxBossHit() {
-                return backing.getMaxBossHit();
-            }
-
-            /**
-             * Increases the boss's attack counter by one.
-             */
-            @Override
-            public void increaseBossAttackCounter() {
-                backing.increaseBossAttackCounter();
-            }
-
-            /**
-             * Clears the boss's attack counter.
-             */
-            @Override
-            public void clearBossAttackCount() {
-                backing.clearBossAttackCount();
-            }
-
-            /**
-             * Returns the current attack position.
-             *
-             * @return the current attack position
-             */
-            @Override
-            public Position getAttackPosition() {
-                return backing.getAttackPosition();
-            }
-
-            /**
-             * Returns the position of the character who died.
-             */
-            @Override
-            public Position getWhoDied() {
-                return backing.getWhoDied();
-            }
-
-            /**
-             * Resets the positions of all characters.
-             */
-            @Override
-            public void resetPositions() {
-                backing.resetPositions();
-            }
-
-            /**
-             * Returns the name of the enemy.
-             */
-            @Override
-            public String getEnemyName() {
-                return backing.getEnemyName();
-            }
-
-            /**
-             * Returns the speed of the enemy.
-             */
-            @Override
-            public int getEnemySpeed() {
-                return backing.getEnemySpeed();
-            }
-
-            /**
-             * Decreases the player's stamina by the specified amount.
-             *
-             * @param staminaToRemove the amount of stamina to remove
-             */
-            @Override
-            public void decreasePlayerStamina(final int staminaToRemove) {
-                backing.decreasePlayerStamina(staminaToRemove);
-            }
-
-            /**
-             * Sets the enemy's current hit points.
-             *
-             * @param currentHp the current hit points to set
-             */
-            @Override
-            public void setEnemyCurrentHp(final int currentHp) {
-                backing.setEnemyCurrentHp(currentHp);
-            }
-
-            /**
-             * Sets the enemy's maximum hit points.
-             *
-             * @param maxHp the maximum hit points to set
-             */
-            @Override
-            public void setEnemyMaxHp(final int maxHp) {
-                backing.setEnemyMaxHp(maxHp);
-            }
-
-        };
+        return new ReadOnlyCombatModelAdapter(this.model);
     }
 
     /**
@@ -1442,8 +1152,6 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Sets the current state of the combat controller.
-     * This method handles the transition between states,
-     * calling exitState on the old state and enterState on the new one.
      *
      * @param state the new state to set
      */
@@ -1463,11 +1171,15 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Sets the encountered enemy for the combat.
-     * This method updates the model with the new enemy
-     * and adjusts the enemy state accordingly.
      *
      * @param encounteredEnemy the enemy to set
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "CombatController is the logical owner of the"
+        + " Enemy during combat"
+        + " and must keep a live reference to manage its lifecycle."
+    )
     @Override
     public final void setEncounteredEnemy(final Enemy encounteredEnemy) {
         this.enemy = encounteredEnemy;
@@ -1503,14 +1215,15 @@ public class CombatController implements CombatControllerApi {
         final int physical = 0;
         final int longRange = 1;
         final int num = RANDOM.nextInt(2);
+        final int poison = RANDOM.nextInt(2);
 
         switch (num) {
             case physical -> performEnemyPhysicalAttack();
             case longRange -> performLongRangeAttack(
                     model.getEnemyPosition(),
                     -1,
-                    false,
-                    true);
+                    poison == 0,
+                    poison == 1);
             default -> {
             }
         }
@@ -1519,8 +1232,6 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Performs a long-range attack by the specified attacker.
-     * This method animates the long-range attack and applies any effects
-     * such as flame or poison.
      *
      * @param attacker the position of the attacker (player or enemy)
      * @param direction the direction of the attack (1 for player, -1 for enemy)
@@ -1561,7 +1272,6 @@ public class CombatController implements CombatControllerApi {
 
     /**
      * Performs the poison effect animation.
-     * This method animates the poison effect on the affected character.
      */
     public final void performPoisonEffectAnimation() {
         stopAnimationTimer();
@@ -1602,7 +1312,12 @@ public class CombatController implements CombatControllerApi {
                             this.model.isPlayerTurn()
                                 ? this.model.getEnemyPosition()
                                 : this.model
-                                .getPlayerPosition()).build();
+                                .getPlayerPosition())
+                        .boss(this.enemy != null && this.enemy.isBoss())
+                        .squareHeight(SQUARE_HEIGHT)
+                        .squareWidth(SQUARE_WIDTH)
+                        .playerTurn(!this.model.isPlayerTurn())
+                        .build();
                 this.view.updateDisplay(defaultRedraw);
                 conto[0]--;
             }
@@ -1627,7 +1342,7 @@ public class CombatController implements CombatControllerApi {
         this.view.updatePlayerHealth(this.model.getPlayerHealth());
         this.view.updateEnemyHealth(this.model.getEnemyHealth());
         this.model.setPlayerPower(this.player.getPower());
-        this.model.setPlayerStamina(this.player.getStamina());
+        this.model.setPlayerStamina(this.player.getMaxStamina());
         this.view.setPlayerMaxStaminaBar(this.player.getMaxStamina());
         this.view.updatePlayerStamina(this.player.getStamina());
     }

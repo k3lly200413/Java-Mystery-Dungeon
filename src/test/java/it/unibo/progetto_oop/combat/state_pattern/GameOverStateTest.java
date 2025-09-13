@@ -85,6 +85,7 @@ class GameOverStateTest {
         controller = mock(CombatController.class);
         model = mock(ReadOnlyCombatModel.class);
         view = mock(CombatViewApi.class);
+        controller.setEncounteredEnemy(enemy);
 
         when(controller.getReadOnlyModel()).thenReturn(model);
         when(controller.getViewApi()).thenReturn(view);

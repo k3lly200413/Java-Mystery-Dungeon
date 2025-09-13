@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Random;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGridAdapter;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGrid;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGridAdapter;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 
 /**
  * Implementation of a random placement strategy for placing objects
@@ -27,7 +27,7 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
             return;
         }
 
-        for (Position p : pickRandomCandidates(
+        for (final Position p : pickRandomCandidates(
             ReadOnlyGridAdapter.of(base), null, 0, n, rand)) {
             base.set(p.x(), p.y(), type);
         }
@@ -90,7 +90,7 @@ public final class ImplRandomPlacement implements RandomPlacementStrategy {
         final List<Position> out = new ArrayList<>();
         for (int y = 0; y < g.height(); y++) {
             for (int x = 0; x < g.width(); x++) {
-                TileType t = g.get(x, y);
+                final TileType t = g.get(x, y);
                 if (t == TileType.ROOM
                         && !adjacentToTunnel(g, x, y)
                         && isFarFromPlayer(x, y, player, dist)) {

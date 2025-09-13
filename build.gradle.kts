@@ -44,14 +44,16 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.4")
 
     // https://mvnrepository.com/artifact/org.mockito/mockito-core
-    testImplementation("org.mockito:mockito-core:5.19.0")
-    
+    testImplementation("org.mockito:mockito-core:5.19.0")    
     testImplementation("org.easytesting:fest-swing:1.2")
+
+    //testImplementation("org.assertj:assertj-swing-junit:3.17.1") test per GUI
+    
 }
 
 application {
     // Define the main class for the application.
-    mainClass.set("it.unibo.progetto_oop.Main") // DA CAMBIARE
+    mainClass.set("it.unibo.progetto_oop.Main")
 }
 
 tasks.test {

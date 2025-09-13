@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ImplArrayListStructureData;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.FloorGenerator;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRandomPlacement;
@@ -24,7 +24,8 @@ import it.unibo.progetto_oop.overworld.playground.placement_strategy.RandomPlace
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.RoomPlacementStrategy;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.TunnelPlacementStrategy;
 
-public class FloorGeneratorTest {
+// CHECKSTYLE: MagicNumber OFF
+class FloorGeneratorTest {
 
     /**
      * Number of possible directions.
@@ -39,10 +40,6 @@ public class FloorGeneratorTest {
      * Data structure representing the grid of the floor.
      */
     private StructureData grid;
-    /**
-     * Data structure representing the entity grid of the floor.
-     */
-    private StructureData entityGrid;
     /**
      * List of rooms generated in the floor.
      */
@@ -75,16 +72,16 @@ public class FloorGeneratorTest {
                 .tileSize(14)
                 .build();
 
-        RoomPlacementStrategy roomPlacer = new ImplRoomPlacement();
-        TunnelPlacementStrategy tunnelPlacer = new ImplTunnelPlacement();
-        RandomPlacementStrategy objPlacer = new ImplRandomPlacement();
-        Random rng = new Random(42);
+        final RoomPlacementStrategy roomPlacer = new ImplRoomPlacement();
+        final TunnelPlacementStrategy tunnelPlacer = new ImplTunnelPlacement();
+        final RandomPlacementStrategy objPlacer = new ImplRandomPlacement();
+        final Random rng = new Random(42);
 
-        FloorGenerator gen = new FloorGenerator(
+        final FloorGenerator gen = new FloorGenerator(
                 roomPlacer, tunnelPlacer, objPlacer, rng);
 
         grid = new ImplArrayListStructureData(cfg.width(), cfg.height());
-        entityGrid = new ImplArrayListStructureData(cfg.width(), cfg.height());
+        final StructureData entityGrid = new ImplArrayListStructureData(cfg.width(), cfg.height());
         entityGrid.fill(TileType.NONE);
         rooms = gen.generate(grid, entityGrid, cfg, false);
 
@@ -96,7 +93,7 @@ public class FloorGeneratorTest {
 
     private static List<Position> getPositions(final StructureData g,
                                                final TileType t) {
-        List<Position> posList = new ArrayList<>();
+        final List<Position> posList = new ArrayList<>();
         for (int y = 0; y < g.height(); y++) {
             for (int x = 0; x < g.width(); x++) {
                 if (g.get(x, y) == t) {
@@ -111,7 +108,7 @@ public class FloorGeneratorTest {
     @Test
     void roomsAreValidAndNonOverlapping() {
         assertFalse(rooms.isEmpty(), "At least one room");
-        for (Room r : rooms) {
+        for (final Room r : rooms) {
             assertTrue(r.getX() >= 0 && r.getY() >= 0,
                        "Coordinates must be non-negative");
             assertTrue(
@@ -134,9 +131,9 @@ public class FloorGeneratorTest {
     }
 
     private static boolean intersects(final Room a, final Room b) {
-        boolean sepX = a.getX() + a.getWidth() - 1 < b.getX()
+        final boolean sepX = a.getX() + a.getWidth() - 1 < b.getX()
                 || b.getX() + b.getWidth() - 1 < a.getX();
-        boolean sepY = a.getY() + a.getHeight() - 1 < b.getY()
+        final boolean sepY = a.getY() + a.getHeight() - 1 < b.getY()
                 || b.getY() + b.getHeight() - 1 < a.getY();
         return !(sepX || sepY);
     }
@@ -150,7 +147,7 @@ public class FloorGeneratorTest {
     // objects not on walls
     @Test
     void placedObjectsAreNotOnWalls() {
-        for (Position p : concat(players, stairs, enemies, items)) {
+        for (final Position p : concat(players, stairs, enemies, items)) {
             assertNotEquals(
                 TileType.WALL,
                 grid.get(p.x(), p.y()),
@@ -161,14 +158,14 @@ public class FloorGeneratorTest {
 
     @SafeVarargs
     private static <T> List<T> concat(final List<T>... lists) {
-        List<T> newList = new ArrayList<>();
-        for (List<T> l : lists) {
+        final List<T> newList = new ArrayList<>();
+        for (final List<T> l : lists) {
             newList.addAll(l);
         }
         return newList;
     }
 
-   // each room has at least one border cell adjacent to a corridor
+    // each room has at least one border cell adjacent to a corridor
     @Test
     void roomsHaveOneAdjacentCorridor() {
         assertFalse(rooms.isEmpty(), "At least one room");
@@ -176,21 +173,20 @@ public class FloorGeneratorTest {
         final int[] dx = {1, -1, 0, 0};
         final int[] dy = {0, 0, 1, -1};
 
-        for (int i = 0; i < rooms.size(); i++) {
-            Room room = rooms.get(i);
+        for (final Room room : rooms) {
             boolean hasDoor = false;
 
-            for (Position p : room) {
+            for (final Position p : room) {
                 for (int k = 0; k < DIRECTION_COUNT && !hasDoor; k++) {
-                    int nx = p.x() + dx[k];
-                    int ny = p.y() + dy[k];
+                    final int nx = p.x() + dx[k];
+                    final int ny = p.y() + dy[k];
 
-                    Position nearP = new Position(nx, ny);
+                    final Position nearP = new Position(nx, ny);
                     if (inMap(nearP)) {
-                        TileType t = grid.get(nearP.x(), nearP.y());
-                        boolean isCorridor = (t == TileType.TUNNEL);
-                        boolean isOtherRoom = (t == TileType.ROOM
-                            && !room.contains(nearP));
+                        final TileType t = grid.get(nearP.x(), nearP.y());
+                        final boolean isCorridor = t == TileType.TUNNEL;
+                        final boolean isOtherRoom = t == TileType.ROOM
+                            && !room.contains(nearP);
 
                         if (isCorridor || isOtherRoom) {
                             hasDoor = true;
@@ -206,6 +202,5 @@ public class FloorGeneratorTest {
         return p.x() >= 0 && p.y() >= 0
             && p.x() < grid.width() && p.y() < grid.height();
     }
-
 
 }

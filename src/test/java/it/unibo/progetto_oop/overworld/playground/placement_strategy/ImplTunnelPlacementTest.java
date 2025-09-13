@@ -10,11 +10,12 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ImplArrayListStructureData;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 
-public class ImplTunnelPlacementTest {
+// CHECKSTYLE: MagicNumber OFF
+class ImplTunnelPlacementTest {
 
     private static int count(final StructureData g, final TileType t) {
         int c = 0;
@@ -56,8 +57,8 @@ public class ImplTunnelPlacementTest {
     }
 
     private static boolean colHasTunnelFromTo(final StructureData g, final int x, final int y1, final int y2) {
-        int a = Math.min(y1, y2);
-        int b = Math.max(y1, y2);
+        final int a = Math.min(y1, y2);
+        final int b = Math.max(y1, y2);
         for (int y = a; y <= b; y++) {
             if (g.get(x, y) == TileType.WALL) {
                 return false;
@@ -68,18 +69,18 @@ public class ImplTunnelPlacementTest {
 
     @Test
     void testConnectTwoRooms() {
-        StructureData grid = new ImplArrayListStructureData(40, 25);
+        final StructureData grid = new ImplArrayListStructureData(40, 25);
         grid.fill(TileType.WALL);
 
-        Room r1 = new Room(5, 5, 6, 5);
-        Room r2 = new Room(25, 15, 7, 6);
+        final Room r1 = new Room(5, 5, 6, 5);
+        final Room r2 = new Room(25, 15, 7, 6);
         carveRoom(grid, r1);
         carveRoom(grid, r2);
 
-        int roomsBefore = count(grid, TileType.ROOM);
-        int tunnelsBefore = count(grid, TileType.TUNNEL);
+        final int roomsBefore = count(grid, TileType.ROOM);
+        final int tunnelsBefore = count(grid, TileType.TUNNEL);
 
-        var rooms = List.of(r1, r2);
+        final var rooms = List.of(r1, r2);
         new ImplTunnelPlacement().connect(grid, rooms, new Random(123));
 
         // rooms are the same
@@ -88,42 +89,42 @@ public class ImplTunnelPlacementTest {
         assertTrue(count(grid, TileType.TUNNEL) > tunnelsBefore);
 
         // verify at least one L path between the two rooms
-        int x1 = cx(r1);
-        int y1 = cy(r1);
-        int x2 = cx(r2);
-        int y2 = cy(r2);
-        boolean pathVariantA = rowHasTunnelFromTo(grid, y1, x1, x2)
+        final int x1 = cx(r1);
+        final int y1 = cy(r1);
+        final int x2 = cx(r2);
+        final int y2 = cy(r2);
+        final boolean pathVariantA = rowHasTunnelFromTo(grid, y1, x1, x2)
                 && colHasTunnelFromTo(grid, x2, y1, y2);
-        boolean pathVariantB = colHasTunnelFromTo(grid, x1, y1, y2)
+        final boolean pathVariantB = colHasTunnelFromTo(grid, x1, y1, y2)
                 && rowHasTunnelFromTo(grid, y2, x1, x2);
         assertTrue(pathVariantA || pathVariantB);
     }
 
     @Test
     void testNoOpWithZeroOrOneRoom() {
-        // 0 stanze
-        StructureData g = new ImplArrayListStructureData(20, 15);
+        // 0 rooms
+        final StructureData g = new ImplArrayListStructureData(20, 15);
         g.fill(TileType.WALL);
-        int c = count(g, TileType.TUNNEL);
+        final int c = count(g, TileType.TUNNEL);
         new ImplTunnelPlacement().connect(g, List.of(), new Random(1));
         assertEquals(c, count(g, TileType.TUNNEL));
 
-        // 1 stanza
-        StructureData g2 = new ImplArrayListStructureData(20, 15);
+        // 1 room
+        final StructureData g2 = new ImplArrayListStructureData(20, 15);
         g2.fill(TileType.WALL);
-        Room c2 = new Room(3, 3, 4, 4);
+        final Room c2 = new Room(3, 3, 4, 4);
         carveRoom(g2, c2);
-        int t2 = count(g2, TileType.TUNNEL);
+        final int t2 = count(g2, TileType.TUNNEL);
         new ImplTunnelPlacement().connect(g2, List.of(c2), new Random(2));
         assertEquals(t2, count(g2, TileType.TUNNEL));
     }
 
     @Test
     void testConnectMultipleRooms() {
-        StructureData grid = new ImplArrayListStructureData(50, 30);
+        final StructureData grid = new ImplArrayListStructureData(50, 30);
         grid.fill(TileType.WALL);
 
-        List<Room> rooms = new ArrayList<>();
+        final List<Room> rooms = new ArrayList<>();
         rooms.add(new Room(3, 3, 6, 5));
         rooms.add(new Room(18, 6, 7, 6));
         rooms.add(new Room(30, 18, 6, 5));
@@ -134,21 +135,21 @@ public class ImplTunnelPlacementTest {
 
         // for each pair of consecutive rooms, check there is a path
         for (int i = 0; i < rooms.size() - 1; i++) {
-            Room a = rooms.get(i);
-            Room b = rooms.get(i + 1);
-            int x1 = cx(a);
-            int y1 = cy(a);
-            int x2 = cx(b);
-            int y2 = cy(b);
-            boolean pathVariantA = rowHasTunnelFromTo(grid, y1, x1, x2)
+            final Room a = rooms.get(i);
+            final Room b = rooms.get(i + 1);
+            final int x1 = cx(a);
+            final int y1 = cy(a);
+            final int x2 = cx(b);
+            final int y2 = cy(b);
+            final boolean pathVariantA = rowHasTunnelFromTo(grid, y1, x1, x2)
                     && colHasTunnelFromTo(grid, x2, y1, y2);
-            boolean pathVariantB = colHasTunnelFromTo(grid, x1, y1, y2)
+            final boolean pathVariantB = colHasTunnelFromTo(grid, x1, y1, y2)
                     && rowHasTunnelFromTo(grid, y2, x1, x2);
             assertTrue(pathVariantA || pathVariantB);
         }
 
         // room cells are unchanged
-        for (Room r : rooms) {
+        for (final Room r : rooms) {
             for (int y = r.getY(); y < r.getY() + r.getHeight(); y++) {
                 for (int x = r.getX(); x < r.getX() + r.getWidth(); x++) {
                     assertEquals(TileType.ROOM, grid.get(x, y));

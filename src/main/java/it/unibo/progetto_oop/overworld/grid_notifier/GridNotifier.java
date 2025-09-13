@@ -3,6 +3,10 @@ package it.unibo.progetto_oop.overworld.grid_notifier;
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.listner.grid_updater.GridUpdater;
 
+/**
+ * The GridNotifier class is responsible for notifying changes
+ * in the grid, enemy list, and item list to their respective updaters.
+ */
 public class GridNotifier {
     /**
      * The GridUpdater responsible for managing/updating the state of the grid.

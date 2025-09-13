@@ -19,13 +19,12 @@ import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRandomP
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplRoomPlacement;
 import it.unibo.progetto_oop.overworld.playground.placement_strategy.ImplTunnelPlacement;
 
-/**
- * Test basilari su Dungeon: creazione, avanzamento piano, limiti.
- */
-public class DungeonTest {
+// Test on Dungeon: creation, floor advancement, limits.
+// CHECKSTYLE: MagicNumber OFF
+class DungeonTest {
 
     private Dungeon newDungeon(final int maxFloors) {
-        FloorConfig conf = new FloorConfig.Builder()
+        final FloorConfig conf = new FloorConfig.Builder()
                 .size(20, 15)
                 .rooms(3)
                 .roomSize(3, 8, 3, 8)
@@ -33,7 +32,7 @@ public class DungeonTest {
                 .tileSize(14)
                 .build();
 
-        FloorGenerator gen = new FloorGenerator(
+        final FloorGenerator gen = new FloorGenerator(
                 new ImplRoomPlacement(),
                 new ImplTunnelPlacement(),
                 new ImplRandomPlacement(),
@@ -44,7 +43,7 @@ public class DungeonTest {
 
     @Test
     void firstFloorCreated() {
-        Dungeon d = newDungeon(3);
+        final Dungeon d = newDungeon(3);
         assertTrue(d.nextFloor(), "create floor 0 must succeed");
         assertEquals(0, d.getCurrentFloorIndex());
         assertNotNull(
@@ -55,7 +54,7 @@ public class DungeonTest {
 
     @Test
     void nextFloorAdvancesUntilMax() {
-        Dungeon d = newDungeon(3);
+        final Dungeon d = newDungeon(3);
 
         assertTrue(d.nextFloor());               // floor 0
         assertEquals(0, d.getCurrentFloorIndex());
@@ -71,33 +70,33 @@ public class DungeonTest {
     }
 
     @Test
-    void sameInstanceWithoutNextFloorAndDifferentInstancesWhenAdvancing() {
-        Dungeon d = newDungeon(3);
+    void checkFloorInstances() {
+        final Dungeon d = newDungeon(3);
         assertTrue(d.nextFloor());              // floor 0
 
         // two consecutive calls -> same instance
-        Floor f1a = d.getCurrentFloor();
-        Floor f1b = d.getCurrentFloor();
+        final Floor f1a = d.getCurrentFloor();
+        final Floor f1b = d.getCurrentFloor();
         assertSame(
             f1a, f1b, "without advancing the floor must be the same instance"
         );
 
         // advance -> new instance
         assertTrue(d.nextFloor(), "Should advance to floor 1");
-        Floor f2 = d.getCurrentFloor();
+        final Floor f2 = d.getCurrentFloor();
         assertNotSame(
             f1a, f2, "Each advancement must produce a different instance"
         );
 
         // two consecutive calls -> same instance
-        Floor f2a = d.getCurrentFloor();
-        Floor f2b = d.getCurrentFloor();
+        final Floor f2a = d.getCurrentFloor();
+        final Floor f2b = d.getCurrentFloor();
         assertSame(
             f2a, f2b, "Without advancing the floor must be the same instance"
         );
 
         assertTrue(d.nextFloor(), "Should advance to floor 2");
-        Floor f3 = d.getCurrentFloor();
+        final Floor f3 = d.getCurrentFloor();
         assertNotSame(
             f2, f3, "Each advancement must produce a different instance"
         );

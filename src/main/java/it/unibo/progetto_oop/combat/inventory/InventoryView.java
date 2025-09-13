@@ -111,12 +111,12 @@ public final class InventoryView extends JPanel {
     /**
      * view manager to switch back to overworld.
      */
-    private final ViewManager viewManager;
+    private final transient ViewManager viewManager;
 
     /**
      * the inventory this view is displaying.
      */
-    private Inventory inventory;
+    private transient Inventory inventory;
 
     /**
      * Panel containing the grid of item buttons.
@@ -353,6 +353,13 @@ public final class InventoryView extends JPanel {
                 + "Click an item in the grid to see its description."
                 + "</i></html>");
         }
+    }
+
+    private void readObject(final java.io.ObjectInputStream in)
+            throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        // viewManager and inventory are transient and must be reattached by the caller.
+        // e.g. call updateInventoryModel(...) and a setter for viewManager if you add one.
     }
 
 }

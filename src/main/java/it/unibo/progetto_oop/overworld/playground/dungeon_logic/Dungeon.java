@@ -6,7 +6,15 @@ import java.util.Objects;
 
 import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
 
+/**
+ * Represents THE DUNGEON of the application,
+ * with its multiple floors.
+ */
 public class Dungeon {
+    /**
+     * Adjustment value for room dimensions in the final room configuration.
+     */
+    private static final int ROOM_DIMENSION_ADJUSTMENT = 4;
     /**
      * List of floors in the dungeon.
      */
@@ -24,10 +32,6 @@ public class Dungeon {
      * Configuration settings for the dungeon floors.
      */
     private final FloorConfig config;
-    /**
-     * Adjustment value for room dimensions in the final room configuration.
-     */
-    private static final int ROOM_DIMENSION_ADJUSTMENT = 4;
 
     /**
      * Constructs a Dungeon with the specified generator and configuration.
@@ -60,15 +64,15 @@ public class Dungeon {
      * Advances to the next floor in the dungeon if possible.
      *
      * @return {@code true} if the floor was successfully advanced,
-     * {@code false} if already on the last floor
+     *         {@code false} if already on the last floor
      */
     public final boolean nextFloor() {
         if (currentFloor >= config.nFloors() - 1) {
             return false;
         }
-        int nextIndex = currentFloor + 1;
+        final int nextIndex = currentFloor + 1;
         if (nextIndex >= floors.size()) {
-            final boolean isFinal = (nextIndex == config.nFloors() - 1);
+            final boolean isFinal = nextIndex == config.nFloors() - 1;
             final FloorConfig cfg = isFinal ? finalRoomConfig(config) : config;
             floors.add(new Floor(cfg, generator, isFinal));
         }

@@ -15,7 +15,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * The GameStartView class represents the initial view of the game,
+ * displaying a title and a start button.
+ * It extends JPanel and uses a BorderLayout to arrange components.
+ */
 public final class GameStartView extends JPanel {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * The font size for the title label.
@@ -59,10 +66,7 @@ public final class GameStartView extends JPanel {
     /**
      * The title label displayed at the top of the view.
      */
-    private JLabel title = new JLabel(
-        "Java Mystery Dungeon",
-        SwingConstants.CENTER
-    );
+    private final JLabel title;
 
     /**
      * The action to be executed when the start button is pressed.
@@ -76,8 +80,8 @@ public final class GameStartView extends JPanel {
     public GameStartView() {
         setLayout(new BorderLayout());
 
-        var resourcePath = "/spritesOverWorld/startBackground.png";
-        var url = getClass().getResource(resourcePath);
+        final var resourcePath = "/spritesOverWorld/startBackground.png";
+        final var url = getClass().getResource(resourcePath);
         this.backgroundImage = url != null ? new ImageIcon(url).getImage() : null;
 
         // title
@@ -96,12 +100,11 @@ public final class GameStartView extends JPanel {
 
         add(title, BorderLayout.NORTH);
 
-        JPanel center = new JPanel(new GridBagLayout());
+        final JPanel center = new JPanel(new GridBagLayout());
         center.setOpaque(false);
         center.add(startButton);
         add(center, BorderLayout.CENTER);
     }
-
 
     @Override
     protected void paintComponent(final Graphics g) {

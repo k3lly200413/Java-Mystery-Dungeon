@@ -2,6 +2,10 @@ package it.unibo.progetto_oop.overworld.playground.data.listner.grid_updater;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 
+/**
+ * Interface for updating the grid based on various events such as player movement,
+ * enemy movement, item removal, and enemy removal.
+ */
 public interface GridUpdater {
     /**
      * Called when the player moves from one position to another.
@@ -18,7 +22,7 @@ public interface GridUpdater {
      * @param to the destination position of the enemy
      */
     void onEnemyMove(Position from, Position to);
-    
+
     /**
      * Called when an item is removed from a specific position.
      *

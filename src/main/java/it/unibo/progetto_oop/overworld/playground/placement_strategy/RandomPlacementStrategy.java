@@ -4,9 +4,12 @@ import java.util.Random;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGrid;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 
+/**
+ * Strategy interface for random placement of objects and players in a grid structure.
+ */
 public interface RandomPlacementStrategy {
     /**
      * Places an object on the entity structure.
@@ -28,6 +31,7 @@ public interface RandomPlacementStrategy {
         Position player,
         int dist
     );
+
     /**
      * Places the player on the entity structure.
      *

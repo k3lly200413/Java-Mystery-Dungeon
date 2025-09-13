@@ -1,5 +1,17 @@
 package it.unibo.progetto_oop.overworld.mvc.generation_entities;
 
+/**
+ * Configuration record for entity stats in the game.
+ * Includes stats for the player, regular enemies, and bosses.
+ *
+ * @param playerMaxHp        the maximum health points of the player
+ * @param playerStamina      the stamina level of the player
+ * @param playerPower        the power level of the player
+ * @param enemyHp            the health points of a regular enemy
+ * @param enemyPower         the power level of a regular enemy
+ * @param bossHpMultiplier   the health multiplier for bosses
+ * @param bossPowerMultiplier the power multiplier for bosses
+ */
 public record EntityStatsConfig(
         int playerMaxHp,
         int playerStamina,
@@ -11,37 +23,29 @@ public record EntityStatsConfig(
 ) {
     // default centralizzati (unica fonte di verità)
     /** The default maximum health points of the player. */
-    private static final int PLAYER_MAX_HP = 1000000;
+    private static final int PLAYER_MAX_HP = 1_000_000;
     /** The default stamina level of the player. */
     private static final int PLAYER_STAMINA = 100;
-    /** The default power level of the player. */
     private static final int PLAYER_POWER = 50;
-    /** The default health points of the enemy. */
     private static final int ENEMY_HP = 100;
-    /** The default power level of the enemy. */
     private static final int ENEMY_POWER = 20;
-    /** The default health multiplier for the boss. */
     private static final int BOSS_HP_MULT = 3;
-    /** The default power multiplier for the boss. */
     private static final int BOSS_POWER_MULT = 2;
 
+    /**
+     * Creates a new Builder instance for constructing EntityStatsConfig objects.
+     *
+     * @return a new Builder instance
+     */
     public static final class Builder {
 
-        /** Default configuration. */
         public static final EntityStatsConfig DEFAULT = builder().build();
-        /** The maximum health points of the player. */
         private int playerMaxHp = PLAYER_MAX_HP;
-        /** The stamina level of the player. */
         private int playerStamina = PLAYER_STAMINA;
-        /** The power level of the player. */
         private int playerPower = PLAYER_POWER;
-        /** The health points of the enemy. */
         private int enemyHp = ENEMY_HP;
-        /** The power level of the enemy. */
         private int enemyPower = ENEMY_POWER;
-        /** The health multiplier for the boss. */
         private int bossHpMultiplier = BOSS_HP_MULT;
-        /** The power multiplier for the boss. */
         private int bossPowerMultiplier = BOSS_POWER_MULT;
 
         /**

@@ -11,6 +11,7 @@ import it.unibo.progetto_oop.overworld.grid_notifier.GridNotifier;
 import it.unibo.progetto_oop.overworld.player.Player;
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.OverworldPlayerAdapter;
 import it.unibo.progetto_oop.overworld.player.adapter_pattern.PossibleUser;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * This class represents the Game Over state in a combat scenario.
@@ -45,6 +46,13 @@ public class GameOverState implements CombatState {
      *
      *                               Constructor of the GameOverState class.
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "GameOverState is an internal combat-state object and intentionally"
+            + " keeps references to collaborators (CombatCollision, GridNotifier, Enemy). "
+            + "Controller/overworld retain ownership; suppressing to avoid noisy"
+            + "SpotBugs warnings while preserving behavior."
+    )
     public GameOverState(final CombatCollision newCombatCollision,
     final GridNotifier newGridNotifier,
     final Enemy newEnemy, final Player player) {
@@ -103,6 +111,7 @@ public class GameOverState implements CombatState {
                 .enemyRange(2)
                 .setIsGameOver(context.getReadOnlyModel().isGameOver())
                 .whoDied(context.getReadOnlyModel().getWhoDied())
+                .boss(enemy.isBoss())
                 .build();
         context.getViewApi().updateDisplay(defaultRedraw);
     }

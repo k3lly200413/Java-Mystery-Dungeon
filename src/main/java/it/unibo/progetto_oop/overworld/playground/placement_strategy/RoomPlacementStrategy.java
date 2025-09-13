@@ -4,10 +4,14 @@ import java.util.List;
 import java.util.Random;
 
 import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Room;
 
-public interface RoomPlacementStrategy  {
+/**
+ * Strategy interface for placing rooms in a grid structure.
+ */
+@FunctionalInterface
+public interface RoomPlacementStrategy {
     /**
      * Places rooms on the grid based on the given configuration.
      *

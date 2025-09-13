@@ -1,4 +1,3 @@
-
 /**
  * This package contains the classes and interfaces for the playground view.
  */

@@ -173,7 +173,7 @@ public class Inventory implements Serializable{
      * @return a map representing the full inventory
      */
     public Map<Item, Integer> getFullInventory() {
-        return Collections.unmodifiableMap(this.items);
+        return Collections.unmodifiableMap(new HashMap<>(this.items));
     }
 
     /**

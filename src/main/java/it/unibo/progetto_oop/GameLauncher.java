@@ -15,6 +15,11 @@ import it.unibo.progetto_oop.overworld.playground.OverworldLauncher;
 import it.unibo.progetto_oop.overworld.playground.data.FloorConfig;
 import it.unibo.progetto_oop.overworld.playground.view.game_start.GameStartView;
 
+/**
+ * The GameLauncher class is responsible for starting the game.
+ * It initializes the main components and views, and manages the transition
+ * between the overworld and combat modes.
+ */
 public final class GameLauncher {
     /**
      * Configuration for the floor settings.

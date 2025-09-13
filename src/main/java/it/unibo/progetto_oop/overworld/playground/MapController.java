@@ -9,11 +9,14 @@ import javax.swing.SwingUtilities;
 
 import it.unibo.progetto_oop.overworld.mvc.OverworldModel;
 import it.unibo.progetto_oop.overworld.mvc.generation_entities.OverworldEntitiesGenerator;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
 import it.unibo.progetto_oop.overworld.playground.data.listner.ChangeFloorListener;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGrid;
 import it.unibo.progetto_oop.overworld.playground.dungeon_logic.Floor;
 import it.unibo.progetto_oop.overworld.playground.view.playground_view.ImplMapView;
 
+/**
+ * Controller class for managing the map view and handling floor changes in the overworld.
+ */
 public final class MapController implements ChangeFloorListener {
 
     /**
@@ -30,6 +33,14 @@ public final class MapController implements ChangeFloorListener {
      * The model representing the overworld state.
      */
     private final OverworldModel model;
+
+    private final KeyEventDispatcher nextFloorOnN = e -> {
+        if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_N) {
+            next();
+            return true;
+        }
+        return false;
+    };
 
     /**
      * Constructs a MapController with the specified view and model.
@@ -72,18 +83,10 @@ public final class MapController implements ChangeFloorListener {
     }
 
     @Override
-    public void onFloorChange(ReadOnlyGrid base) {
+    public void onFloorChange(final ReadOnlyGrid base) {
         view.setEntityGrid(model.getEntityGridView());
         view.setCameraTarget(model.getPlayer().getPosition());
         view.setZoom(DEFAULT_ZOOM_LEVEL);
         SwingUtilities.invokeLater(() -> view.render(base));
     }
-
-    private final KeyEventDispatcher nextFloorOnN = e -> {
-        if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_N) {
-            next();
-            return true;
-        }
-        return false;
-    };
 }

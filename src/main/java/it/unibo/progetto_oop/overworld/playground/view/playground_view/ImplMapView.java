@@ -5,13 +5,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGrid;
 
 /**
  * A Swing-based implementation of the MapView interface.
@@ -20,6 +21,8 @@ import it.unibo.progetto_oop.overworld.playground.data.TileType;
  */
 
 public final class ImplMapView extends JPanel implements MapView {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * The panel used to render the map view.
@@ -78,6 +81,8 @@ public final class ImplMapView extends JPanel implements MapView {
     /* ============ Canvas ============ */
     private static final class MapPanel extends JPanel {
 
+        private static final long serialVersionUID = 1L;
+
         /**
          * The default width of the grid in cells.
          */
@@ -96,12 +101,12 @@ public final class ImplMapView extends JPanel implements MapView {
         /**
          * The base grid representing the map structure.
          */
-        private ReadOnlyGrid grid; // base
+        private transient ReadOnlyGrid grid; // base
 
         /**
          * The overlay grid representing entities on the map.
          */
-        private ReadOnlyGrid entityGrid; // overlay
+        private transient ReadOnlyGrid entityGrid; // overlay
 
         /**
          * The initial size of each cell in pixels.
@@ -117,36 +122,36 @@ public final class ImplMapView extends JPanel implements MapView {
          * The camera target position on the map.
          * This determines the center of the view.
          */
-        private Position camTarget;
+        private transient Position camTarget;
 
         // Sprite
         /**
          * The image representing the floor tile.
          */
-        private final BufferedImage floorImg;
+        private transient final BufferedImage floorImg;
 
         /**
          * The image representing the stairs tile.
          */
-        private final BufferedImage stairsImg;
+        private transient final BufferedImage stairsImg;
         /**
          * The image representing the player entity.
          */
-        private final BufferedImage playerImg;
+        private transient final BufferedImage playerImg;
 
         /**
          * The image representing the enemy entity.
          */
-        private final BufferedImage enemyImg;
+        private transient final BufferedImage enemyImg;
         /**
          * The image representing the item entity.
          */
-        private final BufferedImage itemImg;
+        private transient final BufferedImage itemImg;
 
         /**
          * The image representing the boss entity.
          */
-        private final BufferedImage bossImg;
+        private transient final BufferedImage bossImg;
 
         MapPanel(final int cellSize) {
             this.initialCell = cellSize;
@@ -266,7 +271,7 @@ public final class ImplMapView extends JPanel implements MapView {
         private static BufferedImage loadSprite(final String path) {
             try (var is = ImplMapView.class.getResourceAsStream(path)) {
                 return is == null ? null : ImageIO.read(is);
-            } catch (final Exception e) {
+            } catch (final IOException e) {
                 return null;
             }
         }
@@ -300,7 +305,6 @@ public final class ImplMapView extends JPanel implements MapView {
                 case BOSS -> Color.MAGENTA;
                 case ITEM -> Color.PINK;
                 case NONE -> new Color(0, 0, 0, 0); // clear
-                default -> Color.MAGENTA;
             };
         }
     }

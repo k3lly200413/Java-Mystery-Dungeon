@@ -10,20 +10,21 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.progetto_oop.overworld.playground.data.Position;
 import it.unibo.progetto_oop.overworld.playground.data.TileType;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ImplArrayListStructureData;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGrid;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.ReadOnlyGridAdapter;
-import it.unibo.progetto_oop.overworld.playground.data.StructureData_strategy.StructureData;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ImplArrayListStructureData;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGrid;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.ReadOnlyGridAdapter;
+import it.unibo.progetto_oop.overworld.playground.data.structuredata_strategy.StructureData;
 
-public class RandomPlacementTest {
+// CHECKSTYLE: MagicNumber OFF
+class RandomPlacementTest {
 
     @Test
     void testPlaceOnBase() {
-        StructureData base = new ImplArrayListStructureData(10, 8);
+        final StructureData base = new ImplArrayListStructureData(10, 8);
         base.fill(TileType.ROOM);
 
-        ImplRandomPlacement placer = new ImplRandomPlacement();
-        Random rand = new Random(12345);
+        final ImplRandomPlacement placer = new ImplRandomPlacement();
+        final Random rand = new Random(123);
 
         placer.placeOnBase(base, TileType.STAIRS, 12, rand);
 
@@ -32,8 +33,8 @@ public class RandomPlacementTest {
 
     @Test
     void testPlaceObjectConstraints() {
-        StructureData base   = new ImplArrayListStructureData(12, 10);
-        StructureData entity = new ImplArrayListStructureData(12, 10);
+        final StructureData base = new ImplArrayListStructureData(12, 10);
+        final StructureData entity = new ImplArrayListStructureData(12, 10);
         base.fill(TileType.ROOM);
         entity.fill(TileType.NONE);
 
@@ -41,17 +42,17 @@ public class RandomPlacementTest {
         base.set(5, 5, TileType.TUNNEL);
         base.set(6, 5, TileType.TUNNEL);
 
-        ReadOnlyGrid baseRO = ReadOnlyGridAdapter.of(base);
+        final ReadOnlyGrid baseRO = ReadOnlyGridAdapter.of(base);
 
-        Position player = new Position(2, 2);
+        final Position player = new Position(2, 2);
         entity.set(player.x(), player.y(), TileType.PLAYER);
 
-        int n = 8;
-        int minDist = 3;
-        ImplRandomPlacement placer = new ImplRandomPlacement();
+        final int n = 8;
+        final int minDist = 3;
+        final ImplRandomPlacement placer = new ImplRandomPlacement();
         placer.placeObject(
                 baseRO, entity, TileType.ENEMY, n,
-                new Random(999), player, minDist
+                new Random(123), player, minDist
         );
 
         int placed = 0;
@@ -75,8 +76,8 @@ public class RandomPlacementTest {
 
     @Test
     void testPlacePlayer() {
-        StructureData base = new ImplArrayListStructureData(7, 6);
-        StructureData entity = new ImplArrayListStructureData(7, 6);
+        final StructureData base = new ImplArrayListStructureData(7, 6);
+        final StructureData entity = new ImplArrayListStructureData(7, 6);
         base.fill(TileType.ROOM);
         entity.fill(TileType.NONE);
 
@@ -84,12 +85,12 @@ public class RandomPlacementTest {
         base.set(3, 2, TileType.TUNNEL);
         base.set(4, 2, TileType.TUNNEL);
 
-        ReadOnlyGrid baseRO = ReadOnlyGridAdapter.of(base);
+        final ReadOnlyGrid baseRO = ReadOnlyGridAdapter.of(base);
 
-        ImplRandomPlacement placer = new ImplRandomPlacement();
-        Random rand = new Random(123);
+        final ImplRandomPlacement placer = new ImplRandomPlacement();
+        final Random rand = new Random(123);
 
-        Position p = placer.placePlayer(baseRO, entity, rand);
+        final Position p = placer.placePlayer(baseRO, entity, rand);
         assertNotNull(p, "placePlayer mustn't return null");
         assertEquals(TileType.PLAYER, entity.get(p.x(), p.y()));
         assertEquals(TileType.ROOM, base.get(p.x(), p.y()));
@@ -97,28 +98,28 @@ public class RandomPlacementTest {
 
     @Test
     void testPlaceObjectCap() {
-        StructureData base = new ImplArrayListStructureData(5, 5);
-        StructureData entity = new ImplArrayListStructureData(5, 5);
+        final StructureData base = new ImplArrayListStructureData(5, 5);
+        final StructureData entity = new ImplArrayListStructureData(5, 5);
         base.fill(TileType.ROOM);
         entity.fill(TileType.NONE);
 
-        ReadOnlyGrid baseRO = ReadOnlyGridAdapter.of(base);
+        final ReadOnlyGrid baseRO = ReadOnlyGridAdapter.of(base);
 
-        Position player = new Position(0, 0);
+        final Position player = new Position(0, 0);
         entity.set(player.x(), player.y(), TileType.PLAYER);
 
-        ImplRandomPlacement placer = new ImplRandomPlacement();
-        Random rand = new Random(1);
+        final ImplRandomPlacement placer = new ImplRandomPlacement();
+        final Random rand = new Random(123);
 
-        int requested = 100; // more than available
-        int minDist = 1;
+        final int requested = 100; // more than available
+        final int minDist = 1;
 
         placer.placeObject(
             baseRO, entity, TileType.ENEMY, requested, rand, player, minDist
         );
 
-        int placed = count(entity, TileType.ENEMY);
-        int maxPossible = base.width() * base.height() - 1; // not the player
+        final int placed = count(entity, TileType.ENEMY);
+        final int maxPossible = base.width() * base.height() - 1; // not the player
 
         assertTrue(placed <= maxPossible);
     }
